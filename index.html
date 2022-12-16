@@ -1,0 +1,551 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Scott's Thoughts - Gen1 Frontend v2.1.dev.21</title>
+    <link rel="stylesheet" href="style-yellow.css" id="cssStylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="ready == false">
+            Loading...
+        </div>
+        <div v-else>
+    <!------ OVERLAY GRAPHICS ---------------------------------------------------------------------------------------------------------------------->
+            <div class="mainContainer">
+                <div v-if="package == false && mapper.meta.gamePlatform == `GB`">
+                    <img v-show="overlay == true" class="overlay" :src="`images/overlay/${starter}.png`" />
+                    <img class="gameArea" src="images/elements/overlay/gen1&2/gamearea.png" />
+                    <img v-show="gameName() == `Pokemon Yellow`" class="demoBorderStats" src="images/elements/overlay/gen1/stats.png" style="opacity: .9"/>
+                </div>
+
+    <!------ INFO DISPLAY --------------------------------------------------------------------------------------------------------------------------->
+                <div class="gamestateContainter">
+                    <div>Current Game: {{mapper.meta.gameName}}</div>
+                    <div>Current Platform: {{mapper.meta.gamePlatform}}</div>
+                    <div>- - - - - - </div>
+                    <div>Current Gamestate: {{g1state()}}</div>
+                    <div>TrainerClass: {{mapper.properties.battle.trainer.class.value}}</div>
+                    <div>TrainerNumber: {{mapper.properties.battle.trainer.number.value}}</div>
+                    <div>TrainerLookup: {{ g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)}}</div>
+                    <div>Mart: {{g1martSelector(this.mapper.properties.overworld.map.value)}}</div>
+                    <!-- <div>Trainer: {{camelCase(fixTrainerName(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number))}}</div>
+                    <div>Trainer: {{fixTrainerName(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)}}</div>
+                    <div>Class: {{mapper.properties.battle.trainer.class.value}}</div>
+                    <div>Number: {{mapper.properties.battle.trainer.number.value}}</div>
+                    <div>Lab: {{mapper.properties.overworld.map.value}}</div>
+                    <div>Level: {{mapper.properties.player.team[0].level.value}}</div>
+                    <div>TeamCount: {{mapper.properties.player.teamCount.value}}</div>
+                    <div>Starter: {{pokemon(starter)}}</div> -->
+                    <br>
+                    <div>HP DV: {{hpDvCalculation()}}</div>
+                    <div>HP: {{Math.floor((((pokemon(starter).baseHp + hpDvCalculation()) * 2 * 5) / 100) + 10 + 5)}}</div>
+                    <div>Atk: {{Math.floor((((pokemon(starter).baseAtk + this.mapper.properties.player.team[0].dvAttack.value) * 2 * 5) / 100) + 5)}}</div>
+                    <div>Def: {{Math.floor((((pokemon(starter).baseDef + this.mapper.properties.player.team[0].dvDefense.value) * 2 * 5) / 100) + 5)}}</div>
+                    <div>Spc: {{Math.floor((((pokemon(starter).baseSpc + this.mapper.properties.player.team[0].dvSpecial.value) * 2 * 5) / 100) + 5)}}</div>
+                    <div>Spd: {{Math.floor((((pokemon(starter).baseSpd + this.mapper.properties.player.team[0].dvSpeed.value) * 2 * 5) / 100) + 5)}}</div>
+                    <div>Logical Statement: {{logicalStatementCheck()}}</div>
+                    <br>
+                    <!-- <div>StatExp-Hp: {{statExp(mapper.properties.player.team[0].statExpHp, "HP Ups")}}</div>
+                    <div>StatExp-Atk: {{statExp(mapper.properties.player.team[0].statExpAttack, "Attack")}}</div>
+                    <div>StatExp-Def: {{statExp(mapper.properties.player.team[0].statExpDefense, "Iron")}}</div>
+                    <div>StatExp-Spc: {{statExp(mapper.properties.player.team[0].statExpSpecial, "Calcium")}}</div>
+                    <div>StatExp-Spd: {{statExp(mapper.properties.player.team[0].statExpSpeed, "Carbos")}}</div>
+                    <br> -->
+                    <!-- <div>Team1: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name}}</div>
+                    <div>move1: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[0]}}</div>
+                    <div>move2: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[1]}}</div>
+                    <div>move3: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[2]}}</div>
+                    <div>move4: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[3]}}</div>
+                    <div>level: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.level}}</div>
+                    <div>hp: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.hp}}</div>
+                    <div>atk: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.atk}}</div>
+                    <div>def: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.def}}</div>
+                    <div>spd: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.spd}}</div>
+                    <div>spc: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.spc}}</div>
+                    <br>
+                    <div>Team1: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name}}</div>
+                    <div>Team2: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.name}}</div>
+                    <div>Team3: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.name}}</div>
+                    <div>Team4: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.name}}</div>
+                    <div>Team5: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.name}}</div>
+                    <div>Team6: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.name}}</div>
+                    <br>
+                    <div>Team7: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[6]?.name}}</div>
+                    <div>move1: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[6]?.moves[0]}}</div>
+                    <div>move2: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[6]?.moves[1]}}</div>
+                    <div>move3: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[6]?.moves[2]}}</div>
+                    <div>move4: {{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[6]?.moves[3]}}</div>
+                    <br>
+                    <div>Type1: {{mapper.properties.player.team[0].type1.value}}</div>
+                    <div>Type2: {{mapper.properties.player.team[0].type2.value}}</div> -->
+                    <!-- <table id="items">
+                        <tr><td>Item1: {{camelCase(mapper.properties.player?.items[0]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[0]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item2: {{camelCase(mapper.properties.player?.items[1]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[1]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item3: {{camelCase(mapper.properties.player?.items[2]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[2]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item4: {{camelCase(mapper.properties.player?.items[3]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[3]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item5: {{camelCase(mapper.properties.player?.items[4]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[4]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item6: {{camelCase(mapper.properties.player?.items[5]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[5]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item7: {{camelCase(mapper.properties.player?.items[6]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[6]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item8: {{camelCase(mapper.properties.player?.items[7]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[7]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item9: {{camelCase(mapper.properties.player?.items[8]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[8]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item10: {{camelCase(mapper.properties.player?.items[9]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[9]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item11: {{camelCase(mapper.properties.player?.items[10]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[10]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item12: {{camelCase(mapper.properties.player?.items[11]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[11]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item13: {{camelCase(mapper.properties.player?.items[12]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[12]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item14: {{camelCase(mapper.properties.player?.items[13]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[13]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item15: {{camelCase(mapper.properties.player?.items[14]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[14]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item16: {{camelCase(mapper.properties.player?.items[15]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[15]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item17: {{camelCase(mapper.properties.player?.items[16]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[16]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item18: {{camelCase(mapper.properties.player?.items[17]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[17]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item19: {{camelCase(mapper.properties.player?.items[18]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[18]?.quantity?.value)}}</td></tr>
+                        <tr><td>Item20: {{camelCase(mapper.properties.player?.items[19]?.item?.value)}}</td><td>{{camelCase(mapper.properties.player?.items[19]?.quantity?.value)}}</td></tr>
+                    </table> -->
+                </div>
+
+    <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
+                <div class="typeContainer">
+                    <!-- MONO TYPE -->
+                    <div v-if="typeIcons == true && getStarterType1() == getStarterType2()">
+                        <img class="typeMono" :src="getStarterType1()" />
+                    </div>
+                    <!-- DUAL TYPE -->
+                    <div v-else-if="typeIcons == true && getStarterType1() != getStarterType2()" class="dualType">
+                        <img :src="getStarterType1()" />
+                        <img :src="getStarterType2()" />
+                    </div>
+                </div>
+    
+            <!--------- BADGE ICONS ---------------------------------------------------------------------------------------------------------------------->
+                <div class="badgesBar">          
+                    <img v-show="mapper.properties.player.badges.badge1.value === true" class="badgeBoostAtk" :src="badgeGraphic(mapper.properties.player.badges.badge1)" style="top: 914px; opacity: .3; left: 22px; z-index: 2;" />
+                    <img v-show="mapper.properties.player.badges.badge3.value === true" class="badgeBoostDef" :src="badgeGraphic(mapper.properties.player.badges.badge3)" style="top: 976px; opacity: .3; left: 22px; z-index: 2;" />                    
+                    <img v-show="mapper.properties.player.badges.badge5.value === true" class="badgeBoostSpd" :src="badgeGraphic(mapper.properties.player.badges.badge5)" style="top: 976px; opacity: .3; left: 206px; z-index: 2;" />                    
+                    <img v-show="mapper.properties.player.badges.badge7.value === true" class="badgeBoostSpc" :src="badgeGraphic(mapper.properties.player.badges.badge7)" style="top: 914px; opacity: .3; left: 206px; z-index: 2;"/>      
+                </div>                         
+    
+            <!--------- STATS ---------------------------------------------------------------------------------------------------------------------------->
+                <!-- STATS OVERLAY GRAPHIC  -->
+                <div class="statsContainer">  
+                    <!-- BASE STATS -------------------------------------------------------------------------------->
+                    <div v-if="currentBattleState() == 0">
+                        <div class="statsLabelsColumn1">
+                            HP:<br>
+                            Atk:<br>
+                            Def:<br>
+                        </div>
+                        <div class="statsLabelsColumn2">
+                            <br>
+                            Spc:<br>
+                            Spd:<br>
+                        </div>
+                        <div class="statsheader">Base Stats</div>
+                        <div class="statsColumn1">
+                            {{ pokemon(starter).baseHp }}<br>
+                            {{ pokemon(starter).baseAtk }}<br>
+                            {{ pokemon(starter).baseDef }}<br>
+                        </div>
+                        <div class="critrate">Crit rate: {{ pokemon(starter).critRate }}%</div>
+                        <div class="statsColumn2">
+                            <br>
+                            {{ pokemon(starter).baseSpc }}<br>
+                            {{ pokemon(starter).baseSpd }}<br>
+                        </div>
+                    </div>
+    
+                    <!-- OVERWORLD STATS --------------------------------------------------------------------------->
+                    <div v-if="currentBattleState() == 2">
+                        <div class="statsLabelsColumn1">
+                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">HP:<br></span>
+                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">Atk:<br></span>
+                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">Def:<br></span>
+                        </div>
+
+                        <div class="statsLabelsColumn2">
+                            <br>
+                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">Spc:<br></span>
+                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">Spd:<br></span>
+                        </div>
+                        <div>
+                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) == `Department` || g1martSelector(mapper.properties.overworld.map.value) == `Vitamins`" class="vitaminHPLabel">HP Up: 
+                                <br>
+                                <span class="vitaminHP">{{statExp(mapper.properties.player.team[0].statExpHp)}}</span>
+                            </span>
+                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) == `Department` || g1martSelector(mapper.properties.overworld.map.value) == `Vitamins`" class="vitaminAtkLabel">Protein: 
+                                <br>
+                                <span class="vitaminAtk">{{statExp(mapper.properties.player.team[0].statExpAttack)}}</span>
+                            </span>
+                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) == `Department` || g1martSelector(mapper.properties.overworld.map.value) == `Vitamins`" class="vitaminDefLabel">Iron: 
+                                <br>
+                                <span class="vitaminDef">{{statExp(mapper.properties.player.team[0].statExpDefense)}}</span>
+                            </span>
+                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) == `Department` || g1martSelector(mapper.properties.overworld.map.value) == `Vitamins`" class="vitaminSpcLabel">Calcium: 
+                                <br>
+                                <span class="vitaminSpc">{{statExp(mapper.properties.player.team[0].statExpSpecial)}}</span>
+                            </span>
+                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) == `Department` || g1martSelector(mapper.properties.overworld.map.value) == `Vitamins`" class="vitaminSpdLabel">Carbos: 
+                                <br>
+                                <span class="vitaminSpd">{{statExp(mapper.properties.player.team[0].statExpSpeed)}}</span>
+                            </span>
+                        </div>
+
+                        <div class="statsheader">Level {{ mapper.properties.player.team[0].level.value }}</div>
+                        <div class="statsColumn1">
+                            {{ mapper.properties.player.team[0].maxHp }}<br>
+                            {{ badgeBoost(mapper.properties.player.badges.badge1.value, mapper.properties.player.team[0].attack.value) }}<br>
+                            {{ badgeBoost(mapper.properties.player.badges.badge3.value, mapper.properties.player.team[0].defense.value) }}<br>
+                        </div>
+                        <div class="critrate">Crit rate: {{ pokemon(starter).critRate }}%</div>
+                        <div class="statsColumn2">
+                            <br>
+                            {{ badgeBoost(mapper.properties.player.badges.badge7.value, mapper.properties.player.team[0].special.value) }}<br>
+                            {{ badgeBoost(mapper.properties.player.badges.badge5.value, mapper.properties.player.team[0].speed.value) }}<br>
+                        </div>
+                    </div>
+    
+                    <!-- BATTLE STATS ----------------------------------------------------------------------------->
+                    <div v-if="currentBattleState() == 4">
+                        <div class="statsLabelsColumn1">
+                            <span>HP:<br></span>
+                            <span v-bind:style="{ opacity: statLabelOpacity(mapper.properties.battle.yourPokemon.modStageAttack), color: statLabelColor(mapper.properties.battle.yourPokemon.modStageAttack) }">Atk:<br></span>
+                            <span v-bind:style="{ opacity: statLabelOpacity(mapper.properties.battle.yourPokemon.modStageDefense), color: statLabelColor(mapper.properties.battle.yourPokemon.modStageDefense) }">Def:<br></span>
+                        </div>
+                        <div class="statsLabelsColumn2">
+                            <br>
+                            <span v-bind:style="{opacity: statLabelOpacity(mapper.properties.battle.yourPokemon.modStageSpecial), color: statLabelColor(mapper.properties.battle.yourPokemon.modStageSpecial)}">Spc:<br></span>
+                            <span v-bind:style="{opacity: statLabelOpacity(mapper.properties.battle.yourPokemon.modStageSpeed), color: statLabelColor(mapper.properties.battle.yourPokemon.modStageSpeed)}">Spd:<br></span>
+                        </div>
+                        <div class="statsheader">Level {{ mapper.properties.player.team[0].level.value }}</div>
+                        <div class="statsColumn1">
+                            {{ mapper.properties.player.team[0].maxHp }}<br>
+                            {{ mapper.properties.battle.yourPokemon.battleStatAttack }}<br>
+                            {{ mapper.properties.battle.yourPokemon.battleStatDefense }}<br>
+                        </div>
+                        <div class="critrate">Crit rate: {{ pokemon(starter).critRate }}%</div>
+                        <div class="statsColumn2">
+                            <br>
+                            {{ mapper.properties.battle.yourPokemon.battleStatSpecial }}<br>
+                            {{ mapper.properties.battle.yourPokemon.battleStatSpeed }}<br>
+                        </div>
+                        <div v-bind:style="{ color: statLabelColor(mapper.properties.battle.yourPokemon.modStageAttack)}" class="atkMod">{{ stageModifiers(mapper.properties.battle.yourPokemon.modStageAttack) }}</div>
+                        <div v-bind:style="{ color: statLabelColor(mapper.properties.battle.yourPokemon.modStageDefense)}" class="defMod">{{ stageModifiers(mapper.properties.battle.yourPokemon.modStageDefense) }}</div>
+                        <div v-bind:style="{ color: statLabelColor(mapper.properties.battle.yourPokemon.modStageSpecial)}" class="spcMod">{{ stageModifiers(mapper.properties.battle.yourPokemon.modStageSpecial) }}</div>
+                        <div v-bind:style="{ color: statLabelColor(mapper.properties.battle.yourPokemon.modStageAttack)}" class="spdMod">{{ stageModifiers(mapper.properties.battle.yourPokemon.modStageSpeed) }}</div>
+                    </div>
+                    <img v-if="mapper.meta.gameName == `Pokemon Yellow` || mapper.meta.gameName == `Pokemon Red and Blue`" class="expLabelGen1" src="images/elements/overlay/gen1/expLabel.png" />
+                    <div class="expTextGen1">Exp:</div>
+                </div>  
+    
+            <!--------- MOVESET (MOVES, POWER, PP) -------------------------------------------------------------------------------------------------------------->
+                <!-- MOVE 1 -->
+                <div class="movesetContainer">
+                    <div class="labelMoves">moves</div>
+                    <div class="labelPwr">pwr.</div>
+                    <div class="labelPP">pp</div>
+                    <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0].move1.value != null">
+                        <div v-show="currentBattleState() == 2 && mapper.properties.player.team[0].move1.value != null" class="move1">{{ camelCase(mapper.properties.player.team[0].move1.value) }}</div>
+                        <div v-show="currentBattleState() == 4 && mapper.properties.player.team[0].move1.value != null" class="move1">{{ camelCase(mapper.properties.battle.yourPokemon.move1.value) }}</div>
+                        <div v-show="mapper.properties.player.team[0].move1.value != null" class="move1pp" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move1pp) }">{{ mapper.properties.player.team[0].move1pp }}</div>
+                        <div v-show="mapper.properties.player.team[0].move1.value != null">
+                        <div v-show="currentBattleState() == 2" class="move1power" :key="typeEffectiveness(mapper.properties.player.team[0].move1.value)">{{ typeEffectiveness(mapper.properties.player.team[0].move1.value) }}</div>
+                        <div v-show="currentBattleState() == 4" class="move1power" :key="typeEffectiveness(mapper.properties.battle.yourPokemon.move1.value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon.move1.value) }}</div>
+                        </div>
+                        <img v-show="currentBattleState() == 2" class="move1icon" :src="moveTypeIcon(mapper.properties.player.team[0].move1.value)" />
+                        <img v-show="currentBattleState() == 4" class="move1icon" :src="moveTypeIcon(mapper.properties.battle.yourPokemon.move1.value)" />
+                    </div>
+                    <!-- MOVE 2 -->
+                    <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0].move2.value != null">
+                        <div v-show="currentBattleState() == 2 && mapper.properties.player.team[0].move2.value != null" class="move2">{{ camelCase(mapper.properties.player.team[0].move2.value) }}</div>
+                        <div v-show="currentBattleState() == 4 && mapper.properties.player.team[0].move2.value != null" class="move2">{{ camelCase(mapper.properties.battle.yourPokemon.move2.value) }}</div>
+                        <div v-show="mapper.properties.player.team[0].move2.value != null" class="move2pp" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move2pp) }">{{ mapper.properties.player.team[0].move2pp }}</div>
+                        <div v-show="mapper.properties.player.team[0].move2.value != null">
+                        <div v-show="currentBattleState() == 2" class="move2power" :key="typeEffectiveness(mapper.properties.player.team[0].move2.value)">{{ typeEffectiveness(mapper.properties.player.team[0].move2.value) }}</div>
+                        <div v-show="currentBattleState() == 4" class="move2power" :key="typeEffectiveness(mapper.properties.battle.yourPokemon.move2.value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon.move2.value) }}</div>
+                        </div>
+                        <img v-show="currentBattleState() == 2" class="move2icon" :src="moveTypeIcon(mapper.properties.player.team[0].move2.value)" />
+                        <img v-show="currentBattleState() == 4" class="move2icon" :src="moveTypeIcon(mapper.properties.battle.yourPokemon.move2.value)" />
+                    </div>
+                    <!-- MOVE 3 -->
+                    <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0].move3.value != null">
+                        <div v-show="currentBattleState() == 2 && mapper.properties.player.team[0].move3.value != null" class="move3">{{ camelCase(mapper.properties.player.team[0].move3.value) }}</div>
+                        <div v-show="currentBattleState() == 4 && mapper.properties.player.team[0].move3.value != null" class="move3">{{ camelCase(mapper.properties.battle.yourPokemon.move3.value) }}</div>
+                        <div v-show="mapper.properties.player.team[0].move3.value != null" class="move3pp" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move3pp) }">{{ mapper.properties.player.team[0].move3pp }}</div>
+                        <div v-show="mapper.properties.player.team[0].move3.value != null">
+                        <div v-show="currentBattleState() == 2" class="move3power" :key="typeEffectiveness(mapper.properties.player.team[0].move3.value)">{{ typeEffectiveness(mapper.properties.player.team[0].move3.value) }}</div>
+                        <div v-show="currentBattleState() == 4" class="move3power" :key="typeEffectiveness(mapper.properties.battle.yourPokemon.move3.value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon.move3.value) }}</div>
+                        </div>
+                        <img v-show="currentBattleState() == 2" class="move3icon" :src="moveTypeIcon(mapper.properties.player.team[0].move3.value)" />
+                        <img v-show="currentBattleState() == 4" class="move3icon" :src="moveTypeIcon(mapper.properties.battle.yourPokemon.move3.value)" />
+                    </div>
+                    <!-- MOVE 3 -->
+                    <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0].move4.value != null">
+                        <div v-show="currentBattleState() == 2 && mapper.properties.player.team[0].move4.value != null" class="move4">{{ camelCase(mapper.properties.player.team[0].move4.value) }}</div>
+                        <div v-show="currentBattleState() == 4 && mapper.properties.player.team[0].move4.value != null" class="move4">{{ camelCase(mapper.properties.battle.yourPokemon.move4.value) }}</div>
+                        <div v-show="mapper.properties.player.team[0].move4.value != null" class="move4pp" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move4pp) }">{{ mapper.properties.player.team[0].move4pp }}</div>
+                        <div v-show="mapper.properties.player.team[0].move4.value != null">
+                        <div v-show="currentBattleState() == 2" class="move4power" :key="typeEffectiveness(mapper.properties.player.team[0].move4.value)">{{ typeEffectiveness(mapper.properties.player.team[0].move4.value) }}</div>
+                        <div v-show="currentBattleState() == 4" class="move4power" :key="typeEffectiveness(mapper.properties.battle.yourPokemon.move4.value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon.move4.value) }}</div>
+                        </div>
+                        <img v-show="currentBattleState() == 2" class="move4icon" :src="moveTypeIcon(mapper.properties.player.team[0].move4.value)" />
+                        <img v-show="currentBattleState() == 4" class="move4icon" :src="moveTypeIcon(mapper.properties.battle.yourPokemon.move4.value)" />
+                    </div>
+                </div>
+
+            <!--------- INFO AREA -------------------------------------------------------------------------------------------------------------->
+                <div class="movepoolContainer">    
+                    <div v-if="info == true">
+                        <div class="encounterInfo">
+                            <span style="text-decoration: underline">Enemy Attributes:</span><br>
+                            HP:<br>Speed:<br>Move1:<br>Move2:<br>Move3:<br>Move4:<br><br>
+                            <span style="text-decoration: underline">{{ nullCheck(mapper.properties.player.team[0].species.value).name }}</span><br>
+                            HP:<br>Status:<br>
+                            <br>AtkDV:<br>DefDV:<br>SpdDV:<br>SpcDv:<br><br>
+                            Party:<br>Items:<br>Money:<br><br>
+                            <span style="text-decoration: underline">Event Tracking</span><br>
+                            Lctn:<br>Rate:<br>Trnrs:<br>Wild:<br><br>
+                            Rt1:<br>Forest:<br>Moon:<br><br>
+                            Heals:<br>Saves:<br><br>
+                            Resets:<br>GT:<br>PlrID:<br><br>
+                            Fast:<br>MFast:<br>MSlow:<br>Slow:
+                        </div>
+                        <div class="encounterData">
+                            <br>
+                            {{ mapper.properties.battle.enemyPokemon.hp.value }}/{{ mapper.properties.battle.enemyPokemon.maxHp.value }}<br>
+                            {{ mapper.properties.battle.enemyPokemon.speed.value }}<br>
+                            {{ camelCase(mapper.properties.battle.enemyPokemon.move1.value) }}<br>
+                            {{ camelCase(mapper.properties.battle.enemyPokemon.move2.value) }}<br>
+                            {{ camelCase(mapper.properties.battle.enemyPokemon.move3.value) }}<br>
+                            {{ camelCase(mapper.properties.battle.enemyPokemon.move4.value) }}<br>
+                            <br><br>
+                            {{ mapper.properties.player.team[0].hp.value }}/{{ mapper.properties.player.team[0].maxHp.value }}<br>
+                            {{ mapper.properties.player.team[0].statusCondition.value }}<br>
+                            <br>
+                            {{ mapper.properties.player.team[0].dvAttack }}<br>
+                            {{ mapper.properties.player.team[0].dvDefense }}<br>
+                            {{ mapper.properties.player.team[0].dvSpeed }}<br>
+                            {{ mapper.properties.player.team[0].dvSpecial }}<br>
+                            <br>
+                            {{ mapper.properties.player.teamCount }}<br>
+                            {{ mapper.properties.player.itemCount }}<br>
+                            {{ mapper.properties.player.money }}<br>
+                            <br><br>
+                            {{ mapper.properties.overworld.map.bytes }}<br>
+                            {{ mapper.properties.overworld.encounterRate }}<br>
+                            {{ totalTrainers }}<br>
+                            {{ totalEncounters }}<br>
+                            <br>
+                            {{ route1Encounters }}<br>
+                            {{ forestEncounters }}<br>
+                            {{ mtmoonEncounters }}<br>
+                            <br>
+                            {{ centerHeals }}<br>
+                            {{ saves }}<br>
+                            <br>
+                            {{ resets }}<br>
+                            {{ gameTimeHMS(mapper.properties.gameTime.hours, mapper.properties.gameTime.minutes, mapper.properties.gameTime.seconds) }}.{{
+                                leadZero(mapper.properties.gameTime.frames) }}<br>
+                            {{ playerId }}<br>
+                            <br>
+                            {{ Math.round(expPercentFast(mapper.properties.player.team[0])) }}%<br>
+                            {{ Math.round(expPercentMediumFast(mapper.properties.player.team[0])) }}%<br>
+                            {{ Math.round(expPercentMediumSlow(mapper.properties.player.team[0])) }}%<br>
+                            {{ Math.round(expPercentSlow(mapper.properties.player.team[0])) }}%
+                        </div>
+                        <div class="bagLineLabelInfo">
+                            Mapper:   {{ mapper.meta.gameName }}
+                        </div>
+                        <div class="bagItemInfo">
+                            {{ camelCase(itemCheck(mapper.properties.player.items[0].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[1].item.value)) }}<br>
+                            {{ camelCase(itemCheck(mapper.properties.player.items[2].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[3].item.value)) }}<br>
+                            {{ camelCase(itemCheck(mapper.properties.player.items[4].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[5].item.value)) }}<br>
+                            {{ camelCase(itemCheck(mapper.properties.player.items[6].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[7].item.value)) }}<br>
+                            {{ camelCase(itemCheck(mapper.properties.player.items[8].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[9].item.value)) }}<br>
+                            {{ camelCase(itemCheck(mapper.properties.player.items[10].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[11].item.value)) }}<br>
+                            {{ camelCase(itemCheck(mapper.properties.player.items[12].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[13].item.value)) }}<br>
+                            {{ camelCase(itemCheck(mapper.properties.player.items[14].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[15].item.value)) }}<br>
+                            {{ camelCase(itemCheck(mapper.properties.player.items[16].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[17].item.value)) }}<br>
+                            {{ camelCase(itemCheck(mapper.properties.player.items[18].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[19].item.value)) }}<br>
+                        </div>
+                        <div class="bagQuantityInfo">
+                            {{ ifZero(mapper.properties.player.items[0].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[1].quantity.value) }}<br>
+                            {{ ifZero(mapper.properties.player.items[2].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[3].quantity.value) }}<br>
+                            {{ ifZero(mapper.properties.player.items[4].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[5].quantity.value) }}<br>
+                            {{ ifZero(mapper.properties.player.items[6].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[7].quantity.value) }}<br>
+                            {{ ifZero(mapper.properties.player.items[8].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[9].quantity.value) }}<br>
+                            {{ ifZero(mapper.properties.player.items[10].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[11].quantity.value) }}<br>
+                            {{ ifZero(mapper.properties.player.items[12].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[13].quantity.value) }}<br>
+                            {{ ifZero(mapper.properties.player.items[14].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[15].quantity.value) }}<br>
+                            {{ ifZero(mapper.properties.player.items[16].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[17].quantity.value) }}<br>
+                            {{ ifZero(mapper.properties.player.items[18].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[19].quantity.value) }}<br><br>
+                        </div>
+                    </div>                
+                </div>
+
+            <!------ LABELS ------------------------------------------------------------------------------------------------------------------------------------>
+                <div class="timerLabel">time played at 4x game speed</div>
+                <div class="resetsLabel">resets</div>
+          
+            <!--------- BATTLE PUSH ON GRAPHIC ---------------------------------------------------------------------------------------------------------------->
+                <transition name="fadeBattle">
+                    <div key=1 v-if="((g1state() == `Battle` || g1state() == `To Battle` || g1state() == `From Battle`)&& g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;">
+                        <div v-if="showSpecialTrainerGraphics == true">
+                            <img class="floor" v-show="specialTrainerGraphics() != null && g1state() == `Battle`" src="images/trainers/floor.png" />
+                            <div class="specialTrainerGraphics">
+                                <img :src="specialTrainerGraphics()" />
+                            </div>
+                        </div>
+                        <div class="trainerLabel">{{pascalCaseDot(pascalCaseSpace(fixTrainerName(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number)))}}</div>
+                        <img class="enemyPng" :src="`images/elements/${starter}.png`" :style="battlePokemonCrop()"/>
+                        <div class="enemyGraphic">
+                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name != undefined" class="ePkmn1">
+                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name}.png`" />
+                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name}}</div>
+                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[0]}}</div>
+                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[1]}}</div>
+                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[2]}}</div>
+                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[3]}}</div>
+                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.hp}}</div>
+                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.atk}}</div>
+                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.def}}</div>
+                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.spd}}</div>
+                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.spc}}</div>
+                            </div>
+                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.name != undefined" class="ePkmn2">
+                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.name}.png`" />
+                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.name}}</div>
+                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.moves[0]}}</div>
+                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.moves[1]}}</div>
+                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.moves[2]}}</div>
+                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.moves[3]}}</div>
+                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.hp}}</div>
+                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.atk}}</div>
+                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.def}}</div>
+                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.spd}}</div>
+                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.spc}}</div>
+                            </div>
+                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.name != undefined" class="ePkmn3">
+                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.name}.png`" />
+                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.name}}</div>
+                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.moves[0]}}</div>
+                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.moves[1]}}</div>
+                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.moves[2]}}</div>
+                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.moves[3]}}</div>
+                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.hp}}</div>
+                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.atk}}</div>
+                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.def}}</div>
+                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.spd}}</div>
+                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.spc}}</div>
+                            </div>
+                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.name != undefined" class="ePkmn4">
+                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.name}.png`" />
+                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.name}}</div>
+                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.moves[0]}}</div>
+                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.moves[1]}}</div>
+                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.moves[2]}}</div>
+                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.moves[3]}}</div>
+                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.hp}}</div>
+                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.atk}}</div>
+                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.def}}</div>
+                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.spd}}</div>
+                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.spc}}</div>
+                            </div>
+                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.name != undefined" class="ePkmn5">
+                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.name}.png`" />
+                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.name}}</div>
+                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.moves[0]}}</div>
+                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.moves[1]}}</div>
+                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.moves[2]}}</div>
+                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.moves[3]}}</div>
+                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.hp}}</div>
+                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.atk}}</div>
+                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.def}}</div>
+                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.spd}}</div>
+                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.spc}}</div>
+                            </div>
+                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.name != undefined" class="ePkmn6">
+                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.name}.png`" />
+                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.name}}</div>
+                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.moves[0]}}</div>
+                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.moves[1]}}</div>
+                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.moves[2]}}</div>
+                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.moves[3]}}</div>
+                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.hp}}</div>
+                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.atk}}</div>
+                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.def}}</div>
+                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.spd}}</div>
+                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.spc}}</div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div key=2 v-else-if="(g1state() == `Battle` && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 0) && battleGraphic == true" class="movepoolContainer">
+                        <img class="rightBar" :src="`images/elements/overlay/gen1&2/${starter}.png`" />
+                        <div class="movepoolLabel">Movepool</div>
+                    </div>
+                    <div key=2 v-else-if="g1state() != `Battle` && battleGraphic == true" class="movepoolContainer">
+                        <img class="rightBar" :src="`images/elements/overlay/gen1&2/${starter}.png`" />
+                        <div class="movepoolLabel">Movepool</div>
+                    </div>
+                    <div key=2 v-else class="movepoolContainer">
+                        <img class="rightBar" :src="`images/elements/overlay/gen1&2/${starter}.png`" />
+                        <div class="movepoolLabel">Movepool</div>  
+                    </div>
+                </transition>
+
+
+            <!--------- INVENTORY -------------------------------------------------------------------------------------------------------------------->
+                <transition name="fade1">
+                    <div v-if="inventory == true && g1state() == `Overworld` && g1martSelector(mapper.properties.overworld.map.value) == `Mart`">
+                        <table id="items" class="inventory">
+                            <div class="inventory" style="top: 42px; font-family: titan; text-align: center;">Player Inventory</div>
+                            <tr class="inventoryLine"><td class="itemName">Money: ${{mapper.properties.player.money}}</td></tr>
+                            <tr class="inventoryLine"><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[0]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[0]?.item?.value, mapper.properties.player?.items[0]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[1]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[1]?.item?.value, mapper.properties.player?.items[1]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[2]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[2]?.item?.value, mapper.properties.player?.items[2]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[3]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[3]?.item?.value, mapper.properties.player?.items[3]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[4]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[4]?.item?.value, mapper.properties.player?.items[4]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[5]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[5]?.item?.value, mapper.properties.player?.items[5]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[6]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[6]?.item?.value, mapper.properties.player?.items[6]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[7]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[7]?.item?.value, mapper.properties.player?.items[7]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[8]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[8]?.item?.value, mapper.properties.player?.items[8]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[9]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[9]?.item?.value, mapper.properties.player?.items[9]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[10]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[10]?.item?.value, mapper.properties.player?.items[10]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[11]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[11]?.item?.value, mapper.properties.player?.items[11]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[12]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[12]?.item?.value, mapper.properties.player?.items[12]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[13]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[13]?.item?.value, mapper.properties.player?.items[13]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[14]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[14]?.item?.value, mapper.properties.player?.items[14]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[15]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[15]?.item?.value, mapper.properties.player?.items[15]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[16]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[16]?.item?.value, mapper.properties.player?.items[16]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[17]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[17]?.item?.value, mapper.properties.player?.items[17]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[18]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[18]?.item?.value, mapper.properties.player?.items[18]?.quantity?.value))}}</td></tr>
+                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[19]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[19]?.item?.value, mapper.properties.player?.items[19]?.quantity?.value))}}</td></tr>
+                        </table>
+                    </div>
+                </transition>
+            <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
+                <div class="expMeterOuter"><div class="expMeterInner" :style="{ width: expPercent(mapper.properties.player.team[0]) + '%' }"></div></div>
+            </div>
+            <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
+                <div>
+                    <audio src="audio/"></audio>
+                </div>
+        </div>
+    </div>
+
+<!--------------------------------------------------------------------- JAVASCRIPT --------------------------------------------------------------------->
+    <!-- PROGRAM IMPORTS -->
+    <script src="https://unpkg.com/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script> 
+    <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script>
+    <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
+    
+    <!-- DATA IMPORTS -->
+    <script src="data/gen1data.js"></script>
+    <script src="data/gen1dataGrowthMovepool.js"></script>
+    <script src="data/gen1moves.js"></script>
+    <script src="data/gen1trainers.js"></script>
+    <script src="data/type-effectiveness.js"></script>
+    <script src="data/stage-modifiers.js"></script>
+
+    <!-- VUE APP IMPORT -->
+    <script type="text/javascript" src="scripts/vue.js"></script>
+</body>

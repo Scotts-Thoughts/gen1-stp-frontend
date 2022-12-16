@@ -1,0 +1,88 @@
+/*  -------------------------------------------------  */
+/*  --------------- ANIMATION TIMINGS ---------------  */
+/*  -------------------------------------------------  */
+
+/* all these timings are derived from analyzed footage */
+
+
+
+/* There are roughly 2.65s from the black screen to when the player gains control of the Pokemon (637 frames @ 240fps) */
+/* DURATION: 2.65s */
+@keyframes battleIntroAnimationFull {
+    /* Black (from the first black frane to when the screen turns white) */
+    0% {
+        opacity: 0;
+    }
+    /* Grayscale Trainer Scroll (from the white frame until the first colour frame) */
+    13% {
+        opacity: 0;
+    }
+    /* Colour ("TRAINER wants to fight!" begins scrolling in the text bar) */
+    25% {
+        opacity: 0;
+    }
+    /* Trainers Send Their Pokemon In (starts with "TRAINER wants to fight!") */
+    36% {
+        opacity: 0;
+    }
+    /* Opponent's Pokemon Fully Rendered (health bar appears) */
+    65% {
+        opacity: 0;
+        }
+    /* Player Pokemon Text (player off screen, text scroll) */
+    73% {
+        opacity: 0;
+    }
+    /* Player Pokemon Text (player off screen, text scroll) */
+    86% {
+        opacity: 0;
+    }
+    /* Player Gains Control (fight, item, pkmn, run) */
+    100% {
+        opacity: 0;
+    }
+}
+
+/* This is to be used for animations that do not require extreme synconization */
+/* DURATION: 2.65s */
+@keyframes battleIntroAnimationSimplified {
+    /* Black (from the first black frane to when the screen turns white) */
+    0% {
+        opacity: 0;
+    }
+    /* "TRAINER wants to fight!" */
+    36% {
+        opacity: 0;
+    }
+    /* Player Gains Control (fight, item, pkmn, run) */
+    100% {
+        opacity: 0;
+    }
+}
+
+/* This animation is to be used when cuts are needed at "TRAINER wants to fight!" (ie. Lorelei after the League Intro Animation) */
+/* DURATION: 0.95s */
+@keyframes battleIntroAnimationShort {
+    /* Black (from the first black frane to when the screen turns white) */
+    0% {
+        opacity: 0;
+    }
+    /* Grayscale Trainer Scroll (from the white frame until the first colour frame) */
+    33% {
+        opacity: 0;
+    }
+    /* Colour */
+    67% {
+        opacity: 0;
+    }
+    /* "TRAINER wants to fight!" */
+    100% {
+        opacity: 0;
+    }
+}
+
+/* 1-3 seconds from Low Health Alarm to Overworld */
+
+
+
+/* .18s from fade to white to overworld */

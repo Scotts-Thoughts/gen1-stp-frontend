@@ -1,0 +1,1460 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    height: 1920px; /* Fixed canvas size */
+    width: 1080px;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Hide scrollbars */
+    background-color: #ffffff;
+}
+
+.mainContainer {
+    width: 1920px;
+    height: 1080px;
+
+    font-family: titan;
+    font-size: 18px;
+
+    display: grid;
+    grid-template-columns: 8px 384px 8px 1120px 8px 384px 8px;
+    grid-template-rows: repeat(60, 1fr);
+}
+
+.gamestateContainter {
+    display: block;
+    position: absolute;
+    font-family: play;
+    font-size: 24px;
+    top: 45px;
+    left: 425px;
+}
+
+.enemyPng {
+    display: block;
+    position: absolute;
+    top: 0px;
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    object-position: top right;
+}
+.ePkmn1 {
+    position: relative;
+    top: 31px;
+    width: 390px;
+}
+.ePkmn2 {
+    position: relative;
+    top: 192px;
+    width: 390px;
+}
+.ePkmn3 {
+    position: relative;
+    top: 353px;
+    width: 390px;
+}
+.ePkmn4 {
+    position: relative;
+    top: 514px;
+    width: 390px;
+}
+.ePkmn5 {
+    position: relative;
+    top: 675px;
+    width: 390px;
+}
+.ePkmn6 {
+    position: relative;
+    top: 836px;
+    width: 390px;
+}
+.ePkmnSpecies {
+    position: absolute;
+    /* border: 1px solid rgb(0, 255, 149); */
+    font-size: 18px;
+    font-family: titan;
+    width: 138px;
+    opacity: .7;
+    text-align: center;
+    top: 7px;
+    left: 9px;
+}
+.ePkmnSprite {
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    max-width: 115px;
+    max-height: 115px;
+    left: 18px;
+    top: 30px;
+    filter: drop-shadow(2px 2px 2px #000)
+}
+.ePkmnMove1 {
+    position: absolute;
+    /* border: 1px solid rgb(47, 0, 255); */
+    width: 190px;
+    font-size: 22px;
+    line-height: 32px;
+    text-align: center;
+    top: 12px;
+    left: 190px;
+    /* font-size: 22px; */
+}
+.ePkmnMove2 {
+    position: absolute;
+    /* border: 1px solid rgb(47, 0, 255); */
+    width: 190px;
+    font-size: 22px;
+    line-height: 32px;
+    text-align: center;
+    top: 48px;
+    left: 190px;
+}
+.ePkmnMove3 {
+    position: absolute;
+    /* border: 1px solid rgb(47, 0, 255); */
+    width: 190px;
+    font-size: 22px;
+    line-height: 32px;
+    text-align: center;
+    top: 84px;
+    left: 190px;
+}
+.ePkmnMove4 {
+    position: absolute;
+    /* border: 1px solid rgb(47, 0, 255); */
+    width: 190px;
+    font-size: 22px;
+    line-height: 32px;
+    text-align: center;
+    top: 119px;
+    left: 190px;
+}
+.ePkmnHp {
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 50px;
+    text-align: center;
+    top: 11px;
+    left: 146.5px;
+}
+.ePkmnAtk {
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 50px;
+    text-align: center;
+    top: 39px;
+    left: 146.5px;
+}
+.ePkmnDef {
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    text-align: center;
+    width: 50px;
+    top: 67px;
+    left: 146.5px;
+}
+.ePkmnSpd {
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    text-align: center;
+    width: 50px;
+    top: 124px;
+    left: 146.5px;
+}
+.ePkmnSpc {
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    text-align: center;
+    width: 50px;
+    left: 146.5px;
+    top: 95px;
+}
+.enemyGraphic {
+    display: block;
+    position: absolute;
+    font-family: play;
+    font-size: 24px;
+    top: 50px;
+    left: 1530px;
+    /* left: 930px; */
+}
+.timerContainer {
+    /* border: 3px solid #e97100; */
+    grid-row-start: 3;
+    grid-row-end: 9;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    position: relative;
+}
+.movesetContainer {
+    border: 3px solid #00e90000;
+    grid-row-start: 19;
+    grid-row-end: 9;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    position: relative;
+}
+.resetsContainer {
+    border: 3px solid #00e9dd00;
+    grid-row-start: 19;
+    grid-row-end: 25;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    position: relative;
+}
+.statsContainer {
+    border: 3px solid #0000ff00;
+    grid-row-start: 45;
+    grid-row-end: 59;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    position: relative;
+}
+.typeContainer {
+    border: 3px solid #b41ac200;
+    grid-row-start: 41;
+    grid-row-end: 44;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    position: relative;
+}
+.movepoolContainer {
+    border: 3px solid #0000ff00;
+    grid-row-start: 3;
+    grid-row-end: 59;
+    grid-column-start: 6;
+    grid-column-end: 7;
+    position: relative;
+}
+.badgesBadge {
+    opacity: 1;  
+}
+
+/*  ------------------------------------  */
+/*  ------------- FONTS ----------------  */
+/*  ------------------------------------  */
+@font-face {
+    src: url(fonts/Play-Bold.ttf);
+    font-family: osb;
+}
+@font-face {
+    src: url(fonts/TitanOne-Regular.ttf);
+    font-family: titan;
+}
+@font-face {
+    src: url(fonts/Play-Bold.ttf);
+    font-family: play;
+}
+
+/*  ------------------------------------  */
+/*  --------------- CSS ----------------  */
+/*  ------------------------------------  */
+.timerLabel {
+    position: absolute;
+    top: 41px;
+    left: 32px;
+    opacity: .72;
+}
+.resetsLabel {
+    position: absolute;
+    top: 329px;
+    left: 30px;
+    opacity: .72;
+}
+.expTextGen1 {
+    position: absolute;
+    top: 34px;
+    left: 16px;
+    z-index: 1005;
+    opacity: .72;
+
+}
+.expLabelGen1 {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+}
+.expLabelGen2 {
+    position: absolute;
+    top: 34px;
+    left: 17px;
+    z-index: 1000;
+}
+.movepoolLabel {
+    position: absolute;
+    font-family: titan;
+    font-size: 30px;
+    top: 0px;
+    left: -2px;
+    text-align: center;
+    width: 384px;
+    z-index: 10001;
+}
+.trainerLabel {
+    position: absolute;
+    font-family: titan;
+    /* border: 1px solid rgb(255, 0, 0); */
+    font-size: 30px;
+    top: 40px;
+    left: 1520px;
+    text-align: center;
+    width: 400px;
+    /* text-transform: capitalize; */
+    z-index: 10001;
+}
+.floor {
+    position: fixed;
+    display: block; 
+    border: 1px solid rgb(255, 0, 0);
+    transform: scale(1);
+    top: 850px;
+    right: -15px;
+    z-index: -50;
+}
+.specialTrainerGraphics {
+    position: fixed;
+    display: block;
+    border: 1px solid rgb(255, 0, 0);
+    object-fit: contain;
+    max-width: 400px;
+    max-height: 400px;
+    z-index: 1000;
+    right: 0px;
+    bottom: 40px;
+    filter: drop-shadow(4px 4px 0px #000);
+}
+/* CSS BOTTOM LAYERS - OVERLAY ELEMENTS (-100 to -50) */
+.overlay {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: -100;
+}
+.defaultTexture {
+	display: block;
+    width:1920px;
+    position: fixed;
+    /* filter: blur(4px); */
+    top: 0px;
+    left: 0px;
+    z-index: -95;
+}
+.frame {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: -90;
+}
+.pokeball {
+	display: block;
+    position: fixed;
+    top: 630px;
+    left: -32px;
+    z-index: -90;
+}
+.gameArea {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: -80;
+}
+.gameArea {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+.demoStats {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: -76;
+}
+.demoBorderStats {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -88;
+    /* filter: drop-shadow(2px 2px 2px #000000) */
+}
+.demoBorderStats {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    /* filter: drop-shadow(2px 2px 2px #000000) */
+}
+.demoBorder {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: -90;
+    filter: drop-shadow(2px 2px 2px #000000)
+}
+.pokemon {
+	display: block;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: -90;
+}
+/* TYPE ICONS */
+.typeMono {
+    position: absolute;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    align-content: center;
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 400px;
+    filter: drop-shadow(8px 8px 15px #000000);
+    left: -10px;
+    top: -82px;
+    z-index: -70;
+    transform: scale(0.4)
+}
+.dualType {
+    position: absolute;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    align-content: center;
+    filter: drop-shadow(8px 8px 15px #000000);
+    width: 400px;
+    height: 200px;
+    top: -66px;
+    left: -12px;
+    transform: scale(.1)
+}
+.type1 {
+    position: absolute;
+    filter: drop-shadow(8px 8px 15px #000000);
+    z-index: -70;
+}
+.type2 {
+    position: absolute;
+    filter: drop-shadow(8px 8px 15px #000000);
+    z-index: -70;
+}
+/* STATS (INDEX 0 to 10) */
+.statsGraphic {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+.statsheader {
+    opacity: 1;
+    font-size: 40px;
+    font-family: play;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    width: 384px;
+    z-index: 1;
+    filter: drop-shadow(1px 1px 0px rgb(70, 70, 70));
+}
+.expMeterOuter {
+    position: absolute;
+    border-radius: 18px;
+    background: linear-gradient(rgb(239, 239, 239), rgb(157, 157, 157));
+    width: 310px;
+    height: 9px;
+    top: 841px;
+    left: 69px;
+    z-index: 2;
+}
+.expMeterInner {
+    position: relative;    
+    border-radius: 18px;
+    background: linear-gradient(hsl(191, 100%, 21%), rgba(0, 167, 233, 0.521)5%);
+    width: 355px;
+    height: 11px;
+    top: -1px;
+    border: 1px solid #00000098
+    /* background:rgb(0, 217, 255); */
+}
+.critrate {
+    font-size: 24px;
+    text-align: center;
+    position: absolute;
+    right: 10px;
+    top: 74px;
+    width: 174px;
+    opacity: 1;
+    /* border: 1px solid #00e900; */
+    line-height: 28px;
+    letter-spacing: -1.5px;
+    text-transform: lowercase;
+    font-family: osb;
+    font-weight: 700;
+    display:block;
+    z-index: 4;
+}
+.statsLabelsColumn1 {
+    font-size: 30px;
+    position: relative;
+    line-height: 62px;
+    top: 59px;
+    left: 14px;
+    z-index: 3;
+    opacity: .72;
+    text-align: left;
+    font-family: osb;
+    font-weight: 500
+}
+.statsLabelsColumn2 {
+    font-size: 30px;
+    position: absolute;
+    line-height: 62px;
+    top: 59px;
+    left: 198px;
+    z-index: 3;
+    opacity: .72;
+    text-align: left;
+    font-family: osb;
+    font-weight: 500
+}
+.statsColumn1 {
+    font-size: 54px;
+    position: absolute;
+    line-height: 62px;
+    top: 58px;
+    right: 198px;
+    z-index: 4;
+    text-align: right;
+    font-family: osb;
+    font-weight: 500
+}
+.statsColumn2 {
+    font-size: 54px;
+    position: absolute;
+    line-height: 62px;
+    top: 58px;
+    right: 15px;
+    z-index: 4;
+    text-align: right;
+    font-family: osb;
+    font-weight: 500
+}
+
+.vitaminHPLabel {
+    font-size: 17px;
+    position: absolute;
+    line-height: 23px;
+    top: 62px;
+    right: 305px;
+    z-index: 4;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.vitaminAtkLabel {
+    font-size: 17px;
+    position: absolute;
+    line-height: 23px;
+    top: 126px;
+    right: 303px;
+    z-index: 4;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.vitaminDefLabel {
+    font-size: 17px;
+    position: absolute;
+    line-height: 23px;
+    top: 186px;
+    right: 318px;
+    z-index: 4;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.vitaminSpcLabel {
+    font-size: 17px;
+    position: absolute;
+    line-height: 23px;
+    top: 126px;
+    right: 117px;
+    z-index: 4;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.vitaminSpdLabel {
+    font-size: 17px;
+    position: absolute;
+    line-height: 23px;
+    top: 187px;
+    right: 121px;
+    z-index: 4;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.vitaminHP {
+    font-size: 36px;
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 60px;
+    line-height: 23px;
+    top: 25px;
+    right: 0px;
+    z-index: 4;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.vitaminAtk {
+    font-size: 36px;
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 60px;
+    line-height: 23px;
+    top: 24px;
+    right: 2px;
+    z-index: 4;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.vitaminDef {
+    font-size: 36px;
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 60px;
+    line-height: 23px;
+    top: 24px;
+    right: -12px;
+    z-index: 4;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.vitaminSpc {
+    font-size: 36px;
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 60px;
+    line-height: 23px;
+    top: 24px;
+    right: 4px;
+    z-index: 4;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.vitaminSpd {
+    font-size: 36px;
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 60px;
+    line-height: 23px;
+    top: 24px;
+    right: 0px;
+    z-index: 4;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+/* BADGES (AS A PART OF THE STATS BAR*/
+.badgeBoostAtk {
+    display: block;
+    opacity: .3;
+    max-width:100px;
+    max-height:100px;
+    position: absolute;
+    top: 119px;
+    left: 11px;
+    z-index: 0;
+    transform: scale(.85);
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+.badgeBoostDef {
+    display: block;
+    opacity: .3;
+    max-width:100px;
+    max-height:100px;
+    position: absolute;
+    top: 181px;
+    left: 11px;
+    z-index: 0;
+    transform: scale(.85);
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+.badgeBoostSpc{
+    display: block;
+    opacity: .3;
+    max-width:100px;
+    max-height:100px;
+    position: absolute;
+    top: 119px;
+    left: 194px;
+    z-index: 0;
+    transform: scale(.85);
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+.badgeBoostSpd {
+    display: block;
+    opacity: .3;
+    max-width:100px;
+    max-height:100px;
+    position: absolute;
+    top: 181px;
+    left: 194px;
+    z-index: 0;
+    transform: scale(.85);
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+/* PACKAGE CONTENTS */
+.overlayStarter {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -50;
+}
+.titles {
+    font-size: 35px;
+    position: absolute;
+    top: 1080px;
+    line-height: 60px;
+    font-family: oseb;
+    font-weight: 700;
+}
+.resets {
+    display: block;
+    max-width: 250;
+    position: fixed;
+    max-height: 250;
+    font-size: 78px;
+    z-index: 5;
+    top: 379px;
+    left: 31px;
+    line-height: 60px;
+    text-align: center;
+    font-family: oseb;
+    font-weight: 700;
+}
+.labelMoves {
+    position: absolute;
+    font-size: 19px;
+    font-family: titan;
+    /* filter: drop-shadow(1px 1px 0px #000000); */
+    left: 21px;
+    top: 1px;
+    z-index: 5;
+    opacity: .72;
+}
+.labelPwr {
+    display: block;
+    position: absolute;
+    font-size: 19px;
+    font-family: titan;
+    /* filter: drop-shadow(1px 1px 0px #000000); */
+    left: 262px;
+    top: 1px;
+    z-index: 5;
+    opacity: .72;
+    text-align: right;
+}
+.labelPP {
+    position: absolute;
+    font-size: 19px;
+    font-family: titan;
+    /* filter: drop-shadow(1px 1px 0px #000000); */
+    left: 336px;
+    top: 1px;
+    z-index: 5;
+    opacity: .72;
+}
+.move1icon {
+    display: block;
+    position: absolute;
+    filter: drop-shadow(0px 0px 5px #000000);
+    /* filter: drop-shadow(1px 1px 4px #000000); */
+    left: -38px;
+    top: -23px;
+    z-index: 5;
+    transform: scale(.24)
+}
+.move2icon {
+    display: block;
+    position: absolute;
+    filter: drop-shadow(0px 0px 5px #000000);
+    left: -38px;
+    top: 12px;
+    z-index: 5;
+    transform: scale(.24)
+}
+.move3icon {
+    display: block;
+    position: absolute;
+    filter: drop-shadow(0px 0px 5px #000000);
+    left: -38px;
+    top: 47px;
+    z-index: 5;
+    transform: scale(.24)
+}
+.move4icon {
+    display: block;
+    position: absolute;
+    filter: drop-shadow(0px 0px 5px #000000);
+    left: -38px;
+    top: 82px;
+    z-index: 5;
+    transform: scale(.24)
+}
+.encounterInfo {
+    font-size: 20px;
+    position: absolute;
+    top: 42px;
+    left: 16px;
+    line-height: 22px;
+    font-family: play;
+    font-weight: 700;
+    z-index: 12000;
+}
+.encounterData {
+    font-size: 20px;
+    position: absolute;
+    top: 42px;
+    left: 96px;
+    line-height: 22px;
+    font-family: play;
+    font-weight: 700;
+    z-index: 12000;
+}
+/* MOVEPOOL */
+.movepoolWay {
+    font-size: 15px;
+    position: absolute;
+    top: 740px;
+    left: 1934px;
+    line-height: 16px;
+    font-family: play;
+    font-weight: 700;
+}
+.movepoolMove {
+    font-size: 15px;
+    position: absolute;
+    top: 740px;
+    left: 2004px;
+    line-height: 16px;
+    font-family: play;
+    font-weight: 700;
+}
+.movepoolType {
+    font-size: 15px;
+    position: absolute;
+    top: 740px;
+    left: 2114px;
+    line-height: 16px;
+    font-family: play;
+    font-weight: 700;
+}
+.movepoolPower {
+    font-size: 15px;
+    position: absolute;
+    top: 740px;
+    left: 2114px;
+    line-height: 16px;
+    font-family: play;
+    font-weight: 700;
+}
+.movepoolAccuracy {
+    font-size: 15px;
+    position: absolute;
+    top: 740px;
+    left: 2114px;
+    line-height: 16px;
+    font-family: play;
+    font-weight: 700;
+}
+.movepoolPP {
+    font-size: 15px;
+    position: absolute;
+    top: 740px;
+    left: 2114px;
+    line-height: 16px;
+    font-family: play;
+    font-weight: 700;
+}
+/* BAG INFO BLOCK (BEHIND THE SCENES) */
+.bagLineLabelInfo {
+    font-size: 18px;
+    position: absolute;
+    top: 924px;
+    left: 200px;
+    line-height: 22px;
+    font-family: play;
+    font-weight: 700;
+    z-index: 12000;
+}
+.bagItemInfo {
+    font-size: 18px;
+    position: absolute;
+    top: 304px;
+    left: 212px;
+    line-height: 22px;
+    width: 300px;
+    font-family: play;
+    text-transform: capitalize;
+    font-weight: 700;
+    z-index: 12000;
+}
+.bagQuantityInfo {
+    font-size: 18px;
+    position: absolute;
+    top: 304px;
+    left: 332px;
+    text-align: right;
+    line-height: 22px;
+    font-family: play;
+    font-weight: 700;
+    z-index: 12000;
+}
+/* BAG OVERLAY */
+.movepoolTitle {
+    display: block;
+    font-size: 32px;
+    max-width:1920px;
+    max-height:1080px;
+    text-align: right; /* need a fix */
+    position: absolute;
+    top: 36px;
+    left: 1628px;
+    font-family: titan;
+    z-index: 600;
+}
+.bagLineLabel {
+    font-size: 38px;
+    position: absolute;
+    top: 112px;
+    left: 1556px;
+    line-height: 42px;
+    font-family: osb;
+    font-weight: 700;
+    z-index: 500;
+}
+.bagItem {
+    font-size: 38px;
+    position: absolute;
+    top: 112px;
+    left: 1556px;
+    line-height: 42px;
+    font-family: osb;
+    font-weight: 700;
+    z-index: 500;
+}
+.bagQuantity {
+    font-size: 38px;
+    position: absolute;
+    top: 112px;
+    left: 1856px;
+    line-height: 42px;
+    font-family: osb;
+    font-weight: 700;
+    z-index: 500;
+}
+.parent {
+    text-align: right;
+    position: relative;
+}
+.gametimeClock {
+    font-size: 65px;
+    display:block;
+    position: absolute;
+    top: 68px;
+    left: 77px;
+    line-height: 60px;
+    font-family: oseb;
+    font-weight: 700;
+}
+.gametimeFrames {
+    font-size: 35px;
+    position: absolute;
+    top: 78px;
+    left: 304px;
+    line-height: 60px;
+    font-family: oseb;
+    font-weight: 700;
+}
+.inventory {
+    font-size: 30px;
+    position: absolute;
+    text-transform: capitalize;
+    top: 84px;
+    left: 904px;
+    line-height: 28px;
+    font-family: play;
+    font-weight: 700;
+    z-index: 60000;
+}
+.itemQnty {
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 52px;
+    text-align: right;
+    background: rgb(175, 175, 175);
+    border-radius: 10px;
+    padding: 7px;
+    filter: drop-shadow(1px 1px 2px #000)
+}
+.itemName {
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 282px;
+    background: rgb(175, 175, 175);
+    border-radius: 10px;
+    padding: 7px;
+    filter: drop-shadow(1px 1px 2px #000)
+}
+/* UI ELEMENTS */
+.timerUI {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: fixed;
+    transform: scale(.2);
+    opacity: .9;
+    top: -160px;
+    left: -760px;
+    z-index: 3;
+}
+.movesetUI {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: fixed;
+    transform: scale(.2);
+    opacity: .9;
+    top: -230px;
+    left: -760px;
+    z-index: 3;
+}
+.resetsUI {
+	display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: fixed;
+    opacity: .9;
+    top: 333px;
+    left: 7px;
+    z-index: 3;
+}
+.barRight {
+	display: flex;
+    position: fixed;
+    opacity: .9;
+    top: 35px;
+    right: 14px;
+    z-index: 3;
+}
+.barLeft {
+	display: flex;
+    position: fixed;
+    left: 14px;
+    top: 35px;
+    z-index: 3;
+}
+.battleOverlay {
+	display: block;
+    position: fixed;
+    opacity: .9;
+    top: 0px;
+    right: 0px;
+    z-index: 100;
+}
+.righttitles {
+    font-size: 35px;
+    position: relative;
+    top: 1080px;
+    right: 0px;
+    text-align: right;
+    line-height: 60px;
+    font-family: oseb;
+    font-weight: 700;
+}
+.badges {
+    display: block;
+    max-width:1920px;
+    max-height:1080px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.status {
+    display: block;
+    font-size: 100px;
+    position: fixed;
+    z-index: 9000;
+    top: 846px;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.labelHP {
+    font-size: 32px;
+    opacity: .6;
+    position: relative;
+    line-height: 37.3px;
+    top: 895px;
+    right: -35px;
+    text-align: left;
+    font-family: osb;
+    font-weight: 500
+}
+.labelAtk {
+    font-size: 32px;
+    position: relative;
+    line-height: 37.3px;
+    top: 905px;
+    right: -35px;
+    text-align: left;
+    font-family: osb;
+    font-weight: 500
+}
+.labelDef {
+    font-size: 32px;
+    position: relative;
+    line-height: 37.3px;
+    top: 915px;
+    right: -35px;
+    text-align: left;
+    font-family: osb;
+    font-weight: 500
+}
+.labelSpc {
+    font-size: 32px;
+    position: relative;
+    line-height: 37.3px;
+    top: 840px;
+    left: 210px;
+    text-align: left;
+    font-family: osb;
+    font-weight: 500
+}
+.labelSpd {
+    font-size: 32px;
+    position: relative;
+    line-height: 37.3px;
+    top: 846px;
+    left: 210px;
+    text-align: left;
+    font-family: osb;
+    font-weight: 500
+}
+.atkMod {
+    font-size: 46px;
+    color: rgb(0, 0, 0);
+    position: absolute;
+    line-height: 37.3px;
+    border: 1px solid #00e90000;
+    width: 52px;
+    top: 132px;
+    left: 14px;
+    z-index: 200;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.defMod {
+    font-size: 46px;
+    color: rgb(0, 0, 0);
+    position: absolute;
+    line-height: 37.3px;
+    border: 1px solid #00e90000;
+    width: 52px;
+    top: 194px;
+    left: 14px;
+    z-index: 200;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.spcMod {
+    font-size: 46px;
+    color: rgb(0, 0, 0);
+    position: absolute;
+    line-height: 37.3px;
+    border: 1px solid #00e90000;
+    width: 52px;
+    top: 132px;
+    right: 129px;
+    z-index: 200;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.spdMod {
+    font-size: 46px;
+    color: rgb(0, 0, 0);
+    position: absolute;
+    line-height: 37.3px;
+    border: 1px solid #00e90000;
+    width: 52px;
+    top: 194px;
+    right: 129px;
+    z-index: 200;
+    text-align: center;
+    font-family: osb;
+    font-weight: 500
+}
+.playerMoves {
+    font-size: 26px;
+    position: fixed;
+    left: 35px;
+    top: 188px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 5;
+    line-height: 34px;
+    text-transform: capitalize;
+    text-align: left;
+    font-family: osb;
+    font-weight: 700
+}
+.move1 {
+    font-size: 30px;
+    position: absolute;
+    left: 46px;
+    top: 24px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 5;
+    line-height: 34px;
+    text-transform: capitalize;
+    text-align: left;
+    font-family: osb;
+    font-weight: 700
+}
+.move2 {
+    font-size: 30px;
+    position: absolute;
+    left: 46px;
+    top: 59px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 5;
+    line-height: 34px;
+    text-transform: capitalize;
+    text-align: left;
+    font-family: osb;
+    font-weight: 700
+}
+.move3 {
+    font-size: 30px;
+    position: absolute;
+    left: 46px;
+    top: 95px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 5;
+    line-height: 34px;
+    text-transform: capitalize;
+    text-align: left;
+    font-family: osb;
+    font-weight: 700
+}
+.move4 {
+    font-size: 30px;
+    position: absolute;
+    left: 46px;
+    top: 131px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 5;
+    line-height: 34px;
+    text-transform: capitalize;
+    text-align: left;
+    font-family: osb;
+    font-weight: 700
+}
+.move1pp {
+    display: block;
+    font-size: 30px;
+    position: absolute;
+    left: 312px;
+    width: 52px;
+    top: 24px;
+    z-index: 5;
+    text-align: right;
+    font-family: osb;
+    font-weight: 700
+}
+.move2pp {
+    display: block;
+    font-size: 30px;
+    position: absolute;
+    left: 312px;
+    width: 52px;
+    top: 59px;
+    z-index: 5;
+    text-align: right;
+    font-family: osb;
+    font-weight: 700
+}
+.move3pp {
+    display: block;
+    font-size: 30px;
+    position: absolute;
+    top: 95px;
+    left: 312px;
+    width: 52px;
+    z-index: 10;
+    text-align: right;
+    font-family: osb;
+    font-weight: 700
+}
+.move4pp {
+    display: block;
+    font-size: 30px;
+    position: absolute;
+    top: 131px;
+    left: 312px;
+    width: 52px;
+    z-index: 10;
+    text-align: right;
+    font-family: osb;
+    font-weight: 700
+}
+.move1power {
+    display: block;
+    font-size: 30px;
+    position: absolute;
+    left: 211px;
+    width: 100px;
+    top: 24px;
+    z-index: 5;
+    text-align: right;
+    font-family: osb;
+    font-weight: 700
+}
+.move2power {
+    display: block;
+    font-size: 30px;
+    position: absolute;
+    left: 211px;
+    width: 100px;
+    top: 59px;
+    z-index: 5;
+    text-align: right;
+    font-family: osb;
+    font-weight: 700
+}
+.move3power {
+    display: block;
+    font-size: 30px;
+    position: absolute;
+    left: 211px;
+    width: 100px;
+    top: 95px;
+    z-index: 5;
+    text-align: right;
+    font-family: osb;
+    font-weight: 700
+}
+.move4power {
+    display: block;
+    font-size: 30px;
+    position: absolute;
+    left: 211px;
+    width: 100px;
+    top: 131px;
+    z-index: 5;
+    text-align: right;
+    font-family: osb;
+    font-weight: 700
+}
+.rightBar {
+    display: block;
+    position: relative;
+    right: 1531px;
+    top: -39px;
+    z-index: 10000;
+    opacity: .95;
+    filter: drop-shadow(2px 2px 2px #000000)
+}
+/* ANIMATIONS */
+.fade1-enter-from {
+	opacity: 0;
+}
+.fade1-enter-to {
+	opacity: 1;
+}
+.fade1-enter-active {
+	transition: opacity .5s ease;
+}
+.fade1-leave-from {
+	opacity: 1;
+}
+.fade1-leave-to {
+	opacity: 0;
+}
+.fade1-leave-active {
+	transition: opacity .2s ease;
+}
+
+
+.fadeBattle-enter-from {
+	opacity: 0;
+}
+.fadeBattle-enter-to {
+	opacity: 1;
+}
+.fadeBattle-enter-active {
+	transition: opacity .15s ease;
+}
+.fadeBattle-leave-from {
+	opacity: 1;
+}
+.fadeBattle-leave-to {
+	opacity: 0;
+}
+.fadeBattle-leave-active {
+	transition: opacity .15s ease;
+}
