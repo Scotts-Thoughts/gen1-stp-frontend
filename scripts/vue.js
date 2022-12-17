@@ -699,7 +699,17 @@ const app = Vue.createApp({
 
         hpDvCalculation() {
             return (((this.mapper.properties.player.team[0].dvAttack.value % 2) * 8) + ((this.mapper.properties.player.team[0].dvDefense.value % 2) * 4) + ((this.mapper.properties.player.team[0].dvSpeed.value % 2) * 2) + ((this.mapper.properties.player.team[0].dvSpecial.value % 2) * 1))
-        }
+        },
+        soloPkmn() {
+            if (this.mapper.properties.player.team[0].species.value != null) {
+                // string = this.mapper.properties.player.team[0].species.value
+                // return string.toLowerCase()
+                return this.mapper.properties.player.team[0].species.value.toLowerCase()
+            }
+            else {
+                return this.starter.toLowerCase()
+            }
+        },
     },
 
 //--------- PROGRAM MOUNTED ---------------------------------------------------------------------------------------------------------------//
