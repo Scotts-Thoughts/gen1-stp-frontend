@@ -6,8 +6,8 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starter:         96, //select starter
-            starterName:     "Drowzee", //string name
+            starter:         76, //select starter
+            starterName:     "Golem", //string name
             secondPlaythrough: false, //used to mitigate luck on second playthroughs
             pick:            true, //turns on the ability to pick your starter
             package:         false, //uses images from package folder, rather than using dynamic values
@@ -699,17 +699,7 @@ const app = Vue.createApp({
 
         hpDvCalculation() {
             return (((this.mapper.properties.player.team[0].dvAttack.value % 2) * 8) + ((this.mapper.properties.player.team[0].dvDefense.value % 2) * 4) + ((this.mapper.properties.player.team[0].dvSpeed.value % 2) * 2) + ((this.mapper.properties.player.team[0].dvSpecial.value % 2) * 1))
-        },
-        soloPkmn() {
-            if (this.mapper.properties.player.team[0].species.value != null) {
-                // string = this.mapper.properties.player.team[0].species.value
-                // return string.toLowerCase()
-                return this.mapper.properties.player.team[0].species.value.toLowerCase()
-            }
-            else {
-                return this.starter.toLowerCase()
-            }
-        },
+        }
     },
 
 //--------- PROGRAM MOUNTED ---------------------------------------------------------------------------------------------------------------//
