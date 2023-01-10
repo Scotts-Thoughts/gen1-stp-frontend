@@ -88,6 +88,14 @@ const app = Vue.createApp({
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
         //REMOVES CAPITALIZATION (TACKLE -> Tackle) OR (Tail Whip -> Tail whip)
+        pkmnDataPath() {
+            if (this.g1state() == "Overworld" || this.g1state() == "To Battle") {
+                return "mapper.properties.player.team[0]"
+            }
+            else if (this.g1state() == "Battle") {
+                return "mapper.properties.battle.yourPokemon"
+            }
+        },
         camelCase: function (str) {
             if (!str || !str.toString()) { return '' }
             return str.toString().replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
@@ -920,7 +928,6 @@ const app = Vue.createApp({
                     await this.mapper.properties.events.trashCanPuzzle.setBytes([solved], false), //don't freeze this property
                 ])
         }
-
         //SETTING OVERWORLD ENCOUNTERS & RNG FOR SECOND PLAYTHROUGH OPTIMIZATION ----------------------------------------------------------------//
         const secondPlaythrough = async () => {
             const noEncounters = 0x00
