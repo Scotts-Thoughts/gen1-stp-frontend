@@ -656,19 +656,19 @@ const app = Vue.createApp({
                     }
                     //NO ENEMY DATA (HAVEN'T BATTLED SINCE RELOADING ROM OR SAVE)
                     else if (this.mapper.properties.battle.enemyPokemon.type1 == null) {
-                        return Math.round(this.movePower(x) * stab)
+                        return Math.floor(this.movePower(x) * stab)
                     }
                     //ATTACKING A MONO-TYPE POKEMON
                     else if (this.mapper.properties.battle.enemyPokemon.type1.value === this.mapper.properties.battle.enemyPokemon.type2.value) {
                         var multiplier1 = multipliers[defendingTypeMono]
-                        return Math.round(this.movePower(x) * multiplier1 * stab)
+                        return Math.floor(this.movePower(x) * multiplier1 * stab)
                     }
                     //ATTACKING A DUAL-TYPE POKEMON
                     else if (this.mapper.properties.battle.enemyPokemon.type1 != this.mapper.properties.battle.enemyPokemon.type2) {
                         var multipliers = this.typeData.find(x => x.moveType === attackingType)
                         var multiplier1 = multipliers[defendingType1]
                         var multiplier2 = multipliers[defendingType2]
-                        return Math.round(this.movePower(x) * multiplier1 * multiplier2 * stab)
+                        return Math.floor(this.movePower(x) * multiplier1 * multiplier2 * stab)
                     }
                     //RETURN THE MOVES POWER IF NOTHING ELSE WORKS
                     else
@@ -680,7 +680,7 @@ const app = Vue.createApp({
                         return this.movePower(x)
                     }
                     else {
-                        return Math.round(this.movePower(x) * stab) //returns the move's base power if not in battle
+                        return Math.floor(this.movePower(x) * stab) //returns the move's base power if not in battle
                     }
                 } 
             }
