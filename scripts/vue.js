@@ -6,8 +6,8 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starter:         76, //select starter
-            starterName:     "Golem", //string name
+            starter:         68, //select starter
+            starterName:     "Machamp", //string name
             secondPlaythrough: false, //used to mitigate luck on second playthroughs
             pick:            true, //turns on the ability to pick your starter
             package:         false, //uses images from package folder, rather than using dynamic values
@@ -50,9 +50,16 @@ const app = Vue.createApp({
             gen1dataGrowthMovepool: gen1dataGrowthMovepool, //contains growth rate and movepools; also constants base stats and typing but these are formatted poorly
             gen1moves: gen1moves, //moves, type, power, accuracy, pp, category, description
             typeData: typeData, //type effectiveness tables
-            g1trainers: g1trainers,
+            // g1trainers: g1trainers, //g1trainers
+            g1YellowTrainers: g1YellowTrainers,
+            g1RedBlueTrainers: g1RedBlueTrainers,
             gameStarted: false,
             
+            //LOOPS
+            pkmnMoves: ["move1","move2","move3","move4"],
+            pkmnSlots: [0, 1, 2, 3, 4, 5],
+            boostingBadges: ["badge1", "badge3", "badge6", "badge7"],
+
             //VARIABLES THAT TRACK IN GAME PROGRESS ------------------------------------------------------------//
             playerId: 999,
             routeEncounters: [],
@@ -85,6 +92,14 @@ const app = Vue.createApp({
         }
     },
     
+    computed: {
+        currentTrainer() {
+            if (this.mapper.meta.gameName == "Pokemon Yellow") { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
+            else if (this.mapper.meta.gameName == "Pokemon Red and Blue") { return g1RedBlueTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
+            else { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
+        },
+    },
+
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
         //REMOVES CAPITALIZATION (TACKLE -> Tackle) OR (Tail Whip -> Tail whip)
@@ -325,6 +340,9 @@ const app = Vue.createApp({
         g1trainer(x, y) {
             return (x + " " + y)
         },
+        currentTrainer() {
+            return (this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value)
+        },
 
         g1trainerEnemySelector(trainerClass) {
             if (this.showAllTrainers == false && (
@@ -364,41 +382,72 @@ const app = Vue.createApp({
         },
 
         fixTrainerName(trainerName, trainerNumber) {
-            if (trainerName == "RIVAL1" && trainerNumber == 1) {
+            if (this.mapper.meta.gameName == "Pokemon Yellow") {
+                if (trainerName == "RIVAL1" && trainerNumber == 1) {
                     return "rival1's team"
+                }
+                else if (trainerName == "RIVAL1" && trainerNumber == 2) {
+                        return "rival1A's team"
+                }
+                else if (trainerName == "RIVAL1" && trainerNumber == 3) {
+                        return "rival2's team"
+                }
+                else if (trainerName == "RIVAL2" && trainerNumber == 1) {
+                        return "rival3's team"
+                }
+                else if (trainerName == "RIVAL2" && (trainerNumber == 2 || trainerNumber == 3 || trainerNumber == 4)) {
+                        return "rival4's team"
+                }
+                else if (trainerName == "RIVAL2" && (trainerNumber == 5 || trainerNumber == 6 || trainerNumber == 7)) {
+                        return "rival5's team"
+                }
+                else if (trainerName == "RIVAL2" && (trainerNumber == 8 || trainerNumber == 9 || trainerNumber == 10)) {
+                        return "rival6's team"
+                }
+                // else if (trainerName == "JR TRAINER F" && trainerNumber == 5) {
+                //     return "WRAPPING LASS"
+                // }
+                // else if (trainerName == "JR TRAINER F" && trainerNumber == 10) {
+                //     return "STATUS CONDITION JR"
+                // }
+                // else if (trainerName == "HIKER" && trainerNumber == 9) {
+                //     return "SELF-DESTRUCTING HIKER"
+                // }
+                else if (trainerName == "RIVAL3") {
+                    return "champion's team"
+                }
+                else {
+                    return trainerName.toLowerCase() + "'s team"
+                }
             }
-            else if (trainerName == "RIVAL1" && trainerNumber == 2) {
-                    return "rival1A's team"
-            }
-            else if (trainerName == "RIVAL1" && trainerNumber == 3) {
-                    return "rival2's team"
-            }
-            else if (trainerName == "RIVAL2" && trainerNumber == 1) {
-                    return "rival3's team"
-            }
-            else if (trainerName == "RIVAL2" && (trainerNumber == 2 || trainerNumber == 3 || trainerNumber == 4)) {
-                    return "rival4's team"
-            }
-            else if (trainerName == "RIVAL2" && (trainerNumber == 5 || trainerNumber == 6 || trainerNumber == 7)) {
-                    return "rival5's team"
-            }
-            else if (trainerName == "RIVAL2" && (trainerNumber == 8 || trainerNumber == 9 || trainerNumber == 10)) {
-                    return "rival6's team"
-            }
-            // else if (trainerName == "JR TRAINER F" && trainerNumber == 5) {
-            //     return "WRAPPING LASS"
-            // }
-            // else if (trainerName == "JR TRAINER F" && trainerNumber == 10) {
-            //     return "STATUS CONDITION JR"
-            // }
-            // else if (trainerName == "HIKER" && trainerNumber == 9) {
-            //     return "SELF-DESTRUCTING HIKER"
-            // }
-            else if (trainerName == "RIVAL3") {
-                return "champion's team"
-            }
-            else {
-                return trainerName.toLowerCase() + "'s team"
+            else if (this.mapper.meta.gameName == "Pokemon Red and Blue") {
+                if (trainerName == "RIVAL1" && trainerNumber == 1 || trainerName == "RIVAL1" && trainerNumber == 2 || trainerName == "RIVAL1" && trainerNumber == 3) {
+                    return "rival1's team"
+                }
+                else if (trainerName == "RIVAL1" && trainerNumber == 4 || trainerName == "RIVAL1" && trainerNumber == 5 || trainerName == "RIVAL1" && trainerNumber == 6) {
+                        return "rival1A's team"
+                }
+                else if (trainerName == "RIVAL1" && trainerNumber == 7 || trainerName == "RIVAL1" && trainerNumber == 8 || trainerName == "RIVAL1" && trainerNumber == 9) {
+                        return "rival2's team"
+                }
+                else if (trainerName == "RIVAL2" && trainerNumber == 1 || trainerName == "RIVAL2" && trainerNumber == 2 || trainerName == "RIVAL2" && trainerNumber == 3) {
+                        return "rival3's team"
+                }
+                else if (trainerName == "RIVAL2" && trainerNumber == 4 || trainerName == "RIVAL2" && trainerNumber == 5 || trainerName == "RIVAL2" && trainerNumber == 6) {
+                        return "rival4's team"
+                }
+                else if (trainerName == "RIVAL2" && trainerNumber == 7 || trainerName == "RIVAL2" && trainerNumber == 8 || trainerName == "RIVAL2" && trainerNumber == 9) {
+                        return "rival5's team"
+                }
+                else if (trainerName == "RIVAL2" && trainerNumber == 10 || trainerName == "RIVAL2" && trainerNumber == 11 || trainerName == "RIVAL2" && trainerNumber == 12) {
+                        return "rival6's team"
+                }
+                else if (trainerName == "RIVAL3") {
+                    return "champion's team"
+                }
+                else {
+                    return trainerName.toLowerCase() + "'s team"
+                }
             }
         },
 

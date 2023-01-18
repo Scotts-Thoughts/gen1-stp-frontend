@@ -8,11 +8,9 @@
 
 <body>
     <div id="app">
-        <div v-if="ready == false">
-            Loading...
-        </div>
+        <div v-if="ready == false">Loading...</div>
         <div v-else>
-    <!------ OVERLAY GRAPHICS ---------------------------------------------------------------------------------------------------------------------->
+            <!------ OVERLAY GRAPHICS ---------------------------------------------------------------------------------------------------------------------->
             <div class="mainContainer">
                 <div v-if="package == false && mapper.meta.gamePlatform == `GB`">
                     <img v-show="overlay == true" class="overlay" :src="`images/overlay/${starterName.toLowerCase()}.png`" />
@@ -20,7 +18,7 @@
                     <img v-show="gameName() == `Pokemon Yellow`" class="demoBorderStats" src="images/elements/overlay/gen1/stats.png" style="opacity: .9"/>
                 </div>
 
-    <!------ INFO DISPLAY --------------------------------------------------------------------------------------------------------------------------->
+            <!------ INFO DISPLAY --------------------------------------------------------------------------------------------------------------------------->
                 <div class="gamestateContainter">
                     <div>Current Game: {{mapper.meta.gameName}}</div>
                     <div>Current Platform: {{mapper.meta.gamePlatform}}</div>
@@ -104,7 +102,7 @@
                     </table> -->
                 </div>
 
-    <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
+            <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
                 <div class="typeContainer">
                     <!-- MONO TYPE -->
                     <div v-if="typeIcons == true && getStarterType1() == getStarterType2()">
@@ -386,9 +384,9 @@
                 <div class="timerLabel">time played at 4x game speed</div>
                 <div class="resetsLabel">resets</div>
           
-            <!--------- BATTLE PUSH ON GRAPHIC ---------------------------------------------------------------------------------------------------------------->
+            <!------- BATTLE PUSH ON GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fadeBattle">
-                    <div key=1 v-if="((g1state() == `Battle` || g1state() == `To Battle` || g1state() == `From Battle`)&& g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;">
+                    <div key=1 v-if="((g1state() == `Battle` || g1state() == `To Battle` || g1state() == `From Battle`) && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;">
                         <div v-if="showSpecialTrainerGraphics == true">
                             <img class="floor" v-show="specialTrainerGraphics() != null && g1state() == `Battle`" src="images/trainers/floor.png" />
                             <div class="specialTrainerGraphics">
@@ -398,7 +396,22 @@
                         <div class="trainerLabel">{{pascalCaseDot(pascalCaseSpace(fixTrainerName(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number)))}}</div>
                         <img class="enemyPng" :src="`images/enemy_area/${starterName.toLowerCase()}.png`" :style="battlePokemonCrop()"/>
                         <div class="enemyGraphic">
-                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name != undefined" class="ePkmn1">
+                            <div v-for="x in pkmnSlots">
+                                <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmn${x + 1}`">
+                                    <img class="ePkmnSprite" :src="`images/pokemon/${currentTrainer.pokemon[x]?.name}.png`" />
+                                    <div class="ePkmnSpecies">{{currentTrainer.pokemon[x]?.name}}</div>
+                                    <div class="ePkmnMove1">{{currentTrainer.pokemon[x]?.moves[0]}}</div>
+                                    <div class="ePkmnMove2">{{currentTrainer.pokemon[x]?.moves[1]}}</div>
+                                    <div class="ePkmnMove3">{{currentTrainer.pokemon[x]?.moves[2]}}</div>
+                                    <div class="ePkmnMove4">{{currentTrainer.pokemon[x]?.moves[3]}}</div>
+                                    <div class="ePkmnHp">{{currentTrainer.pokemon[x]?.hp}}</div>
+                                    <div class="ePkmnAtk">{{currentTrainer.pokemon[x]?.atk}}</div>
+                                    <div class="ePkmnDef">{{currentTrainer.pokemon[x]?.def}}</div>
+                                    <div class="ePkmnSpd">{{currentTrainer.pokemon[x]?.spd}}</div>
+                                    <div class="ePkmnSpc">{{currentTrainer.pokemon[x]?.spc}}</div>
+                                </div>
+                            </div>
+                            <!-- <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name != undefined" class="ePkmn1">
                                 <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name}.png`" />
                                 <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name}}</div>
                                 <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[0]}}</div>
@@ -475,7 +488,7 @@
                                 <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.def}}</div>
                                 <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.spd}}</div>
                                 <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.spc}}</div>
-                            </div>
+                            </div> -->
                         </div> 
                     </div>
                     <div key=2 v-else-if="(g1state() == `Battle` && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 0) && battleGraphic == true" class="movepoolContainer">
@@ -525,10 +538,6 @@
             <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
                 <div class="expMeterOuter"><div class="expMeterInner" :style="{ width: expPercent(mapper.properties.player.team[0]) + '%' }"></div></div>
             </div>
-            <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
-                <div>
-                    <audio src="audio/"></audio>
-                </div>
         </div>
     </div>
 
@@ -537,15 +546,15 @@
     <script src="https://unpkg.com/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script> 
     <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script>
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
-    
-    <!-- DATA IMPORTS -->
+    <!-- DATA -->
     <script src="data/gen1data.js"></script>
     <script src="data/gen1dataGrowthMovepool.js"></script>
     <script src="data/gen1moves.js"></script>
     <script src="data/gen1trainers.js"></script>
+    <script src="data/gen1YellowTrainers.js"></script>
+    <script src="data/gen1RedBlueTrainers.js"></script>
     <script src="data/type-effectiveness.js"></script>
     <script src="data/stage-modifiers.js"></script>
-
-    <!-- VUE APP IMPORT -->
+    <!-- VUE APP -->
     <script type="text/javascript" src="scripts/vue.js"></script>
 </body>

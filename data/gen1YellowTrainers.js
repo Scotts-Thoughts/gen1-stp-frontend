@@ -1,8 +1,9 @@
-const g1trainers = {
+const g1YellowTrainers = {
     "YOUNGSTER 1": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 1",
         "trainer_location": "Route 03",
+        "route_one_offset": "0x39E2F",
         "pokemon": [
             {
                 "name": "Rattata",
@@ -35,13 +36,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 165,
-        "route_one_offset": "0x39D99"
+        "money": 165
     },
     "YOUNGSTER 2": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 2",
         "trainer_location": "Route 03",
+        "route_one_offset": "0x39E33",
         "pokemon": [
             {
                 "name": "Spearow",
@@ -59,13 +60,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 210,
-        "route_one_offset": "0x39D9D"
+        "money": 210
     },
     "YOUNGSTER 3": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 3",
         "trainer_location": "Mt. Moon",
+        "route_one_offset": "0x39E36",
         "pokemon": [
             {
                 "name": "Rattata",
@@ -112,13 +113,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 150,
-        "route_one_offset": "0x39DA0"
+        "money": 150
     },
     "YOUNGSTER 4": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 4",
         "trainer_location": "Route 24",
+        "route_one_offset": "0x39E3B",
         "pokemon": [
             {
                 "name": "Rattata",
@@ -166,13 +167,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 210,
-        "route_one_offset": "0x39DA5"
+        "money": 210
     },
     "YOUNGSTER 5": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 5",
         "trainer_location": "Route 25",
+        "route_one_offset": "0x39E40",
         "pokemon": [
             {
                 "name": "Rattata",
@@ -207,13 +208,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 225,
-        "route_one_offset": "0x39DAA"
+        "money": 225
     },
     "YOUNGSTER 6": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 6",
         "trainer_location": "Route 25",
+        "route_one_offset": "0x39E44",
         "pokemon": [
             {
                 "name": "Slowpoke",
@@ -229,13 +230,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 255,
-        "route_one_offset": "0x39DAE"
+        "money": 255
     },
     "YOUNGSTER 7": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 7",
         "trainer_location": "Route 25",
+        "route_one_offset": "0x39E47",
         "pokemon": [
             {
                 "name": "Ekans",
@@ -267,13 +268,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 210,
-        "route_one_offset": "0x39DB1"
+        "money": 210
     },
     "YOUNGSTER 8": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 8",
         "trainer_location": "SS Anne",
+        "route_one_offset": "0x39E4B",
         "pokemon": [
             {
                 "name": "NidoranM",
@@ -287,18 +288,18 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Horn Attack",
-                    "Poison Sting",
-                    "Focus Energy"
+                    "Double Kick",
+                    "Poison Sting"
                 ]
             }
         ],
-        "money": 315,
-        "route_one_offset": "0x39DB5"
+        "money": 315
     },
     "YOUNGSTER 9": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 9",
         "trainer_location": "Route 11",
+        "route_one_offset": "0x39E4E",
         "pokemon": [
             {
                 "name": "Ekans",
@@ -317,13 +318,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 315,
-        "route_one_offset": "0x39DB8"
+        "money": 315
     },
     "YOUNGSTER 10": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 10",
         "trainer_location": "Route 11",
+        "route_one_offset": "0x39E51",
         "pokemon": [
             {
                 "name": "Sandshrew",
@@ -356,13 +357,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 285,
-        "route_one_offset": "0x39DBB"
+        "money": 285
     },
     "YOUNGSTER 11": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 11",
         "trainer_location": "Route 11",
+        "route_one_offset": "0x39E55",
         "pokemon": [
             {
                 "name": "Rattata",
@@ -413,13 +414,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 255,
-        "route_one_offset": "0x39DBF"
+        "money": 255
     },
     "YOUNGSTER 12": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 12",
         "trainer_location": "Route 11",
+        "route_one_offset": "0x39E5A",
         "pokemon": [
             {
                 "name": "NidoranM",
@@ -431,9 +432,9 @@ const g1trainers = {
                 "spc": 22,
                 "xp": 231,
                 "moves": [
-                    "Leer",
                     "Tackle",
                     "Horn Attack",
+                    "Double Kick",
                     "Poison Sting"
                 ]
             },
@@ -450,17 +451,17 @@ const g1trainers = {
                     "Leer",
                     "Tackle",
                     "Horn Attack",
-                    "Poison Sting"
+                    "Double Kick"
                 ]
             }
         ],
-        "money": 270,
-        "route_one_offset": "0x39DC4"
+        "money": 270
     },
     "YOUNGSTER 13": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 13",
         "trainer_location": "Unused",
+        "route_one_offset": "0x39E5E",
         "pokemon": [
             {
                 "name": "Spearow",
@@ -527,26 +528,87 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 255,
-        "route_one_offset": "0x39DC8"
+        "money": 255
+    },
+    "YOUNGSTER 14": {
+        "trainer_class": "YOUNGSTER",
+        "trainer_name": "YOUNGSTER 14",
+        "trainer_location": "Route 09",
+        "route_one_offset": "0x39E64",
+        "pokemon": [
+            {
+                "name": "Sandshrew",
+                "level": 24,
+                "hp": 61,
+                "atk": 45,
+                "def": 49,
+                "spd": 28,
+                "spc": 23,
+                "xp": 477,
+                "moves": [
+                    "Scratch",
+                    "Sand Attack",
+                    "Slash",
+                    "Fissure"
+                ]
+            }
+        ],
+        "money": 360
     },
     "BUG CATCHER 1": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 1",
         "trainer_location": "Viridian Forest",
+        "route_one_offset": "0x39E67",
         "pokemon": [
             {
-                "name": "Weedle",
-                "level": 6,
-                "hp": 21,
+                "name": "Caterpie",
+                "level": 7,
+                "hp": 24,
                 "atk": 10,
-                "def": 9,
-                "spd": 11,
+                "def": 11,
+                "spd": 12,
                 "spc": 8,
-                "xp": 66,
+                "xp": 79,
                 "moves": [
-                    "Poison Sting",
+                    "Tackle",
                     "String Shot"
+                ]
+            },
+            {
+                "name": "Caterpie",
+                "level": 7,
+                "hp": 24,
+                "atk": 10,
+                "def": 11,
+                "spd": 12,
+                "spc": 8,
+                "xp": 79,
+                "moves": [
+                    "Tackle",
+                    "String Shot"
+                ]
+            }
+        ],
+        "money": 70
+    },
+    "BUG CATCHER 2": {
+        "trainer_class": "BUG CATCHER",
+        "trainer_name": "BUG CATCHER 2",
+        "trainer_location": "Viridian Forest",
+        "route_one_offset": "0x39E6B",
+        "pokemon": [
+            {
+                "name": "Metapod",
+                "level": 6,
+                "hp": 22,
+                "atk": 8,
+                "def": 12,
+                "spd": 9,
+                "spc": 8,
+                "xp": 91,
+                "moves": [
+                    "Harden"
                 ]
             },
             {
@@ -562,88 +624,51 @@ const g1trainers = {
                     "Tackle",
                     "String Shot"
                 ]
-            }
-        ],
-        "money": 60,
-        "route_one_offset": "0x39DCE"
-    },
-    "BUG CATCHER 2": {
-        "trainer_class": "BUG CATCHER",
-        "trainer_name": "BUG CATCHER 2",
-        "trainer_location": "Viridian Forest",
-        "pokemon": [
-            {
-                "name": "Weedle",
-                "level": 7,
-                "hp": 23,
-                "atk": 11,
-                "def": 10,
-                "spd": 13,
-                "spc": 8,
-                "xp": 78,
-                "moves": [
-                    "Poison Sting",
-                    "String Shot"
-                ]
             },
             {
-                "name": "Kakuna",
-                "level": 7,
-                "hp": 24,
-                "atk": 9,
-                "def": 13,
-                "spd": 11,
-                "spc": 9,
-                "xp": 106,
+                "name": "Metapod",
+                "level": 6,
+                "hp": 22,
+                "atk": 8,
+                "def": 12,
+                "spd": 9,
+                "spc": 8,
+                "xp": 91,
                 "moves": [
                     "Harden"
                 ]
-            },
-            {
-                "name": "Weedle",
-                "level": 7,
-                "hp": 23,
-                "atk": 11,
-                "def": 10,
-                "spd": 13,
-                "spc": 8,
-                "xp": 78,
-                "moves": [
-                    "Poison Sting",
-                    "String Shot"
-                ]
             }
         ],
-        "money": 70,
-        "route_one_offset": "0x39DD2"
+        "money": 60
     },
     "BUG CATCHER 3": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 3",
         "trainer_location": "Viridian Forest",
+        "route_one_offset": "0x39E70",
         "pokemon": [
             {
-                "name": "Weedle",
-                "level": 9,
-                "hp": 27,
+                "name": "Caterpie",
+                "level": 10,
+                "hp": 30,
                 "atk": 12,
-                "def": 11,
+                "def": 13,
                 "spd": 15,
                 "spc": 10,
-                "xp": 99,
+                "xp": 112,
                 "moves": [
-                    "Poison Sting",
+                    "Tackle",
                     "String Shot"
                 ]
             }
         ],
-        "money": 90,
-        "route_one_offset": "0x39DD7"
+        "money": 100
     },
     "BUG CATCHER 4": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 4",
         "trainer_location": "Route 03",
+        "route_one_offset": "0x39E73",
         "pokemon": [
             {
                 "name": "Caterpie",
@@ -688,13 +713,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 100,
-        "route_one_offset": "0x39DDA"
+        "money": 100
     },
     "BUG CATCHER 5": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 5",
         "trainer_location": "Route 03",
+        "route_one_offset": "0x39E78",
         "pokemon": [
             {
                 "name": "Weedle",
@@ -751,13 +776,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 90,
-        "route_one_offset": "0x39DDF"
+        "money": 90
     },
     "BUG CATCHER 6": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 6",
         "trainer_location": "Route 03",
+        "route_one_offset": "0x39E7E",
         "pokemon": [
             {
                 "name": "Caterpie",
@@ -787,13 +812,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 110,
-        "route_one_offset": "0x39DE5"
+        "money": 110
     },
     "BUG CATCHER 7": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 7",
         "trainer_location": "Mt. Moon",
+        "route_one_offset": "0x39E82",
         "pokemon": [
             {
                 "name": "Weedle",
@@ -823,13 +848,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 110,
-        "route_one_offset": "0x39DE9"
+        "money": 110
     },
     "BUG CATCHER 8": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 8",
         "trainer_location": "Mt. Moon",
+        "route_one_offset": "0x39E86",
         "pokemon": [
             {
                 "name": "Caterpie",
@@ -873,13 +898,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 100,
-        "route_one_offset": "0x39DED"
+        "money": 100
     },
     "BUG CATCHER 9": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 9",
         "trainer_location": "Route 24",
+        "route_one_offset": "0x39E8B",
         "pokemon": [
             {
                 "name": "Caterpie",
@@ -910,13 +935,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 140,
-        "route_one_offset": "0x39DF2"
+        "money": 140
     },
     "BUG CATCHER 10": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 10",
         "trainer_location": "Route 06",
+        "route_one_offset": "0x39E8F",
         "pokemon": [
             {
                 "name": "Weedle",
@@ -961,13 +986,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 160,
-        "route_one_offset": "0x39DF6"
+        "money": 160
     },
     "BUG CATCHER 11": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 11",
         "trainer_location": "Route 06",
+        "route_one_offset": "0x39E94",
         "pokemon": [
             {
                 "name": "Butterfree",
@@ -979,20 +1004,20 @@ const g1trainers = {
                 "spc": 40,
                 "xp": 685,
                 "moves": [
-                    "Confusion",
                     "PoisonPowder",
                     "Stun Spore",
-                    "Sleep Powder"
+                    "Sleep Powder",
+                    "Supersonic"
                 ]
             }
         ],
-        "money": 200,
-        "route_one_offset": "0x39DFB"
+        "money": 200
     },
     "BUG CATCHER 12": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 12",
         "trainer_location": "Unused",
+        "route_one_offset": "0x39E97",
         "pokemon": [
             {
                 "name": "Metapod",
@@ -1032,17 +1057,18 @@ const g1trainers = {
                 "xp": 288,
                 "moves": [
                     "Tackle",
-                    "Disable"
+                    "Disable",
+                    "Supersonic"
                 ]
             }
         ],
-        "money": 180,
-        "route_one_offset": "0x39DFE"
+        "money": 180
     },
     "BUG CATCHER 13": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 13",
         "trainer_location": "Route 09",
+        "route_one_offset": "0x39E9C",
         "pokemon": [
             {
                 "name": "Beedrill",
@@ -1073,13 +1099,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 190,
-        "route_one_offset": "0x39E03"
+        "money": 190
     },
     "BUG CATCHER 14": {
         "trainer_class": "BUG CATCHER",
         "trainer_name": "BUG CATCHER 14",
         "trainer_location": "Route 09",
+        "route_one_offset": "0x39EA0",
         "pokemon": [
             {
                 "name": "Caterpie",
@@ -1120,17 +1146,57 @@ const g1trainers = {
                 "xp": 321,
                 "moves": [
                     "Tackle",
-                    "Disable"
+                    "Disable",
+                    "Supersonic",
+                    "Confusion"
                 ]
             }
         ],
-        "money": 200,
-        "route_one_offset": "0x39E07"
+        "money": 200
+    },
+    "BUG CATCHER 15": {
+        "trainer_class": "BUG CATCHER",
+        "trainer_name": "BUG CATCHER 15",
+        "trainer_location": "Viridian Forest",
+        "route_one_offset": "0x39EA5",
+        "pokemon": [
+            {
+                "name": "Caterpie",
+                "level": 8,
+                "hp": 26,
+                "atk": 11,
+                "def": 11,
+                "spd": 13,
+                "spc": 9,
+                "xp": 90,
+                "moves": [
+                    "Tackle",
+                    "String Shot"
+                ]
+            },
+            {
+                "name": "Metapod",
+                "level": 8,
+                "hp": 27,
+                "atk": 9,
+                "def": 15,
+                "spd": 11,
+                "spc": 10,
+                "xp": 123,
+                "moves": [
+                    "Harden",
+                    "Tackle",
+                    "String Shot"
+                ]
+            }
+        ],
+        "money": 80
     },
     "LASS 1": {
         "trainer_class": "LASS",
         "trainer_name": "LASS 1",
         "trainer_location": "Route 03",
+        "route_one_offset": "0x39EA9",
         "pokemon": [
             {
                 "name": "Pidgey",
@@ -1161,13 +1227,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 135,
-        "route_one_offset": "0x39E0C"
+        "money": 135
     },
     "LASS 2": {
         "trainer_class": "LASS",
         "trainer_name": "LASS 2",
         "trainer_location": "Route 03",
+        "route_one_offset": "0x39EAD",
         "pokemon": [
             {
                 "name": "Rattata",
@@ -1200,13 +1266,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 150,
-        "route_one_offset": "0x39E10"
+        "money": 150
     },
     "LASS 3": {
         "trainer_class": "LASS",
         "trainer_name": "LASS 3",
         "trainer_location": "Route 03",
+        "route_one_offset": "0x39EB1",
         "pokemon": [
             {
                 "name": "Jigglypuff",
@@ -1224,13 +1290,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 210,
-        "route_one_offset": "0x39E14"
+        "money": 210
     },
     "LASS 4": {
         "trainer_class": "LASS",
         "trainer_name": "LASS 4",
         "trainer_location": "Route 04",
+        "route_one_offset": "0x39EB4",
         "pokemon": [
             {
                 "name": "Paras",
@@ -1281,13 +1347,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 465,
-        "route_one_offset": "0x39E17"
+        "money": 465
     },
     "LASS 5": {
         "trainer_class": "LASS",
         "trainer_name": "LASS 5",
         "trainer_location": "Mt. Moon",
+        "route_one_offset": "0x39EB9",
         "pokemon": [
             {
                 "name": "Oddish",
@@ -1317,13 +1383,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 165,
-        "route_one_offset": "0x39E1C"
+        "money": 165
     },
     "LASS 6": {
         "trainer_class": "LASS",
         "trainer_name": "LASS 6",
         "trainer_location": "Mt. Moon",
+        "route_one_offset": "0x39EBD",
         "pokemon": [
             {
                 "name": "Clefairy",
@@ -1341,13 +1407,13 @@ const g1trainers = {
                 ]
             }
         ],
-        "money": 210,
-        "route_one_offset": "0x39E20"
+        "money": 210
     },
     "LASS 7": {
         "trainer_class": "LASS",
         "trainer_name": "LASS 7",
         "trainer_location": "Route 24",
+        "route_one_offset": "0x39EC0",
         "pokemon": [
             {
                 "name": "Pidgey",
@@ -1377,17 +1443,17 @@ const g1trainers = {
                     "Growl",
                     "Tackle",
                     "Scratch",
-                    "Poison Sting"
+                    "Double Kick"
                 ]
             }
         ],
-        "money": 240,
-        "route_one_offset": "0x39E23"
+        "money": 240
     },
     "LASS 8": {
         "trainer_class": "LASS",
         "trainer_name": "LASS 8",
         "trainer_location": "Route 24",
+        "route_one_offset": "0x39EC4",
         "pokemon": [
             {
                 "name": "Pidgey",
@@ -1417,12 +1483,11 @@ const g1trainers = {
                     "Growl",
                     "Tackle",
                     "Scratch",
-                    "Poison Sting"
+                    "Double Kick"
                 ]
             }
         ],
-        "money": 210,
-        "route_one_offset": "0x39E27"
+        "money": 210
     },
     "LASS 9": {
         "trainer_class": "LASS",
@@ -1442,7 +1507,7 @@ const g1trainers = {
                     "Leer",
                     "Tackle",
                     "Horn Attack",
-                    "Poison Sting"
+                    "Double Kick"
                 ]
             },
             {
@@ -1458,12 +1523,12 @@ const g1trainers = {
                     "Growl",
                     "Tackle",
                     "Scratch",
-                    "Poison Sting"
+                    "Double Kick"
                 ]
             }
         ],
         "money": 225,
-        "route_one_offset": "0x39E2B"
+        "route_one_offset": "0x39EC8"
     },
     "LASS 10": {
         "trainer_class": "LASS",
@@ -1513,7 +1578,7 @@ const g1trainers = {
             }
         ],
         "money": 195,
-        "route_one_offset": "0x39E2F"
+        "route_one_offset": "0x39ECC"
     },
     "LASS 11": {
         "trainer_class": "LASS",
@@ -1545,15 +1610,15 @@ const g1trainers = {
                 "spc": 22,
                 "xp": 226,
                 "moves": [
-                    "Growl",
                     "Tackle",
                     "Scratch",
+                    "Double Kick",
                     "Poison Sting"
                 ]
             }
         ],
         "money": 270,
-        "route_one_offset": "0x39E34"
+        "route_one_offset": "0x39ED1"
     },
     "LASS 12": {
         "trainer_class": "LASS",
@@ -1561,40 +1626,24 @@ const g1trainers = {
         "trainer_location": "SS Anne",
         "pokemon": [
             {
-                "name": "Rattata",
-                "level": 18,
-                "hp": 41,
-                "atk": 28,
-                "def": 20,
-                "spd": 33,
-                "spc": 16,
-                "xp": 219,
+                "name": "Jigglypuff",
+                "level": 20,
+                "hp": 79,
+                "atk": 26,
+                "def": 16,
+                "spd": 16,
+                "spc": 18,
+                "xp": 325,
                 "moves": [
-                    "Tackle",
-                    "Tail Whip",
-                    "Quick Attack",
-                    "Hyper Fang"
-                ]
-            },
-            {
-                "name": "Pikachu",
-                "level": 18,
-                "hp": 43,
-                "atk": 28,
-                "def": 18,
-                "spd": 40,
-                "spc": 25,
-                "xp": 315,
-                "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave",
-                    "Quick Attack"
+                    "Sing",
+                    "Pound",
+                    "Disable",
+                    "Defense Curl"
                 ]
             }
         ],
-        "money": 270,
-        "route_one_offset": "0x39E38"
+        "money": 300,
+        "route_one_offset": "0x39ED5"
     },
     "LASS 13": {
         "trainer_class": "LASS",
@@ -1611,8 +1660,8 @@ const g1trainers = {
                 "spc": 27,
                 "xp": 289,
                 "moves": [
-                    "Tackle",
                     "Scratch",
+                    "Double Kick",
                     "Poison Sting",
                     "Tail Whip"
                 ]
@@ -1629,13 +1678,13 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Scratch",
-                    "Poison Sting",
-                    "Tail Whip"
+                    "Double Kick",
+                    "Poison Sting"
                 ]
             }
         ],
         "money": 345,
-        "route_one_offset": "0x39E3C"
+        "route_one_offset": "0x39ED8"
     },
     "LASS 14": {
         "trainer_class": "LASS",
@@ -1692,7 +1741,7 @@ const g1trainers = {
             }
         ],
         "money": 360,
-        "route_one_offset": "0x39E40"
+        "route_one_offset": "0x39EDC"
     },
     "LASS 15": {
         "trainer_class": "LASS",
@@ -1732,18 +1781,18 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "NidoranM",
+                "name": "NidoranF",
                 "level": 19,
-                "hp": 49,
-                "atk": 30,
-                "def": 23,
-                "spd": 27,
+                "hp": 52,
+                "atk": 26,
+                "def": 27,
+                "spd": 23,
                 "spc": 23,
-                "xp": 243,
+                "xp": 240,
                 "moves": [
-                    "Leer",
                     "Tackle",
-                    "Horn Attack",
+                    "Scratch",
+                    "Double Kick",
                     "Poison Sting"
                 ]
             },
@@ -1764,24 +1813,24 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "Pikachu",
+                "name": "NidoranM",
                 "level": 19,
-                "hp": 45,
-                "atk": 29,
-                "def": 19,
-                "spd": 42,
-                "spc": 27,
-                "xp": 333,
+                "hp": 49,
+                "atk": 30,
+                "def": 23,
+                "spd": 27,
+                "spc": 23,
+                "xp": 243,
                 "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave",
-                    "Quick Attack"
+                    "Tackle",
+                    "Horn Attack",
+                    "Double Kick",
+                    "Poison Sting"
                 ]
             }
         ],
         "money": 285,
-        "route_one_offset": "0x39E45"
+        "route_one_offset": "0x39EE1"
     },
     "LASS 16": {
         "trainer_class": "LASS",
@@ -1822,7 +1871,7 @@ const g1trainers = {
             }
         ],
         "money": 330,
-        "route_one_offset": "0x39E4C"
+        "route_one_offset": "0x39EE8"
     },
     "LASS 17": {
         "trainer_class": "LASS",
@@ -1863,7 +1912,7 @@ const g1trainers = {
             }
         ],
         "money": 345,
-        "route_one_offset": "0x39E50"
+        "route_one_offset": "0x39EEC"
     },
     "LASS 18": {
         "trainer_class": "LASS",
@@ -1904,7 +1953,44 @@ const g1trainers = {
             }
         ],
         "money": 345,
-        "route_one_offset": "0x39E54"
+        "route_one_offset": "0x39EF0"
+    },
+    "LASS 19": {
+        "trainer_class": "LASS",
+        "trainer_name": "LASS 19",
+        "trainer_location": "Viridian Forest",
+        "pokemon": [
+            {
+                "name": "NidoranF",
+                "level": 6,
+                "hp": 23,
+                "atk": 11,
+                "def": 12,
+                "spd": 10,
+                "spc": 10,
+                "xp": 75,
+                "moves": [
+                    "Growl",
+                    "Tackle"
+                ]
+            },
+            {
+                "name": "NidoranM",
+                "level": 6,
+                "hp": 22,
+                "atk": 12,
+                "def": 10,
+                "spd": 11,
+                "spc": 10,
+                "xp": 76,
+                "moves": [
+                    "Leer",
+                    "Tackle"
+                ]
+            }
+        ],
+        "money": 90,
+        "route_one_offset": "0x39EF4"
     },
     "SAILOR 1": {
         "trainer_class": "SAILOR",
@@ -1941,7 +2027,7 @@ const g1trainers = {
             }
         ],
         "money": 540,
-        "route_one_offset": "0x39E58"
+        "route_one_offset": "0x39EF8"
     },
     "SAILOR 2": {
         "trainer_class": "SAILOR",
@@ -1978,7 +2064,7 @@ const g1trainers = {
             }
         ],
         "money": 510,
-        "route_one_offset": "0x39E5C"
+        "route_one_offset": "0x39EFC"
     },
     "SAILOR 3": {
         "trainer_class": "SAILOR",
@@ -2002,7 +2088,7 @@ const g1trainers = {
             }
         ],
         "money": 630,
-        "route_one_offset": "0x39E60"
+        "route_one_offset": "0x39F00"
     },
     "SAILOR 4": {
         "trainer_class": "SAILOR",
@@ -2053,7 +2139,7 @@ const g1trainers = {
             }
         ],
         "money": 510,
-        "route_one_offset": "0x39E63"
+        "route_one_offset": "0x39F03"
     },
     "SAILOR 5": {
         "trainer_class": "SAILOR",
@@ -2092,7 +2178,7 @@ const g1trainers = {
             }
         ],
         "money": 540,
-        "route_one_offset": "0x39E68"
+        "route_one_offset": "0x39F08"
     },
     "SAILOR 6": {
         "trainer_class": "SAILOR",
@@ -2140,7 +2226,7 @@ const g1trainers = {
             }
         ],
         "money": 510,
-        "route_one_offset": "0x39E6C"
+        "route_one_offset": "0x39F0C"
     },
     "SAILOR 7": {
         "trainer_class": "SAILOR",
@@ -2163,7 +2249,7 @@ const g1trainers = {
             }
         ],
         "money": 600,
-        "route_one_offset": "0x39E71"
+        "route_one_offset": "0x39F11"
     },
     "SAILOR 8": {
         "trainer_class": "SAILOR",
@@ -2171,40 +2257,22 @@ const g1trainers = {
         "trainer_location": "Vermilion Gym",
         "pokemon": [
             {
-                "name": "Pikachu",
-                "level": 21,
+                "name": "Magnemite",
+                "level": 24,
                 "hp": 49,
-                "atk": 31,
-                "def": 20,
-                "spd": 46,
-                "spc": 29,
-                "xp": 369,
+                "atk": 26,
+                "def": 42,
+                "spd": 30,
+                "spc": 54,
+                "xp": 457,
                 "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave",
-                    "Quick Attack"
-                ]
-            },
-            {
-                "name": "Pikachu",
-                "level": 21,
-                "hp": 49,
-                "atk": 31,
-                "def": 20,
-                "spd": 46,
-                "spc": 29,
-                "xp": 369,
-                "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave",
-                    "Quick Attack"
+                    "Tackle",
+                    "Sonic Boom"
                 ]
             }
         ],
-        "money": 630,
-        "route_one_offset": "0x39E74"
+        "money": 720,
+        "route_one_offset": "0x39F14"
     },
     "JR TRAINER M 1": {
         "trainer_class": "JR TRAINER M",
@@ -2213,34 +2281,33 @@ const g1trainers = {
         "pokemon": [
             {
                 "name": "Diglett",
-                "level": 11,
-                "hp": 24,
-                "atk": 19,
-                "def": 12,
-                "spd": 27,
-                "spc": 16,
-                "xp": 190,
+                "level": 9,
+                "hp": 22,
+                "atk": 16,
+                "def": 10,
+                "spd": 23,
+                "spc": 14,
+                "xp": 156,
                 "moves": [
                     "Scratch"
                 ]
             },
             {
                 "name": "Sandshrew",
-                "level": 11,
-                "hp": 33,
-                "atk": 23,
-                "def": 25,
-                "spd": 15,
-                "spc": 13,
-                "xp": 219,
+                "level": 9,
+                "hp": 29,
+                "atk": 20,
+                "def": 21,
+                "spd": 13,
+                "spc": 11,
+                "xp": 178,
                 "moves": [
-                    "Scratch",
-                    "Sand Attack"
+                    "Scratch"
                 ]
             }
         ],
-        "money": 220,
-        "route_one_offset": "0x39E78"
+        "money": 180,
+        "route_one_offset": "0x39F17"
     },
     "JR TRAINER M 2": {
         "trainer_class": "JR TRAINER M",
@@ -2280,7 +2347,7 @@ const g1trainers = {
             }
         ],
         "money": 280,
-        "route_one_offset": "0x39E7C"
+        "route_one_offset": "0x39F1B"
     },
     "JR TRAINER M 2 Duplicate": {
         "trainer_class": "JR TRAINER M",
@@ -2320,7 +2387,7 @@ const g1trainers = {
             }
         ],
         "money": 280,
-        "route_one_offset": "0x39E7C"
+        "route_one_offset": "0x39F1B"
     },
     "JR TRAINER M 3": {
         "trainer_class": "JR TRAINER M",
@@ -2339,17 +2406,18 @@ const g1trainers = {
                 "moves": [
                     "Scratch",
                     "Leer",
+                    "Low Kick",
                     "Karate Chop"
                 ]
             }
         ],
         "money": 360,
-        "route_one_offset": "0x39E80"
+        "route_one_offset": "0x39F1F"
     },
     "JR TRAINER M 4": {
         "trainer_class": "JR TRAINER M",
         "trainer_name": "JR TRAINER M 4",
-        "trainer_location": "Route 06",
+        "trainer_location": "Unused",
         "pokemon": [
             {
                 "name": "Squirtle",
@@ -2369,7 +2437,7 @@ const g1trainers = {
             }
         ],
         "money": 400,
-        "route_one_offset": "0x39E83"
+        "route_one_offset": "0x39F22"
     },
     "JR TRAINER M 5": {
         "trainer_class": "JR TRAINER M",
@@ -2410,7 +2478,7 @@ const g1trainers = {
             }
         ],
         "money": 320,
-        "route_one_offset": "0x39E86"
+        "route_one_offset": "0x39F25"
     },
     "JR TRAINER M 6": {
         "trainer_class": "JR TRAINER M",
@@ -2462,12 +2530,12 @@ const g1trainers = {
             }
         ],
         "money": 360,
-        "route_one_offset": "0x39E8A"
+        "route_one_offset": "0x39F29"
     },
     "JR TRAINER M 7": {
         "trainer_class": "JR TRAINER M",
         "trainer_name": "JR TRAINER M 7",
-        "trainer_location": "Route 09",
+        "trainer_location": "Unused",
         "pokemon": [
             {
                 "name": "Growlithe",
@@ -2502,7 +2570,7 @@ const g1trainers = {
             }
         ],
         "money": 420,
-        "route_one_offset": "0x39E8F"
+        "route_one_offset": "0x39F2E"
     },
     "JR TRAINER M 8": {
         "trainer_class": "JR TRAINER M",
@@ -2573,7 +2641,7 @@ const g1trainers = {
             }
         ],
         "money": 380,
-        "route_one_offset": "0x39E93"
+        "route_one_offset": "0x39F32"
     },
     "JR TRAINER M 9": {
         "trainer_class": "JR TRAINER M",
@@ -2591,9 +2659,9 @@ const g1trainers = {
                 "xp": 372,
                 "moves": [
                     "Horn Attack",
+                    "Double Kick",
                     "Poison Sting",
-                    "Focus Energy",
-                    "Fury Attack"
+                    "Focus Energy"
                 ]
             },
             {
@@ -2606,15 +2674,40 @@ const g1trainers = {
                 "spc": 41,
                 "xp": 732,
                 "moves": [
-                    "Tackle",
                     "Horn Attack",
+                    "Double Kick",
                     "Poison Sting",
                     "Focus Energy"
                 ]
             }
         ],
         "money": 580,
-        "route_one_offset": "0x39E99"
+        "route_one_offset": "0x39F38"
+    },
+    "JR TRAINER M 10": {
+        "trainer_class": "JR TRAINER M",
+        "trainer_name": "JR TRAINER M 10",
+        "trainer_location": "Route 06",
+        "pokemon": [
+            {
+                "name": "Weepinbell",
+                "level": 16,
+                "hp": 49,
+                "atk": 36,
+                "def": 23,
+                "spd": 25,
+                "spc": 34,
+                "xp": 517,
+                "moves": [
+                    "Vine Whip",
+                    "Growth",
+                    "Wrap",
+                    "PoisonPowder"
+                ]
+            }
+        ],
+        "money": 320,
+        "route_one_offset": "0x39F3C"
     },
     "JR TRAINER F 1": {
         "trainer_class": "JR TRAINER F",
@@ -2638,48 +2731,46 @@ const g1trainers = {
             }
         ],
         "money": 380,
-        "route_one_offset": "0x39E9D"
+        "route_one_offset": "0x39F3F"
     },
     "JR TRAINER F 2": {
         "trainer_class": "JR TRAINER F",
         "trainer_name": "JR TRAINER F 2",
-        "trainer_location": "Route 06",
+        "trainer_location": "Unused",
         "pokemon": [
             {
-                "name": "Rattata",
+                "name": "Oddish",
                 "level": 16,
-                "hp": 38,
-                "atk": 25,
-                "def": 18,
-                "spd": 30,
-                "spc": 15,
-                "xp": 195,
+                "hp": 42,
+                "atk": 23,
+                "def": 25,
+                "spd": 17,
+                "spc": 31,
+                "xp": 267,
                 "moves": [
-                    "Tackle",
-                    "Tail Whip",
-                    "Quick Attack",
-                    "Hyper Fang"
+                    "Absorb",
+                    "PoisonPowder"
                 ]
             },
             {
-                "name": "Pikachu",
+                "name": "Bellsprout",
                 "level": 16,
-                "hp": 39,
-                "atk": 25,
-                "def": 17,
-                "spd": 36,
-                "spc": 23,
-                "xp": 280,
+                "hp": 44,
+                "atk": 31,
+                "def": 18,
+                "spd": 20,
+                "spc": 29,
+                "xp": 288,
                 "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave",
-                    "Quick Attack"
+                    "Vine Whip",
+                    "Growth",
+                    "Wrap",
+                    "PoisonPowder"
                 ]
             }
         ],
         "money": 320,
-        "route_one_offset": "0x39EA0"
+        "route_one_offset": "0x39F42"
     },
     "JR TRAINER F 3": {
         "trainer_class": "JR TRAINER F",
@@ -2733,7 +2824,7 @@ const g1trainers = {
             }
         ],
         "money": 320,
-        "route_one_offset": "0x39EA4"
+        "route_one_offset": "0x39F46"
     },
     "JR TRAINER F 4": {
         "trainer_class": "JR TRAINER F",
@@ -2758,7 +2849,7 @@ const g1trainers = {
             }
         ],
         "money": 440,
-        "route_one_offset": "0x39EA9"
+        "route_one_offset": "0x39F4B"
     },
     "JR TRAINER F 5": {
         "trainer_class": "JR TRAINER F",
@@ -2829,7 +2920,7 @@ const g1trainers = {
             }
         ],
         "money": 360,
-        "route_one_offset": "0x39EAC"
+        "route_one_offset": "0x39F4E"
     },
     "JR TRAINER F 6": {
         "trainer_class": "JR TRAINER F",
@@ -2854,7 +2945,7 @@ const g1trainers = {
             }
         ],
         "money": 460,
-        "route_one_offset": "0x39EB2"
+        "route_one_offset": "0x39F54"
     },
     "JR TRAINER F 7": {
         "trainer_class": "JR TRAINER F",
@@ -2862,19 +2953,19 @@ const g1trainers = {
         "trainer_location": "Route 10",
         "pokemon": [
             {
-                "name": "Pikachu",
+                "name": "Jigglypuff",
                 "level": 20,
-                "hp": 47,
-                "atk": 30,
-                "def": 20,
-                "spd": 44,
-                "spc": 28,
-                "xp": 351,
+                "hp": 79,
+                "atk": 26,
+                "def": 16,
+                "spd": 16,
+                "spc": 18,
+                "xp": 325,
                 "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave",
-                    "Quick Attack"
+                    "Sing",
+                    "Pound",
+                    "Disable",
+                    "Defense Curl"
                 ]
             },
             {
@@ -2895,7 +2986,7 @@ const g1trainers = {
             }
         ],
         "money": 400,
-        "route_one_offset": "0x39EB5"
+        "route_one_offset": "0x39F57"
     },
     "JR TRAINER F 8": {
         "trainer_class": "JR TRAINER F",
@@ -2936,7 +3027,7 @@ const g1trainers = {
             }
         ],
         "money": 420,
-        "route_one_offset": "0x39EB9"
+        "route_one_offset": "0x39F5B"
     },
     "JR TRAINER F 9": {
         "trainer_class": "JR TRAINER F",
@@ -2993,7 +3084,7 @@ const g1trainers = {
             }
         ],
         "money": 420,
-        "route_one_offset": "0x39EBD"
+        "route_one_offset": "0x39F5F"
     },
     "JR TRAINER F 10": {
         "trainer_class": "JR TRAINER F",
@@ -3034,7 +3125,7 @@ const g1trainers = {
             }
         ],
         "money": 440,
-        "route_one_offset": "0x39EC2"
+        "route_one_offset": "0x39F64"
     },
     "JR TRAINER F 11": {
         "trainer_class": "JR TRAINER F",
@@ -3075,7 +3166,7 @@ const g1trainers = {
             }
         ],
         "money": 480,
-        "route_one_offset": "0x39EC6"
+        "route_one_offset": "0x39F68"
     },
     "JR TRAINER F 12": {
         "trainer_class": "JR TRAINER F",
@@ -3131,19 +3222,19 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "Pikachu",
+                "name": "Pidgey",
                 "level": 24,
-                "hp": 54,
-                "atk": 35,
-                "def": 23,
-                "spd": 52,
-                "spc": 32,
-                "xp": 421,
+                "hp": 57,
+                "atk": 30,
+                "def": 28,
+                "spd": 35,
+                "spc": 25,
+                "xp": 282,
                 "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave",
-                    "Quick Attack"
+                    "Gust",
+                    "Sand Attack",
+                    "Quick Attack",
+                    "Whirlwind"
                 ]
             },
             {
@@ -3164,7 +3255,7 @@ const g1trainers = {
             }
         ],
         "money": 480,
-        "route_one_offset": "0x39ECA"
+        "route_one_offset": "0x39F6C"
     },
     "JR TRAINER F 13": {
         "trainer_class": "JR TRAINER F",
@@ -3205,7 +3296,7 @@ const g1trainers = {
             }
         ],
         "money": 600,
-        "route_one_offset": "0x39ED1"
+        "route_one_offset": "0x39F73"
     },
     "JR TRAINER F 14": {
         "trainer_class": "JR TRAINER F",
@@ -3278,7 +3369,7 @@ const g1trainers = {
             }
         ],
         "money": 540,
-        "route_one_offset": "0x39ED5"
+        "route_one_offset": "0x39F77"
     },
     "JR TRAINER F 15": {
         "trainer_class": "JR TRAINER F",
@@ -3334,7 +3425,7 @@ const g1trainers = {
             }
         ],
         "money": 560,
-        "route_one_offset": "0x39EDB"
+        "route_one_offset": "0x39F7D"
     },
     "JR TRAINER F 16": {
         "trainer_class": "JR TRAINER F",
@@ -3375,7 +3466,7 @@ const g1trainers = {
             }
         ],
         "money": 620,
-        "route_one_offset": "0x39EE0"
+        "route_one_offset": "0x39F82"
     },
     "JR TRAINER F 17": {
         "trainer_class": "JR TRAINER F",
@@ -3416,7 +3507,7 @@ const g1trainers = {
             }
         ],
         "money": 440,
-        "route_one_offset": "0x39EE4"
+        "route_one_offset": "0x39F86"
     },
     "JR TRAINER F 18": {
         "trainer_class": "JR TRAINER F",
@@ -3473,7 +3564,7 @@ const g1trainers = {
             }
         ],
         "money": 400,
-        "route_one_offset": "0x39EE8"
+        "route_one_offset": "0x39F8A"
     },
     "JR TRAINER F 19": {
         "trainer_class": "JR TRAINER F",
@@ -3546,7 +3637,7 @@ const g1trainers = {
             }
         ],
         "money": 380,
-        "route_one_offset": "0x39EED"
+        "route_one_offset": "0x39F8F"
     },
     "JR TRAINER F 20": {
         "trainer_class": "JR TRAINER F",
@@ -3603,7 +3694,7 @@ const g1trainers = {
             }
         ],
         "money": 560,
-        "route_one_offset": "0x39EF3"
+        "route_one_offset": "0x39F95"
     },
     "JR TRAINER F 21": {
         "trainer_class": "JR TRAINER F",
@@ -3611,39 +3702,40 @@ const g1trainers = {
         "trainer_location": "Route 15",
         "pokemon": [
             {
-                "name": "Pikachu",
+                "name": "Pidgey",
                 "level": 29,
-                "hp": 63,
-                "atk": 42,
-                "def": 27,
-                "spd": 61,
-                "spc": 38,
-                "xp": 508,
+                "hp": 66,
+                "atk": 36,
+                "def": 32,
+                "spd": 42,
+                "spc": 29,
+                "xp": 340,
                 "moves": [
-                    "Growl",
-                    "Thunder Wave",
+                    "Sand Attack",
                     "Quick Attack",
-                    "Swift"
+                    "Whirlwind",
+                    "Wing Attack"
                 ]
             },
             {
-                "name": "Raichu",
+                "name": "Pidgeotto",
                 "level": 29,
-                "hp": 78,
-                "atk": 62,
+                "hp": 80,
+                "atk": 45,
                 "def": 41,
-                "spd": 67,
-                "spc": 61,
-                "xp": 757,
+                "spd": 50,
+                "spc": 38,
+                "xp": 702,
                 "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave"
+                    "Gust",
+                    "Sand Attack",
+                    "Quick Attack",
+                    "Whirlwind"
                 ]
             }
         ],
         "money": 580,
-        "route_one_offset": "0x39EF8"
+        "route_one_offset": "0x39F9A"
     },
     "JR TRAINER F 22": {
         "trainer_class": "JR TRAINER F",
@@ -3668,7 +3760,7 @@ const g1trainers = {
             }
         ],
         "money": 660,
-        "route_one_offset": "0x39EFC"
+        "route_one_offset": "0x39F9E"
     },
     "JR TRAINER F 23": {
         "trainer_class": "JR TRAINER F",
@@ -3719,12 +3811,13 @@ const g1trainers = {
                 "moves": [
                     "Constrict",
                     "Bind",
-                    "Absorb"
+                    "Absorb",
+                    "Vine Whip"
                 ]
             }
         ],
         "money": 580,
-        "route_one_offset": "0x39EFF"
+        "route_one_offset": "0x39FA1"
     },
     "JR TRAINER F 24": {
         "trainer_class": "JR TRAINER F",
@@ -3779,7 +3872,32 @@ const g1trainers = {
             }
         ],
         "money": 600,
-        "route_one_offset": "0x39F04"
+        "route_one_offset": "0x39FA6"
+    },
+    "JR TRAINER F 25": {
+        "trainer_class": "JR TRAINER F",
+        "trainer_name": "JR TRAINER F 25",
+        "trainer_location": "Route 06",
+        "pokemon": [
+            {
+                "name": "Cubone",
+                "level": 20,
+                "hp": 53,
+                "atk": 28,
+                "def": 46,
+                "spd": 22,
+                "spc": 24,
+                "xp": 372,
+                "moves": [
+                    "Growl",
+                    "Bone Club",
+                    "Tail Whip",
+                    "Headbutt"
+                ]
+            }
+        ],
+        "money": 400,
+        "route_one_offset": "0x39FAB"
     },
     "POKEMANIAC 1": {
         "trainer_class": "POKEMANIAC",
@@ -3818,7 +3936,7 @@ const g1trainers = {
             }
         ],
         "money": 1500,
-        "route_one_offset": "0x39F09"
+        "route_one_offset": "0x39FAE"
     },
     "POKEMANIAC 2": {
         "trainer_class": "POKEMANIAC",
@@ -3835,8 +3953,10 @@ const g1trainers = {
                 "spc": 24,
                 "xp": 372,
                 "moves": [
+                    "Growl",
                     "Bone Club",
-                    "Growl"
+                    "Tail Whip",
+                    "Headbutt"
                 ]
             },
             {
@@ -3855,7 +3975,7 @@ const g1trainers = {
             }
         ],
         "money": 1000,
-        "route_one_offset": "0x39F0D"
+        "route_one_offset": "0x39FB2"
     },
     "POKEMANIAC 3": {
         "trainer_class": "POKEMANIAC",
@@ -3906,7 +4026,7 @@ const g1trainers = {
             }
         ],
         "money": 1000,
-        "route_one_offset": "0x39F11"
+        "route_one_offset": "0x39FB6"
     },
     "POKEMANIAC 4": {
         "trainer_class": "POKEMANIAC",
@@ -3939,13 +4059,15 @@ const g1trainers = {
                 "spc": 26,
                 "xp": 409,
                 "moves": [
+                    "Growl",
                     "Bone Club",
-                    "Growl"
+                    "Tail Whip",
+                    "Headbutt"
                 ]
             }
         ],
         "money": 1100,
-        "route_one_offset": "0x39F16"
+        "route_one_offset": "0x39FBB"
     },
     "POKEMANIAC 5": {
         "trainer_class": "POKEMANIAC",
@@ -3969,7 +4091,7 @@ const g1trainers = {
             }
         ],
         "money": 1250,
-        "route_one_offset": "0x39F1A"
+        "route_one_offset": "0x39FBF"
     },
     "POKEMANIAC 6": {
         "trainer_class": "POKEMANIAC",
@@ -4026,7 +4148,7 @@ const g1trainers = {
             }
         ],
         "money": 2000,
-        "route_one_offset": "0x39F1D"
+        "route_one_offset": "0x39FC2"
     },
     "POKEMANIAC 7": {
         "trainer_class": "POKEMANIAC",
@@ -4043,8 +4165,10 @@ const g1trainers = {
                 "spc": 27,
                 "xp": 427,
                 "moves": [
+                    "Growl",
                     "Bone Club",
-                    "Growl"
+                    "Tail Whip",
+                    "Headbutt"
                 ]
             },
             {
@@ -4064,7 +4188,7 @@ const g1trainers = {
             }
         ],
         "money": 1150,
-        "route_one_offset": "0x39F22"
+        "route_one_offset": "0x39FC7"
     },
     "SUPER NERD 1": {
         "trainer_class": "SUPER NERD",
@@ -4100,7 +4224,7 @@ const g1trainers = {
             }
         ],
         "money": 275,
-        "route_one_offset": "0x39F26"
+        "route_one_offset": "0x39FCB"
     },
     "SUPER NERD 2": {
         "trainer_class": "SUPER NERD",
@@ -4151,7 +4275,7 @@ const g1trainers = {
             }
         ],
         "money": 300,
-        "route_one_offset": "0x39F2A"
+        "route_one_offset": "0x39FCF"
     },
     "SUPER NERD 3": {
         "trainer_class": "SUPER NERD",
@@ -4217,7 +4341,7 @@ const g1trainers = {
             }
         ],
         "money": 500,
-        "route_one_offset": "0x39F2F"
+        "route_one_offset": "0x39FD4"
     },
     "SUPER NERD 4": {
         "trainer_class": "SUPER NERD",
@@ -4269,7 +4393,7 @@ const g1trainers = {
             }
         ],
         "money": 550,
-        "route_one_offset": "0x39F35"
+        "route_one_offset": "0x39FDA"
     },
     "SUPER NERD 5": {
         "trainer_class": "SUPER NERD",
@@ -4292,7 +4416,7 @@ const g1trainers = {
             }
         ],
         "money": 650,
-        "route_one_offset": "0x39F3A"
+        "route_one_offset": "0x39FDF"
     },
     "SUPER NERD 6": {
         "trainer_class": "SUPER NERD",
@@ -4344,7 +4468,7 @@ const g1trainers = {
             }
         ],
         "money": 550,
-        "route_one_offset": "0x39F3D"
+        "route_one_offset": "0x39FE2"
     },
     "SUPER NERD 7": {
         "trainer_class": "SUPER NERD",
@@ -4406,7 +4530,7 @@ const g1trainers = {
             }
         ],
         "money": 500,
-        "route_one_offset": "0x39F42"
+        "route_one_offset": "0x39FE7"
     },
     "SUPER NERD 8": {
         "trainer_class": "SUPER NERD",
@@ -4445,7 +4569,7 @@ const g1trainers = {
             }
         ],
         "money": 600,
-        "route_one_offset": "0x39F48"
+        "route_one_offset": "0x39FED"
     },
     "SUPER NERD 9": {
         "trainer_class": "SUPER NERD",
@@ -4502,7 +4626,7 @@ const g1trainers = {
             }
         ],
         "money": 900,
-        "route_one_offset": "0x39F4C"
+        "route_one_offset": "0x39FF1"
     },
     "SUPER NERD 10": {
         "trainer_class": "SUPER NERD",
@@ -4574,7 +4698,7 @@ const g1trainers = {
             }
         ],
         "money": 850,
-        "route_one_offset": "0x39F51"
+        "route_one_offset": "0x39FF6"
     },
     "SUPER NERD 11": {
         "trainer_class": "SUPER NERD",
@@ -4599,7 +4723,7 @@ const g1trainers = {
             }
         ],
         "money": 1025,
-        "route_one_offset": "0x39F57"
+        "route_one_offset": "0x39FFC"
     },
     "SUPER NERD 12": {
         "trainer_class": "SUPER NERD",
@@ -4640,7 +4764,7 @@ const g1trainers = {
             }
         ],
         "money": 925,
-        "route_one_offset": "0x39F5A"
+        "route_one_offset": "0x39FFF"
     },
     "HIKER 1": {
         "trainer_class": "HIKER",
@@ -4689,7 +4813,7 @@ const g1trainers = {
             }
         ],
         "money": 350,
-        "route_one_offset": "0x39F5E"
+        "route_one_offset": "0x3A003"
     },
     "HIKER 2": {
         "trainer_class": "HIKER",
@@ -4725,7 +4849,7 @@ const g1trainers = {
             }
         ],
         "money": 525,
-        "route_one_offset": "0x39F63"
+        "route_one_offset": "0x3A008"
     },
     "HIKER 3": {
         "trainer_class": "HIKER",
@@ -4789,7 +4913,7 @@ const g1trainers = {
             }
         ],
         "money": 455,
-        "route_one_offset": "0x39F67"
+        "route_one_offset": "0x3A00C"
     },
     "HIKER 4": {
         "trainer_class": "HIKER",
@@ -4813,7 +4937,7 @@ const g1trainers = {
             }
         ],
         "money": 595,
-        "route_one_offset": "0x39F6D"
+        "route_one_offset": "0x3A012"
     },
     "HIKER 5": {
         "trainer_class": "HIKER",
@@ -4854,7 +4978,7 @@ const g1trainers = {
             }
         ],
         "money": 735,
-        "route_one_offset": "0x39F70"
+        "route_one_offset": "0x3A015"
     },
     "HIKER 6": {
         "trainer_class": "HIKER",
@@ -4907,7 +5031,7 @@ const g1trainers = {
             }
         ],
         "money": 700,
-        "route_one_offset": "0x39F74"
+        "route_one_offset": "0x3A019"
     },
     "HIKER 7": {
         "trainer_class": "HIKER",
@@ -4948,7 +5072,7 @@ const g1trainers = {
             }
         ],
         "money": 735,
-        "route_one_offset": "0x39F79"
+        "route_one_offset": "0x3A01E"
     },
     "HIKER 8": {
         "trainer_class": "HIKER",
@@ -4988,7 +5112,7 @@ const g1trainers = {
             }
         ],
         "money": 665,
-        "route_one_offset": "0x39F7D"
+        "route_one_offset": "0x3A022"
     },
     "HIKER 9": {
         "trainer_class": "HIKER",
@@ -5045,7 +5169,7 @@ const g1trainers = {
             }
         ],
         "money": 735,
-        "route_one_offset": "0x39F81"
+        "route_one_offset": "0x3A026"
     },
     "HIKER 10": {
         "trainer_class": "HIKER",
@@ -5070,7 +5194,7 @@ const g1trainers = {
             }
         ],
         "money": 875,
-        "route_one_offset": "0x39F86"
+        "route_one_offset": "0x3A02B"
     },
     "HIKER 11": {
         "trainer_class": "HIKER",
@@ -5109,7 +5233,7 @@ const g1trainers = {
             }
         ],
         "money": 700,
-        "route_one_offset": "0x39F89"
+        "route_one_offset": "0x3A02E"
     },
     "HIKER 11 Duplicate": {
         "trainer_class": "HIKER",
@@ -5148,7 +5272,7 @@ const g1trainers = {
             }
         ],
         "money": 700,
-        "route_one_offset": "0x39F89"
+        "route_one_offset": "0x3A02E"
     },
     "HIKER 12": {
         "trainer_class": "HIKER",
@@ -5215,7 +5339,7 @@ const g1trainers = {
             }
         ],
         "money": 665,
-        "route_one_offset": "0x39F8D"
+        "route_one_offset": "0x3A032"
     },
     "HIKER 13": {
         "trainer_class": "HIKER",
@@ -5271,7 +5395,7 @@ const g1trainers = {
             }
         ],
         "money": 700,
-        "route_one_offset": "0x39F93"
+        "route_one_offset": "0x3A038"
     },
     "HIKER 14": {
         "trainer_class": "HIKER",
@@ -5312,7 +5436,7 @@ const g1trainers = {
             }
         ],
         "money": 735,
-        "route_one_offset": "0x39F98"
+        "route_one_offset": "0x3A03D"
     },
     "BIKER 1": {
         "trainer_class": "BIKER",
@@ -5363,7 +5487,7 @@ const g1trainers = {
             }
         ],
         "money": 560,
-        "route_one_offset": "0x39F9C"
+        "route_one_offset": "0x3A041"
     },
     "BIKER 2": {
         "trainer_class": "BIKER",
@@ -5400,7 +5524,7 @@ const g1trainers = {
             }
         ],
         "money": 580,
-        "route_one_offset": "0x39FA1"
+        "route_one_offset": "0x3A046"
     },
     "BIKER 3": {
         "trainer_class": "BIKER",
@@ -5480,7 +5604,7 @@ const g1trainers = {
             }
         ],
         "money": 500,
-        "route_one_offset": "0x39FA5"
+        "route_one_offset": "0x3A04A"
     },
     "BIKER 4": {
         "trainer_class": "BIKER",
@@ -5532,7 +5656,7 @@ const g1trainers = {
             }
         ],
         "money": 560,
-        "route_one_offset": "0x39FAC"
+        "route_one_offset": "0x3A051"
     },
     "BIKER 5": {
         "trainer_class": "BIKER",
@@ -5569,7 +5693,7 @@ const g1trainers = {
             }
         ],
         "money": 580,
-        "route_one_offset": "0x39FB1"
+        "route_one_offset": "0x3A056"
     },
     "BIKER 6": {
         "trainer_class": "BIKER",
@@ -5593,7 +5717,7 @@ const g1trainers = {
             }
         ],
         "money": 660,
-        "route_one_offset": "0x39FB5"
+        "route_one_offset": "0x3A05A"
     },
     "BIKER 7": {
         "trainer_class": "BIKER",
@@ -5658,7 +5782,7 @@ const g1trainers = {
             }
         ],
         "money": 520,
-        "route_one_offset": "0x39FB8"
+        "route_one_offset": "0x3A05D"
     },
     "BIKER 8": {
         "trainer_class": "BIKER",
@@ -5711,7 +5835,7 @@ const g1trainers = {
             }
         ],
         "money": 560,
-        "route_one_offset": "0x39FBE"
+        "route_one_offset": "0x3A063"
     },
     "BIKER 9": {
         "trainer_class": "BIKER",
@@ -5736,7 +5860,7 @@ const g1trainers = {
             }
         ],
         "money": 660,
-        "route_one_offset": "0x39FC3"
+        "route_one_offset": "0x3A068"
     },
     "BIKER 10": {
         "trainer_class": "BIKER",
@@ -5777,7 +5901,7 @@ const g1trainers = {
             }
         ],
         "money": 580,
-        "route_one_offset": "0x39FC6"
+        "route_one_offset": "0x3A06B"
     },
     "BIKER 11": {
         "trainer_class": "BIKER",
@@ -5816,7 +5940,7 @@ const g1trainers = {
             }
         ],
         "money": 580,
-        "route_one_offset": "0x39FCA"
+        "route_one_offset": "0x3A06F"
     },
     "BIKER 12": {
         "trainer_class": "BIKER",
@@ -5897,7 +6021,7 @@ const g1trainers = {
             }
         ],
         "money": 500,
-        "route_one_offset": "0x39FCE"
+        "route_one_offset": "0x3A073"
     },
     "BIKER 13": {
         "trainer_class": "BIKER",
@@ -5962,7 +6086,7 @@ const g1trainers = {
             }
         ],
         "money": 520,
-        "route_one_offset": "0x39FD5"
+        "route_one_offset": "0x3A07A"
     },
     "BIKER 14": {
         "trainer_class": "BIKER",
@@ -6013,7 +6137,7 @@ const g1trainers = {
             }
         ],
         "money": 560,
-        "route_one_offset": "0x39FDB"
+        "route_one_offset": "0x3A080"
     },
     "BIKER 15": {
         "trainer_class": "BIKER",
@@ -6051,7 +6175,7 @@ const g1trainers = {
             }
         ],
         "money": 580,
-        "route_one_offset": "0x39FE0"
+        "route_one_offset": "0x3A085"
     },
     "BURGLAR 1": {
         "trainer_class": "BURGLAR",
@@ -6092,7 +6216,7 @@ const g1trainers = {
             }
         ],
         "money": 2610,
-        "route_one_offset": "0x39FE4"
+        "route_one_offset": "0x3A089"
     },
     "BURGLAR 2": {
         "trainer_class": "BURGLAR",
@@ -6117,7 +6241,7 @@ const g1trainers = {
             }
         ],
         "money": 2970,
-        "route_one_offset": "0x39FE8"
+        "route_one_offset": "0x3A08D"
     },
     "BURGLAR 3": {
         "trainer_class": "BURGLAR",
@@ -6171,7 +6295,7 @@ const g1trainers = {
             }
         ],
         "money": 2520,
-        "route_one_offset": "0x39FEB"
+        "route_one_offset": "0x3A090"
     },
     "BURGLAR 4": {
         "trainer_class": "BURGLAR",
@@ -6228,7 +6352,7 @@ const g1trainers = {
             }
         ],
         "money": 3240,
-        "route_one_offset": "0x39FF0"
+        "route_one_offset": "0x3A095"
     },
     "BURGLAR 5": {
         "trainer_class": "BURGLAR",
@@ -6253,7 +6377,7 @@ const g1trainers = {
             }
         ],
         "money": 3690,
-        "route_one_offset": "0x39FF5"
+        "route_one_offset": "0x3A09A"
     },
     "BURGLAR 6": {
         "trainer_class": "BURGLAR",
@@ -6294,7 +6418,7 @@ const g1trainers = {
             }
         ],
         "money": 3330,
-        "route_one_offset": "0x39FF8"
+        "route_one_offset": "0x3A09D"
     },
     "BURGLAR 7": {
         "trainer_class": "BURGLAR",
@@ -6335,7 +6459,7 @@ const g1trainers = {
             }
         ],
         "money": 3060,
-        "route_one_offset": "0x39FFC"
+        "route_one_offset": "0x3A0A1"
     },
     "BURGLAR 8": {
         "trainer_class": "BURGLAR",
@@ -6360,7 +6484,7 @@ const g1trainers = {
             }
         ],
         "money": 3420,
-        "route_one_offset": "0x3A000"
+        "route_one_offset": "0x3A0A5"
     },
     "BURGLAR 9": {
         "trainer_class": "BURGLAR",
@@ -6400,7 +6524,7 @@ const g1trainers = {
             }
         ],
         "money": 3060,
-        "route_one_offset": "0x3A003"
+        "route_one_offset": "0x3A0A8"
     },
     "ENGINEER 1": {
         "trainer_class": "ENGINEER",
@@ -6438,7 +6562,7 @@ const g1trainers = {
             }
         ],
         "money": 1050,
-        "route_one_offset": "0x3A007"
+        "route_one_offset": "0x3A0AC"
     },
     "ENGINEER 2": {
         "trainer_class": "ENGINEER",
@@ -6461,7 +6585,7 @@ const g1trainers = {
             }
         ],
         "money": 1050,
-        "route_one_offset": "0x3A00B"
+        "route_one_offset": "0x3A0B0"
     },
     "ENGINEER 3": {
         "trainer_class": "ENGINEER",
@@ -6511,7 +6635,7 @@ const g1trainers = {
             }
         ],
         "money": 900,
-        "route_one_offset": "0x3A00E"
+        "route_one_offset": "0x3A0B3"
     },
     "FISHER 1": {
         "trainer_class": "FISHER",
@@ -6563,7 +6687,7 @@ const g1trainers = {
             }
         ],
         "money": 595,
-        "route_one_offset": "0x3A013"
+        "route_one_offset": "0x3A0B8"
     },
     "FISHER 2": {
         "trainer_class": "FISHER",
@@ -6615,7 +6739,7 @@ const g1trainers = {
             }
         ],
         "money": 595,
-        "route_one_offset": "0x3A018"
+        "route_one_offset": "0x3A0BD"
     },
     "FISHER 3": {
         "trainer_class": "FISHER",
@@ -6669,7 +6793,7 @@ const g1trainers = {
             }
         ],
         "money": 770,
-        "route_one_offset": "0x3A01D"
+        "route_one_offset": "0x3A0C2"
     },
     "FISHER 4": {
         "trainer_class": "FISHER",
@@ -6710,7 +6834,7 @@ const g1trainers = {
             }
         ],
         "money": 840,
-        "route_one_offset": "0x3A022"
+        "route_one_offset": "0x3A0C7"
     },
     "FISHER 5": {
         "trainer_class": "FISHER",
@@ -6735,7 +6859,7 @@ const g1trainers = {
             }
         ],
         "money": 945,
-        "route_one_offset": "0x3A026"
+        "route_one_offset": "0x3A0CB"
     },
     "FISHER 6": {
         "trainer_class": "FISHER",
@@ -6803,7 +6927,7 @@ const g1trainers = {
             }
         ],
         "money": 735,
-        "route_one_offset": "0x3A029"
+        "route_one_offset": "0x3A0CE"
     },
     "FISHER 7": {
         "trainer_class": "FISHER",
@@ -6876,7 +7000,7 @@ const g1trainers = {
             }
         ],
         "money": 980,
-        "route_one_offset": "0x3A02F"
+        "route_one_offset": "0x3A0D4"
     },
     "FISHER 8": {
         "trainer_class": "FISHER",
@@ -6917,7 +7041,7 @@ const g1trainers = {
             }
         ],
         "money": 1085,
-        "route_one_offset": "0x3A035"
+        "route_one_offset": "0x3A0DA"
     },
     "FISHER 9": {
         "trainer_class": "FISHER",
@@ -7010,7 +7134,7 @@ const g1trainers = {
             }
         ],
         "money": 945,
-        "route_one_offset": "0x3A039"
+        "route_one_offset": "0x3A0DE"
     },
     "FISHER 10": {
         "trainer_class": "FISHER",
@@ -7051,7 +7175,7 @@ const g1trainers = {
             }
         ],
         "money": 1155,
-        "route_one_offset": "0x3A041"
+        "route_one_offset": "0x3A0E6"
     },
     "FISHER 11": {
         "trainer_class": "FISHER",
@@ -7088,7 +7212,7 @@ const g1trainers = {
             }
         ],
         "money": 840,
-        "route_one_offset": "0x3A045"
+        "route_one_offset": "0x3A0EA"
     },
     "SWIMMER 1": {
         "trainer_class": "SWIMMER",
@@ -7124,7 +7248,7 @@ const g1trainers = {
             }
         ],
         "money": 80,
-        "route_one_offset": "0x3A049"
+        "route_one_offset": "0x3A0EE"
     },
     "SWIMMER 2": {
         "trainer_class": "SWIMMER",
@@ -7165,7 +7289,7 @@ const g1trainers = {
             }
         ],
         "money": 150,
-        "route_one_offset": "0x3A04D"
+        "route_one_offset": "0x3A0F2"
     },
     "SWIMMER 3": {
         "trainer_class": "SWIMMER",
@@ -7221,7 +7345,7 @@ const g1trainers = {
             }
         ],
         "money": 145,
-        "route_one_offset": "0x3A051"
+        "route_one_offset": "0x3A0F6"
     },
     "SWIMMER 4": {
         "trainer_class": "SWIMMER",
@@ -7262,7 +7386,7 @@ const g1trainers = {
             }
         ],
         "money": 150,
-        "route_one_offset": "0x3A056"
+        "route_one_offset": "0x3A0FB"
     },
     "SWIMMER 5": {
         "trainer_class": "SWIMMER",
@@ -7334,7 +7458,7 @@ const g1trainers = {
             }
         ],
         "money": 135,
-        "route_one_offset": "0x3A05A"
+        "route_one_offset": "0x3A0FF"
     },
     "SWIMMER 6": {
         "trainer_class": "SWIMMER",
@@ -7391,7 +7515,7 @@ const g1trainers = {
             }
         ],
         "money": 145,
-        "route_one_offset": "0x3A060"
+        "route_one_offset": "0x3A105"
     },
     "SWIMMER 7": {
         "trainer_class": "SWIMMER",
@@ -7432,7 +7556,7 @@ const g1trainers = {
             }
         ],
         "money": 150,
-        "route_one_offset": "0x3A065"
+        "route_one_offset": "0x3A10A"
     },
     "SWIMMER 8": {
         "trainer_class": "SWIMMER",
@@ -7520,7 +7644,7 @@ const g1trainers = {
             }
         ],
         "money": 135,
-        "route_one_offset": "0x3A069"
+        "route_one_offset": "0x3A10E"
     },
     "SWIMMER 9": {
         "trainer_class": "SWIMMER",
@@ -7561,7 +7685,7 @@ const g1trainers = {
             }
         ],
         "money": 155,
-        "route_one_offset": "0x3A070"
+        "route_one_offset": "0x3A115"
     },
     "SWIMMER 10": {
         "trainer_class": "SWIMMER",
@@ -7586,7 +7710,7 @@ const g1trainers = {
             }
         ],
         "money": 175,
-        "route_one_offset": "0x3A074"
+        "route_one_offset": "0x3A119"
     },
     "SWIMMER 11": {
         "trainer_class": "SWIMMER",
@@ -7655,7 +7779,7 @@ const g1trainers = {
             }
         ],
         "money": 140,
-        "route_one_offset": "0x3A077"
+        "route_one_offset": "0x3A11C"
     },
     "SWIMMER 12": {
         "trainer_class": "SWIMMER",
@@ -7696,7 +7820,7 @@ const g1trainers = {
             }
         ],
         "money": 165,
-        "route_one_offset": "0x3A07D"
+        "route_one_offset": "0x3A122"
     },
     "SWIMMER 13": {
         "trainer_class": "SWIMMER",
@@ -7720,7 +7844,7 @@ const g1trainers = {
             }
         ],
         "money": 185,
-        "route_one_offset": "0x3A081"
+        "route_one_offset": "0x3A126"
     },
     "SWIMMER 14": {
         "trainer_class": "SWIMMER",
@@ -7761,7 +7885,7 @@ const g1trainers = {
             }
         ],
         "money": 165,
-        "route_one_offset": "0x3A084"
+        "route_one_offset": "0x3A129"
     },
     "SWIMMER 15": {
         "trainer_class": "SWIMMER",
@@ -7818,7 +7942,7 @@ const g1trainers = {
             }
         ],
         "money": 160,
-        "route_one_offset": "0x3A088"
+        "route_one_offset": "0x3A12D"
     },
     "CUE BALL 1": {
         "trainer_class": "CUE BALL",
@@ -7850,7 +7974,7 @@ const g1trainers = {
                 "spc": 29,
                 "xp": 444,
                 "moves": [
-                    "Leer",
+                    "Low Kick",
                     "Karate Chop",
                     "Fury Swipes",
                     "Focus Energy"
@@ -7873,7 +7997,7 @@ const g1trainers = {
             }
         ],
         "money": 700,
-        "route_one_offset": "0x3A08D"
+        "route_one_offset": "0x3A132"
     },
     "CUE BALL 2": {
         "trainer_class": "CUE BALL",
@@ -7890,7 +8014,7 @@ const g1trainers = {
                 "spc": 29,
                 "xp": 459,
                 "moves": [
-                    "Leer",
+                    "Low Kick",
                     "Karate Chop",
                     "Fury Swipes",
                     "Focus Energy"
@@ -7913,7 +8037,7 @@ const g1trainers = {
             }
         ],
         "money": 725,
-        "route_one_offset": "0x3A092"
+        "route_one_offset": "0x3A137"
     },
     "CUE BALL 3": {
         "trainer_class": "CUE BALL",
@@ -7938,7 +8062,7 @@ const g1trainers = {
             }
         ],
         "money": 825,
-        "route_one_offset": "0x3A096"
+        "route_one_offset": "0x3A13B"
     },
     "CUE BALL 4": {
         "trainer_class": "CUE BALL",
@@ -7955,7 +8079,7 @@ const g1trainers = {
                 "spc": 29,
                 "xp": 459,
                 "moves": [
-                    "Leer",
+                    "Low Kick",
                     "Karate Chop",
                     "Fury Swipes",
                     "Focus Energy"
@@ -7971,15 +8095,15 @@ const g1trainers = {
                 "spc": 44,
                 "xp": 925,
                 "moves": [
-                    "Leer",
                     "Karate Chop",
                     "Fury Swipes",
-                    "Focus Energy"
+                    "Focus Energy",
+                    "Rage"
                 ]
             }
         ],
         "money": 725,
-        "route_one_offset": "0x3A099"
+        "route_one_offset": "0x3A13E"
     },
     "CUE BALL 5": {
         "trainer_class": "CUE BALL",
@@ -8018,7 +8142,7 @@ const g1trainers = {
             }
         ],
         "money": 725,
-        "route_one_offset": "0x3A09D"
+        "route_one_offset": "0x3A142"
     },
     "CUE BALL 6": {
         "trainer_class": "CUE BALL",
@@ -8042,7 +8166,7 @@ const g1trainers = {
             }
         ],
         "money": 825,
-        "route_one_offset": "0x3A0A1"
+        "route_one_offset": "0x3A146"
     },
     "CUE BALL 7": {
         "trainer_class": "CUE BALL",
@@ -8059,8 +8183,8 @@ const g1trainers = {
                 "spc": 27,
                 "xp": 411,
                 "moves": [
-                    "Scratch",
                     "Leer",
+                    "Low Kick",
                     "Karate Chop",
                     "Fury Swipes"
                 ]
@@ -8075,8 +8199,8 @@ const g1trainers = {
                 "spc": 27,
                 "xp": 411,
                 "moves": [
-                    "Scratch",
                     "Leer",
+                    "Low Kick",
                     "Karate Chop",
                     "Fury Swipes"
                 ]
@@ -8113,7 +8237,7 @@ const g1trainers = {
             }
         ],
         "money": 650,
-        "route_one_offset": "0x3A0A4"
+        "route_one_offset": "0x3A149"
     },
     "CUE BALL 8": {
         "trainer_class": "CUE BALL",
@@ -8130,10 +8254,10 @@ const g1trainers = {
                 "spc": 44,
                 "xp": 925,
                 "moves": [
-                    "Leer",
                     "Karate Chop",
                     "Fury Swipes",
-                    "Focus Energy"
+                    "Focus Energy",
+                    "Rage"
                 ]
             },
             {
@@ -8153,7 +8277,7 @@ const g1trainers = {
             }
         ],
         "money": 725,
-        "route_one_offset": "0x3A0AA"
+        "route_one_offset": "0x3A14F"
     },
     "CUE BALL 9": {
         "trainer_class": "CUE BALL",
@@ -8210,7 +8334,7 @@ const g1trainers = {
             }
         ],
         "money": 775,
-        "route_one_offset": "0x3A0AE"
+        "route_one_offset": "0x3A153"
     },
     "GAMBLER 1": {
         "trainer_class": "GAMBLER",
@@ -8246,7 +8370,7 @@ const g1trainers = {
             }
         ],
         "money": 1260,
-        "route_one_offset": "0x3A0B3"
+        "route_one_offset": "0x3A158"
     },
     "GAMBLER 2": {
         "trainer_class": "GAMBLER",
@@ -8286,7 +8410,7 @@ const g1trainers = {
             }
         ],
         "money": 1260,
-        "route_one_offset": "0x3A0B7"
+        "route_one_offset": "0x3A15C"
     },
     "GAMBLER 3": {
         "trainer_class": "GAMBLER",
@@ -8323,7 +8447,7 @@ const g1trainers = {
             }
         ],
         "money": 1260,
-        "route_one_offset": "0x3A0BB"
+        "route_one_offset": "0x3A160"
     },
     "GAMBLER 4": {
         "trainer_class": "GAMBLER",
@@ -8362,7 +8486,7 @@ const g1trainers = {
             }
         ],
         "money": 1260,
-        "route_one_offset": "0x3A0BF"
+        "route_one_offset": "0x3A164"
     },
     "GAMBLER 5": {
         "trainer_class": "GAMBLER",
@@ -8416,7 +8540,7 @@ const g1trainers = {
             }
         ],
         "money": 1540,
-        "route_one_offset": "0x3A0C3"
+        "route_one_offset": "0x3A168"
     },
     "GAMBLER 6": {
         "trainer_class": "GAMBLER",
@@ -8473,7 +8597,7 @@ const g1trainers = {
             }
         ],
         "money": 1540,
-        "route_one_offset": "0x3A0C8"
+        "route_one_offset": "0x3A16D"
     },
     "GAMBLER 7": {
         "trainer_class": "GAMBLER",
@@ -8514,7 +8638,7 @@ const g1trainers = {
             }
         ],
         "money": 1680,
-        "route_one_offset": "0x3A0CD"
+        "route_one_offset": "0x3A172"
     },
     "BEAUTY 1": {
         "trainer_class": "BEAUTY",
@@ -8587,7 +8711,7 @@ const g1trainers = {
             }
         ],
         "money": 1470,
-        "route_one_offset": "0x3A0D1"
+        "route_one_offset": "0x3A176"
     },
     "BEAUTY 2": {
         "trainer_class": "BEAUTY",
@@ -8628,7 +8752,7 @@ const g1trainers = {
             }
         ],
         "money": 1680,
-        "route_one_offset": "0x3A0D7"
+        "route_one_offset": "0x3A17C"
     },
     "BEAUTY 3": {
         "trainer_class": "BEAUTY",
@@ -8652,7 +8776,7 @@ const g1trainers = {
             }
         ],
         "money": 1820,
-        "route_one_offset": "0x3A0DB"
+        "route_one_offset": "0x3A180"
     },
     "BEAUTY 4": {
         "trainer_class": "BEAUTY",
@@ -8676,19 +8800,19 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "Pikachu",
+                "name": "Vulpix",
                 "level": 27,
-                "hp": 60,
-                "atk": 39,
-                "def": 25,
-                "spd": 57,
-                "spc": 36,
-                "xp": 474,
+                "hp": 61,
+                "atk": 32,
+                "def": 30,
+                "spd": 44,
+                "spc": 44,
+                "xp": 364,
                 "moves": [
-                    "Growl",
-                    "Thunder Wave",
+                    "Ember",
+                    "Tail Whip",
                     "Quick Attack",
-                    "Swift"
+                    "Roar"
                 ]
             },
             {
@@ -8709,7 +8833,7 @@ const g1trainers = {
             }
         ],
         "money": 1890,
-        "route_one_offset": "0x3A0DE"
+        "route_one_offset": "0x3A183"
     },
     "BEAUTY 5": {
         "trainer_class": "BEAUTY",
@@ -8750,7 +8874,7 @@ const g1trainers = {
             }
         ],
         "money": 2030,
-        "route_one_offset": "0x3A0E3"
+        "route_one_offset": "0x3A188"
     },
     "BEAUTY 6": {
         "trainer_class": "BEAUTY",
@@ -8775,7 +8899,7 @@ const g1trainers = {
             }
         ],
         "money": 2450,
-        "route_one_offset": "0x3A0E7"
+        "route_one_offset": "0x3A18C"
     },
     "BEAUTY 7": {
         "trainer_class": "BEAUTY",
@@ -8832,7 +8956,7 @@ const g1trainers = {
             }
         ],
         "money": 2100,
-        "route_one_offset": "0x3A0EA"
+        "route_one_offset": "0x3A18F"
     },
     "BEAUTY 8": {
         "trainer_class": "BEAUTY",
@@ -8873,7 +8997,7 @@ const g1trainers = {
             }
         ],
         "money": 2170,
-        "route_one_offset": "0x3A0EF"
+        "route_one_offset": "0x3A194"
     },
     "BEAUTY 9": {
         "trainer_class": "BEAUTY",
@@ -8914,7 +9038,7 @@ const g1trainers = {
             }
         ],
         "money": 2030,
-        "route_one_offset": "0x3A0F3"
+        "route_one_offset": "0x3A198"
     },
     "BEAUTY 10": {
         "trainer_class": "BEAUTY",
@@ -8955,7 +9079,7 @@ const g1trainers = {
             }
         ],
         "money": 2030,
-        "route_one_offset": "0x3A0F7"
+        "route_one_offset": "0x3A19C"
     },
     "BEAUTY 11": {
         "trainer_class": "BEAUTY",
@@ -9012,7 +9136,7 @@ const g1trainers = {
             }
         ],
         "money": 2310,
-        "route_one_offset": "0x3A0FB"
+        "route_one_offset": "0x3A1A0"
     },
     "BEAUTY 12": {
         "trainer_class": "BEAUTY",
@@ -9101,7 +9225,7 @@ const g1trainers = {
             }
         ],
         "money": 1890,
-        "route_one_offset": "0x3A100"
+        "route_one_offset": "0x3A1A5"
     },
     "BEAUTY 13": {
         "trainer_class": "BEAUTY",
@@ -9142,7 +9266,7 @@ const g1trainers = {
             }
         ],
         "money": 2100,
-        "route_one_offset": "0x3A107"
+        "route_one_offset": "0x3A1AC"
     },
     "BEAUTY 14": {
         "trainer_class": "BEAUTY",
@@ -9199,7 +9323,7 @@ const g1trainers = {
             }
         ],
         "money": 2030,
-        "route_one_offset": "0x3A10B"
+        "route_one_offset": "0x3A1B0"
     },
     "BEAUTY 15": {
         "trainer_class": "BEAUTY",
@@ -9256,7 +9380,7 @@ const g1trainers = {
             }
         ],
         "money": 2100,
-        "route_one_offset": "0x3A110"
+        "route_one_offset": "0x3A1B5"
     },
     "PSYCHIC 1": {
         "trainer_class": "PSYCHIC",
@@ -9329,7 +9453,7 @@ const g1trainers = {
             }
         ],
         "money": 310,
-        "route_one_offset": "0x3A115"
+        "route_one_offset": "0x3A1BA"
     },
     "PSYCHIC 2": {
         "trainer_class": "PSYCHIC",
@@ -9370,7 +9494,7 @@ const g1trainers = {
             }
         ],
         "money": 340,
-        "route_one_offset": "0x3A11B"
+        "route_one_offset": "0x3A1C0"
     },
     "PSYCHIC 3": {
         "trainer_class": "PSYCHIC",
@@ -9427,7 +9551,7 @@ const g1trainers = {
             }
         ],
         "money": 330,
-        "route_one_offset": "0x3A11F"
+        "route_one_offset": "0x3A1C4"
     },
     "PSYCHIC 4": {
         "trainer_class": "PSYCHIC",
@@ -9452,11 +9576,11 @@ const g1trainers = {
             }
         ],
         "money": 380,
-        "route_one_offset": "0x3A124"
+        "route_one_offset": "0x3A1C9"
     },
-    "ROCKER 1": {
-        "trainer_class": "ROCKER",
-        "trainer_name": "ROCKER 1",
+    "Rocker 1": {
+        "trainer_class": "Rocker",
+        "trainer_name": "Rocker 1",
         "trainer_location": "Vermilion Gym",
         "pokemon": [
             {
@@ -9475,16 +9599,18 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "Magnemite",
+                "name": "Voltorb",
                 "level": 20,
-                "hp": 43,
-                "atk": 22,
-                "def": 36,
-                "spd": 26,
-                "spc": 46,
-                "xp": 381,
+                "hp": 49,
+                "atk": 20,
+                "def": 28,
+                "spd": 48,
+                "spc": 30,
+                "xp": 441,
                 "moves": [
-                    "Tackle"
+                    "Tackle",
+                    "Screech",
+                    "Sonic Boom"
                 ]
             },
             {
@@ -9504,11 +9630,11 @@ const g1trainers = {
             }
         ],
         "money": 500,
-        "route_one_offset": "0x3A127"
+        "route_one_offset": "0x3A1CC"
     },
-    "ROCKER 2": {
-        "trainer_class": "ROCKER",
-        "trainer_name": "ROCKER 2",
+    "Rocker 2": {
+        "trainer_class": "Rocker",
+        "trainer_name": "Rocker 2",
         "trainer_location": "Route 12",
         "pokemon": [
             {
@@ -9545,12 +9671,12 @@ const g1trainers = {
             }
         ],
         "money": 725,
-        "route_one_offset": "0x3A12C"
+        "route_one_offset": "0x3A1D1"
     },
     "JUGGLER 1": {
         "trainer_class": "JUGGLER",
         "trainer_name": "JUGGLER 1",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Kadabra",
@@ -9562,7 +9688,7 @@ const g1trainers = {
                 "spc": 79,
                 "xp": 900,
                 "moves": [
-                    "Teleport",
+                    "Kinesis",
                     "Confusion",
                     "Disable",
                     "Psybeam"
@@ -9585,7 +9711,7 @@ const g1trainers = {
             }
         ],
         "money": 1015,
-        "route_one_offset": "0x3A130"
+        "route_one_offset": "0x3A1D5"
     },
     "JUGGLER 2": {
         "trainer_class": "JUGGLER",
@@ -9658,7 +9784,7 @@ const g1trainers = {
             }
         ],
         "money": 1435,
-        "route_one_offset": "0x3A134"
+        "route_one_offset": "0x3A1D9"
     },
     "JUGGLER 3": {
         "trainer_class": "JUGGLER",
@@ -9731,7 +9857,7 @@ const g1trainers = {
             }
         ],
         "money": 1085,
-        "route_one_offset": "0x3A13A"
+        "route_one_offset": "0x3A1DF"
     },
     "JUGGLER 4": {
         "trainer_class": "JUGGLER",
@@ -9772,7 +9898,7 @@ const g1trainers = {
             }
         ],
         "money": 1190,
-        "route_one_offset": "0x3A140"
+        "route_one_offset": "0x3A1E5"
     },
     "JUGGLER 5": {
         "trainer_class": "JUGGLER",
@@ -9797,7 +9923,7 @@ const g1trainers = {
             }
         ],
         "money": 1680,
-        "route_one_offset": "0x3A144"
+        "route_one_offset": "0x3A1E9"
     },
     "JUGGLER 6": {
         "trainer_class": "JUGGLER",
@@ -9822,7 +9948,7 @@ const g1trainers = {
             }
         ],
         "money": 1155,
-        "route_one_offset": "0x3A147"
+        "route_one_offset": "0x3A1EC"
     },
     "JUGGLER 7": {
         "trainer_class": "JUGGLER",
@@ -9847,7 +9973,7 @@ const g1trainers = {
             }
         ],
         "money": 1330,
-        "route_one_offset": "0x3A14A"
+        "route_one_offset": "0x3A1EF"
     },
     "JUGGLER 8": {
         "trainer_class": "JUGGLER",
@@ -9888,7 +10014,7 @@ const g1trainers = {
             }
         ],
         "money": 1190,
-        "route_one_offset": "0x3A14D"
+        "route_one_offset": "0x3A1F2"
     },
     "TAMER 1": {
         "trainer_class": "TAMER",
@@ -9929,7 +10055,7 @@ const g1trainers = {
             }
         ],
         "money": 1360,
-        "route_one_offset": "0x3A151"
+        "route_one_offset": "0x3A1F6"
     },
     "TAMER 2": {
         "trainer_class": "TAMER",
@@ -9986,7 +10112,7 @@ const g1trainers = {
             }
         ],
         "money": 1320,
-        "route_one_offset": "0x3A155"
+        "route_one_offset": "0x3A1FA"
     },
     "TAMER 3": {
         "trainer_class": "TAMER",
@@ -10011,7 +10137,7 @@ const g1trainers = {
             }
         ],
         "money": 1720,
-        "route_one_offset": "0x3A15A"
+        "route_one_offset": "0x3A1FF"
     },
     "TAMER 4": {
         "trainer_class": "TAMER",
@@ -10052,7 +10178,7 @@ const g1trainers = {
             }
         ],
         "money": 1560,
-        "route_one_offset": "0x3A15D"
+        "route_one_offset": "0x3A202"
     },
     "TAMER 5": {
         "trainer_class": "TAMER",
@@ -10093,7 +10219,7 @@ const g1trainers = {
             }
         ],
         "money": 1760,
-        "route_one_offset": "0x3A161"
+        "route_one_offset": "0x3A206"
     },
     "TAMER 6": {
         "trainer_class": "TAMER",
@@ -10126,9 +10252,9 @@ const g1trainers = {
                 "spc": 62,
                 "xp": 1341,
                 "moves": [
-                    "Karate Chop",
                     "Fury Swipes",
                     "Focus Energy",
+                    "Rage",
                     "Seismic Toss"
                 ]
             },
@@ -10166,7 +10292,7 @@ const g1trainers = {
             }
         ],
         "money": 1680,
-        "route_one_offset": "0x3A165"
+        "route_one_offset": "0x3A20A"
     },
     "BIRD KEEPER 1": {
         "trainer_class": "BIRD KEEPER",
@@ -10207,7 +10333,7 @@ const g1trainers = {
             }
         ],
         "money": 725,
-        "route_one_offset": "0x3A16B"
+        "route_one_offset": "0x3A210"
     },
     "BIRD KEEPER 2": {
         "trainer_class": "BIRD KEEPER",
@@ -10296,7 +10422,7 @@ const g1trainers = {
             }
         ],
         "money": 625,
-        "route_one_offset": "0x3A16F"
+        "route_one_offset": "0x3A214"
     },
     "BIRD KEEPER 3": {
         "trainer_class": "BIRD KEEPER",
@@ -10369,7 +10495,7 @@ const g1trainers = {
             }
         ],
         "money": 650,
-        "route_one_offset": "0x3A176"
+        "route_one_offset": "0x3A21B"
     },
     "BIRD KEEPER 4": {
         "trainer_class": "BIRD KEEPER",
@@ -10394,7 +10520,7 @@ const g1trainers = {
             }
         ],
         "money": 825,
-        "route_one_offset": "0x3A17C"
+        "route_one_offset": "0x3A221"
     },
     "BIRD KEEPER 5": {
         "trainer_class": "BIRD KEEPER",
@@ -10435,7 +10561,7 @@ const g1trainers = {
             }
         ],
         "money": 725,
-        "route_one_offset": "0x3A17F"
+        "route_one_offset": "0x3A224"
     },
     "BIRD KEEPER 6": {
         "trainer_class": "BIRD KEEPER",
@@ -10507,7 +10633,7 @@ const g1trainers = {
             }
         ],
         "money": 650,
-        "route_one_offset": "0x3A183"
+        "route_one_offset": "0x3A228"
     },
     "BIRD KEEPER 7": {
         "trainer_class": "BIRD KEEPER",
@@ -10561,7 +10687,7 @@ const g1trainers = {
             }
         ],
         "money": 700,
-        "route_one_offset": "0x3A189"
+        "route_one_offset": "0x3A22E"
     },
     "BIRD KEEPER 8": {
         "trainer_class": "BIRD KEEPER",
@@ -10602,7 +10728,7 @@ const g1trainers = {
             }
         ],
         "money": 725,
-        "route_one_offset": "0x3A18E"
+        "route_one_offset": "0x3A233"
     },
     "BIRD KEEPER 9": {
         "trainer_class": "BIRD KEEPER",
@@ -10627,7 +10753,7 @@ const g1trainers = {
             }
         ],
         "money": 850,
-        "route_one_offset": "0x3A192"
+        "route_one_offset": "0x3A237"
     },
     "BIRD KEEPER 10": {
         "trainer_class": "BIRD KEEPER",
@@ -10700,7 +10826,7 @@ const g1trainers = {
             }
         ],
         "money": 650,
-        "route_one_offset": "0x3A195"
+        "route_one_offset": "0x3A23A"
     },
     "BIRD KEEPER 11": {
         "trainer_class": "BIRD KEEPER",
@@ -10757,7 +10883,7 @@ const g1trainers = {
             }
         ],
         "money": 750,
-        "route_one_offset": "0x3A19B"
+        "route_one_offset": "0x3A240"
     },
     "BIRD KEEPER 12": {
         "trainer_class": "BIRD KEEPER",
@@ -10830,7 +10956,7 @@ const g1trainers = {
             }
         ],
         "money": 975,
-        "route_one_offset": "0x3A1A0"
+        "route_one_offset": "0x3A245"
     },
     "BIRD KEEPER 13": {
         "trainer_class": "BIRD KEEPER",
@@ -10871,7 +10997,7 @@ const g1trainers = {
             }
         ],
         "money": 1050,
-        "route_one_offset": "0x3A1A6"
+        "route_one_offset": "0x3A24B"
     },
     "BIRD KEEPER 14": {
         "trainer_class": "BIRD KEEPER",
@@ -10927,7 +11053,7 @@ const g1trainers = {
             }
         ],
         "money": 700,
-        "route_one_offset": "0x3A1AA"
+        "route_one_offset": "0x3A24F"
     },
     "BIRD KEEPER 15": {
         "trainer_class": "BIRD KEEPER",
@@ -11000,7 +11126,7 @@ const g1trainers = {
             }
         ],
         "money": 650,
-        "route_one_offset": "0x3A1AF"
+        "route_one_offset": "0x3A254"
     },
     "BIRD KEEPER 16": {
         "trainer_class": "BIRD KEEPER",
@@ -11041,7 +11167,7 @@ const g1trainers = {
             }
         ],
         "money": 725,
-        "route_one_offset": "0x3A1B5"
+        "route_one_offset": "0x3A25A"
     },
     "BIRD KEEPER 17": {
         "trainer_class": "BIRD KEEPER",
@@ -11097,7 +11223,7 @@ const g1trainers = {
             }
         ],
         "money": 700,
-        "route_one_offset": "0x3A1B9"
+        "route_one_offset": "0x3A25E"
     },
     "BLACKBELT 1": {
         "trainer_class": "BLACKBELT",
@@ -11136,7 +11262,7 @@ const g1trainers = {
             }
         ],
         "money": 925,
-        "route_one_offset": "0x3A1BE"
+        "route_one_offset": "0x3A263"
     },
     "BLACKBELT 2": {
         "trainer_class": "BLACKBELT",
@@ -11153,7 +11279,7 @@ const g1trainers = {
                 "spc": 31,
                 "xp": 490,
                 "moves": [
-                    "Leer",
+                    "Low Kick",
                     "Karate Chop",
                     "Fury Swipes",
                     "Focus Energy"
@@ -11169,7 +11295,7 @@ const g1trainers = {
                 "spc": 31,
                 "xp": 490,
                 "moves": [
-                    "Leer",
+                    "Low Kick",
                     "Karate Chop",
                     "Fury Swipes",
                     "Focus Energy"
@@ -11185,15 +11311,15 @@ const g1trainers = {
                 "spc": 47,
                 "xp": 988,
                 "moves": [
-                    "Leer",
                     "Karate Chop",
                     "Fury Swipes",
-                    "Focus Energy"
+                    "Focus Energy",
+                    "Rage"
                 ]
             }
         ],
         "money": 775,
-        "route_one_offset": "0x3A1C2"
+        "route_one_offset": "0x3A267"
     },
     "BLACKBELT 3": {
         "trainer_class": "BLACKBELT",
@@ -11233,7 +11359,7 @@ const g1trainers = {
             }
         ],
         "money": 800,
-        "route_one_offset": "0x3A1C7"
+        "route_one_offset": "0x3A26C"
     },
     "BLACKBELT 4": {
         "trainer_class": "BLACKBELT",
@@ -11250,15 +11376,15 @@ const g1trainers = {
                 "spc": 53,
                 "xp": 1149,
                 "moves": [
-                    "Leer",
                     "Karate Chop",
                     "Fury Swipes",
-                    "Focus Energy"
+                    "Focus Energy",
+                    "Rage"
                 ]
             }
         ],
         "money": 900,
-        "route_one_offset": "0x3A1CB"
+        "route_one_offset": "0x3A270"
     },
     "BLACKBELT 5": {
         "trainer_class": "BLACKBELT",
@@ -11290,7 +11416,7 @@ const g1trainers = {
                 "spc": 31,
                 "xp": 490,
                 "moves": [
-                    "Leer",
+                    "Low Kick",
                     "Karate Chop",
                     "Fury Swipes",
                     "Focus Energy"
@@ -11306,15 +11432,15 @@ const g1trainers = {
                 "spc": 47,
                 "xp": 988,
                 "moves": [
-                    "Leer",
                     "Karate Chop",
                     "Fury Swipes",
-                    "Focus Energy"
+                    "Focus Energy",
+                    "Rage"
                 ]
             }
         ],
         "money": 775,
-        "route_one_offset": "0x3A1CE"
+        "route_one_offset": "0x3A273"
     },
     "BLACKBELT 6": {
         "trainer_class": "BLACKBELT",
@@ -11355,7 +11481,7 @@ const g1trainers = {
             }
         ],
         "money": 1000,
-        "route_one_offset": "0x3A1D3"
+        "route_one_offset": "0x3A278"
     },
     "BLACKBELT 7": {
         "trainer_class": "BLACKBELT",
@@ -11380,7 +11506,7 @@ const g1trainers = {
             }
         ],
         "money": 1075,
-        "route_one_offset": "0x3A1D7"
+        "route_one_offset": "0x3A27C"
     },
     "BLACKBELT 8": {
         "trainer_class": "BLACKBELT",
@@ -11437,7 +11563,7 @@ const g1trainers = {
             }
         ],
         "money": 950,
-        "route_one_offset": "0x3A1DA"
+        "route_one_offset": "0x3A27F"
     },
     "BLACKBELT 9": {
         "trainer_class": "BLACKBELT",
@@ -11494,22 +11620,22 @@ const g1trainers = {
             }
         ],
         "money": 1075,
-        "route_one_offset": "0x3A1DF"
+        "route_one_offset": "0x3A284"
     },
     "RIVAL1 1": {
         "trainer_class": "RIVAL1",
-        "trainer_name": "RIVAL1 Squirtle 1",
+        "trainer_name": "RIVAL1 1",
         "trainer_location": "Pallet Town",
         "pokemon": [
             {
-                "name": "Squirtle",
+                "name": "Eevee",
                 "level": 5,
-                "hp": 20,
-                "atk": 10,
-                "def": 12,
-                "spd": 10,
-                "spc": 10,
-                "xp": 70,
+                "hp": 21,
+                "atk": 11,
+                "def": 10,
+                "spd": 11,
+                "spc": 12,
+                "xp": 97,
                 "moves": [
                     "Tackle",
                     "Tail Whip"
@@ -11517,336 +11643,80 @@ const g1trainers = {
             }
         ],
         "money": 175,
-        "route_one_offset": "0x3A1E4"
+        "route_one_offset": "0x3A289"
     },
     "RIVAL1 2": {
         "trainer_class": "RIVAL1",
-        "trainer_name": "RIVAL1 Bulbasaur 1",
-        "trainer_location": "Pallet Town",
+        "trainer_name": "RIVAL1 2",
+        "trainer_location": "Route 22",
         "pokemon": [
             {
-                "name": "Bulbasaur",
-                "level": 5,
-                "hp": 20,
-                "atk": 10,
-                "def": 10,
-                "spd": 10,
+                "name": "Spearow",
+                "level": 9,
+                "hp": 27,
+                "atk": 17,
+                "def": 11,
+                "spd": 19,
                 "spc": 12,
-                "xp": 67,
+                "xp": 111,
+                "moves": [
+                    "Peck",
+                    "Growl",
+                    "Leer"
+                ]
+            },
+            {
+                "name": "Eevee",
+                "level": 8,
+                "hp": 28,
+                "atk": 15,
+                "def": 14,
+                "spd": 15,
+                "spc": 16,
+                "xp": 157,
                 "moves": [
                     "Tackle",
-                    "Growl"
+                    "Tail Whip",
+                    "Sand Attack"
                 ]
             }
         ],
-        "money": 175,
-        "route_one_offset": "0x3A1E7"
+        "money": 280,
+        "route_one_offset": "0x3A28C"
     },
     "RIVAL1 3": {
         "trainer_class": "RIVAL1",
-        "trainer_name": "RIVAL1 Charmander 1",
-        "trainer_location": "Pallet Town",
-        "pokemon": [
-            {
-                "name": "Charmander",
-                "level": 5,
-                "hp": 19,
-                "atk": 11,
-                "def": 10,
-                "spd": 12,
-                "spc": 10,
-                "xp": 69,
-                "moves": [
-                    "Scratch",
-                    "Growl"
-                ]
-            }
-        ],
-        "money": 175,
-        "route_one_offset": "0x3A1EA"
-    },
-    "RIVAL1 4": {
-        "trainer_class": "RIVAL1",
-        "trainer_name": "RIVAL1 Squirtle 2",
-        "trainer_location": "Route 22",
-        "pokemon": [
-            {
-                "name": "Pidgey",
-                "level": 9,
-                "hp": 27,
-                "atk": 14,
-                "def": 13,
-                "spd": 16,
-                "spc": 12,
-                "xp": 105,
-                "moves": [
-                    "Gust",
-                    "Sand Attack"
-                ]
-            },
-            {
-                "name": "Squirtle",
-                "level": 8,
-                "hp": 26,
-                "atk": 14,
-                "def": 16,
-                "spd": 13,
-                "spc": 14,
-                "xp": 112,
-                "moves": [
-                    "Tackle",
-                    "Tail Whip",
-                    "Bubble"
-                ]
-            }
-        ],
-        "money": 280,
-        "route_one_offset": "0x3A1ED"
-    },
-    "RIVAL1 5": {
-        "trainer_class": "RIVAL1",
-        "trainer_name": "RIVAL1 Bulbasaur 2",
-        "trainer_location": "Route 22",
-        "pokemon": [
-            {
-                "name": "Pidgey",
-                "level": 9,
-                "hp": 27,
-                "atk": 14,
-                "def": 13,
-                "spd": 16,
-                "spc": 12,
-                "xp": 105,
-                "moves": [
-                    "Gust",
-                    "Sand Attack"
-                ]
-            },
-            {
-                "name": "Bulbasaur",
-                "level": 8,
-                "hp": 26,
-                "atk": 14,
-                "def": 14,
-                "spd": 13,
-                "spc": 16,
-                "xp": 109,
-                "moves": [
-                    "Tackle",
-                    "Growl",
-                    "Leech Seed"
-                ]
-            }
-        ],
-        "money": 280,
-        "route_one_offset": "0x3A1F3"
-    },
-    "RIVAL1 6": {
-        "trainer_class": "RIVAL1",
-        "trainer_name": "RIVAL1 Charmander 2",
-        "trainer_location": "Route 22",
-        "pokemon": [
-            {
-                "name": "Pidgey",
-                "level": 9,
-                "hp": 27,
-                "atk": 14,
-                "def": 13,
-                "spd": 16,
-                "spc": 12,
-                "xp": 105,
-                "moves": [
-                    "Gust",
-                    "Sand Attack"
-                ]
-            },
-            {
-                "name": "Charmander",
-                "level": 8,
-                "hp": 25,
-                "atk": 14,
-                "def": 13,
-                "spd": 16,
-                "spc": 14,
-                "xp": 111,
-                "moves": [
-                    "Scratch",
-                    "Growl"
-                ]
-            }
-        ],
-        "money": 280,
-        "route_one_offset": "0x3A1F9"
-    },
-    "RIVAL1 7": {
-        "trainer_class": "RIVAL1",
-        "trainer_name": "RIVAL1 Squirtle 3",
+        "trainer_name": "RIVAL1 3",
         "trainer_location": "Cerulean City",
         "pokemon": [
             {
-                "name": "Pidgeotto",
+                "name": "Spearow",
                 "level": 18,
-                "hp": 53,
-                "atk": 29,
-                "def": 27,
-                "spd": 33,
-                "spc": 25,
-                "xp": 435,
-                "moves": [
-                    "Gust",
-                    "Sand Attack",
-                    "Quick Attack"
-                ]
-            },
-            {
-                "name": "Abra",
-                "level": 15,
-                "hp": 34,
-                "atk": 13,
-                "def": 11,
-                "spd": 34,
-                "spc": 38,
-                "xp": 234,
-                "moves": [
-                    "Teleport"
-                ]
-            },
-            {
-                "name": "Rattata",
-                "level": 15,
-                "hp": 36,
-                "atk": 24,
-                "def": 17,
-                "spd": 29,
-                "spc": 14,
-                "xp": 183,
-                "moves": [
-                    "Tackle",
-                    "Tail Whip",
-                    "Quick Attack",
-                    "Hyper Fang"
-                ]
-            },
-            {
-                "name": "Squirtle",
-                "level": 17,
-                "hp": 44,
-                "atk": 24,
-                "def": 29,
-                "spd": 22,
-                "spc": 24,
-                "xp": 240,
-                "moves": [
-                    "Tackle",
-                    "Tail Whip",
-                    "Bubble",
-                    "Water Gun"
-                ]
-            }
-        ],
-        "money": 595,
-        "route_one_offset": "0x3A1FF"
-    },
-    "RIVAL1 8": {
-        "trainer_class": "RIVAL1",
-        "trainer_name": "RIVAL1 Bulbasaur 3",
-        "trainer_location": "Cerulean City",
-        "pokemon": [
-            {
-                "name": "Pidgeotto",
-                "level": 18,
-                "hp": 53,
-                "atk": 29,
-                "def": 27,
-                "spd": 33,
-                "spc": 25,
-                "xp": 435,
-                "moves": [
-                    "Gust",
-                    "Sand Attack",
-                    "Quick Attack"
-                ]
-            },
-            {
-                "name": "Abra",
-                "level": 15,
-                "hp": 34,
-                "atk": 13,
-                "def": 11,
-                "spd": 34,
-                "spc": 38,
-                "xp": 234,
-                "moves": [
-                    "Teleport"
-                ]
-            },
-            {
-                "name": "Rattata",
-                "level": 15,
-                "hp": 36,
-                "atk": 24,
-                "def": 17,
-                "spd": 29,
-                "spc": 14,
-                "xp": 183,
-                "moves": [
-                    "Tackle",
-                    "Tail Whip",
-                    "Quick Attack",
-                    "Hyper Fang"
-                ]
-            },
-            {
-                "name": "Bulbasaur",
-                "level": 17,
                 "hp": 45,
-                "atk": 24,
-                "def": 24,
-                "spd": 23,
-                "spc": 29,
-                "xp": 232,
-                "moves": [
-                    "Tackle",
-                    "Growl",
-                    "Leech Seed",
-                    "Vine Whip"
-                ]
-            }
-        ],
-        "money": 595,
-        "route_one_offset": "0x3A209"
-    },
-    "RIVAL1 9": {
-        "trainer_class": "RIVAL1",
-        "trainer_name": "RIVAL1 Charmander 3",
-        "trainer_location": "Cerulean City",
-        "pokemon": [
-            {
-                "name": "Pidgeotto",
-                "level": 18,
-                "hp": 53,
                 "atk": 29,
-                "def": 27,
+                "def": 18,
                 "spd": 33,
-                "spc": 25,
-                "xp": 435,
+                "spc": 19,
+                "xp": 223,
                 "moves": [
-                    "Gust",
-                    "Sand Attack",
-                    "Quick Attack"
+                    "Peck",
+                    "Growl",
+                    "Leer",
+                    "Fury Attack"
                 ]
             },
             {
-                "name": "Abra",
+                "name": "Sandshrew",
                 "level": 15,
-                "hp": 34,
-                "atk": 13,
-                "def": 11,
-                "spd": 34,
-                "spc": 38,
-                "xp": 234,
+                "hp": 42,
+                "atk": 30,
+                "def": 32,
+                "spd": 19,
+                "spc": 16,
+                "xp": 298,
                 "moves": [
-                    "Teleport"
+                    "Scratch",
+                    "Sand Attack"
                 ]
             },
             {
@@ -11866,28 +11736,28 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "Charmander",
+                "name": "Eevee",
                 "level": 17,
-                "hp": 42,
-                "atk": 25,
-                "def": 22,
-                "spd": 29,
-                "spc": 24,
-                "xp": 235,
+                "hp": 48,
+                "atk": 26,
+                "def": 24,
+                "spd": 26,
+                "spc": 29,
+                "xp": 334,
                 "moves": [
-                    "Scratch",
-                    "Growl",
-                    "Ember",
-                    "Leer"
+                    "Tackle",
+                    "Tail Whip",
+                    "Sand Attack",
+                    "Growl"
                 ]
             }
         ],
         "money": 595,
-        "route_one_offset": "0x3A213"
+        "route_one_offset": "0x3A292"
     },
     "PROF OAK 1": {
-        "trainer_class": "PROF OAK",
-        "trainer_name": "PROF OAK 1",
+        "trainer_class": "PROFOAK",
+        "trainer_name": "PROFOAK 1",
         "trainer_location": "Unused",
         "pokemon": [
             {
@@ -11971,11 +11841,11 @@ const g1trainers = {
             }
         ],
         "money": 6930,
-        "route_one_offset": "0x3A21D"
+        "route_one_offset": "0x3A29C"
     },
     "PROF OAK 2": {
-        "trainer_class": "PROF OAK",
-        "trainer_name": "PROF OAK 2",
+        "trainer_class": "PROFOAK",
+        "trainer_name": "PROFOAK 2",
         "trainer_location": "Unused",
         "pokemon": [
             {
@@ -12038,7 +11908,7 @@ const g1trainers = {
                     "Razor Leaf",
                     "Growth",
                     "Sleep Powder",
-                    "Solar Beam"
+                    "Solarbeam"
                 ]
             },
             {
@@ -12059,11 +11929,11 @@ const g1trainers = {
             }
         ],
         "money": 6930,
-        "route_one_offset": "0x3A229"
+        "route_one_offset": "0x3A2A8"
     },
     "PROF OAK 3": {
-        "trainer_class": "PROF OAK",
-        "trainer_name": "PROF OAK 3",
+        "trainer_class": "PROFOAK",
+        "trainer_name": "PROFOAK 3",
         "trainer_location": "Unused",
         "pokemon": [
             {
@@ -12147,7 +12017,7 @@ const g1trainers = {
             }
         ],
         "money": 6930,
-        "route_one_offset": "0x3A235"
+        "route_one_offset": "0x3A2B4"
     },
     "SCIENTIST 1": {
         "trainer_class": "SCIENTIST",
@@ -12187,12 +12057,12 @@ const g1trainers = {
             }
         ],
         "money": 1700,
-        "route_one_offset": "0x3A241"
+        "route_one_offset": "0x3A2C0"
     },
     "SCIENTIST 2": {
         "trainer_class": "SCIENTIST",
         "trainer_name": "SCIENTIST 2",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Grimer",
@@ -12254,12 +12124,12 @@ const g1trainers = {
             }
         ],
         "money": 1300,
-        "route_one_offset": "0x3A245"
+        "route_one_offset": "0x3A2C4"
     },
     "SCIENTIST 3": {
         "trainer_class": "SCIENTIST",
         "trainer_name": "SCIENTIST 3",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Magnemite",
@@ -12309,12 +12179,12 @@ const g1trainers = {
             }
         ],
         "money": 1400,
-        "route_one_offset": "0x3A24B"
+        "route_one_offset": "0x3A2CA"
     },
     "SCIENTIST 4": {
         "trainer_class": "SCIENTIST",
         "trainer_name": "SCIENTIST 4",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Electrode",
@@ -12349,7 +12219,7 @@ const g1trainers = {
             }
         ],
         "money": 1450,
-        "route_one_offset": "0x3A250"
+        "route_one_offset": "0x3A2CF"
     },
     "SCIENTIST 4 Duplicate": {
         "trainer_class": "SCIENTIST",
@@ -12389,12 +12259,12 @@ const g1trainers = {
             }
         ],
         "money": 1450,
-        "route_one_offset": "0x3A250"
+        "route_one_offset": "0x3A2CF"
     },
     "SCIENTIST 5": {
         "trainer_class": "SCIENTIST",
         "trainer_name": "SCIENTIST 5",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Electrode",
@@ -12414,12 +12284,12 @@ const g1trainers = {
             }
         ],
         "money": 1650,
-        "route_one_offset": "0x3A254"
+        "route_one_offset": "0x3A2D3"
     },
     "SCIENTIST 6": {
         "trainer_class": "SCIENTIST",
         "trainer_name": "SCIENTIST 6",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Magneton",
@@ -12482,12 +12352,12 @@ const g1trainers = {
             }
         ],
         "money": 1300,
-        "route_one_offset": "0x3A257"
+        "route_one_offset": "0x3A2D6"
     },
     "SCIENTIST 7": {
         "trainer_class": "SCIENTIST",
         "trainer_name": "SCIENTIST 7",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Voltorb",
@@ -12565,12 +12435,12 @@ const g1trainers = {
             }
         ],
         "money": 1250,
-        "route_one_offset": "0x3A25D"
+        "route_one_offset": "0x3A2DC"
     },
     "SCIENTIST 8": {
         "trainer_class": "SCIENTIST",
         "trainer_name": "SCIENTIST 8",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Electrode",
@@ -12605,12 +12475,12 @@ const g1trainers = {
             }
         ],
         "money": 1450,
-        "route_one_offset": "0x3A264"
+        "route_one_offset": "0x3A2E3"
     },
     "SCIENTIST 9": {
         "trainer_class": "SCIENTIST",
         "trainer_name": "SCIENTIST 9",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Grimer",
@@ -12644,12 +12514,12 @@ const g1trainers = {
             }
         ],
         "money": 1450,
-        "route_one_offset": "0x3A268"
+        "route_one_offset": "0x3A2E7"
     },
     "SCIENTIST 10": {
         "trainer_class": "SCIENTIST",
         "trainer_name": "SCIENTIST 10",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Voltorb",
@@ -12698,12 +12568,12 @@ const g1trainers = {
             }
         ],
         "money": 1400,
-        "route_one_offset": "0x3A26C"
+        "route_one_offset": "0x3A2EB"
     },
     "SCIENTIST 11": {
         "trainer_class": "SCIENTIST",
         "trainer_name": "SCIENTIST 11",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Magnemite",
@@ -12737,7 +12607,7 @@ const g1trainers = {
             }
         ],
         "money": 1450,
-        "route_one_offset": "0x3A271"
+        "route_one_offset": "0x3A2F0"
     },
     "SCIENTIST 12": {
         "trainer_class": "SCIENTIST",
@@ -12794,7 +12664,7 @@ const g1trainers = {
             }
         ],
         "money": 1650,
-        "route_one_offset": "0x3A275"
+        "route_one_offset": "0x3A2F4"
     },
     "SCIENTIST 13": {
         "trainer_class": "SCIENTIST",
@@ -12835,7 +12705,7 @@ const g1trainers = {
             }
         ],
         "money": 1700,
-        "route_one_offset": "0x3A27A"
+        "route_one_offset": "0x3A2F9"
     },
     "GIOVANNI 1": {
         "trainer_class": "GIOVANNI",
@@ -12872,28 +12742,29 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "Kangaskhan",
+                "name": "Persian",
                 "level": 29,
-                "hp": 104,
-                "atk": 65,
-                "def": 56,
-                "spd": 61,
-                "spc": 32,
-                "xp": 1087,
+                "hp": 81,
+                "atk": 50,
+                "def": 44,
+                "spd": 76,
+                "spc": 47,
+                "xp": 919,
                 "moves": [
-                    "Comet Punch",
-                    "Rage",
-                    "Bite"
+                    "Growl",
+                    "Bite",
+                    "Screech",
+                    "Pay Day"
                 ]
             }
         ],
         "money": 2871,
-        "route_one_offset": "0x3A27E"
+        "route_one_offset": "0x3A2FD"
     },
     "GIOVANNI 2": {
         "trainer_class": "GIOVANNI",
         "trainer_name": "GIOVANNI 2",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Nidorino",
@@ -12905,26 +12776,26 @@ const g1trainers = {
                 "spc": 51,
                 "xp": 934,
                 "moves": [
-                    "Horn Attack",
+                    "Double Kick",
                     "Poison Sting",
                     "Focus Energy",
                     "Fury Attack"
                 ]
             },
             {
-                "name": "Kangaskhan",
+                "name": "Persian",
                 "level": 35,
-                "hp": 124,
-                "atk": 77,
-                "def": 66,
-                "spd": 73,
-                "spc": 38,
-                "xp": 1312,
+                "hp": 96,
+                "atk": 60,
+                "def": 52,
+                "spd": 91,
+                "spc": 56,
+                "xp": 1110,
                 "moves": [
-                    "Comet Punch",
-                    "Rage",
+                    "Growl",
                     "Bite",
-                    "Tail Whip"
+                    "Screech",
+                    "Pay Day"
                 ]
             },
             {
@@ -12955,12 +12826,12 @@ const g1trainers = {
                     "Scratch",
                     "Tail Whip",
                     "Body Slam",
-                    "Poison Sting"
+                    "Double Kick"
                 ]
             }
         ],
         "money": 4059,
-        "route_one_offset": "0x3A286"
+        "route_one_offset": "0x3A305"
     },
     "GIOVANNI 3": {
         "trainer_class": "GIOVANNI",
@@ -12968,88 +12839,88 @@ const g1trainers = {
         "trainer_location": "Viridian Gym",
         "pokemon": [
             {
-                "name": "Rhyhorn",
-                "level": 45,
-                "hp": 134,
-                "atk": 89,
-                "def": 97,
-                "spd": 34,
-                "spc": 39,
-                "xp": 1300,
+                "name": "Dugtrio",
+                "level": 50,
+                "hp": 103,
+                "atk": 94,
+                "def": 63,
+                "spd": 133,
+                "spc": 83,
+                "xp": 1638,
                 "moves": [
-                    "Stomp",
-                    "Tail Whip",
-                    "Fury Attack",
-                    "Horn Drill"
+                    "Dig",
+                    "Sand Attack",
+                    "Fissure",
+                    "Earthquake"
                 ]
             },
             {
-                "name": "Dugtrio",
-                "level": 42,
-                "hp": 88,
-                "atk": 79,
-                "def": 53,
-                "spd": 112,
-                "spc": 70,
-                "xp": 1377,
+                "name": "Persian",
+                "level": 53,
+                "hp": 140,
+                "atk": 88,
+                "def": 77,
+                "spd": 135,
+                "spc": 82,
+                "xp": 1680,
                 "moves": [
-                    "Growl",
-                    "Dig",
-                    "Sand Attack",
+                    "Screech",
+                    "Double Team",
+                    "Fury Swipes",
                     "Slash"
                 ]
             },
             {
                 "name": "Nidoqueen",
-                "level": 44,
-                "hp": 140,
-                "atk": 85,
-                "def": 88,
-                "spd": 78,
-                "spc": 78,
-                "xp": 1828,
+                "level": 53,
+                "hp": 166,
+                "atk": 101,
+                "def": 105,
+                "spd": 94,
+                "spc": 92,
+                "xp": 2202,
                 "moves": [
-                    "Scratch",
+                    "Earthquake",
                     "Tail Whip",
-                    "Body Slam",
-                    "Poison Sting"
+                    "Thunder",
+                    "Double Kick"
                 ]
             },
             {
                 "name": "Nidoking",
-                "level": 45,
-                "hp": 135,
-                "atk": 95,
-                "def": 81,
-                "spd": 88,
-                "spc": 79,
-                "xp": 1879,
+                "level": 55,
+                "hp": 162,
+                "atk": 116,
+                "def": 98,
+                "spd": 107,
+                "spc": 96,
+                "xp": 2298,
                 "moves": [
-                    "Tackle",
-                    "Horn Attack",
-                    "Poison Sting",
-                    "Thrash"
+                    "Earthquake",
+                    "Leer",
+                    "Thunder",
+                    "Double Kick"
                 ]
             },
             {
                 "name": "Rhydon",
-                "level": 50,
-                "hp": 173,
-                "atk": 144,
-                "def": 133,
-                "spd": 53,
-                "spc": 58,
-                "xp": 2185,
+                "level": 55,
+                "hp": 189,
+                "atk": 157,
+                "def": 145,
+                "spd": 57,
+                "spc": 63,
+                "xp": 2403,
                 "moves": [
-                    "Stomp",
-                    "Tail Whip",
-                    "Fissure",
-                    "Horn Drill"
+                    "Rock Slide",
+                    "Fury Attack",
+                    "Horn Drill",
+                    "Earthquake"
                 ]
             }
         ],
-        "money": 4950,
-        "route_one_offset": "0x3A290"
+        "money": 5445,
+        "route_one_offset": "0x3A30F"
     },
     "ROCKET 1": {
         "trainer_class": "ROCKET",
@@ -13087,7 +12958,7 @@ const g1trainers = {
             }
         ],
         "money": 390,
-        "route_one_offset": "0x3A29C"
+        "route_one_offset": "0x3A31B"
     },
     "ROCKET 2": {
         "trainer_class": "ROCKET",
@@ -13139,7 +13010,7 @@ const g1trainers = {
             }
         ],
         "money": 330,
-        "route_one_offset": "0x3A2A0"
+        "route_one_offset": "0x3A31F"
     },
     "ROCKET 3": {
         "trainer_class": "ROCKET",
@@ -13177,12 +13048,12 @@ const g1trainers = {
             }
         ],
         "money": 360,
-        "route_one_offset": "0x3A2A5"
+        "route_one_offset": "0x3A324"
     },
     "ROCKET 4": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 4",
-        "trainer_location": "Mt. Moon",
+        "trainer_location": "Unused",
         "pokemon": [
             {
                 "name": "Raticate",
@@ -13202,7 +13073,7 @@ const g1trainers = {
             }
         ],
         "money": 480,
-        "route_one_offset": "0x3A2A9"
+        "route_one_offset": "0x3A328"
     },
     "ROCKET 5": {
         "trainer_class": "ROCKET",
@@ -13240,7 +13111,7 @@ const g1trainers = {
             }
         ],
         "money": 510,
-        "route_one_offset": "0x3A2AC"
+        "route_one_offset": "0x3A32B"
     },
     "ROCKET 6": {
         "trainer_class": "ROCKET",
@@ -13279,7 +13150,7 @@ const g1trainers = {
             }
         ],
         "money": 450,
-        "route_one_offset": "0x3A2B0"
+        "route_one_offset": "0x3A32F"
     },
     "ROCKET 7": {
         "trainer_class": "ROCKET",
@@ -13319,7 +13190,7 @@ const g1trainers = {
             }
         ],
         "money": 600,
-        "route_one_offset": "0x3A2B4"
+        "route_one_offset": "0x3A333"
     },
     "ROCKET 8": {
         "trainer_class": "ROCKET",
@@ -13358,7 +13229,7 @@ const g1trainers = {
             }
         ],
         "money": 630,
-        "route_one_offset": "0x3A2B8"
+        "route_one_offset": "0x3A337"
     },
     "ROCKET 9": {
         "trainer_class": "ROCKET",
@@ -13399,7 +13270,7 @@ const g1trainers = {
             }
         ],
         "money": 630,
-        "route_one_offset": "0x3A2BC"
+        "route_one_offset": "0x3A33B"
     },
     "ROCKET 10": {
         "trainer_class": "ROCKET",
@@ -13450,7 +13321,7 @@ const g1trainers = {
             }
         ],
         "money": 600,
-        "route_one_offset": "0x3A2C0"
+        "route_one_offset": "0x3A33F"
     },
     "ROCKET 11": {
         "trainer_class": "ROCKET",
@@ -13523,7 +13394,7 @@ const g1trainers = {
             }
         ],
         "money": 570,
-        "route_one_offset": "0x3A2C5"
+        "route_one_offset": "0x3A344"
     },
     "ROCKET 12": {
         "trainer_class": "ROCKET",
@@ -13560,7 +13431,7 @@ const g1trainers = {
             }
         ],
         "money": 660,
-        "route_one_offset": "0x3A2CB"
+        "route_one_offset": "0x3A34A"
     },
     "ROCKET 13": {
         "trainer_class": "ROCKET",
@@ -13643,7 +13514,7 @@ const g1trainers = {
             }
         ],
         "money": 510,
-        "route_one_offset": "0x3A2CF"
+        "route_one_offset": "0x3A34E"
     },
     "ROCKET 14": {
         "trainer_class": "ROCKET",
@@ -13700,7 +13571,7 @@ const g1trainers = {
             }
         ],
         "money": 600,
-        "route_one_offset": "0x3A2D6"
+        "route_one_offset": "0x3A355"
     },
     "ROCKET 15": {
         "trainer_class": "ROCKET",
@@ -13737,12 +13608,12 @@ const g1trainers = {
             }
         ],
         "money": 630,
-        "route_one_offset": "0x3A2DB"
+        "route_one_offset": "0x3A35A"
     },
     "ROCKET 16": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 16",
-        "trainer_location": "ROCKET Hideout",
+        "trainer_location": "Unused",
         "pokemon": [
             {
                 "name": "Sandshrew",
@@ -13792,12 +13663,12 @@ const g1trainers = {
             }
         ],
         "money": 690,
-        "route_one_offset": "0x3A2DF"
+        "route_one_offset": "0x3A35E"
     },
     "ROCKET 17": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 17",
-        "trainer_location": "ROCKET Hideout",
+        "trainer_location": "Unused",
         "pokemon": [
             {
                 "name": "Ekans",
@@ -13848,7 +13719,7 @@ const g1trainers = {
             }
         ],
         "money": 690,
-        "route_one_offset": "0x3A2E4"
+        "route_one_offset": "0x3A363"
     },
     "ROCKET 18": {
         "trainer_class": "ROCKET",
@@ -13887,12 +13758,12 @@ const g1trainers = {
             }
         ],
         "money": 630,
-        "route_one_offset": "0x3A2E9"
+        "route_one_offset": "0x3A368"
     },
     "ROCKET 19": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 19",
-        "trainer_location": "Pokemon Tower",
+        "trainer_location": "Unused",
         "pokemon": [
             {
                 "name": "Zubat",
@@ -13944,12 +13815,12 @@ const g1trainers = {
             }
         ],
         "money": 750,
-        "route_one_offset": "0x3A2ED"
+        "route_one_offset": "0x3A36C"
     },
     "ROCKET 20": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 20",
-        "trainer_location": "Pokemon Tower",
+        "trainer_location": "Unused",
         "pokemon": [
             {
                 "name": "Koffing",
@@ -13983,12 +13854,12 @@ const g1trainers = {
             }
         ],
         "money": 780,
-        "route_one_offset": "0x3A2F2"
+        "route_one_offset": "0x3A371"
     },
     "ROCKET 21": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 21",
-        "trainer_location": "Pokemon Tower",
+        "trainer_location": "Unused",
         "pokemon": [
             {
                 "name": "Zubat",
@@ -14056,7 +13927,7 @@ const g1trainers = {
             }
         ],
         "money": 690,
-        "route_one_offset": "0x3A2F6"
+        "route_one_offset": "0x3A375"
     },
     "ROCKET 22": {
         "trainer_class": "ROCKET",
@@ -14095,12 +13966,12 @@ const g1trainers = {
             }
         ],
         "money": 780,
-        "route_one_offset": "0x3A2FC"
+        "route_one_offset": "0x3A37B"
     },
     "ROCKET 23": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 23",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Cubone",
@@ -14113,7 +13984,8 @@ const g1trainers = {
                 "xp": 540,
                 "moves": [
                     "Bone Club",
-                    "Growl",
+                    "Tail Whip",
+                    "Headbutt",
                     "Leer"
                 ]
             },
@@ -14135,12 +14007,12 @@ const g1trainers = {
             }
         ],
         "money": 870,
-        "route_one_offset": "0x3A300"
+        "route_one_offset": "0x3A37F"
     },
     "ROCKET 24": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 24",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Golbat",
@@ -14224,12 +14096,12 @@ const g1trainers = {
             }
         ],
         "money": 750,
-        "route_one_offset": "0x3A304"
+        "route_one_offset": "0x3A383"
     },
     "ROCKET 25": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 25",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Raticate",
@@ -14281,12 +14153,12 @@ const g1trainers = {
             }
         ],
         "money": 840,
-        "route_one_offset": "0x3A30B"
+        "route_one_offset": "0x3A38A"
     },
     "ROCKET 26": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 26",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Machop",
@@ -14321,12 +14193,12 @@ const g1trainers = {
             }
         ],
         "money": 870,
-        "route_one_offset": "0x3A310"
+        "route_one_offset": "0x3A38F"
     },
     "ROCKET 27": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 27",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Ekans",
@@ -14371,18 +14243,19 @@ const g1trainers = {
                 "xp": 522,
                 "moves": [
                     "Bone Club",
-                    "Growl",
+                    "Tail Whip",
+                    "Headbutt",
                     "Leer"
                 ]
             }
         ],
         "money": 840,
-        "route_one_offset": "0x3A314"
+        "route_one_offset": "0x3A393"
     },
     "ROCKET 28": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 28",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Arbok",
@@ -14402,12 +14275,12 @@ const g1trainers = {
             }
         ],
         "money": 990,
-        "route_one_offset": "0x3A319"
+        "route_one_offset": "0x3A398"
     },
     "ROCKET 29": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 29",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Hypno",
@@ -14427,12 +14300,12 @@ const g1trainers = {
             }
         ],
         "money": 990,
-        "route_one_offset": "0x3A31C"
+        "route_one_offset": "0x3A39B"
     },
     "ROCKET 30": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 30",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Machop",
@@ -14466,12 +14339,12 @@ const g1trainers = {
             }
         ],
         "money": 870,
-        "route_one_offset": "0x3A31F"
+        "route_one_offset": "0x3A39E"
     },
     "ROCKET 31": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 31",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Zubat",
@@ -14523,12 +14396,12 @@ const g1trainers = {
             }
         ],
         "money": 840,
-        "route_one_offset": "0x3A323"
+        "route_one_offset": "0x3A3A2"
     },
     "ROCKET 32": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 32",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Raticate",
@@ -14594,12 +14467,12 @@ const g1trainers = {
             }
         ],
         "money": 780,
-        "route_one_offset": "0x3A328"
+        "route_one_offset": "0x3A3A7"
     },
     "ROCKET 33": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 33",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Cubone",
@@ -14612,7 +14485,8 @@ const g1trainers = {
                 "xp": 540,
                 "moves": [
                     "Bone Club",
-                    "Growl",
+                    "Tail Whip",
+                    "Headbutt",
                     "Leer"
                 ]
             },
@@ -14627,18 +14501,19 @@ const g1trainers = {
                 "xp": 540,
                 "moves": [
                     "Bone Club",
-                    "Growl",
+                    "Tail Whip",
+                    "Headbutt",
                     "Leer"
                 ]
             }
         ],
         "money": 870,
-        "route_one_offset": "0x3A32E"
+        "route_one_offset": "0x3A3AD"
     },
     "ROCKET 34": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 34",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Sandshrew",
@@ -14674,12 +14549,12 @@ const g1trainers = {
             }
         ],
         "money": 870,
-        "route_one_offset": "0x3A332"
+        "route_one_offset": "0x3A3B1"
     },
     "ROCKET 35": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 35",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Raticate",
@@ -14747,12 +14622,12 @@ const g1trainers = {
             }
         ],
         "money": 780,
-        "route_one_offset": "0x3A336"
+        "route_one_offset": "0x3A3B5"
     },
     "ROCKET 36": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 36",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Weezing",
@@ -14801,12 +14676,12 @@ const g1trainers = {
             }
         ],
         "money": 840,
-        "route_one_offset": "0x3A33C"
+        "route_one_offset": "0x3A3BB"
     },
     "ROCKET 37": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 37",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Drowzee",
@@ -14855,12 +14730,12 @@ const g1trainers = {
             }
         ],
         "money": 840,
-        "route_one_offset": "0x3A341"
+        "route_one_offset": "0x3A3C0"
     },
     "ROCKET 38": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 38",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Golbat",
@@ -14912,12 +14787,12 @@ const g1trainers = {
             }
         ],
         "money": 840,
-        "route_one_offset": "0x3A346"
+        "route_one_offset": "0x3A3C5"
     },
     "ROCKET 39": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 39",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Machoke",
@@ -14936,12 +14811,12 @@ const g1trainers = {
             }
         ],
         "money": 990,
-        "route_one_offset": "0x3A34B"
+        "route_one_offset": "0x3A3CA"
     },
     "ROCKET 40": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 40",
-        "trainer_location": "Silph",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
                 "name": "Rattata",
@@ -15025,12 +14900,12 @@ const g1trainers = {
             }
         ],
         "money": 750,
-        "route_one_offset": "0x3A34E"
+        "route_one_offset": "0x3A3CD"
     },
     "ROCKET 41": {
         "trainer_class": "ROCKET",
         "trainer_name": "ROCKET 41",
-        "trainer_location": "Silph",
+        "trainer_location": "Unused",
         "pokemon": [
             {
                 "name": "Cubone",
@@ -15042,8 +14917,8 @@ const g1trainers = {
                 "spc": 35,
                 "xp": 595,
                 "moves": [
-                    "Bone Club",
-                    "Growl",
+                    "Tail Whip",
+                    "Headbutt",
                     "Leer",
                     "Focus Energy"
                 ]
@@ -15075,14 +14950,328 @@ const g1trainers = {
                 "xp": 849,
                 "moves": [
                     "Bone Club",
-                    "Growl",
-                    "Leer",
-                    "Focus Energy"
+                    "Tail Whip",
+                    "Headbutt",
+                    "Leer"
                 ]
             }
         ],
         "money": 960,
-        "route_one_offset": "0x3A355"
+        "route_one_offset": "0x3A3D4"
+    },
+    "ROCKET 42": {
+        "trainer_class": "ROCKET",
+        "trainer_name": "Jessie & James 1",
+        "trainer_location": "Mt. Moon",
+        "pokemon": [
+            {
+                "name": "Ekans",
+                "level": 14,
+                "hp": 36,
+                "atk": 24,
+                "def": 19,
+                "spd": 22,
+                "spc": 18,
+                "xp": 186,
+                "moves": [
+                    "Wrap",
+                    "Leer",
+                    "Poison Sting"
+                ]
+            },
+            {
+                "name": "Meowth",
+                "level": 14,
+                "hp": 37,
+                "atk": 20,
+                "def": 17,
+                "spd": 32,
+                "spc": 18,
+                "xp": 207,
+                "moves": [
+                    "Scratch",
+                    "Growl",
+                    "Bite"
+                ]
+            },
+            {
+                "name": "Koffing",
+                "level": 14,
+                "hp": 37,
+                "atk": 25,
+                "def": 33,
+                "spd": 17,
+                "spc": 24,
+                "xp": 342,
+                "moves": [
+                    "Tackle",
+                    "Smog"
+                ]
+            }
+        ],
+        "money": 420,
+        "route_one_offset": "0x3A3D9"
+    },
+    "ROCKET 43": {
+        "trainer_class": "ROCKET",
+        "trainer_name": "Jessie & James 2",
+        "trainer_location": "ROCKET Hideout",
+        "pokemon": [
+            {
+                "name": "Koffing",
+                "level": 25,
+                "hp": 59,
+                "atk": 42,
+                "def": 56,
+                "spd": 26,
+                "spc": 39,
+                "xp": 610,
+                "moves": [
+                    "Tackle",
+                    "Smog"
+                ]
+            },
+            {
+                "name": "Meowth",
+                "level": 25,
+                "hp": 59,
+                "atk": 32,
+                "def": 26,
+                "spd": 54,
+                "spc": 29,
+                "xp": 369,
+                "moves": [
+                    "Growl",
+                    "Bite",
+                    "Pay Day",
+                    "Screech"
+                ]
+            },
+            {
+                "name": "Ekans",
+                "level": 25,
+                "hp": 56,
+                "atk": 39,
+                "def": 31,
+                "spd": 36,
+                "spc": 29,
+                "xp": 331,
+                "moves": [
+                    "Leer",
+                    "Poison Sting",
+                    "Bite",
+                    "Glare"
+                ]
+            }
+        ],
+        "money": 750,
+        "route_one_offset": "0x3A3DE"
+    },
+    "ROCKET 44": {
+        "trainer_class": "ROCKET",
+        "trainer_name": "Jessie & James 3",
+        "trainer_location": "Pokemon Tower",
+        "pokemon": [
+            {
+                "name": "Meowth",
+                "level": 27,
+                "hp": 62,
+                "atk": 34,
+                "def": 28,
+                "spd": 57,
+                "spc": 30,
+                "xp": 399,
+                "moves": [
+                    "Growl",
+                    "Bite",
+                    "Pay Day",
+                    "Screech"
+                ]
+            },
+            {
+                "name": "Arbok",
+                "level": 27,
+                "hp": 73,
+                "atk": 55,
+                "def": 46,
+                "spd": 52,
+                "spc": 44,
+                "xp": 850,
+                "moves": [
+                    "Leer",
+                    "Poison Sting",
+                    "Bite",
+                    "Glare"
+                ]
+            },
+            {
+                "name": "Weezing",
+                "level": 27,
+                "hp": 76,
+                "atk": 58,
+                "def": 74,
+                "spd": 41,
+                "spc": 55,
+                "xp": 1000,
+                "moves": [
+                    "Tackle",
+                    "Smog",
+                    "Sludge"
+                ]
+            }
+        ],
+        "money": 810,
+        "route_one_offset": "0x3A3E3"
+    },
+    "ROCKET 45": {
+        "trainer_class": "ROCKET",
+        "trainer_name": "Jessie & James 4",
+        "trainer_location": "Silph Co.",
+        "pokemon": [
+            {
+                "name": "Weezing",
+                "level": 31,
+                "hp": 86,
+                "atk": 66,
+                "def": 84,
+                "spd": 47,
+                "spc": 62,
+                "xp": 1149,
+                "moves": [
+                    "Tackle",
+                    "Smog",
+                    "Sludge"
+                ]
+            },
+            {
+                "name": "Arbok",
+                "level": 31,
+                "hp": 83,
+                "atk": 63,
+                "def": 52,
+                "spd": 59,
+                "spc": 50,
+                "xp": 976,
+                "moves": [
+                    "Leer",
+                    "Poison Sting",
+                    "Bite",
+                    "Glare"
+                ]
+            },
+            {
+                "name": "Meowth",
+                "level": 31,
+                "hp": 70,
+                "atk": 38,
+                "def": 31,
+                "spd": 65,
+                "spc": 34,
+                "xp": 457,
+                "moves": [
+                    "Growl",
+                    "Bite",
+                    "Pay Day",
+                    "Screech"
+                ]
+            }
+        ],
+        "money": 930,
+        "route_one_offset": "0x3A3E8"
+    },
+    "ROCKET 46": {
+        "trainer_class": "ROCKET",
+        "trainer_name": "ROCKET 46",
+        "trainer_location": "Unused",
+        "pokemon": [
+            {
+                "name": "Koffing",
+                "level": 16,
+                "hp": 41,
+                "atk": 28,
+                "def": 37,
+                "spd": 18,
+                "spc": 26,
+                "xp": 390,
+                "moves": [
+                    "Tackle",
+                    "Smog"
+                ]
+            }
+        ],
+        "money": 480,
+        "route_one_offset": "0x3A3ED"
+    },
+    "ROCKET 47": {
+        "trainer_class": "ROCKET",
+        "trainer_name": "ROCKET 47",
+        "trainer_location": "Unused",
+        "pokemon": [
+            {
+                "name": "Koffing",
+                "level": 27,
+                "hp": 62,
+                "atk": 44,
+                "def": 60,
+                "spd": 28,
+                "spc": 41,
+                "xp": 658,
+                "moves": [
+                    "Tackle",
+                    "Smog"
+                ]
+            }
+        ],
+        "money": 810,
+        "route_one_offset": "0x3A3F0"
+    },
+    "ROCKET 48": {
+        "trainer_class": "ROCKET",
+        "trainer_name": "ROCKET 48",
+        "trainer_location": "Unused",
+        "pokemon": [
+            {
+                "name": "Weezing",
+                "level": 29,
+                "hp": 81,
+                "atk": 62,
+                "def": 79,
+                "spd": 44,
+                "spc": 58,
+                "xp": 1074,
+                "moves": [
+                    "Tackle",
+                    "Smog",
+                    "Sludge"
+                ]
+            }
+        ],
+        "money": 870,
+        "route_one_offset": "0x3A3F3"
+    },
+    "ROCKET 49": {
+        "trainer_class": "ROCKET",
+        "trainer_name": "ROCKET 49",
+        "trainer_location": "Unused",
+        "pokemon": [
+            {
+                "name": "Weezing",
+                "level": 33,
+                "hp": 91,
+                "atk": 70,
+                "def": 89,
+                "spd": 49,
+                "spc": 66,
+                "xp": 1222,
+                "moves": [
+                    "Tackle",
+                    "Smog",
+                    "Sludge"
+                ]
+            }
+        ],
+        "money": 990,
+        "route_one_offset": "0x3A3F6"
     },
     "COOLTRAINER M 1": {
         "trainer_class": "COOLTRAINER M",
@@ -15099,7 +15288,7 @@ const g1trainers = {
                 "spc": 54,
                 "xp": 985,
                 "moves": [
-                    "Horn Attack",
+                    "Double Kick",
                     "Poison Sting",
                     "Focus Energy",
                     "Fury Attack"
@@ -15115,15 +15304,15 @@ const g1trainers = {
                 "spc": 69,
                 "xp": 1629,
                 "moves": [
-                    "Tackle",
                     "Horn Attack",
                     "Poison Sting",
-                    "Thrash"
+                    "Thrash",
+                    "Double Kick"
                 ]
             }
         ],
         "money": 1365,
-        "route_one_offset": "0x3A35A"
+        "route_one_offset": "0x3A3F9"
     },
     "COOLTRAINER M 2": {
         "trainer_class": "COOLTRAINER M",
@@ -15179,7 +15368,7 @@ const g1trainers = {
             }
         ],
         "money": 1505,
-        "route_one_offset": "0x3A35E"
+        "route_one_offset": "0x3A3FD"
     },
     "COOLTRAINER M 3": {
         "trainer_class": "COOLTRAINER M",
@@ -15236,7 +15425,7 @@ const g1trainers = {
             }
         ],
         "money": 1505,
-        "route_one_offset": "0x3A363"
+        "route_one_offset": "0x3A402"
     },
     "COOLTRAINER M 4": {
         "trainer_class": "COOLTRAINER M",
@@ -15276,7 +15465,7 @@ const g1trainers = {
             }
         ],
         "money": 1575,
-        "route_one_offset": "0x3A368"
+        "route_one_offset": "0x3A407"
     },
     "COOLTRAINER M 5": {
         "trainer_class": "COOLTRAINER M",
@@ -15349,7 +15538,7 @@ const g1trainers = {
             }
         ],
         "money": 1470,
-        "route_one_offset": "0x3A36C"
+        "route_one_offset": "0x3A40B"
     },
     "COOLTRAINER M 6": {
         "trainer_class": "COOLTRAINER M",
@@ -15406,7 +15595,7 @@ const g1trainers = {
             }
         ],
         "money": 1540,
-        "route_one_offset": "0x3A372"
+        "route_one_offset": "0x3A411"
     },
     "COOLTRAINER M 7": {
         "trainer_class": "COOLTRAINER M",
@@ -15423,15 +15612,15 @@ const g1trainers = {
                 "spc": 86,
                 "xp": 2047,
                 "moves": [
-                    "Tackle",
                     "Horn Attack",
                     "Poison Sting",
-                    "Thrash"
+                    "Thrash",
+                    "Double Kick"
                 ]
             }
         ],
         "money": 1715,
-        "route_one_offset": "0x3A377"
+        "route_one_offset": "0x3A416"
     },
     "COOLTRAINER M 8": {
         "trainer_class": "COOLTRAINER M",
@@ -15472,7 +15661,7 @@ const g1trainers = {
             }
         ],
         "money": 1540,
-        "route_one_offset": "0x3A37A"
+        "route_one_offset": "0x3A419"
     },
     "COOLTRAINER M 9": {
         "trainer_class": "COOLTRAINER M",
@@ -15513,7 +15702,7 @@ const g1trainers = {
             }
         ],
         "money": 1365,
-        "route_one_offset": "0x3A37E"
+        "route_one_offset": "0x3A41D"
     },
     "COOLTRAINER M 10": {
         "trainer_class": "COOLTRAINER M",
@@ -15538,7 +15727,7 @@ const g1trainers = {
             }
         ],
         "money": 1505,
-        "route_one_offset": "0x3A382"
+        "route_one_offset": "0x3A421"
     },
     "COOLTRAINER F 1": {
         "trainer_class": "COOLTRAINER F",
@@ -15595,7 +15784,7 @@ const g1trainers = {
             }
         ],
         "money": 840,
-        "route_one_offset": "0x3A385"
+        "route_one_offset": "0x3A424"
     },
     "COOLTRAINER F 2": {
         "trainer_class": "COOLTRAINER F",
@@ -15644,15 +15833,15 @@ const g1trainers = {
                 "spc": 97,
                 "xp": 1759,
                 "moves": [
+                    "Acid",
                     "Razor Leaf",
                     "Wrap",
-                    "PoisonPowder",
-                    "Sleep Powder"
+                    "PoisonPowder"
                 ]
             }
         ],
         "money": 1505,
-        "route_one_offset": "0x3A38A"
+        "route_one_offset": "0x3A429"
     },
     "COOLTRAINER F 3": {
         "trainer_class": "COOLTRAINER F",
@@ -15708,7 +15897,7 @@ const g1trainers = {
             }
         ],
         "money": 1505,
-        "route_one_offset": "0x3A38F"
+        "route_one_offset": "0x3A42E"
     },
     "COOLTRAINER F 4": {
         "trainer_class": "COOLTRAINER F",
@@ -15725,10 +15914,10 @@ const g1trainers = {
                 "spc": 104,
                 "xp": 1813,
                 "moves": [
+                    "Sleep Powder",
+                    "Acid",
                     "Petal Dance",
-                    "PoisonPowder",
-                    "Stun Spore",
-                    "Sleep Powder"
+                    "PoisonPowder"
                 ]
             },
             {
@@ -15741,15 +15930,15 @@ const g1trainers = {
                 "spc": 85,
                 "xp": 1576,
                 "moves": [
-                    "Sleep Powder",
                     "Supersonic",
                     "Whirlwind",
+                    "Gust",
                     "Psybeam"
                 ]
             }
         ],
         "money": 1610,
-        "route_one_offset": "0x3A394"
+        "route_one_offset": "0x3A433"
     },
     "COOLTRAINER F 5": {
         "trainer_class": "COOLTRAINER F",
@@ -15790,7 +15979,7 @@ const g1trainers = {
             }
         ],
         "money": 1540,
-        "route_one_offset": "0x3A398"
+        "route_one_offset": "0x3A437"
     },
     "COOLTRAINER F 6": {
         "trainer_class": "COOLTRAINER F",
@@ -15831,7 +16020,7 @@ const g1trainers = {
             }
         ],
         "money": 1575,
-        "route_one_offset": "0x3A39C"
+        "route_one_offset": "0x3A43B"
     },
     "COOLTRAINER F 7": {
         "trainer_class": "COOLTRAINER F",
@@ -15848,10 +16037,10 @@ const g1trainers = {
                 "spc": 61,
                 "xp": 1128,
                 "moves": [
+                    "Double Kick",
                     "Poison Sting",
                     "Tail Whip",
-                    "Bite",
-                    "Fury Swipes"
+                    "Bite"
                 ]
             },
             {
@@ -15867,12 +16056,12 @@ const g1trainers = {
                     "Scratch",
                     "Tail Whip",
                     "Body Slam",
-                    "Poison Sting"
+                    "Double Kick"
                 ]
             }
         ],
         "money": 1575,
-        "route_one_offset": "0x3A3A0"
+        "route_one_offset": "0x3A43F"
     },
     "COOLTRAINER F 8": {
         "trainer_class": "COOLTRAINER F",
@@ -15928,7 +16117,7 @@ const g1trainers = {
             }
         ],
         "money": 1505,
-        "route_one_offset": "0x3A3A4"
+        "route_one_offset": "0x3A443"
     },
     "BRUNO 1": {
         "trainer_class": "BRUNO",
@@ -15945,10 +16134,10 @@ const g1trainers = {
                 "spc": 45,
                 "xp": 1225,
                 "moves": [
-                    "Rock Throw",
-                    "Rage",
+                    "Rock Slide",
+                    "Screech",
                     "Slam",
-                    "Harden"
+                    "Dig"
                 ]
             },
             {
@@ -15963,8 +16152,8 @@ const g1trainers = {
                 "moves": [
                     "Ice Punch",
                     "Thunder Punch",
-                    "Mega Punch",
-                    "Counter"
+                    "Fire Punch",
+                    "Double Team"
                 ]
             },
             {
@@ -15977,10 +16166,10 @@ const g1trainers = {
                 "spc": 52,
                 "xp": 1638,
                 "moves": [
-                    "Jump Kick",
-                    "Focus Energy",
+                    "Double Kick",
+                    "Mega Kick",
                     "Hi Jump Kick",
-                    "Mega Kick"
+                    "Double Team"
                 ]
             },
             {
@@ -15993,10 +16182,10 @@ const g1trainers = {
                 "spc": 47,
                 "xp": 1296,
                 "moves": [
-                    "Rock Throw",
-                    "Rage",
+                    "Rock Slide",
+                    "Screech",
                     "Slam",
-                    "Harden"
+                    "Earthquake"
                 ]
             },
             {
@@ -16010,14 +16199,14 @@ const g1trainers = {
                 "xp": 2398,
                 "moves": [
                     "Leer",
-                    "Focus Energy",
-                    "Fissure",
+                    "Karate Chop",
+                    "Strength",
                     "Submission"
                 ]
             }
         ],
         "money": 5742,
-        "route_one_offset": "0x3A3A9"
+        "route_one_offset": "0x3A448"
     },
     "BROCK 1": {
         "trainer_class": "BROCK",
@@ -16026,36 +16215,36 @@ const g1trainers = {
         "pokemon": [
             {
                 "name": "Geodude",
-                "level": 12,
-                "hp": 33,
-                "atk": 26,
-                "def": 30,
-                "spd": 11,
-                "spc": 14,
-                "xp": 220,
+                "level": 10,
+                "hp": 29,
+                "atk": 22,
+                "def": 26,
+                "spd": 10,
+                "spc": 12,
+                "xp": 183,
                 "moves": [
-                    "Tackle",
-                    "Defense Curl"
+                    "Tackle"
                 ]
             },
             {
                 "name": "Onix",
-                "level": 14,
-                "hp": 36,
-                "atk": 20,
-                "def": 52,
-                "spd": 26,
-                "spc": 15,
-                "xp": 324,
+                "level": 12,
+                "hp": 32,
+                "atk": 17,
+                "def": 45,
+                "spd": 23,
+                "spc": 14,
+                "xp": 277,
                 "moves": [
                     "Tackle",
                     "Screech",
+                    "Bind",
                     "Bide"
                 ]
             }
         ],
-        "money": 1386,
-        "route_one_offset": "0x3A3B5"
+        "money": 1188,
+        "route_one_offset": "0x3A454"
     },
     "MISTY 1": {
         "trainer_class": "MISTY",
@@ -16088,12 +16277,13 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Water Gun",
-                    "BubbleBeam"
+                    "Harden",
+                    "Bubblebeam"
                 ]
             }
         ],
         "money": 2079,
-        "route_one_offset": "0x3A3BB"
+        "route_one_offset": "0x3A45A"
     },
     "LT.SURGE 1": {
         "trainer_class": "LT.SURGE",
@@ -16101,54 +16291,24 @@ const g1trainers = {
         "trainer_location": "Vermilion Gym",
         "pokemon": [
             {
-                "name": "Voltorb",
-                "level": 21,
-                "hp": 51,
-                "atk": 21,
-                "def": 29,
-                "spd": 50,
-                "spc": 31,
-                "xp": 463,
-                "moves": [
-                    "Tackle",
-                    "Screech",
-                    "Sonic Boom"
-                ]
-            },
-            {
-                "name": "Pikachu",
-                "level": 18,
-                "hp": 43,
-                "atk": 28,
-                "def": 18,
-                "spd": 40,
-                "spc": 25,
-                "xp": 315,
-                "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave",
-                    "Quick Attack"
-                ]
-            },
-            {
                 "name": "Raichu",
-                "level": 24,
-                "hp": 66,
-                "atk": 52,
-                "def": 35,
-                "spd": 56,
-                "spc": 52,
-                "xp": 627,
+                "level": 28,
+                "hp": 76,
+                "atk": 60,
+                "def": 40,
+                "spd": 65,
+                "spc": 59,
+                "xp": 732,
                 "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunderbolt"
+                    "Thunderbolt",
+                    "Mega Punch",
+                    "Mega Kick",
+                    "Growl"
                 ]
             }
         ],
-        "money": 2376,
-        "route_one_offset": "0x3A3C1"
+        "money": 2772,
+        "route_one_offset": "0x3A460"
     },
     "ERIKA 1": {
         "trainer_class": "ERIKA",
@@ -16156,54 +16316,56 @@ const g1trainers = {
         "trainer_location": "Celadon Gym",
         "pokemon": [
             {
-                "name": "Victreebel",
-                "level": 29,
-                "hp": 90,
-                "atk": 71,
-                "def": 47,
-                "spd": 50,
-                "spc": 67,
-                "xp": 1186,
-                "moves": [
-                    "Razor Leaf",
-                    "Wrap",
-                    "PoisonPowder",
-                    "Sleep Powder"
-                ]
-            },
-            {
                 "name": "Tangela",
-                "level": 24,
-                "hp": 69,
-                "atk": 35,
-                "def": 64,
-                "spd": 37,
-                "spc": 56,
-                "xp": 853,
+                "level": 30,
+                "hp": 83,
+                "atk": 43,
+                "def": 78,
+                "spd": 45,
+                "spc": 69,
+                "xp": 1066,
                 "moves": [
                     "Constrict",
-                    "Bind"
+                    "Bind",
+                    "Mega Drain",
+                    "Vine Whip"
                 ]
             },
             {
-                "name": "Vileplume",
-                "level": 29,
-                "hp": 87,
-                "atk": 56,
-                "def": 58,
-                "spd": 38,
-                "spc": 67,
-                "xp": 1143,
+                "name": "Weepinbell",
+                "level": 32,
+                "hp": 88,
+                "atk": 68,
+                "def": 42,
+                "spd": 45,
+                "spc": 64,
+                "xp": 1035,
+                "moves": [
+                    "Razor Leaf",
+                    "Sleep Powder",
+                    "Stun Spore",
+                    "Acid"
+                ]
+            },
+            {
+                "name": "Gloom",
+                "level": 32,
+                "hp": 85,
+                "atk": 52,
+                "def": 54,
+                "spd": 35,
+                "spc": 64,
+                "xp": 904,
                 "moves": [
                     "Petal Dance",
-                    "PoisonPowder",
-                    "Mega Drain",
-                    "Sleep Powder"
+                    "Stun Spore",
+                    "Sleep Powder",
+                    "Acid"
                 ]
             }
         ],
-        "money": 2871,
-        "route_one_offset": "0x3A3C9"
+        "money": 3168,
+        "route_one_offset": "0x3A464"
     },
     "KOGA 1": {
         "trainer_class": "KOGA",
@@ -16211,72 +16373,72 @@ const g1trainers = {
         "trainer_location": "Fuchsia Gym",
         "pokemon": [
             {
-                "name": "Koffing",
-                "level": 37,
-                "hp": 82,
-                "atk": 59,
-                "def": 81,
-                "spd": 36,
-                "spc": 55,
-                "xp": 903,
+                "name": "Venonat",
+                "level": 44,
+                "hp": 113,
+                "atk": 61,
+                "def": 56,
+                "spd": 51,
+                "spc": 47,
+                "xp": 706,
                 "moves": [
-                    "Tackle",
-                    "Smog",
-                    "Sludge",
-                    "Smokescreen"
-                ]
-            },
-            {
-                "name": "Muk",
-                "level": 39,
-                "hp": 137,
-                "atk": 93,
-                "def": 69,
-                "spd": 50,
-                "spc": 61,
-                "xp": 1311,
-                "moves": [
-                    "Disable",
-                    "Poison Gas",
-                    "Minimize",
-                    "Sludge"
-                ]
-            },
-            {
-                "name": "Koffing",
-                "level": 37,
-                "hp": 82,
-                "atk": 59,
-                "def": 81,
-                "spd": 36,
-                "spc": 55,
-                "xp": 903,
-                "moves": [
-                    "Tackle",
-                    "Smog",
-                    "Sludge",
-                    "Smokescreen"
-                ]
-            },
-            {
-                "name": "Weezing",
-                "level": 43,
-                "hp": 115,
-                "atk": 90,
-                "def": 115,
-                "spd": 63,
-                "spc": 84,
-                "xp": 1593,
-                "moves": [
-                    "Smog",
-                    "Sludge",
                     "Toxic",
-                    "Selfdestruct"
+                    "Tackle",
+                    "Sleep Powder",
+                    "Psychic"
+                ]
+            },
+            {
+                "name": "Venonat",
+                "level": 46,
+                "hp": 118,
+                "atk": 63,
+                "def": 58,
+                "spd": 53,
+                "spc": 49,
+                "xp": 738,
+                "moves": [
+                    "Toxic",
+                    "Psybeam",
+                    "Supersonic",
+                    "Psychic"
+                ]
+            },
+            {
+                "name": "Venonat",
+                "level": 48,
+                "hp": 123,
+                "atk": 66,
+                "def": 60,
+                "spd": 55,
+                "spc": 51,
+                "xp": 771,
+                "moves": [
+                    "Toxic",
+                    "Double Edge",
+                    "Sleep Powder",
+                    "Psychic"
+                ]
+            },
+            {
+                "name": "Venomoth",
+                "level": 50,
+                "hp": 138,
+                "atk": 79,
+                "def": 73,
+                "spd": 103,
+                "spc": 103,
+                "xp": 1477,
+                "moves": [
+                    "Leech Life",
+                    "Double Team",
+                    "Psychic",
+                    "Toxic"
                 ]
             }
         ],
-        "money": 4257,
-        "route_one_offset": "0x3A3D1"
+        "money": 4950,
+        "route_one_offset": "0x3A46C"
     },
     "BLAINE 1": {
         "trainer_class": "BLAINE",
@@ -16284,72 +16446,56 @@ const g1trainers = {
         "trainer_location": "Cinnabar Gym",
         "pokemon": [
             {
-                "name": "Growlithe",
-                "level": 42,
-                "hp": 104,
-                "atk": 71,
-                "def": 49,
-                "spd": 62,
-                "spc": 53,
-                "xp": 819,
+                "name": "Ninetales",
+                "level": 48,
+                "hp": 135,
+                "atk": 86,
+                "def": 84,
+                "spd": 108,
+                "spc": 108,
+                "xp": 1830,
                 "moves": [
-                    "Ember",
-                    "Leer",
-                    "Take Down",
-                    "Agility"
-                ]
-            },
-            {
-                "name": "Ponyta",
-                "level": 40,
-                "hp": 96,
-                "atk": 80,
-                "def": 55,
-                "spd": 83,
-                "spc": 63,
-                "xp": 1302,
-                "moves": [
+                    "Flamethrower",
                     "Tail Whip",
-                    "Stomp",
-                    "Growl",
-                    "Fire Spin"
+                    "Quick Attack",
+                    "Confuse Ray"
                 ]
             },
             {
                 "name": "Rapidash",
-                "level": 42,
-                "hp": 113,
-                "atk": 96,
-                "def": 70,
-                "spd": 99,
-                "spc": 78,
-                "xp": 1728,
+                "level": 50,
+                "hp": 133,
+                "atk": 114,
+                "def": 83,
+                "spd": 118,
+                "spc": 93,
+                "xp": 2056,
                 "moves": [
-                    "Tail Whip",
                     "Stomp",
                     "Growl",
-                    "Fire Spin"
+                    "Fire Spin",
+                    "Take Down"
                 ]
             },
             {
                 "name": "Arcanine",
-                "level": 47,
-                "hp": 149,
-                "atk": 116,
-                "def": 87,
-                "spd": 101,
-                "spc": 87,
-                "xp": 2145,
+                "level": 54,
+                "hp": 169,
+                "atk": 133,
+                "def": 100,
+                "spd": 116,
+                "spc": 100,
+                "xp": 2464,
                 "moves": [
-                    "Roar",
-                    "Ember",
+                    "Flamethrower",
                     "Fire Blast",
+                    "Reflect",
                     "Take Down"
                 ]
             }
         ],
-        "money": 4653,
-        "route_one_offset": "0x3A3DB"
+        "money": 5346,
+        "route_one_offset": "0x3A476"
     },
     "SABRINA 1": {
         "trainer_class": "SABRINA",
@@ -16357,72 +16503,53 @@ const g1trainers = {
         "trainer_location": "Saffron Gym",
         "pokemon": [
             {
+                "name": "Abra",
+                "level": 50,
+                "hp": 93,
+                "atk": 34,
+                "def": 28,
+                "spd": 103,
+                "spc": 118,
+                "xp": 781,
+                "moves": [
+                    "Flash"
+                ]
+            },
+            {
                 "name": "Kadabra",
-                "level": 38,
-                "hp": 84,
-                "atk": 38,
-                "def": 33,
-                "spd": 90,
-                "spc": 102,
-                "xp": 1180,
+                "level": 50,
+                "hp": 108,
+                "atk": 49,
+                "def": 43,
+                "spd": 118,
+                "spc": 133,
+                "xp": 1552,
                 "moves": [
-                    "Disable",
-                    "Psybeam",
+                    "Kinesis",
                     "Recover",
-                    "Psychic"
-                ]
-            },
-            {
-                "name": "Mr. Mime",
-                "level": 37,
-                "hp": 82,
-                "atk": 44,
-                "def": 59,
-                "spd": 77,
-                "spc": 84,
-                "xp": 1077,
-                "moves": [
-                    "Confusion",
-                    "Barrier",
-                    "Light Screen",
-                    "Doubleslap"
-                ]
-            },
-            {
-                "name": "Venomoth",
-                "level": 38,
-                "hp": 107,
-                "atk": 61,
-                "def": 56,
-                "spd": 79,
-                "spc": 79,
-                "xp": 1123,
-                "moves": [
-                    "PoisonPowder",
-                    "Leech Life",
-                    "Stun Spore",
-                    "Psybeam"
+                    "Psychic",
+                    "Psywave"
                 ]
             },
             {
                 "name": "Alakazam",
-                "level": 43,
-                "hp": 107,
-                "atk": 55,
-                "def": 50,
-                "spd": 115,
-                "spc": 127,
-                "xp": 1713,
+                "level": 50,
+                "hp": 123,
+                "atk": 64,
+                "def": 58,
+                "spd": 133,
+                "spc": 148,
+                "xp": 1992,
                 "moves": [
-                    "Psybeam",
-                    "Recover",
                     "Psywave",
+                    "Recover",
+                    "Psychic",
                     "Reflect"
                 ]
             }
         ],
-        "money": 4257,
-        "route_one_offset": "0x3A3E5"
+        "money": 4950,
+        "route_one_offset": "0x3A47E"
     },
     "GENTLEMAN 1": {
         "trainer_class": "GENTLEMAN",
@@ -16461,7 +16588,7 @@ const g1trainers = {
             }
         ],
         "money": 1260,
-        "route_one_offset": "0x3A3EF"
+        "route_one_offset": "0x3A486"
     },
     "GENTLEMAN 2": {
         "trainer_class": "GENTLEMAN",
@@ -16478,9 +16605,9 @@ const g1trainers = {
                 "spc": 23,
                 "xp": 243,
                 "moves": [
-                    "Leer",
                     "Tackle",
                     "Horn Attack",
+                    "Double Kick",
                     "Poison Sting"
                 ]
             },
@@ -16494,15 +16621,15 @@ const g1trainers = {
                 "spc": 23,
                 "xp": 240,
                 "moves": [
-                    "Growl",
                     "Tackle",
                     "Scratch",
+                    "Double Kick",
                     "Poison Sting"
                 ]
             }
         ],
         "money": 1330,
-        "route_one_offset": "0x3A3F3"
+        "route_one_offset": "0x3A48A"
     },
     "GENTLEMAN 3": {
         "trainer_class": "GENTLEMAN",
@@ -16510,24 +16637,38 @@ const g1trainers = {
         "trainer_location": "SS Anne",
         "pokemon": [
             {
-                "name": "Pikachu",
-                "level": 23,
-                "hp": 52,
-                "atk": 34,
-                "def": 22,
-                "spd": 50,
-                "spc": 31,
-                "xp": 403,
+                "name": "Voltorb",
+                "level": 22,
+                "hp": 53,
+                "atk": 22,
+                "def": 30,
+                "spd": 52,
+                "spc": 32,
+                "xp": 484,
                 "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave",
-                    "Quick Attack"
+                    "Tackle",
+                    "Screech",
+                    "Sonic Boom",
+                    "Selfdestruct"
+                ]
+            },
+            {
+                "name": "Magnemite",
+                "level": 22,
+                "hp": 46,
+                "atk": 24,
+                "def": 39,
+                "spd": 28,
+                "spc": 50,
+                "xp": 418,
+                "moves": [
+                    "Tackle",
+                    "Sonic Boom"
                 ]
             }
         ],
-        "money": 1610,
-        "route_one_offset": "0x3A3F7"
+        "money": 1540,
+        "route_one_offset": "0x3A48E"
     },
     "GENTLEMAN 3 Duplicate": {
         "trainer_class": "GENTLEMAN",
@@ -16535,24 +16676,38 @@ const g1trainers = {
         "trainer_location": "Vermilion Gym",
         "pokemon": [
             {
-                "name": "Pikachu",
-                "level": 23,
-                "hp": 52,
-                "atk": 34,
-                "def": 22,
-                "spd": 50,
-                "spc": 31,
-                "xp": 403,
+                "name": "Voltorb",
+                "level": 22,
+                "hp": 53,
+                "atk": 22,
+                "def": 30,
+                "spd": 52,
+                "spc": 32,
+                "xp": 484,
                 "moves": [
-                    "Thundershock",
-                    "Growl",
-                    "Thunder Wave",
-                    "Quick Attack"
+                    "Tackle",
+                    "Screech",
+                    "Sonic Boom",
+                    "Selfdestruct"
+                ]
+            },
+            {
+                "name": "Magnemite",
+                "level": 22,
+                "hp": 46,
+                "atk": 24,
+                "def": 39,
+                "spd": 28,
+                "spc": 50,
+                "xp": 418,
+                "moves": [
+                    "Tackle",
+                    "Sonic Boom"
                 ]
             }
         ],
-        "money": 1610,
-        "route_one_offset": "0x3A3F7"
+        "money": 1540,
+        "route_one_offset": "0x3A48E"
     },
     "GENTLEMAN 4": {
         "trainer_class": "GENTLEMAN",
@@ -16569,15 +16724,15 @@ const g1trainers = {
                 "spc": 70,
                 "xp": 1531,
                 "moves": [
-                    "Fury Swipes",
-                    "Focus Energy",
+                    "Rage",
                     "Seismic Toss",
-                    "Thrash"
+                    "Thrash",
+                    "Screech"
                 ]
             }
         ],
         "money": 3360,
-        "route_one_offset": "0x3A3FA"
+        "route_one_offset": "0x3A492"
     },
     "GENTLEMAN 5": {
         "trainer_class": "GENTLEMAN",
@@ -16613,37 +16768,38 @@ const g1trainers = {
             }
         ],
         "money": 1190,
-        "route_one_offset": "0x3A3FD"
+        "route_one_offset": "0x3A495"
     },
     "RIVAL2 1": {
         "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Squirtle 1",
+        "trainer_name": "RIVAL2 1",
         "trainer_location": "SS Anne",
         "pokemon": [
             {
-                "name": "Pidgeotto",
+                "name": "Spearow",
                 "level": 19,
-                "hp": 55,
+                "hp": 47,
                 "atk": 31,
-                "def": 28,
-                "spd": 35,
-                "spc": 27,
-                "xp": 459,
+                "def": 19,
+                "spd": 34,
+                "spc": 19,
+                "xp": 235,
                 "moves": [
-                    "Gust",
-                    "Sand Attack",
-                    "Quick Attack"
+                    "Peck",
+                    "Growl",
+                    "Leer",
+                    "Fury Attack"
                 ]
             },
             {
-                "name": "Raticate",
+                "name": "Rattata",
                 "level": 16,
-                "hp": 46,
-                "atk": 33,
-                "def": 26,
-                "spd": 38,
-                "spc": 23,
-                "xp": 397,
+                "hp": 38,
+                "atk": 25,
+                "def": 18,
+                "spd": 30,
+                "spc": 15,
+                "xp": 195,
                 "moves": [
                     "Tackle",
                     "Tail Whip",
@@ -16652,503 +16808,539 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "Kadabra",
+                "name": "Sandshrew",
                 "level": 18,
-                "hp": 45,
-                "atk": 20,
-                "def": 18,
-                "spd": 45,
-                "spc": 51,
-                "xp": 558,
+                "hp": 48,
+                "atk": 35,
+                "def": 38,
+                "spd": 22,
+                "spc": 18,
+                "xp": 358,
                 "moves": [
-                    "Teleport",
-                    "Confusion",
-                    "Disable"
+                    "Scratch",
+                    "Sand Attack",
+                    "Slash"
                 ]
             },
             {
-                "name": "Wartortle",
+                "name": "Eevee",
                 "level": 20,
-                "hp": 56,
-                "atk": 33,
-                "def": 40,
-                "spd": 31,
+                "hp": 55,
+                "atk": 30,
+                "def": 28,
+                "spd": 30,
                 "spc": 34,
-                "xp": 612,
+                "xp": 393,
                 "moves": [
                     "Tackle",
                     "Tail Whip",
-                    "Bubble",
-                    "Water Gun"
+                    "Sand Attack",
+                    "Growl"
                 ]
             }
         ],
         "money": 1300,
-        "route_one_offset": "0x3A401"
+        "route_one_offset": "0x3A499"
     },
     "RIVAL2 2": {
         "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Bulbasaur 1",
-        "trainer_location": "SS Anne",
+        "trainer_name": "RIVAL2 2 Jolteon",
+        "trainer_location": "Pokemon Tower",
         "pokemon": [
             {
-                "name": "Pidgeotto",
-                "level": 19,
-                "hp": 55,
-                "atk": 31,
-                "def": 28,
-                "spd": 35,
-                "spc": 27,
-                "xp": 459,
+                "name": "Fearow",
+                "level": 25,
+                "hp": 71,
+                "atk": 54,
+                "def": 41,
+                "spd": 59,
+                "spc": 39,
+                "xp": 867,
                 "moves": [
-                    "Gust",
-                    "Sand Attack",
-                    "Quick Attack"
+                    "Growl",
+                    "Leer",
+                    "Fury Attack",
+                    "Mirror Move"
                 ]
             },
             {
-                "name": "Raticate",
-                "level": 16,
-                "hp": 46,
-                "atk": 33,
-                "def": 26,
-                "spd": 38,
-                "spc": 23,
-                "xp": 397,
+                "name": "Shellder",
+                "level": 23,
+                "hp": 50,
+                "atk": 39,
+                "def": 54,
+                "spd": 27,
+                "spc": 29,
+                "xp": 477,
                 "moves": [
                     "Tackle",
+                    "Withdraw",
+                    "Supersonic",
+                    "Clamp"
+                ]
+            },
+            {
+                "name": "Vulpix",
+                "level": 22,
+                "hp": 52,
+                "atk": 27,
+                "def": 26,
+                "spd": 37,
+                "spc": 37,
+                "xp": 297,
+                "moves": [
+                    "Ember",
                     "Tail Whip",
                     "Quick Attack",
-                    "Hyper Fang"
+                    "Roar"
                 ]
             },
             {
-                "name": "Kadabra",
-                "level": 18,
-                "hp": 45,
-                "atk": 20,
-                "def": 18,
-                "spd": 45,
-                "spc": 51,
-                "xp": 558,
-                "moves": [
-                    "Teleport",
-                    "Confusion",
-                    "Disable"
-                ]
-            },
-            {
-                "name": "Ivysaur",
+                "name": "Sandshrew",
                 "level": 20,
-                "hp": 57,
-                "atk": 33,
-                "def": 33,
-                "spd": 32,
-                "spc": 40,
-                "xp": 603,
+                "hp": 53,
+                "atk": 38,
+                "def": 42,
+                "spd": 24,
+                "spc": 20,
+                "xp": 397,
                 "moves": [
-                    "Tackle",
+                    "Scratch",
+                    "Sand Attack",
+                    "Slash"
+                ]
+            },
+            {
+                "name": "Eevee",
+                "level": 25,
+                "hp": 66,
+                "atk": 37,
+                "def": 34,
+                "spd": 36,
+                "spc": 41,
+                "xp": 492,
+                "moves": [
+                    "Tail Whip",
+                    "Sand Attack",
                     "Growl",
-                    "Leech Seed",
-                    "Vine Whip"
+                    "Quick Attack"
                 ]
             }
         ],
-        "money": 1300,
-        "route_one_offset": "0x3A40B"
+        "money": 1625,
+        "route_one_offset": "0x3A4A3"
     },
     "RIVAL2 3": {
         "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Charmander 1",
-        "trainer_location": "SS Anne",
+        "trainer_name": "RIVAL2 2 Flareon",
+        "trainer_location": "Pokemon Tower",
         "pokemon": [
             {
-                "name": "Pidgeotto",
-                "level": 19,
-                "hp": 55,
-                "atk": 31,
-                "def": 28,
-                "spd": 35,
-                "spc": 27,
-                "xp": 459,
+                "name": "Fearow",
+                "level": 25,
+                "hp": 71,
+                "atk": 54,
+                "def": 41,
+                "spd": 59,
+                "spc": 39,
+                "xp": 867,
                 "moves": [
-                    "Gust",
-                    "Sand Attack",
-                    "Quick Attack"
+                    "Growl",
+                    "Leer",
+                    "Fury Attack",
+                    "Mirror Move"
                 ]
             },
             {
-                "name": "Raticate",
-                "level": 16,
-                "hp": 46,
-                "atk": 33,
-                "def": 26,
-                "spd": 38,
-                "spc": 23,
-                "xp": 397,
+                "name": "Magnemite",
+                "level": 23,
+                "hp": 48,
+                "atk": 25,
+                "def": 40,
+                "spd": 29,
+                "spc": 52,
+                "xp": 438,
                 "moves": [
                     "Tackle",
-                    "Tail Whip",
-                    "Quick Attack",
-                    "Hyper Fang"
+                    "Sonic Boom"
                 ]
             },
             {
-                "name": "Kadabra",
-                "level": 18,
-                "hp": 45,
-                "atk": 20,
-                "def": 18,
-                "spd": 45,
-                "spc": 51,
-                "xp": 558,
+                "name": "Shellder",
+                "level": 22,
+                "hp": 48,
+                "atk": 37,
+                "def": 52,
+                "spd": 26,
+                "spc": 28,
+                "xp": 456,
                 "moves": [
-                    "Teleport",
-                    "Confusion",
-                    "Disable"
+                    "Tackle",
+                    "Withdraw",
+                    "Supersonic"
                 ]
             },
             {
-                "name": "Charmeleon",
+                "name": "Sandshrew",
                 "level": 20,
-                "hp": 56,
-                "atk": 34,
-                "def": 31,
-                "spd": 40,
-                "spc": 34,
-                "xp": 607,
+                "hp": 53,
+                "atk": 38,
+                "def": 42,
+                "spd": 24,
+                "spc": 20,
+                "xp": 397,
                 "moves": [
                     "Scratch",
+                    "Sand Attack",
+                    "Slash"
+                ]
+            },
+            {
+                "name": "Eevee",
+                "level": 25,
+                "hp": 66,
+                "atk": 37,
+                "def": 34,
+                "spd": 36,
+                "spc": 41,
+                "xp": 492,
+                "moves": [
+                    "Tail Whip",
+                    "Sand Attack",
                     "Growl",
-                    "Ember",
-                    "Leer"
+                    "Quick Attack"
                 ]
             }
         ],
-        "money": 1300,
-        "route_one_offset": "0x3A415"
+        "money": 1625,
+        "route_one_offset": "0x3A4AF"
     },
     "RIVAL2 4": {
         "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Squirtle 2",
+        "trainer_name": "RIVAL2 2 Vaporeon",
         "trainer_location": "Pokemon Tower",
         "pokemon": [
             {
-                "name": "Pidgeotto",
+                "name": "Fearow",
                 "level": 25,
-                "hp": 70,
-                "atk": 39,
-                "def": 36,
-                "spd": 44,
-                "spc": 34,
-                "xp": 604,
+                "hp": 71,
+                "atk": 54,
+                "def": 41,
+                "spd": 59,
+                "spc": 39,
+                "xp": 867,
                 "moves": [
-                    "Gust",
-                    "Sand Attack",
-                    "Quick Attack",
-                    "Whirlwind"
+                    "Growl",
+                    "Leer",
+                    "Fury Attack",
+                    "Mirror Move"
                 ]
             },
             {
-                "name": "Growlithe",
+                "name": "Vulpix",
                 "level": 23,
-                "hp": 61,
-                "atk": 41,
-                "def": 29,
-                "spd": 36,
-                "spc": 31,
-                "xp": 448,
-                "moves": [
-                    "Bite",
-                    "Roar",
-                    "Ember",
-                    "Leer"
-                ]
-            },
-            {
-                "name": "Exeggcute",
-                "level": 22,
-                "hp": 61,
-                "atk": 26,
-                "def": 43,
-                "spd": 26,
-                "spc": 34,
-                "xp": 462,
-                "moves": [
-                    "Barrage",
-                    "Hypnosis"
-                ]
-            },
-            {
-                "name": "Kadabra",
-                "level": 20,
-                "hp": 49,
-                "atk": 22,
-                "def": 20,
-                "spd": 50,
-                "spc": 56,
-                "xp": 621,
-                "moves": [
-                    "Teleport",
-                    "Confusion",
-                    "Disable"
-                ]
-            },
-            {
-                "name": "Wartortle",
-                "level": 25,
-                "hp": 68,
-                "atk": 41,
-                "def": 49,
+                "hp": 54,
+                "atk": 28,
+                "def": 27,
                 "spd": 38,
+                "spc": 38,
+                "xp": 310,
+                "moves": [
+                    "Ember",
+                    "Tail Whip",
+                    "Quick Attack",
+                    "Roar"
+                ]
+            },
+            {
+                "name": "Magnemite",
+                "level": 22,
+                "hp": 46,
+                "atk": 24,
+                "def": 39,
+                "spd": 28,
+                "spc": 50,
+                "xp": 418,
+                "moves": [
+                    "Tackle",
+                    "Sonic Boom"
+                ]
+            },
+            {
+                "name": "Sandshrew",
+                "level": 20,
+                "hp": 53,
+                "atk": 38,
+                "def": 42,
+                "spd": 24,
+                "spc": 20,
+                "xp": 397,
+                "moves": [
+                    "Scratch",
+                    "Sand Attack",
+                    "Slash"
+                ]
+            },
+            {
+                "name": "Eevee",
+                "level": 25,
+                "hp": 66,
+                "atk": 37,
+                "def": 34,
+                "spd": 36,
                 "spc": 41,
-                "xp": 765,
+                "xp": 492,
                 "moves": [
                     "Tail Whip",
-                    "Bubble",
-                    "Water Gun",
-                    "Bite"
+                    "Sand Attack",
+                    "Growl",
+                    "Quick Attack"
                 ]
             }
         ],
         "money": 1625,
-        "route_one_offset": "0x3A41F"
+        "route_one_offset": "0x3A4BB"
     },
     "RIVAL2 5": {
         "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Bulbasaur 2",
-        "trainer_location": "Pokemon Tower",
+        "trainer_name": "RIVAL2 3 Jolteon",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
-                "name": "Pidgeotto",
-                "level": 25,
-                "hp": 70,
-                "atk": 39,
-                "def": 36,
-                "spd": 44,
-                "spc": 34,
-                "xp": 604,
+                "name": "Sandslash",
+                "level": 38,
+                "hp": 111,
+                "atk": 87,
+                "def": 94,
+                "spd": 60,
+                "spc": 52,
+                "xp": 1326,
                 "moves": [
-                    "Gust",
                     "Sand Attack",
+                    "Slash",
+                    "Poison Sting",
+                    "Swift"
+                ]
+            },
+            {
+                "name": "Ninetales",
+                "level": 35,
+                "hp": 101,
+                "atk": 64,
+                "def": 63,
+                "spd": 80,
+                "spc": 80,
+                "xp": 1335,
+                "moves": [
+                    "Ember",
+                    "Tail Whip",
                     "Quick Attack",
-                    "Whirlwind"
+                    "Roar"
                 ]
             },
             {
-                "name": "Gyarados",
-                "level": 23,
-                "hp": 80,
-                "atk": 66,
-                "def": 45,
-                "spd": 45,
-                "spc": 54,
-                "xp": 1054,
+                "name": "Cloyster",
+                "level": 37,
+                "hp": 89,
+                "atk": 81,
+                "def": 144,
+                "spd": 62,
+                "spc": 73,
+                "xp": 1609,
                 "moves": [
-                    "Bite",
-                    "Dragon Rage",
-                    "Leer",
-                    "Hydro Pump"
-                ]
-            },
-            {
-                "name": "Growlithe",
-                "level": 22,
-                "hp": 59,
-                "atk": 39,
-                "def": 28,
-                "spd": 34,
-                "spc": 30,
-                "xp": 429,
-                "moves": [
-                    "Bite",
-                    "Roar",
-                    "Ember"
+                    "Withdraw",
+                    "Supersonic",
+                    "Clamp",
+                    "Aurora Beam"
                 ]
             },
             {
                 "name": "Kadabra",
-                "level": 20,
-                "hp": 49,
-                "atk": 22,
-                "def": 20,
-                "spd": 50,
-                "spc": 56,
-                "xp": 621,
+                "level": 35,
+                "hp": 78,
+                "atk": 35,
+                "def": 31,
+                "spd": 84,
+                "spc": 94,
+                "xp": 1087,
                 "moves": [
-                    "Teleport",
                     "Confusion",
-                    "Disable"
+                    "Disable",
+                    "Psybeam",
+                    "Recover"
                 ]
             },
             {
-                "name": "Ivysaur",
-                "level": 25,
-                "hp": 69,
-                "atk": 40,
-                "def": 40,
-                "spd": 39,
-                "spc": 49,
-                "xp": 754,
+                "name": "Jolteon",
+                "level": 40,
+                "hp": 108,
+                "atk": 64,
+                "def": 59,
+                "spd": 115,
+                "spc": 99,
+                "xp": 1687,
                 "moves": [
-                    "Growl",
-                    "Leech Seed",
-                    "Vine Whip",
-                    "PoisonPowder"
+                    "Thundershock",
+                    "Sand Attack",
+                    "Double Kick",
+                    "Pin Missile"
                 ]
             }
         ],
-        "money": 1625,
-        "route_one_offset": "0x3A42B"
+        "money": 2600,
+        "route_one_offset": "0x3A4C7"
     },
     "RIVAL2 6": {
         "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Charmander 2",
-        "trainer_location": "Pokemon Tower",
+        "trainer_name": "RIVAL2 3 Flareon",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
-                "name": "Pidgeotto",
-                "level": 25,
-                "hp": 70,
-                "atk": 39,
-                "def": 36,
-                "spd": 44,
-                "spc": 34,
-                "xp": 604,
-                "moves": [
-                    "Gust",
-                    "Sand Attack",
-                    "Quick Attack",
-                    "Whirlwind"
-                ]
-            },
-            {
-                "name": "Exeggcute",
-                "level": 23,
-                "hp": 64,
-                "atk": 27,
-                "def": 45,
-                "spd": 27,
-                "spc": 36,
-                "xp": 483,
-                "moves": [
-                    "Barrage",
-                    "Hypnosis"
-                ]
-            },
-            {
-                "name": "Gyarados",
-                "level": 22,
-                "hp": 77,
-                "atk": 63,
-                "def": 43,
-                "spd": 44,
+                "name": "Sandslash",
+                "level": 38,
+                "hp": 111,
+                "atk": 87,
+                "def": 94,
+                "spd": 60,
                 "spc": 52,
-                "xp": 1008,
+                "xp": 1326,
                 "moves": [
-                    "Bite",
-                    "Dragon Rage",
-                    "Leer",
-                    "Hydro Pump"
+                    "Sand Attack",
+                    "Slash",
+                    "Poison Sting",
+                    "Swift"
+                ]
+            },
+            {
+                "name": "Cloyster",
+                "level": 35,
+                "hp": 85,
+                "atk": 77,
+                "def": 136,
+                "spd": 59,
+                "spc": 70,
+                "xp": 1522,
+                "moves": [
+                    "Withdraw",
+                    "Supersonic",
+                    "Clamp",
+                    "Aurora Beam"
+                ]
+            },
+            {
+                "name": "Magneton",
+                "level": 37,
+                "hp": 89,
+                "atk": 56,
+                "def": 81,
+                "spd": 62,
+                "spc": 99,
+                "xp": 1276,
+                "moves": [
+                    "Tackle",
+                    "Sonic Boom",
+                    "Thundershock",
+                    "Supersonic"
                 ]
             },
             {
                 "name": "Kadabra",
-                "level": 20,
-                "hp": 49,
-                "atk": 22,
-                "def": 20,
-                "spd": 50,
-                "spc": 56,
-                "xp": 621,
+                "level": 35,
+                "hp": 78,
+                "atk": 35,
+                "def": 31,
+                "spd": 84,
+                "spc": 94,
+                "xp": 1087,
                 "moves": [
-                    "Teleport",
                     "Confusion",
-                    "Disable"
+                    "Disable",
+                    "Psybeam",
+                    "Recover"
                 ]
             },
             {
-                "name": "Charmeleon",
-                "level": 25,
-                "hp": 68,
-                "atk": 41,
-                "def": 38,
-                "spd": 49,
-                "spc": 41,
-                "xp": 760,
+                "name": "Flareon",
+                "level": 40,
+                "hp": 108,
+                "atk": 116,
+                "def": 59,
+                "spd": 63,
+                "spc": 99,
+                "xp": 1696,
                 "moves": [
-                    "Growl",
                     "Ember",
-                    "Leer",
-                    "Rage"
+                    "Sand Attack",
+                    "Bite",
+                    "Fire Spin"
                 ]
             }
         ],
-        "money": 1625,
-        "route_one_offset": "0x3A437"
+        "money": 2600,
+        "route_one_offset": "0x3A4D3"
     },
     "RIVAL2 7": {
         "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Squirtle 3",
-        "trainer_location": "Silph",
+        "trainer_name": "RIVAL2 3 Vaporeon",
+        "trainer_location": "Silph Co.",
         "pokemon": [
             {
-                "name": "Pidgeot",
-                "level": 37,
-                "hp": 114,
-                "atk": 70,
-                "def": 66,
-                "spd": 78,
-                "spc": 62,
-                "xp": 1363,
+                "name": "Sandslash",
+                "level": 38,
+                "hp": 111,
+                "atk": 87,
+                "def": 94,
+                "spd": 60,
+                "spc": 52,
+                "xp": 1326,
                 "moves": [
                     "Sand Attack",
-                    "Quick Attack",
-                    "Whirlwind",
-                    "Wing Attack"
+                    "Slash",
+                    "Poison Sting",
+                    "Swift"
                 ]
             },
             {
-                "name": "Growlithe",
-                "level": 38,
-                "hp": 95,
-                "atk": 65,
-                "def": 45,
-                "spd": 56,
-                "spc": 49,
-                "xp": 741,
-                "moves": [
-                    "Roar",
-                    "Ember",
-                    "Leer",
-                    "Take Down"
-                ]
-            },
-            {
-                "name": "Exeggcute",
+                "name": "Magneton",
                 "level": 35,
-                "hp": 92,
-                "atk": 39,
+                "hp": 85,
+                "atk": 53,
+                "def": 77,
+                "spd": 59,
+                "spc": 94,
+                "xp": 1207,
+                "moves": [
+                    "Tackle",
+                    "Sonic Boom",
+                    "Thundershock",
+                    "Supersonic"
+                ]
+            },
+            {
+                "name": "Ninetales",
+                "level": 37,
+                "hp": 106,
+                "atk": 67,
                 "def": 66,
-                "spd": 38,
-                "spc": 52,
-                "xp": 735,
+                "spd": 84,
+                "spc": 84,
+                "xp": 1410,
                 "moves": [
-                    "Hypnosis",
-                    "Reflect",
-                    "Leech Seed",
-                    "Stun Spore"
+                    "Ember",
+                    "Tail Whip",
+                    "Quick Attack",
+                    "Roar"
                 ]
             },
             {
-                "name": "Alakazam",
+                "name": "Kadabra",
                 "level": 35,
-                "hp": 89,
-                "atk": 46,
-                "def": 42,
-                "spd": 94,
-                "spc": 105,
-                "xp": 1395,
+                "hp": 78,
+                "atk": 35,
+                "def": 31,
+                "spd": 84,
+                "spc": 94,
+                "xp": 1087,
                 "moves": [
                     "Confusion",
                     "Disable",
@@ -17157,448 +17349,44 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "Blastoise",
+                "name": "Vaporeon",
                 "level": 40,
-                "hp": 119,
-                "atk": 78,
-                "def": 91,
-                "spd": 73,
-                "spc": 79,
-                "xp": 1800,
+                "hp": 160,
+                "atk": 64,
+                "def": 59,
+                "spd": 63,
+                "spc": 99,
+                "xp": 1680,
                 "moves": [
-                    "Bubble",
                     "Water Gun",
+                    "Sand Attack",
                     "Bite",
-                    "Withdraw"
+                    "Aurora Beam"
                 ]
             }
         ],
         "money": 2600,
-        "route_one_offset": "0x3A443"
+        "route_one_offset": "0x3A4DF"
     },
     "RIVAL2 8": {
         "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Bulbasaur 3",
-        "trainer_location": "Silph",
-        "pokemon": [
-            {
-                "name": "Pidgeot",
-                "level": 37,
-                "hp": 114,
-                "atk": 70,
-                "def": 66,
-                "spd": 78,
-                "spc": 62,
-                "xp": 1363,
-                "moves": [
-                    "Sand Attack",
-                    "Quick Attack",
-                    "Whirlwind",
-                    "Wing Attack"
-                ]
-            },
-            {
-                "name": "Gyarados",
-                "level": 38,
-                "hp": 126,
-                "atk": 106,
-                "def": 71,
-                "spd": 72,
-                "spc": 87,
-                "xp": 1741,
-                "moves": [
-                    "Bite",
-                    "Dragon Rage",
-                    "Leer",
-                    "Hydro Pump"
-                ]
-            },
-            {
-                "name": "Growlithe",
-                "level": 35,
-                "hp": 89,
-                "atk": 60,
-                "def": 42,
-                "spd": 52,
-                "spc": 45,
-                "xp": 682,
-                "moves": [
-                    "Roar",
-                    "Ember",
-                    "Leer",
-                    "Take Down"
-                ]
-            },
-            {
-                "name": "Alakazam",
-                "level": 35,
-                "hp": 89,
-                "atk": 46,
-                "def": 42,
-                "spd": 94,
-                "spc": 105,
-                "xp": 1395,
-                "moves": [
-                    "Confusion",
-                    "Disable",
-                    "Psybeam",
-                    "Recover"
-                ]
-            },
-            {
-                "name": "Venusaur",
-                "level": 40,
-                "hp": 120,
-                "atk": 77,
-                "def": 77,
-                "spd": 75,
-                "spc": 91,
-                "xp": 1782,
-                "moves": [
-                    "Leech Seed",
-                    "Vine Whip",
-                    "PoisonPowder",
-                    "Razor Leaf"
-                ]
-            }
-        ],
-        "money": 2600,
-        "route_one_offset": "0x3A44F"
-    },
-    "RIVAL2 9": {
-        "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Charmander 3",
-        "trainer_location": "Silph",
-        "pokemon": [
-            {
-                "name": "Pidgeot",
-                "level": 37,
-                "hp": 114,
-                "atk": 70,
-                "def": 66,
-                "spd": 78,
-                "spc": 62,
-                "xp": 1363,
-                "moves": [
-                    "Sand Attack",
-                    "Quick Attack",
-                    "Whirlwind",
-                    "Wing Attack"
-                ]
-            },
-            {
-                "name": "Exeggcute",
-                "level": 38,
-                "hp": 99,
-                "atk": 42,
-                "def": 71,
-                "spd": 41,
-                "spc": 56,
-                "xp": 798,
-                "moves": [
-                    "Reflect",
-                    "Leech Seed",
-                    "Stun Spore",
-                    "PoisonPowder"
-                ]
-            },
-            {
-                "name": "Gyarados",
-                "level": 35,
-                "hp": 117,
-                "atk": 98,
-                "def": 65,
-                "spd": 67,
-                "spc": 80,
-                "xp": 1605,
-                "moves": [
-                    "Bite",
-                    "Dragon Rage",
-                    "Leer",
-                    "Hydro Pump"
-                ]
-            },
-            {
-                "name": "Alakazam",
-                "level": 35,
-                "hp": 89,
-                "atk": 46,
-                "def": 42,
-                "spd": 94,
-                "spc": 105,
-                "xp": 1395,
-                "moves": [
-                    "Confusion",
-                    "Disable",
-                    "Psybeam",
-                    "Recover"
-                ]
-            },
-            {
-                "name": "Charizard",
-                "level": 40,
-                "hp": 118,
-                "atk": 79,
-                "def": 73,
-                "spd": 91,
-                "spc": 79,
-                "xp": 1791,
-                "moves": [
-                    "Ember",
-                    "Leer",
-                    "Rage",
-                    "Slash"
-                ]
-            }
-        ],
-        "money": 2600,
-        "route_one_offset": "0x3A45B"
-    },
-    "RIVAL2 10": {
-        "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Squirtle 4",
+        "trainer_name": "RIVAL2 4 Jolteon",
         "trainer_location": "Route 22",
         "pokemon": [
             {
-                "name": "Pidgeot",
+                "name": "Sandslash",
                 "level": 47,
-                "hp": 142,
-                "atk": 88,
-                "def": 83,
-                "spd": 98,
-                "spc": 78,
-                "xp": 1731,
+                "hp": 135,
+                "atk": 107,
+                "def": 115,
+                "spd": 73,
+                "spc": 64,
+                "xp": 1641,
                 "moves": [
-                    "Quick Attack",
-                    "Whirlwind",
-                    "Wing Attack",
-                    "Agility"
-                ]
-            },
-            {
-                "name": "Rhyhorn",
-                "level": 45,
-                "hp": 134,
-                "atk": 89,
-                "def": 97,
-                "spd": 34,
-                "spc": 39,
-                "xp": 1300,
-                "moves": [
-                    "Stomp",
-                    "Tail Whip",
-                    "Fury Attack",
-                    "Horn Drill"
-                ]
-            },
-            {
-                "name": "Growlithe",
-                "level": 45,
-                "hp": 111,
-                "atk": 76,
-                "def": 52,
-                "spd": 66,
-                "spc": 57,
-                "xp": 877,
-                "moves": [
-                    "Ember",
-                    "Leer",
-                    "Take Down",
-                    "Agility"
-                ]
-            },
-            {
-                "name": "Exeggcute",
-                "level": 47,
-                "hp": 120,
-                "atk": 51,
-                "def": 87,
-                "spd": 50,
-                "spc": 68,
-                "xp": 987,
-                "moves": [
-                    "Leech Seed",
-                    "Stun Spore",
-                    "PoisonPowder",
-                    "Solar Beam"
-                ]
-            },
-            {
-                "name": "Alakazam",
-                "level": 50,
-                "hp": 123,
-                "atk": 64,
-                "def": 58,
-                "spd": 133,
-                "spc": 148,
-                "xp": 1992,
-                "moves": [
-                    "Psybeam",
-                    "Recover",
-                    "Psychic",
-                    "Reflect"
-                ]
-            },
-            {
-                "name": "Blastoise",
-                "level": 53,
-                "hp": 155,
-                "atk": 102,
-                "def": 119,
-                "spd": 96,
-                "spc": 103,
-                "xp": 2385,
-                "moves": [
-                    "Bite",
-                    "Withdraw",
-                    "Skull Bash",
-                    "Hydro Pump"
-                ]
-            }
-        ],
-        "money": 3445,
-        "route_one_offset": "0x3A467"
-    },
-    "RIVAL2 11": {
-        "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Bulbasaur 4",
-        "trainer_location": "Route 22",
-        "pokemon": [
-            {
-                "name": "Pidgeot",
-                "level": 47,
-                "hp": 142,
-                "atk": 88,
-                "def": 83,
-                "spd": 98,
-                "spc": 78,
-                "xp": 1731,
-                "moves": [
-                    "Quick Attack",
-                    "Whirlwind",
-                    "Wing Attack",
-                    "Agility"
-                ]
-            },
-            {
-                "name": "Rhyhorn",
-                "level": 45,
-                "hp": 134,
-                "atk": 89,
-                "def": 97,
-                "spd": 34,
-                "spc": 39,
-                "xp": 1300,
-                "moves": [
-                    "Stomp",
-                    "Tail Whip",
-                    "Fury Attack",
-                    "Horn Drill"
-                ]
-            },
-            {
-                "name": "Gyarados",
-                "level": 45,
-                "hp": 147,
-                "atk": 125,
-                "def": 83,
-                "spd": 85,
-                "spc": 102,
-                "xp": 2062,
-                "moves": [
-                    "Bite",
-                    "Dragon Rage",
-                    "Leer",
-                    "Hydro Pump"
-                ]
-            },
-            {
-                "name": "Growlithe",
-                "level": 47,
-                "hp": 116,
-                "atk": 79,
-                "def": 54,
-                "spd": 68,
-                "spc": 59,
-                "xp": 916,
-                "moves": [
-                    "Ember",
-                    "Leer",
-                    "Take Down",
-                    "Agility"
-                ]
-            },
-            {
-                "name": "Alakazam",
-                "level": 50,
-                "hp": 123,
-                "atk": 64,
-                "def": 58,
-                "spd": 133,
-                "spc": 148,
-                "xp": 1992,
-                "moves": [
-                    "Psybeam",
-                    "Recover",
-                    "Psychic",
-                    "Reflect"
-                ]
-            },
-            {
-                "name": "Venusaur",
-                "level": 53,
-                "hp": 156,
-                "atk": 101,
-                "def": 101,
-                "spd": 98,
-                "spc": 119,
-                "xp": 2361,
-                "moves": [
-                    "Vine Whip",
-                    "PoisonPowder",
-                    "Razor Leaf",
-                    "Growth"
-                ]
-            }
-        ],
-        "money": 3445,
-        "route_one_offset": "0x3A475"
-    },
-    "RIVAL2 12": {
-        "trainer_class": "RIVAL2",
-        "trainer_name": "RIVAL2 Charmander 4",
-        "trainer_location": "Route 22",
-        "pokemon": [
-            {
-                "name": "Pidgeot",
-                "level": 47,
-                "hp": 142,
-                "atk": 88,
-                "def": 83,
-                "spd": 98,
-                "spc": 78,
-                "xp": 1731,
-                "moves": [
-                    "Quick Attack",
-                    "Whirlwind",
-                    "Wing Attack",
-                    "Agility"
-                ]
-            },
-            {
-                "name": "Rhyhorn",
-                "level": 45,
-                "hp": 134,
-                "atk": 89,
-                "def": 97,
-                "spd": 34,
-                "spc": 39,
-                "xp": 1300,
-                "moves": [
-                    "Stomp",
-                    "Tail Whip",
-                    "Fury Attack",
-                    "Horn Drill"
+                    "Slash",
+                    "Poison Sting",
+                    "Swift",
+                    "Fury Swipes"
                 ]
             },
             {
@@ -17614,34 +17402,50 @@ const g1trainers = {
                     "Leech Seed",
                     "Stun Spore",
                     "PoisonPowder",
-                    "Solar Beam"
+                    "Solarbeam"
                 ]
             },
             {
-                "name": "Gyarados",
-                "level": 47,
-                "hp": 153,
-                "atk": 130,
-                "def": 86,
-                "spd": 88,
-                "spc": 106,
-                "xp": 2154,
+                "name": "Ninetales",
+                "level": 45,
+                "hp": 127,
+                "atk": 81,
+                "def": 79,
+                "spd": 102,
+                "spc": 102,
+                "xp": 1716,
                 "moves": [
-                    "Bite",
-                    "Dragon Rage",
-                    "Leer",
-                    "Hydro Pump"
+                    "Ember",
+                    "Tail Whip",
+                    "Quick Attack",
+                    "Roar"
                 ]
             },
             {
-                "name": "Alakazam",
+                "name": "Cloyster",
+                "level": 47,
+                "hp": 111,
+                "atk": 102,
+                "def": 181,
+                "spd": 78,
+                "spc": 92,
+                "xp": 2044,
+                "moves": [
+                    "Withdraw",
+                    "Supersonic",
+                    "Clamp",
+                    "Aurora Beam"
+                ]
+            },
+            {
+                "name": "Kadabra",
                 "level": 50,
-                "hp": 123,
-                "atk": 64,
-                "def": 58,
-                "spd": 133,
-                "spc": 148,
-                "xp": 1992,
+                "hp": 108,
+                "atk": 49,
+                "def": 43,
+                "spd": 118,
+                "spc": 133,
+                "xp": 1552,
                 "moves": [
                     "Psybeam",
                     "Recover",
@@ -17650,55 +17454,208 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "Charizard",
+                "name": "Jolteon",
                 "level": 53,
-                "hp": 154,
-                "atk": 103,
-                "def": 96,
-                "spd": 119,
-                "spc": 103,
-                "xp": 2373,
+                "hp": 140,
+                "atk": 83,
+                "def": 77,
+                "spd": 151,
+                "spc": 130,
+                "xp": 2236,
                 "moves": [
-                    "Leer",
-                    "Rage",
+                    "Pin Missile",
+                    "Thunder Wave",
+                    "Agility",
+                    "Thunder"
+                ]
+            }
+        ],
+        "money": 3445,
+        "route_one_offset": "0x3A4EB"
+    },
+    "RIVAL2 9": {
+        "trainer_class": "RIVAL2",
+        "trainer_name": "RIVAL2 4 Flareon",
+        "trainer_location": "Route 22",
+        "pokemon": [
+            {
+                "name": "Sandslash",
+                "level": 47,
+                "hp": 135,
+                "atk": 107,
+                "def": 115,
+                "spd": 73,
+                "spc": 64,
+                "xp": 1641,
+                "moves": [
                     "Slash",
+                    "Poison Sting",
+                    "Swift",
+                    "Fury Swipes"
+                ]
+            },
+            {
+                "name": "Exeggcute",
+                "level": 45,
+                "hp": 116,
+                "atk": 49,
+                "def": 84,
+                "spd": 48,
+                "spc": 66,
+                "xp": 945,
+                "moves": [
+                    "Leech Seed",
+                    "Stun Spore",
+                    "PoisonPowder",
+                    "Solarbeam"
+                ]
+            },
+            {
+                "name": "Cloyster",
+                "level": 45,
+                "hp": 107,
+                "atk": 98,
+                "def": 174,
+                "spd": 75,
+                "spc": 88,
+                "xp": 1957,
+                "moves": [
+                    "Withdraw",
+                    "Supersonic",
+                    "Clamp",
+                    "Aurora Beam"
+                ]
+            },
+            {
+                "name": "Magneton",
+                "level": 47,
+                "hp": 111,
+                "atk": 69,
+                "def": 101,
+                "spd": 78,
+                "spc": 125,
+                "xp": 1621,
+                "moves": [
+                    "Thundershock",
+                    "Supersonic",
+                    "Thunder Wave",
+                    "Swift"
+                ]
+            },
+            {
+                "name": "Kadabra",
+                "level": 50,
+                "hp": 108,
+                "atk": 49,
+                "def": 43,
+                "spd": 118,
+                "spc": 133,
+                "xp": 1552,
+                "moves": [
+                    "Psybeam",
+                    "Recover",
+                    "Psychic",
+                    "Reflect"
+                ]
+            },
+            {
+                "name": "Flareon",
+                "level": 53,
+                "hp": 140,
+                "atk": 152,
+                "def": 77,
+                "spd": 82,
+                "spc": 130,
+                "xp": 2248,
+                "moves": [
+                    "Fire Spin",
+                    "Smog",
+                    "Leer",
                     "Flamethrower"
                 ]
             }
         ],
         "money": 3445,
-        "route_one_offset": "0x3A483"
+        "route_one_offset": "0x3A4F9"
     },
-    "RIVAL3 1": {
-        "trainer_class": "RIVAL3",
-        "trainer_name": "RIVAL3 Squirtle",
-        "trainer_location": "Indigo Plateau",
+    "RIVAL2 10": {
+        "trainer_class": "RIVAL2",
+        "trainer_name": "RIVAL2 4 Vaporeon",
+        "trainer_location": "Route 22",
         "pokemon": [
             {
-                "name": "Pidgeot",
-                "level": 61,
-                "hp": 182,
-                "atk": 113,
-                "def": 106,
-                "spd": 125,
-                "spc": 100,
-                "xp": 2247,
+                "name": "Sandslash",
+                "level": 47,
+                "hp": 135,
+                "atk": 107,
+                "def": 115,
+                "spd": 73,
+                "spc": 64,
+                "xp": 1641,
                 "moves": [
-                    "Whirlwind",
-                    "Wing Attack",
-                    "Sky Attack",
-                    "Mirror Move"
+                    "Slash",
+                    "Poison Sting",
+                    "Swift",
+                    "Fury Swipes"
                 ]
             },
             {
-                "name": "Alakazam",
-                "level": 59,
-                "hp": 143,
-                "atk": 74,
-                "def": 67,
-                "spd": 156,
-                "spc": 173,
-                "xp": 2350,
+                "name": "Exeggcute",
+                "level": 45,
+                "hp": 116,
+                "atk": 49,
+                "def": 84,
+                "spd": 48,
+                "spc": 66,
+                "xp": 945,
+                "moves": [
+                    "Leech Seed",
+                    "Stun Spore",
+                    "PoisonPowder",
+                    "Solarbeam"
+                ]
+            },
+            {
+                "name": "Magneton",
+                "level": 45,
+                "hp": 107,
+                "atk": 67,
+                "def": 97,
+                "spd": 75,
+                "spc": 120,
+                "xp": 1552,
+                "moves": [
+                    "Sonic Boom",
+                    "Thundershock",
+                    "Supersonic",
+                    "Thunder Wave"
+                ]
+            },
+            {
+                "name": "Ninetales",
+                "level": 47,
+                "hp": 133,
+                "atk": 84,
+                "def": 83,
+                "spd": 106,
+                "spc": 106,
+                "xp": 1792,
+                "moves": [
+                    "Ember",
+                    "Tail Whip",
+                    "Quick Attack",
+                    "Roar"
+                ]
+            },
+            {
+                "name": "Kadabra",
+                "level": 50,
+                "hp": 108,
+                "atk": 49,
+                "def": 43,
+                "spd": 118,
+                "spc": 133,
+                "xp": 1552,
                 "moves": [
                     "Psybeam",
                     "Recover",
@@ -17707,91 +17664,44 @@ const g1trainers = {
                 ]
             },
             {
-                "name": "Rhydon",
-                "level": 61,
-                "hp": 208,
-                "atk": 174,
-                "def": 161,
-                "spd": 63,
-                "spc": 69,
-                "xp": 2665,
+                "name": "Vaporeon",
+                "level": 53,
+                "hp": 209,
+                "atk": 83,
+                "def": 77,
+                "spd": 82,
+                "spc": 130,
+                "xp": 2226,
                 "moves": [
-                    "Tail Whip",
-                    "Fury Attack",
-                    "Horn Drill",
-                    "Leer"
-                ]
-            },
-            {
-                "name": "Arcanine",
-                "level": 61,
-                "hp": 190,
-                "atk": 150,
-                "def": 112,
-                "spd": 130,
-                "spc": 112,
-                "xp": 2784,
-                "moves": [
-                    "Roar",
-                    "Ember",
-                    "Leer",
-                    "Take Down"
-                ]
-            },
-            {
-                "name": "Exeggutor",
-                "level": 63,
-                "hp": 202,
-                "atk": 136,
-                "def": 122,
-                "spd": 84,
-                "spc": 172,
-                "xp": 2862,
-                "moves": [
-                    "Barrage",
-                    "Hypnosis",
-                    "Stomp"
-                ]
-            },
-            {
-                "name": "Blastoise",
-                "level": 65,
-                "hp": 188,
-                "atk": 124,
-                "def": 145,
-                "spd": 116,
-                "spc": 125,
-                "xp": 2925,
-                "moves": [
-                    "Bite",
-                    "Withdraw",
-                    "Blizzard",
+                    "Haze",
+                    "Mist",
+                    "Acid Armor",
                     "Hydro Pump"
                 ]
             }
         ],
-        "money": 6435,
-        "route_one_offset": "0x3A491"
+        "money": 3445,
+        "route_one_offset": "0x3A507"
     },
-    "RIVAL3 2": {
+    "RIVAL3 1": {
         "trainer_class": "RIVAL3",
-        "trainer_name": "RIVAL3 Bulbasaur",
+        "trainer_name": "RIVAL3 Jolteon",
         "trainer_location": "Indigo Plateau",
         "pokemon": [
             {
-                "name": "Pidgeot",
+                "name": "Sandslash",
                 "level": 61,
-                "hp": 182,
-                "atk": 113,
-                "def": 106,
-                "spd": 125,
-                "spc": 100,
-                "xp": 2247,
+                "hp": 172,
+                "atk": 137,
+                "def": 148,
+                "spd": 94,
+                "spc": 81,
+                "xp": 2130,
                 "moves": [
-                    "Whirlwind",
-                    "Wing Attack",
-                    "Sky Attack",
-                    "Mirror Move"
+                    "Slash",
+                    "Poison Sting",
+                    "Earthquake",
+                    "Fury Swipes"
                 ]
             },
             {
@@ -17807,128 +17717,7 @@ const g1trainers = {
                     "Psybeam",
                     "Recover",
                     "Psychic",
-                    "Reflect"
-                ]
-            },
-            {
-                "name": "Rhydon",
-                "level": 61,
-                "hp": 208,
-                "atk": 174,
-                "def": 161,
-                "spd": 63,
-                "spc": 69,
-                "xp": 2665,
-                "moves": [
-                    "Tail Whip",
-                    "Fury Attack",
-                    "Horn Drill",
-                    "Leer"
-                ]
-            },
-            {
-                "name": "Gyarados",
-                "level": 61,
-                "hp": 196,
-                "atk": 168,
-                "def": 111,
-                "spd": 113,
-                "spc": 136,
-                "xp": 2796,
-                "moves": [
-                    "Dragon Rage",
-                    "Leer",
-                    "Hydro Pump",
-                    "Hyper Beam"
-                ]
-            },
-            {
-                "name": "Arcanine",
-                "level": 63,
-                "hp": 196,
-                "atk": 154,
-                "def": 115,
-                "spd": 134,
-                "spc": 115,
-                "xp": 2875,
-                "moves": [
-                    "Roar",
-                    "Ember",
-                    "Leer",
-                    "Take Down"
-                ]
-            },
-            {
-                "name": "Venusaur",
-                "level": 65,
-                "hp": 189,
-                "atk": 123,
-                "def": 123,
-                "spd": 119,
-                "spc": 145,
-                "xp": 2896,
-                "moves": [
-                    "Razor Leaf",
-                    "Growth",
-                    "Mega Drain",
-                    "Solar Beam"
-                ]
-            }
-        ],
-        "money": 6435,
-        "route_one_offset": "0x3A49F"
-    },
-    "RIVAL3 3": {
-        "trainer_class": "RIVAL3",
-        "trainer_name": "RIVAL3 Charmander",
-        "trainer_location": "Indigo Plateau",
-        "pokemon": [
-            {
-                "name": "Pidgeot",
-                "level": 61,
-                "hp": 182,
-                "atk": 113,
-                "def": 106,
-                "spd": 125,
-                "spc": 100,
-                "xp": 2247,
-                "moves": [
-                    "Whirlwind",
-                    "Wing Attack",
-                    "Sky Attack",
-                    "Mirror Move"
-                ]
-            },
-            {
-                "name": "Alakazam",
-                "level": 59,
-                "hp": 143,
-                "atk": 74,
-                "def": 67,
-                "spd": 156,
-                "spc": 173,
-                "xp": 2350,
-                "moves": [
-                    "Psybeam",
-                    "Recover",
-                    "Psychic",
-                    "Reflect"
-                ]
-            },
-            {
-                "name": "Rhydon",
-                "level": 61,
-                "hp": 208,
-                "atk": 174,
-                "def": 161,
-                "spd": 63,
-                "spc": 69,
-                "xp": 2665,
-                "moves": [
-                    "Tail Whip",
-                    "Fury Attack",
-                    "Horn Drill",
-                    "Leer"
+                    "Kinesis"
                 ]
             },
             {
@@ -17943,44 +17732,271 @@ const g1trainers = {
                 "moves": [
                     "Barrage",
                     "Hypnosis",
-                    "Stomp"
+                    "Stomp",
+                    "Leech Seed"
                 ]
             },
             {
-                "name": "Gyarados",
+                "name": "Cloyster",
+                "level": 61,
+                "hp": 141,
+                "atk": 131,
+                "def": 234,
+                "spd": 100,
+                "spc": 118,
+                "xp": 2653,
+                "moves": [
+                    "Ice Beam",
+                    "Clamp",
+                    "Aurora Beam",
+                    "Spike Cannon"
+                ]
+            },
+            {
+                "name": "Ninetales",
                 "level": 63,
-                "hp": 202,
-                "atk": 173,
-                "def": 114,
-                "spd": 117,
+                "hp": 175,
+                "atk": 112,
+                "def": 109,
+                "spd": 141,
                 "spc": 141,
-                "xp": 2889,
+                "xp": 2403,
                 "moves": [
-                    "Dragon Rage",
-                    "Leer",
-                    "Hydro Pump",
-                    "Hyper Beam"
+                    "Confuse Ray",
+                    "Tail Whip",
+                    "Quick Attack",
+                    "Fire Spin"
                 ]
             },
             {
-                "name": "Charizard",
+                "name": "Jolteon",
                 "level": 65,
-                "hp": 186,
-                "atk": 125,
-                "def": 116,
-                "spd": 145,
-                "spc": 125,
-                "xp": 2910,
+                "hp": 169,
+                "atk": 101,
+                "def": 93,
+                "spd": 184,
+                "spc": 158,
+                "xp": 2743,
                 "moves": [
-                    "Rage",
-                    "Slash",
-                    "Fire Blast",
-                    "Fire Spin"
+                    "Pin Missile",
+                    "Thunder Wave",
+                    "Quick Attack",
+                    "Thunder"
                 ]
             }
         ],
         "money": 6435,
-        "route_one_offset": "0x3A4AD"
+        "route_one_offset": "0x3A515"
+    },
+    "RIVAL3 2": {
+        "trainer_class": "RIVAL3",
+        "trainer_name": "RIVAL3 Flareon",
+        "trainer_location": "Indigo Plateau",
+        "pokemon": [
+            {
+                "name": "Sandslash",
+                "level": 61,
+                "hp": 172,
+                "atk": 137,
+                "def": 148,
+                "spd": 94,
+                "spc": 81,
+                "xp": 2130,
+                "moves": [
+                    "Slash",
+                    "Poison Sting",
+                    "Earthquake",
+                    "Fury Swipes"
+                ]
+            },
+            {
+                "name": "Alakazam",
+                "level": 59,
+                "hp": 143,
+                "atk": 74,
+                "def": 67,
+                "spd": 156,
+                "spc": 173,
+                "xp": 2350,
+                "moves": [
+                    "Psybeam",
+                    "Recover",
+                    "Psychic",
+                    "Kinesis"
+                ]
+            },
+            {
+                "name": "Exeggutor",
+                "level": 61,
+                "hp": 196,
+                "atk": 131,
+                "def": 118,
+                "spd": 81,
+                "spc": 167,
+                "xp": 2770,
+                "moves": [
+                    "Barrage",
+                    "Hypnosis",
+                    "Stomp",
+                    "Leech Seed"
+                ]
+            },
+            {
+                "name": "Magneton",
+                "level": 61,
+                "hp": 141,
+                "atk": 89,
+                "def": 130,
+                "spd": 100,
+                "spc": 161,
+                "xp": 2104,
+                "moves": [
+                    "Thunderbolt",
+                    "Thunder Wave",
+                    "Swift",
+                    "Screech"
+                ]
+            },
+            {
+                "name": "Cloyster",
+                "level": 63,
+                "hp": 146,
+                "atk": 136,
+                "def": 241,
+                "spd": 103,
+                "spc": 122,
+                "xp": 2740,
+                "moves": [
+                    "Ice Beam",
+                    "Clamp",
+                    "Aurora Beam",
+                    "Spike Cannon"
+                ]
+            },
+            {
+                "name": "Flareon",
+                "level": 65,
+                "hp": 169,
+                "atk": 185,
+                "def": 93,
+                "spd": 99,
+                "spc": 158,
+                "xp": 2757,
+                "moves": [
+                    "Fire Spin",
+                    "Reflect",
+                    "Quick Attack",
+                    "Flamethrower"
+                ]
+            }
+        ],
+        "money": 6435,
+        "route_one_offset": "0x3A523"
+    },
+    "RIVAL3 3": {
+        "trainer_class": "RIVAL3",
+        "trainer_name": "RIVAL3 Vaporeon",
+        "trainer_location": "Indigo Plateau",
+        "pokemon": [
+            {
+                "name": "Sandslash",
+                "level": 61,
+                "hp": 172,
+                "atk": 137,
+                "def": 148,
+                "spd": 94,
+                "spc": 81,
+                "xp": 2130,
+                "moves": [
+                    "Slash",
+                    "Poison Sting",
+                    "Earthquake",
+                    "Fury Swipes"
+                ]
+            },
+            {
+                "name": "Alakazam",
+                "level": 59,
+                "hp": 143,
+                "atk": 74,
+                "def": 67,
+                "spd": 156,
+                "spc": 173,
+                "xp": 2350,
+                "moves": [
+                    "Psybeam",
+                    "Recover",
+                    "Psychic",
+                    "Kinesis"
+                ]
+            },
+            {
+                "name": "Exeggutor",
+                "level": 61,
+                "hp": 196,
+                "atk": 131,
+                "def": 118,
+                "spd": 81,
+                "spc": 167,
+                "xp": 2770,
+                "moves": [
+                    "Barrage",
+                    "Hypnosis",
+                    "Stomp",
+                    "Leech Seed"
+                ]
+            },
+            {
+                "name": "Ninetales",
+                "level": 61,
+                "hp": 169,
+                "atk": 108,
+                "def": 106,
+                "spd": 136,
+                "spc": 136,
+                "xp": 2326,
+                "moves": [
+                    "Confuse Ray",
+                    "Tail Whip",
+                    "Quick Attack",
+                    "Fire Spin"
+                ]
+            },
+            {
+                "name": "Magneton",
+                "level": 63,
+                "hp": 146,
+                "atk": 91,
+                "def": 134,
+                "spd": 103,
+                "spc": 166,
+                "xp": 2173,
+                "moves": [
+                    "Thunderbolt",
+                    "Thunder Wave",
+                    "Swift",
+                    "Screech"
+                ]
+            },
+            {
+                "name": "Vaporeon",
+                "level": 65,
+                "hp": 254,
+                "atk": 101,
+                "def": 93,
+                "spd": 99,
+                "spc": 158,
+                "xp": 2730,
+                "moves": [
+                    "Aurora Beam",
+                    "Mist",
+                    "Quick Attack",
+                    "Hydro Pump"
+                ]
+            }
+        ],
+        "money": 6435,
+        "route_one_offset": "0x3A531"
     },
     "LORELEI 1": {
         "trainer_class": "LORELEI",
@@ -17997,7 +18013,7 @@ const g1trainers = {
                 "spc": 116,
                 "xp": 2035,
                 "moves": [
-                    "Growl",
+                    "Bubblebeam",
                     "Aurora Beam",
                     "Rest",
                     "Take Down"
@@ -18015,7 +18031,7 @@ const g1trainers = {
                 "moves": [
                     "Supersonic",
                     "Clamp",
-                    "Aurora Beam",
+                    "Ice Beam",
                     "Spike Cannon"
                 ]
             },
@@ -18029,8 +18045,8 @@ const g1trainers = {
                 "spc": 100,
                 "xp": 1897,
                 "moves": [
-                    "Growl",
-                    "Water Gun",
+                    "Psychic",
+                    "Surf",
                     "Withdraw",
                     "Amnesia"
                 ]
@@ -18047,7 +18063,7 @@ const g1trainers = {
                 "moves": [
                     "Doubleslap",
                     "Ice Punch",
-                    "Body Slam",
+                    "Lovely Kiss",
                     "Thrash"
                 ]
             },
@@ -18069,7 +18085,7 @@ const g1trainers = {
             }
         ],
         "money": 5544,
-        "route_one_offset": "0x3A4BB"
+        "route_one_offset": "0x3A53F"
     },
     "CHANNELER 1": {
         "trainer_class": "CHANNELER",
@@ -18093,7 +18109,7 @@ const g1trainers = {
             }
         ],
         "money": 660,
-        "route_one_offset": "0x3A4C7"
+        "route_one_offset": "0x3A54B"
     },
     "CHANNELER 2": {
         "trainer_class": "CHANNELER",
@@ -18117,7 +18133,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A4CA"
+        "route_one_offset": "0x3A54E"
     },
     "CHANNELER 3": {
         "trainer_class": "CHANNELER",
@@ -18156,7 +18172,7 @@ const g1trainers = {
             }
         ],
         "money": 690,
-        "route_one_offset": "0x3A4CD"
+        "route_one_offset": "0x3A551"
     },
     "CHANNELER 4": {
         "trainer_class": "CHANNELER",
@@ -18180,7 +18196,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A4D1"
+        "route_one_offset": "0x3A555"
     },
     "CHANNELER 5": {
         "trainer_class": "CHANNELER",
@@ -18204,7 +18220,7 @@ const g1trainers = {
             }
         ],
         "money": 690,
-        "route_one_offset": "0x3A4D4"
+        "route_one_offset": "0x3A558"
     },
     "CHANNELER 6": {
         "trainer_class": "CHANNELER",
@@ -18228,7 +18244,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A4D7"
+        "route_one_offset": "0x3A55B"
     },
     "CHANNELER 7": {
         "trainer_class": "CHANNELER",
@@ -18252,7 +18268,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A4DA"
+        "route_one_offset": "0x3A55E"
     },
     "CHANNELER 8": {
         "trainer_class": "CHANNELER",
@@ -18276,7 +18292,7 @@ const g1trainers = {
             }
         ],
         "money": 660,
-        "route_one_offset": "0x3A4DD"
+        "route_one_offset": "0x3A561"
     },
     "CHANNELER 9": {
         "trainer_class": "CHANNELER",
@@ -18300,7 +18316,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A4E0"
+        "route_one_offset": "0x3A564"
     },
     "CHANNELER 10": {
         "trainer_class": "CHANNELER",
@@ -18339,7 +18355,7 @@ const g1trainers = {
             }
         ],
         "money": 690,
-        "route_one_offset": "0x3A4E3"
+        "route_one_offset": "0x3A567"
     },
     "CHANNELER 11": {
         "trainer_class": "CHANNELER",
@@ -18363,7 +18379,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A4E7"
+        "route_one_offset": "0x3A56B"
     },
     "CHANNELER 12": {
         "trainer_class": "CHANNELER",
@@ -18387,7 +18403,7 @@ const g1trainers = {
             }
         ],
         "money": 660,
-        "route_one_offset": "0x3A4EA"
+        "route_one_offset": "0x3A56E"
     },
     "CHANNELER 13": {
         "trainer_class": "CHANNELER",
@@ -18411,7 +18427,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A4ED"
+        "route_one_offset": "0x3A571"
     },
     "CHANNELER 14": {
         "trainer_class": "CHANNELER",
@@ -18435,7 +18451,7 @@ const g1trainers = {
             }
         ],
         "money": 690,
-        "route_one_offset": "0x3A4F0"
+        "route_one_offset": "0x3A574"
     },
     "CHANNELER 15": {
         "trainer_class": "CHANNELER",
@@ -18459,7 +18475,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A4F3"
+        "route_one_offset": "0x3A577"
     },
     "CHANNELER 16": {
         "trainer_class": "CHANNELER",
@@ -18483,7 +18499,7 @@ const g1trainers = {
             }
         ],
         "money": 660,
-        "route_one_offset": "0x3A4F6"
+        "route_one_offset": "0x3A57A"
     },
     "CHANNELER 17": {
         "trainer_class": "CHANNELER",
@@ -18507,7 +18523,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A4F9"
+        "route_one_offset": "0x3A57D"
     },
     "CHANNELER 18": {
         "trainer_class": "CHANNELER",
@@ -18531,7 +18547,7 @@ const g1trainers = {
             }
         ],
         "money": 660,
-        "route_one_offset": "0x3A4FC"
+        "route_one_offset": "0x3A580"
     },
     "CHANNELER 19": {
         "trainer_class": "CHANNELER",
@@ -18585,7 +18601,7 @@ const g1trainers = {
             }
         ],
         "money": 660,
-        "route_one_offset": "0x3A4FF"
+        "route_one_offset": "0x3A583"
     },
     "CHANNELER 20": {
         "trainer_class": "CHANNELER",
@@ -18609,7 +18625,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A504"
+        "route_one_offset": "0x3A588"
     },
     "CHANNELER 21": {
         "trainer_class": "CHANNELER",
@@ -18633,7 +18649,7 @@ const g1trainers = {
             }
         ],
         "money": 720,
-        "route_one_offset": "0x3A507"
+        "route_one_offset": "0x3A58B"
     },
     "CHANNELER 22": {
         "trainer_class": "CHANNELER",
@@ -18674,7 +18690,7 @@ const g1trainers = {
             }
         ],
         "money": 1020,
-        "route_one_offset": "0x3A50A"
+        "route_one_offset": "0x3A58E"
     },
     "CHANNELER 23": {
         "trainer_class": "CHANNELER",
@@ -18699,7 +18715,7 @@ const g1trainers = {
             }
         ],
         "money": 1140,
-        "route_one_offset": "0x3A50E"
+        "route_one_offset": "0x3A592"
     },
     "CHANNELER 24": {
         "trainer_class": "CHANNELER",
@@ -18756,7 +18772,7 @@ const g1trainers = {
             }
         ],
         "money": 990,
-        "route_one_offset": "0x3A511"
+        "route_one_offset": "0x3A595"
     },
     "AGATHA 1": {
         "trainer_class": "AGATHA",
@@ -18774,9 +18790,9 @@ const g1trainers = {
                 "xp": 2280,
                 "moves": [
                     "Confuse Ray",
-                    "Night Shade",
-                    "Hypnosis",
-                    "Dream Eater"
+                    "Substitute",
+                    "Lick",
+                    "Mega Drain"
                 ]
             },
             {
@@ -18790,9 +18806,9 @@ const g1trainers = {
                 "xp": 2052,
                 "moves": [
                     "Supersonic",
-                    "Confuse Ray",
+                    "Toxic",
                     "Wing Attack",
-                    "Haze"
+                    "Leech Life"
                 ]
             },
             {
@@ -18806,7 +18822,7 @@ const g1trainers = {
                 "xp": 1485,
                 "moves": [
                     "Confuse Ray",
-                    "Night Shade",
+                    "Lick",
                     "Hypnosis",
                     "Dream Eater"
                 ]
@@ -18821,7 +18837,7 @@ const g1trainers = {
                 "spc": 89,
                 "xp": 1827,
                 "moves": [
-                    "Bite",
+                    "Wrap",
                     "Glare",
                     "Screech",
                     "Acid"
@@ -18838,14 +18854,14 @@ const g1trainers = {
                 "xp": 2442,
                 "moves": [
                     "Confuse Ray",
-                    "Night Shade",
-                    "Toxic",
+                    "Psychic",
+                    "Hypnosis",
                     "Dream Eater"
                 ]
             }
         ],
         "money": 5940,
-        "route_one_offset": "0x3A516"
+        "route_one_offset": "0x3A59A"
     },
     "LANCE 1": {
         "trainer_class": "LANCE",
@@ -18878,9 +18894,9 @@ const g1trainers = {
                 "spc": 92,
                 "xp": 1728,
                 "moves": [
-                    "Agility",
+                    "Thunder Wave",
                     "Slam",
-                    "Dragon Rage",
+                    "Thunderbolt",
                     "Hyper Beam"
                 ]
             },
@@ -18894,9 +18910,9 @@ const g1trainers = {
                 "spc": 92,
                 "xp": 1728,
                 "moves": [
-                    "Agility",
-                    "Slam",
-                    "Dragon Rage",
+                    "Bubblebeam",
+                    "Wrap",
+                    "Ice Beam",
                     "Hyper Beam"
                 ]
             },
@@ -18910,9 +18926,9 @@ const g1trainers = {
                 "spc": 86,
                 "xp": 2596,
                 "moves": [
-                    "Supersonic",
-                    "Bite",
-                    "Take Down",
+                    "Wing Attack",
+                    "Swift",
+                    "Fly",
                     "Hyper Beam"
                 ]
             },
@@ -18926,14 +18942,14 @@ const g1trainers = {
                 "spc": 138,
                 "xp": 2895,
                 "moves": [
-                    "Agility",
-                    "Slam",
-                    "Barrier",
+                    "Blizzard",
+                    "Fire Blast",
+                    "Thunder",
                     "Hyper Beam"
                 ]
             }
         ],
         "money": 6138,
-        "route_one_offset": "0x3A522"
+        "route_one_offset": "0x3A5A6"
     }
 }

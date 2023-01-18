@@ -1,4 +1,4 @@
-const g1trainers = {
+const g1RedBlueTrainers = {
     "YOUNGSTER 1": {
         "trainer_class": "YOUNGSTER",
         "trainer_name": "YOUNGSTER 1",
