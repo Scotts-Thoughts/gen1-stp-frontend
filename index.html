@@ -45,6 +45,12 @@
                     <div>Spd: {{Math.floor((((pokemon(starter).baseSpd + this.mapper.properties.player.team[0].dvSpeed.value) * 2 * 5) / 100) + 5)}}</div>
                     <div>Logical Statement: {{logicalStatementCheck()}}</div>
                     <br>
+                    <div>BattleStart: {{ mapper.properties.battle.turnInfo.battleStart.value }}</div>
+                    <div>EnemyType1: {{ mapper.properties.battle.enemyPokemon.type1.value }}</div>
+                    <div>EnemyType2: {{ mapper.properties.battle.enemyPokemon.type2.value }}</div>
+                    <div>TrainerDefeated: {{ mapper.properties.battle.turnInfo.trainerDefeated.value }}</div>
+                    <div>lowHealthAlarm: {{ mapper.properties.battle.lowHealthAlarm.value }}</div>
+                    <div>BattleType: {{ mapper.properties.battle.type.value }}</div>
                     <!-- <div>StatExp-Hp: {{statExp(mapper.properties.player.team[0].statExpHp, "HP Ups")}}</div>
                     <div>StatExp-Atk: {{statExp(mapper.properties.player.team[0].statExpAttack, "Attack")}}</div>
                     <div>StatExp-Def: {{statExp(mapper.properties.player.team[0].statExpDefense, "Iron")}}</div>

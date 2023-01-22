@@ -773,7 +773,7 @@ const app = Vue.createApp({
 
         hpDvCalculation() {
             return (((this.mapper.properties.player.team[0].dvAttack.value % 2) * 8) + ((this.mapper.properties.player.team[0].dvDefense.value % 2) * 4) + ((this.mapper.properties.player.team[0].dvSpeed.value % 2) * 2) + ((this.mapper.properties.player.team[0].dvSpecial.value % 2) * 1))
-        }
+        },
     },
 
 //--------- PROGRAM MOUNTED ---------------------------------------------------------------------------------------------------------------//
@@ -1128,6 +1128,13 @@ const app = Vue.createApp({
         })
         this.mapper.properties.overworld.encounterRate.change(async (x) => {
             await secondPlaythrough()
+        })
+
+        this.mapper.properties.battle.type.change(async (x) => {
+            if (this.g1state() == "Overworld") {
+                this.mapper.properties.battle.enemyPokemon.type1.setBytes([0x00],false)
+                this.mapper.properties.battle.enemyPokemon.type2.setBytes([0x00],false)
+            }
         })
     },
 }).mount('#app')
