@@ -13,7 +13,7 @@
             <!------ OVERLAY GRAPHICS ---------------------------------------------------------------------------------------------------------------------->
             <div class="mainContainer">
                 <div v-if="package == false && mapper.meta.gamePlatform == `GB`">
-                    <img v-show="overlay == true" class="overlay" :src="`images/overlay/${starterName.toLowerCase()}.png`" />
+                    <img v-show="overlay == true" class="overlay" :src="`images/overlay/${starterName.toLowerCase()}${overlayName}.png`" />
                     <img class="gameArea" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img v-show="gameName() == `Pokemon Yellow`" class="demoBorderStats" src="images/elements/overlay/gen1/stats.png" style="opacity: .9"/>
                 </div>
@@ -394,7 +394,7 @@
                             </div>
                         </div>
                         <div class="trainerLabel">{{pascalCaseDot(pascalCaseSpace(fixTrainerName(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number)))}}</div>
-                        <img class="enemyPng" :src="`images/enemy_area/${starterName.toLowerCase()}.png`" :style="battlePokemonCrop()"/>
+                        <img class="enemyPng" :src="`images/enemy_area/${starterName.toLowerCase()}${overlayName}.png`" :style="battlePokemonCrop()"/>
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
                                 <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmn${x + 1}`">
@@ -411,96 +411,18 @@
                                     <div class="ePkmnSpc">{{currentTrainer.pokemon[x]?.spc}}</div>
                                 </div>
                             </div>
-                            <!-- <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name != undefined" class="ePkmn1">
-                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name}.png`" />
-                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.name}}</div>
-                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[0]}}</div>
-                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[1]}}</div>
-                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[2]}}</div>
-                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.moves[3]}}</div>
-                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.hp}}</div>
-                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.atk}}</div>
-                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.def}}</div>
-                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.spd}}</div>
-                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[0]?.spc}}</div>
-                            </div>
-                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.name != undefined" class="ePkmn2">
-                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.name}.png`" />
-                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.name}}</div>
-                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.moves[0]}}</div>
-                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.moves[1]}}</div>
-                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.moves[2]}}</div>
-                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.moves[3]}}</div>
-                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.hp}}</div>
-                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.atk}}</div>
-                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.def}}</div>
-                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.spd}}</div>
-                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[1]?.spc}}</div>
-                            </div>
-                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.name != undefined" class="ePkmn3">
-                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.name}.png`" />
-                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.name}}</div>
-                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.moves[0]}}</div>
-                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.moves[1]}}</div>
-                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.moves[2]}}</div>
-                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.moves[3]}}</div>
-                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.hp}}</div>
-                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.atk}}</div>
-                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.def}}</div>
-                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.spd}}</div>
-                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[2]?.spc}}</div>
-                            </div>
-                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.name != undefined" class="ePkmn4">
-                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.name}.png`" />
-                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.name}}</div>
-                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.moves[0]}}</div>
-                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.moves[1]}}</div>
-                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.moves[2]}}</div>
-                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.moves[3]}}</div>
-                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.hp}}</div>
-                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.atk}}</div>
-                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.def}}</div>
-                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.spd}}</div>
-                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[3]?.spc}}</div>
-                            </div>
-                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.name != undefined" class="ePkmn5">
-                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.name}.png`" />
-                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.name}}</div>
-                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.moves[0]}}</div>
-                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.moves[1]}}</div>
-                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.moves[2]}}</div>
-                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.moves[3]}}</div>
-                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.hp}}</div>
-                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.atk}}</div>
-                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.def}}</div>
-                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.spd}}</div>
-                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[4]?.spc}}</div>
-                            </div>
-                            <div v-show="g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.name != undefined" class="ePkmn6">
-                                <img class="ePkmnSprite" :src="`images/pokemon/${g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.name}.png`" />
-                                <div class="ePkmnSpecies">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.name}}</div>
-                                <div class="ePkmnMove1">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.moves[0]}}</div>
-                                <div class="ePkmnMove2">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.moves[1]}}</div>
-                                <div class="ePkmnMove3">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.moves[2]}}</div>
-                                <div class="ePkmnMove4">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.moves[3]}}</div>
-                                <div class="ePkmnHp">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.hp}}</div>
-                                <div class="ePkmnAtk">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.atk}}</div>
-                                <div class="ePkmnDef">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.def}}</div>
-                                <div class="ePkmnSpd">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.spd}}</div>
-                                <div class="ePkmnSpc">{{g1trainers[g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)]?.pokemon[5]?.spc}}</div>
-                            </div> -->
                         </div> 
                     </div>
                     <div key=2 v-else-if="(g1state() == `Battle` && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 0) && battleGraphic == true" class="movepoolContainer">
-                        <img class="rightBar" :src="`images/movepool/${starterName.toLowerCase()}.png`" />
+                        <img class="rightBar" :src="`images/movepool/${starterName.toLowerCase()}${overlayName}.png`" />
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                     <div key=2 v-else-if="g1state() != `Battle` && battleGraphic == true" class="movepoolContainer">
-                        <img class="rightBar" :src="`images/movepool/${starterName.toLowerCase()}.png`" />
+                        <img class="rightBar" :src="`images/movepool/${starterName.toLowerCase()}${overlayName}.png`" />
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                     <div key=2 v-else class="movepoolContainer">
-                        <img class="rightBar" :src="`images/movepool/${starterName.toLowerCase()}.png`" />
+                        <img class="rightBar" :src="`images/movepool/${starterName.toLowerCase()}${overlayName}.png`" />
                         <div class="movepoolLabel">Movepool</div>  
                     </div>
                 </transition>

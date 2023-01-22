@@ -6,8 +6,9 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starter:         68, //select starter
-            starterName:     "Machamp", //string name
+            starter:         18, //select starter
+            starterName:     "Pidgeot", //string name
+            overlayName:     "", // add "-yellow" or "-red" here based on the game being played
             secondPlaythrough: false, //used to mitigate luck on second playthroughs
             pick:            true, //turns on the ability to pick your starter
             package:         false, //uses images from package folder, rather than using dynamic values
@@ -80,7 +81,7 @@ const app = Vue.createApp({
 
             //VARIABLES THAT STYLE ELEMENTS
             statLabelOpacityValue: .1,
-            modColor: true,
+            modColor: false,
             modRaise: "rgb(0, 85, 11)",
             modLower: "rgb(114, 0, 0)",
             modDefault: "rgb(0, 0, 0)",
@@ -304,37 +305,53 @@ const app = Vue.createApp({
             this.currentGamestate = string
             return string
         },
+        // g1state() {
+        //     if (this.mapper.properties.battle.specialType.value === `Oak Catching Starter`) {
+        //         string = "Base Stats"
+        //         gamestate = 1
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1 && this.mapper.properties.battle.lowHealthAlarm.value == "Disabled") {
+        //         string = "From Battle"
+        //         gamestate = 2
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1) {
+        //         string = "Battle"
+        //         gamestate = 2
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value === 0 && this.mapper.properties.battle.type.bytes >= 1) {
+        //         string = "To Battle"
+        //         gamestate = 3
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.type.value === `None`) {
+        //         string = "Overworld"
+        //         gamestate = 4
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        //     else {
+        //         string = "Base Stats"
+        //         gamestate = 5
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        // },
         g1state() {
             if (this.mapper.properties.battle.specialType.value === `Oak Catching Starter`) {
-                string = "Base Stats"
-                gamestate = 1
-                return this.setGamestate(string, gamestate)
-            }
-            else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1 && this.mapper.properties.battle.lowHealthAlarm.value == "Disabled") {
-                string = "From Battle"
-                gamestate = 2
-                return this.setGamestate(string, gamestate)
+                return "Base Stats"
             }
             else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1) {
-                string = "Battle"
-                gamestate = 2
-                return this.setGamestate(string, gamestate)
+                return "Battle"
             }
             else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value === 0 && this.mapper.properties.battle.type.bytes >= 1) {
-                string = "To Battle"
-                gamestate = 3
-                return this.setGamestate(string, gamestate)
+                return "To Battle"
             }
             else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.type.value === `None`) {
-                string = "Overworld"
-                gamestate = 4
-                return this.setGamestate(string, gamestate)
+                return "Overworld"
             }
-            else {
-                string = "Base Stats"
-                gamestate = 5
-                return this.setGamestate(string, gamestate)
-            }
+            else
+                return "Base Stats"
         },
 
         g1trainer(x, y) {
