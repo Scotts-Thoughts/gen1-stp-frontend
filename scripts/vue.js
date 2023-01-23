@@ -788,15 +788,20 @@ const app = Vue.createApp({
         this.mapper.properties.player.team[0].level.change((prop) => {
             if (prop.value == 0) {
                 this.g1stateVariable = "Base Stats";
-            } else if (this.g1state == "Base Stats") {
+            } else if (this.g1stateVariable == "Base Stats") {
                 this.g1stateVariable = "Overworld";
             }
         });
 
         this.mapper.properties.battle.type.change((prop) => {
-            if (this.g1state == "Base Stats") return; // ignore everything if we still dont have a pokemon
+            if (this.g1stateVariable == "Base Stats") return; // ignore everything if we still dont have a pokemon
 
             if (prop.value == "Wild" || prop.value == "Trainer") {
+                // this.mapper.properties.battle.yourPokemon.battleStatMaxHp.setBytes([this.mapper.properties.player.team[0].maxHp.bytes],false)
+                // this.mapper.properties.battle.yourPokemon.battleStatAttack.setBytes([this.mapper.properties.player.team[0].attack.bytes],false)
+                // this.mapper.properties.battle.yourPokemon.battleStatDefense.setBytes([this.mapper.properties.player.team[0].defense.bytes],false)
+                // this.mapper.properties.battle.yourPokemon.battleStatSpeed.setBytes([this.mapper.properties.player.team[0].speed.bytes],false)
+                // this.mapper.properties.battle.yourPokemon.battleStatSpecial.setBytes([this.mapper.properties.player.team[0].special.bytes],false)
                 this.g1stateVariable = "To Battle";
             } else if (prop.value == "None") {
                 this.g1stateVariable = "Overworld";
