@@ -60,6 +60,7 @@ const app = Vue.createApp({
             pkmnMoves: ["move1","move2","move3","move4"],
             pkmnSlots: [0, 1, 2, 3, 4, 5],
             boostingBadges: ["badge1", "badge3", "badge6", "badge7"],
+            inventorySlots: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
 
             //VARIABLES THAT TRACK IN GAME PROGRESS ------------------------------------------------------------//
             playerId: 999,
@@ -90,6 +91,9 @@ const app = Vue.createApp({
             ppMid: "rgb(114, 0, 0)",
             // ppMid: "rgb(121, 72, 0)",
             ppLow: "rgb(114, 0, 0)",
+
+            //GAMESTATE VARIABLE
+            g1stateVariable: "Base Stats"
         }
     },
     
@@ -282,22 +286,19 @@ const app = Vue.createApp({
             //BATTLE
             //OAK CATCHING STARTER
             if (this.mapper.properties.battle.specialType.value === `Oak Catching Starter`) {
-                return 0
+                return 0 //base stats (tutorial)
             }
             else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1) {
-                return 4
+                return 4 //battle
             }
-            //START OF BATTLE
             else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value === 0 && this.mapper.properties.battle.type.bytes >= 1) {
-                return 2
+                return 2 //to battle
             }
-            //OVERWORLD
             else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.type.value === `None`) {
-                return 2
+                return 2 //overworld
             }
-            //BASE STATS
             else
-                return 0
+                return 0 //base stats
         },
         setGamestate(state, number) {
             if (this.gamestateLogging == true)
@@ -305,53 +306,37 @@ const app = Vue.createApp({
             this.currentGamestate = string
             return string
         },
-        // g1state() {
-        //     if (this.mapper.properties.battle.specialType.value === `Oak Catching Starter`) {
-        //         string = "Base Stats"
-        //         gamestate = 1
-        //         return this.setGamestate(string, gamestate)
-        //     }
-        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1 && this.mapper.properties.battle.lowHealthAlarm.value == "Disabled") {
-        //         string = "From Battle"
-        //         gamestate = 2
-        //         return this.setGamestate(string, gamestate)
-        //     }
-        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1) {
-        //         string = "Battle"
-        //         gamestate = 2
-        //         return this.setGamestate(string, gamestate)
-        //     }
-        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value === 0 && this.mapper.properties.battle.type.bytes >= 1) {
-        //         string = "To Battle"
-        //         gamestate = 3
-        //         return this.setGamestate(string, gamestate)
-        //     }
-        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.type.value === `None`) {
-        //         string = "Overworld"
-        //         gamestate = 4
-        //         return this.setGamestate(string, gamestate)
-        //     }
-        //     else {
-        //         string = "Base Stats"
-        //         gamestate = 5
-        //         return this.setGamestate(string, gamestate)
-        //     }
-        // },
         g1state() {
             if (this.mapper.properties.battle.specialType.value === `Oak Catching Starter`) {
-                return "Base Stats"
+                string = "Base Stats"
+                gamestate = 1
+                return this.setGamestate(string, gamestate)
+            }
+            else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1 && this.mapper.properties.battle.lowHealthAlarm.value == "Disabled") {
+                string = "From Battle"
+                gamestate = 2
+                return this.setGamestate(string, gamestate)
             }
             else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1) {
-                return "Battle"
+                string = "Battle"
+                gamestate = 2
+                return this.setGamestate(string, gamestate)
             }
             else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value === 0 && this.mapper.properties.battle.type.bytes >= 1) {
-                return "To Battle"
+                string = "To Battle"
+                gamestate = 3
+                return this.setGamestate(string, gamestate)
             }
             else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.type.value === `None`) {
-                return "Overworld"
+                string = "Overworld"
+                gamestate = 4
+                return this.setGamestate(string, gamestate)
             }
-            else
-                return "Base Stats"
+            else {
+                string = "Base Stats"
+                gamestate = 5
+                return this.setGamestate(string, gamestate)
+            }
         },
 
         g1trainer(x, y) {
@@ -708,52 +693,55 @@ const app = Vue.createApp({
                 return 1
         }, 
         typeEffectiveness(x) { //x = move1.value
-            var stab = this.determineSTAB(x)
-            if (x != null) {
-                if (this.typeCalcs == true && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1) { //calculates effective power when in battle
-                    var attackingType = this.moveType(x)
-                    var defendingTypeMono = this.mapper.properties.battle.enemyPokemon.type1.value
-                    var defendingType1 = this.mapper.properties.battle.enemyPokemon.type1.value
-                    var defendingType2 = this.mapper.properties.battle.enemyPokemon.type2.value
-                    var multipliers = this.typeData.find(x => x.moveType === attackingType)
-                    //NO MOVE POWER (STATUS MOVE)
-                    if (this.movePower(x) == "-") {
-                        return this.movePower(x)
-                    }
-                    //NO ENEMY DATA (HAVEN'T BATTLED SINCE RELOADING ROM OR SAVE)
-                    else if (this.mapper.properties.battle.enemyPokemon.type1 == null) {
-                        return Math.floor(this.movePower(x) * stab)
-                    }
-                    //ATTACKING A MONO-TYPE POKEMON
-                    else if (this.mapper.properties.battle.enemyPokemon.type1.value === this.mapper.properties.battle.enemyPokemon.type2.value) {
-                        var multiplier1 = multipliers[defendingTypeMono]
-                        return Math.floor(this.movePower(x) * multiplier1 * stab)
-                    }
-                    //ATTACKING A DUAL-TYPE POKEMON
-                    else if (this.mapper.properties.battle.enemyPokemon.type1 != this.mapper.properties.battle.enemyPokemon.type2) {
+            if (this.g1stateVariable == "Battle") {
+                var stab = this.determineSTAB(x)
+                if (x != null) {
+                    if (this.typeCalcs == true && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1) { //calculates effective power when in battle
+                        var attackingType = this.moveType(x)
+                        var defendingTypeMono = this.mapper.properties.battle.enemyPokemon.type1.value
+                        var defendingType1 = this.mapper.properties.battle.enemyPokemon.type1.value
+                        var defendingType2 = this.mapper.properties.battle.enemyPokemon.type2.value
                         var multipliers = this.typeData.find(x => x.moveType === attackingType)
-                        var multiplier1 = multipliers[defendingType1]
-                        var multiplier2 = multipliers[defendingType2]
-                        return Math.floor(this.movePower(x) * multiplier1 * multiplier2 * stab)
+                        //NO MOVE POWER (STATUS MOVE)
+                        if (this.movePower(x) == "-") {
+                            return this.movePower(x)
+                        }
+                        //NO ENEMY DATA (HAVEN'T BATTLED SINCE RELOADING ROM OR SAVE)
+                        else if (this.mapper.properties.battle.enemyPokemon.type1 == null) {
+                            return Math.floor(this.movePower(x) * stab)
+                        }
+                        //ATTACKING A MONO-TYPE POKEMON
+                        else if (this.mapper.properties.battle.enemyPokemon.type1.value === this.mapper.properties.battle.enemyPokemon.type2.value) {
+                            var multiplier1 = multipliers[defendingTypeMono]
+                            return Math.floor(this.movePower(x) * multiplier1 * stab)
+                        }
+                        //ATTACKING A DUAL-TYPE POKEMON
+                        else if (this.mapper.properties.battle.enemyPokemon.type1 != this.mapper.properties.battle.enemyPokemon.type2) {
+                            var multipliers = this.typeData.find(x => x.moveType === attackingType)
+                            var multiplier1 = multipliers[defendingType1]
+                            var multiplier2 = multipliers[defendingType2]
+                            return Math.floor(this.movePower(x) * multiplier1 * multiplier2 * stab)
+                        }
+                        //RETURN THE MOVES POWER IF NOTHING ELSE WORKS
+                        else
+                            return this.movePower(x) //returns the move's base power if not in battle
                     }
-                    //RETURN THE MOVES POWER IF NOTHING ELSE WORKS
-                    else
-                        return this.movePower(x) //returns the move's base power if not in battle
-                }
-                //RETURN THE MOVE'S POWER IF NOT IN BATTLE
-                else {
-                    if (this.movePower(x) == "-") {
-                        return this.movePower(x)
-                    }
+                    //RETURN THE MOVE'S POWER IF NOT IN BATTLE
                     else {
-                        return Math.floor(this.movePower(x) * stab) //returns the move's base power if not in battle
-                    }
-                } 
+                        if (this.movePower(x) == "-") {
+                            return this.movePower(x)
+                        }
+                        else {
+                            return Math.floor(this.movePower(x) * stab) //returns the move's base power if not in battle
+                        }
+                    } 
+                }
+                else {
+                    //  console.log("Broken - likely bug")
+                     return ""
+                }
             }
-            else {
-                //  console.log("Broken - likely bug")
-                 return ""
-            }
+            else { return this.movePower(x) }
         },
         
         //BADGE BOOSTS
@@ -783,6 +771,53 @@ const app = Vue.createApp({
         this.mapper.onConnected = (x) => this.ready = true
         this.mapper.onDisconnected = (x) => this.ready = false
         await this.mapper.connect()
+
+        // set initial gamestate value when the layout is loaded
+        if (this.mapper.properties.player.team[0].level.value == 0) 
+            this.g1stateVariable = "Base Stats";
+        else if (this.mapper.properties.battle.type.value == "None")
+            this.g1stateVariable = "Overworld";
+        else if (this.mapper.properties.battle.turnInfo.battleStart.value == 0)
+            this.g1stateVariable = "To Battle";
+        else if (this.mapper.properties.battle.lowHealthAlarm.value ==  "Disabled")
+            this.g1stateVariable = "From Battle";
+        else
+            this.g1stateVariable = "Battle";
+
+        // wait for events to change the state
+        this.mapper.properties.player.team[0].level.change((prop) => {
+            if (prop.value == 0) {
+                this.g1stateVariable = "Base Stats";
+            } else if (this.g1state == "Base Stats") {
+                this.g1stateVariable = "Overworld";
+            }
+        });
+
+        this.mapper.properties.battle.type.change((prop) => {
+            if (this.g1state == "Base Stats") return; // ignore everything if we still dont have a pokemon
+
+            if (prop.value == "Wild" || prop.value == "Trainer") {
+                this.g1stateVariable = "To Battle";
+            } else if (prop.value == "None") {
+                this.g1stateVariable = "Overworld";
+            }
+        });
+
+        this.mapper.properties.battle.turnInfo.battleStart.change((prop) => {
+            if (this.g1stateVariable == "Base Stats") return; // ignore everything if we still dont have a pokemon
+
+            if (prop.value != 0) {
+                this.g1stateVariable = "Battle";
+            }
+        });
+
+        this.mapper.properties.battle.lowHealthAlarm.change((prop) => {
+            if (this.g1stateVariable == "Base Stats") return; // ignore everything if we still dont have a pokemon
+
+            if (prop.value == "Disabled") {
+                this.g1stateVariable = "From Battle";
+            }
+        });
 
         // Route 1 Encounters
         // This code tracks the number of wild encounters on Route 1
@@ -1128,13 +1163,6 @@ const app = Vue.createApp({
         })
         this.mapper.properties.overworld.encounterRate.change(async (x) => {
             await secondPlaythrough()
-        })
-
-        this.mapper.properties.battle.type.change(async (x) => {
-            if (this.g1state() == "Overworld") {
-                this.mapper.properties.battle.enemyPokemon.type1.setBytes([0x00],false)
-                this.mapper.properties.battle.enemyPokemon.type2.setBytes([0x00],false)
-            }
         })
     },
 }).mount('#app')

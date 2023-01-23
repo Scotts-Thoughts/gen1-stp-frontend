@@ -17,7 +17,6 @@
                     <img class="gameArea" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img v-show="gameName() == `Pokemon Yellow`" class="demoBorderStats" src="images/elements/overlay/gen1/stats.png" style="opacity: .9"/>
                 </div>
-
             <!------ INFO DISPLAY --------------------------------------------------------------------------------------------------------------------------->
                 <div class="gamestateContainter">
                     <div>Current Game: {{mapper.meta.gameName}}</div>
@@ -43,6 +42,8 @@
                     <div>TrainerDefeated: {{ mapper.properties.battle.turnInfo.trainerDefeated.value }}</div>
                     <div>lowHealthAlarm: {{ mapper.properties.battle.lowHealthAlarm.value }}</div>
                     <div>BattleType: {{ mapper.properties.battle.type.value }}</div>
+                    <br>
+                    <div>GamestateVariable: {{ g1stateVariable }}</div>
                 </div>
 
             <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
@@ -70,7 +71,7 @@
                 <!-- STATS OVERLAY GRAPHIC  -->
                 <div class="statsContainer">  
                     <!-- BASE STATS -------------------------------------------------------------------------------->
-                    <div v-if="currentBattleState() == 0">
+                    <div v-if="g1stateVariable == `Base Stats`">
                         <div class="statsLabelsColumn1">
                             HP:<br>
                             Atk:<br>
@@ -96,7 +97,7 @@
                     </div>
     
                     <!-- OVERWORLD STATS --------------------------------------------------------------------------->
-                    <div v-if="currentBattleState() == 2">
+                    <div v-if="g1stateVariable == `Overworld` || g1stateVariable == `To Battle`">
                         <div class="statsLabelsColumn1">
                             <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">HP:<br></span>
                             <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">Atk:<br></span>
@@ -146,7 +147,7 @@
                     </div>
     
                     <!-- BATTLE STATS ----------------------------------------------------------------------------->
-                    <div v-if="currentBattleState() == 4">
+                    <div v-if="g1stateVariable == `Battle` || g1stateVariable == `From Battle`">
                         <div class="statsLabelsColumn1">
                             <span>HP:<br></span>
                             <span v-bind:style="{ opacity: statLabelOpacity(mapper.properties.battle.yourPokemon.modStageAttack), color: statLabelColor(mapper.properties.battle.yourPokemon.modStageAttack) }">Atk:<br></span>
@@ -184,52 +185,18 @@
                     <div class="labelMoves">moves</div>
                     <div class="labelPwr">pwr.</div>
                     <div class="labelPP">pp</div>
-                    <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0].move1.value != null">
-                        <div v-show="currentBattleState() == 2 && mapper.properties.player.team[0].move1.value != null" class="move1">{{ camelCase(mapper.properties.player.team[0].move1.value) }}</div>
-                        <div v-show="currentBattleState() == 4 && mapper.properties.player.team[0].move1.value != null" class="move1">{{ camelCase(mapper.properties.battle.yourPokemon.move1.value) }}</div>
-                        <div v-show="mapper.properties.player.team[0].move1.value != null" class="move1pp" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move1pp) }">{{ mapper.properties.player.team[0].move1pp }}</div>
-                        <div v-show="mapper.properties.player.team[0].move1.value != null">
-                        <div v-show="currentBattleState() == 2" class="move1power" :key="typeEffectiveness(mapper.properties.player.team[0].move1.value)">{{ typeEffectiveness(mapper.properties.player.team[0].move1.value) }}</div>
-                        <div v-show="currentBattleState() == 4" class="move1power" :key="typeEffectiveness(mapper.properties.battle.yourPokemon.move1.value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon.move1.value) }}</div>
+                    <div v-for="move in pkmnMoves">
+                        <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0][move].value != null">
+                            <div v-show="g1stateVariable != `Battle` && mapper.properties.player.team[0][move].value != null" :class="`${move}`">{{ camelCase(mapper.properties.player.team[0][move].value) }}</div>
+                            <div v-show="g1stateVariable == `Battle` && mapper.properties.player.team[0][move].value != null" :class="`${move}`">{{ camelCase(mapper.properties.battle.yourPokemon[move].value) }}</div>
+                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`${move}pp`" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move1pp) }">{{ mapper.properties.player.team[0][move + "pp"] }}</div>
+                            <div v-show="mapper.properties.player.team[0][move].value != null">
+                            <div v-show="g1stateVariable != `Battle`" :class="`${move}power`" :key="typeEffectiveness(mapper.properties.player.team[0][move].value)">{{ typeEffectiveness(mapper.properties.player.team[0][move].value) }}</div>
+                            <div v-show="g1stateVariable == `Battle`" :class="`${move}power`" :key="typeEffectiveness(mapper.properties.battle.yourPokemon[move].value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon[move].value) }}</div>
+                            </div>
+                            <img v-show="g1stateVariable != `Battle`" :class="`${move}icon`" :src="moveTypeIcon(mapper.properties.player.team[0][move].value)" />
+                            <img v-show="g1stateVariable == `Battle`" :class="`${move}icon`" :src="moveTypeIcon(mapper.properties.battle.yourPokemon[move].value)" />
                         </div>
-                        <img v-show="currentBattleState() == 2" class="move1icon" :src="moveTypeIcon(mapper.properties.player.team[0].move1.value)" />
-                        <img v-show="currentBattleState() == 4" class="move1icon" :src="moveTypeIcon(mapper.properties.battle.yourPokemon.move1.value)" />
-                    </div>
-                    <!-- MOVE 2 -->
-                    <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0].move2.value != null">
-                        <div v-show="currentBattleState() == 2 && mapper.properties.player.team[0].move2.value != null" class="move2">{{ camelCase(mapper.properties.player.team[0].move2.value) }}</div>
-                        <div v-show="currentBattleState() == 4 && mapper.properties.player.team[0].move2.value != null" class="move2">{{ camelCase(mapper.properties.battle.yourPokemon.move2.value) }}</div>
-                        <div v-show="mapper.properties.player.team[0].move2.value != null" class="move2pp" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move2pp) }">{{ mapper.properties.player.team[0].move2pp }}</div>
-                        <div v-show="mapper.properties.player.team[0].move2.value != null">
-                        <div v-show="currentBattleState() == 2" class="move2power" :key="typeEffectiveness(mapper.properties.player.team[0].move2.value)">{{ typeEffectiveness(mapper.properties.player.team[0].move2.value) }}</div>
-                        <div v-show="currentBattleState() == 4" class="move2power" :key="typeEffectiveness(mapper.properties.battle.yourPokemon.move2.value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon.move2.value) }}</div>
-                        </div>
-                        <img v-show="currentBattleState() == 2" class="move2icon" :src="moveTypeIcon(mapper.properties.player.team[0].move2.value)" />
-                        <img v-show="currentBattleState() == 4" class="move2icon" :src="moveTypeIcon(mapper.properties.battle.yourPokemon.move2.value)" />
-                    </div>
-                    <!-- MOVE 3 -->
-                    <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0].move3.value != null">
-                        <div v-show="currentBattleState() == 2 && mapper.properties.player.team[0].move3.value != null" class="move3">{{ camelCase(mapper.properties.player.team[0].move3.value) }}</div>
-                        <div v-show="currentBattleState() == 4 && mapper.properties.player.team[0].move3.value != null" class="move3">{{ camelCase(mapper.properties.battle.yourPokemon.move3.value) }}</div>
-                        <div v-show="mapper.properties.player.team[0].move3.value != null" class="move3pp" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move3pp) }">{{ mapper.properties.player.team[0].move3pp }}</div>
-                        <div v-show="mapper.properties.player.team[0].move3.value != null">
-                        <div v-show="currentBattleState() == 2" class="move3power" :key="typeEffectiveness(mapper.properties.player.team[0].move3.value)">{{ typeEffectiveness(mapper.properties.player.team[0].move3.value) }}</div>
-                        <div v-show="currentBattleState() == 4" class="move3power" :key="typeEffectiveness(mapper.properties.battle.yourPokemon.move3.value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon.move3.value) }}</div>
-                        </div>
-                        <img v-show="currentBattleState() == 2" class="move3icon" :src="moveTypeIcon(mapper.properties.player.team[0].move3.value)" />
-                        <img v-show="currentBattleState() == 4" class="move3icon" :src="moveTypeIcon(mapper.properties.battle.yourPokemon.move3.value)" />
-                    </div>
-                    <!-- MOVE 3 -->
-                    <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0].move4.value != null">
-                        <div v-show="currentBattleState() == 2 && mapper.properties.player.team[0].move4.value != null" class="move4">{{ camelCase(mapper.properties.player.team[0].move4.value) }}</div>
-                        <div v-show="currentBattleState() == 4 && mapper.properties.player.team[0].move4.value != null" class="move4">{{ camelCase(mapper.properties.battle.yourPokemon.move4.value) }}</div>
-                        <div v-show="mapper.properties.player.team[0].move4.value != null" class="move4pp" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move4pp) }">{{ mapper.properties.player.team[0].move4pp }}</div>
-                        <div v-show="mapper.properties.player.team[0].move4.value != null">
-                        <div v-show="currentBattleState() == 2" class="move4power" :key="typeEffectiveness(mapper.properties.player.team[0].move4.value)">{{ typeEffectiveness(mapper.properties.player.team[0].move4.value) }}</div>
-                        <div v-show="currentBattleState() == 4" class="move4power" :key="typeEffectiveness(mapper.properties.battle.yourPokemon.move4.value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon.move4.value) }}</div>
-                        </div>
-                        <img v-show="currentBattleState() == 2" class="move4icon" :src="moveTypeIcon(mapper.properties.player.team[0].move4.value)" />
-                        <img v-show="currentBattleState() == 4" class="move4icon" :src="moveTypeIcon(mapper.properties.battle.yourPokemon.move4.value)" />
                     </div>
                 </div>
 
@@ -297,28 +264,10 @@
                             Mapper:   {{ mapper.meta.gameName }}
                         </div>
                         <div class="bagItemInfo">
-                            {{ camelCase(itemCheck(mapper.properties.player.items[0].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[1].item.value)) }}<br>
-                            {{ camelCase(itemCheck(mapper.properties.player.items[2].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[3].item.value)) }}<br>
-                            {{ camelCase(itemCheck(mapper.properties.player.items[4].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[5].item.value)) }}<br>
-                            {{ camelCase(itemCheck(mapper.properties.player.items[6].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[7].item.value)) }}<br>
-                            {{ camelCase(itemCheck(mapper.properties.player.items[8].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[9].item.value)) }}<br>
-                            {{ camelCase(itemCheck(mapper.properties.player.items[10].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[11].item.value)) }}<br>
-                            {{ camelCase(itemCheck(mapper.properties.player.items[12].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[13].item.value)) }}<br>
-                            {{ camelCase(itemCheck(mapper.properties.player.items[14].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[15].item.value)) }}<br>
-                            {{ camelCase(itemCheck(mapper.properties.player.items[16].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[17].item.value)) }}<br>
-                            {{ camelCase(itemCheck(mapper.properties.player.items[18].item.value)) }}<br>{{ camelCase(itemCheck(mapper.properties.player.items[19].item.value)) }}<br>
+                            <div v-for="slot in inventorySlots">{{ camelCase(itemCheck(mapper.properties.player.items[slot].item.value))}}</div>
                         </div>
                         <div class="bagQuantityInfo">
-                            {{ ifZero(mapper.properties.player.items[0].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[1].quantity.value) }}<br>
-                            {{ ifZero(mapper.properties.player.items[2].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[3].quantity.value) }}<br>
-                            {{ ifZero(mapper.properties.player.items[4].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[5].quantity.value) }}<br>
-                            {{ ifZero(mapper.properties.player.items[6].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[7].quantity.value) }}<br>
-                            {{ ifZero(mapper.properties.player.items[8].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[9].quantity.value) }}<br>
-                            {{ ifZero(mapper.properties.player.items[10].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[11].quantity.value) }}<br>
-                            {{ ifZero(mapper.properties.player.items[12].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[13].quantity.value) }}<br>
-                            {{ ifZero(mapper.properties.player.items[14].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[15].quantity.value) }}<br>
-                            {{ ifZero(mapper.properties.player.items[16].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[17].quantity.value) }}<br>
-                            {{ ifZero(mapper.properties.player.items[18].quantity.value) }}<br>{{ ifZero(mapper.properties.player.items[19].quantity.value) }}<br><br>
+                            <div v-for="slot in inventorySlots">{{ ifZero(mapper.properties.player.items[slot].quantity.value) }}</div>
                         </div>
                     </div>                
                 </div>
@@ -329,7 +278,7 @@
           
             <!------- BATTLE PUSH ON GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fadeBattle">
-                    <div key=1 v-if="((g1state() == `Battle` || g1state() == `To Battle` || g1state() == `From Battle`) && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;">
+                    <div key=1 v-if="((g1stateVariable == `Battle` || g1stateVariable == `To Battle` || g1stateVariable == `From Battle`) && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;">
                         <div v-if="showSpecialTrainerGraphics == true">
                             <img class="floor" v-show="specialTrainerGraphics() != null && g1state() == `Battle`" src="images/trainers/floor.png" />
                             <div class="specialTrainerGraphics">
@@ -356,11 +305,11 @@
                             </div>
                         </div> 
                     </div>
-                    <div key=2 v-else-if="(g1state() == `Battle` && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 0) && battleGraphic == true" class="movepoolContainer">
+                    <div key=2 v-else-if="(g1stateVariable == `Battle` && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 0) && battleGraphic == true" class="movepoolContainer">
                         <img class="rightBar" :src="`images/movepool/${starterName.toLowerCase()}${overlayName}.png`" />
                         <div class="movepoolLabel">Movepool</div>
                     </div>
-                    <div key=2 v-else-if="g1state() != `Battle` && battleGraphic == true" class="movepoolContainer">
+                    <div key=2 v-else-if="g1stateVariable != `Battle` && battleGraphic == true" class="movepoolContainer">
                         <img class="rightBar" :src="`images/movepool/${starterName.toLowerCase()}${overlayName}.png`" />
                         <div class="movepoolLabel">Movepool</div>
                     </div>
@@ -373,7 +322,7 @@
 
             <!--------- INVENTORY -------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade1">
-                    <div v-if="inventory == true && g1state() == `Overworld` && g1martSelector(mapper.properties.overworld.map.value) == `Mart`">
+                    <div v-if="inventory == true && g1stateVariable == `Overworld` && g1martSelector(mapper.properties.overworld.map.value) == `Mart`">
                         <table id="items" class="inventory">
                             <div class="inventory" style="top: 42px; font-family: titan; text-align: center;">Player Inventory</div>
                             <tr class="inventoryLine"><td class="itemName">Money: ${{mapper.properties.player.money}}</td></tr>
