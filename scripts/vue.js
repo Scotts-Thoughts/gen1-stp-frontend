@@ -6,8 +6,8 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starter:         18, //select starter
-            starterName:     "Pidgeot", //string name
+            starter:         22, //select starter
+            starterName:     "Fearow", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played
             secondPlaythrough: false, //used to mitigate luck on second playthroughs
             pick:            true, //turns on the ability to pick your starter
