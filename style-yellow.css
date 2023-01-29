@@ -538,6 +538,7 @@ body {
     z-index: 3;
     opacity: .72;
     text-align: left;
+    
     font-family: osb;
     font-weight: 500
 }

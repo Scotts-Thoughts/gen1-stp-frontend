@@ -6,8 +6,8 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starter:         22, //select starter
-            starterName:     "Fearow", //string name
+            starter:         147, //select starter
+            starterName:     "Dratini", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played
             secondPlaythrough: false, //used to mitigate luck on second playthroughs
             pick:            true, //turns on the ability to pick your starter
@@ -82,11 +82,11 @@ const app = Vue.createApp({
 
             //VARIABLES THAT STYLE ELEMENTS
             statLabelOpacityValue: .1,
-            modColor: false,
-            modRaise: "rgb(0, 85, 11)",
-            modLower: "rgb(114, 0, 0)",
+            modColor: true,
+            modRaise: "rgb(0, 0, 0)",
+            modLower: "rgb(0, 0, 0)",
             modDefault: "rgb(0, 0, 0)",
-            ppColor: true,
+            ppColor: false,
             ppHigh: "rgb(0, 0, 0)",
             ppMid: "rgb(114, 0, 0)",
             // ppMid: "rgb(121, 72, 0)",
