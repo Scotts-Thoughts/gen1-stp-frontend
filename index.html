@@ -44,6 +44,9 @@
                     <div>BattleType: {{ mapper.properties.battle.type.value }}</div>
                     <br>
                     <div>GamestateVariable: {{ g1stateVariable }}</div>
+                    <br>
+                    <div>{{ typeEffectiveness(mapper.properties.battle.yourPokemon.move1.value) }}</div>
+                    <div>{{ determineSTAB(mapper.properties.battle.yourPokemon.move1.value) }}</div>
                 </div>
 
             <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
@@ -191,8 +194,8 @@
                             <div v-show="g1stateVariable == `Battle` && mapper.properties.player.team[0][move].value != null" :class="`${move}`">{{ camelCase(mapper.properties.battle.yourPokemon[move].value) }}</div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`${move}pp`" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move1pp) }">{{ mapper.properties.player.team[0][move + "pp"] }}</div>
                             <div v-show="mapper.properties.player.team[0][move].value != null">
-                            <div v-show="g1stateVariable != `Battle`" :class="`${move}power`" :key="typeEffectiveness(mapper.properties.player.team[0][move].value)">{{ typeEffectiveness(mapper.properties.player.team[0][move].value) }}</div>
-                            <div v-show="g1stateVariable == `Battle`" :class="`${move}power`" :key="typeEffectiveness(mapper.properties.battle.yourPokemon[move].value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon[move].value) }}</div>
+                                <div v-show="g1stateVariable != `Battle`" :class="`${move}power`" :key="typeEffectiveness(mapper.properties.player.team[0][move].value)">{{ typeEffectiveness(mapper.properties.player.team[0][move].value) }}</div>
+                                <div v-show="g1stateVariable == `Battle`" :class="`${move}power`" :key="typeEffectiveness(mapper.properties.battle.yourPokemon[move].value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon[move].value) }}</div>
                             </div>
                             <img v-show="g1stateVariable != `Battle`" :class="`${move}icon`" :src="moveTypeIcon(mapper.properties.player.team[0][move].value)" />
                             <img v-show="g1stateVariable == `Battle`" :class="`${move}icon`" :src="moveTypeIcon(mapper.properties.battle.yourPokemon[move].value)" />

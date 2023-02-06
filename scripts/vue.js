@@ -6,8 +6,8 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starter:         147, //select starter
-            starterName:     "Dratini", //string name
+            starter:         22, //select starter
+            starterName:     "Fearow", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played
             secondPlaythrough: false, //used to mitigate luck on second playthroughs
             pick:            true, //turns on the ability to pick your starter
@@ -83,9 +83,9 @@ const app = Vue.createApp({
             //VARIABLES THAT STYLE ELEMENTS
             statLabelOpacityValue: .1,
             modColor: true,
-            modRaise: "rgb(0, 0, 0)",
-            modLower: "rgb(0, 0, 0)",
-            modDefault: "rgb(0, 0, 0)",
+            modRaise: "rgb(82, 82, 82)",
+            modLower: "rgb(82, 82, 82)",
+            modDefault: "rgb(82, 82, 82)",
             ppColor: false,
             ppHigh: "rgb(0, 0, 0)",
             ppMid: "rgb(114, 0, 0)",
@@ -693,7 +693,7 @@ const app = Vue.createApp({
                 return 1
         }, 
         typeEffectiveness(x) { //x = move1.value
-            if (this.g1stateVariable == "Battle") {
+            // if (this.g1stateVariable == "Battle") {
                 var stab = this.determineSTAB(x)
                 if (x != null) {
                     if (this.typeCalcs == true && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1) { //calculates effective power when in battle
@@ -740,8 +740,8 @@ const app = Vue.createApp({
                     //  console.log("Broken - likely bug")
                      return ""
                 }
-            }
-            else { return this.movePower(x) }
+            // }
+            // else { return this.movePower(x) }
         },
         
         //BADGE BOOSTS
@@ -1168,6 +1168,10 @@ const app = Vue.createApp({
         })
         this.mapper.properties.overworld.encounterRate.change(async (x) => {
             await secondPlaythrough()
+        })
+
+        this.mapper.properties.screen.lcdStatus.change(async (x) => {
+            if (this.mapper.properties.screen.lcdStatus.value == false ) { console.log("LCD Changed") }
         })
     },
 }).mount('#app')
