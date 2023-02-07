@@ -242,7 +242,30 @@ body {
 .badgesBadge {
     opacity: 1;  
 }
-
+/* .exp_growthRate {
+    position: absolute;
+    font-family: play;
+    line-height: 26px;
+    font-size: 21px;
+    top: 811px;
+    left: 9px;
+    width: 380px;
+    text-align: center;
+    border: 1px solid rgb(255, 0, 0);
+    z-index: 500;
+} */
+.exp_growthRate {
+    position: absolute;
+    font-family: play;
+    line-height: 26px;
+    font-size: 21px;
+    top: 811px;
+    left: 80px;
+    width: 296px;
+    text-align: center;
+    border: 1px solid rgba(255, 0, 0, 0);
+    z-index: 500;
+}
 /*  ------------------------------------  */
 /*  ------------- FONTS ----------------  */
 /*  ------------------------------------  */
@@ -276,15 +299,32 @@ body {
 }
 .expTextGen1 {
     position: absolute;
-    top: 34px;
+    top: 74px;
     left: 16px;
     z-index: 1005;
     opacity: .72;
-
+}
+.expTextGen2 {
+    position: absolute;
+    font-size: 24px;
+    font-family: play;
+    top: 48px;
+    left: 25px;
+    z-index: 1005;
+    opacity: .55;
+}
+.expBar {
+    /* border: 1px solid rgb(255, 0, 0); */
+    position: absolute;
+    width: 400px;
+    height: 50px;
+    left: 0px;
+    top: 770px;
 }
 .expLabelGen1 {
-    position: fixed;
-    top: 0px;
+    position: absolute;
+    font-family: play;
+    top: -770px;
     left: 0px;
     z-index: 1000;
 }
@@ -460,7 +500,7 @@ body {
     filter: drop-shadow(8px 8px 15px #000000);
     width: 400px;
     height: 200px;
-    top: -66px;
+    top: -96px;
     left: -12px;
     transform: scale(.1)
 }
@@ -482,34 +522,36 @@ body {
     z-index: 0;
 }
 .statsheader {
+    border: 1px solid #ff000000;
     opacity: 1;
     font-size: 40px;
     font-family: play;
     position: absolute;
     text-align: center;
-    top: 0px;
-    width: 384px;
+    top: -28px;
+    width: 378px;
     z-index: 1;
-    filter: drop-shadow(1px 1px 0px rgb(70, 70, 70));
+    /* filter: drop-shadow(1px 1px 0px rgb(70, 70, 70)); */
 }
 .expMeterOuter {
     position: absolute;
-    border-radius: 18px;
+    border-radius: 4px;
+    border: 1px solid #000;
     background: linear-gradient(rgb(239, 239, 239), rgb(157, 157, 157));
-    width: 310px;
-    height: 9px;
-    top: 841px;
+    width: 311px;
+    height: 17px;
+    top: 65px;
     left: 69px;
     z-index: 2;
 }
 .expMeterInner {
     position: relative;    
-    border-radius: 18px;
-    background: linear-gradient(hsl(191, 100%, 21%), rgba(0, 167, 233, 0.521)5%);
-    width: 355px;
-    height: 11px;
+    border-radius: 4px;
+    background: linear-gradient(90deg,hsl(189, 92%, 45%), hsl(187, 100%, 69%));
+    width: 311px;
+    height: 16.5px;
     top: -1px;
-    border: 1px solid #00000098
+    border: 1px solid #000000
     /* background:rgb(0, 217, 255); */
 }
 .critrate {

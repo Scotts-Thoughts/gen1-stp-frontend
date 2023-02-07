@@ -15,27 +15,12 @@
                 <div v-if="package == false && mapper.meta.gamePlatform == `GB`">
                     <img v-show="overlay == true" class="overlay" :src="`images/overlay/${starterName.toLowerCase()}${overlayName}.png`" />
                     <img class="gameArea" src="images/elements/overlay/gen1&2/gamearea.png" />
-                    <img v-show="gameName() == `Pokemon Yellow`" class="demoBorderStats" src="images/elements/overlay/gen1/stats.png" style="opacity: .9"/>
+                    <img v-show="gameName() == `Pokemon Yellow`" class="demoBorderStats" src="images/exp_bar/stats.png"/>
+                    <img v-show="gameName() == `Pokemon Yellow`" class="demoBorderStats" src="images/exp_bar/exp_bar.png"/>
+                    <div class="exp_growthRate">{{ growthRate(starterName) }}</div>
                 </div>
             <!------ INFO DISPLAY --------------------------------------------------------------------------------------------------------------------------->
                 <div class="gamestateContainter">
-                    <div>Current Game: {{mapper.meta.gameName}}</div>
-                    <div>Current Platform: {{mapper.meta.gamePlatform}}</div>
-                    <div>- - - - - - </div>
-                    <div>Current Gamestate: {{g1state()}}</div>
-                    <div>TrainerClass: {{mapper.properties.battle.trainer.class.value}}</div>
-                    <div>TrainerNumber: {{mapper.properties.battle.trainer.number.value}}</div>
-                    <div>TrainerLookup: {{ g1trainer(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number.value)}}</div>
-                    <div>Mart: {{g1martSelector(this.mapper.properties.overworld.map.value)}}</div>
-                    <br>
-                    <div>HP DV: {{hpDvCalculation()}}</div>
-                    <div>HP: {{Math.floor((((pokemon(starter).baseHp + hpDvCalculation()) * 2 * 5) / 100) + 10 + 5)}}</div>
-                    <div>Atk: {{Math.floor((((pokemon(starter).baseAtk + this.mapper.properties.player.team[0].dvAttack.value) * 2 * 5) / 100) + 5)}}</div>
-                    <div>Def: {{Math.floor((((pokemon(starter).baseDef + this.mapper.properties.player.team[0].dvDefense.value) * 2 * 5) / 100) + 5)}}</div>
-                    <div>Spc: {{Math.floor((((pokemon(starter).baseSpc + this.mapper.properties.player.team[0].dvSpecial.value) * 2 * 5) / 100) + 5)}}</div>
-                    <div>Spd: {{Math.floor((((pokemon(starter).baseSpd + this.mapper.properties.player.team[0].dvSpeed.value) * 2 * 5) / 100) + 5)}}</div>
-                    <div>Logical Statement: {{logicalStatementCheck()}}</div>
-                    <br>
                     <div>BattleStart: {{ mapper.properties.battle.turnInfo.battleStart.value }}</div>
                     <div>EnemyType1: {{ mapper.properties.battle.enemyPokemon.type1.value }}</div>
                     <div>EnemyType2: {{ mapper.properties.battle.enemyPokemon.type2.value }}</div>
@@ -45,8 +30,6 @@
                     <br>
                     <div>GamestateVariable: {{ g1stateVariable }}</div>
                     <br>
-                    <div>{{ typeEffectiveness(mapper.properties.battle.yourPokemon.move1.value) }}</div>
-                    <div>{{ determineSTAB(mapper.properties.battle.yourPokemon.move1.value) }}</div>
                 </div>
 
             <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
@@ -71,7 +54,6 @@
                 </div>                         
     
             <!--------- STATS ---------------------------------------------------------------------------------------------------------------------------->
-                <!-- STATS OVERLAY GRAPHIC  -->
                 <div class="statsContainer">  
                     <!-- BASE STATS -------------------------------------------------------------------------------->
                     <div v-if="g1stateVariable == `Base Stats`">
@@ -178,8 +160,6 @@
                         <div v-bind:style="{ color: statLabelColor(mapper.properties.battle.yourPokemon.modStageSpecial)}" class="spcMod">{{ stageModifiers(mapper.properties.battle.yourPokemon.modStageSpecial) }}</div>
                         <div v-bind:style="{ color: statLabelColor(mapper.properties.battle.yourPokemon.modStageAttack)}" class="spdMod">{{ stageModifiers(mapper.properties.battle.yourPokemon.modStageSpeed) }}</div>
                     </div>
-                    <img v-if="mapper.meta.gameName == `Pokemon Yellow` || mapper.meta.gameName == `Pokemon Red and Blue`" class="expLabelGen1" src="images/elements/overlay/gen1/expLabel.png" />
-                    <div class="expTextGen1">Exp:</div>
                 </div>  
     
             <!--------- MOVESET (MOVES, POWER, PP) -------------------------------------------------------------------------------------------------------------->
@@ -353,7 +333,11 @@
                     </div>
                 </transition>
             <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
-                <div class="expMeterOuter"><div class="expMeterInner" :style="{ width: expPercent(mapper.properties.player.team[0]) + '%' }"></div></div>
+                <div v-show="expBarToggle == true" class="expBar">
+                    <img class="expLabelGen1" src="images/exp_bar/exp_label.png" />
+                    <div class="expTextGen2">Exp:</div>
+                    <div class="expMeterOuter"><div class="expMeterInner" :style="{ width: expPercent(mapper.properties.player.team[0]) + '%' }"></div></div>
+                </div>
             </div>
         </div>
     </div>

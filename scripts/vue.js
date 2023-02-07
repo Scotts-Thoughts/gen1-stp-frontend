@@ -6,8 +6,8 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starter:         22, //select starter
-            starterName:     "Fearow", //string name
+            starter:         71, //select starter
+            starterName:     "Victreebel", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played
             secondPlaythrough: false, //used to mitigate luck on second playthroughs
             pick:            true, //turns on the ability to pick your starter
@@ -32,6 +32,7 @@ const app = Vue.createApp({
             badgesBar:          false, //turns on dynamic badges
             badgeBoostGraphics: true, //turns on opaque badge icons for boosts
             addStabBonus:       true,
+            expBarToggle:       true,
             
             // CUSTOM STARTING MOVES
             customMoves: false, //if custom moves is turned off, custom trainer ID will be turned off as well
@@ -589,6 +590,11 @@ const app = Vue.createApp({
         },
 
         //EXPERIENCE FUNCTIONS
+        growthRate(starter) {
+            var growthRate = this.gen1dataGrowthMovepool.find(y => y.name === starter)
+            return growthRate.growth_rate
+        },
+
         expPercent(x) {
             if (this.mapper.properties.player.team[0].species.value != null) {
                 var growthRate = this.gen1dataGrowthMovepool.find(y => y.name === x.species.value)
