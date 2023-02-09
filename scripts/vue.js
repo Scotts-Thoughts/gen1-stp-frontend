@@ -94,7 +94,7 @@ const app = Vue.createApp({
             // ppMid: "rgb(121, 72, 0)",
             ppLow: "rgb(114, 0, 0)",
 
-            //GAMESTATE VARIABLE
+            //STORING DATA
             g1stateVariable: "Base Stats",
             prevSpecies: undefined,
         }
