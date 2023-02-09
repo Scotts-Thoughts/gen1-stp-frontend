@@ -10,7 +10,6 @@
     <div id="app">
         <div v-if="ready == false">Loading...</div>
         <div v-else>
-            <!------ OVERLAY GRAPHICS ---------------------------------------------------------------------------------------------------------------------->
             <div class="mainContainer">
                 <div v-if="package == false && mapper.meta.gamePlatform == `GB`">
                     <img v-show="overlay == true" class="overlay" :src="`images/overlay/${starterName.toLowerCase()}${overlayName}.png`" />
@@ -18,34 +17,24 @@
                     <img v-show="gameName() == `Pokemon Yellow`" class="demoBorderStats" src="images/exp_bar/stats.png"/>
                     <img v-show="gameName() == `Pokemon Yellow`" class="demoBorderStats" src="images/exp_bar/exp_bar.png"/>
                     <div class="exp_growthRate">{{ growthRate(starterName) }}</div>
+                    <div class="timerLabel">time played at 4x game speed</div>
+                    <div class="resetsLabel">resets</div>
                 </div>
-            <!------ INFO DISPLAY --------------------------------------------------------------------------------------------------------------------------->
+<!------ DEBUGGING ---------------------------------------------------------------------------------------------------------------------------->
                 <div class="gamestateContainter">
-                    <div>BattleStart: {{ mapper.properties.battle.turnInfo.battleStart.value }}</div>
-                    <div>EnemyType1: {{ mapper.properties.battle.enemyPokemon.type1.value }}</div>
-                    <div>EnemyType2: {{ mapper.properties.battle.enemyPokemon.type2.value }}</div>
-                    <div>TrainerDefeated: {{ mapper.properties.battle.turnInfo.trainerDefeated.value }}</div>
-                    <div>lowHealthAlarm: {{ mapper.properties.battle.lowHealthAlarm.value }}</div>
-                    <div>BattleType: {{ mapper.properties.battle.type.value }}</div>
-                    <br>
-                    <div>GamestateVariable: {{ g1stateVariable }}</div>
-                    <br>
+                    <div>GamestateVariable: {{ g1stateVariable }}</div><br>
                 </div>
 
-            <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
+<!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
                 <div class="typeContainer">
-                    <!-- MONO TYPE -->
-                    <div v-if="typeIcons == true && getStarterType1() == getStarterType2()">
-                        <img class="typeMono" :src="getStarterType1()" />
-                    </div>
-                    <!-- DUAL TYPE -->
+                    <div v-if="typeIcons == true && getStarterType1() == getStarterType2()"><img class="typeMono" :src="getStarterType1()" /></div>
                     <div v-else-if="typeIcons == true && getStarterType1() != getStarterType2()" class="dualType">
                         <img :src="getStarterType1()" />
                         <img :src="getStarterType2()" />
                     </div>
                 </div>
     
-            <!--------- BADGE ICONS ---------------------------------------------------------------------------------------------------------------------->
+<!--------- BADGE ICONS ---------------------------------------------------------------------------------------------------------------------->
                 <div class="badgesBar">          
                     <img v-show="mapper.properties.player.badges.badge1.value === true" class="badgeBoostAtk" :src="badgeGraphic(mapper.properties.player.badges.badge1)" style="top: 914px; opacity: .3; left: 22px; z-index: 2;" />
                     <img v-show="mapper.properties.player.badges.badge3.value === true" class="badgeBoostDef" :src="badgeGraphic(mapper.properties.player.badges.badge3)" style="top: 976px; opacity: .3; left: 22px; z-index: 2;" />                    
@@ -53,9 +42,8 @@
                     <img v-show="mapper.properties.player.badges.badge7.value === true" class="badgeBoostSpc" :src="badgeGraphic(mapper.properties.player.badges.badge7)" style="top: 914px; opacity: .3; left: 206px; z-index: 2;"/>      
                 </div>                         
     
-            <!--------- STATS ---------------------------------------------------------------------------------------------------------------------------->
+<!-- BASE STATS -------------------------------------------------------------------------------->
                 <div class="statsContainer">  
-                    <!-- BASE STATS -------------------------------------------------------------------------------->
                     <div v-if="g1stateVariable == `Base Stats`">
                         <div class="statsLabelsColumn1">
                             HP:<br>
@@ -81,7 +69,7 @@
                         </div>
                     </div>
     
-                    <!-- OVERWORLD STATS --------------------------------------------------------------------------->
+<!-- OVERWORLD STATS --------------------------------------------------------------------------->
                     <div v-if="g1stateVariable == `Overworld` || g1stateVariable == `To Battle`">
                         <div class="statsLabelsColumn1">
                             <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">HP:<br></span>
@@ -131,7 +119,7 @@
                         </div>
                     </div>
     
-                    <!-- BATTLE STATS ----------------------------------------------------------------------------->
+<!-- BATTLE STATS ----------------------------------------------------------------------------->
                     <div v-if="g1stateVariable == `Battle` || g1stateVariable == `From Battle`">
                         <div class="statsLabelsColumn1">
                             <span>HP:<br></span>
@@ -162,8 +150,7 @@
                     </div>
                 </div>  
     
-            <!--------- MOVESET (MOVES, POWER, PP) -------------------------------------------------------------------------------------------------------------->
-                <!-- MOVE 1 -->
+<!--------- MOVESET -------------------------------------------------------------------------------------------------------------->
                 <div class="movesetContainer">
                     <div class="labelMoves">moves</div>
                     <div class="labelPwr">pwr.</div>
@@ -182,88 +169,12 @@
                         </div>
                     </div>
                 </div>
-
-            <!--------- INFO AREA -------------------------------------------------------------------------------------------------------------->
-                <div class="movepoolContainer">    
-                    <div v-if="info == true">
-                        <div class="encounterInfo">
-                            <span style="text-decoration: underline">Enemy Attributes:</span><br>
-                            HP:<br>Speed:<br>Move1:<br>Move2:<br>Move3:<br>Move4:<br><br>
-                            <span style="text-decoration: underline">{{ nullCheck(mapper.properties.player.team[0].species.value).name }}</span><br>
-                            HP:<br>Status:<br>
-                            <br>AtkDV:<br>DefDV:<br>SpdDV:<br>SpcDv:<br><br>
-                            Party:<br>Items:<br>Money:<br><br>
-                            <span style="text-decoration: underline">Event Tracking</span><br>
-                            Lctn:<br>Rate:<br>Trnrs:<br>Wild:<br><br>
-                            Rt1:<br>Forest:<br>Moon:<br><br>
-                            Heals:<br>Saves:<br><br>
-                            Resets:<br>GT:<br>PlrID:<br><br>
-                            Fast:<br>MFast:<br>MSlow:<br>Slow:
-                        </div>
-                        <div class="encounterData">
-                            <br>
-                            {{ mapper.properties.battle.enemyPokemon.hp.value }}/{{ mapper.properties.battle.enemyPokemon.maxHp.value }}<br>
-                            {{ mapper.properties.battle.enemyPokemon.speed.value }}<br>
-                            {{ camelCase(mapper.properties.battle.enemyPokemon.move1.value) }}<br>
-                            {{ camelCase(mapper.properties.battle.enemyPokemon.move2.value) }}<br>
-                            {{ camelCase(mapper.properties.battle.enemyPokemon.move3.value) }}<br>
-                            {{ camelCase(mapper.properties.battle.enemyPokemon.move4.value) }}<br>
-                            <br><br>
-                            {{ mapper.properties.player.team[0].hp.value }}/{{ mapper.properties.player.team[0].maxHp.value }}<br>
-                            {{ mapper.properties.player.team[0].statusCondition.value }}<br>
-                            <br>
-                            {{ mapper.properties.player.team[0].dvAttack }}<br>
-                            {{ mapper.properties.player.team[0].dvDefense }}<br>
-                            {{ mapper.properties.player.team[0].dvSpeed }}<br>
-                            {{ mapper.properties.player.team[0].dvSpecial }}<br>
-                            <br>
-                            {{ mapper.properties.player.teamCount }}<br>
-                            {{ mapper.properties.player.itemCount }}<br>
-                            {{ mapper.properties.player.money }}<br>
-                            <br><br>
-                            {{ mapper.properties.overworld.map.bytes }}<br>
-                            {{ mapper.properties.overworld.encounterRate }}<br>
-                            {{ totalTrainers }}<br>
-                            {{ totalEncounters }}<br>
-                            <br>
-                            {{ route1Encounters }}<br>
-                            {{ forestEncounters }}<br>
-                            {{ mtmoonEncounters }}<br>
-                            <br>
-                            {{ centerHeals }}<br>
-                            {{ saves }}<br>
-                            <br>
-                            {{ resets }}<br>
-                            {{ gameTimeHMS(mapper.properties.gameTime.hours, mapper.properties.gameTime.minutes, mapper.properties.gameTime.seconds) }}.{{
-                                leadZero(mapper.properties.gameTime.frames) }}<br>
-                            {{ playerId }}<br>
-                            <br>
-                            {{ Math.round(expPercentFast(mapper.properties.player.team[0])) }}%<br>
-                            {{ Math.round(expPercentMediumFast(mapper.properties.player.team[0])) }}%<br>
-                            {{ Math.round(expPercentMediumSlow(mapper.properties.player.team[0])) }}%<br>
-                            {{ Math.round(expPercentSlow(mapper.properties.player.team[0])) }}%
-                        </div>
-                        <div class="bagLineLabelInfo">
-                            Mapper:   {{ mapper.meta.gameName }}
-                        </div>
-                        <div class="bagItemInfo">
-                            <div v-for="slot in inventorySlots">{{ camelCase(itemCheck(mapper.properties.player.items[slot].item.value))}}</div>
-                        </div>
-                        <div class="bagQuantityInfo">
-                            <div v-for="slot in inventorySlots">{{ ifZero(mapper.properties.player.items[slot].quantity.value) }}</div>
-                        </div>
-                    </div>                
-                </div>
-
-            <!------ LABELS ------------------------------------------------------------------------------------------------------------------------------------>
-                <div class="timerLabel">time played at 4x game speed</div>
-                <div class="resetsLabel">resets</div>
           
-            <!------- BATTLE PUSH ON GRAPHIC ------------------------------------------------------------------------------------------------------------------->
+<!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fadeBattle">
                     <div key=1 v-if="((g1stateVariable == `Battle` || g1stateVariable == `To Battle` || g1stateVariable == `From Battle`) && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;">
                         <div v-if="showSpecialTrainerGraphics == true">
-                            <img class="floor" v-show="specialTrainerGraphics() != null && g1state() == `Battle`" src="images/trainers/floor.png" />
+                            <img class="floor" v-show="specialTrainerGraphics() != null && g1stateVariable == `Battle`" src="images/trainers/floor.png" />
                             <div class="specialTrainerGraphics">
                                 <img :src="specialTrainerGraphics()" />
                             </div>
@@ -280,10 +191,10 @@
                                     <div class="ePkmnMove3">{{currentTrainer.pokemon[x]?.moves[2]}}</div>
                                     <div class="ePkmnMove4">{{currentTrainer.pokemon[x]?.moves[3]}}</div>
                                     <div class="ePkmnHp">{{currentTrainer.pokemon[x]?.hp}}</div>
-                                    <div class="ePkmnAtk">{{currentTrainer.pokemon[x]?.atk}}</div>
-                                    <div class="ePkmnDef">{{currentTrainer.pokemon[x]?.def}}</div>
-                                    <div class="ePkmnSpd">{{currentTrainer.pokemon[x]?.spd}}</div>
-                                    <div class="ePkmnSpc">{{currentTrainer.pokemon[x]?.spc}}</div>
+                                    <div class="ePkmnAtk">{{activeSlot(x,mapper.properties.battle.enemyPokemon.pkmnIndex.value,"attack",currentTrainer.pokemon[x]?.atk,"enemyPokemon")}}</div>
+                                    <div class="ePkmnDef">{{activeSlot(x,mapper.properties.battle.enemyPokemon.pkmnIndex.value,"defense",currentTrainer.pokemon[x]?.def,"enemyPokemon")}}</div>
+                                    <div class="ePkmnSpd">{{activeSlot(x,mapper.properties.battle.enemyPokemon.pkmnIndex.value,"speed",currentTrainer.pokemon[x]?.spd,"enemyPokemon")}}</div>
+                                    <div class="ePkmnSpc">{{activeSlot(x,mapper.properties.battle.enemyPokemon.pkmnIndex.value,"special",currentTrainer.pokemon[x]?.spc,"enemyPokemon")}}</div>
                                 </div>
                             </div>
                         </div> 
@@ -301,53 +212,20 @@
                         <div class="movepoolLabel">Movepool</div>  
                     </div>
                 </transition>
-
-
-            <!--------- INVENTORY -------------------------------------------------------------------------------------------------------------------->
-                <transition name="fade1">
-                    <div v-if="inventory == true && g1stateVariable == `Overworld` && g1martSelector(mapper.properties.overworld.map.value) == `Mart`">
-                        <table id="items" class="inventory">
-                            <div class="inventory" style="top: 42px; font-family: titan; text-align: center;">Player Inventory</div>
-                            <tr class="inventoryLine"><td class="itemName">Money: ${{mapper.properties.player.money}}</td></tr>
-                            <tr class="inventoryLine"><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[0]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[0]?.item?.value, mapper.properties.player?.items[0]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[1]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[1]?.item?.value, mapper.properties.player?.items[1]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[2]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[2]?.item?.value, mapper.properties.player?.items[2]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[3]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[3]?.item?.value, mapper.properties.player?.items[3]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[4]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[4]?.item?.value, mapper.properties.player?.items[4]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[5]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[5]?.item?.value, mapper.properties.player?.items[5]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[6]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[6]?.item?.value, mapper.properties.player?.items[6]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[7]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[7]?.item?.value, mapper.properties.player?.items[7]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[8]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[8]?.item?.value, mapper.properties.player?.items[8]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[9]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[9]?.item?.value, mapper.properties.player?.items[9]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[10]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[10]?.item?.value, mapper.properties.player?.items[10]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[11]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[11]?.item?.value, mapper.properties.player?.items[11]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[12]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[12]?.item?.value, mapper.properties.player?.items[12]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[13]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[13]?.item?.value, mapper.properties.player?.items[13]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[14]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[14]?.item?.value, mapper.properties.player?.items[14]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[15]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[15]?.item?.value, mapper.properties.player?.items[15]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[16]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[16]?.item?.value, mapper.properties.player?.items[16]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[17]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[17]?.item?.value, mapper.properties.player?.items[17]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[18]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[18]?.item?.value, mapper.properties.player?.items[18]?.quantity?.value))}}</td></tr>
-                            <tr><td class="itemName">{{camelCase(inventoryDisplayItem(mapper.properties.player?.items[19]?.item?.value))}}</td><td class="itemQnty">{{camelCase(inventoryDisplayQuality(mapper.properties.player?.items[19]?.item?.value, mapper.properties.player?.items[19]?.quantity?.value))}}</td></tr>
-                        </table>
-                    </div>
-                </transition>
-            <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
+<!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
                 <div v-show="expBarToggle == true" class="expBar">
                     <img class="expLabelGen1" src="images/exp_bar/exp_label.png" />
                     <div class="expTextGen2">Exp:</div>
-                    <div class="expMeterOuter"><div class="expMeterInner" :style="{ width: expPercent(mapper.properties.player.team[0]) + '%' }"></div></div>
+                    <div class="expMeterOuter"><div class="expMeterInner" ref="expBar" :style="{ width: expPercent(mapper.properties.player.team[0]) + '%' }"></div></div>
                 </div>
             </div>
         </div>
     </div>
 
-<!--------------------------------------------------------------------- JAVASCRIPT --------------------------------------------------------------------->
-    <!-- PROGRAM IMPORTS -->
+<!------ JAVASCRIPT --------------------------------------------------------------------------------------------------------------------->
     <script src="https://unpkg.com/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script> 
     <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script>
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
-    <!-- DATA -->
     <script src="data/gen1data.js"></script>
     <script src="data/gen1dataGrowthMovepool.js"></script>
     <script src="data/gen1moves.js"></script>
@@ -356,6 +234,5 @@
     <script src="data/gen1RedBlueTrainers.js"></script>
     <script src="data/type-effectiveness.js"></script>
     <script src="data/stage-modifiers.js"></script>
-    <!-- VUE APP -->
     <script type="text/javascript" src="scripts/vue.js"></script>
 </body>
