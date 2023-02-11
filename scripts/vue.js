@@ -1197,48 +1197,5 @@ const app = Vue.createApp({
         this.mapper.properties.overworld.encounterRate.change(async (x) => {
             await secondPlaythrough()
         })
-
-        this.mapper.properties.screen.lcdStatus.change(async (x) => {
-            if (this.mapper.properties.screen.lcdStatus.value == false ) { console.log("LCD Changed") }
-        })
-
-        this.mapper.properties.player.team[0].expPoints.change(async (newProp, oldProp) => {
-            const currSpecies = this.mapper.properties.player.team[0].species.value;
-            const growthRate = this.gen1dataGrowthMovepool.find(y => y.name === currSpecies).growth_rate
-            const oldExpStats = this.calcExpStats(growthRate, oldProp.value);
-            const newExpStats = this.calcExpStats(growthRate, newProp.value);
-
-            // did we switch out?
-            // there is still a bug here. what if we changed to the same species?
-            if (this.prevSpecies != currSpecies) {
-                // update prevSpecies
-                this.prevSpecies = currSpecies; 
-                // dont animate, just set newExpStats.percent
-                this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
-            } 
-            // same pokemon but exp changed
-            else {
-                if (oldExpStats.level == newExpStats.level) {
-                    // animate width to newExpStats.percent
-                    this.$refs.expBar.style.transition = 'width 500ms ease-in-out';
-                    this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
-                    await this.sleep(550);
-                } else {
-                    // animate width to 100%
-                    this.$refs.expBar.style.transition = 'width 250ms ease-in';
-                    this.$refs.expBar.style.width = "100%";
-                    await this.sleep(300);
-                    // dont animate, set width to 0%
-                    this.$refs.expBar.style.transition = null;
-                    this.$refs.expBar.style.width = "0%";
-                    await this.sleep(50);
-                    // animate width from 0% to newExpStats.percent
-                    this.$refs.expBar.style.transition = 'width 250ms ease-out';
-                    this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
-                    await this.sleep(300);
-                }
-            }
-            this.$refs.expBar.style.transition = null;
-        })
     },
 }).mount('#app')

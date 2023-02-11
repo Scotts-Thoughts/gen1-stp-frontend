@@ -216,7 +216,7 @@
                 <div v-show="expBarToggle == true" class="expBar">
                     <img class="expLabelGen1" src="images/exp_bar/exp_label.png" />
                     <div class="expTextGen2">Exp:</div>
-                    <div class="expMeterOuter"><div class="expMeterInner" ref="expBar" :style="{ width: expPercent(mapper.properties.player.team[0]) + '%' }"></div></div>
+                    <div class="expMeterOuter"><div class="expMeterInner" :style="{ width: expPercent(mapper.properties.player.team[0]) + '%' }"></div></div>
                 </div>
             </div>
         </div>
