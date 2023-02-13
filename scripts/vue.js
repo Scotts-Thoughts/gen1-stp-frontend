@@ -9,7 +9,7 @@ const app = Vue.createApp({
             starter:         71, //select starter
             starterName:     "Victreebel", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played
-            secondPlaythrough: false, //used to mitigate luck on second playthroughs
+            secondPlaythrough: true, //used to mitigate luck on second playthroughs
             pick:            true, //turns on the ability to pick your starter
             package:         false, //uses images from package folder, rather than using dynamic values
             movepool:        true, //uses dynamic movepool when in the overworld & in wild battles
@@ -33,6 +33,7 @@ const app = Vue.createApp({
             badgeBoostGraphics: true, //turns on opaque badge icons for boosts
             addStabBonus:       true,
             expBarToggle:       true,
+            showCritMultiplierInEP: true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             
             // CUSTOM STARTING MOVES
             customMoves: false, //if custom moves is turned off, custom trainer ID will be turned off as well
@@ -84,10 +85,9 @@ const app = Vue.createApp({
             //VARIABLES THAT STYLE ELEMENTS
             statLabelOpacityValue: 0,
             modColor: true,
-            modRaise: "rgb(0, 0, 0)",
-            modLower: "rgb(0, 0, 0)",
-
-            modDefault: "rgb(0, 0, 0)",
+            modRaise: "rgb(82, 82, 82)",
+            modLower: "rgb(82, 82, 82)",
+            modDefault: "rgb(82, 82, 82)",
             ppColor: false,
             ppHigh: "rgb(0, 0, 0)",
             ppMid: "rgb(114, 0, 0)",
@@ -105,7 +105,18 @@ const app = Vue.createApp({
             if (this.mapper.meta.gameName == "Pokemon Yellow") { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
             else if (this.mapper.meta.gameName == "Pokemon Red and Blue") { return g1RedBlueTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
             else { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
+        
+        //shorthands
         },
+        s1() {
+            return this.mapper?.properties?.player?.team[0]
+        },
+        map() {
+            return this.mapper?.properties
+        },
+        batt() {
+            return this.mapper?.properties.battle
+        }
     },
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
@@ -164,14 +175,14 @@ const app = Vue.createApp({
         //TYPE ICONS FOR THE STARTER SELECTION
         getStarterType1() {
             if (this.pick == true)
-                var type = this.gen1data.find(y => y.dexNumber === this.starter)
+                var type = this.gen1data.find(y => y.Pokemon === this.starterName)
                 var lowerType = type.type1.toLowerCase()
                 // console.log(`images/elements/types/${lowerType}.png`)
                 return `images/elements/types/${lowerType}.png`
         },
         getStarterType2() {
             if (this.pick == true)
-                var type = this.gen1data.find(y => y.dexNumber === this.starter)
+                var type = this.gen1data.find(y => y.Pokemon === this.starterName)
                 if (type.type2 != null) {
                     var lowerType = type.type2.toLowerCase()
                     // console.log(`images/elements/types/${lowerType}.png`)
@@ -695,7 +706,21 @@ const app = Vue.createApp({
         movePower(y) { //y = move1.value
             if (y) {
                 var move = this.gen1moves.find(x => x.Move.toUpperCase() === y)
-                if (move) return move.Power
+                if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP")) {
+                    level = this.mapper.properties.player.team[0].level.value
+                    critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
+                    power = move.Power
+                    pokemon = this.gen1data.find(y => y.Pokemon === this.starterName)
+                    baseSpeed = pokemon.baseSpd
+                    //test to see if the Pokemon always crits
+                    if (baseSpeed > 64) { //if the Pokemon has 63 or less base speed it will crit less often
+                        return power * critModifier
+                    }
+                    else {
+                        return power
+                    }
+                }
+                else if (move) { return move.Power }
             }
             return null
         },

@@ -23,6 +23,23 @@
 <!------ DEBUGGING ---------------------------------------------------------------------------------------------------------------------------->
                 <div class="gamestateContainter">
                     <div>GamestateVariable: {{ g1stateVariable }}</div><br>
+                    <br>
+                    <div>Player:</div><br>
+                    <div>Reflect: {{ batt.effectsPlayer.reflect }}</div><br>
+                    <div>Light Screen: {{ batt.effectsPlayer.lightScreen }}</div><br>
+                    <br>
+                    <div>CPU:</div><br>
+                    <div>Reflect: {{ batt.effectsCPU.lightScreen }}</div><br>
+                    <div>Light Screen: {{ batt.effectsCPU.reflect }}</div><br>
+                    <br>
+                    <br>
+                    <div>Confusion: {{ batt.effectsPlayer.confusion.value }}</div><br>
+                    <div>Leech Seed: {{ batt.effectsPlayer.leechSeeded.value }}</div><br>
+                    <div>Non-Volatile Status: {{ s1.statusCondition.value }}</div><br>
+                    <br>
+                    <br>
+                    <div>Accuracy: {{ batt.yourPokemon.modStageAccuracy.value }}</div><br>
+                    <div>Evasion: {{ batt.yourPokemon.modStageEvasion.value }}</div><br>
                 </div>
 
 <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
@@ -36,10 +53,10 @@
     
 <!--------- BADGE ICONS ---------------------------------------------------------------------------------------------------------------------->
                 <div class="badgesBar">          
-                    <img v-show="mapper.properties.player.badges.badge1.value === true" class="badgeBoostAtk" :src="badgeGraphic(mapper.properties.player.badges.badge1)" style="top: 914px; opacity: .3; left: 22px; z-index: 2;" />
-                    <img v-show="mapper.properties.player.badges.badge3.value === true" class="badgeBoostDef" :src="badgeGraphic(mapper.properties.player.badges.badge3)" style="top: 976px; opacity: .3; left: 22px; z-index: 2;" />                    
-                    <img v-show="mapper.properties.player.badges.badge5.value === true" class="badgeBoostSpd" :src="badgeGraphic(mapper.properties.player.badges.badge5)" style="top: 976px; opacity: .3; left: 206px; z-index: 2;" />                    
-                    <img v-show="mapper.properties.player.badges.badge7.value === true" class="badgeBoostSpc" :src="badgeGraphic(mapper.properties.player.badges.badge7)" style="top: 914px; opacity: .3; left: 206px; z-index: 2;"/>      
+                    <img v-show="map.player.badges.badge1.value === true" class="badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" style="top: 914px; opacity: .3; left: 22px; z-index: 2;" />
+                    <img v-show="map.player.badges.badge3.value === true" class="badgeBoostDef" :src="badgeGraphic(map.player.badges.badge3)" style="top: 976px; opacity: .3; left: 22px; z-index: 2;" />                    
+                    <img v-show="map.player.badges.badge5.value === true" class="badgeBoostSpd" :src="badgeGraphic(map.player.badges.badge5)" style="top: 976px; opacity: .3; left: 206px; z-index: 2;" />                    
+                    <img v-show="map.player.badges.badge7.value === true" class="badgeBoostSpc" :src="badgeGraphic(map.player.badges.badge7)" style="top: 914px; opacity: .3; left: 206px; z-index: 2;"/>      
                 </div>                         
     
 <!-- BASE STATS -------------------------------------------------------------------------------->
@@ -72,44 +89,44 @@
 <!-- OVERWORLD STATS --------------------------------------------------------------------------->
                     <div v-if="g1stateVariable == `Overworld` || g1stateVariable == `To Battle`">
                         <div class="statsLabelsColumn1">
-                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">HP:<br></span>
-                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">Atk:<br></span>
-                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">Def:<br></span>
+                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP:<br></span>
+                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Atk:<br></span>
+                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Def:<br></span>
                         </div>
 
                         <div class="statsLabelsColumn2">
                             <br>
-                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">Spc:<br></span>
-                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) != `Department`">Spd:<br></span>
+                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spc:<br></span>
+                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spd:<br></span>
                         </div>
                         <div>
-                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) == `Department` || g1martSelector(mapper.properties.overworld.map.value) == `Vitamins`" class="vitaminHPLabel">HP Up: 
+                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminHPLabel">HP Up: 
                                 <br>
-                                <span class="vitaminHP">{{statExp(mapper.properties.player.team[0].statExpHp)}}</span>
+                                <span class="vitaminHP">{{statExp(map.player.team[0].statExpHp)}}</span>
                             </span>
-                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) == `Department` || g1martSelector(mapper.properties.overworld.map.value) == `Vitamins`" class="vitaminAtkLabel">Protein: 
+                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminAtkLabel">Protein: 
                                 <br>
-                                <span class="vitaminAtk">{{statExp(mapper.properties.player.team[0].statExpAttack)}}</span>
+                                <span class="vitaminAtk">{{statExp(map.player.team[0].statExpAttack)}}</span>
                             </span>
-                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) == `Department` || g1martSelector(mapper.properties.overworld.map.value) == `Vitamins`" class="vitaminDefLabel">Iron: 
+                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminDefLabel">Iron: 
                                 <br>
-                                <span class="vitaminDef">{{statExp(mapper.properties.player.team[0].statExpDefense)}}</span>
+                                <span class="vitaminDef">{{statExp(map.player.team[0].statExpDefense)}}</span>
                             </span>
-                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) == `Department` || g1martSelector(mapper.properties.overworld.map.value) == `Vitamins`" class="vitaminSpcLabel">Calcium: 
+                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminSpcLabel">Calcium: 
                                 <br>
-                                <span class="vitaminSpc">{{statExp(mapper.properties.player.team[0].statExpSpecial)}}</span>
+                                <span class="vitaminSpc">{{statExp(map.player.team[0].statExpSpecial)}}</span>
                             </span>
-                            <span v-show="g1martSelector(mapper.properties.overworld.map.value) == `Department` || g1martSelector(mapper.properties.overworld.map.value) == `Vitamins`" class="vitaminSpdLabel">Carbos: 
+                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminSpdLabel">Carbos: 
                                 <br>
-                                <span class="vitaminSpd">{{statExp(mapper.properties.player.team[0].statExpSpeed)}}</span>
+                                <span class="vitaminSpd">{{statExp(map.player.team[0].statExpSpeed)}}</span>
                             </span>
                         </div>
 
-                        <div class="statsheader">Level {{ mapper.properties.player.team[0].level.value }}</div>
+                        <div class="statsheader">Level {{ map.player.team[0].level.value }}</div>
                         <div class="statsColumn1">
-                            {{ mapper.properties.player.team[0].maxHp }}<br>
-                            {{ badgeBoost(mapper.properties.player.badges.badge1.value, mapper.properties.player.team[0].attack.value) }}<br>
-                            {{ badgeBoost(mapper.properties.player.badges.badge3.value, mapper.properties.player.team[0].defense.value) }}<br>
+                            {{ map.player.team[0].maxHp }}<br>
+                            {{ badgeBoost(map.player.badges.badge1.value, map.player.team[0].attack.value) }}<br>
+                            {{ badgeBoost(map.player.badges.badge3.value, map.player.team[0].defense.value) }}<br>
                         </div>
                         <div class="critrate">Crit rate: {{ pokemon(starter).critRate }}%</div>
                         <div class="statsColumn2">
@@ -123,30 +140,30 @@
                     <div v-if="g1stateVariable == `Battle` || g1stateVariable == `From Battle`">
                         <div class="statsLabelsColumn1">
                             <span>HP:<br></span>
-                            <span v-bind:style="{ opacity: statLabelOpacity(mapper.properties.battle.yourPokemon.modStageAttack), color: statLabelColor(mapper.properties.battle.yourPokemon.modStageAttack) }">Atk:<br></span>
-                            <span v-bind:style="{ opacity: statLabelOpacity(mapper.properties.battle.yourPokemon.modStageDefense), color: statLabelColor(mapper.properties.battle.yourPokemon.modStageDefense) }">Def:<br></span>
+                            <span v-bind:style="{ opacity: statLabelOpacity(batt.yourPokemon.modStageAttack), color: statLabelColor(batt.yourPokemon.modStageAttack) }">Atk:<br></span>
+                            <span v-bind:style="{ opacity: statLabelOpacity(batt.yourPokemon.modStageDefense), color: statLabelColor(batt.yourPokemon.modStageDefense) }">Def:<br></span>
                         </div>
                         <div class="statsLabelsColumn2">
                             <br>
-                            <span v-bind:style="{opacity: statLabelOpacity(mapper.properties.battle.yourPokemon.modStageSpecial), color: statLabelColor(mapper.properties.battle.yourPokemon.modStageSpecial)}">Spc:<br></span>
-                            <span v-bind:style="{opacity: statLabelOpacity(mapper.properties.battle.yourPokemon.modStageSpeed), color: statLabelColor(mapper.properties.battle.yourPokemon.modStageSpeed)}">Spd:<br></span>
+                            <span v-bind:style="{opacity: statLabelOpacity(batt.yourPokemon.modStageSpecial), color: statLabelColor(batt.yourPokemon.modStageSpecial)}">Spc:<br></span>
+                            <span v-bind:style="{opacity: statLabelOpacity(batt.yourPokemon.modStageSpeed), color: statLabelColor(batt.yourPokemon.modStageSpeed)}">Spd:<br></span>
                         </div>
                         <div class="statsheader">Level {{ mapper.properties.player.team[0].level.value }}</div>
                         <div class="statsColumn1">
                             {{ mapper.properties.player.team[0].maxHp }}<br>
-                            {{ mapper.properties.battle.yourPokemon.battleStatAttack }}<br>
-                            {{ mapper.properties.battle.yourPokemon.battleStatDefense }}<br>
+                            {{ batt.yourPokemon.battleStatAttack }}<br>
+                            {{ batt.yourPokemon.battleStatDefense }}<br>
                         </div>
                         <div class="critrate">Crit rate: {{ pokemon(starter).critRate }}%</div>
                         <div class="statsColumn2">
                             <br>
-                            {{ mapper.properties.battle.yourPokemon.battleStatSpecial }}<br>
-                            {{ mapper.properties.battle.yourPokemon.battleStatSpeed }}<br>
+                            {{ batt.yourPokemon.battleStatSpecial }}<br>
+                            {{ batt.yourPokemon.battleStatSpeed }}<br>
                         </div>
-                        <div v-bind:style="{ color: statLabelColor(mapper.properties.battle.yourPokemon.modStageAttack)}" class="atkMod">{{ stageModifiers(mapper.properties.battle.yourPokemon.modStageAttack) }}</div>
-                        <div v-bind:style="{ color: statLabelColor(mapper.properties.battle.yourPokemon.modStageDefense)}" class="defMod">{{ stageModifiers(mapper.properties.battle.yourPokemon.modStageDefense) }}</div>
-                        <div v-bind:style="{ color: statLabelColor(mapper.properties.battle.yourPokemon.modStageSpecial)}" class="spcMod">{{ stageModifiers(mapper.properties.battle.yourPokemon.modStageSpecial) }}</div>
-                        <div v-bind:style="{ color: statLabelColor(mapper.properties.battle.yourPokemon.modStageAttack)}" class="spdMod">{{ stageModifiers(mapper.properties.battle.yourPokemon.modStageSpeed) }}</div>
+                        <div v-bind:style="{ color: statLabelColor(batt.yourPokemon.modStageAttack)}" class="atkMod">{{ stageModifiers(batt.yourPokemon.modStageAttack) }}</div>
+                        <div v-bind:style="{ color: statLabelColor(batt.yourPokemon.modStageDefense)}" class="defMod">{{ stageModifiers(batt.yourPokemon.modStageDefense) }}</div>
+                        <div v-bind:style="{ color: statLabelColor(batt.yourPokemon.modStageSpecial)}" class="spcMod">{{ stageModifiers(batt.yourPokemon.modStageSpecial) }}</div>
+                        <div v-bind:style="{ color: statLabelColor(batt.yourPokemon.modStageAttack)}" class="spdMod">{{ stageModifiers(batt.yourPokemon.modStageSpeed) }}</div>
                     </div>
                 </div>  
     
@@ -158,28 +175,28 @@
                     <div v-for="move in pkmnMoves">
                         <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0][move].value != null">
                             <div v-show="g1stateVariable != `Battle` && mapper.properties.player.team[0][move].value != null" :class="`${move}`">{{ camelCase(mapper.properties.player.team[0][move].value) }}</div>
-                            <div v-show="g1stateVariable == `Battle` && mapper.properties.player.team[0][move].value != null" :class="`${move}`">{{ camelCase(mapper.properties.battle.yourPokemon[move].value) }}</div>
+                            <div v-show="g1stateVariable == `Battle` && mapper.properties.player.team[0][move].value != null" :class="`${move}`">{{ camelCase(batt.yourPokemon[move].value) }}</div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`${move}pp`" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move1pp) }">{{ mapper.properties.player.team[0][move + "pp"] }}</div>
                             <div v-show="mapper.properties.player.team[0][move].value != null">
                                 <div v-show="g1stateVariable != `Battle`" :class="`${move}power`" :key="typeEffectiveness(mapper.properties.player.team[0][move].value)">{{ typeEffectiveness(mapper.properties.player.team[0][move].value) }}</div>
-                                <div v-show="g1stateVariable == `Battle`" :class="`${move}power`" :key="typeEffectiveness(mapper.properties.battle.yourPokemon[move].value)">{{ typeEffectiveness(mapper.properties.battle.yourPokemon[move].value) }}</div>
+                                <div v-show="g1stateVariable == `Battle`" :class="`${move}power`" :key="typeEffectiveness(batt.yourPokemon[move].value)">{{ typeEffectiveness(batt.yourPokemon[move].value) }}</div>
                             </div>
                             <img v-show="g1stateVariable != `Battle`" :class="`${move}icon`" :src="moveTypeIcon(mapper.properties.player.team[0][move].value)" />
-                            <img v-show="g1stateVariable == `Battle`" :class="`${move}icon`" :src="moveTypeIcon(mapper.properties.battle.yourPokemon[move].value)" />
+                            <img v-show="g1stateVariable == `Battle`" :class="`${move}icon`" :src="moveTypeIcon(batt.yourPokemon[move].value)" />
                         </div>
                     </div>
                 </div>
           
 <!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fadeBattle">
-                    <div key=1 v-if="((g1stateVariable == `Battle` || g1stateVariable == `To Battle` || g1stateVariable == `From Battle`) && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;">
+                    <div key=1 v-if="((g1stateVariable == `Battle` || g1stateVariable == `To Battle` || g1stateVariable == `From Battle`) && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;">
                         <div v-if="showSpecialTrainerGraphics == true">
                             <img class="floor" v-show="specialTrainerGraphics() != null && g1stateVariable == `Battle`" src="images/trainers/floor.png" />
                             <div class="specialTrainerGraphics">
                                 <img :src="specialTrainerGraphics()" />
                             </div>
                         </div>
-                        <div class="trainerLabel">{{pascalCaseDot(pascalCaseSpace(fixTrainerName(mapper.properties.battle.trainer.class.value, mapper.properties.battle.trainer.number)))}}</div>
+                        <div class="trainerLabel">{{pascalCaseDot(pascalCaseSpace(fixTrainerName(batt.trainer.class.value, batt.trainer.number)))}}</div>
                         <img class="enemyPng" :src="`images/enemy_area/${starterName.toLowerCase()}${overlayName}.png`" :style="battlePokemonCrop()"/>
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
@@ -191,15 +208,15 @@
                                     <div class="ePkmnMove3">{{currentTrainer.pokemon[x]?.moves[2]}}</div>
                                     <div class="ePkmnMove4">{{currentTrainer.pokemon[x]?.moves[3]}}</div>
                                     <div class="ePkmnHp">{{currentTrainer.pokemon[x]?.hp}}</div>
-                                    <div class="ePkmnAtk">{{activeSlot(x,mapper.properties.battle.enemyPokemon.pkmnIndex.value,"attack",currentTrainer.pokemon[x]?.atk,"enemyPokemon")}}</div>
-                                    <div class="ePkmnDef">{{activeSlot(x,mapper.properties.battle.enemyPokemon.pkmnIndex.value,"defense",currentTrainer.pokemon[x]?.def,"enemyPokemon")}}</div>
-                                    <div class="ePkmnSpd">{{activeSlot(x,mapper.properties.battle.enemyPokemon.pkmnIndex.value,"speed",currentTrainer.pokemon[x]?.spd,"enemyPokemon")}}</div>
-                                    <div class="ePkmnSpc">{{activeSlot(x,mapper.properties.battle.enemyPokemon.pkmnIndex.value,"special",currentTrainer.pokemon[x]?.spc,"enemyPokemon")}}</div>
+                                    <div class="ePkmnAtk">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"attack",currentTrainer.pokemon[x]?.atk,"enemyPokemon")}}</div>
+                                    <div class="ePkmnDef">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"defense",currentTrainer.pokemon[x]?.def,"enemyPokemon")}}</div>
+                                    <div class="ePkmnSpd">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",currentTrainer.pokemon[x]?.spd,"enemyPokemon")}}</div>
+                                    <div class="ePkmnSpc">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",currentTrainer.pokemon[x]?.spc,"enemyPokemon")}}</div>
                                 </div>
                             </div>
                         </div> 
                     </div>
-                    <div key=2 v-else-if="(g1stateVariable == `Battle` && g1trainerEnemySelector(mapper.properties.battle.trainer.class.value) == 0) && battleGraphic == true" class="movepoolContainer">
+                    <div key=2 v-else-if="(g1stateVariable == `Battle` && g1trainerEnemySelector(batt.trainer.class.value) == 0) && battleGraphic == true" class="movepoolContainer">
                         <img class="rightBar" :src="`images/movepool/${starterName.toLowerCase()}${overlayName}.png`" />
                         <div class="movepoolLabel">Movepool</div>
                     </div>
@@ -216,7 +233,7 @@
                 <div v-show="expBarToggle == true" class="expBar">
                     <img class="expLabelGen1" src="images/exp_bar/exp_label.png" />
                     <div class="expTextGen2">Exp:</div>
-                    <div class="expMeterOuter"><div class="expMeterInner" :style="{ width: expPercent(mapper.properties.player.team[0]) + '%' }"></div></div>
+                    <div class="expMeterOuter"><div class="expMeterInner" :style="{ width: expPercent(s1) + '%' }"></div></div>
                 </div>
             </div>
         </div>
