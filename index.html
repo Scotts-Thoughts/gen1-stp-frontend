@@ -22,24 +22,47 @@
                 </div>
 <!------ DEBUGGING ---------------------------------------------------------------------------------------------------------------------------->
                 <div class="gamestateContainter">
-                    <div>GamestateVariable: {{ g1stateVariable }}</div><br>
+                    <div>GamestateVariable: {{ g1stateVariable }}</div>
                     <br>
                     <div>Player:</div><br>
-                    <div>Reflect: {{ batt.effectsPlayer.reflect }}</div><br>
-                    <div>Light Screen: {{ batt.effectsPlayer.lightScreen }}</div><br>
+                    <div>Reflect: {{ batt.effectsPlayer.reflect.value }}</div>
+                    <div>Light Screen: {{ batt.effectsPlayer.lightScreen.value }}</div>
                     <br>
                     <div>CPU:</div><br>
-                    <div>Reflect: {{ batt.effectsCPU.lightScreen }}</div><br>
-                    <div>Light Screen: {{ batt.effectsCPU.reflect }}</div><br>
+                    <div>Reflect: {{ batt.effectsCPU.reflect.value }}</div>
+                    <div>Light Screen: {{ batt.effectsCPU.lightScreen.value }}</div>
                     <br>
                     <br>
-                    <div>Confusion: {{ batt.effectsPlayer.confusion.value }}</div><br>
-                    <div>Leech Seed: {{ batt.effectsPlayer.leechSeeded.value }}</div><br>
-                    <div>Non-Volatile Status: {{ s1.statusCondition.value }}</div><br>
+                    <div>Confusion: {{ batt.effectsPlayer.confusion.value }}</div>
+                    <div>Leech Seed: {{ batt.effectsPlayer.leechSeeded.value }}</div>
+                    <div>Non-Volatile Status: {{ s1.statusCondition.value }}</div>
                     <br>
                     <br>
-                    <div>Accuracy: {{ batt.yourPokemon.modStageAccuracy.value }}</div><br>
-                    <div>Evasion: {{ batt.yourPokemon.modStageEvasion.value }}</div><br>
+                    <div>Accuracy: {{ batt.yourPokemon.modStageAccuracy.value }}</div>
+                    <div>Evasion: {{ batt.yourPokemon.modStageEvasion.value }}</div>
+                    <br>
+                    <br>
+                    <transition name="fade1">
+                        <div v-show="batt.yourPokemon.modStageAccuracy.value != 0 && g1stateVariable == `Battle`">Accuracy: {{ batt.yourPokemon.modStageAccuracy.value }}</div>
+                    </transition>
+                    <transition name="fade1">
+                        <div v-show="batt.yourPokemon.modStageEvasion.value != 0 && g1stateVariable == `Battle`">Evasion: {{ batt.yourPokemon.modStageEvasion.value }}</div>
+                    </transition>
+                    <transition name="fade1">
+                        <div v-show="batt.effectsPlayer.reflect.value == true && g1stateVariable == `Battle`">Reflect</div>
+                    </transition>
+                    <transition name="fade1">
+                        <div v-show="batt.effectsPlayer.lightScreen.value == true && g1stateVariable == `Battle`">Light Screen</div>
+                    </transition>
+                    <transition name="fade1">
+                        <div v-show="batt.effectsPlayer.confusion.value == true && g1stateVariable == `Battle`">Confused</div>
+                    </transition>
+                    <transition name="fade1">
+                        <div v-show="batt.effectsPlayer.leechSeeded.value == true && g1stateVariable == `Battle`">Leech Seed</div>
+                    </transition>
+                    <transition name="fade1">
+                        <div v-show="s1.statusCondition.value != null">{{ pascalCaseSpace(s1.statusCondition.value) }}</div>
+                    </transition>
                 </div>
 
 <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
@@ -229,6 +252,11 @@
                         <div class="movepoolLabel">Movepool</div>  
                     </div>
                 </transition>
+<!--------- BATTLE POP UPS -------------------------------------------------------------------------------------------------------------------->
+                <div>
+
+                </div>
+                
 <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
                 <div v-show="expBarToggle == true" class="expBar">
                     <img class="expLabelGen1" src="images/exp_bar/exp_label.png" />
