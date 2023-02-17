@@ -501,9 +501,9 @@ body {
     filter: drop-shadow(8px 8px 15px #000000);
     width: 400px;
     height: 200px;
-    top: -96px;
+    top: -92px;
     left: -12px;
-    transform: scale(.1)
+    transform: scale(.09)
 }
 .type1 {
     position: absolute;
@@ -1454,6 +1454,58 @@ body {
     top: 131px;
     z-index: 5;
     text-align: right;
+    font-family: osb;
+    font-weight: 700
+}
+.accuracyLabel {
+    display: block;
+    font-size: 20px;
+    border: 1px solid #ff000000;
+    position: absolute;
+    left: 125px;
+    width: 126px;
+    top: 326px;
+    z-index: 5;
+    text-align: center;
+    font-family: osb;
+    font-weight: 700
+}
+.accuracyMod {
+    display: block;
+    font-size: 40px;
+    border: 1px solid #ff000000;
+    position: absolute;
+    left: 122px;
+    width: 126px;
+    top: 342px;
+    z-index: 5;
+    text-align: center;
+    font-family: osb;
+    font-weight: 700
+}
+.evasionLabel {
+    display: block;
+    font-size: 20px;
+    border: 1px solid #ff000000;
+    position: absolute;
+    left: 261px;
+    width: 125px;
+    top: 326px;
+    z-index: 5;
+    text-align: center;
+    font-family: osb;
+    font-weight: 700
+}
+.evasionMod {
+    display: block;
+    font-size: 40px;
+    border: 1px solid #ff000000;
+    position: absolute;
+    left: 257px;
+    width: 126px;
+    top: 342px;
+    z-index: 5;
+    text-align: center;
     font-family: osb;
     font-weight: 700
 }

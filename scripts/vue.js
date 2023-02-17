@@ -19,6 +19,7 @@ const app = Vue.createApp({
             trainerArt:      true, //shows custom trainer art
             
             showSpecialTrainerGraphics: false, //shows drawn art for defined trainers
+            battlePopUps: false, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             
             info:              false, //displays behind the scenes info
             typeIcons:         true, //turns on dynamic type icons
@@ -56,6 +57,7 @@ const app = Vue.createApp({
             // g1trainers: g1trainers, //g1trainers
             g1YellowTrainers: g1YellowTrainers,
             g1RedBlueTrainers: g1RedBlueTrainers,
+            statusConditions: statusConditions,
             gameStarted: false,
             
             //LOOPS
@@ -122,6 +124,12 @@ const app = Vue.createApp({
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
         //REMOVES CAPITALIZATION (TACKLE -> Tackle) OR (Tail Whip -> Tail whip)
+        accEva(mod) {
+            if (mod > 0) {
+                return "+" + mod
+            }
+            else return mod
+        },
         pkmnDataPath() {
             if (this.g1state() == "Overworld" || this.g1state() == "To Battle") {
                 return "mapper.properties.player.team[0]"
