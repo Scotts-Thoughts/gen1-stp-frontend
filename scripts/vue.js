@@ -589,21 +589,17 @@ const app = Vue.createApp({
         },
         gameName() {
             if (this.mapper.meta.gameName == `Pokemon Yellow`) {
-                // console.log(this.mapper.meta.gameName)    
                 return this.mapper.meta.gameName
             }
             else if (this.mapper.meta.gameName == `Pokemon Crystal`) {
-                // console.log(this.mapper.meta.gameName) 
                 return this.mapper.meta.gameName
             }
 
             else if (this.mapper.meta.gameName == `Pokemon Red and Blue`) {
-                // console.log(this.mapper.meta.gameName) 
                 return `Pokemon Yellow`
             }
 
             else if (this.mapper.meta.gameName == `Pokemon Gold and Silver`) {
-                // console.log(this.mapper.meta.gameName) 
                 return `Pokemon Crystal`
             }
             else
