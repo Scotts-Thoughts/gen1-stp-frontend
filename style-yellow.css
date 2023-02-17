@@ -1201,6 +1201,7 @@ body {
     line-height: 37.3px;
     top: 905px;
     right: -35px;
+    opacity: .6;
     text-align: left;
     font-family: osb;
     font-weight: 500
@@ -1211,6 +1212,7 @@ body {
     line-height: 37.3px;
     top: 915px;
     right: -35px;
+    opacity: .6;
     text-align: left;
     font-family: osb;
     font-weight: 500
@@ -1221,6 +1223,7 @@ body {
     line-height: 37.3px;
     top: 840px;
     left: 210px;
+    opacity: .6;
     text-align: left;
     font-family: osb;
     font-weight: 500
@@ -1231,6 +1234,7 @@ body {
     line-height: 37.3px;
     top: 846px;
     left: 210px;
+    opacity: .6;
     text-align: left;
     font-family: osb;
     font-weight: 500

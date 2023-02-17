@@ -9,7 +9,7 @@ const app = Vue.createApp({
             starter:         71, //select starter
             starterName:     "Victreebel", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played
-            secondPlaythrough: true, //used to mitigate luck on second playthroughs
+            secondPlaythrough: false, //used to mitigate luck on second playthroughs
             pick:            true, //turns on the ability to pick your starter
             package:         false, //uses images from package folder, rather than using dynamic values
             movepool:        true, //uses dynamic movepool when in the overworld & in wild battles
@@ -17,7 +17,7 @@ const app = Vue.createApp({
             battleGraphic:   true, //uses battle graphic with enemy moveset & stats
             showAllTrainers: true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
             trainerArt:      true, //shows custom trainer art
-            
+            expBarAnimation: true,
             showSpecialTrainerGraphics: false, //shows drawn art for defined trainers
             battlePopUps: false, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             
@@ -87,9 +87,9 @@ const app = Vue.createApp({
             //VARIABLES THAT STYLE ELEMENTS
             statLabelOpacityValue: 0,
             modColor: true,
-            modRaise: "rgb(82, 82, 82)",
-            modLower: "rgb(82, 82, 82)",
-            modDefault: "rgb(82, 82, 82)",
+            modRaise: "rgb(0, 0, 0)",
+            modLower: "rgb(0, 0, 0)",
+            modDefault: "rgb(0, 0, 0)",
             ppColor: false,
             ppHigh: "rgb(0, 0, 0)",
             ppMid: "rgb(114, 0, 0)",
@@ -1229,6 +1229,63 @@ const app = Vue.createApp({
         })
         this.mapper.properties.overworld.encounterRate.change(async (x) => {
             await secondPlaythrough()
+        })
+
+        //EXP BAR
+        var species = this.mapper.properties.player.team[0].species.value;
+        var growthRate = this.gen1dataGrowthMovepool.find(y => y.name === species).growth_rate
+        var expStats = this.calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value);
+        this.$refs.expBar.style.width = (expStats.percent * 100) + "%";
+        this.prevSpecies = species
+
+        this.mapper.properties.player.team[0].expPoints.change(async (newProp, oldProp) => {
+            if (this.expBarAnimation == true) {
+                const currSpecies = this.mapper.properties.player.team[0].species.value;
+                const growthRate = this.gen1dataGrowthMovepool.find(y => y.name === currSpecies).growth_rate
+                const oldExpStats = this.calcExpStats(growthRate, oldProp.value);
+                const newExpStats = this.calcExpStats(growthRate, newProp.value);
+                console.log(oldExpStats, newExpStats)
+    
+                if (oldProp.value == newProp.value) { return }
+                // did we switch out?
+                // there is still a bug here. what if we changed to the same species?
+                if (this.g1stateVariable == `Overworld`) {
+                    this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
+                }
+                else if (this.prevSpecies != currSpecies) {
+                    // update prevSpecies
+                    console.log("prevSpecies != currSpecies")
+
+                    this.prevSpecies = currSpecies; 
+                    // dont animate, just set newExpStats.percent
+                    this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
+                } 
+                // same pokemon but exp changed
+                else {
+                    if (oldExpStats.level == newExpStats.level) {
+                        console.log("If")
+                        // animate width to newExpStats.percent
+                        this.$refs.expBar.style.transition = 'width 200ms ease-in-out';
+                        this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
+                        await this.sleep(250);
+                    } else {
+                        console.log("Else")
+                        // animate width to 100%
+                        this.$refs.expBar.style.transition = 'width 100ms ease-in';
+                        this.$refs.expBar.style.width = "100%";
+                        await this.sleep(150);
+                        // dont animate, set width to 0%
+                        this.$refs.expBar.style.transition = null;
+                        this.$refs.expBar.style.width = "0%";
+                        await this.sleep(50);
+                        // animate width from 0% to newExpStats.percent
+                        this.$refs.expBar.style.transition = 'width 100ms ease-out';
+                        this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
+                        await this.sleep(150);
+                    }
+                }
+                this.$refs.expBar.style.transition = null;
+            }
         })
     },
 }).mount('#app')
