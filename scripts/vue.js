@@ -82,6 +82,7 @@ const app = Vue.createApp({
             badges:       0,
             currentGamestate: "New Game",
             gamestateLogging: false,
+            slotTimingFix: false,
 
             //VARIABLES
             flaggedTrainer: false,
@@ -190,7 +191,7 @@ const app = Vue.createApp({
                 screens = .5
             }
             //Run damage calculation
-            part1 = Math.floor(((2 * lvl * critical)/5 + 2) * movePower * userOffensiveStat)
+            part1 = Math.floor(Math.floor((2 * lvl * critical)/5 + 2) * movePower * userOffensiveStat)
             part2 = Math.floor(part1/targetDefensiveStat)
             part3 = Math.floor(part2/50) + 2
             part4 = undefined
@@ -225,6 +226,38 @@ const app = Vue.createApp({
             }
             if (playerSpeed < enemySpeed) {
                 return "Underspeeds"
+            }
+        },
+        enemyPkmnFaintCheck(pkmnData) {
+            if (pkmnData.hp == 0) {
+                return false
+            }
+            else {
+                return true
+            }
+        },
+        enemyPkmnFaint(pkmnData) {
+            if (pkmnData.hp == 0) {
+                return "filter: drop-shadow(2px 2px 2px #000) saturate(1.3) grayscale(100%); opacity: .5;"
+            }
+            else {
+                return "filter: drop-shadow(2px 2px 2px #000) saturate(1.3) grayscale(0%);"
+            }
+        },
+        enemyPkmnText(pkmnData) {
+            if (pkmnData.hp == 0) {
+                return "opacity: .3"
+            }
+            else {
+                return "opacity: 1"
+            }
+        },
+        enemyPkmnSpecies(pkmnData) {
+            if (pkmnData.hp == 0) {
+                return "opacity: .3"
+            }
+            else {
+                return "opacity: .7"
             }
         },
         
@@ -418,13 +451,19 @@ const app = Vue.createApp({
             }
             else return quantity
         },
+
         // STAGE MULTIPLIERS
         activeSlot(activePkmn, currentSlot, statLabel, stat, side) {
-            if (activePkmn == currentSlot && this.g1stateVariable == "Battle") {
-                return this.mapper.properties.battle[side][statLabel].value
-            }
-            else { 
+            if (this.slotTimingFix == true) {
                 return stat 
+            }
+            else {
+                if (activePkmn == currentSlot && this.g1stateVariable == "Battle") {
+                    return this.mapper.properties.battle[side][statLabel].value
+                }
+                else { 
+                    return stat
+                }
             }
         },
 
@@ -1422,6 +1461,15 @@ const app = Vue.createApp({
         this.mapper.properties.overworld.encounterRate.change(async (x) => {
             await secondPlaythrough()
         })
+
+        //FIX OF ENEMY BATTLE STATS
+        this.mapper.properties.battle.enemyPokemon.partyPos.change(async (newProp, oldProp) => {
+            if (newProp == 0 || newProp == 255) { return }
+            this.slotTimingFix = true    
+            await this.sleep(150)
+            this.slotTimingFix = false
+        })
+
 
         //EXP BAR
         var species = this.mapper.properties.player.team[0].species.value;

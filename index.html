@@ -45,6 +45,10 @@
                     <br>
                     <br>
                     Speed Comparison: {{ speedComparison(s1dynamic, battEn) }}<br>
+                    <br>
+                    SlotFix: {{ mapper.properties.battle.enemyPokemon.partyPos.value }}<br>
+                    SlotFix: {{ slotTimingFix }}<br>
+                    <br>
                 </div>
 
 <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
@@ -152,13 +156,13 @@
                     <div v-if="g1stateVariable == `Battle` || g1stateVariable == `From Battle`">
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span>HP:<br></span>
-                            <span v-bind:style="{ opacity: statLabelOpacity(batt.yourPokemon.modStageAttack), color: statLabelColor(batt.yourPokemon.modStageAttack) }">Atk:<br></span>
-                            <span v-bind:style="{ opacity: statLabelOpacity(batt.yourPokemon.modStageDefense), color: statLabelColor(batt.yourPokemon.modStageDefense) }">Def:<br></span>
+                            <span :style="{ opacity: statLabelOpacity(batt.yourPokemon.modStageAttack), color: statLabelColor(batt.yourPokemon.modStageAttack) }">Atk:<br></span>
+                            <span :style="{ opacity: statLabelOpacity(batt.yourPokemon.modStageDefense), color: statLabelColor(batt.yourPokemon.modStageDefense) }">Def:<br></span>
                         </div>
                         <div class="statsLabelStyle statsLabelsColumn2">
                             <br>
-                            <span v-bind:style="{opacity: statLabelOpacity(batt.yourPokemon.modStageSpecial), color: statLabelColor(batt.yourPokemon.modStageSpecial)}">Spc:<br></span>
-                            <span v-bind:style="{opacity: statLabelOpacity(batt.yourPokemon.modStageSpeed), color: statLabelColor(batt.yourPokemon.modStageSpeed)}">Spd:<br></span>
+                            <span :style="{opacity: statLabelOpacity(batt.yourPokemon.modStageSpecial), color: statLabelColor(batt.yourPokemon.modStageSpecial)}">Spc:<br></span>
+                            <span :style="{opacity: statLabelOpacity(batt.yourPokemon.modStageSpeed), color: statLabelColor(batt.yourPokemon.modStageSpeed)}">Spd:<br></span>
                         </div>
                         <div class="statsheader">Level {{ mapper.properties.player.team[0].level.value }}</div>
                         <div class="statsColumnStyle statsColumn1">
@@ -172,10 +176,10 @@
                             {{ batt.yourPokemon.battleStatSpecial }}<br>
                             {{ batt.yourPokemon.battleStatSpeed }}<br>
                         </div>
-                        <div v-bind:style="{ color: statLabelColor(batt.yourPokemon.modStageAttack)}" class="atkMod">{{ stageModifiers(batt.yourPokemon.modStageAttack) }}</div>
-                        <div v-bind:style="{ color: statLabelColor(batt.yourPokemon.modStageDefense)}" class="defMod">{{ stageModifiers(batt.yourPokemon.modStageDefense) }}</div>
-                        <div v-bind:style="{ color: statLabelColor(batt.yourPokemon.modStageSpecial)}" class="spcMod">{{ stageModifiers(batt.yourPokemon.modStageSpecial) }}</div>
-                        <div v-bind:style="{ color: statLabelColor(batt.yourPokemon.modStageAttack)}" class="spdMod">{{ stageModifiers(batt.yourPokemon.modStageSpeed) }}</div>
+                        <div :style="{ color: statLabelColor(batt.yourPokemon.modStageAttack)}" class="atkMod">{{ stageModifiers(batt.yourPokemon.modStageAttack) }}</div>
+                        <div :style="{ color: statLabelColor(batt.yourPokemon.modStageDefense)}" class="defMod">{{ stageModifiers(batt.yourPokemon.modStageDefense) }}</div>
+                        <div :style="{ color: statLabelColor(batt.yourPokemon.modStageSpecial)}" class="spcMod">{{ stageModifiers(batt.yourPokemon.modStageSpecial) }}</div>
+                        <div :style="{ color: statLabelColor(batt.yourPokemon.modStageAttack)}" class="spdMod">{{ stageModifiers(batt.yourPokemon.modStageSpeed) }}</div>
                     </div>
                 </div>  
     
@@ -209,17 +213,17 @@
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
                                 <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmnStyle ePkmn${x + 1}`">
-                                    <img class="ePkmnSprite" :src="`images/pokemon/${currentTrainer.pokemon[x]?.name}.png`" />
-                                    <div class="ePkmnSpecies">{{currentTrainer.pokemon[x]?.name}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove1">{{currentTrainer.pokemon[x]?.moves[0]}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove2">{{currentTrainer.pokemon[x]?.moves[1]}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove3">{{currentTrainer.pokemon[x]?.moves[2]}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove4">{{currentTrainer.pokemon[x]?.moves[3]}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnHp">{{currentTrainer.pokemon[x]?.hp}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnAtk">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"attack",currentTrainer.pokemon[x]?.atk,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnDef">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"defense",currentTrainer.pokemon[x]?.def,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnSpd">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",currentTrainer.pokemon[x]?.spd,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnSpc">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",currentTrainer.pokemon[x]?.spc,"enemyPokemon")}}</div>
+                                    <img class="ePkmnSprite" :style="enemyPkmnFaint(batt.trainer.team[x])" :src="`images/pokemon/${currentTrainer.pokemon[x]?.name}.png`"/>
+                                    <div class="ePkmnSpecies opacityTransition" :style="enemyPkmnSpecies(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.name}}</div>
+                                    <div class="ePkmnMoveStyle ePkmnMove1 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.moves[0]}}</div>
+                                    <div class="ePkmnMoveStyle ePkmnMove2 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.moves[1]}}</div>
+                                    <div class="ePkmnMoveStyle ePkmnMove3 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.moves[2]}}</div>
+                                    <div class="ePkmnMoveStyle ePkmnMove4 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.moves[3]}}</div>
+                                    <div class="ePkmnStatsStyle ePkmnHp opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.hp}}</div>
+                                    <div class="ePkmnStatsStyle ePkmnAtk opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"attack",currentTrainer.pokemon[x]?.atk,"enemyPokemon")}}</div>
+                                    <div class="ePkmnStatsStyle ePkmnDef opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"defense",currentTrainer.pokemon[x]?.def,"enemyPokemon")}}</div>
+                                    <div class="ePkmnStatsStyle ePkmnSpd opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",currentTrainer.pokemon[x]?.spd,"enemyPokemon")}}</div>
+                                    <div class="ePkmnStatsStyle ePkmnSpc opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",currentTrainer.pokemon[x]?.spc,"enemyPokemon")}}</div>
                                 </div>
                             </div>
                         </div> 

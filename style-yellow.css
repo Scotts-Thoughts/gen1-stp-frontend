@@ -229,7 +229,7 @@ box-shadow:
     max-height: 115px;
     left: 18px;
     top: 30px;
-    filter: drop-shadow(2px 2px 2px #000)
+    transition: opacity 500ms ease-in-out, filter 500ms ease-in-out;
 }
 .ePkmnMoveStyle {
     position: absolute;
@@ -240,6 +240,7 @@ box-shadow:
     text-align: center;
     left: 190px;
 }
+.opacityTransition { transition: opacity 500ms ease-in-out;}
 .ePkmnMove1 { top: 12px; }
 .ePkmnMove2 { top: 48px; }
 .ePkmnMove3 { top: 84px; }
