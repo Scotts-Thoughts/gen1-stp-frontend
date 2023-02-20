@@ -205,8 +205,14 @@ const app = Vue.createApp({
             damageMax = part4
             minPercentage = Math.round((damageMin/targetMaxHp) * 100)
             maxPercentage = Math.round((damageMax/targetMaxHp) * 100)
+            var recoilMin = 0
+            var recoilMax = 0
+            if (move == "TAKE DOWN" || move == "SUBMISSION" || move == "DOUBLE-EDGE") {
+                recoilMin = Math.floor(damageMin * 0.25)
+                recoilMax = Math.floor(damageMax * 0.25)
+            }
 
-            return [damageMin, damageMax, minPercentage, maxPercentage,]
+            return [damageMin, damageMax, minPercentage, maxPercentage, recoilMin, recoilMax,]
         },
         speedComparison(playerPkmnData, enemyPkmnData) {
             var playerSpeed = playerPkmnData.speed.value
@@ -761,19 +767,15 @@ const app = Vue.createApp({
                 var growthRate = this.gen1dataGrowthMovepool.find(y => y.name === x.species.value)
                 var newExp = 0
                 if (growthRate.growth_rate == "Slow") {
-                    // console.log(`Slow`)
                     newExp = this.expPercentSlow(x)
                 }
                 else if (growthRate.growth_rate == "Medium Slow") {
-                    // console.log(`Medium Slow`)
                     newExp = this.expPercentMediumSlow(x)
                 }
                 else if (growthRate.growth_rate == "Medium Fast") {
-                    // console.log(`Medium Fast`)
                     newExp = this.expPercentMediumFast(x)
                 }
                 else if (growthRate.growth_rate == "Fast") {
-                    // console.log(`Fast`)
                     newExp = this.expPercentFast(x)
                 }
                 else    
@@ -784,7 +786,6 @@ const app = Vue.createApp({
         },
         expPercentFast(x) {
             expBar = ((x.expPoints.value) - ((4 * (Math.pow(x.level.value, 3))) / 5)) / (((4 * (Math.pow(x.level.value + 1, 3))) / 5) - ((4 * (Math.pow(x.level.value, 3))) / 5)) // errors could lurk here
-            // console.log(expBar)
             if ((expBar*100) > 100)
                 return 100
             else if ((expBar*100) < 0)
@@ -794,8 +795,6 @@ const app = Vue.createApp({
         },
         expPercentMediumFast(x) {
             expBar = (((x.expPoints.value) - (Math.pow(x.level.value, 3))) / ((Math.pow(x.level.value + 1, 3)) - (Math.pow(x.level.value, 3))))
-            // console.log(expBar)
-            
             if ((expBar*100) > 100)
                 return 100
             else if ((expBar*100) < 0)
@@ -806,7 +805,6 @@ const app = Vue.createApp({
         expPercentMediumSlow(x) { //this formula may be incorrect
             var medSlow = (((((6 / 5) * (Math.pow(x.level.value, 3))) - (15 * (Math.pow(x.level.value, 2))) + (100 * x.level.value) - 140)))
             expBar = (((x.expPoints.value) - medSlow) / ((((((6 / 5) * (Math.pow((x.level.value + 1), 3))) - (15 * (Math.pow((x.level.value + 1), 2))) + (100 * (x.level.value + 1)) - 140))) - medSlow)) // errors could lurk here
-            // console.log(expBar)
             if ((expBar*100) > 100)
                 return 100
             else if ((expBar*100) < 0)
@@ -816,8 +814,6 @@ const app = Vue.createApp({
         },
         expPercentSlow(x) {
             expBar = (((x.expPoints.value) - (Math.floor((5 * (Math.pow(x.level.value, 3))) / 4))) / ((Math.floor((5 * (Math.pow(x.level.value + 1, 3))) / 4)) - (Math.floor((5 * (Math.pow(x.level.value, 3))) / 4)))) // errors could lurk here
-            // console.log(expBar)
-            
             if ((expBar*100) > 100)
                 return 100
             else if ((expBar*100) < 0)
