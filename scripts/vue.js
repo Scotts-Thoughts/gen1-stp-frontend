@@ -6,10 +6,13 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starter:         71, //select starter
-            starterName:     "Victreebel", //string name
-            overlayName:     "", // add "-yellow" or "-red" here based on the game being played
+            starter:         49, //select starter
+            starterName:     "Venomoth", //string name
+            overlayName:     "-type", // add "-yellow" or "-red" here based on the game being played
             secondPlaythrough: false, //used to mitigate luck on second playthroughs
+            
+            developmentFeatures: true, //turn on new features
+            
             pick:            true, //turns on the ability to pick your starter
             package:         false, //uses images from package folder, rather than using dynamic values
             movepool:        true, //uses dynamic movepool when in the overworld & in wild battles
@@ -19,25 +22,20 @@ const app = Vue.createApp({
             trainerArt:      true, //shows custom trainer art
             expBarAnimation: true,
             showSpecialTrainerGraphics: false, //shows drawn art for defined trainers
-            battlePopUps: false, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
+            battlePopUps: true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             
-            info:              false, //displays behind the scenes info
             typeIcons:         true, //turns on dynamic type icons
             typeCalcs:         true, //calculates effective power based on the pokemon in battle
             overlay:           true, //overrides with starter & fixed ovelay (must be new style)
             
-            dResets:            false, //turns on dynamic resets
-            dMoveset:           false, //turns on moveset
-            dTimer:             false, //turns on timer
-            dStats:             false, //turns on stats
-            badgesBar:          false, //turns on dynamic badges
             badgeBoostGraphics: true, //turns on opaque badge icons for boosts
             addStabBonus:       true,
             expBarToggle:       true,
             showCritMultiplierInEP: true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             
             // CUSTOM STARTING MOVES
-            customMoves: false, //if custom moves is turned off, custom trainer ID will be turned off as well
+            customMoves: true, //if custom moves is turned off, custom trainer ID will be turned off as well
+            randomStartingSet: true,
             customMove1: 0x96,
             customMove1pp: 0x28,
             customMove2: 0x52,
@@ -58,6 +56,8 @@ const app = Vue.createApp({
             g1YellowTrainers: g1YellowTrainers,
             g1RedBlueTrainers: g1RedBlueTrainers,
             statusConditions: statusConditions,
+            venomothStartingMoves: venomothStartingMoves,
+            stageModifiersData: stageModifiersData,
             gameStarted: false,
             
             //LOOPS
@@ -65,6 +65,8 @@ const app = Vue.createApp({
             pkmnSlots: [0, 1, 2, 3, 4, 5],
             boostingBadges: ["badge1", "badge3", "badge6", "badge7"],
             inventorySlots: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
+            fieldEffects: ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
+            accuracyEvasion: ["accuracy", "evasion"],
 
             //VARIABLES THAT TRACK IN GAME PROGRESS ------------------------------------------------------------//
             playerId: 999,
@@ -107,9 +109,8 @@ const app = Vue.createApp({
             if (this.mapper.meta.gameName == "Pokemon Yellow") { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
             else if (this.mapper.meta.gameName == "Pokemon Red and Blue") { return g1RedBlueTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
             else { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
-        
-        //shorthands
         },
+        //shorthands
         s1() {
             return this.mapper?.properties?.player?.team[0]
         },
@@ -117,12 +118,110 @@ const app = Vue.createApp({
             return this.mapper?.properties
         },
         batt() {
-            return this.mapper?.properties.battle
-        }
+            return this.mapper?.properties?.battle
+        },
+        battEn() {
+            return this.mapper?.properties?.battle?.enemyPokemon
+        },
+        s1dynamic() {
+            if (this.g1stateVariable == `Battle`) {
+                return this.mapper?.properties?.battle?.yourPokemon
+            }
+            else {
+                return this.mapper?.properties?.player?.team[0]
+            }
+        },
     },
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        //DAMAGE CALCULATION
+        damageCalculation(userPkmnData, targetPkmnData, move) {
+            if (this.g1stateVariable != `Battle`) { return "" }
+            //Setup data for calculation
+            var lvl = userPkmnData.level.value
+            var userAttack = userPkmnData.attack.value
+            var userSpecial = userPkmnData.special.value
+            var userType1 = userPkmnData.type1.value
+            var userType2 = userPkmnData.type2.value
+            
+            var targetDefense = targetPkmnData.defense.value
+            var targetSpecial = targetPkmnData.special.value
+            var targetMaxHp = targetPkmnData.maxHp.value
+            var targetType1 = targetPkmnData.type1.value
+            var targetType2 = targetPkmnData.type2.value
+            var defenderScreen = undefined
+
+            var moveData = this.gen1moves.find(x => x.Move.toUpperCase() === move)
+            var moveType = moveData.Type
+            var movePower = moveData.Power
+            var moveCategory = moveData.Category
+            
+            var stab = 1
+            var AttackingTypeEffectiveness = this.typeData.find(x => x.moveType === moveType)
+            var critical = 1
+            var screens = 1
+
+            var userOffensiveStat = undefined
+            var targetDefensiveStat = undefined
+
+            var AttackingTypeEffectiveness = this.typeData.find(x => x.moveType === moveType)
+            var type1 = AttackingTypeEffectiveness[targetType1]
+            var type2 = AttackingTypeEffectiveness[targetType2]
+
+            //Check values & update modifiers
+            if (moveType == userType1 || moveType == userType2) {
+                stab = 1.5
+            }
+            if (moveCategory == "Physical") {
+                userOffensiveStat = userAttack
+                targetDefensiveStat = targetDefense
+                defenderScreen = targetPkmnData.effects.reflect.value
+            }
+            if (moveCategory == "Special") {
+                userOffensiveStat = userSpecial
+                targetDefensiveStat = targetSpecial
+                defenderScreen = targetPkmnData.effects.lightScreen.value
+            }
+            if (moveCategory == "Status") {
+                return ""
+            }
+            if (defenderScreen == true) {
+                screens = .5
+            }
+            //Run damage calculation
+            part1 = Math.floor(((2 * lvl * critical)/5 + 2) * movePower * userOffensiveStat)
+            part2 = Math.floor(part1/targetDefensiveStat)
+            part3 = Math.floor(part2/50) + 2
+            part4 = undefined
+            if (targetType1 == targetType2) {
+                part4 = Math.floor(Math.floor(Math.floor(part3 * stab) * type1) * screens)
+            }
+            else {
+                part4 = Math.floor(Math.floor(Math.floor(Math.floor(part3 * stab) * type1) * type2) * screens)
+            }
+            //Results to return
+            damageMin = Math.floor(part4 * (217/255))
+            damageMax = part4
+            minPercentage = Math.round((damageMin/targetMaxHp) * 100)
+            maxPercentage = Math.round((damageMax/targetMaxHp) * 100)
+
+            return [damageMin, damageMax, minPercentage, maxPercentage,]
+        },
+        speedComparison(playerPkmnData, enemyPkmnData) {
+            var playerSpeed = playerPkmnData.speed.value
+            var enemySpeed = enemyPkmnData.speed.value
+            if (playerSpeed > enemySpeed) {
+                return "Outspeeds"
+            }
+            if (playerSpeed == enemySpeed) {
+                return "Speed-Tied"
+            }
+            if (playerSpeed < enemySpeed) {
+                return "Underspeeds"
+            }
+        },
+        
         //REMOVES CAPITALIZATION (TACKLE -> Tackle) OR (Tail Whip -> Tail whip)
         accEva(mod) {
             if (mod > 0) {
@@ -196,6 +295,27 @@ const app = Vue.createApp({
                     // console.log(`images/elements/types/${lowerType}.png`)
                     return `images/elements/types/${lowerType}.png`
                 }
+        },
+        pkmnType(typeNumber, type1, type2) {
+            if (type1 && this.g1stateVariable != `Base Stats`) {
+                if (type1 == type2) {
+                    return `images/elements/types/${type1}.png`
+                }
+                else if (type1 != type2 && typeNumber == 1) {
+                    return `images/elements/types/${type1}.png`
+                }
+                else if (type1 != type2 && typeNumber == 2) {
+                    return `images/elements/types/${type2}.png`
+                }
+            }
+            else {
+                if (typeNumber == 1) {
+                    return this.getStarterType1()
+                }
+                else if (typeNumber == 2) {
+                    return this.getStarterType2()
+                }
+            }
         },
         
         //BADGE GRAPHIC RECALL
@@ -728,12 +848,57 @@ const app = Vue.createApp({
             }
             return null
         },
+        moveDynamic(slot) {
+            if (this.g1stateVariable == `Battle`) {
+                return this.mapper?.properties?.battle?.yourPokemon[`move${slot}`].value
+            }
+            else {
+                return this.mapper?.properties?.player?.team[0][`move${slot}`].value
+            }
+        },
         moveType(y) { //y = move1.value
             if (y) {
                 var move = this.gen1moves.find(x => x.Move.toUpperCase() === y)
                 if (move) return move.Type
             }
             return null
+        },
+        moveAccuracyStatic(move) {
+            var moveObject = this.gen1moves.find(x => x.Move.toUpperCase() === move)
+            return moveObject.Accuracy
+        },
+        moveAccuracyDynamic(move) {
+            var moveObject = this.gen1moves.find(x => x.Move.toUpperCase() === move)
+            var moveAccuracy = moveObject.Accuracy
+            var stageMods = this.stageModifiersData.find(x => x.modType === "accuracy")
+            var currentModStage = this.batt.yourPokemon.modStageAccuracy.value
+            if (moveAccuracy == `-`) {
+                return `-`
+            }
+            else {
+                return Math.floor(moveAccuracy * stageMods[currentModStage])
+            }
+        },
+        moveAccuracyEvasionDynamic(move) {
+            if (move) {
+                var moveObject = this.gen1moves.find(x => x.Move.toUpperCase() === move)
+                var moveAccuracy = moveObject.Accuracy
+                var accuracyStageMods = this.stageModifiersData.find(x => x.modType === "accuracy")
+                var currentAccuracyModStage = this.batt.yourPokemon.modStageAccuracy.value
+                var evasionStageMods = this.stageModifiersData.find(x => x.modType === "evasion")
+                var currentEvasionModStage = this.batt.enemyPokemon.modEnemyStageEvasion.value
+                if (this.g1stateVariable == `Battle`) {
+                    if (moveAccuracy == `-`) {
+                        return `-`
+                    }
+                    else {
+                        return Math.floor(moveAccuracy * accuracyStageMods[currentAccuracyModStage] * evasionStageMods[currentEvasionModStage])
+                    }
+                }
+                else {
+                    return moveAccuracy
+                }
+            }
         },
 
         // TYPE EFFECTIVENESS
@@ -810,6 +975,8 @@ const app = Vue.createApp({
             // else { return this.movePower(x) }
         },
         
+
+
         //BADGE BOOSTS
         badgeBoost(badge, stat) {
             if (badge == true)
@@ -1009,6 +1176,39 @@ const app = Vue.createApp({
                     await this.mapper.properties.player.team[0].defense.setBytes([0x00, defense], false),
                     await this.mapper.properties.player.team[0].special.setBytes([0x00, special], false),
                     await this.mapper.properties.player.team[0].speed.setBytes([0x00, speed], false),
+                ])
+            }
+            //RANDOM STARTING SET
+            else if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.randomStartingSet == true) {
+                var randomMove1 = this.venomothStartingMoves[this.s1.type1.value].move1
+                var randomMove2 = this.venomothStartingMoves[this.s1.type1.value].move2
+                var randomMove3 = this.venomothStartingMoves[this.s1.type2.value].move1
+                var randomMove4 = this.venomothStartingMoves[this.s1.type2.value].move2
+                var randomMove1pp = this.venomothStartingMoves[this.s1.type1.value].pp1
+                var randomMove2pp = this.venomothStartingMoves[this.s1.type1.value].pp2
+                var randomMove3pp = this.venomothStartingMoves[this.s1.type2.value].pp1
+                var randomMove4pp = this.venomothStartingMoves[this.s1.type2.value].pp2
+                await Promise.all([
+                    await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false),
+                    await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
+                    await this.mapper.properties.player.team[0].dvSpeed.setBytes([perfectDVs], false),
+                    await this.mapper.properties.player.team[0].dvSpecial.setBytes([perfectDVs], false),
+
+                    await this.mapper.properties.player.team[0].hp.setBytes([0x00, hitpoints], false), //Apply stat recalculation (don't freeze)
+                    await this.mapper.properties.player.team[0].maxHp.setBytes([0x00, hitpoints], false),
+                    await this.mapper.properties.player.team[0].attack.setBytes([0x00, attack], false), 
+                    await this.mapper.properties.player.team[0].defense.setBytes([0x00, defense], false),
+                    await this.mapper.properties.player.team[0].special.setBytes([0x00, special], false),
+                    await this.mapper.properties.player.team[0].speed.setBytes([0x00, speed], false),
+
+                    await this.mapper.properties.player.team[0].move1.setBytes([randomMove1], false),
+                    await this.mapper.properties.player.team[0].move2.setBytes([randomMove2], false),
+                    await this.mapper.properties.player.team[0].move3.setBytes([randomMove3], false),
+                    await this.mapper.properties.player.team[0].move4.setBytes([randomMove4], false),
+                    await this.mapper.properties.player.team[0].move1pp.setBytes([randomMove1pp], false),
+                    await this.mapper.properties.player.team[0].move2pp.setBytes([randomMove2pp], false),
+                    await this.mapper.properties.player.team[0].move3pp.setBytes([randomMove3pp], false),
+                    await this.mapper.properties.player.team[0].move4pp.setBytes([randomMove4pp], false),
                 ])
             }
             else if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == true && this.customTrainerID == false) {
