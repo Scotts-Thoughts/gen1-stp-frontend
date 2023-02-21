@@ -49,6 +49,9 @@
                     SlotFix: {{ mapper.properties.battle.enemyPokemon.partyPos.value }}<br>
                     SlotFix: {{ slotTimingFix }}<br>
                     <br>
+                    Class: {{ batt.trainer.class.value }}<br>
+                    Number: {{ batt.trainer.number }}<br>
+                    <br>
                 </div>
 
 <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
@@ -202,12 +205,6 @@
 <!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade">
                     <div v-if="((g1stateVariable == `Battle` || g1stateVariable == `To Battle` || g1stateVariable == `From Battle`) && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
-                        <div v-if="showSpecialTrainerGraphics == true && developmentFeatures == true">
-                            <img class="floor" v-show="specialTrainerGraphics() != null && g1stateVariable == `Battle`" src="images/trainers/floor.png" />
-                            <div class="specialTrainerGraphics">
-                                <img :src="specialTrainerGraphics()"/>
-                            </div>
-                        </div>
                         <div class="trainerLabel">{{pascalCaseDot(pascalCaseSpace(fixTrainerName(batt.trainer.class.value, batt.trainer.number)))}}</div>
                         <img class="enemyPng" :src="`images/enemy_area/${starterName.toLowerCase()}${overlayName}.png`" :style="battlePokemonCrop()"/>
                         <div class="enemyGraphic">
@@ -225,6 +222,9 @@
                                     <div class="ePkmnStatsStyle ePkmnSpd opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",currentTrainer.pokemon[x]?.spd,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnSpc opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",currentTrainer.pokemon[x]?.spc,"enemyPokemon")}}</div>
                                 </div>
+                            </div>
+                            <div v-if="showSpecialTrainerGraphics == true">
+                                <img class="canvas" :src="specialTrainerGraphics()"/>
                             </div>
                         </div> 
                     </div>
@@ -268,14 +268,14 @@
                     <transition v-show="s1.statusCondition.value != null" name="fade">
                         <div>{{ pascalCaseSpace(s1.statusCondition.value) }}</div>
                     </transition> -->
-                    <div v-if="developmentFeatures == true" class="round-gradient">
+                    <!-- <div v-if="developmentFeatures == true" class="round-gradient">
                         <div style="text-decoration: underline;">Effects:</div>
                         <div v-for="effect in fieldEffects" >
                             <transition name="fade">
                                 <div v-if="batt.yourPokemon.effects[effect].value == true">{{ camelCase(effect) }}</div>
                             </transition>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 
 <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->

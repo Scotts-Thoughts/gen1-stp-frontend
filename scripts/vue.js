@@ -21,7 +21,7 @@ const app = Vue.createApp({
             showAllTrainers: true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
             trainerArt:      true, //shows custom trainer art
             expBarAnimation: true,
-            showSpecialTrainerGraphics: false, //shows drawn art for defined trainers
+            showSpecialTrainerGraphics: true, //shows drawn art for defined trainers
             battlePopUps: true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             
             typeIcons:         true, //turns on dynamic type icons
@@ -139,6 +139,7 @@ const app = Vue.createApp({
         //DAMAGE CALCULATION
         damageCalculation(userPkmnData, targetPkmnData, move) {
             if (this.g1stateVariable != `Battle`) { return "" }
+            if (move == null) { return "" }
             //Setup data for calculation
             var lvl = userPkmnData.level.value
             var userAttack = userPkmnData.attack.value
@@ -538,9 +539,9 @@ const app = Vue.createApp({
         g1trainer(x, y) {
             return (x + " " + y)
         },
-        currentTrainer() {
-            return (this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value)
-        },
+        // currentTrainer() {
+        //     return (this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value)
+        // },
 
         g1trainerEnemySelector(trainerClass) {
             if (this.showAllTrainers == false && (
@@ -641,20 +642,22 @@ const app = Vue.createApp({
         },
 
         specialTrainerGraphics() {
-            if (this.showSpecialTrainerGraphics) {
-                if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5) return "images/trainers/Wrapping_Lass.png"
-                else if (this.mapper.properties.battle.trainer.class == "POKEMANIAC" && this.mapper.properties.battle.trainer.number == 7) return "images/trainers/Pokemaniac.png"
-                else if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10) return "images/trainers/PowdersJrTrainer.png"
-                else if (this.mapper.properties.battle.trainer.class == "ROCKET" && this.mapper.properties.battle.trainer.number == 38) return "images/trainers/HypnoRocket.png"
-                else if (this.mapper.properties.battle.trainer.class == "HIKER" && this.mapper.properties.battle.trainer.number == 9) return "images/trainers/Self-DestructingHiker.png"
-                else if (this.mapper.properties.battle.trainer.class == "BROCK") return "images/trainers/brock.png"
-                else if (this.mapper.properties.battle.trainer.class == "MISTY") return "images/trainers/misty.png"
-                else if (this.mapper.properties.battle.trainer.class == "LT.SURGE") return "images/trainers/ltsurge.png"
-                else if (this.mapper.properties.battle.trainer.class == "ERIKA") return "images/trainers/erika.png"
-                else if (this.mapper.properties.battle.trainer.class == "KOGA") return "images/trainers/koga.png"
-                else if (this.mapper.properties.battle.trainer.class == "SABRINA") return "images/trainers/sabrina.png"
-                else if (this.mapper.properties.battle.trainer.class == "BLAINE") return "images/trainers/blaine.png"
-                else if (this.mapper.properties.battle.trainer.class == "GIOVANNI" && this.mapper.properties.battle.trainer.number == 3) return "images/trainers/giovanni.png"
+            if (this.showSpecialTrainerGraphics == true) {
+                if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+                else if (this.mapper.properties.battle.trainer.class == "POKEMANIAC" && this.mapper.properties.battle.trainer.number == 7) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+                else if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+                else if (this.mapper.properties.battle.trainer.class == "ROCKET" && this.mapper.properties.battle.trainer.number == 38) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+                else if (this.mapper.properties.battle.trainer.class == "HIKER" && this.mapper.properties.battle.trainer.number == 9) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+                else if (this.mapper.properties.battle.trainer.class == "LASS" && this.mapper.properties.battle.trainer.number == 3) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+                else if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+                else if (this.mapper.properties.battle.trainer.class == "BROCK") return "images/trainers/BROCK.png"
+                else if (this.mapper.properties.battle.trainer.class == "MISTY") return "images/trainers/MISTY.png"
+                else if (this.mapper.properties.battle.trainer.class == "LT.SURGE") return "images/trainers/LTSURGE.png"
+                else if (this.mapper.properties.battle.trainer.class == "ERIKA") return "images/trainers/ERIKA.png"
+                else if (this.mapper.properties.battle.trainer.class == "KOGA") return "images/trainers/KOGA.png"
+                else if (this.mapper.properties.battle.trainer.class == "SABRINA") return "images/trainers/SABRINA.png"
+                else if (this.mapper.properties.battle.trainer.class == "BLAINE") return "images/trainers/BLAINE.png"
+                else if (this.mapper.properties.battle.trainer.class == "GIOVANNI" && this.mapper.properties.battle.trainer.number == 3) return "images/trainers/GIOVANNI.png"
                 else return null;
             }
         },

@@ -1658,5 +1658,5 @@ const gen1moves = [
     Category: " ",
     CategoryST: " ",
     Description: " "
-  }
+  },
 ]
