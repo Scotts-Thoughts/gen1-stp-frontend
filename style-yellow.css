@@ -956,3 +956,10 @@ box-shadow:
 .fade-leave-from   { opacity: 1; }
 .fade-leave-to     { opacity: 0; }
 .fade-leave-active { transition: opacity 200ms ease-in-out; }
+
+.fadeDelayed-enter-from   { opacity: 0; }
+.fadeDelayed-enter-to     { opacity: 1; }
+.fadeDelayed-enter-active { transition: opacity 500ms ease-in-out 400ms; }
+.fadeDelayed-leave-from   { opacity: 1; }
+.fadeDelayed-leave-to     { opacity: 0; }
+.fadeDelayed-leave-active { transition: opacity 200ms ease-in-out; }

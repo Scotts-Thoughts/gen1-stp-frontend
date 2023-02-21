@@ -223,9 +223,7 @@
                                     <div class="ePkmnStatsStyle ePkmnSpc opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",currentTrainer.pokemon[x]?.spc,"enemyPokemon")}}</div>
                                 </div>
                             </div>
-                            <div v-if="showSpecialTrainerGraphics == true">
-                                <img class="canvas" :src="specialTrainerGraphics()"/>
-                            </div>
+
                         </div> 
                     </div>
                     <div v-else class="movepoolContainer" key=2>
@@ -233,6 +231,12 @@
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                 </transition>
+                <transition name="fadeDelayed">
+                    <div v-if="((g1stateVariable == `Battle` || g1stateVariable == `To Battle` || g1stateVariable == `From Battle`) && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true && showSpecialTrainerGraphics == true" style="position: absolute;" key=1>
+                        <img class="canvas" :src="specialTrainerGraphics()"/>
+                    </div>
+                </transition>
+
 <!--------- BATTLE POP UPS -------------------------------------------------------------------------------------------------------------------->
                 <div v-if="battlePopUps == true && developmentFeatures == true" style="position: absolute;">
                     <transition name="fade">
