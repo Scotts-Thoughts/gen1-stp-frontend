@@ -181,14 +181,31 @@ box-shadow:
     ;
 }
 
-.gamestateContainter {
+.testingArea1 {
     display: block;
+    border: 4px solid #000000;
+    padding: 8px;
     position: absolute;
     font-family: play;
     font-size: 24px;
     line-height: 26px;
     top: 55px;
     left: 425px;
+    width: 520px;
+    height: 972px;
+}
+.testingArea2 {
+    display: block;
+    border: 4px solid #000000;
+    padding: 8px;
+    position: absolute;
+    font-family: play;
+    font-size: 24px;
+    line-height: 26px;
+    top: 55px;
+    left: 975px;
+    width: 520px;
+    height: 972px;
 }
 
 .enemyPng {
@@ -365,10 +382,11 @@ box-shadow:
     position: absolute;
     font-family: titan;
     font-size: 30px;
-    top: 0px;
-    left: -2px;
+    top: 35px;
+    left: 1539px;
     text-align: center;
-    width: 384px;
+    width: 362px;
+    border: 4px solid #ff000000;
     z-index: 10001;
 }
 .trainerLabel {
@@ -963,3 +981,75 @@ box-shadow:
 .fadeDelayed-leave-from   { opacity: 1; }
 .fadeDelayed-leave-to     { opacity: 0; }
 .fadeDelayed-leave-active { transition: opacity 200ms ease-in-out; }
+
+.movepool_way {
+    text-align: left;
+    padding-right: 4px;
+    padding-left: 4px;
+    /* border: 1px solid #a6c400; */
+}
+.movepool_move {
+    text-align: left;
+    padding-right: 4px;
+    /* border: 1px solid #a6c400; */
+}
+.movepool_type {
+    text-align: center;
+    padding-right: 2px;
+    /* border: 1px solid #a6c400; */
+}
+.movepool_tableC {
+    text-align: center;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+/* :nth-child(odd) {
+    background-color: #7e7e7e;
+} */
+.movepool_header {
+    line-height: 17px;
+}
+.movepoolDemo {
+    display: block;
+    position: absolute;
+    /* border: 1px solid #00ff0d00; */
+    background-color: #ffffff;
+    font-size: 16px;
+    line-height: 20px;
+
+    /* line-height: 35px; */
+    width: 362px;
+    height: 966px;
+    font-family: play;
+    left: 1539px;
+    top: 78px;
+    opacity: .9;
+    border: none;
+}
+/* .movepoolDemo tr {
+    transform: scaleY(.9);
+} */
+.movepoolDemo th:nth-child(1) {
+    width: 50px;
+}
+.movepoolDemo th:nth-child(2) {
+    width: 162px;
+}
+.movepoolDemo th:nth-child(3) {
+    width: 89px;
+}
+.movepoolDemo th:nth-child(4) {
+    width: 37px;
+}
+.movepoolDemo th:nth-child(5) {
+    width: 46px;
+}
+.movepoolDemo th:nth-child(6) {
+    width: 42px;
+}
+.movepoolTable {
+    font-size: 17px;
+}
+tr:nth-child(odd) {
+    background-color: #cfcfcf;
+}

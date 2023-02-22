@@ -6,9 +6,10 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starter:         49, //select starter
-            starterName:     "Venomoth", //string name
-            overlayName:     "-type", // add "-yellow" or "-red" here based on the game being played
+            starter:         79, //select starter
+            starterName:     "Slowpoke", //string name
+            overlayName:     "", // add "-yellow" or "-red" here based on the game being played
+            // overlayName:     "-type", // add "-yellow" or "-red" here based on the game being played
             secondPlaythrough: false, //used to mitigate luck on second playthroughs
             
             developmentFeatures: true, //turn on new features
@@ -34,8 +35,8 @@ const app = Vue.createApp({
             showCritMultiplierInEP: true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             
             // CUSTOM STARTING MOVES
-            customMoves: true, //if custom moves is turned off, custom trainer ID will be turned off as well
-            randomStartingSet: true,
+            customMoves: false, //if custom moves is turned off, custom trainer ID will be turned off as well
+            randomStartingSet: false,
             customMove1: 0x96,
             customMove1pp: 0x28,
             customMove2: 0x52,
@@ -58,6 +59,9 @@ const app = Vue.createApp({
             statusConditions: statusConditions,
             venomothStartingMoves: venomothStartingMoves,
             stageModifiersData: stageModifiersData,
+            tmhmMapping: tmhmMapping,
+            g1MoveData: g1MoveData,
+            g1PokemonData: g1PokemonData,
             gameStarted: false,
             
             //LOOPS
@@ -102,6 +106,7 @@ const app = Vue.createApp({
             //STORING DATA
             g1stateVariable: "Base Stats",
             prevSpecies: undefined,
+            splitData: [],
         }
     },
     
@@ -132,10 +137,84 @@ const app = Vue.createApp({
                 return this.mapper?.properties?.player?.team[0]
             }
         },
+        s1dynamicReset() {
+            if (this.g1stateVariable == `Battle`) {
+                return this.mapper?.properties?.battle?.yourPokemon
+            }
+            else if (this.g1stateVariable == `Base Stats`) {
+                var data = this.g1PokemonData?.[this.starterName]
+                return {
+                    species: { value: data.name },
+                    ...data
+                }
+            }
+            else {
+                return this.mapper?.properties?.player?.team[0]
+            }
+        },
+
     },
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        //SPLITS
+        currentSplit(splitData) {
+            var arrayLength = splitData.length
+            var split = splitData[arrayLength]["realtime.end"]
+            return this.formatDuration(split)
+        },
+        lastSplit(splitData) {
+            var arrayLength = splitData.length
+            var splitNumber = arrayLength - 1
+            var split = splitData[splitNumber]["realtime.end"]
+            return this.formatDuration(split)
+        },
+        formatDuration(x) {
+            if (x.startsWith("00:")) {
+                x = x.substring(3)
+            }
+            if (x.startsWith(0)) {
+                x = x.substring(1)
+            }
+            x = x.substring(0, x.length-4)
+            return x
+        },
+        split(splitName, splits) {
+            console.log(splits)
+            var split = splits.find(x => x.trainer_name === splitName)
+            debugger
+            if (split == undefined) return
+            return split["realtime.end.hours"] + ":" + split["realtime.end.minutes"] + ":" + split["realtime.end.seconds"]
+        },
+
+        //AUTOMATION MOVEPOOL GRAPHIC
+        dataSearch(dataObject, pointerValue) {
+            if (!pointerValue) return ""
+            const key = Object.keys(dataObject).find(x => x.toLowerCase() == pointerValue.toLowerCase())
+            return dataObject[key] || "ERROR"
+        },
+        getMovepool(gen1PkmnData, moveData, tmhmMapping, species) {
+            const pkmn = this.dataSearch(gen1PkmnData, species)
+            let obj = {
+                initial: pkmn.initial_moveset.map(x => {
+                    return this.dataSearch(moveData, x)
+                }),
+                level: pkmn.levelup_moveset.map(x => {
+                    return {
+                        ...{Level: x[0]},
+                        ...this.dataSearch(moveData, x[1]) //searching for index 1
+                    }
+                }),     
+                tmhm: pkmn.tm_hm_learnset.map(x => {
+                    return {
+                        ...{tmhm: tmhmMapping.find(y => y.Move == x)?.tmhmIndex??"TM01"},
+                        ...this.dataSearch(moveData, x)
+                    }
+                }),     
+            }
+            return obj
+        },
+
         //DAMAGE CALCULATION
         damageCalculation(userPkmnData, targetPkmnData, move) {
             if (this.g1stateVariable != `Battle`) { return "" }
@@ -215,6 +294,14 @@ const app = Vue.createApp({
             }
 
             return [damageMin, damageMax, minPercentage, maxPercentage, recoilMin, recoilMax,]
+        },
+        bestMovePlayer(userPkmnData, targetPkmnData) {
+            var damage1 = [this.damageCalculation(userPkmnData, targetPkmnData, this.batt.yourPokemon.move1.value)[1], "move1"]
+            var damage2 = [this.damageCalculation(userPkmnData, targetPkmnData, this.batt.yourPokemon.move2.value)[1], "move2"]
+            var damage3 = [this.damageCalculation(userPkmnData, targetPkmnData, this.batt.yourPokemon.move3.value)[1], "move3"]
+            var damage4 = [this.damageCalculation(userPkmnData, targetPkmnData, this.batt.yourPokemon.move4.value)[1], "move4"]
+            var maxDamage = Math.max(damage1[0], damage2[0], damage3[0], damage4[0])
+            return maxDamage
         },
         speedComparison(playerPkmnData, enemyPkmnData) {
             var playerSpeed = playerPkmnData.speed.value
@@ -1090,6 +1177,14 @@ const app = Vue.createApp({
             }
         });
 
+        //AUTOSPLITTER WEBSOCKET
+        let client = new WebSocket("ws://localhost:6789/");
+            client.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            this.splitData.push(data);
+            console.log("DATA FROM WEBSOCKET", data);
+        };
+
         // Route 1 Encounters
         // This code tracks the number of wild encounters on Route 1
         this.mapper.properties.battle.type.change(function (x) {
@@ -1487,7 +1582,6 @@ const app = Vue.createApp({
                 const growthRate = this.gen1dataGrowthMovepool.find(y => y.name === currSpecies).growth_rate
                 const oldExpStats = this.calcExpStats(growthRate, oldProp.value);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
-                console.log(oldExpStats, newExpStats)
     
                 if (oldProp.value == newProp.value) { return }
                 // did we switch out?
@@ -1497,7 +1591,6 @@ const app = Vue.createApp({
                 }
                 else if (this.prevSpecies != currSpecies) {
                     // update prevSpecies
-                    console.log("prevSpecies != currSpecies")
 
                     this.prevSpecies = currSpecies; 
                     // dont animate, just set newExpStats.percent
@@ -1506,13 +1599,11 @@ const app = Vue.createApp({
                 // same pokemon but exp changed
                 else {
                     if (oldExpStats.level == newExpStats.level) {
-                        console.log("If")
                         // animate width to newExpStats.percent
                         this.$refs.expBar.style.transition = 'width 200ms ease-in-out';
                         this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
                         await this.sleep(250);
                     } else {
-                        console.log("Else")
                         // animate width to 100%
                         this.$refs.expBar.style.transition = 'width 100ms ease-in';
                         this.$refs.expBar.style.width = "100%";
