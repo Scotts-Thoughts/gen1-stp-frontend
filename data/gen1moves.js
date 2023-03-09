@@ -1280,7 +1280,7 @@ const gen1moves = [
     Description: "A NORMAL-type attack. A triangular field of energy is created and launched at the target."
   },
   {
-    Move: "Vice Grip",
+    Move: "Vicegrip",
     Type: "Normal",
     Power: 55,
     Accuracy: 100,
@@ -1443,7 +1443,7 @@ const gen1moves = [
     Move: "Hypnosis",
     Type: "Psychic",
     Power: "-",
-    Accuracy: 59.8,
+    Accuracy: 60,
     PP: 20,
     Category: "Status",
     CategoryST: "Status",

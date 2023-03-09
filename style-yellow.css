@@ -352,6 +352,33 @@ box-shadow:
 .ePkmnSpd { top: 124px; }
 .ePkmnSpc { top: 95px; }
 
+.enemyMods {
+    position: absolute;
+    font-size: 20px;
+    width: 25px;
+    height: 25px;
+    line-height: 24px;
+    /* border: 1px solid #000; */
+    text-align: center;
+    border-radius: 15px;
+    background: #a1a1a1;
+    filter: drop-shadow(0px 0px 2px);
+    left: 192px;
+    opacity: 1;
+}
+.attackMod {
+    top: 34px;
+}
+.defenseMod {
+    top: 63px;
+}
+.specialMod {
+    top: 92px;
+}
+.speedMod {
+    top: 124px;
+}
+
 .enemyGraphic {
     display: block;
     position: absolute;
@@ -1015,6 +1042,10 @@ box-shadow:
     font-family: osb;
     font-weight: 700
 }
+.popUpLabelStyle {
+    opacity: .6;
+    text-decoration: underline;
+}
 .accuracyLabel {
     font-size: 20px;
     left: 125px;
@@ -1039,6 +1070,18 @@ box-shadow:
     width: 126px;
     top: 342px;
 }
+.screensLabel {
+    font-size: 15px;
+    left: 13px;
+    width: 103px;
+    top: 438px;
+}
+.screensValue {
+    font-size: 20px;
+    left: 13px;
+    width: 103px;
+    top: 460px;
+}
 .rightBar {
     display: block;
     position: relative;
@@ -1055,6 +1098,13 @@ box-shadow:
 .fade-leave-from   { opacity: 1; }
 .fade-leave-to     { opacity: 0; }
 .fade-leave-active { transition: opacity 200ms ease-in-out; }
+
+.fadeMod-enter-from   { opacity: 0; }
+.fadeMod-enter-to     { opacity: 1; }
+.fadeMod-enter-active { transition: opacity 400ms ease-in; }
+.fadeMod-leave-from   { opacity: 1; }
+.fadeMod-leave-to     { opacity: 0; }
+.fadeMod-leave-active { transition: opacity 400ms ease-out; }
 
 .fadeDelayed-enter-from   { opacity: 0; }
 .fadeDelayed-enter-to     { opacity: 1; }
@@ -1088,7 +1138,8 @@ box-shadow:
     background-color: #7e7e7e;
 } */
 .movepool_header {
-    line-height: 17px;
+    vertical-align: text-bottom;
+    line-height: 19px;
 }
 .movepoolDemo {
     display: block;
@@ -1103,7 +1154,7 @@ box-shadow:
     height: 966px;
     font-family: play;
     left: 1539px;
-    top: 78px;
+    top: 77px;
     opacity: .9;
     border: none;
 }
