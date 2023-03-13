@@ -6,7 +6,7 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Krabby", //string name
+            starterName:     "Tentacruel", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough: false, //used to mitigate luck on second playthroughs
             
@@ -105,7 +105,7 @@ const app = Vue.createApp({
             prevSpecies: undefined,
             splitData: [],
             enemyModColour: ["0", "background: #d84444;"],
-            enemyState: "Pokemon", //"Pokemon", "Fainted"
+            enemyState: "Not In Battle", //"Pokemon", "Fainted"
             battleState: "Not In Battle",
         }
     },
@@ -1444,28 +1444,27 @@ const app = Vue.createApp({
         //         this.enemyState = "Not In Battle";
         //     }
         // });
-
-        this.mapper.properties.battle.enemyPokemon.hp.change(async (newProp, oldProp) => {
-            if (newProp == 0) {
-                this.enemyState = "Fainting"
+        this.mapper.properties.battle.type.change((prop) => {
+            if (prop.value == "Wild" || prop.value == "Trainer") {
+                this.enemyState = "Battle Starting";
             }
         });
         this.mapper.properties.screen.menu.currentItem.change(async (newProp, oldProp) => {
-            if ((this.enemyState == "Fainted" || this.g1stateVariable == "To Battle") && newProp == 0) {
+            if ((this.enemyState == "Fainted" || this.enemyState == "Battle Starting") && newProp == 0) {
                 this.enemyState = "Pokemon Sent Out"
             }
             if ((this.enemyState == "Pokemon Sent Out") && newProp > 0) {
                 this.enemyState = "Pokemon"
             }
         });
-        this.mapper.properties.battle.turnInfo.trainerDefeated.change(async (prop) => {
-            if (prop == 1) {
-                this.enemyState = "Battle Finished"
-            }
-        });
         this.mapper.properties.battle.turnInfo.battleStart.change((prop) => {
             if (prop.value != 0 && this.g1stateVariable == "To Battle") {
                 this.enemyState = "Pokemon";
+            }
+        });
+        this.mapper.properties.battle.enemyPokemon.hp.change(async (newProp, oldProp) => {
+            if (newProp == 0 && this.enemyState == "Pokemon") {
+                this.enemyState = "Fainting"
             }
         });
         this.mapper.properties.screen.tiles.column1.tile7.change((prop) => {
@@ -1475,9 +1474,15 @@ const app = Vue.createApp({
                 this.mapper.properties.screen.tiles.column1.tile4 == 127 && 
                 this.mapper.properties.screen.tiles.column1.tile3 == 127 && 
                 this.mapper.properties.screen.tiles.column1.tile2 == 127 && 
-                this.mapper.properties.screen.tiles.column1.tile1 == 127) {
+                this.mapper.properties.screen.tiles.column1.tile1 == 127 &&
+                this.enemyState == "Fainting") {
                     this.enemyState = "Fainted"
                 }
+        });
+        this.mapper.properties.battle.turnInfo.trainerDefeated.change(async (prop) => {
+            if (prop == 1) {
+                this.enemyState = "Battle Finished"
+            }
         });
 
         //AUTOSPLITTER WEBSOCKET
@@ -1876,22 +1881,17 @@ const app = Vue.createApp({
             })
         })
 
-        // this.mapper.properties.battle.enemyPokemon.hp.change(async (newProp, oldProp) => {
-        //     if (newProp == 0 && this.g1stateVariable == "Battle") { 
-        //         this.slotTimingFix = true 
-                // this.mapper.properties.battle.enemyPokemon.hp.change(async (newProp, oldProp) => {
-                    // await this.sleep(200)
-                    // this.slotTimingFix = false
-                // })
-                // await this.sleep(200)
-                // this.slotTimingFix = false
-        //     }
-        // })
-        // this.mapper.properties.battle.enemyPokemon.hp.change(async (newProp, oldProp) => {
-        //     if (newProp == 0 && this.g1stateVariable == "Battle") { 
-        //         this.slotTimingFix = true 
-        //     }
-        // })
+        //UNKNOWN DUNGEON
+        this.mapper.properties.overworld.map.change(async (prop) => {
+            if (prop.value == `Route 24`) {
+                await this.mapper.properties.overworld.encounterRate.setBytes([0x00], false)
+            }
+            if (prop.value == `Unknown Dungeon`) {
+                await this.mapper.properties.overworld.encounterRate.setBytes([0x00], true)
+                await this.sleep(250)
+                await this.mapper.properties.player.joypadSimulation.setBytes([0xFF], true)
+            }
+        });
 
         //EXP BAR
         var species = this.s1dynamicReset.species.value;
@@ -1899,8 +1899,6 @@ const app = Vue.createApp({
         var expStats = this.calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value);
         this.$refs.expBar.style.width = (expStats.percent * 100) + "%";
         this.prevSpecies = species
-        // console.log("Exp Stats: ", expStats)
-
         this.mapper.properties.player.team[0].expPoints.change(async (newProp, oldProp) => {
             if (this.expBarAnimation == true) {
                 const currSpecies = this.s1dynamicReset.species.value;
@@ -1917,7 +1915,6 @@ const app = Vue.createApp({
                 }
                 else if (this.prevSpecies != currSpecies) {
                     // update prevSpecies
-
                     this.prevSpecies = currSpecies; 
                     // dont animate, just set newExpStats.percent
                     this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
