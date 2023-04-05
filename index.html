@@ -16,8 +16,8 @@
                     <img v-show="overlay == true" class="canvas" :src="`images/overlay/${starterName.toLowerCase()}${overlayName}.png`" />
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img v-show="gameName() == `Pokemon Yellow`" class="canvas" src="images/exp_bar/stats.png"/>
-                    <img v-show="gameName() == `Pokemon Yellow`" class="canvas" src="images/exp_bar/exp_bar.png"/>
-                    <div class="exp_growthRate">{{ growthRate(starterName) }}</div>
+                    <img v-show="gameName() == `Pokemon Yellow`" class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
+                    <div class="exp_growthRate">{{ growthRate }}</div>
                     <div class="genericLabels timerLabel">time played at 4x game speed</div>
                     <div class="genericLabels resetsLabel">resets</div>
                 </div>
@@ -194,7 +194,7 @@
                     <div v-for="move in pkmnMoves">
                         <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0][move].value != null">
                             <img :class="`movesetStyling iconStyling ${move}icon`" :src="moveTypeIcon(s1dynamic[move].value)" />
-                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling moveStyling ${move}`">{{ pascalCaseSpace(camelCase(s1dynamic[move].value)) }}</div>
+                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling moveStyling ${move}`">{{ move_name(pascalCaseDash(pascalCaseSpace(camelCase(s1dynamic[move].value)))) }}</div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling powerStyling ${move}`" :key="typeEffectiveness(s1dynamic[move].value)">{{ typeEffectiveness(s1dynamic[move].value) }}</div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling accuracyStyling ${move}`">{{ moveAccuracyEvasionDynamic(s1dynamic[move].value) }}<span style="font-size: 20px;">%</span></div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling ppStyling ${move}`" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move1pp) }">{{ mapper.properties.player.team[0][move + "pp"] }}</div>
@@ -234,10 +234,10 @@
                                     <img class="ePkmnSprite" :style="enemyPkmnFaint(batt.trainer.team[x])" :src="`images/pokemon/${currentTrainer.pokemon[x]?.name}.png`"/>
                                     <div class="ePkmnSpecies opacityTransition" :style="enemyPkmnSpecies(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.name}}</div>
                                     <img class="enemyStatsArea" :style="enemyPkmnFaintStats(batt.trainer.team[x])" :src="`images/enemy_area/stats/${x}.png`"/>
-                                    <div class="ePkmnMoveStyle ePkmnMove1 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.moves[0]}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove2 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.moves[1]}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove3 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.moves[2]}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove4 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.moves[3]}}</div>
+                                    <div class="ePkmnMoveStyle ePkmnMove1 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{move_name(currentTrainer.pokemon[x]?.moves[0])}}</div>
+                                    <div class="ePkmnMoveStyle ePkmnMove2 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{move_name(currentTrainer.pokemon[x]?.moves[1])}}</div>
+                                    <div class="ePkmnMoveStyle ePkmnMove3 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{move_name(currentTrainer.pokemon[x]?.moves[2])}}</div>
+                                    <div class="ePkmnMoveStyle ePkmnMove4 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{move_name(currentTrainer.pokemon[x]?.moves[3])}}</div>
                                     <div class="ePkmnStatsStyle ePkmnHp opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.hp}}</div>
                                     <div class="ePkmnStatsStyle ePkmnAtk opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"attack",currentTrainer.pokemon[x]?.atk,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnDef opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"defense",currentTrainer.pokemon[x]?.def,"enemyPokemon")}}</div>
@@ -288,14 +288,9 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <img class="canvas" :src="`images/movepool_border/${starterName.toLowerCase()}.png`"/>
+                        <img class="canvas" :src="`images/movepool_border/${starterName.toLowerCase()}${overlayName}.png`"/>
                         <div class="movepoolLabel">Movepool</div>
                     </div>
-                    <!-- OLD MOVEPOOL (IMAGE) -->
-                    <!-- <div v-else class="movepoolContainer" key=2>
-                        <img class="rightBar" :src="`images/movepool/${starterName.toLowerCase()}${overlayName}.png`" />
-                        <div class="movepoolLabel">Movepool</div>
-                    </div> -->
                 </transition>
                 <transition name="fadeDelayed">
                     <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true && showSpecialTrainerGraphics == true" style="position: absolute;" key=1>
@@ -307,21 +302,21 @@
                 <div v-if="battlePopUps == true && developmentFeatures == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-show="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/accuracy/${starterName.toLowerCase()}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/accuracy/${starterName.toLowerCase()}${overlayName}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-show="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/evasion/${starterName.toLowerCase()}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/evasion/${starterName.toLowerCase()}${overlayName}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-show="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/screens/${starterName.toLowerCase()}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/screens/${starterName.toLowerCase()}${overlayName}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>
@@ -349,7 +344,7 @@
 
 <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
                 <div v-show="expBarToggle == true" class="expBar">
-                    <img class="expLabelGen1" src="images/exp_bar/exp_label.png" />
+                    <img class="expLabelGen1" src="images/exp_bar/exp_label.png"/>
                     <div class="expTextGen2">Exp:</div>
                     <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
                 </div>
@@ -358,8 +353,10 @@
     </div>
 
 <!------ JAVASCRIPT --------------------------------------------------------------------------------------------------------------------->
-    <script src="https://unpkg.com/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script> 
-    <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script>
+    <!-- <script src="https://unpkg.com/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script>  -->
+    <!-- <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script> -->
+    <script src="packages/signalR.js"></script>
+    <script src="packages/vue.js"></script>
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
     <script src="data/gen1data.js"></script>
     <script src="data/gen1dataGrowthMovepool.js"></script>

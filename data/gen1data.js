@@ -1756,6 +1756,21 @@ const gen1data =
       expYield: 155
     },
     {
+        dexNumber: 230,
+        Pokemon: "Kingdra",
+        baseHp: 75,
+        baseAtk: 95,
+        baseDef: 95,
+        baseSpd: 85,
+        baseSpc: 95,
+        critRate: 16.41,
+        baseStatTotal: 395,
+        baseStatAverage: 79,
+        type1: "Water",
+        type2: "Dragon",
+        expYield: 207
+    },
+    {
       dexNumber: 118,
       Pokemon: "Goldeen",
       baseHp: 45,

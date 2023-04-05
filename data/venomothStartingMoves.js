@@ -67,7 +67,7 @@ const venomothStartingMoves = {
     },
     "Ground": {
         "move1": 0x7D, //bone club
-        "move2": 0x1C, //sand attack
+        "move2": 0x1C, //Sand-Attack
         "pp1": 0x14,
         "pp2": 0x0F,
     },

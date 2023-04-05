@@ -314,7 +314,7 @@ box-shadow:
     position: absolute;
     /* border: 1px solid rgb(47, 0, 255); */
     width: 190px;
-    font-size: 22px;
+    font-size: 20px;
     line-height: 32px;
     text-align: center;
     left: 190px;
@@ -425,7 +425,7 @@ box-shadow:
     font-family: play;
     line-height: 26px;
     font-size: 21px;
-    top: 811px;
+    top: 809px;
     left: 80px;
     width: 296px;
     text-align: center;
@@ -455,7 +455,7 @@ box-shadow:
     position: absolute;
     font-size: 24px;
     font-family: play;
-    top: 48px;
+    top: 46px;
     left: 25px;
     z-index: 1005;
     opacity: .55;
@@ -472,12 +472,12 @@ box-shadow:
     position: absolute;
     font-family: play;
     top: -770px;
-    left: 0px;
+    left: 1px;
     z-index: 1000;
 }
 .expLabelGen2 {
     position: absolute;
-    top: 34px;
+    top: 33px;
     left: 17px;
     z-index: 1000;
 }
@@ -564,7 +564,7 @@ box-shadow:
     font-family: play;
     position: absolute;
     text-align: center;
-    top: -28px;
+    top: -29px;
     width: 378px;
     z-index: 1;
     /* filter: drop-shadow(1px 1px 0px rgb(70, 70, 70)); */
@@ -577,15 +577,15 @@ box-shadow:
     position: absolute;
     border: 1px solid #000;
     background: var(--expBarBackground);
-    height: 17px;
-    top: 65px;
-    left: 69px;
+    height: 16px;
+    top: 64px;
+    left: 70px;
     z-index: 2;
 }
 .expMeterInner {
     position: relative;    
     background: var(--expBarExperience);
-    height: 16.5px;
+    height: 16px;
     top: -1px;
     border: 1px solid #000000;
 }
@@ -1098,6 +1098,14 @@ box-shadow:
 .fade-leave-from   { opacity: 1; }
 .fade-leave-to     { opacity: 0; }
 .fade-leave-active { transition: opacity 200ms ease-in-out; }
+
+/* ANIMATIONS */
+.fadeTrainer-enter-from   { opacity: 0; }
+.fadeTrainer-enter-to     { opacity: 1; }
+.fadeTrainer-enter-active { transition: opacity 300ms ease-in-out 1000ms; }
+.fadeTrainer-leave-from   { opacity: 1; }
+.fadeTrainer-leave-to     { opacity: 0; }
+.fadeTrainer-leave-active { transition: opacity 200ms ease-in-out 1000ms; }
 
 .fadeDelayed-enter-from   { opacity: 0; }
 .fadeDelayed-enter-to     { opacity: 1; }

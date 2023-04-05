@@ -60,7 +60,7 @@ const gen1moves = [
     Description: "The strongest of all ELECTRIC-type attacks. Has a one-in-ten chance of paralyzing the target."
   },
   {
-    Move: "Thunderpunch",
+    Move: "ThunderPunch",
     Type: "Electric",
     Power: 75,
     Accuracy: 100,
@@ -380,7 +380,7 @@ const gen1moves = [
     Description: "Induces sleep. A Pokémon will stay asleep for several turns if an item isn't used to wake it."
   },
   {
-    Move: "Solarbeam",
+    Move: "SolarBeam",
     Type: "Grass",
     Power: 120,
     Accuracy: 100,
@@ -650,7 +650,7 @@ const gen1moves = [
     Description: "A NORMAL-type attack. The punch is relatively strong and highly accurate."
   },
   {
-    Move: "Doubleslap",
+    Move: "DoubleSlap",
     Type: "Normal",
     Power: 15,
     Accuracy: 85,
@@ -1090,7 +1090,7 @@ const gen1moves = [
     Description: "A NORMAL-type attack. It has a high probability of a critical hit for inflicting double the damage."
   },
   {
-    Move: "Smokescreen",
+    Move: "SmokeScreen",
     Type: "Normal",
     Power: "-",
     Accuracy: 100,
@@ -1110,7 +1110,7 @@ const gen1moves = [
     Description: "Restores HP by 1/2 of the user's maximum HP. May also be used in the field."
   },
   {
-    Move: "Sonicboom",
+    Move: "SonicBoom",
     Type: "Normal",
     Power: "-",
     Accuracy: 90,
@@ -1340,7 +1340,7 @@ const gen1moves = [
     Description: "A poisonous cloud of gas is forcefully expelled to poison the target."
   },
   {
-    Move: "Poisonpowder",
+    Move: "PoisonPowder",
     Type: "Poison",
     Power: "-",
     Accuracy: 75,
@@ -1570,7 +1570,7 @@ const gen1moves = [
     Description: "A WATER-type attack. Has a one-in-three chance of reducing the target's SPEED."
   },
   {
-    Move: "Bubblebeam",
+    Move: "BubbleBeam",
     Type: "Water",
     Power: 65,
     Accuracy: 100,

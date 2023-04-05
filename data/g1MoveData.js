@@ -65,9 +65,9 @@ const g1MoveData = {
     CategoryST: "Special",
     Description: "The strongest of all ELECTRIC-type attacks. Has a one-in-ten chance of paralyzing the target."
   },
-"Thunder Punch" :
+"ThunderPunch" :
   {
-    Move: "Thunder Punch",
+    Move: "ThunderPunch",
     Type: "Electric",
     Power: 75,
     Accuracy: 100,
@@ -417,9 +417,9 @@ const g1MoveData = {
     CategoryST: "Status",
     Description: "Induces sleep. A Pokémon will stay asleep for several turns if an item isn't used to wake it."
   },
-"Solarbeam" :
+"SolarBeam" :
   {
-    Move: "Solarbeam",
+    Move: "SolarBeam",
     Type: "Grass",
     Power: 120,
     Accuracy: 100,
@@ -714,9 +714,9 @@ const g1MoveData = {
     CategoryST: "Physical",
     Description: "A NORMAL-type attack. The punch is relatively strong and highly accurate."
   },
-"Doubleslap" :
+"DoubleSlap" :
   {
-    Move: "Doubleslap",
+    Move: "DoubleSlap",
     Type: "Normal",
     Power: 15,
     Accuracy: 85,
@@ -736,9 +736,9 @@ const g1MoveData = {
     CategoryST: "Stat",
     Description: "Creates illusionary copies of the user. The copies disorient the enemy, reducing its accuracy."
   },
-"Double Edge" :
+"Double-Edge" :
   {
-    Move: "Double Edge",
+    Move: "Double-Edge",
     Type: "Normal",
     Power: 100,
     Accuracy: 100,
@@ -1198,9 +1198,9 @@ const g1MoveData = {
     CategoryST: "Physical",
     Description: "A NORMAL-type attack. It has a high probability of a critical hit for inflicting double the damage."
   },
-"Smokescreen" :
+"SmokeScreen" :
   {
-    Move: "Smokescreen",
+    Move: "SmokeScreen",
     Type: "Normal",
     Power: "-",
     Accuracy: 100,
@@ -1220,9 +1220,9 @@ const g1MoveData = {
     CategoryST: "Heal",
     Description: "Restores HP by 1/2 of the user's maximum HP. May also be used in the field."
   },
-"Sonic Boom" :
+"SonicBoom" :
   {
-    Move: "Sonic Boom",
+    Move: "SonicBoom",
     Type: "Normal",
     Power: "-",
     Accuracy: 90,
@@ -1473,9 +1473,9 @@ const g1MoveData = {
     CategoryST: "Status",
     Description: "A poisonous cloud of gas is forcefully expelled to poison the target."
   },
-"Poisonpowder" :
+"PoisonPowder" :
   {
-    Move: "Poisonpowder",
+    Move: "PoisonPowder",
     Type: "Poison",
     Power: "-",
     Accuracy: 75,
@@ -1726,9 +1726,9 @@ const g1MoveData = {
     CategoryST: "Special",
     Description: "A WATER-type attack. Has a one-in-three chance of reducing the target's SPEED."
   },
-"Bubblebeam" :
+"BubbleBeam" :
   {
-    Move: "Bubblebeam",
+    Move: "BubbleBeam",
     Type: "Water",
     Power: 65,
     Accuracy: 100,

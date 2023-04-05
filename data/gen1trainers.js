@@ -263,7 +263,7 @@ const g1trainers = {
                 "xp": 279,
                 "moves": [
                     "Scratch",
-                    "Sand Attack"
+                    "Sand-Attack"
                 ]
             }
         ],
@@ -336,7 +336,7 @@ const g1trainers = {
                 "xp": 378,
                 "moves": [
                     "Scratch",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash"
                 ]
             },
@@ -1143,7 +1143,7 @@ const g1trainers = {
                 "xp": 105,
                 "moves": [
                     "Gust",
-                    "Sand Attack"
+                    "Sand-Attack"
                 ]
             },
             {
@@ -1157,7 +1157,7 @@ const g1trainers = {
                 "xp": 105,
                 "moves": [
                     "Gust",
-                    "Sand Attack"
+                    "Sand-Attack"
                 ]
             }
         ],
@@ -1360,7 +1360,7 @@ const g1trainers = {
                 "xp": 187,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -1400,7 +1400,7 @@ const g1trainers = {
                 "xp": 165,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -1494,7 +1494,7 @@ const g1trainers = {
                 "xp": 153,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -1531,7 +1531,7 @@ const g1trainers = {
                 "xp": 211,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -1710,7 +1710,7 @@ const g1trainers = {
                 "xp": 223,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -1801,7 +1801,7 @@ const g1trainers = {
                     "Pound",
                     "Growl",
                     "Sing",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             },
             {
@@ -1817,7 +1817,7 @@ const g1trainers = {
                     "Pound",
                     "Growl",
                     "Sing",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             }
         ],
@@ -2235,7 +2235,7 @@ const g1trainers = {
                 "xp": 219,
                 "moves": [
                     "Scratch",
-                    "Sand Attack"
+                    "Sand-Attack"
                 ]
             }
         ],
@@ -2456,7 +2456,7 @@ const g1trainers = {
                 "xp": 358,
                 "moves": [
                     "Scratch",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash"
                 ]
             }
@@ -2567,7 +2567,7 @@ const g1trainers = {
                 "xp": 378,
                 "moves": [
                     "Scratch",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash"
                 ]
             }
@@ -2697,7 +2697,7 @@ const g1trainers = {
                 "xp": 187,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -2712,7 +2712,7 @@ const g1trainers = {
                 "xp": 187,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -2727,7 +2727,7 @@ const g1trainers = {
                 "xp": 187,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             }
@@ -2890,7 +2890,7 @@ const g1trainers = {
                     "Pound",
                     "Growl",
                     "Sing",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             }
         ],
@@ -2913,7 +2913,7 @@ const g1trainers = {
                 "xp": 247,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -2929,7 +2929,7 @@ const g1trainers = {
                 "xp": 508,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -2970,7 +2970,7 @@ const g1trainers = {
                 "xp": 247,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -3093,7 +3093,7 @@ const g1trainers = {
                 "xp": 282,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -3184,7 +3184,7 @@ const g1trainers = {
                     "Bubble",
                     "Hypnosis",
                     "Water Gun",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             },
             {
@@ -3200,7 +3200,7 @@ const g1trainers = {
                     "Bubble",
                     "Hypnosis",
                     "Water Gun",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             }
         ],
@@ -3223,7 +3223,7 @@ const g1trainers = {
                 "xp": 318,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -3255,7 +3255,7 @@ const g1trainers = {
                 "xp": 318,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -3271,7 +3271,7 @@ const g1trainers = {
                 "xp": 652,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -3314,7 +3314,7 @@ const g1trainers = {
                     "Bubble",
                     "Hypnosis",
                     "Water Gun",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             },
             {
@@ -3328,7 +3328,7 @@ const g1trainers = {
                 "xp": 498,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer"
                 ]
             }
@@ -3411,7 +3411,7 @@ const g1trainers = {
                     "Pound",
                     "Growl",
                     "Sing",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             }
         ],
@@ -3466,7 +3466,7 @@ const g1trainers = {
                 "xp": 235,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -3491,7 +3491,7 @@ const g1trainers = {
                 "xp": 223,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -3661,7 +3661,7 @@ const g1trainers = {
                 "xp": 480,
                 "moves": [
                     "Sing",
-                    "Doubleslap",
+                    "DoubleSlap",
                     "Minimize",
                     "Metronome"
                 ]
@@ -3758,7 +3758,7 @@ const g1trainers = {
                 "xp": 532,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer",
                     "Water Gun"
                 ]
@@ -4170,7 +4170,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             },
             {
@@ -4199,7 +4199,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             },
             {
@@ -4324,7 +4324,7 @@ const g1trainers = {
                 "xp": 418,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             },
             {
@@ -4424,7 +4424,7 @@ const g1trainers = {
                 "xp": 457,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             },
             {
@@ -4439,7 +4439,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct"
                 ]
             }
@@ -5754,7 +5754,7 @@ const g1trainers = {
                 "xp": 639,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -5770,7 +5770,7 @@ const g1trainers = {
                 "xp": 639,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -6419,7 +6419,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             },
             {
@@ -6433,7 +6433,7 @@ const g1trainers = {
                 "xp": 400,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             }
         ],
@@ -6456,7 +6456,7 @@ const g1trainers = {
                 "xp": 400,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             }
         ],
@@ -6505,7 +6505,7 @@ const g1trainers = {
                 "xp": 621,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock"
                 ]
             }
@@ -6798,7 +6798,7 @@ const g1trainers = {
                 "xp": 373,
                 "moves": [
                     "Bubble",
-                    "Smokescreen"
+                    "SmokeScreen"
                 ]
             }
         ],
@@ -7199,7 +7199,7 @@ const g1trainers = {
                 "xp": 514,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer"
                 ]
             },
@@ -7241,7 +7241,7 @@ const g1trainers = {
                     "Bubble",
                     "Hypnosis",
                     "Water Gun",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             },
             {
@@ -7257,7 +7257,7 @@ const g1trainers = {
                     "Bubble",
                     "Hypnosis",
                     "Water Gun",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             }
         ],
@@ -7280,7 +7280,7 @@ const g1trainers = {
                 "xp": 480,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer"
                 ]
             },
@@ -7409,7 +7409,7 @@ const g1trainers = {
                 "xp": 532,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer",
                     "Water Gun"
                 ]
@@ -7425,7 +7425,7 @@ const g1trainers = {
                 "xp": 532,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer",
                     "Water Gun"
                 ]
@@ -7498,7 +7498,7 @@ const g1trainers = {
                 "xp": 480,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer"
                 ]
             },
@@ -7604,7 +7604,7 @@ const g1trainers = {
                 "xp": 498,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer"
                 ]
             },
@@ -7619,7 +7619,7 @@ const g1trainers = {
                 "xp": 498,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer"
                 ]
             },
@@ -7634,7 +7634,7 @@ const g1trainers = {
                 "xp": 930,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer"
                 ]
             },
@@ -7649,7 +7649,7 @@ const g1trainers = {
                 "xp": 498,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer"
                 ]
             }
@@ -7673,7 +7673,7 @@ const g1trainers = {
                 "xp": 1095,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer",
                     "Water Gun"
                 ]
@@ -7781,7 +7781,7 @@ const g1trainers = {
                     "Bubble",
                     "Hypnosis",
                     "Water Gun",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             },
             {
@@ -7811,7 +7811,7 @@ const g1trainers = {
                 "xp": 1062,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer",
                     "Water Gun"
                 ]
@@ -8305,7 +8305,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             },
             {
@@ -8728,7 +8728,7 @@ const g1trainers = {
                 "moves": [
                     "Growl",
                     "Sing",
-                    "Doubleslap",
+                    "DoubleSlap",
                     "Minimize"
                 ]
             },
@@ -8851,7 +8851,7 @@ const g1trainers = {
                 "moves": [
                     "Hypnosis",
                     "Water Gun",
-                    "Doubleslap",
+                    "DoubleSlap",
                     "Body Slam"
                 ]
             },
@@ -8891,7 +8891,7 @@ const g1trainers = {
                 "xp": 702,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -8909,7 +8909,7 @@ const g1trainers = {
                     "Sing",
                     "Disable",
                     "Defense Curl",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             }
         ],
@@ -9032,7 +9032,7 @@ const g1trainers = {
                     "Bubble",
                     "Hypnosis",
                     "Water Gun",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             },
             {
@@ -9096,7 +9096,7 @@ const g1trainers = {
                     "Bubble",
                     "Hypnosis",
                     "Water Gun",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             }
         ],
@@ -9217,7 +9217,7 @@ const g1trainers = {
                 "xp": 996,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer",
                     "Water Gun"
                 ]
@@ -9233,7 +9233,7 @@ const g1trainers = {
                 "xp": 532,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer",
                     "Water Gun"
                 ]
@@ -9249,7 +9249,7 @@ const g1trainers = {
                 "xp": 996,
                 "moves": [
                     "Bubble",
-                    "Smokescreen",
+                    "SmokeScreen",
                     "Leer",
                     "Water Gun"
                 ]
@@ -9308,7 +9308,7 @@ const g1trainers = {
                     "Confusion",
                     "Barrier",
                     "Light Screen",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             },
             {
@@ -9349,7 +9349,7 @@ const g1trainers = {
                     "Confusion",
                     "Barrier",
                     "Light Screen",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             },
             {
@@ -9471,7 +9471,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             },
             {
@@ -9499,7 +9499,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             }
         ],
@@ -9522,7 +9522,7 @@ const g1trainers = {
                 "xp": 639,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -9538,7 +9538,7 @@ const g1trainers = {
                 "xp": 931,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -9790,7 +9790,7 @@ const g1trainers = {
                 "xp": 1398,
                 "moves": [
                     "Light Screen",
-                    "Doubleslap",
+                    "DoubleSlap",
                     "Meditate",
                     "Substitute"
                 ]
@@ -9906,7 +9906,7 @@ const g1trainers = {
                 "xp": 1186,
                 "moves": [
                     "Scratch",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash",
                     "Poison Sting"
                 ]
@@ -9963,7 +9963,7 @@ const g1trainers = {
                 "xp": 1152,
                 "moves": [
                     "Scratch",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash",
                     "Poison Sting"
                 ]
@@ -10183,7 +10183,7 @@ const g1trainers = {
                 "spc": 29,
                 "xp": 340,
                 "moves": [
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind",
                     "Wing Attack"
@@ -10200,7 +10200,7 @@ const g1trainers = {
                 "xp": 702,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -10241,7 +10241,7 @@ const g1trainers = {
                 "xp": 294,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -10257,7 +10257,7 @@ const g1trainers = {
                 "xp": 294,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -10314,7 +10314,7 @@ const g1trainers = {
                 "xp": 306,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -10330,7 +10330,7 @@ const g1trainers = {
                 "xp": 628,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -10453,7 +10453,7 @@ const g1trainers = {
                 "xp": 628,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -10468,7 +10468,7 @@ const g1trainers = {
                 "spc": 39,
                 "xp": 523,
                 "moves": [
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Leer",
                     "Fury Attack",
                     "Swords Dance"
@@ -10500,7 +10500,7 @@ const g1trainers = {
                 "xp": 306,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -10750,7 +10750,7 @@ const g1trainers = {
                 "xp": 726,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -10774,7 +10774,7 @@ const g1trainers = {
                 "spc": 50,
                 "xp": 943,
                 "moves": [
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind",
                     "Wing Attack"
@@ -10790,7 +10790,7 @@ const g1trainers = {
                 "spc": 50,
                 "xp": 943,
                 "moves": [
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind",
                     "Wing Attack"
@@ -10822,7 +10822,7 @@ const g1trainers = {
                 "spc": 50,
                 "xp": 943,
                 "moves": [
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind",
                     "Wing Attack"
@@ -10888,7 +10888,7 @@ const g1trainers = {
                 "spc": 29,
                 "xp": 330,
                 "moves": [
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind",
                     "Wing Attack"
@@ -10920,7 +10920,7 @@ const g1trainers = {
                 "xp": 678,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -10945,7 +10945,7 @@ const g1trainers = {
                 "xp": 306,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -10977,7 +10977,7 @@ const g1trainers = {
                 "xp": 306,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -11018,7 +11018,7 @@ const g1trainers = {
                 "xp": 702,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -11581,7 +11581,7 @@ const g1trainers = {
                 "xp": 105,
                 "moves": [
                     "Gust",
-                    "Sand Attack"
+                    "Sand-Attack"
                 ]
             },
             {
@@ -11619,7 +11619,7 @@ const g1trainers = {
                 "xp": 105,
                 "moves": [
                     "Gust",
-                    "Sand Attack"
+                    "Sand-Attack"
                 ]
             },
             {
@@ -11657,7 +11657,7 @@ const g1trainers = {
                 "xp": 105,
                 "moves": [
                     "Gust",
-                    "Sand Attack"
+                    "Sand-Attack"
                 ]
             },
             {
@@ -11694,7 +11694,7 @@ const g1trainers = {
                 "xp": 435,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -11763,7 +11763,7 @@ const g1trainers = {
                 "xp": 435,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -11832,7 +11832,7 @@ const g1trainers = {
                 "xp": 435,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -12038,7 +12038,7 @@ const g1trainers = {
                     "Razor Leaf",
                     "Growth",
                     "Sleep Powder",
-                    "Solar Beam"
+                    "SolarBeam"
                 ]
             },
             {
@@ -12180,7 +12180,7 @@ const g1trainers = {
                 "xp": 750,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -12272,7 +12272,7 @@ const g1trainers = {
                 "xp": 534,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock"
                 ]
             },
@@ -12288,7 +12288,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct"
                 ]
             },
@@ -12303,7 +12303,7 @@ const g1trainers = {
                 "xp": 966,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock"
                 ]
             }
@@ -12327,7 +12327,7 @@ const g1trainers = {
                 "xp": 931,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -12367,7 +12367,7 @@ const g1trainers = {
                 "xp": 931,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -12407,7 +12407,7 @@ const g1trainers = {
                 "xp": 1060,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -12432,7 +12432,7 @@ const g1trainers = {
                 "xp": 897,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock"
                 ]
             },
@@ -12476,7 +12476,7 @@ const g1trainers = {
                 "xp": 495,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock"
                 ]
             }
@@ -12501,7 +12501,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct"
                 ]
             },
@@ -12530,7 +12530,7 @@ const g1trainers = {
                 "xp": 862,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock"
                 ]
             },
@@ -12545,7 +12545,7 @@ const g1trainers = {
                 "xp": 475,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock"
                 ]
             },
@@ -12583,7 +12583,7 @@ const g1trainers = {
                 "xp": 931,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -12637,7 +12637,7 @@ const g1trainers = {
                 "xp": 931,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -12663,7 +12663,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct"
                 ]
             },
@@ -12692,7 +12692,7 @@ const g1trainers = {
                 "xp": 966,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock"
                 ]
             }
@@ -12716,7 +12716,7 @@ const g1trainers = {
                 "xp": 552,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock",
                     "Supersonic"
                 ]
@@ -12755,7 +12755,7 @@ const g1trainers = {
                 "xp": 628,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock",
                     "Supersonic"
                 ]
@@ -12771,7 +12771,7 @@ const g1trainers = {
                 "xp": 1138,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock",
                     "Supersonic"
                 ]
@@ -12787,7 +12787,7 @@ const g1trainers = {
                 "xp": 727,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -12812,7 +12812,7 @@ const g1trainers = {
                 "xp": 648,
                 "moves": [
                     "Tackle",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Thundershock",
                     "Supersonic"
                 ]
@@ -12828,7 +12828,7 @@ const g1trainers = {
                 "xp": 1092,
                 "moves": [
                     "Screech",
-                    "Sonic Boom",
+                    "SonicBoom",
                     "Selfdestruct",
                     "Light Screen"
                 ]
@@ -12995,7 +12995,7 @@ const g1trainers = {
                 "moves": [
                     "Growl",
                     "Dig",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash"
                 ]
             },
@@ -13105,7 +13105,7 @@ const g1trainers = {
                 "xp": 219,
                 "moves": [
                     "Scratch",
-                    "Sand Attack"
+                    "Sand-Attack"
                 ]
             },
             {
@@ -13755,7 +13755,7 @@ const g1trainers = {
                 "xp": 457,
                 "moves": [
                     "Scratch",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash"
                 ]
             },
@@ -13786,7 +13786,7 @@ const g1trainers = {
                 "xp": 802,
                 "moves": [
                     "Scratch",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash"
                 ]
             }
@@ -13826,7 +13826,7 @@ const g1trainers = {
                 "xp": 457,
                 "moves": [
                     "Scratch",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash"
                 ]
             },
@@ -14651,7 +14651,7 @@ const g1trainers = {
                 "xp": 577,
                 "moves": [
                     "Scratch",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash",
                     "Poison Sting"
                 ]
@@ -14667,7 +14667,7 @@ const g1trainers = {
                 "xp": 1012,
                 "moves": [
                     "Scratch",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash",
                     "Poison Sting"
                 ]
@@ -15489,7 +15489,7 @@ const g1trainers = {
                 "spc": 54,
                 "xp": 1362,
                 "moves": [
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash",
                     "Poison Sting",
                     "Swift"
@@ -15507,7 +15507,7 @@ const g1trainers = {
                 "moves": [
                     "Growl",
                     "Dig",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Slash"
                 ]
             }
@@ -15700,7 +15700,7 @@ const g1trainers = {
                 "spc": 102,
                 "xp": 2349,
                 "moves": [
-                    "Doubleslap",
+                    "DoubleSlap",
                     "Sing",
                     "Growl",
                     "Minimize"
@@ -15962,7 +15962,7 @@ const g1trainers = {
                 "xp": 1650,
                 "moves": [
                     "Ice Punch",
-                    "Thunder Punch",
+                    "ThunderPunch",
                     "Mega Punch",
                     "Counter"
                 ]
@@ -16112,7 +16112,7 @@ const g1trainers = {
                 "moves": [
                     "Tackle",
                     "Screech",
-                    "Sonic Boom"
+                    "SonicBoom"
                 ]
             },
             {
@@ -16223,7 +16223,7 @@ const g1trainers = {
                     "Tackle",
                     "Smog",
                     "Sludge",
-                    "Smokescreen"
+                    "SmokeScreen"
                 ]
             },
             {
@@ -16255,7 +16255,7 @@ const g1trainers = {
                     "Tackle",
                     "Smog",
                     "Sludge",
-                    "Smokescreen"
+                    "SmokeScreen"
                 ]
             },
             {
@@ -16385,7 +16385,7 @@ const g1trainers = {
                     "Confusion",
                     "Barrier",
                     "Light Screen",
-                    "Doubleslap"
+                    "DoubleSlap"
                 ]
             },
             {
@@ -16631,7 +16631,7 @@ const g1trainers = {
                 "xp": 459,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -16702,7 +16702,7 @@ const g1trainers = {
                 "xp": 459,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -16773,7 +16773,7 @@ const g1trainers = {
                 "xp": 459,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack"
                 ]
             },
@@ -16844,7 +16844,7 @@ const g1trainers = {
                 "xp": 604,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -16930,7 +16930,7 @@ const g1trainers = {
                 "xp": 604,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -17017,7 +17017,7 @@ const g1trainers = {
                 "xp": 604,
                 "moves": [
                     "Gust",
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind"
                 ]
@@ -17102,7 +17102,7 @@ const g1trainers = {
                 "spc": 62,
                 "xp": 1363,
                 "moves": [
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind",
                     "Wing Attack"
@@ -17191,7 +17191,7 @@ const g1trainers = {
                 "spc": 62,
                 "xp": 1363,
                 "moves": [
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind",
                     "Wing Attack"
@@ -17280,7 +17280,7 @@ const g1trainers = {
                 "spc": 62,
                 "xp": 1363,
                 "moves": [
-                    "Sand Attack",
+                    "Sand-Attack",
                     "Quick Attack",
                     "Whirlwind",
                     "Wing Attack"
@@ -17420,7 +17420,7 @@ const g1trainers = {
                     "Leech Seed",
                     "Stun Spore",
                     "PoisonPowder",
-                    "Solar Beam"
+                    "SolarBeam"
                 ]
             },
             {
@@ -17614,7 +17614,7 @@ const g1trainers = {
                     "Leech Seed",
                     "Stun Spore",
                     "PoisonPowder",
-                    "Solar Beam"
+                    "SolarBeam"
                 ]
             },
             {
@@ -17871,7 +17871,7 @@ const g1trainers = {
                     "Razor Leaf",
                     "Growth",
                     "Mega Drain",
-                    "Solar Beam"
+                    "SolarBeam"
                 ]
             }
         ],
@@ -18045,7 +18045,7 @@ const g1trainers = {
                 "spc": 120,
                 "xp": 1644,
                 "moves": [
-                    "Doubleslap",
+                    "DoubleSlap",
                     "Ice Punch",
                     "Body Slam",
                     "Thrash"
