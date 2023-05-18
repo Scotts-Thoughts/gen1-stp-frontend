@@ -203,27 +203,6 @@
           
 <!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade">
-                    <!-- <div v-if="((g1stateVariable == `Battle` || g1stateVariable == `To Battle` || g1stateVariable == `From Battle`) && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true && secondPlaythrough == true" style="position: absolute;" key=2>
-                        <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
-                        <img class="enemyPng" :src="`images/enemy_area_2/${starterName.toLowerCase()}${overlayName}.png`" :style="battlePokemonCrop()"/>
-                        <div class="enemyGraphic">
-                            <div v-for="x in pkmnSlots">
-                                <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmnStyle ePkmn${x + 1}`">
-                                    <div class="damageRangeLabels ePkmnPlayerDamageRangeLabel" :style="enemyPkmnText(batt.trainer.team[x])">Player</div>
-                                    <div class="damageRangeLabels ePkmnEnemyDamageRangeLabel" :style="enemyPkmnText(batt.trainer.team[x])">Computer</div>
-                                    <img class="ePkmnSprite" :style="enemyPkmnFaint(batt.trainer.team[x])" :src="`images/pokemon/${currentTrainer.pokemon[x]?.name}.png`"/>
-                                    <div class="ePkmnSpecies opacityTransition" :style="enemyPkmnSpecies(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.name}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnRanges ePkmnPlayerRange opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{ capitalization_format(damageComparisonPlayer(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value))[6]) }}
-                                        <br>{{ damageComparisonPlayer(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value))[2] }}% - {{ damageComparisonPlayer(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value))[3] }}% 
-                                    </div>
-                                    <div class="ePkmnMoveStyle ePkmnRanges ePkmnEnemyRange opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{ capitalization_format(damageComparisonEnemy(enemyDynamic(x,batt.enemyPokemon.partyPos.value), s1dynamic, x)[6]) }}
-                                        <br>{{ damageComparisonEnemy(enemyDynamic(x,batt.enemyPokemon.partyPos.value), s1dynamic, x)[2] }}% - {{ damageComparisonEnemy(enemyDynamic(x,batt.enemyPokemon.partyPos.value), s1dynamic, x)[3] }}% 
-                                    </div>
-                                    <div class="ePkmnSpeedComparison" :style="speedColouration(speedComparison(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value)),batt.trainer.team[x])">{{ speedComparison(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value)) }}</div>
-                                </div>
-                            </div>
-                        </div> 
-                    </div> -->
                     <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <img class="enemyPng" :src="`images/enemy_area/${starterName.toLowerCase()}${overlayName}.png`" :style="battlePokemonCrop()"/>
@@ -251,33 +230,6 @@
                             </div>
                         </div> 
                     </div>
-                    <!-- <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
-                        <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
-                        <img class="enemyPng" :src="`images/enemy_area/${starterName.toLowerCase()}${overlayName}.png`" :style="battlePokemonCrop()"/>
-                        <div class="enemyGraphic">
-                            <div v-for="x in pkmnSlots">
-                                <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmnStyle ePkmn${x + 1}`">
-                                    <img class="ePkmnSprite" :style="enemyPkmnFaint(batt.trainer.team[x])" :src="`images/pokemon/${currentTrainer.pokemon[x]?.name}.png`"/>
-                                    <div class="ePkmnSpecies opacityTransition" :style="enemyPkmnSpecies(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.name}}</div>
-                                    <img class="enemyStatsArea" :style="enemyPkmnFaintStats(batt.trainer.team[x])" :src="`images/enemy_area/stats/${x}.png`"/>
-                                    <div class="ePkmnMoveStyle ePkmnMove1 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{move_name(currentTrainer.pokemon[x]?.moves[0])}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove2 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{move_name(currentTrainer.pokemon[x]?.moves[1])}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove3 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{move_name(currentTrainer.pokemon[x]?.moves[2])}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove4 opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{move_name(currentTrainer.pokemon[x]?.moves[3])}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnHp opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.hp}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnAtk opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"attack",currentTrainer.pokemon[x]?.atk,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnDef opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"defense",currentTrainer.pokemon[x]?.def,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnSpd opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",currentTrainer.pokemon[x]?.spd,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnSpc opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",currentTrainer.pokemon[x]?.spc,"enemyPokemon")}}</div>
-
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageAttack.value != `0`" class="enemyMods attackMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageAttack.value)[1]}`">{{batt.enemyPokemon.modEnemyStageAttack.value}}</div></transition>
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageDefense.value != `0`" class="enemyMods defenseMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageDefense.value)[1]}`">{{batt.enemyPokemon.modEnemyStageDefense.value}}</div></transition>
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpecial.value != `0`" class="enemyMods specialMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpecial.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpecial.value}}</div></transition>
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpeed.value != `0`" class="enemyMods speedMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpeed.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpeed.value}}</div></transition>
-                                </div>
-                            </div>
-                        </div> 
-                    </div> -->
 
                     <div v-else key=3>
                         <table class="movepoolDemo" cellspacing="0">
