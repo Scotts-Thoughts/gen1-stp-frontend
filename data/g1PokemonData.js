@@ -3012,7 +3012,7 @@ const g1PokemonData = {
         ],
         [
             55,
-            "acid_armorc"
+            "Acid Armor"
         ]
         ]
     },
@@ -7639,6 +7639,10 @@ const g1PokemonData = {
         [
             22,
             "Water Gun"
+        ],
+        [
+            29,
+            "Dragon Rage"
         ],
         [
             44,

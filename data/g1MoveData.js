@@ -19,7 +19,7 @@ const g1MoveData = {
     PP: 20,
     Category: "Physical",
     CategoryST: "Physical",
-    Description: "An attack that fiaaares many needle-like projectiles from the body. Strikes several times."
+    Description: "An attack that fires many needle-like projectiles from the body. Strikes several times."
   },
 "String Shot" :
   {

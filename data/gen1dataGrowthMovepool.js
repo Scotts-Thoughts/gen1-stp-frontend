@@ -7520,6 +7520,10 @@ const gen1dataGrowthMovepool =
             "Water Gun"
         ],
         [
+            29,
+            "Dragon Rage"
+        ],
+        [
             44,
             "Agility"
         ],

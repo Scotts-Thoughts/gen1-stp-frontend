@@ -6,9 +6,10 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Paras", //string name
+            starterName:     "Pidgeotto", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough: true, //used to mitigate luck on second playthroughs
+            moonEncounters: true, //true turns Mt Moon encounters off for second playthroughs
             
             developmentFeatures: true, //turn on new features
             
@@ -63,6 +64,7 @@ const app = Vue.createApp({
             gameStarted: false,
             
             //LOOPS
+            // pkmnMoves: ["move1","move2","move3"],
             pkmnMoves: ["move1","move2","move3","move4"],
             pkmnSlots: [0, 1, 2, 3, 4, 5],
             boostingBadges: ["badge1", "badge3", "badge6", "badge7"],
@@ -193,7 +195,7 @@ const app = Vue.createApp({
                 return ["Both","font-size: 20px","Screens",]
             }
             if (this.batt.yourPokemon.effects.lightScreen.value == true) {
-                return ["Light Screen","font-size: 16px","ScrenemyModColoureen",]
+                return ["Light Screen","font-size: 16px","Screen",]
             }
             if (this.batt.yourPokemon.effects.reflect.value == true) {
                 return ["Reflect","font-size: 20px","Screen",]
@@ -209,6 +211,85 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        //STREAMING AUDIO
+        // A function to create an audio element and play a given track
+        playTrack(track) {
+            // Create a new audio element
+            audio = new Audio(track);
+    
+            // Add an event listener to play the next track when the current one ends
+            audio.addEventListener("ended", () => {
+            // If there is a previous loop, resume playing it from the start
+            if (previousLoop) {
+                currentLoop = previousLoop;
+                previousLoop = null;
+            }
+            // Increment the current track index and loop back to the start if necessary
+            currentTrack++;
+            if (currentTrack >= currentLoop.length) {
+                currentTrack = 0;
+            }
+            // Play the next track
+            this.playTrack(currentLoop[currentTrack]);
+            });
+    
+            // Check the mute variable and set the audio volume accordingly
+            if (this.mute) {
+            audio.volume = 0;
+            } else {
+            audio.volume = 1;
+            }
+    
+            // Play the audio element
+            audio.play();
+        },
+        // A function to switch between loops based on a condition
+        switchLoop(x) {
+            // Define the condition and the loop to switch to if it is met
+            let condition = x == 1;
+            let newLoop = loop2;
+    
+            // If the condition is met, switch to the new loop and play the first track
+            if (condition) {
+            currentLoop = newLoop;
+            currentTrack = 0;
+            this.playTrack(currentLoop[currentTrack]);
+            }
+        },
+        // A function to interrupt the current track by playing a specific track
+        interruptTrack() {
+            // Define the specific track to play and loop it
+            let specificTrack = "interlude.mp3";
+            audio = new Audio(specificTrack);
+            audio.loop = true;
+    
+            // Save the current loop as the previous loop and play the specific track
+            previousLoop = currentLoop;
+            this.playTrack(specificTrack);
+        },
+        // A function to stop playing the specific track and resume the previous loop when a condition is met
+        resumeLoop(badge) {
+            // Define the condition and the track to play before resuming the previous loop
+            let condition = badge == true;
+            let resumeTrack = "congrats.mp3";
+    
+            // If the condition is met, stop looping the specific track and play the resume track
+            if (condition) {
+            audio.loop = false;
+            this.playTrack(resumeTrack);
+            }
+        },
+        // A function to toggle the mute variable and update the audio volume accordingly
+        toggleMute() {
+            this.mute = !this.mute;
+            if (this.mute) {
+            audio.volume = 0;
+            } else {
+            audio.volume = 1;
+            }
+        },
+
+        //MOVE NAME CAPITALIZATION
         move_name(move_string) { //converts move strings so that they are formatted correctly
             if (move_string != undefined) {
                 if (move_string.toLowerCase() == "vicegrip")     { return "ViceGrip" }
@@ -331,7 +412,7 @@ const app = Vue.createApp({
             var targetType2 = targetPkmnData.type2.value
             var defenderScreen = undefined
 
-            var moveData = this.gen1moves.find(x => x.Move.toUpperCase() === move)
+            var moveData = this.gen1moves.find(x => x.Move.toLowerCase() === move.toLowerCase())
             var moveType = moveData.Type
             var movePower = moveData.Power
             var moveCategory = moveData.Category
@@ -575,40 +656,54 @@ const app = Vue.createApp({
             }
             else return mod
         },
-        pkmnDataPath() {
-            if (this.g1state() == "Overworld" || this.g1state() == "To Battle") {
-                return "mapper.properties.player.team[0]"
-            }
-            else if (this.g1state() == "Battle") {
-                return "mapper.properties.battle.yourPokemon"
-            }
-        },
-        camelCase: function (str) {
-            if (!str || !str.toString()) { return '' }
-            return str.toString().replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
-                return index == 0 ? word.toUpperCase() : word.toLowerCase();
-            })
-        },
-        pascalCaseSpace(str) {
-            let words = str.split(' ');
-            for (let char of words) {
-                words[words.indexOf(char)] = char.charAt(0).toUpperCase() + char.slice(1);
-            }
-            return words.join(' ');
-        },
-        pascalCaseDot(str) {
-            let words = str.split('.');
-            for (let char of words) {
-                words[words.indexOf(char)] = char.charAt(0).toUpperCase() + char.slice(1);
-            }
-            return words.join(' ');
-        },
-        pascalCaseDash(str) {
-            let words = str.split('-');
-            for (let char of words) {
-                words[words.indexOf(char)] = char.charAt(0).toUpperCase() + char.slice(1);
-            }
-            return words.join('-');
+        //!UNUSED
+        // pkmnDataPath() {
+        //     if (this.g1state() == "Overworld" || this.g1state() == "To Battle") {
+        //         return "mapper.properties.player.team[0]"
+        //     }
+        //     else if (this.g1state() == "Battle") {
+        //         return "mapper.properties.battle.yourPokemon"
+        //     }
+        // },
+        //!DEPRECATED
+        // camelCase: function (str) {
+        //     if (!str || !str.toString()) { return '' }
+        //     return str.toString().replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+        //         return index == 0 ? word.toUpperCase() : word.toLowerCase();
+        //     })
+        // },
+        // pascalCaseSpace(str) {
+        //     let words = str.split(' ');
+        //     for (let char of words) {
+        //         words[words.indexOf(char)] = char.charAt(0).toUpperCase() + char.slice(1);
+        //     }
+        //     return words.join(' ');
+        // },
+        // pascalCaseDot(str) {
+        //     let words = str.split('.');
+        //     for (let char of words) {
+        //         words[words.indexOf(char)] = char.charAt(0).toUpperCase() + char.slice(1);
+        //     }
+        //     return words.join(' ');
+        // },
+        // pascalCaseDash(str) {
+        //     let words = str.split('-');
+        //     for (let char of words) {
+        //         words[words.indexOf(char)] = char.charAt(0).toUpperCase() + char.slice(1);
+        //     }
+        //     return words.join('-');
+        // },
+        // capitalization_format(str) {
+        //     if (str == null) { return "" }
+        //     return str.replace(/(^|\s|\-|\.)(\w)/g, function(match, p1, p2) {
+        //       return p1 + p2.toUpperCase();
+        //     });
+        // },
+        capitalization_format(str) {
+            if (str == null) { return "" }
+            return str.toLowerCase().replace(/(^|\s|\-|\.)(\w)/g, function(match, p1, p2) {
+              return p1 + p2.toUpperCase();
+            });
         },
         statExp(statExp, label) { //statExp = mapper.properties.player.team[0].statExpAttack.value
             vitaminsUsed = (statExp / 2560)
@@ -752,19 +847,20 @@ const app = Vue.createApp({
                 return null
         },
 
-        inventoryDisplayItem(item) {
-            if (item == "--End of list--") {
-                return " "
-            }
-            else return item
-        },
+        //!UNUSED
+        // inventoryDisplayItem(item) {
+        //     if (item == "--End of list--") {
+        //         return " "
+        //     }
+        //     else return item
+        // },
 
-        inventoryDisplayQuality(item, quantity) {
-            if (item == "--End of list--") {
-                return " "
-            }
-            else return quantity
-        },
+        // inventoryDisplayQuality(item, quantity) {
+        //     if (item == "--End of list--") {
+        //         return " "
+        //     }
+        //     else return quantity
+        // },
 
         // STAGE MULTIPLIERS
         activeSlot(activePkmn, currentSlot, statLabel, stat, side) {
@@ -800,7 +896,7 @@ const app = Vue.createApp({
         //MOVE ICON DISPLAY
         moveTypeIcon(y) { //y = move1.value
             if (y != null && y != undefined) {
-                var move = this.gen1moves.find(x => x.Move.toUpperCase() === y)
+                var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
                 var moveType = move[`Type`].toLowerCase()
                 return `images/elements/type-icons/${moveType}.png`
             }
@@ -826,48 +922,53 @@ const app = Vue.createApp({
             else
                 return 0 //base stats
         },
-        setGamestate(state, number) {
-            if (this.gamestateLogging == true)
-                // console.log("Gamestate: "+"("+number+") "+state)
-            this.currentGamestate = string
-            return string
-        },
-        g1state() {
-            if (this.mapper.properties.battle.specialType.value === `Oak Catching Starter`) {
-                string = "Base Stats"
-                gamestate = 1
-                return this.setGamestate(string, gamestate)
-            }
-            else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1 && this.mapper.properties.battle.lowHealthAlarm.value == "Disabled") {
-                string = "From Battle"
-                gamestate = 2
-                return this.setGamestate(string, gamestate)
-            }
-            else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1) {
-                string = "Battle"
-                gamestate = 2
-                return this.setGamestate(string, gamestate)
-            }
-            else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value === 0 && this.mapper.properties.battle.type.bytes >= 1) {
-                string = "To Battle"
-                gamestate = 3
-                return this.setGamestate(string, gamestate)
-            }
-            else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.type.value === `None`) {
-                string = "Overworld"
-                gamestate = 4
-                return this.setGamestate(string, gamestate)
-            }
-            else {
-                string = "Base Stats"
-                gamestate = 5
-                return this.setGamestate(string, gamestate)
-            }
-        },
 
-        g1trainer(x, y) {
-            return (x + " " + y)
-        },
+        //!UNUSED - OLD GAMESTATE FUNCTION
+        // setGamestate(state, number) {
+        //     if (this.gamestateLogging == true)
+        //         // console.log("Gamestate: "+"("+number+") "+state)
+        //     this.currentGamestate = string
+        //     return string
+        // },
+        // g1state() {
+        //     if (this.mapper.properties.battle.specialType.value === `Oak Catching Starter`) {
+        //         string = "Base Stats"
+        //         gamestate = 1
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1 && this.mapper.properties.battle.lowHealthAlarm.value == "Disabled") {
+        //         string = "From Battle"
+        //         gamestate = 2
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value >= 1 && this.mapper.properties.battle.type.bytes >= 1) {
+        //         string = "Battle"
+        //         gamestate = 2
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.turnInfo.battleStart.value === 0 && this.mapper.properties.battle.type.bytes >= 1) {
+        //         string = "To Battle"
+        //         gamestate = 3
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        //     else if (this.mapper.properties.player.team[0].level > 0 && this.mapper.properties.battle.type.value === `None`) {
+        //         string = "Overworld"
+        //         gamestate = 4
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        //     else {
+        //         string = "Base Stats"
+        //         gamestate = 5
+        //         return this.setGamestate(string, gamestate)
+        //     }
+        // },
+
+        //!UNUSED
+        // g1trainer(x, y) {
+        //     return (x + " " + y)
+        // },
+
+        //!UNUSED
         // currentTrainer() {
         //     return (this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value)
         // },
@@ -909,162 +1010,332 @@ const app = Vue.createApp({
                 return 0
         },
 
+        //!OLD fixTrainerName function - new one needs testing
+        // fixTrainerName(trainerName, trainerNumber) {
+        //     if (this.mapper.meta.gameName == "Pokemon Yellow") {
+        //         if (trainerName == "RIVAL1" && trainerNumber == 1) {
+        //             return "rival1's team"
+        //         }
+        //         else if (trainerName == "RIVAL1" && trainerNumber == 2) {
+        //                 return "rival1A's team"
+        //         }
+        //         else if (trainerName == "RIVAL1" && trainerNumber == 3) {
+        //                 return "rival2's team"
+        //         }
+        //         else if (trainerName == "RIVAL2" && trainerNumber == 1) {
+        //                 return "rival3's team"
+        //         }
+        //         else if (trainerName == "RIVAL2" && (trainerNumber == 2 || trainerNumber == 3 || trainerNumber == 4)) {
+        //                 return "rival4's team"
+        //         }
+        //         else if (trainerName == "RIVAL2" && (trainerNumber == 5 || trainerNumber == 6 || trainerNumber == 7)) {
+        //                 return "rival5's team"
+        //         }
+        //         else if (trainerName == "RIVAL2" && (trainerNumber == 8 || trainerNumber == 9 || trainerNumber == 10)) {
+        //                 return "rival6's team"
+        //         }
+        //         else if (trainerName == "RIVAL3") {
+        //             return "champion's team"
+        //         }
+        //         else {
+        //             return trainerName.toLowerCase() + "'s team"
+        //         }
+        //     }
+        //     else if (this.mapper.meta.gameName == "Pokemon Red and Blue") {
+        //         if (trainerName == "RIVAL1" && trainerNumber == 1 || trainerName == "RIVAL1" && trainerNumber == 2 || trainerName == "RIVAL1" && trainerNumber == 3) {
+        //             return "rival1's team"
+        //         }
+        //         else if (trainerName == "RIVAL1" && trainerNumber == 4 || trainerName == "RIVAL1" && trainerNumber == 5 || trainerName == "RIVAL1" && trainerNumber == 6) {
+        //                 return "rival1A's team"
+        //         }
+        //         else if (trainerName == "RIVAL1" && trainerNumber == 7 || trainerName == "RIVAL1" && trainerNumber == 8 || trainerName == "RIVAL1" && trainerNumber == 9) {
+        //                 return "rival2's team"
+        //         }
+        //         else if (trainerName == "RIVAL2" && trainerNumber == 1 || trainerName == "RIVAL2" && trainerNumber == 2 || trainerName == "RIVAL2" && trainerNumber == 3) {
+        //                 return "rival3's team"
+        //         }
+        //         else if (trainerName == "RIVAL2" && trainerNumber == 4 || trainerName == "RIVAL2" && trainerNumber == 5 || trainerName == "RIVAL2" && trainerNumber == 6) {
+        //                 return "rival4's team"
+        //         }
+        //         else if (trainerName == "RIVAL2" && trainerNumber == 7 || trainerName == "RIVAL2" && trainerNumber == 8 || trainerName == "RIVAL2" && trainerNumber == 9) {
+        //                 return "rival5's team"
+        //         }
+        //         else if (trainerName == "RIVAL2" && trainerNumber == 10 || trainerName == "RIVAL2" && trainerNumber == 11 || trainerName == "RIVAL2" && trainerNumber == 12) {
+        //                 return "rival6's team"
+        //         }
+        //         else if (trainerName == "RIVAL3") {
+        //             return "champion's team"
+        //         }
+        //         else {
+        //             return trainerName.toLowerCase() + "'s team"
+        //         }
+        //     }
+        // },
+
+        //CO-PILOT REFACTOR
         fixTrainerName(trainerName, trainerNumber) {
-            if (this.mapper.meta.gameName == "Pokemon Yellow") {
-                if (trainerName == "RIVAL1" && trainerNumber == 1) {
-                    return "rival1's team"
-                }
-                else if (trainerName == "RIVAL1" && trainerNumber == 2) {
-                        return "rival1A's team"
-                }
-                else if (trainerName == "RIVAL1" && trainerNumber == 3) {
-                        return "rival2's team"
-                }
-                else if (trainerName == "RIVAL2" && trainerNumber == 1) {
-                        return "rival3's team"
-                }
-                else if (trainerName == "RIVAL2" && (trainerNumber == 2 || trainerNumber == 3 || trainerNumber == 4)) {
-                        return "rival4's team"
-                }
-                else if (trainerName == "RIVAL2" && (trainerNumber == 5 || trainerNumber == 6 || trainerNumber == 7)) {
-                        return "rival5's team"
-                }
-                else if (trainerName == "RIVAL2" && (trainerNumber == 8 || trainerNumber == 9 || trainerNumber == 10)) {
-                        return "rival6's team"
-                }
-                else if (trainerName == "RIVAL3") {
-                    return "champion's team"
-                }
-                else {
-                    return trainerName.toLowerCase() + "'s team"
-                }
-            }
-            else if (this.mapper.meta.gameName == "Pokemon Red and Blue") {
-                if (trainerName == "RIVAL1" && trainerNumber == 1 || trainerName == "RIVAL1" && trainerNumber == 2 || trainerName == "RIVAL1" && trainerNumber == 3) {
-                    return "rival1's team"
-                }
-                else if (trainerName == "RIVAL1" && trainerNumber == 4 || trainerName == "RIVAL1" && trainerNumber == 5 || trainerName == "RIVAL1" && trainerNumber == 6) {
-                        return "rival1A's team"
-                }
-                else if (trainerName == "RIVAL1" && trainerNumber == 7 || trainerName == "RIVAL1" && trainerNumber == 8 || trainerName == "RIVAL1" && trainerNumber == 9) {
-                        return "rival2's team"
-                }
-                else if (trainerName == "RIVAL2" && trainerNumber == 1 || trainerName == "RIVAL2" && trainerNumber == 2 || trainerName == "RIVAL2" && trainerNumber == 3) {
-                        return "rival3's team"
-                }
-                else if (trainerName == "RIVAL2" && trainerNumber == 4 || trainerName == "RIVAL2" && trainerNumber == 5 || trainerName == "RIVAL2" && trainerNumber == 6) {
-                        return "rival4's team"
-                }
-                else if (trainerName == "RIVAL2" && trainerNumber == 7 || trainerName == "RIVAL2" && trainerNumber == 8 || trainerName == "RIVAL2" && trainerNumber == 9) {
-                        return "rival5's team"
-                }
-                else if (trainerName == "RIVAL2" && trainerNumber == 10 || trainerName == "RIVAL2" && trainerNumber == 11 || trainerName == "RIVAL2" && trainerNumber == 12) {
-                        return "rival6's team"
-                }
-                else if (trainerName == "RIVAL3") {
-                    return "champion's team"
-                }
-                else {
-                    return trainerName.toLowerCase() + "'s team"
-                }
+            const yellowMappings = {
+              "RIVAL1": {
+                1: "rival1's team",
+                2: "rival1A's team",
+                3: "rival2's team"
+              },
+              "RIVAL2": {
+                1: "rival3's team",
+                2: "rival4's team",
+                3: "rival4's team",
+                4: "rival4's team",
+                5: "rival5's team",
+                6: "rival5's team",
+                7: "rival5's team",
+                8: "rival6's team",
+                9: "rival6's team",
+                10: "rival6's team"
+              },
+              "RIVAL3": "champion's team"
+            };
+          
+            const redAndBlueMappings = {
+              "RIVAL1": {
+                1: "rival1's team",
+                2: "rival1A's team",
+                3: "rival2's team",
+                4: "rival1A's team",
+                5: "rival1A's team",
+                6: "rival1A's team",
+                7: "rival2's team",
+                8: "rival2's team",
+                9: "rival2's team"
+              },
+              "RIVAL2": {
+                1: "rival3's team",
+                2: "rival3's team",
+                3: "rival3's team",
+                4: "rival4's team",
+                5: "rival4's team",
+                6: "rival4's team",
+                7: "rival5's team",
+                8: "rival5's team",
+                9: "rival5's team",
+                10: "rival6's team",
+                11: "rival6's team",
+                12: "rival6's team"
+              },
+              "RIVAL3": "champion's team"
+            };
+          
+            const mappings = this.mapper.meta.gameName === "Pokemon Yellow" ? yellowMappings : redAndBlueMappings;
+          
+            if (mappings[trainerName]) {
+              const teamName = mappings[trainerName][trainerNumber] || mappings[trainerName];
+              return teamName.toLowerCase() + "'s team";
+            } else {
+              return trainerName.toLowerCase() + "'s team";
             }
         },
 
+        // specialTrainerGraphics() {
+        //     if (this.showSpecialTrainerGraphics == true) {
+        //         if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+        //         else if (this.mapper.properties.battle.trainer.class == "YOUNGSTER" && this.mapper.properties.battle.trainer.number == 1) return `images/trainers/BEN.png` //YOUNGSTER BEN
+        //         else if (this.mapper.properties.battle.trainer.class == "POKEMANIAC" && this.mapper.properties.battle.trainer.number == 7) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+        //         else if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+        //         else if (this.mapper.properties.battle.trainer.class == "ROCKET" && this.mapper.properties.battle.trainer.number == 38) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+        //         else if (this.mapper.properties.battle.trainer.class == "HIKER" && this.mapper.properties.battle.trainer.number == 9) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+        //         else if (this.mapper.properties.battle.trainer.class == "LASS" && this.mapper.properties.battle.trainer.number == 3) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+        //         else if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 1) return `images/trainers/GOLDEEN.png` //CERULEAN GYM GOLDEEN TRAINER
+        //         else if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
+        //         else if (this.mapper.properties.battle.trainer.class == "CHANNELER" && this.mapper.properties.battle.trainer.number == 10) return `images/trainers/AGATHAJR.png`
+        //         else if (this.mapper.properties.battle.trainer.class == "RIVAL1" && this.mapper.properties.battle.trainer.number == 1) return `images/trainers/RIVAL1.png` //LAB RIVAL
+        //         else if (this.mapper.properties.battle.trainer.class == "RIVAL1" && this.mapper.properties.battle.trainer.number == 2) return `images/trainers/RIVAL1.png` //ROUTE22 RIVAL
+        //         else if (this.mapper.properties.battle.trainer.class == "RIVAL1" && this.mapper.properties.battle.trainer.number == 3) return `images/trainers/RIVAL2.png` //CERULEAN RIVAL
+        //         else if (this.mapper.properties.battle.trainer.class == "RIVAL2" && this.mapper.properties.battle.trainer.number == 1) return `images/trainers/RIVAL2.png` //SS ANNE RIVAL
+        //         // else if (this.mapper.properties.battle.trainer.class == "RIVAL2" && this.mapper.properties.battle.trainer.number == 2) return `images/trainers/RIVAL2.png` //POKEMON TOWER RIVAL, 5 member team
+        //         // else if (this.mapper.properties.battle.trainer.class == "RIVAL2" && this.mapper.properties.battle.trainer.number == 3) return `images/trainers/RIVAL2.png` //POKEMON TOWER RIVAL, 5 member team
+        //         // else if (this.mapper.properties.battle.trainer.class == "RIVAL2" && this.mapper.properties.battle.trainer.number == 4) return `images/trainers/RIVAL2.png` //POKEMON TOWER RIVAL, 5 member team
+        //         else if (this.mapper.properties.battle.trainer.class == "BROCK") return "images/trainers/BROCK.png"
+        //         else if (this.mapper.properties.battle.trainer.class == "MISTY") return "images/trainers/MISTY.png"
+        //         else if (this.mapper.properties.battle.trainer.class == "LT.SURGE" && this.mapper.meta.gameName == `Pokemon Yellow`) return "images/trainers/LTSURGE.png"
+        //         else if (this.mapper.properties.battle.trainer.class == "LT.SURGE" && this.mapper.meta.gameName == `Pokemon Red and Blue`) return "images/trainers/LTSURGE-RED.png"
+        //         else if (this.mapper.properties.battle.trainer.class == "ERIKA") return "images/trainers/ERIKA.png"
+        //         else if (this.mapper.properties.battle.trainer.class == "KOGA") return "images/trainers/KOGA.png"
+        //         else if (this.mapper.properties.battle.trainer.class == "SABRINA" && this.mapper.meta.gameName == `Pokemon Yellow`) return "images/trainers/SABRINA.png"
+        //         else if (this.mapper.properties.battle.trainer.class == "SABRINA" && this.mapper.meta.gameName == `Pokemon Red and Blue`) return "images/trainers/SABRINA-RED.png"
+        //         else if (this.mapper.properties.battle.trainer.class == "BLAINE" && this.mapper.meta.gameName == `Pokemon Yellow`) return "images/trainers/BLAINE.png"
+        //         else if (this.mapper.properties.battle.trainer.class == "BLAINE" && this.mapper.meta.gameName == `Pokemon Red and Blue`) return "images/trainers/BLAINE-RED.png"
+        //         else if (this.mapper.properties.battle.trainer.class == "GIOVANNI" && this.mapper.properties.battle.trainer.number == 3) return "images/trainers/GIOVANNI.png"
+        //         else return null;
+        //     }
+        // },
+
+        //CO-PILOT REFACTOR
         specialTrainerGraphics() {
-            if (this.showSpecialTrainerGraphics == true) {
-                if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
-                else if (this.mapper.properties.battle.trainer.class == "YOUNGSTER" && this.mapper.properties.battle.trainer.number == 1) return `images/trainers/BEN.png` //YOUNGSTER BEN
-                else if (this.mapper.properties.battle.trainer.class == "POKEMANIAC" && this.mapper.properties.battle.trainer.number == 7) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
-                else if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
-                else if (this.mapper.properties.battle.trainer.class == "ROCKET" && this.mapper.properties.battle.trainer.number == 38) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
-                else if (this.mapper.properties.battle.trainer.class == "HIKER" && this.mapper.properties.battle.trainer.number == 9) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
-                else if (this.mapper.properties.battle.trainer.class == "LASS" && this.mapper.properties.battle.trainer.number == 3) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
-                else if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 1) return `images/trainers/GOLDEEN.png` //CERULEAN GYM GOLDEEN TRAINER
-                else if (this.mapper.properties.battle.trainer.class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3) return `images/trainers/${this.mapper.properties.battle.trainer.class.value}_${this.mapper.properties.battle.trainer.number}.png`
-                else if (this.mapper.properties.battle.trainer.class == "CHANNELER" && this.mapper.properties.battle.trainer.number == 10) return `images/trainers/AGATHAJR.png`
-                else if (this.mapper.properties.battle.trainer.class == "RIVAL1" && this.mapper.properties.battle.trainer.number == 1) return `images/trainers/RIVAL1.png` //LAB RIVAL
-                else if (this.mapper.properties.battle.trainer.class == "RIVAL1" && this.mapper.properties.battle.trainer.number == 2) return `images/trainers/RIVAL1.png` //ROUTE22 RIVAL
-                else if (this.mapper.properties.battle.trainer.class == "RIVAL1" && this.mapper.properties.battle.trainer.number == 3) return `images/trainers/RIVAL2.png` //CERULEAN RIVAL
-                else if (this.mapper.properties.battle.trainer.class == "RIVAL2" && this.mapper.properties.battle.trainer.number == 1) return `images/trainers/RIVAL2.png` //SS ANNE RIVAL
-                // else if (this.mapper.properties.battle.trainer.class == "RIVAL2" && this.mapper.properties.battle.trainer.number == 2) return `images/trainers/RIVAL2.png` //POKEMON TOWER RIVAL, 5 member team
-                // else if (this.mapper.properties.battle.trainer.class == "RIVAL2" && this.mapper.properties.battle.trainer.number == 3) return `images/trainers/RIVAL2.png` //POKEMON TOWER RIVAL, 5 member team
-                // else if (this.mapper.properties.battle.trainer.class == "RIVAL2" && this.mapper.properties.battle.trainer.number == 4) return `images/trainers/RIVAL2.png` //POKEMON TOWER RIVAL, 5 member team
-                else if (this.mapper.properties.battle.trainer.class == "BROCK") return "images/trainers/BROCK.png"
-                else if (this.mapper.properties.battle.trainer.class == "MISTY") return "images/trainers/MISTY.png"
-                else if (this.mapper.properties.battle.trainer.class == "LT.SURGE" && this.mapper.meta.gameName == `Pokemon Yellow`) return "images/trainers/LTSURGE.png"
-                else if (this.mapper.properties.battle.trainer.class == "LT.SURGE" && this.mapper.meta.gameName == `Pokemon Red and Blue`) return "images/trainers/LTSURGE-RED.png"
-                else if (this.mapper.properties.battle.trainer.class == "ERIKA") return "images/trainers/ERIKA.png"
-                else if (this.mapper.properties.battle.trainer.class == "KOGA") return "images/trainers/KOGA.png"
-                else if (this.mapper.properties.battle.trainer.class == "SABRINA" && this.mapper.meta.gameName == `Pokemon Yellow`) return "images/trainers/SABRINA.png"
-                else if (this.mapper.properties.battle.trainer.class == "SABRINA" && this.mapper.meta.gameName == `Pokemon Red and Blue`) return "images/trainers/SABRINA-RED.png"
-                else if (this.mapper.properties.battle.trainer.class == "BLAINE" && this.mapper.meta.gameName == `Pokemon Yellow`) return "images/trainers/BLAINE.png"
-                else if (this.mapper.properties.battle.trainer.class == "BLAINE" && this.mapper.meta.gameName == `Pokemon Red and Blue`) return "images/trainers/BLAINE-RED.png"
-                else if (this.mapper.properties.battle.trainer.class == "GIOVANNI" && this.mapper.properties.battle.trainer.number == 3) return "images/trainers/GIOVANNI.png"
-                else return null;
+            if (this.showSpecialTrainerGraphics) {
+              const { class: trainerClass, number: trainerNumber } = this.mapper.properties.battle.trainer;
+              switch (`${trainerClass}_${trainerNumber}`) {
+                case "JR TRAINER F_5":
+                  return "images/trainers/JR TRAINER F_5.png";
+                case "YOUNGSTER_1":
+                  return "images/trainers/BEN.png";
+                case "POKEMANIAC_7":
+                  return "images/trainers/POKEMANIAC_7.png";
+                case "JR TRAINER F_10":
+                  return "images/trainers/JR TRAINER F_10.png";
+                case "ROCKET_38":
+                  return "images/trainers/ROCKET_38.png";
+                case "HIKER_9":
+                  return "images/trainers/HIKER_9.png";
+                case "LASS_3":
+                  return "images/trainers/LASS_3.png";
+                case "JR TRAINER F_1":
+                  return "images/trainers/GOLDEEN.png";
+                case "JR TRAINER F_3":
+                  return "images/trainers/JR TRAINER F_3.png";
+                case "CHANNELER_10":
+                  return "images/trainers/AGATHAJR.png";
+                case "RIVAL1_1":
+                  return "images/trainers/RIVAL1.png";
+                case "RIVAL1_2":
+                  return "images/trainers/RIVAL1.png";
+                case "RIVAL1_3":
+                  return "images/trainers/RIVAL2.png";
+                case "RIVAL2_1":
+                  return "images/trainers/RIVAL2.png";
+                case "BROCK":
+                  return "images/trainers/BROCK.png";
+                case "MISTY":
+                  return "images/trainers/MISTY.png";
+                case "LT.SURGE":
+                  return "images/trainers/LTSURGE.png";
+                case "ERIKA":
+                  return "images/trainers/ERIKA.png";
+                case "KOGA":
+                  return "images/trainers/KOGA.png";
+                case "GIOVANNI_3":
+                  return "images/trainers/GIOVANNI.png";
+                default:
+                  return null;
+              }
             }
         },
 
-        g1martSelector(map) { //map value
-            if (this.inventory == false) {
-                return "Overworld"
+        //!OLD CODE
+        // g1martSelector(map) { //map value
+        //     if (this.inventory == false) {
+        //         return "Overworld"
+        //     }
+        //     else if (map == "Viridian City - Mart" ||
+        //     map == "Pewter City - Mart" ||
+        //     map == "Cerulean City - Mart" ||
+        //     map == "Vermilion City - Mart" ||
+        //     map == "Lavender Town - Mart" ||
+        //     map == "Fuchsia City - Mart" ||
+        //     map == "Cinnabar Island - Mart" ||
+        //     map == "CINNABAR_MART_COPY" ||
+        //     map == "Saffron City - Mart" ||
+        //     map == "Indigo Plateau - Lobby" ||
+        //     map == "Celadon City - Pokecenter" ||
+        //     map == "Saffron City - Pokecenter"
+        //     ) {
+        //         return "Mart" //currently unused
+        //     }
+        //     else if (map == "Celadon City - Department Store - 1F" ||
+        //     map == "Celadon City - Department Store - 2F" ||
+        //     map == "Celadon City - Department Store - 3F" ||
+        //     map == "Celadon City - Department Store - 4F" ||
+        //     map == "Celadon City - Department Store - 5F" ||
+        //     map == "Celadon City - Department Store - Roof" ||
+        //     map == "Celadon City - Department Store - Elevator") {
+        //         return "Department" //shows vitamins
+        //     }
+        //     else if (map == "Cinnabar Mansion" ||
+        //     map == "Safari Zone (Center)" ||
+        //     map == "Safari Zone (East)" ||
+        //     map == "Safari Zone (North)" ||
+        //     map == "Safari Zone (West)" ||
+        //     map == "Safari Zone - Secret House"
+        //     ) { //show vitamins in mansion & safari zone
+        //         return "Department" //shows vitamins
+        //     }
+        //     else {
+        //         return "Overworld" //shows regular stat labels
+        //     }
+        // },
+
+        //CO-PILOT REFACTOR
+        g1martSelector(map) {
+            if (!this.inventory) {
+              return "Overworld";
             }
-            else if (map == "Viridian City - Mart" ||
-            map == "Pewter City - Mart" ||
-            map == "Cerulean City - Mart" ||
-            map == "Vermilion City - Mart" ||
-            map == "Lavender Town - Mart" ||
-            map == "Fuchsia City - Mart" ||
-            map == "Cinnabar Island - Mart" ||
-            map == "CINNABAR_MART_COPY" ||
-            map == "Saffron City - Mart" ||
-            map == "Indigo Plateau - Lobby" ||
-            map == "Celadon City - Pokecenter" ||
-            map == "Saffron City - Pokecenter"
-            ) {
-                return "Mart" //currently unused
-            }
-            else if (map == "Celadon City - Department Store - 1F" ||
-            map == "Celadon City - Department Store - 2F" ||
-            map == "Celadon City - Department Store - 3F" ||
-            map == "Celadon City - Department Store - 4F" ||
-            map == "Celadon City - Department Store - 5F" ||
-            map == "Celadon City - Department Store - Roof" ||
-            map == "Celadon City - Department Store - Elevator") {
-                return "Department" //shows vitamins
-            }
-            else if (map == "Cinnabar Mansion" ||
-            map == "Safari Zone (Center)" ||
-            map == "Safari Zone (East)" ||
-            map == "Safari Zone (North)" ||
-            map == "Safari Zone (West)" ||
-            map == "Safari Zone - Secret House"
-            ) { //show vitamins in mansion & safari zone
-                return "Department" //shows vitamins
-            }
-            else {
-                return "Overworld" //shows regular stat labels
+          
+            switch (map) {
+              case "Viridian City - Mart":
+              case "Pewter City - Mart":
+              case "Cerulean City - Mart":
+              case "Vermilion City - Mart":
+              case "Lavender Town - Mart":
+              case "Fuchsia City - Mart":
+              case "Cinnabar Island - Mart":
+              case "CINNABAR_MART_COPY":
+              case "Saffron City - Mart":
+              case "Indigo Plateau - Lobby":
+              case "Celadon City - Pokecenter":
+              case "Saffron City - Pokecenter":
+                return "Mart"; // currently unused
+              case "Celadon City - Department Store - 1F":
+              case "Celadon City - Department Store - 2F":
+              case "Celadon City - Department Store - 3F":
+              case "Celadon City - Department Store - 4F":
+              case "Celadon City - Department Store - 5F":
+              case "Celadon City - Department Store - Roof":
+              case "Celadon City - Department Store - Elevator":
+              case "Cinnabar Mansion":
+              case "Safari Zone (Center)":
+              case "Safari Zone (East)":
+              case "Safari Zone (North)":
+              case "Safari Zone (West)":
+              case "Safari Zone - Secret House":
+                return "Department"; // shows vitamins
+              default:
+                return "Overworld"; // shows regular stat labels
             }
         },
 
+        //!OLD CODE - Co-pilot improved this
+        // battlePokemonCrop() {
+        //     if (this.mapper.properties.battle.trainer.totalPokemon == 1) {
+        //         return "height: 242px;"
+        //     }
+        //     else if (this.mapper.properties.battle.trainer.totalPokemon == 2) {
+        //         return "height: 402px;"
+        //     }
+        //     else if (this.mapper.properties.battle.trainer.totalPokemon == 3) {
+        //         return "height: 562px;"
+        //     }
+        //     else if (this.mapper.properties.battle.trainer.totalPokemon == 4) {
+        //         return "height: 722px;"
+        //     }
+        //     else if (this.mapper.properties.battle.trainer.totalPokemon == 5) {
+        //         return "height: 888px;"
+        //     }
+        //     else if (this.mapper.properties.battle.trainer.totalPokemon == 6) {
+        //         return "height: 1080px;"
+        //     }
+        // },
+
+        //CO-PILOT REFACTOR
         battlePokemonCrop() {
-            if (this.mapper.properties.battle.trainer.totalPokemon == 1) {
-                return "height: 242px;"
-            }
-            else if (this.mapper.properties.battle.trainer.totalPokemon == 2) {
-                return "height: 402px;"
-            }
-            else if (this.mapper.properties.battle.trainer.totalPokemon == 3) {
-                return "height: 562px;"
-            }
-            else if (this.mapper.properties.battle.trainer.totalPokemon == 4) {
-                return "height: 722px;"
-            }
-            else if (this.mapper.properties.battle.trainer.totalPokemon == 5) {
-                return "height: 888px;"
-            }
-            else if (this.mapper.properties.battle.trainer.totalPokemon == 6) {
-                return "height: 1080px;"
-            }
+            const heights = {
+              1: "242px",
+              2: "402px",
+              3: "562px",
+              4: "722px",
+              5: "888px",
+              6: "1080px"
+            };
+          
+            const totalPokemon = this.mapper.properties.battle.trainer.totalPokemon;
+            return `height: ${heights[totalPokemon]};`;
         },
         
         //GAMETIME FUNCTIONS
@@ -1142,76 +1413,78 @@ const app = Vue.createApp({
                 percent: (exp - currLvlExp) / (nextLvlExp - currLvlExp),
             };
         },
-        expPercent(x) {
-            if (this.mapper.properties.player.team[0].species.value != null) {
-                var growthRate = this.gen1dataGrowthMovepool.find(y => y.name === x.species.value)
-                var newExp = 0
-                if (growthRate.growth_rate == "Slow") {
-                    newExp = this.expPercentSlow(x)
-                }
-                else if (growthRate.growth_rate == "Medium Slow") {
-                    newExp = this.expPercentMediumSlow(x)
-                }
-                else if (growthRate.growth_rate == "Medium Fast") {
-                    newExp = this.expPercentMediumFast(x)
-                }
-                else if (growthRate.growth_rate == "Fast") {
-                    newExp = this.expPercentFast(x)
-                }
-                else    
-                    return 0
-                return newExp
-            }
-            return 0
-        },
-        expPercentFast(x) {
-            expBar = ((x.expPoints.value) - ((4 * (Math.pow(x.level.value, 3))) / 5)) / (((4 * (Math.pow(x.level.value + 1, 3))) / 5) - ((4 * (Math.pow(x.level.value, 3))) / 5)) // errors could lurk here
-            if ((expBar*100) > 100)
-                return 100
-            else if ((expBar*100) < 0)
-                return 0
-            else
-                return expBar * 100
-        },
-        expPercentMediumFast(x) {
-            expBar = (((x.expPoints.value) - (Math.pow(x.level.value, 3))) / ((Math.pow(x.level.value + 1, 3)) - (Math.pow(x.level.value, 3))))
-            if ((expBar*100) > 100)
-                return 100
-            else if ((expBar*100) < 0)
-                return 0
-            else
-                return expBar * 100
-        },
-        expPercentMediumSlow(x) { //this formula may be incorrect
-            var medSlow = (((((6 / 5) * (Math.pow(x.level.value, 3))) - (15 * (Math.pow(x.level.value, 2))) + (100 * x.level.value) - 140)))
-            expBar = (((x.expPoints.value) - medSlow) / ((((((6 / 5) * (Math.pow((x.level.value + 1), 3))) - (15 * (Math.pow((x.level.value + 1), 2))) + (100 * (x.level.value + 1)) - 140))) - medSlow)) // errors could lurk here
-            if ((expBar*100) > 100)
-                return 100
-            else if ((expBar*100) < 0)
-                return 0
-            else
-                return expBar * 100
-        },
-        expPercentSlow(x) {
-            expBar = (((x.expPoints.value) - (Math.floor((5 * (Math.pow(x.level.value, 3))) / 4))) / ((Math.floor((5 * (Math.pow(x.level.value + 1, 3))) / 4)) - (Math.floor((5 * (Math.pow(x.level.value, 3))) / 4)))) // errors could lurk here
-            if ((expBar*100) > 100)
-                return 100
-            else if ((expBar*100) < 0)
-                return 0
-            else
-                return expBar * 100
-        },
+
+        //!OLD EXP CALCULATIONS - UNUSED
+        // expPercent(x) {
+        //     if (this.mapper.properties.player.team[0].species.value != null) {
+        //         var growthRate = this.gen1dataGrowthMovepool.find(y => y.name === x.species.value)
+        //         var newExp = 0
+        //         if (growthRate.growth_rate == "Slow") {
+        //             newExp = this.expPercentSlow(x)
+        //         }
+        //         else if (growthRate.growth_rate == "Medium Slow") {
+        //             newExp = this.expPercentMediumSlow(x)
+        //         }
+        //         else if (growthRate.growth_rate == "Medium Fast") {
+        //             newExp = this.expPercentMediumFast(x)
+        //         }
+        //         else if (growthRate.growth_rate == "Fast") {
+        //             newExp = this.expPercentFast(x)
+        //         }
+        //         else    
+        //             return 0
+        //         return newExp
+        //     }
+        //     return 0
+        // },
+        // expPercentFast(x) {
+        //     expBar = ((x.expPoints.value) - ((4 * (Math.pow(x.level.value, 3))) / 5)) / (((4 * (Math.pow(x.level.value + 1, 3))) / 5) - ((4 * (Math.pow(x.level.value, 3))) / 5)) // errors could lurk here
+        //     if ((expBar*100) > 100)
+        //         return 100
+        //     else if ((expBar*100) < 0)
+        //         return 0
+        //     else
+        //         return expBar * 100
+        // },
+        // expPercentMediumFast(x) {
+        //     expBar = (((x.expPoints.value) - (Math.pow(x.level.value, 3))) / ((Math.pow(x.level.value + 1, 3)) - (Math.pow(x.level.value, 3))))
+        //     if ((expBar*100) > 100)
+        //         return 100
+        //     else if ((expBar*100) < 0)
+        //         return 0
+        //     else
+        //         return expBar * 100
+        // },
+        // expPercentMediumSlow(x) { //this formula may be incorrect
+        //     var medSlow = (((((6 / 5) * (Math.pow(x.level.value, 3))) - (15 * (Math.pow(x.level.value, 2))) + (100 * x.level.value) - 140)))
+        //     expBar = (((x.expPoints.value) - medSlow) / ((((((6 / 5) * (Math.pow((x.level.value + 1), 3))) - (15 * (Math.pow((x.level.value + 1), 2))) + (100 * (x.level.value + 1)) - 140))) - medSlow)) // errors could lurk here
+        //     if ((expBar*100) > 100)
+        //         return 100
+        //     else if ((expBar*100) < 0)
+        //         return 0
+        //     else
+        //         return expBar * 100
+        // },
+        // expPercentSlow(x) {
+        //     expBar = (((x.expPoints.value) - (Math.floor((5 * (Math.pow(x.level.value, 3))) / 4))) / ((Math.floor((5 * (Math.pow(x.level.value + 1, 3))) / 4)) - (Math.floor((5 * (Math.pow(x.level.value, 3))) / 4)))) // errors could lurk here
+        //     if ((expBar*100) > 100)
+        //         return 100
+        //     else if ((expBar*100) < 0)
+        //         return 0
+        //     else
+        //         return expBar * 100
+        // },
 
         // MOVE MANAGEMENT
         movePower(y) { //y = move1.value
             if (y) {
-                var move = this.gen1moves.find(x => x.Move.toUpperCase() === y)
+                var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
                 if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP")) {
                     level = this.mapper.properties.player.team[0].level.value
                     critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
                     power = move.Power
                     pokemon = this.gen1data.find(y => y.Pokemon === this.starterName)
-                    baseSpeed = pokemon.baseSpd
+                    baseSpeed = pokemon.baseSpd9
                     //test to see if the Pokemon always crits
                     if (baseSpeed > 64) { //if the Pokemon has 63 or less base speed it will crit less often
                         return power * critModifier
@@ -1224,6 +1497,7 @@ const app = Vue.createApp({
             }
             return null
         },
+
         moveDynamic(slot) {
             if (this.g1stateVariable == `Battle`) {
                 return this.mapper?.properties?.battle?.yourPokemon[`move${slot}`].value
@@ -1234,30 +1508,33 @@ const app = Vue.createApp({
         },
         moveType(y) { //y = move1.value
             if (y) {
-                var move = this.gen1moves.find(x => x.Move.toUpperCase() === y)
+                var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
                 if (move) return move.Type
             }
             return null
         },
-        moveAccuracyStatic(move) {
-            var moveObject = this.gen1moves.find(x => x.Move.toUpperCase() === move)
-            return moveObject.Accuracy
-        },
-        moveAccuracyDynamic(move) {
-            var moveObject = this.gen1moves.find(x => x.Move.toUpperCase() === move)
-            var moveAccuracy = moveObject.Accuracy
-            var stageMods = this.stageModifiersData.find(x => x.modType === "accuracy")
-            var currentModStage = this.batt.yourPokemon.modStageAccuracy.value
-            if (moveAccuracy == `-`) {
-                return `-`
-            }
-            else {
-                return Math.floor(moveAccuracy * stageMods[currentModStage])
-            }
-        },
+
+        //!DEPRECATED
+        // moveAccuracyStatic(move) {
+        //     var moveObject = this.gen1moves.find(x => x.Move.toLowerCase() === move.toLowerCase())
+        //     return moveObject.Accuracy
+        // },
+        //!DEPRECATED
+        // moveAccuracyDynamic(move) {
+        //     var moveObject = this.gen1moves.find(x => x.Move.toLowerCase() === move.toLowerCase())
+        //     var moveAccuracy = moveObject.Accuracy
+        //     var stageMods = this.stageModifiersData.find(x => x.modType === "accuracy")
+        //     var currentModStage = this.batt.yourPokemon.modStageAccuracy.value
+        //     if (moveAccuracy == `-`) {
+        //         return `-`
+        //     }
+        //     else {
+        //         return Math.floor(moveAccuracy * stageMods[currentModStage])
+        //     }
+        // },
         moveAccuracyEvasionDynamic(move) {
             if (move) {
-                var moveObject = this.gen1moves.find(x => x.Move.toUpperCase() === move)
+                var moveObject = this.gen1moves.find(x => x.Move.toLowerCase() === move.toLowerCase())
                 var moveAccuracy = moveObject.Accuracy
                 var accuracyStageMods = this.stageModifiersData.find(x => x.modType === "accuracy")
                 var currentAccuracyModStage = this.batt.yourPokemon.modStageAccuracy.value
@@ -1277,13 +1554,16 @@ const app = Vue.createApp({
             }
         },
 
-        // TYPE EFFECTIVENESS
-        checkTypes(x, y) { //x = type1.value, y = type2.value
-            if (x.value == y.value)
-                return true
-            else
-                return false
-        },
+        //!DEPRECATED
+        // // TYPE EFFECTIVENESS
+        // checkTypes(x, y) { //x = type1.value, y = type2.value
+        //     if (x.value == y.value)
+        //         return true
+        //     else
+        //         return false
+        // },
+
+        ////THIS FUNCTION IS DEPRECATED WITH typeEffectiveness()
         determineSTAB(x) { //x = move1.value
             if (this.addStabBonus == true) {
                 var pkmnType1 = this.mapper.properties.player.team[0].type1.value
@@ -1299,6 +1579,8 @@ const app = Vue.createApp({
         sleep(ms) {
             return new Promise((res) => setTimeout(res, ms))
         },
+
+        //!DEPRECATED - test other type effectiveness function first
         typeEffectiveness(x) { //x = move1.value
             if (this.typeCalcs == true) {
                 var stab = this.determineSTAB(x)
@@ -1350,8 +1632,48 @@ const app = Vue.createApp({
             }
             else { return this.movePower(x) }
         },
-        
 
+        //!NEW TYPE EFFECTIVENESS FUNCTION
+        type_effectiveness(pkmnData, moveNumber, enemyData) { //pkmnData = team[0] etc
+            if (this.typeCalcs == true) {
+                const move_data_array = Object.values(this.g1MoveData);
+                var move_name          = pkmnData[moveNumber].value
+                
+                if (move_name == null) { return "" } //stop the function if there is no move in that slot
+                
+                var move_type          = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Type
+                var move_info          = this.typeData.find(x => x.moveType === move_type)
+                var move_power         = this.movePower(move_name)
+                var move_category      = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Category
+                var attacker_type1     = pkmnData.type1.value
+                var attacker_type2     = pkmnData.type2.value
+                var defender_type1     = enemyData.type1.value
+                var defender_type2     = enemyData.type2.value
+                var multiplier_stab    = 1
+                var multiplier_type1   = move_info[defender_type1]
+                var multiplier_type2   = 1
+                var screen_reflect     = 1
+                var screen_lightscreen = 1
+                
+                //update variables
+                if (move_type == attacker_type1 || move_type == attacker_type2)                { multiplier_stab = 1.5 }
+                if (defender_type1 != defender_type2)                                          { multiplier_type2 = this.typeData.find(x => x.moveType === move_type)[defender_type2] }
+                if (move_type == "Normal" || move_type == "Fighting" || move_type == "Flying" || move_type == "Bug" || move_type == "Poison" || move_type == "Ghost" || move_type == "Ground" || move_type == "Rock" || move_type == "Steel") {
+                    move_category = "Physical" }
+                if (move_type == "Fire" || move_type == "Water" || move_type == "Grass" || move_type == "Electric" || move_type == "Psychic" || move_type == "Ice" || move_type == "Dragon" || move_type == "Dark") {
+                    move_category = "Special" }
+                if (enemyData.effects.reflect.value == true && move_category == "Physical")    { screen_reflect = 0.5 }
+                if (enemyData.effects.lightScreen.value == true && move_category == "Special") { screen_lightscreen = 0.5 }
+
+                //return if further updates aren't required
+                if (move_power == "-")                { return move_power } //returns "-" if the move has no power
+                if (this.g1stateVariable != `Battle`) { return Math.floor(move_power * multiplier_stab) } //returns the move's base power if not in battle
+
+                //calculate the move's effective power
+                return Math.floor(move_power * multiplier_stab * multiplier_type1 * multiplier_type2 * screen_reflect * screen_lightscreen)
+            }
+            else { return this.movePower(pkmnData[moveNumber].value) }
+        },
 
         //BADGE BOOSTS
         badgeBoost(badge, stat) {
@@ -1361,16 +1683,18 @@ const app = Vue.createApp({
                 return stat
         },
         
-        logicalStatementCheck() {
-            if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1)
-                return true
-            else
-                return false
-        },
+        //!DEPRECATED
+        // logicalStatementCheck() {
+        //     if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1)
+        //         return true
+        //     else
+        //         return false
+        // },
 
-        hpDvCalculation() {
-            return (((this.mapper.properties.player.team[0].dvAttack.value % 2) * 8) + ((this.mapper.properties.player.team[0].dvDefense.value % 2) * 4) + ((this.mapper.properties.player.team[0].dvSpeed.value % 2) * 2) + ((this.mapper.properties.player.team[0].dvSpecial.value % 2) * 1))
-        },
+        //!UNUSED
+        // hpDvCalculation() {
+        //     return (((this.mapper.properties.player.team[0].dvAttack.value % 2) * 8) + ((this.mapper.properties.player.team[0].dvDefense.value % 2) * 4) + ((this.mapper.properties.player.team[0].dvSpeed.value % 2) * 2) + ((this.mapper.properties.player.team[0].dvSpecial.value % 2) * 1))
+        // },
     },
 
 //--------- PROGRAM MOUNTED ---------------------------------------------------------------------------------------------------------------//
@@ -1445,11 +1769,6 @@ const app = Vue.createApp({
         });
 
         //ENEMY STATE MANAGER
-        //"Pokemon", "Fainted"
-        // this.mapper.properties.battle.enemyPokemon.partyPos.change(async (newProp, oldProp) => {
-        //     await this.sleep(100)
-        //     this.enemyState = "Pokemon"
-        // })
         if (this.mapper.properties.player.team[0].level.value == 0) 
             this.enemyState = "Not In Battle";
         else if (this.mapper.properties.battle.type.value == "None")
@@ -1465,29 +1784,6 @@ const app = Vue.createApp({
         else if  (this.mapper.properties.battle.enemyPokemon.hp.value > 0 && this.mapper.properties.screen.menu.currentItem.value > 0)
             this.enemyState = "Pokemon";
 
-        // //NOT IN BATTLE
-        // // wait for events to change the state
-        // this.mapper.properties.player.team[0].level.change((prop) => {
-        //     if (prop.value == 0) {
-        //         this.enemyState = "Not In Battle";
-        //     } else if (this.g1stateVariable == "Base Stats" && this.map.overworld.map.value == "Pallet Town - Oak's Lab") {
-        //         this.enemyState = "Not In Battle";
-        //     } else if (this.g1stateVariable == "Base Stats") {
-        //         this.enemyState = "Not In Battle";
-        //     }
-        // });
-        // this.mapper.properties.battle.type.change((prop) => {
-        //     if (this.g1stateVariable == "Base Stats" && this.map.overworld.map.value == "Pallet Town - Oak's Lab") { //FIX for flicker in Oak's lab
-        //         this.enemyState = "Battle Starting";
-        //     }; 
-        //     if (this.g1stateVariable == "Base Stats") return; // ignore everything if we still dont have a pokemon
-
-        //     if (prop.value == "Wild" || prop.value == "Trainer") {
-        //         this.enemyState = "Battle Starting";
-        //     } else if (prop.value == "None") {
-        //         this.enemyState = "Not In Battle";
-        //     }
-        // });
         this.mapper.properties.battle.type.change((prop) => {
             if (prop.value == "Wild" || prop.value == "Trainer") {
                 this.enemyState = "Battle Starting";
@@ -1879,6 +2175,12 @@ const app = Vue.createApp({
                     ])  
                 }
             }
+            // else if (this.secondPlaythrough == true && this.mtmoonEncounters == true && this.mapper.meta.gameName == `Pokemon Red and Blue`) {
+            //     if ()
+            // }
+            // else if (this.secondPlaythrough == true && this.mtmoonEncounters == true && this.mapper.meta.gameName == `Yellow`) {
+
+            // }
         }
         
         //Recalculate starting stats when the DVs in slot 1 change (when you receive your starter)

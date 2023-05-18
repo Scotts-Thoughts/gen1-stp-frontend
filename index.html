@@ -25,18 +25,19 @@
                 <div class="testingArea1">
                     <div>GamestateVariable: {{ g1stateVariable }}</div>
                     <div>EnemyState: {{enemyState}}</div><br>
+                    <div>Starter: {{starterName}}</div><br>
                     <br>
                     <span style="text-decoration: underline;">Player Damage Ranges:</span><br>
-                    {{pascalCaseSpace(camelCase(moveDynamic(1)))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[1] }})<br>
-                    {{pascalCaseSpace(camelCase(moveDynamic(2)))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[1] }})<br>
-                    {{pascalCaseSpace(camelCase(moveDynamic(3)))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[1] }})<br>
-                    {{pascalCaseSpace(camelCase(moveDynamic(4)))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[1] }})<br>
+                    {{capitalization_format(moveDynamic(1))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[1] }})<br>
+                    {{capitalization_format(moveDynamic(2))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[1] }})<br>
+                    {{capitalization_format(moveDynamic(3))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[1] }})<br>
+                    {{capitalization_format(moveDynamic(4))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[1] }})<br>
                     <br>
                     <span style="text-decoration: underline;">AI Damage Ranges</span><br>
-                    {{pascalCaseSpace(camelCase(battEn.move1.value))}}: {{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[1] }})<br>
-                    {{pascalCaseSpace(camelCase(battEn.move2.value))}}: {{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[1] }})<br>
-                    {{pascalCaseSpace(camelCase(battEn.move3.value))}}: {{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[1] }})<br>
-                    {{pascalCaseSpace(camelCase(battEn.move4.value))}}: {{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[1] }})<br>
+                    {{capitalization_format(battEn.move1.value)}}: {{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[1] }})<br>
+                    {{capitalization_format(battEn.move2.value)}}: {{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[1] }})<br>
+                    {{capitalization_format(battEn.move3.value)}}: {{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[1] }})<br>
+                    {{capitalization_format(battEn.move4.value)}}: {{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[1] }})<br>
                     <br>
                 </div>
                 <div class="testingArea2">
@@ -70,8 +71,6 @@
                     <img v-show="map.player.badges.badge7.value === true" class="badgeBoostStyle badgeBoostSpc" :src="badgeGraphic(map.player.badges.badge7)" style="top: 914px; opacity: .3; left: 206px; z-index: 2;"/>      
                 </div>                         
     
-
-
 <!-- BASE STATS -------------------------------------------------------------------------------->
                 <div class="statsContainer">  
                     <div v-if="g1stateVariable == `Base Stats`">
@@ -194,8 +193,8 @@
                     <div v-for="move in pkmnMoves">
                         <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0][move].value != null">
                             <img :class="`movesetStyling iconStyling ${move}icon`" :src="moveTypeIcon(s1dynamic[move].value)" />
-                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling moveStyling ${move}`">{{ move_name(pascalCaseDash(pascalCaseSpace(camelCase(s1dynamic[move].value)))) }}</div>
-                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling powerStyling ${move}`" :key="typeEffectiveness(s1dynamic[move].value)">{{ typeEffectiveness(s1dynamic[move].value) }}</div>
+                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling moveStyling ${move}`">{{ move_name(capitalization_format(s1dynamic[move].value)) }}</div>
+                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling powerStyling ${move}`" :key="type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon)">{{ type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon) }}</div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling accuracyStyling ${move}`">{{ moveAccuracyEvasionDynamic(s1dynamic[move].value) }}<span style="font-size: 20px;">%</span></div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling ppStyling ${move}`" v-bind:style="{ color: ppValueColor(mapper.properties.player.team[0].move1pp) }">{{ mapper.properties.player.team[0][move + "pp"] }}</div>
                         </div>
@@ -205,7 +204,7 @@
 <!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade">
                     <!-- <div v-if="((g1stateVariable == `Battle` || g1stateVariable == `To Battle` || g1stateVariable == `From Battle`) && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true && secondPlaythrough == true" style="position: absolute;" key=2>
-                        <div class="trainerLabel">{{pascalCaseDot(pascalCaseSpace(fixTrainerName(batt.trainer.class.value, batt.trainer.number)))}}</div>
+                        <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <img class="enemyPng" :src="`images/enemy_area_2/${starterName.toLowerCase()}${overlayName}.png`" :style="battlePokemonCrop()"/>
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
@@ -214,10 +213,10 @@
                                     <div class="damageRangeLabels ePkmnEnemyDamageRangeLabel" :style="enemyPkmnText(batt.trainer.team[x])">Computer</div>
                                     <img class="ePkmnSprite" :style="enemyPkmnFaint(batt.trainer.team[x])" :src="`images/pokemon/${currentTrainer.pokemon[x]?.name}.png`"/>
                                     <div class="ePkmnSpecies opacityTransition" :style="enemyPkmnSpecies(batt.trainer.team[x])">{{currentTrainer.pokemon[x]?.name}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnRanges ePkmnPlayerRange opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{ pascalCaseSpace(camelCase(damageComparisonPlayer(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value))[6])) }}
+                                    <div class="ePkmnMoveStyle ePkmnRanges ePkmnPlayerRange opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{ capitalization_format(damageComparisonPlayer(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value))[6]) }}
                                         <br>{{ damageComparisonPlayer(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value))[2] }}% - {{ damageComparisonPlayer(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value))[3] }}% 
                                     </div>
-                                    <div class="ePkmnMoveStyle ePkmnRanges ePkmnEnemyRange opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{ pascalCaseSpace(camelCase(damageComparisonEnemy(enemyDynamic(x,batt.enemyPokemon.partyPos.value), s1dynamic, x)[6])) }}
+                                    <div class="ePkmnMoveStyle ePkmnRanges ePkmnEnemyRange opacityTransition" :style="enemyPkmnText(batt.trainer.team[x])">{{ capitalization_format(damageComparisonEnemy(enemyDynamic(x,batt.enemyPokemon.partyPos.value), s1dynamic, x)[6]) }}
                                         <br>{{ damageComparisonEnemy(enemyDynamic(x,batt.enemyPokemon.partyPos.value), s1dynamic, x)[2] }}% - {{ damageComparisonEnemy(enemyDynamic(x,batt.enemyPokemon.partyPos.value), s1dynamic, x)[3] }}% 
                                     </div>
                                     <div class="ePkmnSpeedComparison" :style="speedColouration(speedComparison(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value)),batt.trainer.team[x])">{{ speedComparison(s1dynamic, enemyDynamic(x,batt.enemyPokemon.partyPos.value)) }}</div>
@@ -226,7 +225,7 @@
                         </div> 
                     </div> -->
                     <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
-                        <div class="trainerLabel">{{pascalCaseDot(pascalCaseSpace(fixTrainerName(batt.trainer.class.value, batt.trainer.number)))}}</div>
+                        <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <img class="enemyPng" :src="`images/enemy_area/${starterName.toLowerCase()}${overlayName}.png`" :style="battlePokemonCrop()"/>
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
@@ -323,25 +322,6 @@
                     </transition>
                 </div>
                 
-                <!-- NEW STATS -->
-                <!-- <div class="border stats">
-                    <div class="header">Base Stats</div>
-                    <div class="posAbs growthRate">Slow</div>
-                    <div class="columnStyle column1 row1 statLabelStyle">HP:</div>
-                    <div class="columnStyle column1 row2 statLabelStyle">Atk:</div>
-                    <div class="columnStyle column1 row3 statLabelStyle">Def:</div> 
-                    <div class="columnStyle column3 row2 statLabelStyle">Spc:</div>
-                    <div class="columnStyle column3 row3 statLabelStyle">Spe:</div>
-                    <div class="posAbs critRateLabel">crit rate:</div>
-                    <div class="posAbs statStyle column2 statrow1">150</div>
-                    <div class="posAbs statStyle column2 statrow2">155</div>
-                    <div class="posAbs statStyle column2 statrow3">180</div>
-                    <div class="posAbs statStyle column4 statrow2">195</div>
-                    <div class="posAbs statStyle column4 statrow3">160</div>
-                    <div class="posAbs critRateValue">11.72%</div>
-                    <div></div>
-                </div> -->
-
 <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
                 <div v-show="expBarToggle == true" class="expBar">
                     <img class="expLabelGen1" src="images/exp_bar/exp_label.png"/>
@@ -353,8 +333,6 @@
     </div>
 
 <!------ JAVASCRIPT --------------------------------------------------------------------------------------------------------------------->
-    <!-- <script src="https://unpkg.com/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script>  -->
-    <!-- <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script> -->
     <script src="packages/signalR.js"></script>
     <script src="packages/vue.js"></script>
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
