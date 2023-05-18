@@ -7,7 +7,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "An HP-draining attack. It adds half the HP it drained from the target to the attacker's HP."
   },
 "Pin Missile" :
@@ -18,7 +17,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "An attack that fires many needle-like projectiles from the body. Strikes several times."
   },
 "String Shot" :
@@ -29,7 +27,6 @@ const g1MoveData = {
     Accuracy: 95,
     PP: 40,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Strings are sprayed out and wrapped around the target to reduce its SPEED."
   },
 "Twineedle" :
@@ -40,7 +37,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "An attack that strikes twice. The target may occasionally become poisoned."
   },
 "Dragon Rage" :
@@ -51,7 +47,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Fixed",
-    CategoryST: "Fixed",
     Description: "A DRAGON-type attack. It inflicts a set amount of damage, regardless of the target's type."
   },
 "Thunder" :
@@ -62,7 +57,6 @@ const g1MoveData = {
     Accuracy: 70,
     PP: 10,
     Category: "Special",
-    CategoryST: "Special",
     Description: "The strongest of all ELECTRIC-type attacks. Has a one-in-ten chance of paralyzing the target."
   },
 "ThunderPunch" :
@@ -73,7 +67,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A special ELECTRIC-type attack. Has a one-in-ten chance of paralyzing the target."
   },
 "Thundershock" :
@@ -84,7 +77,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Special",
-    CategoryST: "Special",
     Description: "An ELECTRIC-type attack. Has a one-in-ten chance of paralyzing the target."
   },
 "Thunder Wave" :
@@ -95,7 +87,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Status",
-    CategoryST: "Status",
     Description: "A special move that causes paralysis. When paralyzed, the victim has a one-in-four chance of immobility."
   },
 "Thunderbolt" :
@@ -106,7 +97,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Special",
-    CategoryST: "Special",
     Description: "An ELECTRIC-type attack. Has a one-in-ten chance of paralyzing the target."
   },
 "Counter" :
@@ -117,7 +107,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 20,
     Category: "Fixed",
-    CategoryST: "Fixed",
     Description: "A retaliation move that pays back double the damage of a physical attack. Highly accurate."
   },
 "Double Kick" :
@@ -128,7 +117,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A FIGHTING-type attack. As the name implies, it is actually two quick kicks in succession."
   },
 "Hi Jump Kick" :
@@ -139,7 +127,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "Stronger than a JUMP KICK. If it misses, the attacker sustains 1/8 the damage it should have caused."
   },
 "Jump Kick" :
@@ -150,7 +137,6 @@ const g1MoveData = {
     Accuracy: 95,
     PP: 25,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A forceful FIGHTING-type attack. If it misses, however, the attacker gets hurt."
   },
 "Low Kick" :
@@ -161,7 +147,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A FIGHTING-type attack. Has a one-in-three chance of making the target flinch if it connects."
   },
 "Rolling Kick" :
@@ -172,7 +157,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A sharp FIGHTING-type attack. Has a one-in-three chance of making the target flinch if it connects."
   },
 "Seismic Toss" :
@@ -183,7 +167,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Fixed",
-    CategoryST: "Fixed",
     Description: "A FIGHTING-type attack. Throws the target with enough force to flip the world upside down."
   },
 "Submission" :
@@ -194,7 +177,6 @@ const g1MoveData = {
     Accuracy: 80,
     PP: 25,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "The strongest FIGHTING attack. One quarter of the damage it inflicts comes back to hurt the attacker."
   },
 "Ember" :
@@ -205,7 +187,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 25,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A FIRE-type attack. Has a one-in-ten chance of leaving the target with a damaging burn."
   },
 "Fire Blast" :
@@ -216,7 +197,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 5,
     Category: "Special",
-    CategoryST: "Special",
     Description: "The strongest FIRE-type attack. Has a one-in-three chance of inflicting a burn on the target."
   },
 "Fire Punch" :
@@ -227,7 +207,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A special FIRE-type attack. Has a one-in-ten chance of inflicting a burn on the target."
   },
 "Fire Spin" :
@@ -238,7 +217,6 @@ const g1MoveData = {
     Accuracy: 70,
     PP: 15,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A FIRE-type attack that lasts two to five turns. The target cannot move while surrounded by flames."
   },
 "Flamethrower" :
@@ -249,7 +227,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A powerful FIRE-type attack. Has a one-in-ten chance of leaving the target with a damaging burn."
   },
 "Drill Peck" :
@@ -260,7 +237,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A standard FLYING-type attack. It is strong and highly likely to hit the target."
   },
 "Fly" :
@@ -271,7 +247,6 @@ const g1MoveData = {
     Accuracy: 95,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "The Pokémon flies high, then strikes in the next turn. Used for flying to places already visited."
   },
 "Mirror Move" :
@@ -282,7 +257,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Status",
-    CategoryST: "Misc",
     Description: "A move that strikes back with the opponent's last move. This move comes after the enemy's move."
   },
 "Peck" :
@@ -293,7 +267,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 35,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A standard FLYING-type attack. It is favored by Pokémon that have beaks and/or horns."
   },
 "Sky Attack" :
@@ -304,7 +277,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 5,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "The strongest FLYING-type attack. Energy is stored in the first turn, then fired the next turn."
   },
 "Wing Attack" :
@@ -315,7 +287,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 35,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A FLYING-type attack. The attacking Pokémon spreads its wings and charges at the target."
   },
 "Confuse Ray" :
@@ -326,7 +297,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Status",
-    CategoryST: "Status",
     Description: "A sinister flash of light makes the target confused. A special GHOST-type technique."
   },
 "Lick" :
@@ -337,7 +307,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A GHOST-type attack. Has a one-in-three chance of leaving the target with paralysis."
   },
 "Night Shade" :
@@ -348,7 +317,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Fixed",
-    CategoryST: "Fixed",
     Description: "A GHOST-type attack. Highly accurate, it inflicts damage regardless of the target's type."
   },
 "Absorb" :
@@ -359,7 +327,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A GRASS-type attack. It adds half the HP it drained from the target to the attacker's HP."
   },
 "Leech Seed" :
@@ -370,7 +337,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 10,
     Category: "Status",
-    CategoryST: "Status",
     Description: "Plants a seed on the target Pokémon. The seed slowly drains the target's HP for the attacker."
   },
 "Mega Drain" :
@@ -381,7 +347,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A GRASS-type attack. It adds half the HP it drained from the target to the attacker's HP."
   },
 "Petal Dance" :
@@ -392,7 +357,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A dance-like attack that lasts two to three turns. Afterwards, the attacker becomes confused."
   },
 "Razor Leaf" :
@@ -403,7 +367,6 @@ const g1MoveData = {
     Accuracy: 95,
     PP: 25,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A GRASS-type attack that sends sharp-edged leaves at the target. Likely to get a critical hit."
   },
 "Sleep Powder" :
@@ -414,7 +377,6 @@ const g1MoveData = {
     Accuracy: 75,
     PP: 15,
     Category: "Status",
-    CategoryST: "Status",
     Description: "Induces sleep. A Pokémon will stay asleep for several turns if an item isn't used to wake it."
   },
 "SolarBeam" :
@@ -425,7 +387,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Special",
-    CategoryST: "Special",
     Description: "The strongest GRASS-type attack. Energy is absorbed in the first turn, then fired the next turn."
   },
 "Spore" :
@@ -436,7 +397,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Status",
-    CategoryST: "Status",
     Description: "Special spores are scattered from mushrooms. If the opponent inhales the spores, it will fall asleep."
   },
 "Stun Spore" :
@@ -447,7 +407,6 @@ const g1MoveData = {
     Accuracy: 75,
     PP: 30,
     Category: "Status",
-    CategoryST: "Status",
     Description: "A special move that causes paralysis. When paralyzed, the victim has a one-in-four chance of immobility."
   },
 "Vine Whip" :
@@ -458,7 +417,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A GRASS-type attack. The Pokémon uses its cruel whips to strike the opponent."
   },
 "Bone Club" :
@@ -469,7 +427,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A physical attack using a bone as a club. If it connects, it may cause the target to flinch."
   },
 "Bonemerang" :
@@ -480,7 +437,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 10,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A boomerang made of bone is thrown to inflict damage twice - on the way out and on its return."
   },
 "Dig" :
@@ -491,7 +447,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "The attacker digs underground in the first turn, then pops up in the next turn to attack."
   },
 "Earthquake" :
@@ -502,7 +457,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "An attack that inflicts damage by shaking the ground. It is useless against FLYING-type Pokémon."
   },
 "Fissure" :
@@ -513,7 +467,6 @@ const g1MoveData = {
     Accuracy: 30,
     PP: 5,
     Category: "OHKO",
-    CategoryST: "OHKO",
     Description: "Causes a single-hit knockout if it hits. Useless against FLYING-type Pokémon."
   },
 "Aurora Beam" :
@@ -524,7 +477,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Special",
-    CategoryST: "Special",
     Description: "An ICE-type attack. Has a one-in-three chance of reducing the target's ATTACK power."
   },
 "Blizzard" :
@@ -535,7 +487,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 5,
     Category: "Special",
-    CategoryST: "Special",
     Description: "The strongest ICE-type attack. Has a one-in-ten chance of freezing the target solid."
   },
 "Haze" :
@@ -546,7 +497,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Eliminates all changes affecting status, such as SPEED and accuracy, of both Pokémon in battle."
   },
 "Ice Beam" :
@@ -557,7 +507,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Special",
-    CategoryST: "Special",
     Description: "An ICE-type attack. Has a one-in-ten chance of freezing the target solid."
   },
 "Ice Punch" :
@@ -568,7 +517,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A special ICE-type attack. Has a one-in-ten chance of freezing the target."
   },
 "Mist" :
@@ -579,7 +527,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Status",
-    CategoryST: "Status",
     Description: "Provides full protection against any enemy status attack, such as those that lower DEFENSE."
   },
 "Barrage" :
@@ -590,7 +537,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "Several spheres are thrown consecutively at the target to inflict damage."
   },
 "Bide" :
@@ -601,7 +547,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 10,
     Category: "Fixed",
-    CategoryST: "Fixed",
     Description: "The user waits for several turns. At the end, it returns double the damage it received."
   },
 "Bind" :
@@ -612,7 +557,6 @@ const g1MoveData = {
     Accuracy: 74.6,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "Traps and squeezes the target over several turns. The target cannot move while under attack."
   },
 "Bite" :
@@ -623,7 +567,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 25,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A bite made using sharp fangs. This may cause the opponent to flinch, and it might not attack."
   },
 "Body Slam" :
@@ -634,7 +577,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Has a one-in-three chance of paralyzing the target if it connects."
   },
 "Comet Punch" :
@@ -645,7 +587,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "Although each slap is weak, this attack hits the target two to five times in succession."
   },
 "Constrict" :
@@ -656,7 +597,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 35,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Has a one-in-three chance of reducing the target's SPEED."
   },
 "Conversion" :
@@ -667,7 +607,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 30,
     Category: "Status",
-    CategoryST: "Misc",
     Description: "A special move that switches the user's elemental type to that of the target."
   },
 "Cut" :
@@ -678,7 +617,6 @@ const g1MoveData = {
     Accuracy: 95,
     PP: 30,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Also used for cutting small bushes to open new paths."
   },
 "Defense Curl" :
@@ -689,7 +627,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 40,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Raises the user's DEFENSE. Can normally be used up to six times in a row."
   },
 "Disable" :
@@ -700,7 +637,6 @@ const g1MoveData = {
     Accuracy: 55,
     PP: 20,
     Category: "Status",
-    CategoryST: "Misc",
     Description: "A technique that disables one of the target's moves. The disabled move can't be used until it wears off."
   },
 "Dizzy Punch" :
@@ -711,7 +647,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. The punch is relatively strong and highly accurate."
   },
 "DoubleSlap" :
@@ -722,7 +657,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 10,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "Although each slap is weak, this attack hits the target two to five times in succession."
   },
 "Double Team" :
@@ -733,7 +667,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 15,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Creates illusionary copies of the user. The copies disorient the enemy, reducing its accuracy."
   },
 "Double-Edge" :
@@ -744,7 +677,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A charging tackle attack. One quarter of the damage it inflicts comes back to hurt the attacker."
   },
 "Egg Bomb" :
@@ -755,7 +687,6 @@ const g1MoveData = {
     Accuracy: 75,
     PP: 10,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. An egg is launched at the target. It may miss, however."
   },
 "Explosion" :
@@ -766,7 +697,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 5,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "The most powerful attack of all. However, the attacker faints after using this move."
   },
 "Flash" :
@@ -777,7 +707,6 @@ const g1MoveData = {
     Accuracy: 70,
     PP: 20,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Creates a brilliant flash of light that blinds the target. This technique reduces the opponent's accuracy."
   },
 "Focus Energy" :
@@ -788,7 +717,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 30,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Raises the likelihood of nailing the opponent's weak spot for a critical hit."
   },
 "Fury Attack" :
@@ -799,7 +727,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. The Pokémon rapidly jabs at its opponent several times."
   },
 "Fury Swipes" :
@@ -810,7 +737,6 @@ const g1MoveData = {
     Accuracy: 80,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "The target is scratched by sharp claws two to five times in quick succession."
   },
 "Glare" :
@@ -821,7 +747,6 @@ const g1MoveData = {
     Accuracy: 75,
     PP: 30,
     Category: "Status",
-    CategoryST: "Status",
     Description: "The target is transfixed with terrifying sharp eyes. The target is frightened into paralysis."
   },
 "Growl" :
@@ -832,7 +757,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 40,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "A technique that lowers the target's ATTACK power. Can normally be used up to six times."
   },
 "Growth" :
@@ -843,7 +767,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 40,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Raises SPECIAL to make special attacks stronger and enhance protection against special moves."
   },
 "Guillotine" :
@@ -854,7 +777,6 @@ const g1MoveData = {
     Accuracy: 30,
     PP: 5,
     Category: "OHKO",
-    CategoryST: "OHKO",
     Description: "A single-hit knockout attack. Learned only by Pokémon that have large pincers."
   },
 "Gust" :
@@ -865,7 +787,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 35,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack used by bird Pokémon. A powerful wind is generated by flapping wings."
   },
 "Harden" :
@@ -876,7 +797,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 30,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Raises the user's DEFENSE. Useful when battling physically strong Pokémon."
   },
 "Headbutt" :
@@ -887,7 +807,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Has a one-in-three chance of making the target flinch if it connects."
   },
 "Horn Attack" :
@@ -898,7 +817,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 25,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. A sharp horn is driven hard into the target to inflict damage."
   },
 "Horn Drill" :
@@ -909,7 +827,6 @@ const g1MoveData = {
     Accuracy: 30,
     PP: 5,
     Category: "OHKO",
-    CategoryST: "OHKO",
     Description: "A single-hit knockout attack. Learned only by Pokémon with a horn or horns."
   },
 "Hyper Beam" :
@@ -920,7 +837,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 5,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "An extremely powerful attack. The attacker becomes so tired, it has to rest the next turn."
   },
 "Hyper Fang" :
@@ -931,7 +847,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Has a one-in-ten chance of making the target flinch."
   },
 "Karate Chop" :
@@ -942,7 +857,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 25,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Often turns into a critical hit and inflicts double the damage."
   },
 "Leer" :
@@ -953,7 +867,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "A technique that lowers the target's DEFENSE. Useful against tough, armored Pokémon."
   },
 "Lovely Kiss" :
@@ -964,7 +877,6 @@ const g1MoveData = {
     Accuracy: 75,
     PP: 10,
     Category: "Status",
-    CategoryST: "Status",
     Description: "A special move that puts the target to sleep with a big kiss. (Actually, the victim passes out.)"
   },
 "Mega Kick" :
@@ -975,7 +887,6 @@ const g1MoveData = {
     Accuracy: 75,
     PP: 5,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Out of all the Pokémon kicking attacks, this is the strongest."
   },
 "Mega Punch" :
@@ -986,7 +897,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack move. It is highly accurate and relatively powerful."
   },
 "Metronome" :
@@ -997,7 +907,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 10,
     Category: "Status",
-    CategoryST: "Misc",
     Description: "The user waggles its finger, triggering a move. There is no telling what will happen."
   },
 "Mimic" :
@@ -1008,7 +917,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Status",
-    CategoryST: "Misc",
     Description: "A move for learning one of the opponent's moves, for use during that battle only."
   },
 "Minimize" :
@@ -1019,7 +927,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "Reduces the user's size and makes it harder to hit. Can normally be used up to six times."
   },
 "Pay Day" :
@@ -1030,7 +937,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A move that also nets money at the end of battle. How much depends on the attack frequency and level."
   },
 "Pound" :
@@ -1041,7 +947,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 35,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Slightly stronger than TACKLE. Many Pokémon know this move."
   },
 "Quick Attack" :
@@ -1052,7 +957,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "An attack that always strikes first. If both Pokémon use this, the one with higher SPEED attacks first."
   },
 "Rage" :
@@ -1063,7 +967,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A non-stop attack move. The user's ATTACK power increases every time it sustains damage."
   },
 "Razor Wind" :
@@ -1074,7 +977,6 @@ const g1MoveData = {
     Accuracy: 75,
     PP: 10,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A two-turn attack with the wind attack in the second turn. Learned by many FLYING-type Pokémon."
   },
 "Recover" :
@@ -1085,7 +987,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 20,
     Category: "Status",
-    CategoryST: "Heal",
     Description: "Restores HP by 1/2 of the user's maximum HP. Few Pokémon learn this technique on their own."
   },
 "Roar" :
@@ -1096,7 +997,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Status",
-    CategoryST: "Bad",
     Description: "A terrifying roar that drives wild Pokémon away. It is useful only in the wild."
   },
 "Sand-Attack" :
@@ -1107,7 +1007,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "An attack in which sand is used to blind the target and reduce its attack accuracy."
   },
 "Scratch" :
@@ -1118,7 +1017,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 35,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Sharp claws are used to inflict damage on the target."
   },
 "Screech" :
@@ -1129,7 +1027,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 40,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "A move that makes a horrible noise. It sharply reduces the target's DEFENSE."
   },
 "Selfdestruct" :
@@ -1140,7 +1037,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 5,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "The user explodes, inflicting damage on the enemy, then faints. Useless against GHOST-type."
   },
 "Sharpen" :
@@ -1151,7 +1047,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 30,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Raises the user's ATTACK power. The edges of the Pokémon are made harder for more impact."
   },
 "Sing" :
@@ -1162,7 +1057,6 @@ const g1MoveData = {
     Accuracy: 55,
     PP: 15,
     Category: "Status",
-    CategoryST: "Status",
     Description: "A special NORMAL-type technique. A soothing melody lulls the target to sleep."
   },
 "Skull Bash" :
@@ -1173,7 +1067,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "In the first turn, the attacker tucks in its head. The next turn, it head-butts at full steam."
   },
 "Slam" :
@@ -1184,7 +1077,6 @@ const g1MoveData = {
     Accuracy: 74.6,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack move. The attacker uses an appendage (e.g. tail) to slam the target hard."
   },
 "Slash" :
@@ -1195,7 +1087,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. It has a high probability of a critical hit for inflicting double the damage."
   },
 "SmokeScreen" :
@@ -1206,7 +1097,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Creates an obscuring cloud of smoke that reduces the enemy's accuracy."
   },
 "Softboiled" :
@@ -1217,7 +1107,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 10,
     Category: "Status",
-    CategoryST: "Heal",
     Description: "Restores HP by 1/2 of the user's maximum HP. May also be used in the field."
   },
 "SonicBoom" :
@@ -1228,7 +1117,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. It inflicts a set amount of damage regardless of the target's type."
   },
 "Spike Cannon" :
@@ -1239,7 +1127,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A physical attack consisting of two to five consecutive hits. Highly accurate."
   },
 "Splash" :
@@ -1250,7 +1137,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 40,
     Category: "Status",
-    CategoryST: "Bad",
     Description: "A move that involves only flopping and SPLASHing around in front of the opponent. It has no effect."
   },
 "Stomp" :
@@ -1261,7 +1147,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Has a one-in-three chance of making the target flinch if it connects."
   },
 "Strength" :
@@ -1272,7 +1157,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A very powerful NORMAL-type attack. Also used for moving obstacles like boulders."
   },
 "Struggle" :
@@ -1283,7 +1167,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "Used only if the user runs totally out of PP. The user is hit with 1/4 of the damage it inflicts."
   },
 "Substitute" :
@@ -1294,7 +1177,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 10,
     Category: "Status",
-    CategoryST: "Misc",
     Description: "Uses 1/4 of the user's maximum HP to create a substitute that takes the opponent's attacks."
   },
 "Super Fang" :
@@ -1305,7 +1187,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 10,
     Category: "Fixed",
-    CategoryST: "Fixed",
     Description: "If it hits, this attack cuts the target's HP in half. Learned by Pokémon with developed fangs."
   },
 "Supersonic" :
@@ -1316,7 +1197,6 @@ const g1MoveData = {
     Accuracy: 55,
     PP: 20,
     Category: "Status",
-    CategoryST: "Status",
     Description: "A special NORMAL-type technique. Supersonic sound waves are used to confuse the target."
   },
 "Swift" :
@@ -1327,7 +1207,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. It is highly accurate, so it can be counted on to inflict damage."
   },
 "Swords Dance" :
@@ -1338,7 +1217,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 30,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "A special move that greatly boosts the user's ATTACK power. Can normally be used up to three times."
   },
 "Tackle" :
@@ -1349,7 +1227,6 @@ const g1MoveData = {
     Accuracy: 95,
     PP: 35,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. Many Pokémon know this attack right from the start."
   },
 "Tail Whip" :
@@ -1360,7 +1237,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "A technique that lowers the target's DEFENSE. Useful against tough, armored Pokémon."
   },
 "Take Down" :
@@ -1371,7 +1247,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A charging attack. One quarter of the damage it inflicts comes back to hurt the attacker."
   },
 "Thrash" :
@@ -1382,7 +1257,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "An attack that lasts two to three turns. Afterwards, the attacker becomes confused."
   },
 "Transform" :
@@ -1393,7 +1267,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Status",
-    CategoryST: "Misc",
     Description: "Transforms the user into a copy of the target, including the type. All moves have only five PP each."
   },
 "Tri Attack" :
@@ -1404,7 +1277,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack. A triangular field of energy is created and launched at the target."
   },
 "Vicegrip" :
@@ -1415,7 +1287,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A NORMAL-type attack used only by Pokémon with pincers. The target is gripped and injured."
   },
 "Whirlwind" :
@@ -1426,7 +1297,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 20,
     Category: "Status",
-    CategoryST: "Bad",
     Description: "Generates a powerful wind that blows away wild Pokémon. Useful in the wild only."
   },
 "Wrap" :
@@ -1437,7 +1307,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "Traps and squeezes the target over two to five turns. The target cannot move while under attack."
   },
 "Acid" :
@@ -1448,7 +1317,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A POISON-type attack. Has a one-in-three chance of lowering the target's DEFENSE."
   },
 "Acid Armor" :
@@ -1459,7 +1327,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 40,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Melts the user's body for protection. A move that sharply raises DEFENSE."
   },
 "Poison Gas" :
@@ -1470,7 +1337,6 @@ const g1MoveData = {
     Accuracy: 55,
     PP: 40,
     Category: "Status",
-    CategoryST: "Status",
     Description: "A poisonous cloud of gas is forcefully expelled to poison the target."
   },
 "PoisonPowder" :
@@ -1481,7 +1347,6 @@ const g1MoveData = {
     Accuracy: 75,
     PP: 35,
     Category: "Status",
-    CategoryST: "Status",
     Description: "A technique that poisons the target. If poisoned, the victim loses HP steadily."
   },
 "Poison Sting" :
@@ -1492,7 +1357,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 35,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A POISON-type attack. Has a one-in- five chance of leaving the target with the lingering effects of poison."
   },
 "Sludge" :
@@ -1503,7 +1367,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A POISON-type attack. Has a fifty-fifty chance of poisoning the target."
   },
 "Smog" :
@@ -1514,7 +1377,6 @@ const g1MoveData = {
     Accuracy: 70,
     PP: 20,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "Smog is spewed as a cloud. Has a fifty-fifty chance of poisoning the target."
   },
 "Toxic" :
@@ -1525,7 +1387,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 10,
     Category: "Status",
-    CategoryST: "Status",
     Description: "A technique that badly poisons the target. The amount of damage from the poison increases every turn."
   },
 "Agility" :
@@ -1536,7 +1397,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 30,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "A special technique that greatly boosts the user's SPEED. Can normally be used up to three times."
   },
 "Amnesia" :
@@ -1547,7 +1407,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 20,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Sharply raises the user's SPECIAL stat. Also increases protection against special attacks."
   },
 "Barrier" :
@@ -1558,7 +1417,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 30,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Instantly forms a barrier between the user and the opponent. DEFENSE is sharply increased."
   },
 "Confusion" :
@@ -1569,7 +1427,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 25,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A PSYCHIC-type attack. Has a one-in-ten chance of leaving the target confused."
   },
 "Dream Eater" :
@@ -1580,7 +1437,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Special",
-    CategoryST: "Special",
     Description: "Works only on sleeping Pokémon. This technique steals the target's HP and adds it to the user's HP."
   },
 "Hypnosis" :
@@ -1591,7 +1447,6 @@ const g1MoveData = {
     Accuracy: 60,
     PP: 20,
     Category: "Status",
-    CategoryST: "Status",
     Description: "A special PSYCHIC-type move. The target is hypnotized into a deep sleep."
   },
 "Kinesis" :
@@ -1602,7 +1457,6 @@ const g1MoveData = {
     Accuracy: 80,
     PP: 15,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "A special move of bending spoons to confound the enemy. Makes the user harder to hit."
   },
 "Light Screen" :
@@ -1613,7 +1467,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 30,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Reduces damage from special attacks by about half. A special PSYCHIC-type technique."
   },
 "Meditate" :
@@ -1624,7 +1477,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 40,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "A special technique that boosts the user's ATTACK power. Can normally be used up to six times."
   },
 "Psybeam" :
@@ -1635,7 +1487,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A PSYCHIC-type attack. Has a one-in-ten chance of making the target confused."
   },
 "Psychic" :
@@ -1646,7 +1497,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 10,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A PSYCHIC-type attack. Has a one-in-three chance of lowering the target's SPECIAL rating."
   },
 "Psywave" :
@@ -1657,7 +1507,6 @@ const g1MoveData = {
     Accuracy: 80,
     PP: 15,
     Category: "Fixed",
-    CategoryST: "Fixed",
     Description: "A PSYCHIC-type attack of varying intensity. It occasionally inflicts heavy damage."
   },
 "Reflect" :
@@ -1668,7 +1517,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 20,
     Category: "Status",
-    CategoryST: "Stat",
     Description: "Reduces damage from physical attacks by about half. A special PSYCHIC-type technique."
   },
 "Rest" :
@@ -1679,7 +1527,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 10,
     Category: "Status",
-    CategoryST: "Heal",
     Description: "The user takes a nap to fully restore its HP and recover from any status abnormalities."
   },
 "Teleport" :
@@ -1690,7 +1537,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 20,
     Category: "Status",
-    CategoryST: "Bad",
     Description: "A special technique for instantly escaping from wild Pokémon. Useful in the wild only."
   },
 "Rock Slide" :
@@ -1701,7 +1547,6 @@ const g1MoveData = {
     Accuracy: 90,
     PP: 10,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A ROCK-type attack that hits the target with an avalanche of rocks and boulders."
   },
 "Rock Throw" :
@@ -1712,7 +1557,6 @@ const g1MoveData = {
     Accuracy: 65,
     PP: 15,
     Category: "Physical",
-    CategoryST: "Physical",
     Description: "A ROCK-type attack. As the name implies, a huge boulder is dropped on the target."
   },
 "Bubble" :
@@ -1723,7 +1567,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 30,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A WATER-type attack. Has a one-in-three chance of reducing the target's SPEED."
   },
 "BubbleBeam" :
@@ -1734,7 +1577,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 20,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A WATER-type attack. Has a one-in-three chance of reducing the target's SPEED."
   },
 "Clamp" :
@@ -1745,7 +1587,6 @@ const g1MoveData = {
     Accuracy: 75,
     PP: 10,
     Category: "Special",
-    CategoryST: "Special",
     Description: "The target is gripped in the attacker's shell for two to five turns. It can't move while under attack."
   },
 "Crabhammer" :
@@ -1756,7 +1597,6 @@ const g1MoveData = {
     Accuracy: 85,
     PP: 10,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A move that is used only by Pokémon with pincers. Likely to get a critical hit."
   },
 "Hydro Pump" :
@@ -1767,7 +1607,6 @@ const g1MoveData = {
     Accuracy: 80,
     PP: 5,
     Category: "Special",
-    CategoryST: "Special",
     Description: "The strongest WATER-type attack. However, while it is powerful, it may miss the target."
   },
 "Surf" :
@@ -1778,7 +1617,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A WATER-type attack. The power of this technique is strong and highly accurate."
   },
 "Water Gun" :
@@ -1789,7 +1627,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 25,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A WATER-type attack. Stronger than BUBBLE. Many WATER-type Pokémon learn this move."
   },
 "Waterfall" :
@@ -1800,7 +1637,6 @@ const g1MoveData = {
     Accuracy: 100,
     PP: 15,
     Category: "Special",
-    CategoryST: "Special",
     Description: "A WATER-type attack. The target is hit with a blow packing the power of fish traveling up waterfalls."
   },
 "Withdraw" :  {
@@ -1810,7 +1646,6 @@ const g1MoveData = {
     Accuracy: "-",
     PP: 40,
     Category: "Status",
-    CategoryST: "Status",
     Description: "Used mainly by Pokémon with shells. By withdrawing into the shell, DEFENSE is increased."
   },
 }
