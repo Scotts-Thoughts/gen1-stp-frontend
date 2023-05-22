@@ -13,7 +13,7 @@
         <div v-else>
             <div class="mainContainer">
                 <div>
-                    <img v-show="overlay == true" class="canvas" :src="`images/overlay/${starterName.toLowerCase()}${overlayName}.png`" />
+                    <img class="canvas" :src="`images/overlay/${starterName.toLowerCase()}${overlayName}.png`" />
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
@@ -26,6 +26,8 @@
                     <div>GamestateVariable: {{ g1stateVariable }}</div>
                     <div>EnemyState: {{enemyState}}</div><br>
                     <div>Starter: {{starterName}}</div><br>
+                    <div>Starter: {{pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)}}</div><br>
+                    <div>Starter: {{pkmnType(2, s1dynamicReset.type1.value, s1dynamicReset.type2.value)}}</div><br>
                     <br>
                     <span style="text-decoration: underline;">Player Damage Ranges:</span><br>
                     {{capitalization_format(moveDynamic(1))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[1] }})<br>
@@ -54,10 +56,10 @@
 
 <!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
                 <div class="typeContainer">
-                    <div v-if="typeIcons == true && pkmnType(1, s1.type1.value, s1.type2.value) == pkmnType(2, s1.type1.value, s1.type2.value)" class="type">
+                    <div v-if="pkmnType(1, s1.type1.value, s1.type2.value) == pkmnType(2, s1.type1.value, s1.type2.value)" class="type">
                         <img :src="pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                     </div>
-                    <div v-else-if="typeIcons == true && pkmnType(1, s1.type1.value, s1.type2.value) != pkmnType(2, s1.type1.value, s1.type2.value)" class="type">
+                    <div v-else-if="pkmnType(1, s1.type1.value, s1.type2.value) != pkmnType(2, s1.type1.value, s1.type2.value)" class="type">
                         <img :src="pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                         <img :src="pkmnType(2, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                     </div>
@@ -86,15 +88,15 @@
                         </div>
                         <div class="statsheader">Base Stats</div>
                         <div class="statsColumnStyle statsColumn1">
-                            {{ pokemon(starter).baseHp }}<br>
-                            {{ pokemon(starter).baseAtk }}<br>
-                            {{ pokemon(starter).baseDef }}<br>
+                            {{ g1PokemonData[starterName].base_hp }}<br>
+                            {{ g1PokemonData[starterName].base_atk }}<br>
+                            {{ g1PokemonData[starterName].base_def }}<br>
                         </div>
-                        <div class="critrate">Crit rate: {{ pokemon(starter).critRate }}%</div>
+                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName].base_spd) }}%</div>
                         <div class="statsColumnStyle statsColumn2">
                             <br>
-                            {{ pokemon(starter).baseSpc }}<br>
-                            {{ pokemon(starter).baseSpd }}<br>
+                            {{ g1PokemonData[starterName].base_spc }}<br>
+                            {{ g1PokemonData[starterName].base_spd }}<br>
                         </div>
                     </div>
     
@@ -145,7 +147,7 @@
                             {{ badgeBoost(map.player.badges.badge1.value, map.player.team[0].attack.value) }}<br>
                             {{ badgeBoost(map.player.badges.badge3.value, map.player.team[0].defense.value) }}<br>
                         </div>
-                        <div class="critrate">Crit rate: {{ pokemon(starter).critRate }}%</div>
+                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName].base_spd) }}%</div>
                         <div class="statsColumnStyle statsColumn2">
                             <br>
                             {{ badgeBoost(mapper.properties.player.badges.badge7.value, mapper.properties.player.team[0].special.value) }}<br>
@@ -171,7 +173,7 @@
                             {{ batt.yourPokemon.battleStatAttack }}<br>
                             {{ batt.yourPokemon.battleStatDefense }}<br>
                         </div>
-                        <div class="critrate">Crit rate: {{ pokemon(starter).critRate }}%</div>
+                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName].base_spd) }}%</div>
                         <div class="statsColumnStyle statsColumn2">
                             <br>
                             {{ batt.yourPokemon.battleStatSpecial }}<br>
@@ -302,7 +304,7 @@
                 </div>
                 
 <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
-                <div v-show="expBarToggle == true" class="expBar">
+                <div class="expBar">
                     <img class="expLabelGen1" src="images/exp_bar/exp_label.png"/>
                     <div class="expTextGen2">Exp:</div>
                     <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
@@ -315,10 +317,7 @@
     <script src="packages/signalR.js"></script>
     <script src="packages/vue.js"></script>
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
-    <script src="data/gen1data.js"></script>
-    <script src="data/gen1dataGrowthMovepool.js"></script>
     <script src="data/gen1moves.js"></script>
-    <script src="data/gen1trainers.js"></script>
     <script src="data/gen1YellowTrainers.js"></script>
     <script src="data/gen1RedBlueTrainers.js"></script>
     <script src="data/type-effectiveness.js"></script>

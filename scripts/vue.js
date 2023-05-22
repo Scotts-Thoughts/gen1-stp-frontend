@@ -6,30 +6,22 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Pidgeotto", //string name
+            starterName:     "Shedinja", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
-            secondPlaythrough: true, //used to mitigate luck on second playthroughs
-            moonEncounters: true, //true turns Mt Moon encounters off for second playthroughs
+            secondPlaythrough:   false, //used to mitigate luck on second playthroughs
+            moonEncounters:      true, //true turns Mt Moon encounters off for second playthroughs
             
             developmentFeatures: true, //turn on new features
-            
             pick:            true, //turns on the ability to pick your starter
-            movepool:        true, //uses dynamic movepool when in the overworld & in wild battles
             inventory:       true, //uses inventory when in the department store & marts
             battleGraphic:   true, //uses battle graphic with enemy moveset & stats
             showAllTrainers: true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
             trainerArt:      true, //shows custom trainer art
             expBarAnimation: true,
             showSpecialTrainerGraphics: true, //shows drawn art for defined trainers
-            battlePopUps: true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
+            battlePopUps:    true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
+            typeCalcs:       true, //calculates effective power based on the pokemon in battle
             
-            typeIcons:         true, //turns on dynamic type icons
-            typeCalcs:         true, //calculates effective power based on the pokemon in battle
-            overlay:           true, //overrides with starter & fixed ovelay (must be new style)
-            
-            badgeBoostGraphics: true, //turns on opaque badge icons for boosts
-            addStabBonus:       true,
-            expBarToggle:       true,
             showCritMultiplierInEP: true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             
             // CUSTOM STARTING MOVES
@@ -47,8 +39,6 @@ const app = Vue.createApp({
             customTrainerID: false, //when set to true it will ensure the Pokemon receives boosted EXP; and the level is set to a custom value
 
             //DATA ---------------------------------------------------------------------------------------------//
-            gen1data: gen1data, //base stats, typings, pokedex numbers, etc
-            gen1dataGrowthMovepool: gen1dataGrowthMovepool, //contains growth rate and movepools; also constants base stats and typing but these are formatted poorly
             gen1moves: gen1moves, //moves, type, power, accuracy, pp, category, description
             typeData: typeData, //type effectiveness tables
             g1YellowTrainers: g1YellowTrainers,
@@ -121,9 +111,6 @@ const app = Vue.createApp({
                 return this.mapper?.properties?.player?.team[0]
             }
         },
-        starter() {
-            return this.gen1data.find(x => x.Pokemon === this.starterName).dexNumber
-        },
         starting_type_fix() {
             if (this.map.overworld.map.value == "Pallet Town - Oak's Lab" || this.g1stateVariable == "Base Stats") {
                 return [this.g1PokemonData[this.starterName].type1.toLowerCase(), this.g1PokemonData[this.starterName].type2.toLowerCase()]
@@ -161,13 +148,28 @@ const app = Vue.createApp({
                 return [" ","font-size: 20px","Screen",]
             }
         },
+        //CO-PILOT REFACTOR
+        // screen() {
+        //     const { reflect, lightScreen } = this.batt.yourPokemon.effects;
+        //     const screenType = reflect.value && lightScreen.value ? "Both" : reflect.value ? "Reflect" : lightScreen.value ? "Light Screen" : " ";
+        //     const fontSize = reflect.value && lightScreen.value ? "20px" : "16px";
+        //     return [screenType, `font-size: ${fontSize}`, "Screen"];
+        // },
         growthRate() {
             return this.g1PokemonData[this.starterName].growth_rate
+        },
+        getStarterType() {
+            var type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
+            var type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
+            return { "type1": type1, "type2": type2 }
         },
     },
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        g1CritRate(baseSpeed) {
+            return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
+        },
         //MOVE NAME CAPITALIZATION
         move_name(move_string) {
             if (move_string == null) { return "" }
@@ -513,6 +515,7 @@ const app = Vue.createApp({
 
         //REMOVES CAPITALIZATION (TACKLE -> Tackle) OR (Tail Whip -> Tail whip)
         capitalization_format(str) {
+            if (str == )
             if (str == null) { return "" }
             return str.toLowerCase().replace(/(^|\s|\-|\.)(\w)/g, function(match, p1, p2) {
               return p1 + p2.toUpperCase();
@@ -530,18 +533,6 @@ const app = Vue.createApp({
                 return trainerClass
         },
         //TYPE ICONS FOR THE STARTER SELECTION
-        getStarterType1() {
-            var type = this.gen1data.find(y => y.Pokemon === this.starterName)
-            var lowerType = type.type1.toLowerCase()
-            return `images/elements/types/${lowerType}.png`
-        },
-        getStarterType2() {
-            var type = this.gen1data.find(y => y.Pokemon === this.starterName)
-            if (type.type2 != null) {
-                var lowerType = type.type2.toLowerCase()
-                return `images/elements/types/${lowerType}.png`
-            }
-        },
         pkmnType(typeNumber, type1, type2) {
             if (type1 && this.g1stateVariable != `Base Stats`) {
                 if (type1 == type2) {
@@ -556,10 +547,10 @@ const app = Vue.createApp({
             }
             else {
                 if (typeNumber == 1) {
-                    return this.getStarterType1()
+                    return `images/elements/types/${this.getStarterType.type1}.png`
                 }
                 else if (typeNumber == 2) {
-                    return this.getStarterType2()
+                    return `images/elements/types/${this.getStarterType.type2}.png`
                 }
             }
         },
@@ -578,7 +569,7 @@ const app = Vue.createApp({
         pokemon(y) {
             if (y != null)
                 y = parseInt(y)
-            return this.gen1data.find(x => x.dexNumber === y)
+            return this.g1PokemonData.starterName
         },
         stageModifiers(y) {
             if (y === null) {
@@ -867,8 +858,8 @@ const app = Vue.createApp({
                     level = this.mapper.properties.player.team[0].level.value
                     critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
                     power = move.Power
-                    pokemon = this.gen1data.find(y => y.Pokemon === this.starterName)
-                    baseSpeed = pokemon.baseSpd
+                    pokemon = this.g1PokemonData[this.starterName]
+                    baseSpeed = pokemon.base_spd
                     //test to see if the Pokemon always crits
                     if (baseSpeed > 64) { //if the Pokemon has 63 or less base speed it will crit less often
                         return power * critModifier
@@ -924,7 +915,7 @@ const app = Vue.createApp({
 
         ////THIS FUNCTION IS DEPRECATED WITH typeEffectiveness()
         determineSTAB(x) { //x = move1.value
-            if (this.addStabBonus == true) {
+            if (x) {
                 var pkmnType1 = this.mapper.properties.player.team[0].type1.value
                 var pkmnType2 = this.mapper.properties.player.team[0].type2.value
                 if (pkmnType1 == this.moveType(x) || pkmnType2 == this.moveType(x))
@@ -1115,14 +1106,14 @@ const app = Vue.createApp({
 
         // SETTING THE STARTER POKEMON'S STATS ----------------------------------------------------------------------------------------------//
         const setStartingStats = async () => {
-            const pkmn = this.pokemon(this.starter) // slot 1 species
+            const pkmn = this.pokemon(this.starterName) // slot 1 species
             const perfectDVs = 0xff // desired DV value
             //calculates the Pokemon's starting stats with the desired DVs
-            hitpoints = Math.floor((((this.pokemon(this.starter).baseHp + 15) * 2 * this.customLevel) / 100) + 10 + this.customLevel)
-            attack = Math.floor((((this.pokemon(this.starter).baseAtk + 15) * 2 * this.customLevel) / 100) + 5) 
-            defense = Math.floor((((this.pokemon(this.starter).baseDef + 15) * 2 * this.customLevel) / 100) + 5)
-            special = Math.floor((((this.pokemon(this.starter).baseSpc + 15) * 2 * this.customLevel) / 100) + 5)
-            speed = Math.floor((((this.pokemon(this.starter).baseSpd + 15) * 2 * this.customLevel) / 100) + 5)
+            hitpoints = Math.floor((((this.pokemon(this.starterName).base_hp + 15) * 2 * this.customLevel) / 100) + 10 + this.customLevel)
+            attack = Math.floor((((this.pokemon(this.starterName).base_atk + 15) * 2 * this.customLevel) / 100) + 5) 
+            defense = Math.floor((((this.pokemon(this.starterName).base_def + 15) * 2 * this.customLevel) / 100) + 5)
+            special = Math.floor((((this.pokemon(this.starterName).base_spc + 15) * 2 * this.customLevel) / 100) + 5)
+            speed = Math.floor((((this.pokemon(this.starterName).base_spd + 15) * 2 * this.customLevel) / 100) + 5)
             //only recalculate stats when DVs change if the player is in Oak's Lab, at level 5, with exactly 1 Pokemon
             if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == false) {
                 await Promise.all([
@@ -1414,14 +1405,14 @@ const app = Vue.createApp({
 
         //EXP BAR
         var species = this.s1dynamicReset.species.value;
-        var growthRate = this.gen1dataGrowthMovepool.find(y => y.name === species).growth_rate
+        var growthRate = this.g1PokemonData[species].growth_rate
         var expStats = this.calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value);
         this.$refs.expBar.style.width = (expStats.percent * 100) + "%";
         this.prevSpecies = species
         this.mapper.properties.player.team[0].expPoints.change(async (newProp, oldProp) => {
             if (this.expBarAnimation == true) {
                 const currSpecies = this.s1dynamicReset.species.value;
-                const growthRate = this.gen1dataGrowthMovepool.find(y => y.name === currSpecies).growth_rate
+                const growthRate = this.g1PokemonData[species].growth_rate
                 const oldExpStats = this.calcExpStats(growthRate, oldProp.value);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
                 const animationMaxDuration = 600

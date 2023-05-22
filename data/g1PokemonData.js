@@ -7588,72 +7588,6 @@ const g1PokemonData = {
         ]
         ]
     },
-"Kingdra" :
-    {
-        name: "Kingdra",
-        base_hp: 75,
-        base_atk: 95,
-        base_def: 95,
-        base_spd: 85,
-        base_spc: 95,
-        type1: "Water",
-        type2: "Dragon",
-        catch_rate: 45,
-        base_xp: 207,
-        initial_moveset: [
-        "Bubble",
-        "SmokeScreen",
-        "Leer",
-        "Water Gun"
-        ],
-        growth_rate: "Medium Fast",
-        tm_hm_learnset: [
-        "Toxic",
-        "Take Down",
-        "Double-Edge",
-        "BubbleBeam",
-        "Water Gun",
-        "Ice Beam",
-        "Blizzard",
-        "Hyper Beam",
-        "Rage",
-        "Dragon Rage",
-        "Mimic",
-        "Double Team",
-        "Bide",
-        "Swift",
-        "Skull Bash",
-        "Rest",
-        "Substitute",
-        "Surf"
-        ],
-        levelup_moveset: [
-        [
-            8,
-            "SmokeScreen"
-        ],
-        [
-            15,
-            "Leer"
-        ],
-        [
-            22,
-            "Water Gun"
-        ],
-        [
-            29,
-            "Dragon Rage"
-        ],
-        [
-            44,
-            "Agility"
-        ],
-        [
-            55,
-            "Hydro Pump"
-        ]
-        ]
-    },
 "Seaking" :
     {
         name: "Seaking",
@@ -9483,5 +9417,310 @@ const g1PokemonData = {
             "Haze"
         ]
         ]
-    }
+    },
+//backported Pokemon
+"Kingdra" :
+    {
+        name: "Kingdra",
+        base_hp: 75,
+        base_atk: 95,
+        base_def: 95,
+        base_spd: 85,
+        base_spc: 95,
+        type1: "Water",
+        type2: "Dragon",
+        catch_rate: 45,
+        base_xp: 207,
+        initial_moveset: [
+        "Bubble",
+        "SmokeScreen",
+        "Leer",
+        "Water Gun"
+        ],
+        growth_rate: "Medium Fast",
+        tm_hm_learnset: [
+        "Toxic",
+        "Take Down",
+        "Double-Edge",
+        "BubbleBeam",
+        "Water Gun",
+        "Ice Beam",
+        "Blizzard",
+        "Hyper Beam",
+        "Rage",
+        "Dragon Rage",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Swift",
+        "Skull Bash",
+        "Rest",
+        "Substitute",
+        "Surf"
+        ],
+        levelup_moveset: [
+        [
+            8,
+            "SmokeScreen"
+        ],
+        [
+            15,
+            "Leer"
+        ],
+        [
+            22,
+            "Water Gun"
+        ],
+        [
+            29,
+            "Dragon Rage"
+        ],
+        [
+            44,
+            "Agility"
+        ],
+        [
+            55,
+            "Hydro Pump"
+        ]
+        ]
+    },
+"Shedinja" :
+    {
+        name: "Shedinja",
+        base_hp: 1,
+        base_atk: 90,
+        base_def: 45,
+        base_spd: 40,
+        base_spc: 30,
+        type1: "Bug",
+        type2: "Ghost",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Scratch",
+        "Harden"
+        ],
+        growth_rate: "Erratic",
+        tm_hm_learnset: [
+        "Toxic",
+        "Double-Edge",
+        "Hyper Beam",
+        "Mega Drain",
+        "Dig",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Dream Eater",
+        "Rest",
+        "Substitute",
+        "Cut",
+        "Flash"
+        ],
+        levelup_moveset: [
+        [
+            5,
+            "Leech Life"
+        ],
+        [
+            14,
+            "Fury Swipes"
+        ],
+        [
+            19,
+            "Mind Reader"
+        ],
+        [
+            31,
+            "Confuse Ray"
+        ],
+        [
+            38,
+            "Shadow Ball"
+        ]
+        ]
+    },
+"Rotom" :
+    {
+        name: "Rotom",
+        base_hp: 50,
+        base_atk: 50,
+        base_def: 77,
+        base_spd: 91,
+        base_spc: 95,
+        type1: "Electric",
+        type2: "Ghost",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Thunder Wave",
+        "Thundershock",
+        "Confuse Ray"
+        ],
+        growth_rate: "Medium Fast",
+        tm_hm_learnset: [
+        "Toxic",
+        "Hyper Beam",
+        "Thunderbolt",
+        "Thunder",
+        "Dig",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Dream Eater",
+        "Rest",
+        "Thunder Wave",
+        "Substitute"
+        ],
+        levelup_moveset: [
+        [
+            15,
+            "SonicBoom"
+        ],
+        [
+            22,
+            "Double Team"
+        ],
+        [
+            29,
+            "Night Shade"
+        ],
+        [
+            36,
+            "Substitute"
+        ],
+        [
+            50,
+            "Thunderbolt"
+        ]
+        ]
+    },
+"Pumpkaboo" :
+    {
+        name: "Pumpkaboo", //small size pumpkaboo
+        base_hp: 44, //other values: 49, 54, 59
+        base_atk: 66,
+        base_def: 70,
+        base_spd: 56, //other values: 51, 46, 41
+        base_spc: 55,
+        type1: "Ghost",
+        type2: "Grass",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Astonish",
+        "Confuse Ray",
+        "Confuse Ray"
+        ],
+        growth_rate: "Medium Fast",
+        tm_hm_learnset: [ //incomplete
+        "Toxic",
+        "Hyper Beam",
+        "Thunderbolt",
+        "Thunder",
+        "Dig",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Dream Eater",
+        "Rest",
+        "Thunder Wave",
+        "Substitute"
+        ],
+        levelup_moveset: [ //incomplete
+        [
+            16,
+            "Leech Seed"
+        ],
+        [
+            20,
+            "Razor Leaf"
+        ],
+        [
+            26,
+            "Barrage"
+        ],
+        [
+            36,
+            "Night Shade"
+        ],
+        [
+            48,
+            "Thunderbolt"
+        ]
+        ]
+    },
+"Heracross" :
+    {
+        name: "Heracross",
+        base_hp: 80,
+        base_atk: 125,
+        base_def: 75,
+        base_spd: 85,
+        base_spc: 40,
+        type1: "Bug",
+        type2: "Fighting",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Tackle",
+        "Leer"
+        ],
+        growth_rate: "Slow",
+        tm_hm_learnset: [
+        "Swords Dance",
+        "Toxic",
+        "Horn Drill",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "Hyper Beam",
+        "Submission",
+        "Counter",
+        "Seismic Toss",
+        "Earthquake",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Rest",
+        "Rock Slide",
+        "Substitute",
+        "Cut",
+        "Strength",
+        ],
+        levelup_moveset: [
+        [
+            12,
+            "Horn Attack"
+        ],
+        [
+            19,
+            "Fury Attack"
+        ],
+        [
+            27,
+            "Counter"
+        ],
+        [
+            35,
+            "Take Down"
+        ],
+        [
+            44,
+            "Thunderbolt"
+        ],
+        // [
+        //     54,
+        //     "Pin Missile"
+        // ],
+        [
+            54,
+            "Megahorn"
+        ]
+        ]
+    },
 }

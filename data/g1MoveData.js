@@ -1648,4 +1648,41 @@ const g1MoveData = {
     Category: "Status",
     Description: "Used mainly by Pokémon with shells. By withdrawing into the shell, DEFENSE is increased."
   },
+// ADDITIONAL MOVES FOR PORTBACKS
+"Shadow Ball" :  {
+  Move: "Shadow Ball",
+  Type: "Ghost",
+  Power: "80",
+  Accuracy: "100",
+  PP: 15,
+  Category: "Physical",
+  Description: "A generation 2 GHOST-type attack that was ported back by Snowy."
+  },
+"Mind Reader" :  {
+  Move: "Mind Reader",
+  Type: "Normal",
+  Power: "-",
+  Accuracy: "-",
+  PP: 5,
+  Category: "Status",
+  Description: "A generation 2 move that was ported back by Snowy. It gives allows the user to bypass accuracy checks with the next used move."
+  },
+"Sketch" :  {
+  Move: "Sketch",
+  Type: "Normal",
+  Power: "-",
+  Accuracy: "-",
+  PP: 1,
+  Category: "Status",
+  Description: "A generation 2 move that was ported back by WaielAl. It's Smeargle's signature move."
+  },
+"Megahorn" :  {
+  Move: "Megahorn",
+  Type: "Bug",
+  Power: "120",
+  Accuracy: "85",
+  PP: 10,
+  Category: "Physical",
+  Description: "A generation 2 move that was ported back by WaielAl. It's Heracross's signature move."
+  },
 }
