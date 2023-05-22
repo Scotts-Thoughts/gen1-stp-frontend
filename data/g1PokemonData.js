@@ -9723,4 +9723,180 @@ const g1PokemonData = {
         ]
         ]
     },
+"Crobat" :
+    {
+        name: "Crobat",
+        base_hp: 85,
+        base_atk: 90,
+        base_def: 80,
+        base_spd: 130,
+        base_spc: 80, //golbat has it's spcdef as spc in gen1
+        type1: "Poison",
+        type2: "Flying",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Leech Life",
+        "Screech",
+        "Bite",
+        "Supersonic"
+        ],
+        growth_rate: "Medium Fast",
+        tm_hm_learnset: [
+        "Razor Wind",
+        "Whirlwind",
+        "Toxic",
+        "Take Down",
+        "Double-Edge",
+        "Hyper Beam",
+        "Rage",
+        "Mega Drain",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Swift",
+        "Rest",
+        "Substitute",
+        "Fly"
+        ],
+        levelup_moveset: [
+        [
+            21,
+            "Confuse Ray"
+        ],
+        [
+            32,
+            "Wing Attack"
+        ],
+        [
+            50,
+            "Haze"
+        ]
+        ]
+    },
+"Sudowoodo" :
+    {
+        name: "Sudowoodo",
+        base_hp: 70,
+        base_atk: 100,
+        base_def: 115,
+        base_spd: 30,
+        base_spc: 65, //won't use this stat offensively, makes sense to match spcdef as a result
+        type1: "Rock",
+        type2: "Rock",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Rock Throw",
+        "Mimic"
+        ],
+        growth_rate: "Medium Fast",
+        tm_hm_learnset: [
+        "Mega Punch",
+        "Mega Kick",
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "Hyper Beam",
+        "Counter",
+        "Seismic Toss",
+        "Rage",
+        "Earthquake",
+        "Fissure",
+        "Dig",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Selfdestruct",
+        "Rest",
+        "Rock Slide",
+        "Substitute",
+        "Strength"
+        ],
+        levelup_moveset: [
+        [
+            19,
+            "Low Kick"
+        ],
+        [
+            28,
+            "Rock Slide"
+        ],
+        [
+            37,
+            "Slam"
+        ],
+        [
+            46,
+            "Double-Edge"
+        ]
+        ]
+    },
+"Politoed" :
+    {
+        name: "Politoed",
+        base_hp: 90,
+        base_atk: 75,
+        base_def: 75,
+        base_spd: 70,
+        base_spc: 100, //spcdef //other option is 90 (spcatk)
+        type1: "Water",
+        type2: "Water",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Water Gun",
+        "Hypnosis",
+        "DoubleSlap",
+        "BubbleBeam" //alternatively could be body slam
+        ],
+        growth_rate: "Medium Fast",
+        tm_hm_learnset: [
+        "Mega Punch",
+        "Mega Kick",
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "BubbleBeam",
+        "Water Gun",
+        "Ice Beam",
+        "Blizzard",
+        "Hyper Beam",
+        "Counter",
+        "Seismic Toss",
+        "Earthquake",
+        "Fissure",
+        "Psychic",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Metronome",
+        "Skull Bash",
+        "Rest",
+        "Psywave",
+        "Substitute",
+        "Surf",
+        "Strength"
+        ],
+        levelup_moveset: [
+        [
+            19,
+            "Low Kick"
+        ],
+        [
+            28,
+            "Rock Slide"
+        ],
+        [
+            37,
+            "Slam"
+        ],
+        [
+            46,
+            "Double-Edge"
+        ]
+        ]
+    },
 }
