@@ -1685,4 +1685,13 @@ const g1MoveData = {
   Category: "Physical",
   Description: "A generation 2 move that was ported back by WaielAl. It's Heracross's signature move."
   },
+"Present" :  {
+  Move: "Present",
+  Type: "Normal",
+  Power: "-",
+  Accuracy: "90",
+  PP: 15,
+  Category: "Physical",
+  Description: "A generation 2 move that was ported back by WaielAl. It's Delibird's signature move."
+  },
 }

@@ -6,9 +6,9 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Shedinja", //string name
+            starterName:     "Crobat", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
-            secondPlaythrough:   false, //used to mitigate luck on second playthroughs
+            secondPlaythrough:   true, //used to mitigate luck on second playthroughs
             moonEncounters:      true, //true turns Mt Moon encounters off for second playthroughs
             
             developmentFeatures: true, //turn on new features
@@ -515,7 +515,6 @@ const app = Vue.createApp({
 
         //REMOVES CAPITALIZATION (TACKLE -> Tackle) OR (Tail Whip -> Tail whip)
         capitalization_format(str) {
-            if (str == )
             if (str == null) { return "" }
             return str.toLowerCase().replace(/(^|\s|\-|\.)(\w)/g, function(match, p1, p2) {
               return p1 + p2.toUpperCase();
@@ -569,7 +568,7 @@ const app = Vue.createApp({
         pokemon(y) {
             if (y != null)
                 y = parseInt(y)
-            return this.g1PokemonData.starterName
+            return this.g1PokemonData[this.starterName]
         },
         stageModifiers(y) {
             if (y === null) {
@@ -614,8 +613,9 @@ const app = Vue.createApp({
         //MOVE ICON DISPLAY
         moveTypeIcon(y) { //y = move1.value
             if (y != null && y != undefined) {
-                var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
-                var moveType = move[`Type`].toLowerCase()
+                var moveName = this.capitalization_format(y)
+                var move = this.g1MoveData[moveName]
+                var moveType = move.Type.toLowerCase()
                 return `images/elements/type-icons/${moveType}.png`
             }
             return null
@@ -853,7 +853,8 @@ const app = Vue.createApp({
         // MOVE MANAGEMENT
         movePower(y) { //y = move1.value
             if (y) {
-                var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
+                // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
+                var move = this.g1MoveData[y]
                 if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP")) {
                     level = this.mapper.properties.player.team[0].level.value
                     critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation

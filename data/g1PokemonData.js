@@ -9711,7 +9711,7 @@ const g1PokemonData = {
         ],
         [
             44,
-            "Thunderbolt"
+            "Submission"
         ],
         // [
         //     54,
@@ -9898,5 +9898,111 @@ const g1PokemonData = {
             "Double-Edge"
         ]
         ]
+    },
+"Sandile" :
+    {
+        name: "Sandile",
+        base_hp: 50,
+        base_atk: 72,
+        base_def: 35,
+        base_spd: 65,
+        base_spc: 35, //same spca and spcd
+        type1: "Ground",
+        type2: "Dark",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Leer",
+        "Rage",
+        "Bite",
+        ],
+        growth_rate: "Medium Slow",
+        tm_hm_learnset: [
+        "Toxic",
+        "Take Down",
+        "Double-Edge",
+        "Rage",
+        "Earthquake",
+        "Fissure",
+        "Dig",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Fire Blast",
+        "Rest",
+        "Rock Slide",
+        "Substitute",
+        "Cut"
+        ],
+        levelup_moveset: [
+        [
+            4,
+            "Bite"
+        ],
+        [
+            7,
+            "Sand-Attack"
+        ],
+        [
+            19,
+            "Roar"
+        ],
+        [
+            31,
+            "Dig"
+        ],
+        [
+            43,
+            "Earthquake"
+        ],
+        [
+            46,
+            "Thrash"
+        ]
+        ]
+    },
+"Delibird" :
+    {
+        name: "Delibird",
+        base_hp: 45,
+        base_atk: 55,
+        base_def: 45,
+        base_spd: 75,
+        base_spc: 65, //could also be 45
+        type1: "Ice",
+        type2: "Flying",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Present"
+        ],
+        growth_rate: "Fast",
+        tm_hm_learnset: [
+        "Mega Punch",
+        "Razor Wind",
+        "Whirlwind",
+        "Mega Kick",
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "BubbleBeam",
+        "Water Gun",
+        "Ice Beam",
+        "Blizzard",
+        "Hyper Beam",
+        "Pay Day",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Swift",
+        "Sky Attack",
+        "Rest",
+        "Substitute",
+        "Fly"
+        ],
+        levelup_moveset: []
     },
 }
