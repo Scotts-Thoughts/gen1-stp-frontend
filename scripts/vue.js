@@ -6,7 +6,7 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Crobat", //string name
+            starterName:     "Scyther", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough:   true, //used to mitigate luck on second playthroughs
             moonEncounters:      true, //true turns Mt Moon encounters off for second playthroughs
@@ -613,7 +613,7 @@ const app = Vue.createApp({
         //MOVE ICON DISPLAY
         moveTypeIcon(y) { //y = move1.value
             if (y != null && y != undefined) {
-                var moveName = this.capitalization_format(y)
+                var moveName = this.move_name(y)
                 var move = this.g1MoveData[moveName]
                 var moveType = move.Type.toLowerCase()
                 return `images/elements/type-icons/${moveType}.png`
@@ -892,7 +892,7 @@ const app = Vue.createApp({
 
         moveAccuracyEvasionDynamic(move) {
             if (move) {
-                var move_name = this.capitalization_format(move)
+                var move_name = this.move_name(move)
                 var moveObject = this.g1MoveData[move_name]
                 var moveAccuracy = moveObject.Accuracy
                 var accuracyStageMods = this.stageModifiersData.find(x => x.modType === "accuracy")

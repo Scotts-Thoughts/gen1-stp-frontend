@@ -554,7 +554,7 @@ const g1MoveData = {
     Move: "Bind",
     Type: "Normal",
     Power: 15,
-    Accuracy: 74.6,
+    Accuracy: 75,
     PP: 20,
     Category: "Physical",
     Description: "Traps and squeezes the target over several turns. The target cannot move while under attack."
@@ -1204,7 +1204,7 @@ const g1MoveData = {
     Move: "Swift",
     Type: "Normal",
     Power: 60,
-    Accuracy: 100,
+    Accuracy: "-",
     PP: 20,
     Category: "Physical",
     Description: "A NORMAL-type attack. It is highly accurate, so it can be counted on to inflict damage."
@@ -1279,9 +1279,9 @@ const g1MoveData = {
     Category: "Physical",
     Description: "A NORMAL-type attack. A triangular field of energy is created and launched at the target."
   },
-"Vicegrip" :
+"ViceGrip" :
   {
-    Move: "Vicegrip",
+    Move: "ViceGrip",
     Type: "Normal",
     Power: 55,
     Accuracy: 100,
