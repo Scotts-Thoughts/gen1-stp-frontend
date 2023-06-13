@@ -6,66 +6,36 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Scyther", //string name
-            overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
-            secondPlaythrough:   true, //used to mitigate luck on second playthroughs
-            moonEncounters:      true, //true turns Mt Moon encounters off for second playthroughs
+            starterName: "Scyther", //string name
+            overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             
-            developmentFeatures: true, //turn on new features
-            pick:            true, //turns on the ability to pick your starter
-            inventory:       true, //uses inventory when in the department store & marts
-            battleGraphic:   true, //uses battle graphic with enemy moveset & stats
-            showAllTrainers: true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
-            trainerArt:      true, //shows custom trainer art
-            expBarAnimation: true,
+            inventory:                  true, //uses inventory when in the department store & marts
+            battleGraphic:              true, //uses battle graphic with enemy moveset & stats
+            showAllTrainers:            true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
+            expBarAnimation:            true,
             showSpecialTrainerGraphics: true, //shows drawn art for defined trainers
-            battlePopUps:    true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
-            typeCalcs:       true, //calculates effective power based on the pokemon in battle
+            battlePopUps:               true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
+            typeCalcs:                  true, //calculates effective power based on the pokemon in battle
+            showCritMultiplierInEP:     true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             
-            showCritMultiplierInEP: true, //shows high crit ratio moves with adjusted power if the move always scores a crit
-            
-            // CUSTOM STARTING MOVES
-            customMoves: false, //if custom moves is turned off, custom trainer ID will be turned off as well
-            randomStartingSet: false,
-            customMove1: 0x96,
-            customMove1pp: 0x28,
-            customMove2: 0x52,
-            customMove2pp: 0x0A,
-            customMove3: 0x00,
-            customMove3pp: 0x00,
-            customMove4: 0x00,
-            customMove4pp: 0x00,
-            customLevel: 0x05, //set to 0x05 unless you want a different level at the start
-            customTrainerID: false, //when set to true it will ensure the Pokemon receives boosted EXP; and the level is set to a custom value
-
             //DATA ---------------------------------------------------------------------------------------------//
-            gen1moves: gen1moves, //moves, type, power, accuracy, pp, category, description
-            typeData: typeData, //type effectiveness tables
-            g1YellowTrainers: g1YellowTrainers,
-            g1RedBlueTrainers: g1RedBlueTrainers,
-            statusConditions: statusConditions,
-            venomothStartingMoves: venomothStartingMoves,
+            g1MoveData:         g1MoveData,
+            g1PokemonData:      g1PokemonData,
+            g1YellowTrainers:   g1YellowTrainers,
+            g1RedBlueTrainers:  g1RedBlueTrainers,
+            typeData:           typeData,
             stageModifiersData: stageModifiersData,
-            tmhmMapping: tmhmMapping,
-            g1MoveData: g1MoveData,
-            g1PokemonData: g1PokemonData,
+            tmhmMapping:        tmhmMapping,
             
-            //LOOPS
-            pkmnMoves: ["move1","move2","move3","move4"],
-            pkmnSlots: [0, 1, 2, 3, 4, 5],
-            boostingBadges: ["badge1", "badge3", "badge6", "badge7"],
-            inventorySlots: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
-            fieldEffects: ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
+            //VARS ---------------------------------------------------------------------------------------------//
+            pkmnMoves:       ["move1","move2","move3","move4"],
+            pkmnSlots:       [0, 1, 2, 3, 4, 5],
+            fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
-            slotTimingFix: false,
-            statLabelOpacityValue: 0,
-
-            //STORING DATA
             g1stateVariable: "Base Stats",
-            prevSpecies: undefined,
-            splitData: [],
-            enemyModColour: ["0", "background: #d84444;"],
-            enemyState: "Not In Battle", //"Pokemon", "Fainted"
+            prevSpecies:     undefined,
+            enemyModColour:  ["0", "background: #d84444;"],
+            enemyState:      "Not In Battle", //"Pokemon", "Fainted"
         }
     },
     
@@ -148,13 +118,6 @@ const app = Vue.createApp({
                 return [" ","font-size: 20px","Screen",]
             }
         },
-        //CO-PILOT REFACTOR
-        // screen() {
-        //     const { reflect, lightScreen } = this.batt.yourPokemon.effects;
-        //     const screenType = reflect.value && lightScreen.value ? "Both" : reflect.value ? "Reflect" : lightScreen.value ? "Light Screen" : " ";
-        //     const fontSize = reflect.value && lightScreen.value ? "20px" : "16px";
-        //     return [screenType, `font-size: ${fontSize}`, "Screen"];
-        // },
         growthRate() {
             return this.g1PokemonData[this.starterName].growth_rate
         },
@@ -170,31 +133,30 @@ const app = Vue.createApp({
         g1CritRate(baseSpeed) {
             return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
         },
-        //MOVE NAME CAPITALIZATION
         move_name(move_string) {
             if (move_string == null) { return "" }
             move_string = move_string.toLowerCase()
             const moveMappings = {
-              "vicegrip": "ViceGrip",
-              "doubleslap": "DoubleSlap",
-              "double-edge": "Double-Edge",
-              "solarbeam": "SolarBeam",
+              "vicegrip":     "ViceGrip",
+              "doubleslap":   "DoubleSlap",
+              "double-edge":  "Double-Edge",
+              "solarbeam":    "SolarBeam",
               "extremespeed": "ExtremeSpeed",
               "dynamicpunch": "DynamicPunch",
               "thunderpunch": "ThunderPunch",
-              "bubblebeam": "BubbleBeam",
+              "bubblebeam":   "BubbleBeam",
               "grasswhistle": "GrassWhistle",
-              "softboiled": "Softboiled",
-              "sand-attack": "Sand-Attack",
-              "mud-slap": "Mud-Slap",
+              "softboiled":   "Softboiled",
+              "sand-attack":  "Sand-Attack",
+              "mud-slap":     "Mud-Slap",
               "featherdance": "FeatherDance",
               "poisonpowder": "PoisonPowder",
               "dragonbreath": "DragonBreath",
               "ancientpower": "AncientPower",
               "smellingsalt": "SmellingSalt",
               "selfdestruct": "Selfdestruct",
-              "smokescreen": "SmokeScreen",
-              "sonicboom": "SonicBoom"
+              "smokescreen":  "SmokeScreen",
+              "sonicboom":    "SonicBoom"
             };
             const formattedMove = moveMappings[move_string];
             return formattedMove || this.capitalization_format(move_string);
@@ -219,37 +181,7 @@ const app = Vue.createApp({
             }
         },
         
-        //SPLITS
-        currentSplit(splitData) {
-            var arrayLength = splitData.length
-            var split = splitData[arrayLength]["realtime.end"]
-            return this.formatDuration(split)
-        },
-        lastSplit(splitData) {
-            var arrayLength = splitData.length
-            var splitNumber = arrayLength - 1
-            var split = splitData[splitNumber]["realtime.end"]
-            return this.formatDuration(split)
-        },
-        formatDuration(x) {
-            if (x.startsWith("00:")) {
-                x = x.substring(3)
-            }
-            if (x.startsWith(0)) {
-                x = x.substring(1)
-            }
-            x = x.substring(0, x.length-4)
-            return x
-        },
-        split(splitName, splits) {
-            console.log(splits)
-            var split = splits.find(x => x.trainer_name === splitName)
-            debugger
-            if (split == undefined) return
-            return split["realtime.end.hours"] + ":" + split["realtime.end.minutes"] + ":" + split["realtime.end.seconds"]
-        },
-
-        //AUTOMATION MOVEPOOL GRAPHIC
+        //Movepool Graphic
         dataSearch(dataObject, pointerValue) {
             if (!pointerValue) return ""
             const key = Object.keys(dataObject).find(x => x.toLowerCase() == pointerValue.toLowerCase())
@@ -276,220 +208,6 @@ const app = Vue.createApp({
                 }),     
             }
             return obj
-        },
-
-        //DAMAGE CALCULATION
-        damageCalculation(userPkmnData, targetPkmnData, move) {
-            if (this.g1stateVariable == "Overworld" || this.g1stateVariable == "Base Stats") { return "" }
-            if (move == null) { return "" }
-            //Setup data for calculation
-            var lvl = userPkmnData.level.value
-            var userAttack = userPkmnData.attack.value
-            var userSpecial = userPkmnData.special.value
-            var userType1 = userPkmnData.type1.value
-            var userType2 = userPkmnData.type2.value
-            
-            var targetDefense = targetPkmnData.defense.value
-            var targetSpecial = targetPkmnData.special.value
-            var targetMaxHp = targetPkmnData.maxHp.value
-            var targetType1 = targetPkmnData.type1.value
-            var targetType2 = targetPkmnData.type2.value
-            var defenderScreen = undefined
-
-            var moveData = this.gen1moves.find(x => x.Move.toLowerCase() === move.toLowerCase())
-            var moveType = moveData.Type
-            var movePower = moveData.Power
-            var moveCategory = moveData.Category
-            
-            var stab = 1
-            var AttackingTypeEffectiveness = this.typeData.find(x => x.moveType === moveType)
-            var critical = 1
-            var screens = 1
-
-            var userOffensiveStat = undefined
-            var targetDefensiveStat = undefined
-
-            var AttackingTypeEffectiveness = this.typeData.find(x => x.moveType === moveType)
-            var type1 = AttackingTypeEffectiveness[targetType1]
-            var type2 = AttackingTypeEffectiveness[targetType2]
-
-            //Check values & update modifiers
-            if (moveType == userType1 || moveType == userType2) {
-                stab = 1.5
-            }
-            if (moveCategory == "Physical") {
-                userOffensiveStat = userAttack
-                targetDefensiveStat = targetDefense
-                if (targetPkmnData.effects?.reflect?.value) {
-                    defenderScreen = targetPkmnData.effects.reflect.value
-                }
-                else {
-                    defenderScreen = false
-                } 
-            }
-            if (moveCategory == "Special") {
-                userOffensiveStat = userSpecial
-                targetDefensiveStat = targetSpecial
-                if (targetPkmnData.effects?.lightScreen?.value) {
-                    defenderScreen = targetPkmnData.effects.lightScreen.value
-                }
-                else {
-                    defenderScreen = false
-                } 
-            }
-            if (moveCategory == "Status") {
-                return ""
-            }
-            if (defenderScreen == true) {
-                screens = .5
-            }
-            //Run damage calculation
-            part1 = Math.floor(Math.floor((2 * lvl * critical)/5 + 2) * movePower * userOffensiveStat)
-            part2 = Math.floor(part1/targetDefensiveStat)
-            part3 = Math.floor(part2/50) + 2
-            part4 = undefined
-            if (targetType1 == targetType2) {
-                part4 = Math.floor(Math.floor(Math.floor(part3 * stab) * type1) * screens)
-            }
-            else {
-                part4 = Math.floor(Math.floor(Math.floor(Math.floor(part3 * stab) * type1) * type2) * screens)
-            }
-            //Results to return
-            damageMin = Math.floor(part4 * (217/255))
-            damageMax = part4
-
-            //UNIQUE MOVES & FIXED DAMAGE
-            if (move == "GUILLOTINE") { return ["OHKO", "OHKO", 100, 100, 0, 0, move] }
-            if (move == "FISSURE") { return ["OHKO", "OHKO", 100, 100, 0, 0, move] }
-            if (move == "DRAGON RAGE") { 
-                damageMin = 40
-                damageMax = 40
-            }
-            if (move == "SonicBoom") { 
-                damageMin = 20
-                damageMax = 20
-            }
-            if (move == "NIGHT SHADE") { 
-                damageMin = userPkmnData.level
-                damageMax = userPkmnData.level
-            }
-            if (move == "PSYWAVE") { 
-                damageMin = 1
-                damageMax = Math.floor(userPkmnData.level * 1.5)
-            }
-            if (move == "DOUBLESLAP" || 
-            move == "PIN MISSILE" || 
-            move == "COMET PUNCH" || 
-            move == "FURY SWIPES" || 
-            move == "SPIKE CANNON" || 
-            move == "BARRAGE" || 
-            move == "FURY ATTACK") { 
-                damageMin = damageMin * 2
-                damageMax = damageMax * 5
-            }
-            if (move == "WRAP" || 
-            move == "CLAMP" || 
-            move == "FIRE SPIN" || 
-            move == "BIND") { 
-                damageMin = damageMin * 2
-                damageMax = damageMax * 5
-            }
-            if (move == "BONEMERANG" || 
-            move == "DOUBLE KICK" || 
-            move == "TWINEEDLE") { 
-                damageMin = damageMin * 2
-                damageMax = damageMax * 2
-            }
-            if (move == "COUNTER") {
-                if (this.batt.enemyMove.type.value == "Normal" || this.batt.enemyMove.type.value == "Fighting") {
-                    damageMin = this.batt.attackDamage.value * 2
-                    damageMax = this.batt.attackDamage.value * 2
-                }
-                else {
-                    damageMin = 0
-                    damageMax = 0
-                }
-            }
-
-            minPercentage = Math.round((damageMin/targetMaxHp) * 100)
-            maxPercentage = Math.round((damageMax/targetMaxHp) * 100)
-            var recoilMin = 0
-            var recoilMax = 0
-            if (move == "TAKE DOWN" || move == "SUBMISSION" || move == "DOUBLE-EDGE") {
-                recoilMin = Math.floor(damageMin * 0.25)
-                recoilMax = Math.floor(damageMax * 0.25)
-            }
-
-            return [damageMin, damageMax, minPercentage, maxPercentage, recoilMin, recoilMax, move]
-        },
-        damageComparisonPlayer(userPkmnData, targetPkmnData) {
-            var damage1 = this.damageCalculation(userPkmnData, targetPkmnData, this.batt.yourPokemon.move1.value)
-            var damage2 = this.damageCalculation(userPkmnData, targetPkmnData, this.batt.yourPokemon.move2.value)
-            var damage3 = this.damageCalculation(userPkmnData, targetPkmnData, this.batt.yourPokemon.move3.value)
-            var damage4 = this.damageCalculation(userPkmnData, targetPkmnData, this.batt.yourPokemon.move4.value)
-            var damageComparison = [damage1, damage2, damage3, damage4]
-            var maxArr = [0,-1,0,0,0,0,0]
-            for(var i = 0; i < damageComparison.length; i++) {
-                if (!isNaN(damageComparison[i][1])) {
-                    if(maxArr[1] < damageComparison[i][1]) {
-                        maxArr = damageComparison[i];
-                    }
-                }
-            }
-            if (maxArr[1] == -1) {
-                return [null,"No damaging move",null,null,null,null,null]
-            }
-            return maxArr
-        },
-        damageComparisonEnemy(userPkmnData, targetPkmnData, x) {
-            var damage1 = this.damageCalculation(userPkmnData, targetPkmnData, this.batt.trainer.team[x].move1.value)
-            var damage2 = this.damageCalculation(userPkmnData, targetPkmnData, this.batt.trainer.team[x].move2.value)
-            var damage3 = this.damageCalculation(userPkmnData, targetPkmnData, this.batt.trainer.team[x].move3.value)
-            var damage4 = this.damageCalculation(userPkmnData, targetPkmnData, this.batt.trainer.team[x].move4.value)
-            var damageComparison = [damage1, damage2, damage3, damage4]
-            var maxArr = [0,-1]
-            for(var i = 0; i < damageComparison.length; i++) {
-                if (!isNaN(damageComparison[i][1])) {
-                    // if(maxArr = damageComparison[i][1]) {
-                        //NEEDS A WAY TO MANAGE TIES
-                    // }
-                    if(maxArr[1] < damageComparison[i][1]) {
-                        maxArr = damageComparison[i];
-                    }
-                }
-            }
-            if (maxArr[1] == -1) {
-                return [null,"No damaging move",null,null,null,null,null]
-            }
-            return maxArr
-        },
-        speedComparison(playerPkmnData, enemyPkmnData) {
-            const playerSpeed = playerPkmnData.speed.value;
-            const enemySpeed = enemyPkmnData.speed.value;
-          
-            if (playerSpeed === enemySpeed) {
-              return "Speed-Tie";
-            }
-          
-            return playerSpeed > enemySpeed ? "Outspeeds" : "Outsped";
-        },
-        speedColouration(speedComparison, pkmnData) {
-            const { hp } = pkmnData;
-          
-            if (hp === 0) {
-              return "background-color: #dfdfdfad; opacity: .5;";
-            }
-          
-            switch (speedComparison) {
-              case "Outsped":
-                return "background-color: #9ff789;";
-              case "Speed-Tie":
-                return "background-color: #f0e9b0;";
-              case "Outspeeds":
-                return "background-color: #e7a59a;";
-              default:
-                return "";
-            }
         },
         
         getEnemyPkmnStyles(pkmnData) {
@@ -587,7 +305,7 @@ const app = Vue.createApp({
         },
         statLabelOpacity(x) {
             if (x.bytes != 7)
-                return this.statLabelOpacityValue
+                return 0
             else
                 return 1
         },
@@ -697,7 +415,6 @@ const app = Vue.createApp({
             }
         },
 
-        //CO-PILOT REFACTOR
         specialTrainerGraphics() {
             if (this.showSpecialTrainerGraphics) {
               const { class: trainerClass, number: trainerNumber } = this.mapper.properties.battle.trainer;
@@ -748,7 +465,6 @@ const app = Vue.createApp({
             }
         },
 
-        // //CO-PILOT REFACTOR
         g1martSelector(map) {
             if (!this.inventory) {
               return "Overworld";
@@ -874,22 +590,6 @@ const app = Vue.createApp({
             return null
         },
 
-        moveDynamic(slot) {
-            if (this.g1stateVariable == `Battle`) {
-                return this.mapper?.properties?.battle?.yourPokemon[`move${slot}`].value
-            }
-            else {
-                return this.mapper?.properties?.player?.team[0][`move${slot}`].value
-            }
-        },
-        moveType(y) { //y = move1.value
-            if (y) {
-                var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
-                if (move) return move.Type
-            }
-            return null
-        },
-
         moveAccuracyEvasionDynamic(move) {
             if (move) {
                 var move_name = this.move_name(move)
@@ -914,19 +614,6 @@ const app = Vue.createApp({
             else return ""
         },
 
-        ////THIS FUNCTION IS DEPRECATED WITH typeEffectiveness()
-        determineSTAB(x) { //x = move1.value
-            if (x) {
-                var pkmnType1 = this.mapper.properties.player.team[0].type1.value
-                var pkmnType2 = this.mapper.properties.player.team[0].type2.value
-                if (pkmnType1 == this.moveType(x) || pkmnType2 == this.moveType(x))
-                    return 1.5
-                else
-                    return 1
-            }
-            else
-                return 1
-        }, 
         sleep(ms) {
             return new Promise((res) => setTimeout(res, ms))
         },
@@ -985,11 +672,7 @@ const app = Vue.createApp({
         this.mapper.onDisconnected = (x) => this.ready = false
         await this.mapper.connect()
 
-        for (var species of Object.keys(g1PokemonData)) {
-            var image = new Image();
-            image.src = `images/pokemon/${species}.png`;
-        }
-
+        //Functions to track the game's state
         // set initial gamestate value when the layout is loaded
         if (this.mapper.properties.player.team[0].level.value == 0) 
             this.g1stateVariable = "Base Stats";
@@ -1012,9 +695,8 @@ const app = Vue.createApp({
                 this.g1stateVariable = "Overworld";
             }
         });
-
         this.mapper.properties.battle.type.change((prop) => {
-            if (this.g1stateVariable == "Base Stats" && this.map.overworld.map.value == "Pallet Town - Oak's Lab") { //FIX for flicker in Oak's lab
+            if (this.g1stateVariable == "Base Stats" && this.map.overworld.map.value == "Pallet Town - Oak's Lab") { //FIX for graphical flicker in Oak's lab
                 this.g1stateVariable = "To Battle";
             }; 
             if (this.g1stateVariable == "Base Stats") return; // ignore everything if we still dont have a pokemon
@@ -1025,7 +707,6 @@ const app = Vue.createApp({
                 this.g1stateVariable = "Overworld";
             }
         });
-
         this.mapper.properties.battle.turnInfo.battleStart.change((prop) => {
             if (this.g1stateVariable == "Base Stats") return; // ignore everything if we still dont have a pokemon
 
@@ -1033,7 +714,6 @@ const app = Vue.createApp({
                 this.g1stateVariable = "Battle";
             }
         });
-
         this.mapper.properties.battle.lowHealthAlarm.change((prop) => {
             if (this.g1stateVariable == "Base Stats") return; // ignore everything if we still dont have a pokemon
 
@@ -1041,14 +721,13 @@ const app = Vue.createApp({
                 this.g1stateVariable = "From Battle";
             }
         });
-
         this.mapper.properties.overworld.map.change((newProp, oldProp) => {
             if (newProp == "Lance's Room" && oldProp == "Agatha's Room") { 
                 this.g1stateVariable = "Overworld"
             }
         });
 
-        //ENEMY STATE MANAGER
+        //Functions to track the battle's state
         if (this.mapper.properties.player.team[0].level.value == 0) 
             this.enemyState = "Not In Battle";
         else if (this.mapper.properties.battle.type.value == "None")
@@ -1063,7 +742,6 @@ const app = Vue.createApp({
             this.enemyState = "Pokemon Sent Out";
         else if  (this.mapper.properties.battle.enemyPokemon.hp.value > 0 && this.mapper.properties.screen.menu.currentItem.value > 0)
             this.enemyState = "Pokemon";
-
         this.mapper.properties.battle.type.change((prop) => {
             if (prop.value == "Wild" || prop.value == "Trainer") {
                 this.enemyState = "Battle Starting";
@@ -1130,99 +808,6 @@ const app = Vue.createApp({
                     await this.mapper.properties.player.team[0].speed.setBytes([0x00, speed], false),
                 ])
             }
-            //RANDOM STARTING SET
-            else if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.randomStartingSet == true) {
-                var randomMove1 = this.venomothStartingMoves[this.s1.type1.value].move1
-                var randomMove2 = this.venomothStartingMoves[this.s1.type1.value].move2
-                var randomMove3 = this.venomothStartingMoves[this.s1.type2.value].move1
-                var randomMove4 = this.venomothStartingMoves[this.s1.type2.value].move2
-                var randomMove1pp = this.venomothStartingMoves[this.s1.type1.value].pp1
-                var randomMove2pp = this.venomothStartingMoves[this.s1.type1.value].pp2
-                var randomMove3pp = this.venomothStartingMoves[this.s1.type2.value].pp1
-                var randomMove4pp = this.venomothStartingMoves[this.s1.type2.value].pp2
-                await Promise.all([
-                    await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvSpeed.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvSpecial.setBytes([perfectDVs], false),
-
-                    await this.mapper.properties.player.team[0].hp.setBytes([0x00, hitpoints], false), //Apply stat recalculation (don't freeze)
-                    await this.mapper.properties.player.team[0].maxHp.setBytes([0x00, hitpoints], false),
-                    await this.mapper.properties.player.team[0].attack.setBytes([0x00, attack], false), 
-                    await this.mapper.properties.player.team[0].defense.setBytes([0x00, defense], false),
-                    await this.mapper.properties.player.team[0].special.setBytes([0x00, special], false),
-                    await this.mapper.properties.player.team[0].speed.setBytes([0x00, speed], false),
-
-                    await this.mapper.properties.player.team[0].move1.setBytes([randomMove1], false),
-                    await this.mapper.properties.player.team[0].move2.setBytes([randomMove2], false),
-                    await this.mapper.properties.player.team[0].move3.setBytes([randomMove3], false),
-                    await this.mapper.properties.player.team[0].move4.setBytes([randomMove4], false),
-                    await this.mapper.properties.player.team[0].move1pp.setBytes([randomMove1pp], false),
-                    await this.mapper.properties.player.team[0].move2pp.setBytes([randomMove2pp], false),
-                    await this.mapper.properties.player.team[0].move3pp.setBytes([randomMove3pp], false),
-                    await this.mapper.properties.player.team[0].move4pp.setBytes([randomMove4pp], false),
-                ])
-            }
-            else if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == true && this.customTrainerID == false) {
-                await Promise.all([
-                    await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvSpeed.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvSpecial.setBytes([perfectDVs], false),
-
-                    await this.mapper.properties.player.team[0].hp.setBytes([0x00, hitpoints], false), //Apply stat recalculation (don't freeze)
-                    await this.mapper.properties.player.team[0].maxHp.setBytes([0x00, hitpoints], false),
-                    await this.mapper.properties.player.team[0].attack.setBytes([0x00, attack], false), 
-                    await this.mapper.properties.player.team[0].defense.setBytes([0x00, defense], false),
-                    await this.mapper.properties.player.team[0].special.setBytes([0x00, special], false),
-                    await this.mapper.properties.player.team[0].speed.setBytes([0x00, speed], false),
-
-                    await this.mapper.properties.player.team[0].move1.setBytes([this.customMove1], false),
-                    await this.mapper.properties.player.team[0].move2.setBytes([this.customMove2], false),
-                    await this.mapper.properties.player.team[0].move3.setBytes([this.customMove3], false),
-                    await this.mapper.properties.player.team[0].move4.setBytes([this.customMove4], false),
-                    await this.mapper.properties.player.team[0].move1pp.setBytes([this.customMove1pp], false),
-                    await this.mapper.properties.player.team[0].move2pp.setBytes([this.customMove2pp], false),
-                    await this.mapper.properties.player.team[0].move3pp.setBytes([this.customMove3pp], false),
-                    await this.mapper.properties.player.team[0].move4pp.setBytes([this.customMove4pp], false),
-                ])
-            }
-            else if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == true && this.customTrainerID == true) {
-                await Promise.all([
-                    await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvSpeed.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvSpecial.setBytes([perfectDVs], false),
-
-                    await this.mapper.properties.player.team[0].hp.setBytes([0x00, hitpoints], false), //Apply stat recalculation (don't freeze)
-                    await this.mapper.properties.player.team[0].maxHp.setBytes([0x00, hitpoints], false),
-                    await this.mapper.properties.player.team[0].attack.setBytes([0x00, attack], false), 
-                    await this.mapper.properties.player.team[0].defense.setBytes([0x00, defense], false),
-                    await this.mapper.properties.player.team[0].special.setBytes([0x00, special], false),
-                    await this.mapper.properties.player.team[0].speed.setBytes([0x00, speed], false),
-
-                    await this.mapper.properties.player.team[0].move1.setBytes([this.customMove1], false),
-                    await this.mapper.properties.player.team[0].move2.setBytes([this.customMove2], false),
-                    await this.mapper.properties.player.team[0].move3.setBytes([this.customMove3], false),
-                    await this.mapper.properties.player.team[0].move4.setBytes([this.customMove4], false),
-                    await this.mapper.properties.player.team[0].move1pp.setBytes([this.customMove1pp], false),
-                    await this.mapper.properties.player.team[0].move2pp.setBytes([this.customMove2pp], false),
-                    await this.mapper.properties.player.team[0].move3pp.setBytes([this.customMove3pp], false),
-                    await this.mapper.properties.player.team[0].move4pp.setBytes([this.customMove4pp], false),
-                    
-                    await this.mapper.properties.player.team[0].expPoints.setBytes([0x00, 0x10, 0x7A], false),
-                    await this.mapper.properties.player.team[0].level.setBytes([this.customLevel], false),
-                    await this.mapper.properties.player.team[0].trainerId.setBytes([0x00, 0x00], false),
-                ])
-            }
-            else {
-                await Promise.all([ //Set DVs and freeze them even if stat recalculation isn't needed
-                    await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvSpeed.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvSpecial.setBytes([perfectDVs], false),
-                ])
-            }
         }
 
         // SETTING THE STARTER POKEMON'S STATS ----------------------------------------------------------------------------------------------//
@@ -1238,7 +823,6 @@ const app = Vue.createApp({
                     await this.mapper.properties.options.soloChallenge.setBytes([regularOptions]),
                 ])
         }
-
         // SETTING THE STARTER POKEMON'S STATS ----------------------------------------------------------------------------------------------//
         const trashCans = async () => {
             const solved = 0x03 //0x03 finds first can and solves the puzzle, leaves all trainers battlable
@@ -1247,162 +831,19 @@ const app = Vue.createApp({
                     await this.mapper.properties.events.trashCanPuzzle.setBytes([solved], false), //don't freeze this property
                 ])
         }
-        //SETTING OVERWORLD ENCOUNTERS & RNG FOR SECOND PLAYTHROUGH OPTIMIZATION ----------------------------------------------------------------//
-        const secondPlaythrough = async () => {
-            const noEncounters = 0x00
-            const viridianForestPidgey = 0x24
-            const viridianForestEncounterRate = 0x0A
-            const pidgeyLevelFour = 0x04
-            const pidgeyLevelSix = 0x06
-            const moonparas = 0x6D
-            const paraslevelone = 0x0A
-            const parasleveltwo = 0x0C
-            if (this.secondPlaythrough == true && this.mapper.meta.gameName == `Pokemon Yellow`) {
-                if (this.mapper.properties.overworld.map.value == `Route 1` || 
-                this.mapper.properties.overworld.map.value == `Route 3` || 
-                this.mapper.properties.overworld.map.value == `Route 6` || 
-                this.mapper.properties.overworld.map.value == `Route 10` || 
-                this.mapper.properties.overworld.map.value == `Mt Moon - 1` || 
-                this.mapper.properties.overworld.map.value == `Mt Moon - 2` || 
-                this.mapper.properties.overworld.map.value == `Mt Moon - 3` || 
-                this.mapper.properties.overworld.map.value == `Rock Tunnel` || 
-                this.mapper.properties.overworld.map.value == `Rock Tunnel - 1`) {
-                    console.log("secondRun")
-                    await Promise.all([
-                        await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
-                    ])  
-                }
-                else if (this.mapper.properties.overworld.map.value == `Viridian Forest`) {
-                    await Promise.all([
-                        await this.mapper.properties.overworld.encounters.common[0].level.setBytes([pidgeyLevelFour], false),
-                        await this.mapper.properties.overworld.encounters.common[0].pokemon.setBytes([viridianForestPidgey], false),
-                        await this.mapper.properties.overworld.encounters.common[1].level.setBytes([pidgeyLevelFour], false),
-                        await this.mapper.properties.overworld.encounters.common[1].pokemon.setBytes([viridianForestPidgey], false),
-                        await this.mapper.properties.overworld.encounters.common[2].level.setBytes([pidgeyLevelFour], false),
-                        await this.mapper.properties.overworld.encounters.common[2].pokemon.setBytes([viridianForestPidgey], false),
-                        await this.mapper.properties.overworld.encounters.common[3].level.setBytes([pidgeyLevelFour], false),
-                        await this.mapper.properties.overworld.encounters.common[3].pokemon.setBytes([viridianForestPidgey], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[0].level.setBytes([pidgeyLevelSix], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[0].pokemon.setBytes([viridianForestPidgey], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[1].level.setBytes([pidgeyLevelSix], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[1].pokemon.setBytes([viridianForestPidgey], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[2].level.setBytes([pidgeyLevelSix], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[2].pokemon.setBytes([viridianForestPidgey], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([pidgeyLevelSix], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([viridianForestPidgey], false),
-                        await this.mapper.properties.overworld.encounterRate.setBytes([viridianForestEncounterRate], false),
-                    ])  
-                }
-            }
-            else if (this.secondPlaythrough == true && this.mapper.meta.gameName == `Pokemon Red and Blue`) {
-                if (this.mapper.properties.overworld.map.value == `Route 1` || 
-                this.mapper.properties.overworld.map.value == `Route 6` || 
-                this.mapper.properties.overworld.map.value == `Route 10` || 
-                this.mapper.properties.overworld.map.value == `Mt Moon - 1` || 
-                this.mapper.properties.overworld.map.value == `Mt Moon - 2` || 
-                this.mapper.properties.overworld.map.value == `Viridian Forest` || 
-                this.mapper.properties.overworld.map.value == `Rock Tunnel` || 
-                this.mapper.properties.overworld.map.value == `Rock Tunnel - 1`) {
-                    console.log("secondRun")
-                    await Promise.all([
-                        await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
-                    ])  
-                }
-                else if (this.mapper.properties.overworld.map.value == `Route 3`) {
-                    await Promise.all([
-                        await this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([pidgeyLevelSix], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([viridianForestPidgey], false),
-                        await this.mapper.properties.overworld.encounters.rare[0].level.setBytes([pidgeyLevelSix], false),
-                        await this.mapper.properties.overworld.encounters.rare[0].pokemon.setBytes([viridianForestPidgey], false),
-                        await this.mapper.properties.overworld.encounters.rare[1].level.setBytes([pidgeyLevelSix], false),
-                        await this.mapper.properties.overworld.encounters.rare[1].pokemon.setBytes([viridianForestPidgey], false),
-                    ])  
-                }
-                else if (this.mapper.properties.overworld.map.value == `Mt Moon - 3`) {
-                    await Promise.all([
-                        await this.mapper.properties.overworld.encounters.common[0].level.setBytes([paraslevelone], false),
-                        await this.mapper.properties.overworld.encounters.common[0].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounters.common[1].level.setBytes([paraslevelone], false),
-                        await this.mapper.properties.overworld.encounters.common[1].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounters.common[2].level.setBytes([paraslevelone], false),
-                        await this.mapper.properties.overworld.encounters.common[2].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounters.common[3].level.setBytes([paraslevelone], false),
-                        await this.mapper.properties.overworld.encounters.common[3].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounters.common[4].level.setBytes([paraslevelone], false),
-                        await this.mapper.properties.overworld.encounters.common[4].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[0].level.setBytes([paraslevelone], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[0].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[1].level.setBytes([parasleveltwo], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[1].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[2].level.setBytes([parasleveltwo], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[2].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([parasleveltwo], false),
-                        await this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounters.rare[0].level.setBytes([parasleveltwo], false),
-                        await this.mapper.properties.overworld.encounters.rare[0].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounters.rare[1].level.setBytes([parasleveltwo], false),
-                        await this.mapper.properties.overworld.encounters.rare[1].pokemon.setBytes([moonparas], false),
-                        await this.mapper.properties.overworld.encounterRate.setBytes([0x08], false),
-                    ])  
-                }
-            }
-        }
         
         //Recalculate starting stats when the DVs in slot 1 change (when you receive your starter)
-        this.mapper.properties.player.team[0].level.change(async (x) => {
-            await setStartingStats()
-        })
-        this.mapper.properties.player.team[0].dvAttack.change(async (x) => {
-            await setStartingStats()
-        })
-        this.mapper.properties.player.team[0].dvDefense.change(async (x) => {
-            await setStartingStats()
-        })
-        this.mapper.properties.player.team[0].dvSpeed.change(async (x) => {
-            await setStartingStats()
-        })
-        this.mapper.properties.player.team[0].dvSpecial.change(async (x) => {
-            await setStartingStats()
-        })
+        this.mapper.properties.player.team[0].level.change(async (x) => { await setStartingStats() })
+        this.mapper.properties.player.team[0].dvAttack.change(async (x) => { await setStartingStats() })
+        this.mapper.properties.player.team[0].dvDefense.change(async (x) => { await setStartingStats() })
+        this.mapper.properties.player.team[0].dvSpeed.change(async (x) => { await setStartingStats() })
+        this.mapper.properties.player.team[0].dvSpecial.change(async (x) => { await setStartingStats() })
 
         //Whenever the player moves to a different map
         this.mapper.properties.overworld.map.change(async (x) => {
             await optionsSet() //Set options to Fast Text, No Animations, Set Battle (Except during the champion fight)
             await trashCans() //Solve the trash can puzzle if it isn't already solved
-            await secondPlaythrough()
         })
-
-        this.mapper.properties.overworld.encounters.common[0].pokemon.change(async (x) => {
-            await secondPlaythrough()
-        })
-        this.mapper.properties.overworld.encounterRate.change(async (x) => {
-            await secondPlaythrough()
-        })
-
-        // //FIX OF ENEMY BATTLE STATS
-        // this.mapper.properties.battle.enemyPokemon.hp.change(async (newProp, oldProp) => {
-        //     if (newProp == 0) {
-        //         this.slotTimingFix = true    
-        //         console.log("SET TRUE")
-        //     }
-        //     this.mapper.properties.battle.enemyPokemon.partyPos.change(async (x) => {
-        //         await this.sleep(300)
-        //         console.log("SET FALSE")
-        //         this.slotTimingFix = false
-        //     })
-        // })
-
-        //UNKNOWN DUNGEON
-        this.mapper.properties.overworld.map.change(async (prop) => {
-            if (prop.value == `Route 24`) {
-                await this.mapper.properties.overworld.encounterRate.setBytes([0x00], false)
-            }
-            if (prop.value == `Unknown Dungeon`) {
-                await this.mapper.properties.overworld.encounterRate.setBytes([0x00], true)
-                await this.sleep(250)
-                await this.mapper.properties.player.joypadSimulation.setBytes([0xFF], true)
-            }
-        });
 
         //EXP BAR
         var species = this.s1dynamicReset.species.value;
@@ -1419,23 +860,17 @@ const app = Vue.createApp({
                 const animationMaxDuration = 600
 
                 if (oldProp.value == newProp.value) { return }
-                // did we switch out?
-                // there is still a bug here. what if we changed to the same species?
                 if (this.g1stateVariable == `Overworld` || this.g1stateVariable == "Base Stats") {
                     this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
                 }
                 else if (this.prevSpecies != currSpecies) {
-                    // update prevSpecies
                     this.prevSpecies = currSpecies; 
-                    // dont animate, just set newExpStats.percent
                     this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
                 } 
-                // same pokemon but exp changed
                 else {
                     if (oldExpStats.level == newExpStats.level) {
                         var diffExp = newExpStats.percent - oldExpStats.percent
                         var animationDuration = Math.ceil(diffExp * animationMaxDuration)
-                        // animate width to newExpStats.percent
                         this.$refs.expBar.style.transition = `width ${animationDuration}ms ease-in-out`;
                         this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
                         await this.sleep(animationDuration + 50);
@@ -1444,15 +879,12 @@ const app = Vue.createApp({
                         var animationDuration1 = Math.ceil(diffExp1 * animationMaxDuration)
                         var diffExp2 = newExpStats.percent
                         var animationDuration2 = Math.ceil(diffExp2 * animationMaxDuration)
-                        // animate width to 100%
                         this.$refs.expBar.style.transition = `width ${animationDuration1}ms ease-in`;
                         this.$refs.expBar.style.width = "100%";
                         await this.sleep(animationDuration1 + 50);
-                        // dont animate, set width to 0%
                         this.$refs.expBar.style.transition = null;
                         this.$refs.expBar.style.width = "0%";
                         await this.sleep(50);
-                        // animate width from 0% to newExpStats.percent
                         this.$refs.expBar.style.transition = `width ${animationDuration2}ms ease-out`;
                         this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
                         await this.sleep(animationDuration2 + 50);

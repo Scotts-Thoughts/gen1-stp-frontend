@@ -2,11 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scott's Thoughts - Gen1 Frontend v2.1.dev.21</title>
+    <title>Scott's Thoughts - Gen1 Frontend</title>
     <link rel="stylesheet" href="style-yellow.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 </head>
-
 <body>
     <div id="app">
         <div v-if="ready == false">Loading...</div>
@@ -21,40 +19,7 @@
                     <div class="genericLabels timerLabel">time played at 4x game speed</div>
                     <div class="genericLabels resetsLabel">resets</div>
                 </div>
-<!------ DEBUGGING ---------------------------------------------------------------------------------------------------------------------------->
-                <div class="testingArea1">
-                    <div>GamestateVariable: {{ g1stateVariable }}</div>
-                    <div>EnemyState: {{enemyState}}</div><br>
-                    <div>Starter: {{starterName}}</div><br>
-                    <div>Starter: {{pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)}}</div><br>
-                    <div>Starter: {{pkmnType(2, s1dynamicReset.type1.value, s1dynamicReset.type2.value)}}</div><br>
-                    <br>
-                    <span style="text-decoration: underline;">Player Damage Ranges:</span><br>
-                    {{capitalization_format(moveDynamic(1))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(1), "Player")[1] }})<br>
-                    {{capitalization_format(moveDynamic(2))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(2), "Player")[1] }})<br>
-                    {{capitalization_format(moveDynamic(3))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(3), "Player")[1] }})<br>
-                    {{capitalization_format(moveDynamic(4))}}: {{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[2] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[3] }}% ({{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[0] }}-{{ damageCalculation(s1dynamic, battEn, moveDynamic(4), "Player")[1] }})<br>
-                    <br>
-                    <span style="text-decoration: underline;">AI Damage Ranges</span><br>
-                    {{capitalization_format(battEn.move1.value)}}: {{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move1.value, "AI")[1] }})<br>
-                    {{capitalization_format(battEn.move2.value)}}: {{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move2.value, "AI")[1] }})<br>
-                    {{capitalization_format(battEn.move3.value)}}: {{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[1] }})<br>
-                    {{capitalization_format(battEn.move4.value)}}: {{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[1] }})<br>
-                    <br>
-                </div>
-                <div class="testingArea2">
-                    <!-- Splits:<br>
-                    <div v-for="split in splitData">
-                        <span style="text-decoration: underline;">{{ split["trainer_name"] }}:</span><br>
-                        Time: {{ formatDuration(split["realtime.end"]) }}<br>
-                        Level: {{ split["player.team.slot1.level"] }}<br>
-                        Resets: {{ split["resets"] }}<br>
-                        <br>
-                    </div> -->
-                </div>
-
-
-<!------ TYPE ICONS --------------------------------------------------------------------------------------------------------------------------->
+<!-- TYPE ICONS -------------------------------------------------------------------------------->
                 <div class="typeContainer">
                     <div v-if="pkmnType(1, s1.type1.value, s1.type2.value) == pkmnType(2, s1.type1.value, s1.type2.value)" class="type">
                         <img :src="pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
@@ -64,42 +29,23 @@
                         <img :src="pkmnType(2, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                     </div>
                 </div>
-    
-<!--------- BADGE ICONS ---------------------------------------------------------------------------------------------------------------------->
+<!-- BADGE ICONS ------------------------------------------------------------------------------->
                 <div class="badgesBar">          
                     <img v-show="map.player.badges.badge1.value === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" style="top: 914px; opacity: .3; left: 22px; z-index: 2;" />
                     <img v-show="map.player.badges.badge3.value === true" class="badgeBoostStyle badgeBoostDef" :src="badgeGraphic(map.player.badges.badge3)" style="top: 976px; opacity: .3; left: 22px; z-index: 2;" />                    
                     <img v-show="map.player.badges.badge5.value === true" class="badgeBoostStyle badgeBoostSpd" :src="badgeGraphic(map.player.badges.badge5)" style="top: 976px; opacity: .3; left: 206px; z-index: 2;" />                    
                     <img v-show="map.player.badges.badge7.value === true" class="badgeBoostStyle badgeBoostSpc" :src="badgeGraphic(map.player.badges.badge7)" style="top: 914px; opacity: .3; left: 206px; z-index: 2;"/>      
                 </div>                         
-    
 <!-- BASE STATS -------------------------------------------------------------------------------->
                 <div class="statsContainer">  
                     <div v-if="g1stateVariable == `Base Stats`">
-                        <div class="statsLabelStyle statsLabelsColumn1">
-                            HP:<br>
-                            Atk:<br>
-                            Def:<br>
-                        </div>
-                        <div class="statsLabelStyle statsLabelsColumn2">
-                            <br>
-                            Spc:<br>
-                            Spd:<br>
-                        </div>
+                        <div class="statsLabelStyle statsLabelsColumn1">HP:<br>Atk:<br>Def:<br></div>
+                        <div class="statsLabelStyle statsLabelsColumn2"><br>Spc:<br>Spd:<br></div>
                         <div class="statsheader">Base Stats</div>
-                        <div class="statsColumnStyle statsColumn1">
-                            {{ g1PokemonData[starterName].base_hp }}<br>
-                            {{ g1PokemonData[starterName].base_atk }}<br>
-                            {{ g1PokemonData[starterName].base_def }}<br>
-                        </div>
+                        <div class="statsColumnStyle statsColumn1">{{ g1PokemonData[starterName].base_hp }}<br>{{ g1PokemonData[starterName].base_atk }}<br>{{ g1PokemonData[starterName].base_def }}<br></div>
                         <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName].base_spd) }}%</div>
-                        <div class="statsColumnStyle statsColumn2">
-                            <br>
-                            {{ g1PokemonData[starterName].base_spc }}<br>
-                            {{ g1PokemonData[starterName].base_spd }}<br>
-                        </div>
+                        <div class="statsColumnStyle statsColumn2"><br>{{ g1PokemonData[starterName].base_spc }}<br>{{ g1PokemonData[starterName].base_spd }}<br></div>
                     </div>
-    
 <!-- OVERWORLD STATS --------------------------------------------------------------------------->
                     <div v-if="g1stateVariable == `Overworld` || g1stateVariable == `To Battle`">
                         <div class="statsLabelStyle statsLabelsColumn1">
@@ -107,7 +53,6 @@
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Atk:<br></span>
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Def:<br></span>
                         </div>
-
                         <div class="statsLabelStyle statsLabelsColumn2">
                             <br>
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spc:<br></span>
@@ -115,32 +60,26 @@
                         </div>
                         <div>
                             <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminHPLabel">
-                                HP Up: 
-                                <br>
+                                HP Up: <br>
                                 <span class="vitaminsStyle vitaminHP">{{statExp(map.player.team[0].statExpHp)}}</span>
                             </span>
                             <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminAtkLabel">
-                                Protein: 
-                                <br>
+                                Protein: <br>
                                 <span class="vitaminsStyle vitaminAtk">{{statExp(map.player.team[0].statExpAttack)}}</span>
                             </span>
                             <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminDefLabel">
-                                Iron: 
-                                <br>
+                                Iron: <br>
                                 <span class="vitaminsStyle vitaminDef">{{statExp(map.player.team[0].statExpDefense)}}</span>
                             </span>
                             <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminSpcLabel">
-                                Calcium: 
-                                <br>
+                                Calcium: <br>
                                 <span class="vitaminsStyle vitaminSpc">{{statExp(map.player.team[0].statExpSpecial)}}</span>
                             </span>
                             <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminSpdLabel">
-                                Carbos: 
-                                <br>
+                                Carbos: <br>
                                 <span class="vitaminsStyle vitaminSpd">{{statExp(map.player.team[0].statExpSpeed)}}</span>
                             </span>
                         </div>
-
                         <div class="statsheader">Level {{ map.player.team[0].level.value }}</div>
                         <div class="statsColumnStyle statsColumn1">
                             {{ map.player.team[0].maxHp }}<br>
@@ -154,7 +93,6 @@
                             {{ badgeBoost(mapper.properties.player.badges.badge5.value, mapper.properties.player.team[0].speed.value) }}<br>
                         </div>
                     </div>
-    
 <!-- BATTLE STATS ----------------------------------------------------------------------------->
                     <div v-if="g1stateVariable == `Battle` || g1stateVariable == `From Battle`">
                         <div class="statsLabelStyle statsLabelsColumn1">
@@ -185,7 +123,6 @@
                         <div class="spdMod">{{ stageModifiers(batt.yourPokemon.modStageSpeed) }}</div>
                     </div>
                 </div>  
-    
 <!--------- MOVESET -------------------------------------------------------------------------------------------------------------->
                 <div class="movesetContainer">
                     <div class="movesetLabel labelMoves">moves</div>
@@ -202,7 +139,6 @@
                         </div>
                     </div>
                 </div>
-          
 <!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade">
                     <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
@@ -223,7 +159,6 @@
                                     <div class="ePkmnStatsStyle ePkmnDef opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"defense",currentTrainer.pokemon[x]?.def,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnSpd opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",currentTrainer.pokemon[x]?.spd,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnSpc opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",currentTrainer.pokemon[x]?.spc,"enemyPokemon")}}</div>
-
                                     <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageAttack.value != `0`" class="enemyMods attackMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageAttack.value)[1]}`">{{batt.enemyPokemon.modEnemyStageAttack.value}}</div></transition>
                                     <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageDefense.value != `0`" class="enemyMods defenseMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageDefense.value)[1]}`">{{batt.enemyPokemon.modEnemyStageDefense.value}}</div></transition>
                                     <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpecial.value != `0`" class="enemyMods specialMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpecial.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpecial.value}}</div></transition>
@@ -232,7 +167,6 @@
                             </div>
                         </div> 
                     </div>
-
                     <div v-else key=3>
                         <table class="movepoolDemo" cellspacing="0">
                             <tr class="movepool_header" :style="{'background-color': `var(--${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
@@ -277,7 +211,6 @@
                         <img class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
                 </transition>
-
 <!--------- BATTLE POP UPS -------------------------------------------------------------------------------------------------------------------->
                 <div v-if="battlePopUps == true && developmentFeatures == true" style="position: absolute;">
                     <transition name="fade">
@@ -302,7 +235,6 @@
                         </div>
                     </transition>
                 </div>
-                
 <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
                 <div class="expBar">
                     <img class="expLabelGen1" src="images/exp_bar/exp_label.png"/>
@@ -316,16 +248,15 @@
 <!------ JAVASCRIPT --------------------------------------------------------------------------------------------------------------------->
     <script src="packages/signalR.js"></script>
     <script src="packages/vue.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.7/signalr.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.cjs.js"></script> -->
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
-    <script src="data/gen1moves.js"></script>
+    <script src="data/g1MoveData.js"></script>
+    <script src="data/g1PokemonData.js"></script>
     <script src="data/gen1YellowTrainers.js"></script>
     <script src="data/gen1RedBlueTrainers.js"></script>
     <script src="data/type-effectiveness.js"></script>
     <script src="data/stage-modifiers.js"></script>
-    <script src="data/statusConditions.js"></script>
-    <script src="data/venomothStartingMoves.js"></script>
     <script src="data/tmhmmapping.js"></script>
-    <script src="data/g1MoveData.js"></script>
-    <script src="data/g1PokemonData.js"></script>
-    <script type="text/javascript" src="scripts/vue.js"></script>
+    <script type="text/javascript" src="vue.js"></script>
 </body>
