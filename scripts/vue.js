@@ -6,7 +6,7 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Scyther", //string name
+            starterName:     "Venonat", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough:   true, //used to mitigate luck on second playthroughs
             moonEncounters:      true, //true turns Mt Moon encounters off for second playthroughs
