@@ -281,7 +281,7 @@ const g1PokemonData = {
         base_def: 100,
         base_spd: 85,
         base_spc: 125,
-        type1: "ice",
+        type1: "Ice",
         type2: "Flying",
         catch_rate: 3,
         base_xp: 215,
@@ -1133,7 +1133,7 @@ const g1PokemonData = {
         base_spd: 70,
         base_spc: 85,
         type1: "Water",
-        type2: "ice",
+        type2: "Ice",
         catch_rate: 60,
         base_xp: 203,
         initial_moveset: [
@@ -1260,7 +1260,7 @@ const g1PokemonData = {
         base_spd: 70,
         base_spc: 95,
         type1: "Water",
-        type2: "ice",
+        type2: "Ice",
         catch_rate: 75,
         base_xp: 176,
         initial_moveset: [
@@ -3666,13 +3666,13 @@ const g1PokemonData = {
         base_def: 35,
         base_spd: 95,
         base_spc: 95,
-        type1: "ice",
+        type1: "Ice",
         type2: "Psychic",
         catch_rate: 45,
         base_xp: 137,
         initial_moveset: [
         "Pound",
-        "lovely_kiss"
+        "Lovely Kiss"
         ],
         growth_rate: "Medium Fast",
         tm_hm_learnset: [
@@ -4193,7 +4193,7 @@ const g1PokemonData = {
         base_spd: 60,
         base_spc: 95,
         type1: "Water",
-        type2: "ice",
+        type2: "Ice",
         catch_rate: 45,
         base_xp: 219,
         initial_moveset: [
@@ -5201,9 +5201,9 @@ const g1PokemonData = {
         ]
         ]
     },
-"Mr Mime" :
+"Mr. Mime" :
     {
-        name: "Mr Mime",
+        name: "Mr. Mime",
         base_hp: 40,
         base_atk: 45,
         base_def: 65,

@@ -10,8 +10,13 @@
         <div v-if="ready == false">Loading...</div>
         <div v-else>
             <div class="mainContainer">
+<!-- GRAPHICS ---------------------------------------------------------------------------------->
                 <div>
-                    <img class="canvas" :src="`images/overlay/${starterName.toLowerCase()}${overlayName}.png`" />
+                    <img class="canvas" :src="`images/textures/${s1dynamicReset.type1}.png`" />
+                    <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
+                    <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
+                    <img class="pokemon_art" :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
+                    <img class="canvas" :src="`images/left_ui/${s1dynamicReset.type1}.png`" />
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
@@ -60,24 +65,19 @@
                         </div>
                         <div>
                             <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminHPLabel">
-                                HP Up: <br>
-                                <span class="vitaminsStyle vitaminHP">{{statExp(map.player.team[0].statExpHp)}}</span>
+                                HP Up: <br><span class="vitaminsStyle vitaminHP">{{statExp(map.player.team[0].statExpHp)}}</span>
                             </span>
                             <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminAtkLabel">
-                                Protein: <br>
-                                <span class="vitaminsStyle vitaminAtk">{{statExp(map.player.team[0].statExpAttack)}}</span>
+                                Protein: <br><span class="vitaminsStyle vitaminAtk">{{statExp(map.player.team[0].statExpAttack)}}</span>
                             </span>
                             <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminDefLabel">
-                                Iron: <br>
-                                <span class="vitaminsStyle vitaminDef">{{statExp(map.player.team[0].statExpDefense)}}</span>
+                                Iron: <br><span class="vitaminsStyle vitaminDef">{{statExp(map.player.team[0].statExpDefense)}}</span>
                             </span>
                             <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminSpcLabel">
-                                Calcium: <br>
-                                <span class="vitaminsStyle vitaminSpc">{{statExp(map.player.team[0].statExpSpecial)}}</span>
+                                Calcium: <br><span class="vitaminsStyle vitaminSpc">{{statExp(map.player.team[0].statExpSpecial)}}</span>
                             </span>
                             <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminSpdLabel">
-                                Carbos: <br>
-                                <span class="vitaminsStyle vitaminSpd">{{statExp(map.player.team[0].statExpSpeed)}}</span>
+                                Carbos: <br><span class="vitaminsStyle vitaminSpd">{{statExp(map.player.team[0].statExpSpeed)}}</span>
                             </span>
                         </div>
                         <div class="statsheader">Level {{ map.player.team[0].level.value }}</div>
@@ -202,7 +202,7 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <img class="canvas" :src="`images/movepool_border/${starterName.toLowerCase()}${overlayName}.png`"/>
+                        <img class="canvas" :src="`images/movepool_border/${s1dynamicReset.type1}.png`"/>
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                 </transition>
@@ -212,7 +212,7 @@
                     </div>
                 </transition>
 <!--------- BATTLE POP UPS -------------------------------------------------------------------------------------------------------------------->
-                <div v-if="battlePopUps == true && developmentFeatures == true" style="position: absolute;">
+                <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-show="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
                             <img :src="`images/pop_ups/accuracy/${starterName.toLowerCase()}${overlayName}.png`" style="position: absolute;">
