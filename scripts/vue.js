@@ -6,9 +6,9 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Venonat", //string name
+            starterName:     "Arbok", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
-            secondPlaythrough:   true, //used to mitigate luck on second playthroughs
+            secondPlaythrough:   false, //used to mitigate luck on second playthroughs
             moonEncounters:      true, //true turns Mt Moon encounters off for second playthroughs
             
             developmentFeatures: true, //turn on new features
@@ -856,6 +856,7 @@ const app = Vue.createApp({
         // MOVE MANAGEMENT
         movePower(y) { //y = move1.value
             if (y) {
+                if (y.toLowerCase() == "smokescreen") { return "-"}
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
                 var move = this.g1MoveData[y]
                 if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP")) {
