@@ -130,6 +130,12 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        keys_function(object) {
+            return Object.keys(object)
+        },
+        select_starter(x) {
+            this.starterName = x
+        },
         g1CritRate(baseSpeed) {
             return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
         },

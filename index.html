@@ -143,7 +143,7 @@
                 <transition name="fade">
                     <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
-                        <img class="enemyPng" :src="`images/enemy_area/${starterName.toLowerCase()}${overlayName}.png`" :style="battlePokemonCrop()"/>
+                        <img class="enemyPng" :src="`images/enemy_area/${s1dynamicReset.type1}.png`" :style="battlePokemonCrop()"/>
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
                                 <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmnStyle ePkmn${x + 1}`">
@@ -241,7 +241,13 @@
                     <div class="expTextGen2">Exp:</div>
                     <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
                 </div>
+                <!-- UI ----------------------------------------------------------------------------------------->
             </div>
+        </div>
+        <div class="testingArea1">
+            <select onchange="select_starter(this.value)" style="pointer-events: auto; z-index: 50000; position: relative;">
+                <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
+            </select>
         </div>
     </div>
 
