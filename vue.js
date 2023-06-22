@@ -364,6 +364,7 @@ const app = Vue.createApp({
                 trainerClass == "RIVAL3" ||
                 (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3) || //pidgey jr trainer
                 (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5) || //wrapping lass
+                (trainerClass == "SUPER NERD" && this.mapper.properties.battle.trainer.number == 2) || //fossil nerd
                 (trainerClass == "POKEMANIAC" && this.mapper.properties.battle.trainer.number == 7) || //cubone slowpoke maniac
                 (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10) || //status condition jr trainer
                 (trainerClass == "HIKER" && this.mapper.properties.battle.trainer.number == 9) || //Selfdestructing hiker
@@ -431,6 +432,8 @@ const app = Vue.createApp({
                   return "images/trainers/BEN.png";
                 case "POKEMANIAC_7":
                   return "images/trainers/POKEMANIAC_7.png";
+                case "SUPER NERD_2":
+                  return "images/trainers/FOSSIL_NERD.png";
                 case "JR TRAINER F_10":
                   return "images/trainers/JR TRAINER F_10.png";
                 case "ROCKET_38":
