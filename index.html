@@ -215,21 +215,21 @@
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-show="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/accuracy/${starterName.toLowerCase()}${overlayName}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/accuracy/${s1dynamicReset.type1}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-show="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/evasion/${starterName.toLowerCase()}${overlayName}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/evasion/${s1dynamicReset.type1}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-show="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/screens/${starterName.toLowerCase()}${overlayName}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/screens/${s1dynamicReset.type1}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>
@@ -245,9 +245,14 @@
             </div>
         </div>
         <div class="testingArea1">
-            <select onchange="select_starter(this.value)" style="pointer-events: auto; z-index: 50000; position: relative;">
+            <div>Press F11 to exit (or enter) fullscreen</div>
+            <br>
+            <br>
+            <div>Select Solo Pokemon:</div>
+            <select onchange="select_starter(this.value)" style="pointer-events: auto; z-index: 50000; position: relative; width: 300px; height: 40px; font-size: 24px; background: #a7ff92; font-family: Play;">
                 <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
             </select>
+            <br>
         </div>
     </div>
 

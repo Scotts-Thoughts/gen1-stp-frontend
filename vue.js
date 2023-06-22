@@ -133,8 +133,8 @@ const app = Vue.createApp({
         keys_function(object) {
             return Object.keys(object)
         },
-        select_starter(x) {
-            this.starterName = x
+        select_starter(pokemon_species) {
+            this.starterName = pokemon_species
         },
         g1CritRate(baseSpeed) {
             return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
