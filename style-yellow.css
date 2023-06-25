@@ -198,6 +198,24 @@ box-shadow:
     ;
 }
 
+.buttonStyle {
+    pointer-events: auto; 
+    position: relative; 
+    width: 360px; 
+    height: 40px; 
+    font-size: 24px; 
+    background: #a7ff92; 
+    font-family: Play;
+}
+.checkBoxStyle {
+    pointer-events: auto; 
+    position: relative; 
+    width: 20px; 
+    height: 20px; 
+    font-size: 24px; 
+    background: #649c55; 
+    font-family: Play;
+}
 .testingArea1 {
     display: block;
     border: 4px solid #000000;

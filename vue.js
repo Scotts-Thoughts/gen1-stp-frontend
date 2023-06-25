@@ -1,3 +1,38 @@
+const MyStorage = new Proxy({}, {
+    set: (_, prop, value) => {
+        if (value === undefined || value === null)
+            localStorage.removeItem(prop);
+        else
+            localStorage.setItem(prop, JSON.stringify(value));
+    },
+    get: (_, prop) => {
+        if (prop === "clear")
+            return () => localStorage.clear();
+        if (prop === "entries")
+            return () => Object.entries(localStorage);
+        if (prop === "keys")
+            return () => Object.keys(localStorage);
+        if (prop === "has")
+            return (key) => localStorage.getItem(key) == null;
+        return JSON.parse(localStorage.getItem(prop));
+    }
+});
+
+function downloadFile(content, downloadFileName) {
+    const blob = new Blob([content], {type: "application/octet-stream"});
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = downloadFileName;
+    document.body.appendChild(a);
+    a.style.display = 'none';
+    a.click();
+    a.remove();
+    setTimeout(function() {
+        return window.URL.revokeObjectURL(url);
+    }, 1000);
+}
+
 const app = Vue.createApp({
     //DATA & DEFINITIONS
     data() {
@@ -9,6 +44,9 @@ const app = Vue.createApp({
             starterName: "Mr. Mime", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             
+            perfectDVs:                 true, //sets all DVs to 15
+            trashCans:                  true, //solves the trash can puzzle
+            options:                    true, //shows the options menu when set to true
             inventory:                  true, //uses inventory when in the department store & marts
             battleGraphic:              true, //uses battle graphic with enemy moveset & stats
             showAllTrainers:            true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
@@ -17,7 +55,18 @@ const app = Vue.createApp({
             battlePopUps:               true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             typeCalcs:                  true, //calculates effective power based on the pokemon in battle
             showCritMultiplierInEP:     true, //shows high crit ratio moves with adjusted power if the move always scores a crit
-            
+
+            show_advanced_options:      false, //shows the options menu when set to true
+            show_help:                  false, //shows the help menu when set to true
+
+            //ENCOUNTERS ---------------------------------------------------------------------------------------//
+            route1:         true,
+            viridianForest: true,
+            mtMoon:         true,
+            route6:         true,
+            safariZone:     true,
+            mansion:        true,
+
             //DATA ---------------------------------------------------------------------------------------------//
             g1MoveData:         g1MoveData,
             g1PokemonData:      g1PokemonData,
@@ -36,6 +85,11 @@ const app = Vue.createApp({
             prevSpecies:     undefined,
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
+            overlay_color:   "#000000",
+            imageXOffset: 0,
+            imageYOffset: 0,
+            imageScale: 1,
+            imageFlip: false,
         }
     },
     
@@ -130,6 +184,58 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        async colorPick() {
+            return new EyeDropper().open().then(res => res.sRGBHex)
+        },
+        async color_picker() {
+            var color = await this.colorPick()
+            this.set_pokemon_prop("overlay_color", color)
+            this.overlay_color = color
+            console.log(MyStorage.entries())
+        },
+        set_pokemon_prop(property_name, value) {
+            MyStorage[this.starterName] = {
+                ...MyStorage[this.starterName],
+                [property_name]: value,
+            }
+        },
+        warn(...vars) {
+            console.log(...vars)
+        },
+        first_playthrough_settings() {
+            this.route1 = true
+            this.viridianForest = true
+            this.mtMoon = true
+            this.route6 = true
+            this.safariZone = true
+            this.mansion = true
+        },
+        second_playthrough_settings() {
+            this.route1 = false
+            this.viridianForest = true
+            this.mtMoon = false
+            this.route6 = false
+            this.safariZone = true
+            this.mansion = true
+        },
+        save_pokemon_sprite_settings() {
+            this.set_pokemon_prop("imageXOffset", this.imageXOffset)
+            this.set_pokemon_prop("imageYOffset", this.imageYOffset)
+            this.set_pokemon_prop("imageScale", this.imageScale)
+            this.set_pokemon_prop("imageFlip", this.imageFlip)
+            console.log(MyStorage.entries())
+        },
+        load_pokemon_sprite_settings() {
+            this.imageXOffset = MyStorage[this.starterName]?.imageXOffset ?? 0
+            this.imageYOffset = MyStorage[this.starterName]?.imageYOffset ?? 0
+            this.imageScale = MyStorage[this.starterName]?.imageScale ?? 1
+            this.imageFlip = MyStorage[this.starterName]?.imageFlip ?? false
+            this.overlay_color = MyStorage[this.starterName]?.overlay_color ?? "#000000"
+        },
+        clear_overlay_color() {
+            this.set_pokemon_prop("overlay_color", "#000000")
+            this.overlay_color = "#000000"
+        },
         keys_function(object) {
             return Object.keys(object)
         },
@@ -803,7 +909,7 @@ const app = Vue.createApp({
             special = Math.floor((((this.pokemon(this.starterName).base_spc + 15) * 2 * this.customLevel) / 100) + 5)
             speed = Math.floor((((this.pokemon(this.starterName).base_spd + 15) * 2 * this.customLevel) / 100) + 5)
             //only recalculate stats when DVs change if the player is in Oak's Lab, at level 5, with exactly 1 Pokemon
-            if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == false) {
+            if (this.perfectDVs == true && this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == false) {
                 await Promise.all([
                     await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false), //Set DVs perfect and freeze them
                     await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
@@ -823,7 +929,8 @@ const app = Vue.createApp({
         const optionsSet = async () => {
             const regularOptions = 0xC1
             const championOptions = 0x41
-            if (this.mapper.properties.overworld.map.bytes === 0x78)
+            if (this.options == true) {
+                if (this.mapper.properties.overworld.map.bytes === 0x78)
                 await Promise.all([
                     await this.mapper.properties.options.soloChallenge.setBytes([championOptions]),
                 ])
@@ -831,11 +938,12 @@ const app = Vue.createApp({
                 await Promise.all([
                     await this.mapper.properties.options.soloChallenge.setBytes([regularOptions]),
                 ])
+            }
         }
         // SETTING THE STARTER POKEMON'S STATS ----------------------------------------------------------------------------------------------//
         const trashCans = async () => {
             const solved = 0x03 //0x03 finds first can and solves the puzzle, leaves all trainers battlable
-            if (this.mapper.properties.events.trashCanPuzzle.bytes < 3) //check to see if the puzzle is unsolved
+            if (this.mapper.properties.events.trashCanPuzzle.bytes < 3 && this.trashCans == true) //check to see if the puzzle is unsolved
                 await Promise.all([
                     await this.mapper.properties.events.trashCanPuzzle.setBytes([solved], false), //don't freeze this property
                 ])

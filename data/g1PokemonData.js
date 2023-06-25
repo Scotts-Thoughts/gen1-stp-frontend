@@ -9419,590 +9419,590 @@ const g1PokemonData = {
         ]
     },
 //backported Pokemon
-"Kingdra" :
-    {
-        name: "Kingdra",
-        base_hp: 75,
-        base_atk: 95,
-        base_def: 95,
-        base_spd: 85,
-        base_spc: 95,
-        type1: "Water",
-        type2: "Dragon",
-        catch_rate: 45,
-        base_xp: 207,
-        initial_moveset: [
-        "Bubble",
-        "SmokeScreen",
-        "Leer",
-        "Water Gun"
-        ],
-        growth_rate: "Medium Fast",
-        tm_hm_learnset: [
-        "Toxic",
-        "Take Down",
-        "Double-Edge",
-        "BubbleBeam",
-        "Water Gun",
-        "Ice Beam",
-        "Blizzard",
-        "Hyper Beam",
-        "Rage",
-        "Dragon Rage",
-        "Mimic",
-        "Double Team",
-        "Bide",
-        "Swift",
-        "Skull Bash",
-        "Rest",
-        "Substitute",
-        "Surf"
-        ],
-        levelup_moveset: [
-        [
-            8,
-            "SmokeScreen"
-        ],
-        [
-            15,
-            "Leer"
-        ],
-        [
-            22,
-            "Water Gun"
-        ],
-        [
-            29,
-            "Dragon Rage"
-        ],
-        [
-            44,
-            "Agility"
-        ],
-        [
-            55,
-            "Hydro Pump"
-        ]
-        ]
-    },
-"Shedinja" :
-    {
-        name: "Shedinja",
-        base_hp: 1,
-        base_atk: 90,
-        base_def: 45,
-        base_spd: 40,
-        base_spc: 30,
-        type1: "Bug",
-        type2: "Ghost",
-        catch_rate: 255,
-        base_xp: 54,
-        initial_moveset: [
-        "Scratch",
-        "Harden"
-        ],
-        growth_rate: "Erratic",
-        tm_hm_learnset: [
-        "Toxic",
-        "Double-Edge",
-        "Hyper Beam",
-        "Mega Drain",
-        "Dig",
-        "Mimic",
-        "Double Team",
-        "Reflect",
-        "Bide",
-        "Dream Eater",
-        "Rest",
-        "Substitute",
-        "Cut",
-        "Flash"
-        ],
-        levelup_moveset: [
-        [
-            5,
-            "Leech Life"
-        ],
-        [
-            14,
-            "Fury Swipes"
-        ],
-        [
-            19,
-            "Mind Reader"
-        ],
-        [
-            31,
-            "Confuse Ray"
-        ],
-        [
-            38,
-            "Shadow Ball"
-        ]
-        ]
-    },
-"Rotom" :
-    {
-        name: "Rotom",
-        base_hp: 50,
-        base_atk: 50,
-        base_def: 77,
-        base_spd: 91,
-        base_spc: 95,
-        type1: "Electric",
-        type2: "Ghost",
-        catch_rate: 255,
-        base_xp: 54,
-        initial_moveset: [
-        "Thunder Wave",
-        "Thundershock",
-        "Confuse Ray"
-        ],
-        growth_rate: "Medium Fast",
-        tm_hm_learnset: [
-        "Toxic",
-        "Hyper Beam",
-        "Thunderbolt",
-        "Thunder",
-        "Dig",
-        "Mimic",
-        "Double Team",
-        "Reflect",
-        "Bide",
-        "Dream Eater",
-        "Rest",
-        "Thunder Wave",
-        "Substitute"
-        ],
-        levelup_moveset: [
-        [
-            15,
-            "SonicBoom"
-        ],
-        [
-            22,
-            "Double Team"
-        ],
-        [
-            29,
-            "Night Shade"
-        ],
-        [
-            36,
-            "Substitute"
-        ],
-        [
-            50,
-            "Thunderbolt"
-        ]
-        ]
-    },
-"Pumpkaboo" :
-    {
-        name: "Pumpkaboo", //small size pumpkaboo
-        base_hp: 44, //other values: 49, 54, 59
-        base_atk: 66,
-        base_def: 70,
-        base_spd: 56, //other values: 51, 46, 41
-        base_spc: 55,
-        type1: "Ghost",
-        type2: "Grass",
-        catch_rate: 255,
-        base_xp: 54,
-        initial_moveset: [
-        "Astonish",
-        "Confuse Ray",
-        "Confuse Ray"
-        ],
-        growth_rate: "Medium Fast",
-        tm_hm_learnset: [ //incomplete
-        "Toxic",
-        "Hyper Beam",
-        "Thunderbolt",
-        "Thunder",
-        "Dig",
-        "Mimic",
-        "Double Team",
-        "Reflect",
-        "Bide",
-        "Dream Eater",
-        "Rest",
-        "Thunder Wave",
-        "Substitute"
-        ],
-        levelup_moveset: [ //incomplete
-        [
-            16,
-            "Leech Seed"
-        ],
-        [
-            20,
-            "Razor Leaf"
-        ],
-        [
-            26,
-            "Barrage"
-        ],
-        [
-            36,
-            "Night Shade"
-        ],
-        [
-            48,
-            "Thunderbolt"
-        ]
-        ]
-    },
-"Heracross" :
-    {
-        name: "Heracross",
-        base_hp: 80,
-        base_atk: 125,
-        base_def: 75,
-        base_spd: 85,
-        base_spc: 40,
-        type1: "Bug",
-        type2: "Fighting",
-        catch_rate: 255,
-        base_xp: 54,
-        initial_moveset: [
-        "Tackle",
-        "Leer"
-        ],
-        growth_rate: "Slow",
-        tm_hm_learnset: [
-        "Swords Dance",
-        "Toxic",
-        "Horn Drill",
-        "Body Slam",
-        "Take Down",
-        "Double-Edge",
-        "Hyper Beam",
-        "Submission",
-        "Counter",
-        "Seismic Toss",
-        "Earthquake",
-        "Mimic",
-        "Double Team",
-        "Reflect",
-        "Bide",
-        "Rest",
-        "Rock Slide",
-        "Substitute",
-        "Cut",
-        "Strength",
-        ],
-        levelup_moveset: [
-        [
-            12,
-            "Horn Attack"
-        ],
-        [
-            19,
-            "Fury Attack"
-        ],
-        [
-            27,
-            "Counter"
-        ],
-        [
-            35,
-            "Take Down"
-        ],
-        [
-            44,
-            "Submission"
-        ],
-        // [
-        //     54,
-        //     "Pin Missile"
-        // ],
-        [
-            54,
-            "Megahorn"
-        ]
-        ]
-    },
-"Crobat" :
-    {
-        name: "Crobat",
-        base_hp: 85,
-        base_atk: 90,
-        base_def: 80,
-        base_spd: 130,
-        base_spc: 80, //golbat has it's spcdef as spc in gen1
-        type1: "Poison",
-        type2: "Flying",
-        catch_rate: 255,
-        base_xp: 54,
-        initial_moveset: [
-        "Leech Life",
-        "Screech",
-        "Bite",
-        "Supersonic"
-        ],
-        growth_rate: "Medium Fast",
-        tm_hm_learnset: [
-        "Razor Wind",
-        "Whirlwind",
-        "Toxic",
-        "Take Down",
-        "Double-Edge",
-        "Hyper Beam",
-        "Rage",
-        "Mega Drain",
-        "Mimic",
-        "Double Team",
-        "Bide",
-        "Swift",
-        "Rest",
-        "Substitute",
-        "Fly"
-        ],
-        levelup_moveset: [
-        [
-            21,
-            "Confuse Ray"
-        ],
-        [
-            32,
-            "Wing Attack"
-        ],
-        [
-            50,
-            "Haze"
-        ]
-        ]
-    },
-"Sudowoodo" :
-    {
-        name: "Sudowoodo",
-        base_hp: 70,
-        base_atk: 100,
-        base_def: 115,
-        base_spd: 30,
-        base_spc: 65, //won't use this stat offensively, makes sense to match spcdef as a result
-        type1: "Rock",
-        type2: "Rock",
-        catch_rate: 255,
-        base_xp: 54,
-        initial_moveset: [
-        "Rock Throw",
-        "Mimic"
-        ],
-        growth_rate: "Medium Fast",
-        tm_hm_learnset: [
-        "Mega Punch",
-        "Mega Kick",
-        "Toxic",
-        "Body Slam",
-        "Take Down",
-        "Double-Edge",
-        "Hyper Beam",
-        "Counter",
-        "Seismic Toss",
-        "Rage",
-        "Earthquake",
-        "Fissure",
-        "Dig",
-        "Mimic",
-        "Double Team",
-        "Bide",
-        "Selfdestruct",
-        "Rest",
-        "Rock Slide",
-        "Substitute",
-        "Strength"
-        ],
-        levelup_moveset: [
-        [
-            19,
-            "Low Kick"
-        ],
-        [
-            28,
-            "Rock Slide"
-        ],
-        [
-            37,
-            "Slam"
-        ],
-        [
-            46,
-            "Double-Edge"
-        ]
-        ]
-    },
-"Politoed" :
-    {
-        name: "Politoed",
-        base_hp: 90,
-        base_atk: 75,
-        base_def: 75,
-        base_spd: 70,
-        base_spc: 100, //spcdef //other option is 90 (spcatk)
-        type1: "Water",
-        type2: "Water",
-        catch_rate: 255,
-        base_xp: 54,
-        initial_moveset: [
-        "Water Gun",
-        "Hypnosis",
-        "DoubleSlap",
-        "BubbleBeam" //alternatively could be body slam
-        ],
-        growth_rate: "Medium Fast",
-        tm_hm_learnset: [
-        "Mega Punch",
-        "Mega Kick",
-        "Toxic",
-        "Body Slam",
-        "Take Down",
-        "Double-Edge",
-        "BubbleBeam",
-        "Water Gun",
-        "Ice Beam",
-        "Blizzard",
-        "Hyper Beam",
-        "Counter",
-        "Seismic Toss",
-        "Earthquake",
-        "Fissure",
-        "Psychic",
-        "Mimic",
-        "Double Team",
-        "Bide",
-        "Metronome",
-        "Skull Bash",
-        "Rest",
-        "Psywave",
-        "Substitute",
-        "Surf",
-        "Strength"
-        ],
-        levelup_moveset: [
-        [
-            19,
-            "Low Kick"
-        ],
-        [
-            28,
-            "Rock Slide"
-        ],
-        [
-            37,
-            "Slam"
-        ],
-        [
-            46,
-            "Double-Edge"
-        ]
-        ]
-    },
-"Sandile" :
-    {
-        name: "Sandile",
-        base_hp: 50,
-        base_atk: 72,
-        base_def: 35,
-        base_spd: 65,
-        base_spc: 35, //same spca and spcd
-        type1: "Ground",
-        type2: "Dark",
-        catch_rate: 255,
-        base_xp: 54,
-        initial_moveset: [
-        "Leer",
-        "Rage",
-        "Bite",
-        ],
-        growth_rate: "Medium Slow",
-        tm_hm_learnset: [
-        "Toxic",
-        "Take Down",
-        "Double-Edge",
-        "Rage",
-        "Earthquake",
-        "Fissure",
-        "Dig",
-        "Mimic",
-        "Double Team",
-        "Reflect",
-        "Bide",
-        "Fire Blast",
-        "Rest",
-        "Rock Slide",
-        "Substitute",
-        "Cut"
-        ],
-        levelup_moveset: [
-        [
-            4,
-            "Bite"
-        ],
-        [
-            7,
-            "Sand-Attack"
-        ],
-        [
-            19,
-            "Roar"
-        ],
-        [
-            31,
-            "Dig"
-        ],
-        [
-            43,
-            "Earthquake"
-        ],
-        [
-            46,
-            "Thrash"
-        ]
-        ]
-    },
-"Delibird" :
-    {
-        name: "Delibird",
-        base_hp: 45,
-        base_atk: 55,
-        base_def: 45,
-        base_spd: 75,
-        base_spc: 65, //could also be 45
-        type1: "Ice",
-        type2: "Flying",
-        catch_rate: 255,
-        base_xp: 54,
-        initial_moveset: [
-        "Present"
-        ],
-        growth_rate: "Fast",
-        tm_hm_learnset: [
-        "Mega Punch",
-        "Razor Wind",
-        "Whirlwind",
-        "Mega Kick",
-        "Toxic",
-        "Body Slam",
-        "Take Down",
-        "Double-Edge",
-        "BubbleBeam",
-        "Water Gun",
-        "Ice Beam",
-        "Blizzard",
-        "Hyper Beam",
-        "Pay Day",
-        "Mimic",
-        "Double Team",
-        "Reflect",
-        "Bide",
-        "Swift",
-        "Sky Attack",
-        "Rest",
-        "Substitute",
-        "Fly"
-        ],
-        levelup_moveset: []
-    },
+// "Kingdra" :
+//     {
+//         name: "Kingdra",
+//         base_hp: 75,
+//         base_atk: 95,
+//         base_def: 95,
+//         base_spd: 85,
+//         base_spc: 95,
+//         type1: "Water",
+//         type2: "Dragon",
+//         catch_rate: 45,
+//         base_xp: 207,
+//         initial_moveset: [
+//         "Bubble",
+//         "SmokeScreen",
+//         "Leer",
+//         "Water Gun"
+//         ],
+//         growth_rate: "Medium Fast",
+//         tm_hm_learnset: [
+//         "Toxic",
+//         "Take Down",
+//         "Double-Edge",
+//         "BubbleBeam",
+//         "Water Gun",
+//         "Ice Beam",
+//         "Blizzard",
+//         "Hyper Beam",
+//         "Rage",
+//         "Dragon Rage",
+//         "Mimic",
+//         "Double Team",
+//         "Bide",
+//         "Swift",
+//         "Skull Bash",
+//         "Rest",
+//         "Substitute",
+//         "Surf"
+//         ],
+//         levelup_moveset: [
+//         [
+//             8,
+//             "SmokeScreen"
+//         ],
+//         [
+//             15,
+//             "Leer"
+//         ],
+//         [
+//             22,
+//             "Water Gun"
+//         ],
+//         [
+//             29,
+//             "Dragon Rage"
+//         ],
+//         [
+//             44,
+//             "Agility"
+//         ],
+//         [
+//             55,
+//             "Hydro Pump"
+//         ]
+//         ]
+//     },
+// "Shedinja" :
+//     {
+//         name: "Shedinja",
+//         base_hp: 1,
+//         base_atk: 90,
+//         base_def: 45,
+//         base_spd: 40,
+//         base_spc: 30,
+//         type1: "Bug",
+//         type2: "Ghost",
+//         catch_rate: 255,
+//         base_xp: 54,
+//         initial_moveset: [
+//         "Scratch",
+//         "Harden"
+//         ],
+//         growth_rate: "Erratic",
+//         tm_hm_learnset: [
+//         "Toxic",
+//         "Double-Edge",
+//         "Hyper Beam",
+//         "Mega Drain",
+//         "Dig",
+//         "Mimic",
+//         "Double Team",
+//         "Reflect",
+//         "Bide",
+//         "Dream Eater",
+//         "Rest",
+//         "Substitute",
+//         "Cut",
+//         "Flash"
+//         ],
+//         levelup_moveset: [
+//         [
+//             5,
+//             "Leech Life"
+//         ],
+//         [
+//             14,
+//             "Fury Swipes"
+//         ],
+//         [
+//             19,
+//             "Mind Reader"
+//         ],
+//         [
+//             31,
+//             "Confuse Ray"
+//         ],
+//         [
+//             38,
+//             "Shadow Ball"
+//         ]
+//         ]
+//     },
+// "Rotom" :
+//     {
+//         name: "Rotom",
+//         base_hp: 50,
+//         base_atk: 50,
+//         base_def: 77,
+//         base_spd: 91,
+//         base_spc: 95,
+//         type1: "Electric",
+//         type2: "Ghost",
+//         catch_rate: 255,
+//         base_xp: 54,
+//         initial_moveset: [
+//         "Thunder Wave",
+//         "Thundershock",
+//         "Confuse Ray"
+//         ],
+//         growth_rate: "Medium Fast",
+//         tm_hm_learnset: [
+//         "Toxic",
+//         "Hyper Beam",
+//         "Thunderbolt",
+//         "Thunder",
+//         "Dig",
+//         "Mimic",
+//         "Double Team",
+//         "Reflect",
+//         "Bide",
+//         "Dream Eater",
+//         "Rest",
+//         "Thunder Wave",
+//         "Substitute"
+//         ],
+//         levelup_moveset: [
+//         [
+//             15,
+//             "SonicBoom"
+//         ],
+//         [
+//             22,
+//             "Double Team"
+//         ],
+//         [
+//             29,
+//             "Night Shade"
+//         ],
+//         [
+//             36,
+//             "Substitute"
+//         ],
+//         [
+//             50,
+//             "Thunderbolt"
+//         ]
+//         ]
+//     },
+// "Pumpkaboo" :
+//     {
+//         name: "Pumpkaboo", //small size pumpkaboo
+//         base_hp: 44, //other values: 49, 54, 59
+//         base_atk: 66,
+//         base_def: 70,
+//         base_spd: 56, //other values: 51, 46, 41
+//         base_spc: 55,
+//         type1: "Ghost",
+//         type2: "Grass",
+//         catch_rate: 255,
+//         base_xp: 54,
+//         initial_moveset: [
+//         "Astonish",
+//         "Confuse Ray",
+//         "Confuse Ray"
+//         ],
+//         growth_rate: "Medium Fast",
+//         tm_hm_learnset: [ //incomplete
+//         "Toxic",
+//         "Hyper Beam",
+//         "Thunderbolt",
+//         "Thunder",
+//         "Dig",
+//         "Mimic",
+//         "Double Team",
+//         "Reflect",
+//         "Bide",
+//         "Dream Eater",
+//         "Rest",
+//         "Thunder Wave",
+//         "Substitute"
+//         ],
+//         levelup_moveset: [ //incomplete
+//         [
+//             16,
+//             "Leech Seed"
+//         ],
+//         [
+//             20,
+//             "Razor Leaf"
+//         ],
+//         [
+//             26,
+//             "Barrage"
+//         ],
+//         [
+//             36,
+//             "Night Shade"
+//         ],
+//         [
+//             48,
+//             "Thunderbolt"
+//         ]
+//         ]
+//     },
+// "Heracross" :
+//     {
+//         name: "Heracross",
+//         base_hp: 80,
+//         base_atk: 125,
+//         base_def: 75,
+//         base_spd: 85,
+//         base_spc: 40,
+//         type1: "Bug",
+//         type2: "Fighting",
+//         catch_rate: 255,
+//         base_xp: 54,
+//         initial_moveset: [
+//         "Tackle",
+//         "Leer"
+//         ],
+//         growth_rate: "Slow",
+//         tm_hm_learnset: [
+//         "Swords Dance",
+//         "Toxic",
+//         "Horn Drill",
+//         "Body Slam",
+//         "Take Down",
+//         "Double-Edge",
+//         "Hyper Beam",
+//         "Submission",
+//         "Counter",
+//         "Seismic Toss",
+//         "Earthquake",
+//         "Mimic",
+//         "Double Team",
+//         "Reflect",
+//         "Bide",
+//         "Rest",
+//         "Rock Slide",
+//         "Substitute",
+//         "Cut",
+//         "Strength",
+//         ],
+//         levelup_moveset: [
+//         [
+//             12,
+//             "Horn Attack"
+//         ],
+//         [
+//             19,
+//             "Fury Attack"
+//         ],
+//         [
+//             27,
+//             "Counter"
+//         ],
+//         [
+//             35,
+//             "Take Down"
+//         ],
+//         [
+//             44,
+//             "Submission"
+//         ],
+//         // [
+//         //     54,
+//         //     "Pin Missile"
+//         // ],
+//         [
+//             54,
+//             "Megahorn"
+//         ]
+//         ]
+//     },
+// "Crobat" :
+//     {
+//         name: "Crobat",
+//         base_hp: 85,
+//         base_atk: 90,
+//         base_def: 80,
+//         base_spd: 130,
+//         base_spc: 80, //golbat has it's spcdef as spc in gen1
+//         type1: "Poison",
+//         type2: "Flying",
+//         catch_rate: 255,
+//         base_xp: 54,
+//         initial_moveset: [
+//         "Leech Life",
+//         "Screech",
+//         "Bite",
+//         "Supersonic"
+//         ],
+//         growth_rate: "Medium Fast",
+//         tm_hm_learnset: [
+//         "Razor Wind",
+//         "Whirlwind",
+//         "Toxic",
+//         "Take Down",
+//         "Double-Edge",
+//         "Hyper Beam",
+//         "Rage",
+//         "Mega Drain",
+//         "Mimic",
+//         "Double Team",
+//         "Bide",
+//         "Swift",
+//         "Rest",
+//         "Substitute",
+//         "Fly"
+//         ],
+//         levelup_moveset: [
+//         [
+//             21,
+//             "Confuse Ray"
+//         ],
+//         [
+//             32,
+//             "Wing Attack"
+//         ],
+//         [
+//             50,
+//             "Haze"
+//         ]
+//         ]
+//     },
+// "Sudowoodo" :
+//     {
+//         name: "Sudowoodo",
+//         base_hp: 70,
+//         base_atk: 100,
+//         base_def: 115,
+//         base_spd: 30,
+//         base_spc: 65, //won't use this stat offensively, makes sense to match spcdef as a result
+//         type1: "Rock",
+//         type2: "Rock",
+//         catch_rate: 255,
+//         base_xp: 54,
+//         initial_moveset: [
+//         "Rock Throw",
+//         "Mimic"
+//         ],
+//         growth_rate: "Medium Fast",
+//         tm_hm_learnset: [
+//         "Mega Punch",
+//         "Mega Kick",
+//         "Toxic",
+//         "Body Slam",
+//         "Take Down",
+//         "Double-Edge",
+//         "Hyper Beam",
+//         "Counter",
+//         "Seismic Toss",
+//         "Rage",
+//         "Earthquake",
+//         "Fissure",
+//         "Dig",
+//         "Mimic",
+//         "Double Team",
+//         "Bide",
+//         "Selfdestruct",
+//         "Rest",
+//         "Rock Slide",
+//         "Substitute",
+//         "Strength"
+//         ],
+//         levelup_moveset: [
+//         [
+//             19,
+//             "Low Kick"
+//         ],
+//         [
+//             28,
+//             "Rock Slide"
+//         ],
+//         [
+//             37,
+//             "Slam"
+//         ],
+//         [
+//             46,
+//             "Double-Edge"
+//         ]
+//         ]
+//     },
+// "Politoed" :
+//     {
+//         name: "Politoed",
+//         base_hp: 90,
+//         base_atk: 75,
+//         base_def: 75,
+//         base_spd: 70,
+//         base_spc: 100, //spcdef //other option is 90 (spcatk)
+//         type1: "Water",
+//         type2: "Water",
+//         catch_rate: 255,
+//         base_xp: 54,
+//         initial_moveset: [
+//         "Water Gun",
+//         "Hypnosis",
+//         "DoubleSlap",
+//         "BubbleBeam" //alternatively could be body slam
+//         ],
+//         growth_rate: "Medium Fast",
+//         tm_hm_learnset: [
+//         "Mega Punch",
+//         "Mega Kick",
+//         "Toxic",
+//         "Body Slam",
+//         "Take Down",
+//         "Double-Edge",
+//         "BubbleBeam",
+//         "Water Gun",
+//         "Ice Beam",
+//         "Blizzard",
+//         "Hyper Beam",
+//         "Counter",
+//         "Seismic Toss",
+//         "Earthquake",
+//         "Fissure",
+//         "Psychic",
+//         "Mimic",
+//         "Double Team",
+//         "Bide",
+//         "Metronome",
+//         "Skull Bash",
+//         "Rest",
+//         "Psywave",
+//         "Substitute",
+//         "Surf",
+//         "Strength"
+//         ],
+//         levelup_moveset: [
+//         [
+//             19,
+//             "Low Kick"
+//         ],
+//         [
+//             28,
+//             "Rock Slide"
+//         ],
+//         [
+//             37,
+//             "Slam"
+//         ],
+//         [
+//             46,
+//             "Double-Edge"
+//         ]
+//         ]
+//     },
+// "Sandile" :
+//     {
+//         name: "Sandile",
+//         base_hp: 50,
+//         base_atk: 72,
+//         base_def: 35,
+//         base_spd: 65,
+//         base_spc: 35, //same spca and spcd
+//         type1: "Ground",
+//         type2: "Dark",
+//         catch_rate: 255,
+//         base_xp: 54,
+//         initial_moveset: [
+//         "Leer",
+//         "Rage",
+//         "Bite",
+//         ],
+//         growth_rate: "Medium Slow",
+//         tm_hm_learnset: [
+//         "Toxic",
+//         "Take Down",
+//         "Double-Edge",
+//         "Rage",
+//         "Earthquake",
+//         "Fissure",
+//         "Dig",
+//         "Mimic",
+//         "Double Team",
+//         "Reflect",
+//         "Bide",
+//         "Fire Blast",
+//         "Rest",
+//         "Rock Slide",
+//         "Substitute",
+//         "Cut"
+//         ],
+//         levelup_moveset: [
+//         [
+//             4,
+//             "Bite"
+//         ],
+//         [
+//             7,
+//             "Sand-Attack"
+//         ],
+//         [
+//             19,
+//             "Roar"
+//         ],
+//         [
+//             31,
+//             "Dig"
+//         ],
+//         [
+//             43,
+//             "Earthquake"
+//         ],
+//         [
+//             46,
+//             "Thrash"
+//         ]
+//         ]
+//     },
+// "Delibird" :
+//     {
+//         name: "Delibird",
+//         base_hp: 45,
+//         base_atk: 55,
+//         base_def: 45,
+//         base_spd: 75,
+//         base_spc: 65, //could also be 45
+//         type1: "Ice",
+//         type2: "Flying",
+//         catch_rate: 255,
+//         base_xp: 54,
+//         initial_moveset: [
+//         "Present"
+//         ],
+//         growth_rate: "Fast",
+//         tm_hm_learnset: [
+//         "Mega Punch",
+//         "Razor Wind",
+//         "Whirlwind",
+//         "Mega Kick",
+//         "Toxic",
+//         "Body Slam",
+//         "Take Down",
+//         "Double-Edge",
+//         "BubbleBeam",
+//         "Water Gun",
+//         "Ice Beam",
+//         "Blizzard",
+//         "Hyper Beam",
+//         "Pay Day",
+//         "Mimic",
+//         "Double Team",
+//         "Reflect",
+//         "Bide",
+//         "Swift",
+//         "Sky Attack",
+//         "Rest",
+//         "Substitute",
+//         "Fly"
+//         ],
+//         levelup_moveset: []
+//     },
 }
