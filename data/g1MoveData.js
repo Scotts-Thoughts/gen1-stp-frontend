@@ -1074,7 +1074,7 @@ const g1MoveData = {
     Move: "Slam",
     Type: "Normal",
     Power: 80,
-    Accuracy: 74.6,
+    Accuracy: 75,
     PP: 20,
     Category: "Physical",
     Description: "A NORMAL-type attack move. The attacker uses an appendage (e.g. tail) to slam the target hard."
