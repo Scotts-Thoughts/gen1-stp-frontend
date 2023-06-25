@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scott's Thoughts - Gen1 Frontend</title>
+    <title>Scott's Thoughts - Gen1 Frontend Beta</title>
     <link rel="stylesheet" href="style-yellow.css">
 </head>
 <body>
@@ -10,7 +10,7 @@
         <div v-if="ready == false">Loading...</div>
         <div v-else>
             <div class="mainContainer">
-<!-- GRAPHICS ---------------------------------------------------------------------------------->
+                <!-- GRAPHICS ---------------------------------------------------------------------------------->
                 <div>
                     <img class="canvas" :src="`images/textures/${s1dynamicReset.type1}.png`" />
                     <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
@@ -26,7 +26,7 @@
                     <div class="genericLabels timerLabel">time played at 4x game speed</div>
                     <div class="genericLabels resetsLabel">resets</div>
                 </div>
-<!-- TYPE ICONS -------------------------------------------------------------------------------->
+                <!-- TYPE ICONS -------------------------------------------------------------------------------->
                 <div class="typeContainer">
                     <div v-if="pkmnType(1, s1.type1.value, s1.type2.value) == pkmnType(2, s1.type1.value, s1.type2.value)" class="type">
                         <img :src="pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
@@ -36,15 +36,16 @@
                         <img :src="pkmnType(2, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                     </div>
                 </div>
-<!-- BADGE ICONS ------------------------------------------------------------------------------->
+                <!-- BADGE ICONS ------------------------------------------------------------------------------->
                 <div class="badgesBar">          
                     <img v-show="map.player.badges.badge1.value === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" style="top: 914px; opacity: .3; left: 22px; z-index: 2;" />
                     <img v-show="map.player.badges.badge3.value === true" class="badgeBoostStyle badgeBoostDef" :src="badgeGraphic(map.player.badges.badge3)" style="top: 976px; opacity: .3; left: 22px; z-index: 2;" />                    
                     <img v-show="map.player.badges.badge5.value === true" class="badgeBoostStyle badgeBoostSpd" :src="badgeGraphic(map.player.badges.badge5)" style="top: 976px; opacity: .3; left: 206px; z-index: 2;" />                    
                     <img v-show="map.player.badges.badge7.value === true" class="badgeBoostStyle badgeBoostSpc" :src="badgeGraphic(map.player.badges.badge7)" style="top: 914px; opacity: .3; left: 206px; z-index: 2;"/>      
                 </div>                         
-<!-- BASE STATS -------------------------------------------------------------------------------->
+                <!--  STATS ------------------------------------------------------------------------------------->
                 <div class="statsContainer">  
+                    <!-- BASE STATS --------------------------------------------------------------------------->
                     <div v-if="g1stateVariable == `Base Stats`">
                         <div class="statsLabelStyle statsLabelsColumn1">HP:<br>Atk:<br>Def:<br></div>
                         <div class="statsLabelStyle statsLabelsColumn2"><br>Spc:<br>Spd:<br></div>
@@ -53,7 +54,7 @@
                         <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName].base_spd) }}%</div>
                         <div class="statsColumnStyle statsColumn2"><br>{{ g1PokemonData[starterName].base_spc }}<br>{{ g1PokemonData[starterName].base_spd }}<br></div>
                     </div>
-<!-- OVERWORLD STATS --------------------------------------------------------------------------->
+                    <!-- OVERWORLD STATS --------------------------------------------------------------------------->
                     <div v-if="g1stateVariable == `Overworld` || g1stateVariable == `To Battle`">
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP:<br></span>
@@ -95,7 +96,7 @@
                             {{ badgeBoost(mapper.properties.player.badges.badge5.value, mapper.properties.player.team[0].speed.value) }}<br>
                         </div>
                     </div>
-<!-- BATTLE STATS ----------------------------------------------------------------------------->
+                    <!-- BATTLE STATS ----------------------------------------------------------------------------->
                     <div v-if="g1stateVariable == `Battle` || g1stateVariable == `From Battle`">
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span>HP:<br></span>
@@ -125,7 +126,7 @@
                         <div class="spdMod">{{ stageModifiers(batt.yourPokemon.modStageSpeed) }}</div>
                     </div>
                 </div>  
-<!--------- MOVESET -------------------------------------------------------------------------------------------------------------->
+                <!--------- MOVESET -------------------------------------------------------------------------------------------------------------->
                 <div class="movesetContainer">
                     <div class="movesetLabel labelMoves">moves</div>
                     <div class="movesetLabel labelPwr">pwr.</div>
@@ -141,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-<!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
+                <!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade">
                     <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
@@ -213,7 +214,7 @@
                         <img class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
                 </transition>
-<!--------- BATTLE POP UPS -------------------------------------------------------------------------------------------------------------------->
+                <!--------- BATTLE POP UPS -------------------------------------------------------------------------------------------------------------------->
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-show="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
@@ -237,15 +238,15 @@
                         </div>
                     </transition>
                 </div>
-<!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
+                <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
                 <div class="expBar">
                     <img class="expLabelGen1" src="images/exp_bar/exp_label.png"/>
                     <div class="expTextGen2">Exp:</div>
                     <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
                 </div>
-<!-- UI ----------------------------------------------------------------------------------------->
             </div>
         </div>
+        <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
             <div>Press F11 to exit (or enter) fullscreen</div>
             <br>
@@ -258,8 +259,7 @@
                 <option disabled value="">Select a species</option>
                 <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
             </select>
-            <br>
-            <br>
+            <br><br>
             <div>DV Setting:</div>
             <select v-model="dvSetting" class="dropdownMenu">
                 <option disabled value="">Please select one</option>
@@ -268,26 +268,14 @@
                 <option>NPC</option>
                 <option>Random</option>
             </select>
-            <br>
-            Max = 15/15/15/15/15<br>
-            Min = 0/0/0/0/0<br>
-            NPC = 8/9/8/8/8<br>
-            <!-- <div>{{mapper.properties.player?.team[0]?.dvAttack}}</div>
-            <div>{{mapper.properties.player?.team[0]?.dvDefense}}</div>
-            <div>{{mapper.properties.player?.team[0]?.dvSpecial}}</div>
-            <div>{{mapper.properties.player?.team[0]?.dvSpeed}}</div> -->
-            <br>
-            <br>
-            <br>
-            <br>
+            <br><br><br><br><br><br>
             <div>Pokemon Image Settings</div>
             X-Offset: <input type="range" min="-125" max="125" v-model="imageXOffset"/><br>
             Y-Offset: <input type="range" min="-125" max="125"v-model="imageYOffset"/><br>
             Scale: <input type="range" min="0.3" max="2" step="0.02" v-model="imageScale"/><br>
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
             <button @click="save_pokemon_sprite_settings" class="buttonStyle">Save Pokemon Sprite Settings</button>
-            <br>
-            <br>
+            <br><br><br><br><br><br>
             <div>
                 <div>Secondary Menu: {{ help_menus }}</div>
                 <!-- Disable these code areas to unlink menus -->
