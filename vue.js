@@ -41,10 +41,11 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName: "Mr. Mime", //Enter starter name, Special cases: Mr. Mime, Farfetchd
+            starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             
             perfectDVs:                 true, //sets all DVs to 15
+            dvSetting:                  "Max", //Max, Min, NPC, or Random
             trashCans:                  true, //solves the trash can puzzle
             options:                    true, //shows the options menu when set to true
             inventory:                  true, //uses inventory when in the department store & marts
@@ -56,12 +57,12 @@ const app = Vue.createApp({
             typeCalcs:                  true, //calculates effective power based on the pokemon in battle
             showCritMultiplierInEP:     true, //shows high crit ratio moves with adjusted power if the move always scores a crit
 
-            show_advanced_options:      false, //shows the options menu when set to true
-            show_help:                  false, //shows the help menu when set to true
+            help_menus: null,
 
             //ENCOUNTERS ---------------------------------------------------------------------------------------//
             route1:         true,
             viridianForest: true,
+            route3:         true,
             mtMoon:         true,
             route6:         true,
             safariZone:     true,
@@ -85,6 +86,8 @@ const app = Vue.createApp({
             prevSpecies:     undefined,
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
+
+            //Pokemon settings for local storage
             overlay_color:   "#000000",
             imageXOffset: 0,
             imageYOffset: 0,
@@ -92,7 +95,35 @@ const app = Vue.createApp({
             imageFlip: false,
         }
     },
-    
+
+    watch: {
+        //Encounter Checkboxes
+        route1(newProp, oldProp) {
+            if (newProp == false && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },   
+        viridianForest(newProp, oldProp) {
+            if (newProp == false && this.mapper.properties.overworld.map.value == "Viridian Forest") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },   
+        route3(newProp, oldProp) {
+            if (newProp == false && this.mapper.properties.overworld.map.value == "Route 3") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },            
+        mtMoon(newProp, oldProp) {
+            if (newProp == false && (newProp.value == "Mt Moon - 1" || newProp.value == "Mt Moon - 2" || newProp.value == "Mt Moon - 3")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },            
+        route6(newProp, oldProp) {
+            if (newProp == false && this.mapper.properties.overworld.map.value == "Route 6") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },            
+        safariZone(newProp, oldProp) {
+            if (newProp == false && (newProp.value == "Safari Zone (East)" || newProp.value == "Safari Zone (West)" || newProp.value == "Safari Zone (Center)" || newProp.value == "Safari Zone (North)")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },       
+        mansion(newProp, oldProp) {
+            if (newProp == false && this.mapper.properties.overworld.map.value == "Cinnabar Mansion") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },
+        starterName(newProp) {
+            MyStorage.currentStarter = newProp
+        }           
+    },
+
     computed: {
         currentTrainer() {
             if (this.mapper.meta.gameName == "Pokemon Yellow") { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
@@ -205,6 +236,7 @@ const app = Vue.createApp({
         first_playthrough_settings() {
             this.route1 = true
             this.viridianForest = true
+            this.route3 = true
             this.mtMoon = true
             this.route6 = true
             this.safariZone = true
@@ -213,6 +245,7 @@ const app = Vue.createApp({
         second_playthrough_settings() {
             this.route1 = false
             this.viridianForest = true
+            this.route3 = false
             this.mtMoon = false
             this.route6 = false
             this.safariZone = true
@@ -231,6 +264,9 @@ const app = Vue.createApp({
             this.imageScale = MyStorage[this.starterName]?.imageScale ?? 1
             this.imageFlip = MyStorage[this.starterName]?.imageFlip ?? false
             this.overlay_color = MyStorage[this.starterName]?.overlay_color ?? "#000000"
+        },
+        load_starter_pokemon_settings() {
+            this.starterName = MyStorage[this.currentStarter] ?? "Venomoth"
         },
         clear_overlay_color() {
             this.set_pokemon_prop("overlay_color", "#000000")
@@ -301,7 +337,7 @@ const app = Vue.createApp({
         },
         getMovepool(gen1PkmnData, moveData, tmhmMapping, species) {
             const pkmn = this.dataSearch(gen1PkmnData, species)
-            if (pkmn.initial_moveset == undefined) { debugger }
+            if (pkmn.initial_moveset == undefined) {  }
             let obj = {
                 initial: pkmn.initial_moveset.map(x => {
                     return this.dataSearch(moveData, x)
@@ -786,6 +822,63 @@ const app = Vue.createApp({
         this.mapper.onConnected = (x) => this.ready = true
         this.mapper.onDisconnected = (x) => this.ready = false
         await this.mapper.connect()
+        this.starterName = MyStorage.currentStarter ?? "Venomoth"
+
+        // Encounters (set initial value)
+        if (this.route1 == false && this.mapper.properties.overworld.map.value == "Route 1") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+        else if (this.viridianForest == false && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+        else if (this.route3 == false && this.mapper.properties.overworld.map.value == "Route 3") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+        else if (this.mtMoon == false && (this.mapper.properties.overworld.map.value == "Mt Moon - 1" || this.mapper.properties.overworld.map.value == "Mt Moon - 2" || this.mapper.properties.overworld.map.value == "Mt Moon - 3")) {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+        else if (this.route6 == false && this.mapper.properties.overworld.map.value == "Route 6") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+        else if (this.safariZone == false  && (this.mapper.properties.overworld.map.value == "Safari Zone (East)" && this.mapper.properties.overworld.map.value == "Safari Zone (West)" && this.mapper.properties.overworld.map.value == "Safari Zone (Center)" && this.mapper.properties.overworld.map.value == "Safari Zone (North)")) {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+        else if (this.mansion == false && this.mapper.properties.overworld.map.value == "Cinnabar Mansion") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+
+        //Set value on map change
+        this.mapper.properties.overworld.map.change(async (newProp) => {
+            if (this.route1 == false && newProp.value == "Route 1") {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            }
+            else if (this.viridianForest == false && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], true) 
+                await this.sleep(150)
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false)
+            }
+            else if (this.mtMoon == false && (newProp.value == "Mt Moon - 1" || newProp.value == "Mt Moon - 2" || newProp.value == "Mt Moon - 3")) {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], true) 
+                await this.sleep(150)
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false)
+            }
+            else if (this.route3 == false && newProp.value == "Route 3") {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            }
+            else if (this.route6 == false && newProp.value == "Route 6") {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            }
+            else if (this.safariZone == false && (newProp.value == "Safari Zone (East)" || newProp.value == "Safari Zone (West)" || newProp.value == "Safari Zone (Center)" || newProp.value == "Safari Zone (North)")) {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], true) 
+                await this.sleep(150)
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false)
+            }
+            else if (this.mansion == false && newProp.value == "Cinnabar Mansion") {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], true) 
+                await this.sleep(150)
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false)
+            }
+        });
 
         //Functions to track the game's state
         // set initial gamestate value when the layout is loaded
@@ -902,19 +995,31 @@ const app = Vue.createApp({
         const setStartingStats = async () => {
             const pkmn = this.pokemon(this.starterName) // slot 1 species
             const perfectDVs = 0xff // desired DV value
+            var dv = [15,15,15,15,15]
+            var dvHex = [0xff,0xff,0xff,0xff,0xff]
+            if (this.dvSetting == "Random") { return }
+            if (this.dvSetting == "Min") { 
+                dv = [0,0,0,0,0]
+                dvHex = [0x00,0x00,0x00,0x00,0x00]
+            }
+            if (this.dvSetting == "NPC") { 
+                dv = [8,9,8,8,8]
+                dvHex = [0x88,0x98,0x98,0x88,0x88]
+            }
+
             //calculates the Pokemon's starting stats with the desired DVs
-            hitpoints = Math.floor((((this.pokemon(this.starterName).base_hp + 15) * 2 * this.customLevel) / 100) + 10 + this.customLevel)
-            attack = Math.floor((((this.pokemon(this.starterName).base_atk + 15) * 2 * this.customLevel) / 100) + 5) 
-            defense = Math.floor((((this.pokemon(this.starterName).base_def + 15) * 2 * this.customLevel) / 100) + 5)
-            special = Math.floor((((this.pokemon(this.starterName).base_spc + 15) * 2 * this.customLevel) / 100) + 5)
-            speed = Math.floor((((this.pokemon(this.starterName).base_spd + 15) * 2 * this.customLevel) / 100) + 5)
+            hitpoints = Math.floor((((this.pokemon(this.starterName).base_hp + dv[0]) * 2 * 5) / 100) + 10 + 5)
+            attack = Math.floor((((this.pokemon(this.starterName).base_atk + dv[1]) * 2 * 5) / 100) + 5) 
+            defense = Math.floor((((this.pokemon(this.starterName).base_def + dv[2]) * 2 * 5) / 100) + 5)
+            special = Math.floor((((this.pokemon(this.starterName).base_spc + dv[4]) * 2 * 5) / 100) + 5)
+            speed = Math.floor((((this.pokemon(this.starterName).base_spd + dv[3]) * 2 * 5) / 100) + 5)
             //only recalculate stats when DVs change if the player is in Oak's Lab, at level 5, with exactly 1 Pokemon
-            if (this.perfectDVs == true && this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == false) {
+            if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1) {
                 await Promise.all([
-                    await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false), //Set DVs perfect and freeze them
-                    await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvSpeed.setBytes([perfectDVs], false),
-                    await this.mapper.properties.player.team[0].dvSpecial.setBytes([perfectDVs], false),
+                    await this.mapper.properties.player.team[0].dvAttack.setBytes([dvHex[1]], false), //Set DVs perfect and freeze them
+                    await this.mapper.properties.player.team[0].dvDefense.setBytes([dvHex[2]], false),
+                    await this.mapper.properties.player.team[0].dvSpeed.setBytes([dvHex[3]], false),
+                    await this.mapper.properties.player.team[0].dvSpecial.setBytes([dvHex[4]], false),
                     await this.mapper.properties.player.team[0].hp.setBytes([0x00, hitpoints], false), //Apply stat recalculation (don't freeze)
                     await this.mapper.properties.player.team[0].maxHp.setBytes([0x00, hitpoints], false),
                     await this.mapper.properties.player.team[0].attack.setBytes([0x00, attack], false), 

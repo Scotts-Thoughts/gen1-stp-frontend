@@ -253,17 +253,31 @@
             <br>
             <br>
             <br>
-            <div>Select Solo Pokemon:</div>
-            <select v-model="starterName" @change="load_pokemon_sprite_settings" style="pointer-events: auto; position: relative; width: 300px; height: 40px; font-size: 24px; background: #a7ff92; font-family: Play;">
+            <div>Solo Pokemon:</div>
+            <select v-model="starterName" @change="load_pokemon_sprite_settings" class="dropdownMenu">
+                <option disabled value="">Select a species</option>
                 <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
             </select>
             <br>
             <br>
+            <div>DV Setting:</div>
+            <select v-model="dvSetting" class="dropdownMenu">
+                <option disabled value="">Please select one</option>
+                <option>Max</option>
+                <option>Min</option>
+                <option>NPC</option>
+                <option>Random</option>
+            </select>
             <br>
-            <div>Overlay Color Selector:</div>
-            <button @click="color_picker" class="buttonStyle">Color Picker</button>
-            <button @click="clear_overlay_color" class="buttonStyle">Reset Overlay Color</button>
-            <div>Overlay_color: {{overlay_color}}</div>
+            Max = 15/15/15/15/15<br>
+            Min = 0/0/0/0/0<br>
+            NPC = 8/9/8/8/8<br>
+            <!-- <div>{{mapper.properties.player?.team[0]?.dvAttack}}</div>
+            <div>{{mapper.properties.player?.team[0]?.dvDefense}}</div>
+            <div>{{mapper.properties.player?.team[0]?.dvSpecial}}</div>
+            <div>{{mapper.properties.player?.team[0]?.dvSpeed}}</div> -->
+            <br>
+            <br>
             <br>
             <br>
             <div>Pokemon Image Settings</div>
@@ -274,21 +288,49 @@
             <button @click="save_pokemon_sprite_settings" class="buttonStyle">Save Pokemon Sprite Settings</button>
             <br>
             <br>
-            <br>
-            <br>
-            <br>
-            Show help menu: <input class="checkBoxStyle" type="checkbox" v-model="show_help"/><br>
-            <br>
-            Show advanced options: <input class="checkBoxStyle" type="checkbox" v-model="show_advanced_options"/><br>
-            <br>
-            <div>Export Config File:</div>
-            <button onclick="downloadFile(JSON.stringify(MyStorage.entries()),Date.now()+'.txt')" class="buttonStyle">Export</button>
+            <div>
+                <div>Secondary Menu: {{ help_menus }}</div>
+                <!-- Disable these code areas to unlink menus -->
+                <div>
+                    <input type="radio" id="settings" value="Settings" v-model="help_menus" />
+                    <label for="one">Settings:</label>
+                </div>
+                <!-- <div>
+                    <input type="radio" id="ao" value="Advanced Options" v-model="help_menus" />
+                    <label for="one">Advanced Options:</label>
+                </div> -->
+                <div>
+                    <input type="radio" id="Encounters" value="Encounters" v-model="help_menus" />
+                    <label for="two">Encounters:</label>
+                </div>
+                <!-- <div>
+                    <input type="radio" id="ao" value="Color" v-model="help_menus" />
+                    <label for="one">Overlay Color Picker:</label>
+                </div> -->
+                <div>
+                    <input type="radio" id="help" value="Help" v-model="help_menus" />
+                    <label for="two">Help Menu:</label>
+                </div>
+                <div>
+                    <input type="radio" id="Changelog" value="Changelog" v-model="help_menus" />
+                    <label for="two">Changelog:</label>
+                </div>
+                <div>
+                    <input type="radio" id="Credits" value="Credits" v-model="help_menus" />
+                    <label for="two">Credits:</label>
+                </div>
+                <!-- <div>
+                    <input type="radio" id="Dev Tools" value="Dev Tools" v-model="help_menus" />
+                    <label for="two">Dev Tools:</label>
+                </div> -->
+            </div>
         </div>
-        <div v-show="show_advanced_options == true" class="testingArea2" style="z-index: 50000; font-size: 18px;">
-            Perfect DVs: <input class="checkBoxStyle" type="checkbox" v-model="perfectDVs"/><br>
+        <div v-show="help_menus == `Settings`" class="testingArea2" style="z-index: 50000; font-size: 18px;">
+            <!-- Perfect DVs: <input class="checkBoxStyle" type="checkbox" v-model="perfectDVs"/><br> -->
             Trash Cans Solved: <input class="checkBoxStyle" type="checkbox" v-model="trashCans"/><br>
             Options Auto Set: <input class="checkBoxStyle" type="checkbox" v-model="options"/><br>
-            <br>
+        </div>
+        <div v-show="help_menus == `Advanced Options`" class="testingArea2" style="z-index: 50000; font-size: 18px;">
             Info Toggles:<br>
             <!-- inventory: <input class="checkBoxStyle" type="checkbox" v-model="inventory"/><br> -->
             battleGraphic: <input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/><br>
@@ -299,9 +341,23 @@
             Effective Power with Type Effectiveness: <input class="checkBoxStyle" type="checkbox" v-model="typeCalcs"/><br>
             Show Effective Power with Guarenteed Crits: <input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/><br>
             <br>
+        </div>
+        <div v-show="help_menus == `Help`" class="testingArea2" style="z-index: 50000;">
+            <div>Setup Guide: 
+                <br>https://</div>
+            <br>
+            <a href="https://www.retroarch.com/" target="_blank">Retroarch</a><br>
+            <a href="https://gamehook.io/" target="_blank">GameHook</a><br>
+            <br>
+            <div>In OBS use the "Window Capture" source to record the program once it is in Fullscreen.</div>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div>This program is currently in beta. Please report all bugs and issues to Scott's Thoughts directly on Discord.</div>
+        </div>
+        <div v-show="help_menus == `Encounters`" class="testingArea2" style="z-index: 50000;">
             Encounters:<br>
             Route1: <input class="checkBoxStyle" type="checkbox" v-model="route1"/><br>
             Viridian Forest: <input class="checkBoxStyle" type="checkbox" v-model="viridianForest"/><br>
+            Route3: <input class="checkBoxStyle" type="checkbox" v-model="route3"/><br>
             Mt. Moon: <input class="checkBoxStyle" type="checkbox" v-model="mtMoon"/><br>
             Route 6: <input class="checkBoxStyle" type="checkbox" v-model="route6"/><br>
             Safari Zone: <input class="checkBoxStyle" type="checkbox" v-model="safariZone"/><br>
@@ -309,20 +365,49 @@
             <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
             <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
         </div>
-        <div v-show="show_help == true" class="testingArea2" style="z-index: 50000;">
-            <div>Setup Guide: 
-                <br>https://</div>
+        <div v-show="help_menus == `Color`" class="testingArea2" style="z-index: 50000; font-size: 14px;">
+            <div>Overlay Color Selector:</div>
+            <button @click="color_picker" class="buttonStyle">Color Picker</button>
+            <button @click="clear_overlay_color" class="buttonStyle">Reset Overlay Color</button>
+            <div>Overlay_color: {{overlay_color}}</div>
+        </div>
+        <div v-show="help_menus == `Changelog`" class="testingArea2" style="z-index: 50000; font-size: 14px;">
+            <div>version1.2023-06-25.0</div>
             <br>
-            <a href="https://www.retroarch.com/" target="_blank">Retroarch</a><br>
-            <a href="https://gamehook.io/" target="_blank">GameHook</a><br>
+            <div>Changes</div>
+            <div>- Added submenu radio button</div>
+            <div>- Re-organized submenus</div>
+            <div>- Added encounter toggles</div>
+            <div>- Tested encounter toggles</div>
+            <div>- Verfied local storage & Pokemon image editing</div>
+            <div>- Fixed DV calculation formula</div>
+            <div>- Added 3 more DV settings</div>
+            <div>- Verified all DV options are working</div>
+            <div>- The program saves the users previously selected starter</div>
             <br>
-            <div>In OBS use the "Window Source" to capture the program once it is in Fullscreen.</div>
-            <br>
-            <div>Right click on the source and use "Interact" to change the options.</div>
-            <br>
-            <br>
-            <br>
-            <div>This program is currently in beta. Please report all bugs and issues to Scott's Thoughts directly on Discord.</div>
+            <div>Bugs:</div>
+            <div>- Discovered that dropdown menus don't work within OBS</div>
+        </div>
+        <div v-show="help_menus == `Encounters`" class="testingArea2" style="z-index: 50000;">
+            Encounters:<br>
+            Route1: <input class="checkBoxStyle" type="checkbox" v-model="route1"/><br>
+            Viridian Forest: <input class="checkBoxStyle" type="checkbox" v-model="viridianForest"/><br>
+            Route3: <input class="checkBoxStyle" type="checkbox" v-model="route3"/><br>
+            Mt. Moon: <input class="checkBoxStyle" type="checkbox" v-model="mtMoon"/><br>
+            Route 6: <input class="checkBoxStyle" type="checkbox" v-model="route6"/><br>
+            Safari Zone: <input class="checkBoxStyle" type="checkbox" v-model="safariZone"/><br>
+            Pkmn Mansion: <input class="checkBoxStyle" type="checkbox" v-model="mansion"/><br>
+            <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
+            <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
+        </div>
+        <div v-show="help_menus == `Credits`" class="testingArea2" style="z-index: 50000;">
+            <div>Scott's Thoughts</div>
+            <div>WaielAl</div>
+            <div>Flame Sage</div>
+        </div>
+        <div v-show="help_menus == `Dev Tools`" class="testingArea2" style="z-index: 50000;">
+            <div>Export Config File:</div>
+            <button onclick="downloadFile(JSON.stringify(MyStorage.entries()),Date.now()+'.txt')" class="buttonStyle">Export</button>
         </div>
     </div>
 

@@ -198,6 +198,24 @@ box-shadow:
     ;
 }
 
+.dropdownMenu {
+    pointer-events: auto; 
+    position: relative; 
+    width: 300px; 
+    height: 40px; 
+    font-size: 24px; 
+    background: #a7ff92; 
+    font-family: Play;
+}
+.radioButtonStyle {
+    pointer-events: auto; 
+    position: relative; 
+    width: 360px; 
+    height: 40px; 
+    font-size: 24px; 
+    background: #a7ff92; 
+    font-family: Play;
+}
 .buttonStyle {
     pointer-events: auto; 
     position: relative; 
