@@ -721,7 +721,7 @@ const app = Vue.createApp({
         movePower(y) { //y = move1.value
             if (y) {
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
-                var move = this.g1MoveData[y]
+                var move = this.g1MoveData[this.capitalization_format(y)]
                 if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP")) {
                     level = this.mapper.properties.player.team[0].level.value
                     critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
