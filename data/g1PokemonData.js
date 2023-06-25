@@ -10005,4 +10005,60 @@ const g1PokemonData = {
         ],
         levelup_moveset: []
     },
+"Celebi" :
+    {
+        name: "Celebi",
+        base_hp: 100,
+        base_atk: 100,
+        base_def: 100,
+        base_spd: 100,
+        base_spc: 100,
+        type1: "Psychic",
+        type2: "Grass",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Leech Seed",
+        "Confusion",
+        "Recover",
+        "Haze"
+        ],
+        growth_rate: "Fast",
+        tm_hm_learnset: [
+            "Swords Dance",
+            "Whirlwind",
+            "Toxic",
+            "Double-Edge",
+            "Hyper Beam",
+            "Mega Drain",
+            "SolarBeam",
+            "Psychic",
+            "Teleport",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Metronome",
+            "Swift",
+            "Rest",
+            "Psywave",
+            "Substitute",
+            "Cut",
+            "Flash"
+        ],
+        levelup_moveset: [
+            [
+                20,
+                "Rock Throw"
+            ], 
+            [
+                30,
+                "Psywave"
+            ], 
+            [
+                40,
+                "Whirlwind"
+            ], 
+        ]
+    },
 }
