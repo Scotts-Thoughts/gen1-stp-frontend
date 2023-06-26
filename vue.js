@@ -68,6 +68,8 @@ const app = Vue.createApp({
             route6:         true,
             safariZone:     true,
             mansion:        true,
+            route21:        true,
+            route22:        true,
 
             //DATA ---------------------------------------------------------------------------------------------//
             g1MoveData:         g1MoveData,
@@ -88,6 +90,13 @@ const app = Vue.createApp({
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
 
+            //resets
+            playerId: 0,
+            playerName: "NINTEN",
+            resetCatcher: "NINTEN",
+            playerResets: 0,
+            resetCounter: true,
+
             //Pokemon settings for local storage
             overlay_color:   "#000000",
             imageXOffset: 0,
@@ -99,48 +108,84 @@ const app = Vue.createApp({
 
     watch: {
         //Encounter Checkboxes
-        route1(newProp, oldProp) {
+        route1(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },   
-        viridianForest(newProp, oldProp) {
+        viridianForest(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Viridian Forest") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },   
-        route3(newProp, oldProp) {
+        route3(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 3") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },            
-        mtMoon(newProp, oldProp) {
+        mtMoon(newProp) {
             if (newProp == false && (newProp.value == "Mt Moon - 1" || newProp.value == "Mt Moon - 2" || newProp.value == "Mt Moon - 3")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },            
-        route6(newProp, oldProp) {
+        route6(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 6") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },            
-        safariZone(newProp, oldProp) {
+        safariZone(newProp) {
             if (newProp == false && (newProp.value == "Safari Zone (East)" || newProp.value == "Safari Zone (West)" || newProp.value == "Safari Zone (Center)" || newProp.value == "Safari Zone (North)")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },       
-        mansion(newProp, oldProp) {
+        mansion(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Cinnabar Mansion") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },
+        route21(newProp) {
+            if (newProp == false && this.mapper.properties.overworld.map.value == "Route 21") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },
+        route22(newProp) {
+            if (newProp == false && this.mapper.properties.overworld.map.value == "Route 22") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },
         starterName(newProp) {
             MyStorage.currentStarter = newProp
-        }           
+        },
+        playerId() {
+            this.playerResets = 0;
+        },          
     },
 
     computed: {
-        gametime_hours() {
+        gametimeHMS() {
             h = this.mapper.properties.gameTime.hours
-            if (h <= 0) return 0;
-            else return h
-        },
-        gametime_min() {
             m = this.mapper.properties.gameTime.minutes
-            if (m < 10) m = "0" + m.toString();
-            return m
-        },
-        gametime_sec() {
             s = this.mapper.properties.gameTime.seconds
-            if (s < 10) s = "0" + s.toString();
-            return s
+            hour = ""
+            min = ""
+            sec = ""
+            //hour
+            if (h == 0) hour = ""
+            else if (h > 255) hour = 0 + ":"
+            else hour = h + ":"
+            //min
+            if (h == 0 && m == 0) min = ""
+            else min = m + ":"
+            //sec
+            if (h == 0 && m == 0 && s < 10) sec = "0"
+            else sec = s
+            return hour.toString() + min.toString() + sec.toString()
         },
+        // gametime_hours() {
+        //     h = this.mapper.properties.gameTime.hours
+        //     m = this.mapper.properties.gameTime.minutes
+        //     s = this.mapper.properties.gameTime.seconds
+        //     if (h == 0) return ""
+        //     if (h > 255) return 0 + ":";
+        //     else return h + ":"
+        // },
+        // gametime_min() {
+        //     h = this.mapper.properties.gameTime.hours
+        //     m = this.mapper.properties.gameTime.minutes
+        //     s = this.mapper.properties.gameTime.seconds
+        //     if (h == 0 && m == 0) return ""
+        //     if (m < 10) m = "0" + m.toString();
+        //     return m + ":"
+        // },
+        // gametime_sec() {
+        //     h = this.mapper.properties.gameTime.hours
+        //     m = this.mapper.properties.gameTime.minutes
+        //     s = this.mapper.properties.gameTime.seconds
+        //     if (h == 0 && m == 0 && s < 10) return "0"
+        //     return s
+        // },
         gametime_frames() {
             f = this.mapper.properties.gameTime.frames
             if (f < 10) f = "0" + f.toString();
@@ -236,6 +281,54 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        //! Refactor with co-pilot
+        save_all_settings() {
+            this.set_setting_prop("this.route1", this.route1)
+            this.set_setting_prop("this.viridianForest", this.viridianForest)
+            this.set_setting_prop("this.route3", this.route3)
+            this.set_setting_prop("this.mtMoon", this.mtMoon)
+            this.set_setting_prop("this.route6", this.route6)
+            this.set_setting_prop("this.safariZone", this.safariZone)
+            this.set_setting_prop("this.mansion", this.mansion)
+            this.set_setting_prop("this.help_menus", this.help_menus)
+            this.set_setting_prop("this.dvSetting", this.dvSetting)
+            this.set_setting_prop("this.trashCans", this.trashCans)
+            this.set_setting_prop("this.options", this.options)
+            this.set_setting_prop("this.gametimeDisplay", this.gametimeDisplay)
+            this.set_setting_prop("this.resetCounter", this.resetCounter)
+            this.set_setting_prop("this.playerResets", this.playerResets)
+            this.set_setting_prop("this.route21", this.route21)
+            this.set_setting_prop("this.route22", this.route22)
+            // console.log(MyStorage.entries())
+        },
+        load_all_settings() {
+            this.route1 = MyStorage["this.route1"] ?? true
+            this.viridianForest = MyStorage["this.viridianForest"] ?? true
+            this.route3 = MyStorage["this.route3"] ?? true
+            this.mtMoon = MyStorage["this.mtMoon"] ?? true
+            this.route6 = MyStorage["this.route6"] ?? true
+            this.safariZone = MyStorage["this.safariZone"] ?? true
+            this.mansion = MyStorage["this.mansion"] ?? true
+            this.help_menus = MyStorage["this.help_menus"] ?? "Settings"
+            this.dvSetting = MyStorage["this.dvSetting"] ?? "Max"
+            this.trashCans = MyStorage["this.trashCans"] ?? true
+            this.options = MyStorage["this.options"] ?? true
+            this.gametimeDisplay = MyStorage["this.gametimeDisplay"] ?? true
+            this.resetCounter = MyStorage["this.resetCounter"] ?? true
+            this.playerResets = MyStorage["this.playerResets"] ?? 0
+            this.route21 = MyStorage["this.route21"] ?? true
+            this.route22 = MyStorage["this.route22"] ?? true
+        },
+        //string can be: clear, increment, decrement
+        resets_clear() {
+            this.playerResets = 0
+        },
+        resets_increment() {
+            this.playerResets++
+        },
+        resets_decrement() {
+            this.playerResets--
+        },
         async colorPick() {
             return new EyeDropper().open().then(res => res.sRGBHex)
         },
@@ -251,6 +344,9 @@ const app = Vue.createApp({
                 [property_name]: value,
             }
         },
+        set_setting_prop(property_name, value) {
+            MyStorage[property_name] = value
+        },
         warn(...vars) {
             console.log(...vars)
         },
@@ -262,6 +358,8 @@ const app = Vue.createApp({
             this.route6 = true
             this.safariZone = true
             this.mansion = true
+            this.route21 = true
+            this.route22 = true
         },
         second_playthrough_settings() {
             this.route1 = false
@@ -271,6 +369,8 @@ const app = Vue.createApp({
             this.route6 = false
             this.safariZone = true
             this.mansion = true
+            this.route21 = true
+            this.route22 = true
         },
         save_pokemon_sprite_settings() {
             this.set_pokemon_prop("imageXOffset", this.imageXOffset)
@@ -742,7 +842,7 @@ const app = Vue.createApp({
         movePower(y) { //y = move1.value
             if (y) {
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
-                var move = this.g1MoveData[this.capitalization_format(y)]
+                var move = this.g1MoveData[this.move_name(y)]
                 if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP")) {
                     level = this.mapper.properties.player.team[0].level.value
                     critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
@@ -844,6 +944,28 @@ const app = Vue.createApp({
         this.mapper.onDisconnected = (x) => this.ready = false
         await this.mapper.connect()
         this.starterName = MyStorage.currentStarter ?? "Venomoth"
+        this.load_all_settings()
+
+        // reset tracking
+        this.mapper.properties.player.playerId.change((newProp, oldProp) => {
+            if (newProp.value == 0 && oldProp.value > 0) {
+                this.playerResets++;
+            } 
+            // if (newProp.value > 0 && oldProp.value == 0 && this.mapper.properties.player.name.value == "NINTEN") {
+            //     this.playerResets = 0;
+            // }
+            // else if (newProp.value > 0 && this.mapper.properties.player.name.value == "NINTEN" && this.mapper.properties.gameTime.minutes.value == 0) {
+            //     this.playerResets = 0;
+            // }
+        })
+        this.mapper.properties.player.playerId.change((newProp) => {
+            if (newProp.value > 0) {
+                if (newProp.value != this.playerId) {
+                    this.playerResets = 0;
+                    this.playerId = newProp.value;
+                }
+            }
+        })
 
         // Encounters (set initial value)
         if (this.route1 == false && this.mapper.properties.overworld.map.value == "Route 1") {
@@ -867,37 +989,41 @@ const app = Vue.createApp({
         else if (this.mansion == false && this.mapper.properties.overworld.map.value == "Cinnabar Mansion") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
+        else if (this.route21 == false && this.mapper.properties.overworld.map.value == "Route 21") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+        else if (this.route22 == false && this.mapper.properties.overworld.map.value == "Route 22") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
 
         //Set value on map change
-        this.mapper.properties.overworld.map.change(async (newProp) => {
-            if (this.route1 == false && newProp.value == "Route 1") {
+        this.mapper.properties.overworld.encounterRate.change(async (newProp) => {
+            if (this.route1 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 1") {
                 this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
             }
-            else if (this.viridianForest == false && this.mapper.properties.overworld.map.value == "Viridian Forest") {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], true) 
-                await this.sleep(150)
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false)
-            }
-            else if (this.mtMoon == false && (newProp.value == "Mt Moon - 1" || newProp.value == "Mt Moon - 2" || newProp.value == "Mt Moon - 3")) {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], true) 
-                await this.sleep(150)
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false)
-            }
-            else if (this.route3 == false && newProp.value == "Route 3") {
+            else if (this.route3 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 3") {
                 this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
             }
-            else if (this.route6 == false && newProp.value == "Route 6") {
+            else if (this.route6 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 6") {
                 this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
             }
-            else if (this.safariZone == false && (newProp.value == "Safari Zone (East)" || newProp.value == "Safari Zone (West)" || newProp.value == "Safari Zone (Center)" || newProp.value == "Safari Zone (North)")) {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], true) 
-                await this.sleep(150)
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false)
+            if (this.viridianForest == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
             }
-            else if (this.mansion == false && newProp.value == "Cinnabar Mansion") {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], true) 
-                await this.sleep(150)
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false)
+            if (this.safariZone == false && newProp.value > 0 && (this.mapper.properties.overworld.map.value == "Safari Zone (East)" || this.mapper.properties.overworld.map.value == "Safari Zone (West)" || this.mapper.properties.overworld.map.value == "Safari Zone (Center)" || this.mapper.properties.overworld.map.value == "Safari Zone (North)")) {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            }
+            if (this.mtMoon == false && newProp.value > 0 && (this.mapper.properties.overworld.map.value == "Mt Moon - 1" || this.mapper.properties.overworld.map.value == "Mt Moon - 2" || this.mapper.properties.overworld.map.value == "Mt Moon - 3")) {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            }
+            if (this.mansion == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Cinnabar Mansion") {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            }
+            if (this.route21 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 21") {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            }
+            if (this.route22 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 22") {
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
             }
         });
 

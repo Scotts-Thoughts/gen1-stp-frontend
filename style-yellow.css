@@ -871,6 +871,20 @@ box-shadow:
     text-align: right;
     position: relative;
 }
+.resets {
+    font-size: 75px;
+    border: #ff000000 solid 3px;
+    display:block;
+    position: absolute;
+    top: 352px;
+    left: 10px;
+    width: 110px;
+    height: 78px;
+    text-align: center;
+    line-height: 60px;
+    font-family: oseb;
+    font-weight: 700;
+}
 .gametime {
     font-size: 65px;
     border: #ff000000 solid 3px;

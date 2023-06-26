@@ -247,26 +247,25 @@
                 </div>
                 <!---------- GAMETIME ------------------------------------------------------------------------------------------------------------------->
                 <div v-show="gametimeDisplay == true" class="gametime">
-                    <div class="gametimeClock">{{gametime_hours}}:{{gametime_min}}:{{gametime_sec}}</div>
+                    <!-- <div class="gametimeClock">{{gametime_hours}}{{gametime_min}}{{gametime_sec}}</div> -->
+                    <div class="gametimeClock">{{gametimeHMS}}</div>
                     <div class="gametimeFrames">.{{gametime_frames}}</div>
+                </div>
+                <!---------- RESET ------------------------------------------------------------------------------------------------------------------->
+                <div v-show="resetCounter == true" class="resets">
+                    <div>{{playerResets}}</div>
                 </div>
             </div>
         </div>
         <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
-            <div>Press F11 to enter or exit fullscreen</div>
-            <br>
-            <div>This overlay is designed to function in fullscreen at 1920x1080</div>
-            <br>
-            <div>It is not compatible with save states, expect weird behavior if you choose to use them.</div>
-            <br>
             <div>Solo Pokemon:</div>
             <select v-model="starterName" @change="load_pokemon_sprite_settings" class="dropdownMenu">
                 <option disabled value="">Select a species</option>
                 <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
             </select>
             <div class="note">Note: This setting determines which growth rate, crit rate, and base stats are displayed. While playing, the overlay will update all other information to reflect the Pokemon in slot1 of the player's party.</div>
-            <br><br>
+            <br>
             <div>DV Setting:</div>
             <select v-model="dvSetting" class="dropdownMenu">
                 <option disabled value="">Please select one</option>
@@ -274,8 +273,8 @@
                 <option>Min</option>
                 <option>NPC</option>
                 <option>Random</option>
-            </select>
-            <br><br><br>
+            </select><br>
+            <br>
             <div>Pokemon Image Settings</div>
             X-Offset: <input type="range" min="-125" max="125" v-model="imageXOffset"/><br>
             Y-Offset: <input type="range" min="-125" max="125"v-model="imageYOffset"/><br>
@@ -283,7 +282,16 @@
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
             <button @click="save_pokemon_sprite_settings" class="buttonStyle">Save Pokemon Sprite Settings</button>
             <div class="note">Note: this saves styling for the current Solo Pokemon listed above. If you have a different Pokemon in slot1 it will still save this configuration to the Solo Pokemon's profile.</div>
-            <br><br><br>
+            <br><br>
+            <div v-if="resetCounter == true">
+                <div>Reset Counter Settings</div>
+                <button @click="resets_clear" class="buttonStyle">Clear</button>
+                <button @click="resets_increment" class="buttonStyle">Increment</button>
+                <button @click="resets_decrement" class="buttonStyle">Decrement</button>
+                <div class="note">These controls are provided in case there is an error with the automatic reset counter.</div>
+            </div>
+            <br><br><br><br><br><br><br>
+            <button @click="save_all_settings" class="buttonStyle">Save All Settings</button>
         </div>
         <div class="testingArea2" style="z-index: 50000;">
             <div>Secondary Menu:</div>
@@ -291,7 +299,7 @@
                 <option disabled value="">Please select one</option>
                 <option>Settings</option>
                 <!-- <option>Advanced Options</option> -->
-                <option>Encounters</option>
+                <!-- <option>Encounters</option> -->
                 <option>Help</option>
                 <!-- <option>Color</option> -->
                 <!-- <option>Changelog</option> -->
@@ -310,7 +318,26 @@
             <br>
             Show Gametime: <input class="checkBoxStyle" type="checkbox" v-model="gametimeDisplay"/><br>
             <div class="note">Shows the gametime in the top left.</div>
-            <div class="note">Use Livesplit or a similar timer application to show realtime..</div>
+            <div class="note">Use Livesplit or a similar timer application to show realtime.</div>
+            <br>
+            Reset Counter: <input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/><br>
+            <div class="note">Counts resets while you play.</div>
+            <div class="note">This number clears when you select "New Game".</div>
+            <br>
+            Encounters:<br>
+            <div class="note">These settings are for encounters on certain areas of the game where you may want to control for luck.</div>
+            Route1: <input class="checkBoxStyle" type="checkbox" v-model="route1"/><br>
+            Viridian Forest: <input class="checkBoxStyle" type="checkbox" v-model="viridianForest"/><br>
+            Route3: <input class="checkBoxStyle" type="checkbox" v-model="route3"/><br>
+            Mt. Moon: <input class="checkBoxStyle" type="checkbox" v-model="mtMoon"/><br>
+            Route 6: <input class="checkBoxStyle" type="checkbox" v-model="route6"/><br>
+            Safari Zone: <input class="checkBoxStyle" type="checkbox" v-model="safariZone"/><br>
+            Pkmn Mansion: <input class="checkBoxStyle" type="checkbox" v-model="mansion"/><br>
+            Route 21: <input class="checkBoxStyle" type="checkbox" v-model="route21"/><br>
+            Route 22: <input class="checkBoxStyle" type="checkbox" v-model="route22"/><br>
+            <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
+            <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
+            <div class="note">Note: Turns encounters on Route1, Route3, MtMoon, and Route6 off.</div>
         </div>
         <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             Info Toggles:<br>
@@ -333,6 +360,8 @@
             Route 6: <input class="checkBoxStyle" type="checkbox" v-model="route6"/><br>
             Safari Zone: <input class="checkBoxStyle" type="checkbox" v-model="safariZone"/><br>
             Pkmn Mansion: <input class="checkBoxStyle" type="checkbox" v-model="mansion"/><br>
+            Route 21: <input class="checkBoxStyle" type="checkbox" v-model="route21"/><br>
+            Route 22: <input class="checkBoxStyle" type="checkbox" v-model="route22"/><br>
             <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
             <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
             <div class="note">Note: Turns encounters on Route1, Route3, MtMoon, and Route6 off.</div>
@@ -343,6 +372,11 @@
             <br>
             <a href="https://www.retroarch.com/" target="_blank">Retroarch</a><br>
             <a href="https://gamehook.io/" target="_blank">GameHook</a><br>
+            <div>Press F11 to enter or exit fullscreen</div>
+            <br>
+            <div>This overlay is designed to function in fullscreen at 1920x1080</div>
+            <br>
+            <div>It is not compatible with save states, expect weird behavior if you choose to use them.</div>
             <br>
             <div>In OBS use the "Window Capture" source to record the program once it is in Fullscreen.</div><br>
             <div>Program Launch Order:</div>
@@ -351,7 +385,7 @@
             <div>3: This software</div>
             <br>
             <div>Only configure settings in this application after the other two are running.</div>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <br><br><br><br><br><br><br>
             <div>This program is currently in beta. Please report all bugs and issues to Scott's Thoughts directly on Discord.</div>
             </div>
         </div>
