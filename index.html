@@ -12,18 +12,19 @@
             <div class="mainContainer">
                 <!-- GRAPHICS ---------------------------------------------------------------------------------->
                 <div>
-                    <img class="canvas" :src="`images/textures/${s1dynamicReset.type1.toLowerCase()}.png`" />
+                    <img class="canvas" :src="`images/textures/${s1dynamicReset.type1}.png`" />
                     <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
                     <img class="pokemon_art" :style="{
                         'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`, 
                     }" :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
-                    <img class="canvas" :src="`images/left_ui/${s1dynamicReset.type1.toLowerCase()}.png`" />
+                    <img class="canvas" :src="`images/left_ui/${s1dynamicReset.type1}.png`" />
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
                     <div class="exp_growthRate">{{ growthRate }}</div>
-                    <div class="genericLabels timerLabel">time played at 4x game speed</div>
+                    <div v-show="gametimeDisplay == false" class="genericLabels timerLabel">time played at 4x game speed</div>
+                    <div v-show="gametimeDisplay == true" class="genericLabels timerLabel">gametime</div>
                     <div class="genericLabels resetsLabel">resets</div>
                 </div>
                 <!-- TYPE ICONS -------------------------------------------------------------------------------->
@@ -31,7 +32,7 @@
                     <div v-if="pkmnType(1, s1.type1.value, s1.type2.value) == pkmnType(2, s1.type1.value, s1.type2.value)" class="type">
                         <img :src="pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                     </div>
-                    <div v-else-if="pkmnType(1, s1.type1.value, s1.type2.value) != pkmnType(2, s1.type1.value, s1.type2.value)" class="type">
+                    <div v-else class="type">
                         <img :src="pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                         <img :src="pkmnType(2, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                     </div>
@@ -146,7 +147,7 @@
                 <transition name="fade">
                     <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
-                        <img class="enemyPng" :src="`images/enemy_area/${s1dynamicReset.type1.toLowerCase()}.png`" :style="battlePokemonCrop()"/>
+                        <img class="enemyPng" :src="`images/enemy_area/${s1dynamicReset.type1}.png`" :style="battlePokemonCrop()"/>
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
                                 <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmnStyle ePkmn${x + 1}`">
@@ -205,7 +206,7 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <img class="canvas" :src="`images/movepool_border/${s1dynamicReset.type1.toLowerCase()}.png`"/>
+                        <img class="canvas" :src="`images/movepool_border/${s1dynamicReset.type1}.png`"/>
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                 </transition>
@@ -217,21 +218,21 @@
                 <!--------- BATTLE POP UPS -------------------------------------------------------------------------------------------------------------------->
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
-                        <div v-show="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
+                        <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
                             <img :src="`images/pop_ups/accuracy/${s1dynamicReset.type1.toLowerCase()}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-show="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
+                        <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
                             <img :src="`images/pop_ups/evasion/${s1dynamicReset.type1.toLowerCase()}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-show="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
+                        <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
                             <img :src="`images/pop_ups/screens/${s1dynamicReset.type1.toLowerCase()}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
@@ -244,21 +245,27 @@
                     <div class="expTextGen2">Exp:</div>
                     <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
                 </div>
+                <!---------- GAMETIME ------------------------------------------------------------------------------------------------------------------->
+                <div v-show="gametimeDisplay == true" class="gametime">
+                    <div class="gametimeClock">{{gametime_hours}}:{{gametime_min}}:{{gametime_sec}}</div>
+                    <div class="gametimeFrames">.{{gametime_frames}}</div>
+                </div>
             </div>
         </div>
         <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
-            <div>Press F11 to exit (or enter) fullscreen</div>
+            <div>Press F11 to enter or exit fullscreen</div>
             <br>
             <div>This overlay is designed to function in fullscreen at 1920x1080</div>
             <br>
-            <br>
+            <div>It is not compatible with save states, expect weird behavior if you choose to use them.</div>
             <br>
             <div>Solo Pokemon:</div>
             <select v-model="starterName" @change="load_pokemon_sprite_settings" class="dropdownMenu">
                 <option disabled value="">Select a species</option>
                 <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
             </select>
+            <div class="note">Note: This setting determines which growth rate, crit rate, and base stats are displayed. While playing, the overlay will update all other information to reflect the Pokemon in slot1 of the player's party.</div>
             <br><br>
             <div>DV Setting:</div>
             <select v-model="dvSetting" class="dropdownMenu">
@@ -268,57 +275,44 @@
                 <option>NPC</option>
                 <option>Random</option>
             </select>
-            <br><br><br><br><br><br>
+            <br><br><br>
             <div>Pokemon Image Settings</div>
             X-Offset: <input type="range" min="-125" max="125" v-model="imageXOffset"/><br>
             Y-Offset: <input type="range" min="-125" max="125"v-model="imageYOffset"/><br>
             Scale: <input type="range" min="0.3" max="2" step="0.02" v-model="imageScale"/><br>
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
             <button @click="save_pokemon_sprite_settings" class="buttonStyle">Save Pokemon Sprite Settings</button>
-            <br><br><br><br><br><br>
-            <div>
-                <div>Secondary Menu: {{ help_menus }}</div>
-                <!-- Disable these code areas to unlink menus -->
-                <div>
-                    <input type="radio" id="settings" value="Settings" v-model="help_menus" />
-                    <label for="one">Settings:</label>
-                </div>
-                <!-- <div>
-                    <input type="radio" id="ao" value="Advanced Options" v-model="help_menus" />
-                    <label for="one">Advanced Options:</label>
-                </div> -->
-                <div>
-                    <input type="radio" id="Encounters" value="Encounters" v-model="help_menus" />
-                    <label for="two">Encounters:</label>
-                </div>
-                <!-- <div>
-                    <input type="radio" id="ao" value="Color" v-model="help_menus" />
-                    <label for="one">Overlay Color Picker:</label>
-                </div> -->
-                <div>
-                    <input type="radio" id="help" value="Help" v-model="help_menus" />
-                    <label for="two">Help Menu:</label>
-                </div>
-                <div>
-                    <input type="radio" id="Changelog" value="Changelog" v-model="help_menus" />
-                    <label for="two">Changelog:</label>
-                </div>
-                <div>
-                    <input type="radio" id="Credits" value="Credits" v-model="help_menus" />
-                    <label for="two">Credits:</label>
-                </div>
-                <!-- <div>
-                    <input type="radio" id="Dev Tools" value="Dev Tools" v-model="help_menus" />
-                    <label for="two">Dev Tools:</label>
-                </div> -->
-            </div>
+            <div class="note">Note: this saves styling for the current Solo Pokemon listed above. If you have a different Pokemon in slot1 it will still save this configuration to the Solo Pokemon's profile.</div>
+            <br><br><br>
         </div>
-        <div v-show="help_menus == `Settings`" class="testingArea2" style="z-index: 50000; font-size: 18px;">
+        <div class="testingArea2" style="z-index: 50000;">
+            <div>Secondary Menu:</div>
+            <select v-model="help_menus" class="dropdownMenu">
+                <option disabled value="">Please select one</option>
+                <option>Settings</option>
+                <!-- <option>Advanced Options</option> -->
+                <option>Encounters</option>
+                <option>Help</option>
+                <!-- <option>Color</option> -->
+                <!-- <option>Changelog</option> -->
+                <option>Credits</option>
+                <!-- <option>Dev Tools</option> -->
+            </select>
+        </div>
+        <div v-show="help_menus == `Settings`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             <!-- Perfect DVs: <input class="checkBoxStyle" type="checkbox" v-model="perfectDVs"/><br> -->
             Trash Cans Solved: <input class="checkBoxStyle" type="checkbox" v-model="trashCans"/><br>
-            Options Auto Set: <input class="checkBoxStyle" type="checkbox" v-model="options"/><br>
+            <div class="note">Automatically solves the puzzle in Lt. Surge's gym.</div>
+            <br>
+            Automatically Set Options: <input class="checkBoxStyle" type="checkbox" v-model="options"/><br>
+            <div class="note">Fast text, no battle animations, set battle-style.</div>
+            <div class="note">Animations are turned on for the Champion battle.</div>
+            <br>
+            Show Gametime: <input class="checkBoxStyle" type="checkbox" v-model="gametimeDisplay"/><br>
+            <div class="note">Shows the gametime in the top left.</div>
+            <div class="note">Use Livesplit or a similar timer application to show realtime..</div>
         </div>
-        <div v-show="help_menus == `Advanced Options`" class="testingArea2" style="z-index: 50000; font-size: 18px;">
+        <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             Info Toggles:<br>
             <!-- inventory: <input class="checkBoxStyle" type="checkbox" v-model="inventory"/><br> -->
             battleGraphic: <input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/><br>
@@ -330,18 +324,7 @@
             Show Effective Power with Guarenteed Crits: <input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/><br>
             <br>
         </div>
-        <div v-show="help_menus == `Help`" class="testingArea2" style="z-index: 50000;">
-            <div>Setup Guide: 
-                <br>https://</div>
-            <br>
-            <a href="https://www.retroarch.com/" target="_blank">Retroarch</a><br>
-            <a href="https://gamehook.io/" target="_blank">GameHook</a><br>
-            <br>
-            <div>In OBS use the "Window Capture" source to record the program once it is in Fullscreen.</div>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <div>This program is currently in beta. Please report all bugs and issues to Scott's Thoughts directly on Discord.</div>
-        </div>
-        <div v-show="help_menus == `Encounters`" class="testingArea2" style="z-index: 50000;">
+        <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000;">
             Encounters:<br>
             Route1: <input class="checkBoxStyle" type="checkbox" v-model="route1"/><br>
             Viridian Forest: <input class="checkBoxStyle" type="checkbox" v-model="viridianForest"/><br>
@@ -352,14 +335,33 @@
             Pkmn Mansion: <input class="checkBoxStyle" type="checkbox" v-model="mansion"/><br>
             <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
             <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
+            <div class="note">Note: Turns encounters on Route1, Route3, MtMoon, and Route6 off.</div>
         </div>
-        <div v-show="help_menus == `Color`" class="testingArea2" style="z-index: 50000; font-size: 14px;">
+        <div v-show="help_menus == `Help`" class="testingArea3" style="z-index: 50000;">
+            <div>Setup Guide: 
+                <a href="https://youtu.be/8tzOHnQyAkk" target="_blank">https://youtu.be/8tzOHnQyAkk</a><br>
+            <br>
+            <a href="https://www.retroarch.com/" target="_blank">Retroarch</a><br>
+            <a href="https://gamehook.io/" target="_blank">GameHook</a><br>
+            <br>
+            <div>In OBS use the "Window Capture" source to record the program once it is in Fullscreen.</div><br>
+            <div>Program Launch Order:</div>
+            <div>1: RetroArch - load your ROM file</div>
+            <div>2: GameHook - load the mapper</div>
+            <div>3: This software</div>
+            <br>
+            <div>Only configure settings in this application after the other two are running.</div>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div>This program is currently in beta. Please report all bugs and issues to Scott's Thoughts directly on Discord.</div>
+            </div>
+        </div>
+        <div v-show="help_menus == `Color`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>Overlay Color Selector:</div>
             <button @click="color_picker" class="buttonStyle">Color Picker</button>
             <button @click="clear_overlay_color" class="buttonStyle">Reset Overlay Color</button>
             <div>Overlay_color: {{overlay_color}}</div>
         </div>
-        <div v-show="help_menus == `Changelog`" class="testingArea2" style="z-index: 50000; font-size: 14px;">
+        <div v-show="help_menus == `Changelog`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>version1.2023-06-25.0</div>
             <br>
             <div>Changes</div>
@@ -376,24 +378,12 @@
             <div>Bugs:</div>
             <div>- Discovered that dropdown menus don't work within OBS</div>
         </div>
-        <div v-show="help_menus == `Encounters`" class="testingArea2" style="z-index: 50000;">
-            Encounters:<br>
-            Route1: <input class="checkBoxStyle" type="checkbox" v-model="route1"/><br>
-            Viridian Forest: <input class="checkBoxStyle" type="checkbox" v-model="viridianForest"/><br>
-            Route3: <input class="checkBoxStyle" type="checkbox" v-model="route3"/><br>
-            Mt. Moon: <input class="checkBoxStyle" type="checkbox" v-model="mtMoon"/><br>
-            Route 6: <input class="checkBoxStyle" type="checkbox" v-model="route6"/><br>
-            Safari Zone: <input class="checkBoxStyle" type="checkbox" v-model="safariZone"/><br>
-            Pkmn Mansion: <input class="checkBoxStyle" type="checkbox" v-model="mansion"/><br>
-            <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
-            <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
-        </div>
-        <div v-show="help_menus == `Credits`" class="testingArea2" style="z-index: 50000;">
+        <div v-show="help_menus == `Credits`" class="testingArea3" style="z-index: 50000;">
             <div>Scott's Thoughts</div>
             <div>WaielAl</div>
             <div>Flame Sage</div>
         </div>
-        <div v-show="help_menus == `Dev Tools`" class="testingArea2" style="z-index: 50000;">
+        <div v-show="help_menus == `Dev Tools`" class="testingArea3" style="z-index: 50000;">
             <div>Export Config File:</div>
             <button onclick="downloadFile(JSON.stringify(MyStorage.entries()),Date.now()+'.txt')" class="buttonStyle">Export</button>
         </div>

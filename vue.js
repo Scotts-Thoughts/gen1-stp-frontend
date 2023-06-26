@@ -48,6 +48,7 @@ const app = Vue.createApp({
             dvSetting:                  "Max", //Max, Min, NPC, or Random
             trashCans:                  true, //solves the trash can puzzle
             options:                    true, //shows the options menu when set to true
+            gametimeDisplay:            true, //shows the options menu when set to true
             inventory:                  true, //uses inventory when in the department store & marts
             battleGraphic:              true, //uses battle graphic with enemy moveset & stats
             showAllTrainers:            true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
@@ -57,7 +58,7 @@ const app = Vue.createApp({
             typeCalcs:                  true, //calculates effective power based on the pokemon in battle
             showCritMultiplierInEP:     true, //shows high crit ratio moves with adjusted power if the move always scores a crit
 
-            help_menus: null,
+            help_menus: "Settings",
 
             //ENCOUNTERS ---------------------------------------------------------------------------------------//
             route1:         true,
@@ -125,6 +126,26 @@ const app = Vue.createApp({
     },
 
     computed: {
+        gametime_hours() {
+            h = this.mapper.properties.gameTime.hours
+            if (h <= 0) return 0;
+            else return h
+        },
+        gametime_min() {
+            m = this.mapper.properties.gameTime.minutes
+            if (m < 10) m = "0" + m.toString();
+            return m
+        },
+        gametime_sec() {
+            s = this.mapper.properties.gameTime.seconds
+            if (s < 10) s = "0" + s.toString();
+            return s
+        },
+        gametime_frames() {
+            f = this.mapper.properties.gameTime.frames
+            if (f < 10) f = "0" + f.toString();
+            return f
+        },
         currentTrainer() {
             if (this.mapper.meta.gameName == "Pokemon Yellow") { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
             else if (this.mapper.meta.gameName == "Pokemon Red and Blue") { return g1RedBlueTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
@@ -401,21 +422,21 @@ const app = Vue.createApp({
         pkmnType(typeNumber, type1, type2) {
             if (type1 && this.g1stateVariable != `Base Stats`) {
                 if (type1 == type2) {
-                    return `images/elements/types/${type1}.png`
+                    return `images/elements/types/${type1.toLowerCase()}.png`
                 }
                 else if (type1 != type2 && typeNumber == 1) {
-                    return `images/elements/types/${type1}.png`
+                    return `images/elements/types/${type1.toLowerCase()}.png`
                 }
                 else if (type1 != type2 && typeNumber == 2) {
-                    return `images/elements/types/${type2}.png`
+                    return `images/elements/types/${type2.toLowerCase()}.png`
                 }
             }
             else {
                 if (typeNumber == 1) {
-                    return `images/elements/types/${this.getStarterType.type1}.png`
+                    return `images/elements/types/${this.getStarterType.type1.toLowerCase()}.png`
                 }
                 else if (typeNumber == 2) {
-                    return `images/elements/types/${this.getStarterType.type2}.png`
+                    return `images/elements/types/${this.getStarterType.type2.toLowerCase()}.png`
                 }
             }
         },
