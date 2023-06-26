@@ -6,7 +6,7 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Arbok", //string name
+            starterName:     "Celebi", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough:   false, //used to mitigate luck on second playthroughs
             moonEncounters:      true, //true turns Mt Moon encounters off for second playthroughs
@@ -59,6 +59,10 @@ const app = Vue.createApp({
             accuracyEvasion: ["accuracy", "evasion"],
             slotTimingFix: false,
             statLabelOpacityValue: 0,
+            playerId: 0,
+            playerName: "NINTEN",
+            resetCatcher: "NINTEN",
+            playerResets: 0,
 
             //STORING DATA
             g1stateVariable: "Base Stats",
@@ -69,6 +73,12 @@ const app = Vue.createApp({
         }
     },
     
+    watch: {
+        playerId() {
+            this.playerResets = 0;
+        }
+    },
+
     computed: {
         currentTrainer() {
             if (this.mapper.meta.gameName == "Pokemon Yellow") { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
@@ -167,6 +177,19 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        //string can be: clear, increment, decrement
+        resets_controller(string) {
+            if (string == "clear")  {
+                this.playerResets = 0
+            }
+            if (string == "increment")  {
+                this.playerResets++
+            }
+            if (string == "decrement")  {
+                this.playerResets--
+            }
+        },
+
         g1CritRate(baseSpeed) {
             return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
         },
@@ -993,6 +1016,27 @@ const app = Vue.createApp({
             var image = new Image();
             image.src = `images/pokemon/${species}.png`;
         }
+
+        // reset tracking
+        this.mapper.properties.player.playerId.change((newProp, oldProp) => {
+            if (newProp.value == 0 && oldProp.value > 0) {
+                this.playerResets++;
+            } 
+            // if (newProp.value > 0 && oldProp.value == 0 && this.mapper.properties.player.name.value == "NINTEN") {
+            //     this.playerResets = 0;
+            // }
+            // else if (newProp.value > 0 && this.mapper.properties.player.name.value == "NINTEN" && this.mapper.properties.gameTime.minutes.value == 0) {
+            //     this.playerResets = 0;
+            // }
+        })
+        this.mapper.properties.player.playerId.change((newProp) => {
+            if (newProp.value > 0) {
+                if (newProp.value != this.playerId) {
+                    this.playerResets = 0;
+                    this.playerId = newProp.value;
+                }
+            }
+        })
 
         // set initial gamestate value when the layout is loaded
         if (this.mapper.properties.player.team[0].level.value == 0) 

@@ -41,6 +41,10 @@
                     {{capitalization_format(battEn.move3.value)}}: {{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move3.value, "AI")[1] }})<br>
                     {{capitalization_format(battEn.move4.value)}}: {{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[2] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[3] }}% ({{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[0] }}-{{ damageCalculation(battEn, s1dynamic, battEn.move4.value, "AI")[1] }})<br>
                     <br>
+                    <div>PlayerID: {{this.mapper.properties.player.playerId}}</div>
+                    <div>PlayerID: {{playerId}}</div>
+                    <div>PlayerName: {{playerName}}</div>
+                    <div>Resets: {{playerResets}}</div>
                 </div>
                 <div class="testingArea2">
                     <!-- Splits:<br>
