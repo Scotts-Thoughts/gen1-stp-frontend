@@ -10021,9 +10021,8 @@ const g1PokemonData = {
         "Leech Seed",
         "Confusion",
         "Recover",
-        "Haze"
         ],
-        growth_rate: "Fast",
+        growth_rate: "Medium Slow",
         tm_hm_learnset: [
             "Swords Dance",
             "Whirlwind",
@@ -10041,6 +10040,7 @@ const g1PokemonData = {
             "Metronome",
             "Swift",
             "Rest",
+            "Thunder Wave",
             "Psywave",
             "Substitute",
             "Cut",

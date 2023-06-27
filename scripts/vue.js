@@ -8,7 +8,7 @@ const app = Vue.createApp({
             // USER CONFIG --------------------------------------------------------------------------------------//
             starterName:     "Celebi", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
-            secondPlaythrough:   false, //used to mitigate luck on second playthroughs
+            secondPlaythrough:   true, //used to mitigate luck on second playthroughs
             moonEncounters:      true, //true turns Mt Moon encounters off for second playthroughs
             
             developmentFeatures: true, //turn on new features
