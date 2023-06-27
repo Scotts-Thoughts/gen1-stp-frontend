@@ -219,21 +219,21 @@
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/accuracy/${s1dynamicReset.type1.toLowerCase()}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/accuracy/${s1dynamicReset.type1}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/evasion/${s1dynamicReset.type1.toLowerCase()}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/evasion/${s1dynamicReset.type1}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/screens/${s1dynamicReset.type1.toLowerCase()}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/screens/${s1dynamicReset.type1}.png`" style="position: absolute;">
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>
@@ -247,7 +247,6 @@
                 </div>
                 <!---------- GAMETIME ------------------------------------------------------------------------------------------------------------------->
                 <div v-show="gametimeDisplay == true" class="gametime">
-                    <!-- <div class="gametimeClock">{{gametime_hours}}{{gametime_min}}{{gametime_sec}}</div> -->
                     <div class="gametimeClock">{{gametimeHMS}}</div>
                     <div class="gametimeFrames">.{{gametime_frames}}</div>
                 </div>
@@ -337,7 +336,7 @@
             Route 22: <input class="checkBoxStyle" type="checkbox" v-model="route22"/><br>
             <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
             <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
-            <div class="note">Note: Turns encounters on Route1, Route3, MtMoon, and Route6 off.</div>
+            <div class="note">Note: These are the two settings I use for the playthroughs features in all my videos.</div>
         </div>
         <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             Info Toggles:<br>

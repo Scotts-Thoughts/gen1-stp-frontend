@@ -156,36 +156,14 @@ const app = Vue.createApp({
             else if (h > 255) hour = 0 + ":"
             else hour = h + ":"
             //min
-            if (h == 0 && m == 0) min = ""
+            if (h > 0 && m < 10) min = "0" + m.toString() + ":"
+            else if (h == 0 && m == 0) min = ""
             else min = m + ":"
             //sec
-            if (h == 0 && m == 0 && s < 10) sec = "0"
+            if ((h > 0 || m > 0) && s < 10) sec = "0" + s.toString()
             else sec = s
             return hour.toString() + min.toString() + sec.toString()
         },
-        // gametime_hours() {
-        //     h = this.mapper.properties.gameTime.hours
-        //     m = this.mapper.properties.gameTime.minutes
-        //     s = this.mapper.properties.gameTime.seconds
-        //     if (h == 0) return ""
-        //     if (h > 255) return 0 + ":";
-        //     else return h + ":"
-        // },
-        // gametime_min() {
-        //     h = this.mapper.properties.gameTime.hours
-        //     m = this.mapper.properties.gameTime.minutes
-        //     s = this.mapper.properties.gameTime.seconds
-        //     if (h == 0 && m == 0) return ""
-        //     if (m < 10) m = "0" + m.toString();
-        //     return m + ":"
-        // },
-        // gametime_sec() {
-        //     h = this.mapper.properties.gameTime.hours
-        //     m = this.mapper.properties.gameTime.minutes
-        //     s = this.mapper.properties.gameTime.seconds
-        //     if (h == 0 && m == 0 && s < 10) return "0"
-        //     return s
-        // },
         gametime_frames() {
             f = this.mapper.properties.gameTime.frames
             if (f < 10) f = "0" + f.toString();

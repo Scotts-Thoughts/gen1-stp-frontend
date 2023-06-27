@@ -904,6 +904,7 @@ box-shadow:
     position: relative;
     text-align: right;
     left: -60px;
+    top: 1px;
     line-height: 60px;
     font-family: oseb;
     font-weight: 700;
