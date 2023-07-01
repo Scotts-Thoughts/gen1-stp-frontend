@@ -18,7 +18,8 @@
                     <img class="pokemon_art" :style="{
                         'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`, 
                     }" :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
-                    <img class="canvas" :src="`images/left_ui/${s1dynamicReset.type1}.png`" />
+                    <!-- <img class="canvas" :src="`images/left_ui/${s1dynamicReset.type1}.png`" /> -->
+                    <div class="colored-image" style="--url: url(images/left_ui/Electric.png)"></div>
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
@@ -148,6 +149,7 @@
                     <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <img class="enemyPng" :src="`images/enemy_area/${s1dynamicReset.type1}.png`" :style="battlePokemonCrop()"/>
+                        <div class="colored-image" style="--url: url(images/enemy_area/Electric.png)"></div>
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
                                 <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmnStyle ePkmn${x + 1}`">
@@ -206,7 +208,8 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <img class="canvas" :src="`images/movepool_border/${s1dynamicReset.type1}.png`"/>
+                        <!-- <img class="canvas" :src="`images/movepool_border/${s1dynamicReset.type1}.png`"/> -->
+                        <div class="colored-image" style="--url: url(images/movepool_border/Electric.png)"></div>
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                 </transition>
@@ -219,21 +222,24 @@
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/accuracy/${s1dynamicReset.type1}.png`" style="position: absolute;">
+                            <!-- <img :src="`images/pop_ups/accuracy/${s1dynamicReset.type1}.png`" style="position: absolute;"> -->
+                            <div class="colored-image" style="--url: url(images/pop_ups/accuracy/Electric.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/evasion/${s1dynamicReset.type1}.png`" style="position: absolute;">
+                            <!-- <img :src="`images/pop_ups/evasion/${s1dynamicReset.type1}.png`" style="position: absolute;"> -->
+                            <div class="colored-image" style="--url: url(images/pop_ups/evasion/Electric.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/screens/${s1dynamicReset.type1}.png`" style="position: absolute;">
+                            <!-- <img :src="`images/pop_ups/screens/${s1dynamicReset.type1}.png`" style="position: absolute;"> -->
+                            <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>

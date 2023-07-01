@@ -68,8 +68,9 @@ const app = Vue.createApp({
             route6:         true,
             safariZone:     true,
             mansion:        true,
-            route21:        true,
-            route22:        true,
+            route21:        true, //do for others
+            route22:        MyStorage["this.route22"] ?? true,
+            
 
             //DATA ---------------------------------------------------------------------------------------------//
             g1MoveData:         g1MoveData,
@@ -140,7 +141,10 @@ const app = Vue.createApp({
         },
         playerId() {
             this.playerResets = 0;
-        },          
+        },    
+        overlay_color(newColor) {
+            document.documentElement.style.setProperty('--overlay-color', newColor);
+        },      
     },
 
     computed: {
@@ -314,7 +318,7 @@ const app = Vue.createApp({
             var color = await this.colorPick()
             this.set_pokemon_prop("overlay_color", color)
             this.overlay_color = color
-            console.log(MyStorage.entries())
+            // console.log(MyStorage.entries())
         },
         set_pokemon_prop(property_name, value) {
             MyStorage[this.starterName] = {
@@ -362,14 +366,20 @@ const app = Vue.createApp({
             this.imageYOffset = MyStorage[this.starterName]?.imageYOffset ?? 0
             this.imageScale = MyStorage[this.starterName]?.imageScale ?? 1
             this.imageFlip = MyStorage[this.starterName]?.imageFlip ?? false
-            this.overlay_color = MyStorage[this.starterName]?.overlay_color ?? "#000000"
+            if (MyStorage[this.starterName]?.overlay_color) {
+                this.overlay_color = MyStorage[this.starterName]?.overlay_color
+            }
+            else {
+                this.overlay_color = `var(--${this.s1dynamicReset.type1.toLowerCase()})`
+            }
         },
         load_starter_pokemon_settings() {
             this.starterName = MyStorage[this.currentStarter] ?? "Venomoth"
         },
         clear_overlay_color() {
-            this.set_pokemon_prop("overlay_color", "#000000")
-            this.overlay_color = "#000000"
+            this.set_pokemon_prop("overlay_color", null)
+            this.load_pokemon_sprite_settings()
+            // this.overlay_color = "#000000"
         },
         keys_function(object) {
             return Object.keys(object)
@@ -923,6 +933,7 @@ const app = Vue.createApp({
         await this.mapper.connect()
         this.starterName = MyStorage.currentStarter ?? "Venomoth"
         this.load_all_settings()
+        this.load_pokemon_sprite_settings()
 
         // reset tracking
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {

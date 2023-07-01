@@ -132,6 +132,8 @@
     --fairy2:    #ee99ac;
     --fairy3:    #f4bdc9;
 
+    --overlay-color: #000000; /* default color */
+
     /* Exp Bar Colours */
     --expBarBackground: linear-gradient(rgb(239, 239, 239), rgb(157, 157, 157));
     --expBarExperience: linear-gradient(90deg,hsl(189, 92%, 45%), hsl(187, 100%, 69%));
@@ -152,6 +154,29 @@
     src: url(fonts/Play-Bold.ttf);
     font-family: play;
 }
+
+.colored-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    opacity: 0.9;
+    background-image: var(--url);
+    pointer-events: none; /* optional: this makes the image not clickable, so you can click the elements behind it */
+    isolation: isolate; /* optional: this restricts the color blending only to this layer, just to be safe */
+}
+
+.colored-image::after { /* ::after generates a pseudo element inside the div */
+    content: ''; /* content of the pseudo element, needs to be provided */
+    position: absolute;
+    inset: 0; /* sets top/left/bottom/right to 0 */
+    background-color: var(--overlay-color);
+    -webkit-mask-image: var(--url); /* fallback, just to be safe */
+    mask-image: var(--url); /* use the alpha channel of provided image as a mask of this layer */
+    mix-blend-mode: color; /* color blend mode, I'm not sure if 'color' is the right one - might need to be changed */
+}
+
 html {
     height: 100%;
     width: 100%;
