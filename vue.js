@@ -52,7 +52,7 @@ const app = Vue.createApp({
             inventory:                  true, //uses inventory when in the department store & marts
             battleGraphic:              true, //uses battle graphic with enemy moveset & stats
             showAllTrainers:            true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
-            expBarAnimation:            true,
+            expBarAnimation:            false,
             showSpecialTrainerGraphics: true, //shows drawn art for defined trainers
             battlePopUps:               true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             typeCalcs:                  true, //calculates effective power based on the pokemon in battle
@@ -61,20 +61,21 @@ const app = Vue.createApp({
             help_menus: "Settings",
 
             //ENCOUNTERS ---------------------------------------------------------------------------------------//
-            route1:         true,
-            viridianForest: true,
-            route3:         true,
-            mtMoon:         true,
-            route6:         true,
-            safariZone:     true,
-            mansion:        true,
-            route21:        true, //do for others
+            route1:         MyStorage["this.route1"] ?? true,
+            viridianForest: MyStorage["this.viridianForest"] ?? true,
+            route3:         MyStorage["this.route3"] ?? true,
+            mtMoon:         MyStorage["this.mtMoon"] ?? true,
+            route6:         MyStorage["this.route6"] ?? true,
+            safariZone:     MyStorage["this.safariZone"] ?? true,
+            mansion:        MyStorage["this.mansion"] ?? true,
+            route21:        MyStorage["this.route21"] ?? true,
             route22:        MyStorage["this.route22"] ?? true,
             
 
             //DATA ---------------------------------------------------------------------------------------------//
             g1MoveData:         g1MoveData,
             g1PokemonData:      g1PokemonData,
+            g1PokemonDataRB:    g1PokemonDataRB,
             g1YellowTrainers:   g1YellowTrainers,
             g1RedBlueTrainers:  g1RedBlueTrainers,
             typeData:           typeData,
@@ -97,6 +98,7 @@ const app = Vue.createApp({
             resetCatcher: "NINTEN",
             playerResets: 0,
             resetCounter: true,
+            trackResets: true,
 
             //Pokemon settings for local storage
             overlay_color:   "#000000",
@@ -148,6 +150,15 @@ const app = Vue.createApp({
     },
 
     computed: {
+        mew_movepool_style() {
+            if (this.starterName == "Mew") {
+                return "font-size: 15px; line-height: 15.5px;"
+            }
+        },
+        pokemon_version_specific_data() {
+            if (this.mapper.meta.gameName == "Pokemon Yellow") { return this.g1PokemonData }
+            if (this.mapper.meta.gameName == "Pokemon Red and Blue") { return this.g1PokemonDataRB }
+        },
         gametimeHMS() {
             h = this.mapper.properties.gameTime.hours
             m = this.mapper.properties.gameTime.minutes
@@ -355,6 +366,17 @@ const app = Vue.createApp({
             this.route22 = true
         },
         save_pokemon_sprite_settings() {
+            this.set_pokemon_prop("imageXOffset", this.imageXOffset)
+            this.set_pokemon_prop("imageYOffset", this.imageYOffset)
+            this.set_pokemon_prop("imageScale", this.imageScale)
+            this.set_pokemon_prop("imageFlip", this.imageFlip)
+            console.log(MyStorage.entries())
+        },
+        clear_pokemon_sprite_settings() {
+            this.imageXOffset = 0
+            this.imageYOffset = 0
+            this.imageScale = 1
+            this.imageFlip = false
             this.set_pokemon_prop("imageXOffset", this.imageXOffset)
             this.set_pokemon_prop("imageYOffset", this.imageYOffset)
             this.set_pokemon_prop("imageScale", this.imageScale)
@@ -653,29 +675,113 @@ const app = Vue.createApp({
             if (gameName == "Pokemon Yellow") {
               if (trainerName == "RIVAL1") {
                 return rival1Teams[trainerNumber - 1];
-              } else if (trainerName == "RIVAL2") {
+              } 
+              else if (trainerName == "RIVAL2") {
                 return rival2Teams[trainerNumber - 1];
-              } else if (trainerName == "RIVAL3") {
+              } 
+              else if (trainerName == "RIVAL3") {
                 return "champion's team";
-              } else {
+              } 
+              else {
                 return trainerName.toLowerCase() + "'s team";
               }
-            } else if (gameName == "Pokemon Red and Blue") {
-              if (trainerName == "RIVAL1") {
-                return rival1Teams[trainerNumber - 1];
-              } else if (trainerName == "RIVAL2") {
-                return rival2Teams[trainerNumber - 1];
-              } else if (trainerName == "RIVAL3") {
+            } 
+            else if (gameName == "Pokemon Red and Blue") {
+              if (trainerName == "RIVAL1" && (trainerNumber == 1 || trainerNumber == 2 || trainerNumber == 3)) {
+                return "rival1's team";
+              } 
+              else if (trainerName == "RIVAL1" && (trainerNumber == 4 || trainerNumber == 5 || trainerNumber == 6)) {
+                return "rival1a's team";
+              }
+              else if (trainerName == "RIVAL1" && (trainerNumber == 7 || trainerNumber == 8 || trainerNumber == 9)) {
+                return "rival2's team";
+              }
+              else if (trainerName == "RIVAL2" && (trainerNumber == 1 || trainerNumber == 2 || trainerNumber == 3)) {
+                return "rival3's team";
+              } 
+              else if (trainerName == "RIVAL2" && (trainerNumber == 4 || trainerNumber == 5 || trainerNumber == 6)) {
+                return "rival4's team";
+              } 
+              else if (trainerName == "RIVAL2" && (trainerNumber == 7 || trainerNumber == 8 || trainerNumber == 9)) {
+                return "rival5's team";
+              } 
+              else if (trainerName == "RIVAL2" && (trainerNumber == 10 || trainerNumber == 11 || trainerNumber == 12)) {
+                return "rival6's team";
+              } 
+              else if (trainerName == "RIVAL3") {
                 return "champion's team";
-              } else {
+              } 
+              else {
                 return trainerName.toLowerCase() + "'s team";
               }
             }
         },
 
+        //! TODO Why do trainer graphics not appear in Red & Blue?
+        //! Requires testing
         specialTrainerGraphics() {
             if (this.showSpecialTrainerGraphics) {
               const { class: trainerClass, number: trainerNumber } = this.mapper.properties.battle.trainer;
+              if (this.mapper.meta.gameName == "Pokemon Yellow") {
+                switch (`${trainerClass}_${trainerNumber}`) {
+                    case "LT.SURGE_1":
+                        return "images/trainers/ltsurge.png";
+                    case "SABRINA_1":
+                        return "images/trainers/sabrina.png";
+                    case "BLAINE_1":
+                        return "images/trainers/BLAINE.png";
+                    case "RIVAL1_1":
+                        return "images/trainers/RIVAL1.png";
+                    case "RIVAL1_2":
+                        return "images/trainers/RIVAL1.png";
+                    case "RIVAL1_3":
+                        return "images/trainers/RIVAL2.png";
+                    case "RIVAL1_4":
+                        return "images/trainers/RIVAL2.png";
+                    case "RIVAL1_5":
+                        return "images/trainers/RIVAL2.png";
+                    case "RIVAL1_6":
+                        return "images/trainers/RIVAL2.png";
+                    case "RIVAL1_7":
+                        return "images/trainers/RIVAL2.png";
+                    case "RIVAL2_1":
+                        return "images/trainers/RIVAL2.png";
+                }
+              }
+              if (this.mapper.meta.gameName == "Pokemon Red and Blue") {
+                switch (`${trainerClass}_${trainerNumber}`) {
+                    case "LT.SURGE_1":
+                        return "images/trainers/LTSURGE-RED.png";
+                    case "SABRINA_1":
+                        return "images/trainers/SABRINA-RED.png";
+                    case "BLAINE_1":
+                        return "images/trainers/BLAINE-RED.png";
+                    case "RIVAL1_1":
+                        return "images/trainers/RIVAL1.png";
+                    case "RIVAL1_2":
+                        return "images/trainers/RIVAL1.png";
+                    case "RIVAL1_3":
+                        return "images/trainers/RIVAL1.png";
+                    case "RIVAL1_4":
+                        return "images/trainers/RIVAL1.png";
+                    case "RIVAL1_5":
+                        return "images/trainers/RIVAL1.png";
+                    case "RIVAL1_6":
+                        return "images/trainers/RIVAL1.png";
+                    case "RIVAL1_7":
+                        return "images/trainers/RIVAL2.png";
+                    case "RIVAL1_8":
+                        return "images/trainers/RIVAL2.png";
+                    case "RIVAL1_9":
+                        return "images/trainers/RIVAL2.png";
+                    case "RIVAL2_1":
+                        return "images/trainers/RIVAL2.png";
+                    case "RIVAL2_2":
+                        return "images/trainers/RIVAL2.png";
+                    case "RIVAL2_3":
+                        return "images/trainers/RIVAL2.png";
+                }
+              }
               switch (`${trainerClass}_${trainerNumber}`) {
                 case "JR TRAINER F_5":
                   return "images/trainers/JR TRAINER F_5.png";
@@ -685,6 +791,8 @@ const app = Vue.createApp({
                   return "images/trainers/POKEMANIAC_7.png";
                 case "SUPER NERD_2":
                   return "images/trainers/FOSSIL_NERD.png";
+                case "LASS_10":
+                  return "images/trainers/ODDISH_LASS.png";
                 case "JR TRAINER F_10":
                   return "images/trainers/JR TRAINER F_10.png";
                 case "ROCKET_38":
@@ -699,26 +807,14 @@ const app = Vue.createApp({
                   return "images/trainers/JR TRAINER F_3.png";
                 case "CHANNELER_10":
                   return "images/trainers/AGATHAJR.png";
-                case "RIVAL1_1":
-                  return "images/trainers/RIVAL1.png";
-                case "RIVAL1_2":
-                  return "images/trainers/RIVAL1.png";
-                case "RIVAL1_3":
-                  return "images/trainers/RIVAL2.png";
-                case "RIVAL2_1":
-                  return "images/trainers/RIVAL2.png";
-                case "BROCK":
-                  return "images/trainers/BROCK.png";
-                case "MISTY":
-                  return "images/trainers/MISTY.png";
-                case "LT.SURGE":
-                  return "images/trainers/LTSURGE.png";
-                case "ERIKA":
-                  return "images/trainers/ERIKA.png";
-                case "KOGA":
-                  return "images/trainers/KOGA.png";
-                case "GIOVANNI_3":
-                  return "images/trainers/GIOVANNI.png";
+                case "BROCK_1":
+                  return "images/trainers/brock.png";
+                case "MISTY_1":
+                  return "images/trainers/misty.png";
+                case "ERIKA_1":
+                  return "images/trainers/erika.png";
+                case "KOGA_1":
+                  return "images/trainers/koga.png";
                 default:
                   return null;
               }

@@ -18,8 +18,8 @@
                     <img class="pokemon_art" :style="{
                         'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`, 
                     }" :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
-                    <!-- <img class="canvas" :src="`images/left_ui/${s1dynamicReset.type1}.png`" /> -->
-                    <div class="colored-image" style="--url: url(images/left_ui/Electric.png)"></div>
+                    <img class="canvas" :src="`images/left_ui/${s1dynamicReset.type1}.png`" />
+                    <!-- <div class="colored-image" style="--url: url(images/left_ui/Electric.png)"></div> -->
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
@@ -149,7 +149,7 @@
                     <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <img class="enemyPng" :src="`images/enemy_area/${s1dynamicReset.type1}.png`" :style="battlePokemonCrop()"/>
-                        <div class="colored-image" style="--url: url(images/enemy_area/Electric.png)"></div>
+                        <!-- <div class="colored-image" style="--url: url(images/enemy_area/Electric.png);"></div> -->
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
                                 <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmnStyle ePkmn${x + 1}`">
@@ -174,7 +174,7 @@
                         </div> 
                     </div>
                     <div v-else key=3>
-                        <table class="movepoolDemo" cellspacing="0">
+                        <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
                             <tr class="movepool_header" :style="{'background-color': `var(--${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
                                 <th class="movepool_header movepool_way">Way</th>
                                 <th class="movepool_header movepool_move">Move</th>
@@ -183,7 +183,7 @@
                                 <th class="movepool_header movepool_tableC">Acc.</th>
                                 <th class="movepool_header movepool_tableC">PP</th>
                             </tr>
-                            <tr v-for="x in getMovepool(g1PokemonData, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial">
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial">
                                 <td class="movepool_way">1</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${x.Type.toLowerCase()})`}">{{x.Type}}</td>
@@ -191,7 +191,7 @@
                                 <td class="movepool_tableC">{{x.Accuracy}}%</td>
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
-                            <tr v-for="x in getMovepool(g1PokemonData, g1MoveData, tmhmMapping, s1dynamicReset.species.value).level">
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).level">
                                 <td class="movepool_way">{{x.Level}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${x.Type.toLowerCase()})`}">{{x.Type}}</td>
@@ -199,7 +199,7 @@
                                 <td class="movepool_tableC">{{x.Accuracy}}%</td>
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
-                            <tr v-for="x in getMovepool(g1PokemonData, g1MoveData, tmhmMapping, s1dynamicReset.species.value).tmhm">
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).tmhm">
                                 <td class="movepool_way">{{x.tmhm}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
@@ -208,8 +208,8 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <!-- <img class="canvas" :src="`images/movepool_border/${s1dynamicReset.type1}.png`"/> -->
-                        <div class="colored-image" style="--url: url(images/movepool_border/Electric.png)"></div>
+                        <img class="canvas" :src="`images/movepool_border/${s1dynamicReset.type1}.png`"/>
+                        <!-- <div class="colored-image" style="--url: url(images/movepool_border/Electric.png)"></div> -->
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                 </transition>
@@ -222,24 +222,24 @@
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <!-- <img :src="`images/pop_ups/accuracy/${s1dynamicReset.type1}.png`" style="position: absolute;"> -->
-                            <div class="colored-image" style="--url: url(images/pop_ups/accuracy/Electric.png)"></div>
+                            <img :src="`images/pop_ups/accuracy/${s1dynamicReset.type1}.png`" style="position: absolute;">
+                            <!-- <div class="colored-image" style="--url: url(images/pop_ups/accuracy/Electric.png)"></div> -->
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <!-- <img :src="`images/pop_ups/evasion/${s1dynamicReset.type1}.png`" style="position: absolute;"> -->
-                            <div class="colored-image" style="--url: url(images/pop_ups/evasion/Electric.png)"></div>
+                            <img :src="`images/pop_ups/evasion/${s1dynamicReset.type1}.png`" style="position: absolute;">
+                            <!-- <div class="colored-image" style="--url: url(images/pop_ups/evasion/Electric.png)"></div> -->
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <!-- <img :src="`images/pop_ups/screens/${s1dynamicReset.type1}.png`" style="position: absolute;"> -->
-                            <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div>
+                            <img :src="`images/pop_ups/screens/${s1dynamicReset.type1}.png`" style="position: absolute;">
+                            <!-- <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div> -->
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>
@@ -264,6 +264,7 @@
         </div>
         <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
+            <div>Game Loaded: {{mapper?.meta?.gameName}}</div>
             <div>Solo Pokemon:</div>
             <select v-model="starterName" @change="load_pokemon_sprite_settings" class="dropdownMenu">
                 <option disabled value="">Select a species</option>
@@ -286,6 +287,7 @@
             Scale: <input type="range" min="0.3" max="2" step="0.02" v-model="imageScale"/><br>
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
             <button @click="save_pokemon_sprite_settings" class="buttonStyle">Save Pokemon Sprite Settings</button>
+            <button @click="clear_pokemon_sprite_settings" class="buttonStyle">Reset Sprite</button>
             <div class="note">Note: this saves styling for the current Solo Pokemon listed above. If you have a different Pokemon in slot1 it will still save this configuration to the Solo Pokemon's profile.</div>
             <br><br>
             <div v-if="resetCounter == true">
@@ -295,7 +297,7 @@
                 <button @click="resets_decrement" class="buttonStyle">Decrement</button>
                 <div class="note">These controls are provided in case there is an error with the automatic reset counter.</div>
             </div>
-            <br><br><br><br><br><br><br>
+            <br><br><br><br><br>
             <button @click="save_all_settings" class="buttonStyle">Save All Settings</button>
         </div>
         <div class="testingArea2" style="z-index: 50000;">
@@ -434,6 +436,7 @@
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
     <script src="data/g1MoveData.js"></script>
     <script src="data/g1PokemonData.js"></script>
+    <script src="data/g1PokemonDataRB.js"></script>
     <script src="data/gen1YellowTrainers.js"></script>
     <script src="data/gen1RedBlueTrainers.js"></script>
     <script src="data/type-effectiveness.js"></script>

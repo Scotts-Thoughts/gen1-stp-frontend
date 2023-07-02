@@ -332,8 +332,8 @@ box-shadow:
     font-family: play;
     font-size: 24px;
     line-height: 26px;
-    filter: drop-shadow(1px 1px 1px #000000c5);
-    filter: drop-shadow(2px 2px 2px #0000009c);
+    filter: drop-shadow(3px 2px 2px #000000c5);
+    filter: drop-shadow(6px 3px 3px #0000009c);
     top: 360px;
     left: -10px;
     width: 420px;
