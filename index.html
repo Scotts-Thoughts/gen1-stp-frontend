@@ -91,7 +91,7 @@
                             {{ badgeBoost(map.player.badges.badge1.value, map.player.team[0].attack.value) }}<br>
                             {{ badgeBoost(map.player.badges.badge3.value, map.player.team[0].defense.value) }}<br>
                         </div>
-                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName].base_spd) }}%</div>
+                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[s1dynamicReset.species.value].base_spd) }}%</div>
                         <div class="statsColumnStyle statsColumn2">
                             <br>
                             {{ badgeBoost(mapper.properties.player.badges.badge7.value, mapper.properties.player.team[0].special.value) }}<br>
@@ -116,7 +116,7 @@
                             {{ batt.yourPokemon.battleStatAttack }}<br>
                             {{ batt.yourPokemon.battleStatDefense }}<br>
                         </div>
-                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName].base_spd) }}%</div>
+                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[s1dynamicReset.species.value].base_spd) }}%</div>
                         <div class="statsColumnStyle statsColumn2">
                             <br>
                             {{ batt.yourPokemon.battleStatSpecial }}<br>
@@ -344,7 +344,7 @@
             Route 22: <input class="checkBoxStyle" type="checkbox" v-model="route22"/><br>
             <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
             <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
-            <div class="note">Note: These are the two settings I use for the playthroughs features in all my videos.</div>
+            <div class="note">Note: These are the two settings I use for the playthroughs featured in my videos.</div>
         </div>
         <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             Info Toggles:<br>

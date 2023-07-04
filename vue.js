@@ -52,7 +52,7 @@ const app = Vue.createApp({
             inventory:                  true, //uses inventory when in the department store & marts
             battleGraphic:              true, //uses battle graphic with enemy moveset & stats
             showAllTrainers:            true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
-            expBarAnimation:            false,
+            expBarAnimation:            true,
             showSpecialTrainerGraphics: true, //shows drawn art for defined trainers
             battlePopUps:               true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             typeCalcs:                  true, //calculates effective power based on the pokemon in battle
@@ -263,7 +263,7 @@ const app = Vue.createApp({
             }
         },
         growthRate() {
-            return this.g1PokemonData[this.starterName].growth_rate
+            return this.g1PokemonData[this.s1dynamicReset.species.value].growth_rate
         },
         getStarterType() {
             var type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
@@ -1308,7 +1308,7 @@ const app = Vue.createApp({
         this.mapper.properties.player.team[0].expPoints.change(async (newProp, oldProp) => {
             if (this.expBarAnimation == true) {
                 const currSpecies = this.s1dynamicReset.species.value;
-                const growthRate = this.g1PokemonData[species].growth_rate
+                const growthRate = this.g1PokemonData[currSpecies].growth_rate
                 const oldExpStats = this.calcExpStats(growthRate, oldProp.value);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
                 const animationMaxDuration = 600
