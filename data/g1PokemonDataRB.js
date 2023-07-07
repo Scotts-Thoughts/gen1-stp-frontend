@@ -1315,7 +1315,7 @@ const g1PokemonDataRB = {
             ],
             [
                 24,
-                "Sand Attack"
+                "Sand-Attack"
             ],
             [
                 31,
@@ -1783,7 +1783,7 @@ const g1PokemonDataRB = {
             ],
             [
                 24,
-                "Sand Attack"
+                "Sand-Attack"
             ],
             [
                 35,
@@ -1808,7 +1808,7 @@ const g1PokemonDataRB = {
         "base_xp": 92,
         "initial_moveset": [
             "Tackle",
-            "Sand Attack"
+            "Sand-Attack"
         ],
         "growth_rate": "Medium Fast",
         "tm_hm_learnset": [
@@ -2139,8 +2139,8 @@ const g1PokemonDataRB = {
             ]
         ]
     },
-    "Farfetchd": {
-        "name": "Farfetchd",
+    "Farfetch'd": {
+        "name": "Farfetch'd",
         "base_hp": 52,
         "base_atk": 65,
         "base_def": 55,
@@ -2152,7 +2152,7 @@ const g1PokemonDataRB = {
         "base_xp": 94,
         "initial_moveset": [
             "Peck",
-            "Sand Attack"
+            "Sand-Attack"
         ],
         "growth_rate": "Medium Fast",
         "tm_hm_learnset": [
@@ -2268,7 +2268,7 @@ const g1PokemonDataRB = {
         "base_xp": 198,
         "initial_moveset": [
             "Tackle",
-            "Sand Attack",
+            "Sand-Attack",
             "Quick Attack",
             "Ember"
         ],
@@ -3512,7 +3512,7 @@ const g1PokemonDataRB = {
         "base_xp": 197,
         "initial_moveset": [
             "Tackle",
-            "Sand Attack",
+            "Sand-Attack",
             "Quick Attack",
             "Thundershock"
         ],
@@ -5068,8 +5068,8 @@ const g1PokemonDataRB = {
             ]
         ]
     },
-    "Mr_Mime": {
-        "name": "Mr_Mime",
+    "Mr. Mime": {
+        "name": "Mr. Mime",
         "base_hp": 40,
         "base_atk": 45,
         "base_def": 65,
@@ -5331,8 +5331,8 @@ const g1PokemonDataRB = {
             ]
         ]
     },
-    "Nidoran_f": {
-        "name": "Nidoran_f",
+    "NidoranF": {
+        "name": "NidoranF",
         "base_hp": 55,
         "base_atk": 47,
         "base_def": 52,
@@ -5391,8 +5391,8 @@ const g1PokemonDataRB = {
             ]
         ]
     },
-    "Nidoran_m": {
-        "name": "Nidoran_m",
+    "NidoranM": {
+        "name": "NidoranM",
         "base_hp": 46,
         "base_atk": 57,
         "base_def": 40,
@@ -6040,7 +6040,7 @@ const g1PokemonDataRB = {
         "base_xp": 172,
         "initial_moveset": [
             "Gust",
-            "Sand Attack",
+            "Sand-Attack",
             "Quick Attack"
         ],
         "growth_rate": "Medium Slow",
@@ -6065,7 +6065,7 @@ const g1PokemonDataRB = {
         "levelup_moveset": [
             [
                 5,
-                "Sand Attack"
+                "Sand-Attack"
             ],
             [
                 12,
@@ -6102,7 +6102,7 @@ const g1PokemonDataRB = {
         "base_xp": 113,
         "initial_moveset": [
             "Gust",
-            "Sand Attack"
+            "Sand-Attack"
         ],
         "growth_rate": "Medium Slow",
         "tm_hm_learnset": [
@@ -6125,7 +6125,7 @@ const g1PokemonDataRB = {
         "levelup_moveset": [
             [
                 5,
-                "Sand Attack"
+                "Sand-Attack"
             ],
             [
                 12,
@@ -6184,7 +6184,7 @@ const g1PokemonDataRB = {
         "levelup_moveset": [
             [
                 5,
-                "Sand Attack"
+                "Sand-Attack"
             ],
             [
                 12,
@@ -7182,7 +7182,7 @@ const g1PokemonDataRB = {
         "levelup_moveset": [
             [
                 10,
-                "Sand Attack"
+                "Sand-Attack"
             ],
             [
                 17,
@@ -7215,7 +7215,7 @@ const g1PokemonDataRB = {
         "base_xp": 163,
         "initial_moveset": [
             "Scratch",
-            "Sand Attack"
+            "Sand-Attack"
         ],
         "growth_rate": "Medium Fast",
         "tm_hm_learnset": [
@@ -7245,7 +7245,7 @@ const g1PokemonDataRB = {
         "levelup_moveset": [
             [
                 10,
-                "Sand Attack"
+                "Sand-Attack"
             ],
             [
                 17,
@@ -8323,7 +8323,7 @@ const g1PokemonDataRB = {
         "base_xp": 196,
         "initial_moveset": [
             "Tackle",
-            "Sand Attack",
+            "Sand-Attack",
             "Quick Attack",
             "Water Gun"
         ],

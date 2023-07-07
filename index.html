@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scott's Thoughts - Gen1 Frontend Beta</title>
+    <title>Scott's Thoughts - Generation 1 Overlay</title>
     <link rel="stylesheet" href="style-yellow.css">
 </head>
 <body>
@@ -12,13 +12,13 @@
             <div class="mainContainer">
                 <!-- GRAPHICS ---------------------------------------------------------------------------------->
                 <div>
-                    <img class="canvas" :src="`images/textures/${s1dynamicReset.type1}.png`" />
+                    <img class="canvas" :src="`images/textures/${g1PokemonData[starterName].type1}.png`" />
                     <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
                     <img class="pokemon_art" :style="{
                         'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`, 
                     }" :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
-                    <img class="canvas" :src="`images/left_ui/${s1dynamicReset.type1}.png`" />
+                    <img class="canvas" :src="`images/left_ui/${g1PokemonData[starterName].type1}.png`" />
                     <!-- <div class="colored-image" style="--url: url(images/left_ui/Electric.png)"></div> -->
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
@@ -30,6 +30,15 @@
                 </div>
                 <!-- TYPE ICONS -------------------------------------------------------------------------------->
                 <div class="typeContainer">
+                    <div v-if="pkmn_type(1) == pkmn_type(2)" class="type">
+                        <img :src="`images/elements/types/${pkmn_type(1)}.png`" />
+                    </div>
+                    <div v-else class="type">
+                        <img :src="`images/elements/types/${pkmn_type(1)}.png`" />
+                        <img :src="`images/elements/types/${pkmn_type(2)}.png`" />
+                    </div>
+                </div>
+                <!-- <div class="typeContainer">
                     <div v-if="pkmnType(1, s1.type1.value, s1.type2.value) == pkmnType(2, s1.type1.value, s1.type2.value)" class="type">
                         <img :src="pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                     </div>
@@ -37,7 +46,7 @@
                         <img :src="pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                         <img :src="pkmnType(2, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
                     </div>
-                </div>
+                </div> -->
                 <!-- BADGE ICONS ------------------------------------------------------------------------------->
                 <div class="badgesBar">          
                     <img v-show="map.player.badges.badge1.value === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" style="top: 914px; opacity: .3; left: 22px; z-index: 2;" />
@@ -148,7 +157,7 @@
                 <transition name="fade">
                     <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
-                        <img class="enemyPng" :src="`images/enemy_area/${s1dynamicReset.type1}.png`" :style="battlePokemonCrop()"/>
+                        <img class="enemyPng" :src="`images/enemy_area/${g1PokemonData[starterName].type1}.png`" :style="battlePokemonCrop()"/>
                         <!-- <div class="colored-image" style="--url: url(images/enemy_area/Electric.png);"></div> -->
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
@@ -208,7 +217,7 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <img class="canvas" :src="`images/movepool_border/${s1dynamicReset.type1}.png`"/>
+                        <img class="canvas" :src="`images/movepool_border/${g1PokemonData[starterName].type1}.png`"/>
                         <!-- <div class="colored-image" style="--url: url(images/movepool_border/Electric.png)"></div> -->
                         <div class="movepoolLabel">Movepool</div>
                     </div>
@@ -222,7 +231,7 @@
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/accuracy/${s1dynamicReset.type1}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/accuracy/${g1PokemonData[starterName].type1}.png`" style="position: absolute;">
                             <!-- <div class="colored-image" style="--url: url(images/pop_ups/accuracy/Electric.png)"></div> -->
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
@@ -230,7 +239,7 @@
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/evasion/${s1dynamicReset.type1}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/evasion/${g1PokemonData[starterName].type1}.png`" style="position: absolute;">
                             <!-- <div class="colored-image" style="--url: url(images/pop_ups/evasion/Electric.png)"></div> -->
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
@@ -238,7 +247,7 @@
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/screens/${s1dynamicReset.type1}.png`" style="position: absolute;">
+                            <img :src="`images/pop_ups/screens/${g1PokemonData[starterName].type1}.png`" style="position: absolute;">
                             <!-- <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div> -->
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
@@ -264,13 +273,14 @@
         </div>
         <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
+            <div>Compatible with gen1 (Red/Blue/Yellow)</div><br>
             <div>Game Loaded: {{mapper?.meta?.gameName}}</div>
             <div>Solo Pokemon:</div>
-            <select v-model="starterName" @change="load_pokemon_sprite_settings" class="dropdownMenu">
+            <select v-model="starterName" @change="load_pokemon_sprite_settings(s1dynamicReset.species.value)" class="dropdownMenu">
                 <option disabled value="">Select a species</option>
                 <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
             </select>
-            <div class="note">Note: This setting determines which growth rate, crit rate, and base stats are displayed. While playing, the overlay will update all other information to reflect the Pokemon in slot1 of the player's party.</div>
+            <div class="note">Note: Set this to the Pokemon you will be receiving as your starter. Remember, this overlay is programmed for solo challenges only.</div>
             <br>
             <div>DV Setting:</div>
             <select v-model="dvSetting" class="dropdownMenu">
@@ -289,16 +299,18 @@
             <button @click="save_pokemon_sprite_settings" class="buttonStyle">Save Pokemon Sprite Settings</button>
             <button @click="clear_pokemon_sprite_settings" class="buttonStyle">Reset Sprite</button>
             <div class="note">Note: this saves styling for the current Solo Pokemon listed above. If you have a different Pokemon in slot1 it will still save this configuration to the Solo Pokemon's profile.</div>
-            <br><br>
+            <br>
             <div v-if="resetCounter == true">
                 <div>Reset Counter Settings</div>
                 <button @click="resets_clear" class="buttonStyle">Clear</button>
                 <button @click="resets_increment" class="buttonStyle">Increment</button>
-                <button @click="resets_decrement" class="buttonStyle">Decrement</button>
-                <div class="note">These controls are provided in case there is an error with the automatic reset counter.</div>
+                <button @click="resets_decrement" class="buttonStyle">Decrement</button><br>
+                <div class="note">These controls are provided in case there is an<br> error with the automatic reset counter.</div>
+                Count blackouts as resets: <input class="checkBoxStyle" type="checkbox" v-model="blackouts_as_resets"/><br>
             </div>
-            <br><br><br><br><br>
-            <button @click="save_all_settings" class="buttonStyle">Save All Settings</button>
+            <br><br><br>
+            <button class="buttonStyle refresh" onClick="window.location.reload();">Reload Overlay</button>
+            <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button>
         </div>
         <div class="testingArea2" style="z-index: 50000;">
             <div>Secondary Menu:</div>
@@ -331,6 +343,9 @@
             <div class="note">Counts resets while you play.</div>
             <div class="note">This number clears when you select "New Game".</div>
             <br>
+            <!-- Rock Tunnel Darkness: <input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/><br>
+            <div class="note">When enabled Flash is automatically applied in Rock Tunnel.</div>
+            <br> -->
             Encounters:<br>
             <div class="note">These settings are for encounters on certain areas of the game where you may want to control for luck.</div>
             Route1: <input class="checkBoxStyle" type="checkbox" v-model="route1"/><br>
@@ -338,13 +353,15 @@
             Route3: <input class="checkBoxStyle" type="checkbox" v-model="route3"/><br>
             Mt. Moon: <input class="checkBoxStyle" type="checkbox" v-model="mtMoon"/><br>
             Route 6: <input class="checkBoxStyle" type="checkbox" v-model="route6"/><br>
+            Rock Tunnel: <input class="checkBoxStyle" type="checkbox" v-model="rockTunnel"/><br>
             Safari Zone: <input class="checkBoxStyle" type="checkbox" v-model="safariZone"/><br>
             Pkmn Mansion: <input class="checkBoxStyle" type="checkbox" v-model="mansion"/><br>
             Route 21: <input class="checkBoxStyle" type="checkbox" v-model="route21"/><br>
             Route 22: <input class="checkBoxStyle" type="checkbox" v-model="route22"/><br>
+            Victory Road: <input class="checkBoxStyle" type="checkbox" v-model="victoryRoad"/><br>
             <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
             <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
-            <div class="note">Note: These are the two settings I use for the playthroughs featured in my videos.</div>
+            <div class="note">These are the two settings used for Scott's Thoughts videos.</div>
         </div>
         <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             Info Toggles:<br>
@@ -377,6 +394,7 @@
             <div>Setup Guide: 
                 <a href="https://youtu.be/8tzOHnQyAkk" target="_blank">https://youtu.be/8tzOHnQyAkk</a><br>
             <br>
+            </div>
             <a href="https://www.retroarch.com/" target="_blank">Retroarch</a><br>
             <a href="https://gamehook.io/" target="_blank">GameHook</a><br>
             <div>Press F11 to enter or exit fullscreen</div>
@@ -391,10 +409,9 @@
             <div>2: GameHook - load the mapper</div>
             <div>3: This software</div>
             <br>
-            <div>Only configure settings in this application after the other two are running.</div>
-            <br><br><br><br><br><br><br>
-            <div>This program is currently in beta. Please report all bugs and issues to Scott's Thoughts directly on Discord.</div>
-            </div>
+            <div>Only configure settings in this application after the other two are running.</div><br>
+            <br><br><br><br><br>
+            <div>This program is currently in development. Please report all bugs and issues to Scott's Thoughts directly on <a href="https://discord.gg/4x7RNbyKR" target="_blank">Discord</a>.</div>
         </div>
         <div v-show="help_menus == `Color`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>Overlay Color Selector:</div>
@@ -421,8 +438,10 @@
         </div>
         <div v-show="help_menus == `Credits`" class="testingArea3" style="z-index: 50000;">
             <div>Scott's Thoughts</div>
-            <div>WaielAl</div>
-            <div>Flame Sage</div>
+            <div>WaielAl - assistance & programming</div>
+            <div>Flame Sage - assistance & programming</div>
+            <br>
+            <div>Everyone who helped with play testing.</div>
         </div>
         <div v-show="help_menus == `Dev Tools`" class="testingArea3" style="z-index: 50000;">
             <div>Export Config File:</div>

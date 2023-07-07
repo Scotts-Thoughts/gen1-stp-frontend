@@ -138,8 +138,12 @@
     --expBarBackground: linear-gradient(rgb(239, 239, 239), rgb(157, 157, 157));
     --expBarExperience: linear-gradient(90deg,hsl(189, 92%, 45%), hsl(187, 100%, 69%));
 }
-@font-face {
+/* @font-face {
     src: url(fonts/OpenSans-VariableFont_wdth\,wght.ttf);
+    font-family: oseb;
+} */
+@font-face {
+    src: url(fonts/OpenSans-ExtraBold.ttf);
     font-family: oseb;
 }
 @font-face {
@@ -272,6 +276,15 @@ box-shadow:
     background-color: #11ce18;
     transform: translateY(2px);
   }
+
+.refresh {
+    position: absolute;
+    top: 870px;
+}
+.save_all_settings {
+    position: absolute;
+    top: 916px;
+}
 .checkBoxStyle {
     pointer-events: auto; 
     position: relative; 
@@ -1292,7 +1305,7 @@ box-shadow:
     display: block;
     position: absolute;
     /* border: 1px solid #00ff0d00; */
-    background-color: #ffffffc2;
+    background-color: #ffffff;
     font-size: 16px;
     line-height: 20px;
 

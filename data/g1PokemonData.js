@@ -2205,9 +2205,9 @@ const g1PokemonData = {
         ]
         ]
     },
-"Farfetchd" :
+"Farfetch'd" :
     {
-        name: "Farfetchd",
+        name: "Farfetch'd",
         base_hp: 52,
         base_atk: 65,
         base_def: 55,
@@ -3286,11 +3286,11 @@ const g1PokemonData = {
         levelup_moveset: [
         [
             33,
-            "rolling_kick"
+            "Rolling Kick"
         ],
         [
             38,
-            "jump_kick"
+            "Jump Kick"
         ],
         [
             43,
@@ -3298,7 +3298,7 @@ const g1PokemonData = {
         ],
         [
             48,
-            "hi_jump_kick"
+            "Hi Jump Kick"
         ],
         [
             53,
@@ -5468,9 +5468,9 @@ const g1PokemonData = {
         ]
         ]
     },
-"Nidoran_F" :
+"NidoranF" :
     {
-        name: "Nidoran_F",
+        name: "NidoranF",
         base_hp: 55,
         base_atk: 47,
         base_def: 52,
@@ -5529,9 +5529,9 @@ const g1PokemonData = {
         ]
         ]
     },
-"Nidoran_M" :
+"NidoranM" :
     {
-        name: "Nidoran_M",
+        name: "NidoranM",
         base_hp: 46,
         base_atk: 57,
         base_def: 40,

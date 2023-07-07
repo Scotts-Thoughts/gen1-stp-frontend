@@ -66,10 +66,15 @@ const app = Vue.createApp({
             route3:         MyStorage["this.route3"] ?? true,
             mtMoon:         MyStorage["this.mtMoon"] ?? true,
             route6:         MyStorage["this.route6"] ?? true,
+            rockTunnel:     MyStorage["this.rockTunnel"] ?? true,
             safariZone:     MyStorage["this.safariZone"] ?? true,
+            powerPlant:     MyStorage["this.powerPlant"] ?? true,
             mansion:        MyStorage["this.mansion"] ?? true,
             route21:        MyStorage["this.route21"] ?? true,
             route22:        MyStorage["this.route22"] ?? true,
+            victoryRoad:    MyStorage["this.victoryRoad"] ?? true,
+
+            rockTunnelDarkness: false,
             
 
             //DATA ---------------------------------------------------------------------------------------------//
@@ -91,6 +96,7 @@ const app = Vue.createApp({
             prevSpecies:     undefined,
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
+            oldExpValue: 0,
 
             //resets
             playerId: 0,
@@ -98,7 +104,10 @@ const app = Vue.createApp({
             resetCatcher: "NINTEN",
             playerResets: 0,
             resetCounter: true,
-            trackResets: true,
+            game_over: false,
+
+            blackouts_as_resets:        true, //counts blackouts as resets
+            blackout:                   false,
 
             //Pokemon settings for local storage
             overlay_color:   "#000000",
@@ -113,21 +122,30 @@ const app = Vue.createApp({
         //Encounter Checkboxes
         route1(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+            if (newProp == true && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.set(25, false) }
         },   
         viridianForest(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Viridian Forest") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+            if (newProp == true && this.mapper.properties.overworld.map.value == "Viridian Forest") { this.mapper.properties.overworld.encounterRate.set(25, false) }
         },   
         route3(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 3") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+            if (newProp == true && this.mapper.properties.overworld.map.value == "Route 3") { this.mapper.properties.overworld.encounterRate.set(20, false) }
         },            
         mtMoon(newProp) {
-            if (newProp == false && (newProp.value == "Mt Moon - 1" || newProp.value == "Mt Moon - 2" || newProp.value == "Mt Moon - 3")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
-        },            
+            if (newProp == false && (this.mapper.properties.overworld.map.value == "Mt Moon - 1" || this.mapper.properties.overworld.map.value == "Mt Moon - 2" || this.mapper.properties.overworld.map.value == "Mt Moon - 3")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+            if (newProp == true && (this.mapper.properties.overworld.map.value == "Mt Moon - 1" || this.mapper.properties.overworld.map.value == "Mt Moon - 2" || this.mapper.properties.overworld.map.value == "Mt Moon - 3")) { this.mapper.properties.overworld.encounterRate.set(10, false) }
+        },                     
         route6(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 6") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+            if (newProp == true && this.mapper.properties.overworld.map.value == "Route 6") { this.mapper.properties.overworld.encounterRate.set(15, false) }
+        },   
+        rockTunnel(newProp) {
+            if (newProp == false && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) { this.mapper.properties.overworld.encounterRate.set(0, false) }
+            if (newProp == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) { this.mapper.properties.overworld.encounterRate.set(15, false) }
         },            
         safariZone(newProp) {
-            if (newProp == false && (newProp.value == "Safari Zone (East)" || newProp.value == "Safari Zone (West)" || newProp.value == "Safari Zone (Center)" || newProp.value == "Safari Zone (North)")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+            if (newProp == false && (this.mapper.properties.overworld.map.value == "Safari Zone (East)" || this.mapper.properties.overworld.map.value == "Safari Zone (West)" || this.mapper.properties.overworld.map.value == "Safari Zone (Center)" || this.mapper.properties.overworld.map.value == "Safari Zone (North)")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },       
         mansion(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Cinnabar Mansion") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
@@ -138,15 +156,36 @@ const app = Vue.createApp({
         route22(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 22") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },
+        victoryRoad(newProp) {
+            if (newProp == false && this.mapper.properties.overworld.map.value == "Victory Road") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },
         starterName(newProp) {
             MyStorage.currentStarter = newProp
         },
         playerId() {
+            this.game_over = false;
             this.playerResets = 0;
         },    
         overlay_color(newColor) {
             document.documentElement.style.setProperty('--overlay-color', newColor);
-        },      
+        }, 
+        playerResets() {
+            if (this.playerResets < 0) {
+                this.playerResets = 0;
+            }
+            this.blackout == false
+        },
+        rockTunnelDarkness() {
+            if (this.rockTunnelDarkness == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
+                this.mapper.properties.overworld.mapData.pallete.set(0, false)
+            }
+            else if (this.rockTunnelDarkness == false && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
+                this.mapper.properties.overworld.mapData.pallete.set(6, false)
+            }
+            else {
+                return
+            }
+        },   
     },
 
     computed: {
@@ -263,17 +302,32 @@ const app = Vue.createApp({
             }
         },
         growthRate() {
-            return this.g1PokemonData[this.s1dynamicReset.species.value].growth_rate
+            var species = this.s1dynamicReset.species.value
+            // debugger
+            return this.g1PokemonData[species ?? this.starterName].growth_rate
         },
         getStarterType() {
             var type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
             var type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
             return { "type1": type1, "type2": type2 }
         },
+
     },
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        pkmn_type(typeNumber) {
+            data = this.g1PokemonData[this.starterName]
+            if (this.g1stateVariable == `Battle`) {
+                return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value.toLowerCase()
+            }
+            if (this.g1stateVariable == `Overworld` || this.g1stateVariable == `To Battle` || this.g1stateVariable == `From Battle`) {
+                return this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()].value.toLowerCase()
+            }
+            if (this.g1stateVariable != `Battle`) {
+                return data["type" + typeNumber.toString()].toLowerCase()
+            }
+        },
         //! Refactor with co-pilot
         save_all_settings() {
             this.set_setting_prop("this.route1", this.route1)
@@ -281,6 +335,7 @@ const app = Vue.createApp({
             this.set_setting_prop("this.route3", this.route3)
             this.set_setting_prop("this.mtMoon", this.mtMoon)
             this.set_setting_prop("this.route6", this.route6)
+            this.set_setting_prop("this.rockTunnel", this.rockTunnel)
             this.set_setting_prop("this.safariZone", this.safariZone)
             this.set_setting_prop("this.mansion", this.mansion)
             this.set_setting_prop("this.help_menus", this.help_menus)
@@ -292,6 +347,9 @@ const app = Vue.createApp({
             this.set_setting_prop("this.playerResets", this.playerResets)
             this.set_setting_prop("this.route21", this.route21)
             this.set_setting_prop("this.route22", this.route22)
+            this.set_setting_prop("this.victoryRoad", this.victoryRoad)
+            this.set_setting_prop("this.powerPlant", this.powerPlant)
+            this.set_setting_prop("this.blackouts_as_resets", this.blackouts_as_resets)
             // console.log(MyStorage.entries())
         },
         load_all_settings() {
@@ -300,6 +358,7 @@ const app = Vue.createApp({
             this.route3 = MyStorage["this.route3"] ?? true
             this.mtMoon = MyStorage["this.mtMoon"] ?? true
             this.route6 = MyStorage["this.route6"] ?? true
+            this.route6 = MyStorage["this.rockTunnel"] ?? true
             this.safariZone = MyStorage["this.safariZone"] ?? true
             this.mansion = MyStorage["this.mansion"] ?? true
             this.help_menus = MyStorage["this.help_menus"] ?? "Settings"
@@ -311,6 +370,9 @@ const app = Vue.createApp({
             this.playerResets = MyStorage["this.playerResets"] ?? 0
             this.route21 = MyStorage["this.route21"] ?? true
             this.route22 = MyStorage["this.route22"] ?? true
+            this.victoryRoad = MyStorage["this.victoryRoad"] ?? true
+            this.powerPlant = MyStorage["this.powerPlant"] ?? true
+            this.blackouts_as_resets = MyStorage["this.blackouts_as_resets"] ?? true
         },
         //string can be: clear, increment, decrement
         resets_clear() {
@@ -349,10 +411,13 @@ const app = Vue.createApp({
             this.route3 = true
             this.mtMoon = true
             this.route6 = true
+            this.rockTunnel = true
             this.safariZone = true
+            this.powerPlant = true
             this.mansion = true
             this.route21 = true
             this.route22 = true
+            this.victoryRoad = true
         },
         second_playthrough_settings() {
             this.route1 = false
@@ -360,17 +425,20 @@ const app = Vue.createApp({
             this.route3 = false
             this.mtMoon = false
             this.route6 = false
+            this.rockTunnel = true
             this.safariZone = true
+            this.powerPlant = true
             this.mansion = true
             this.route21 = true
             this.route22 = true
+            this.victoryRoad = true
         },
         save_pokemon_sprite_settings() {
             this.set_pokemon_prop("imageXOffset", this.imageXOffset)
             this.set_pokemon_prop("imageYOffset", this.imageYOffset)
             this.set_pokemon_prop("imageScale", this.imageScale)
             this.set_pokemon_prop("imageFlip", this.imageFlip)
-            console.log(MyStorage.entries())
+            // console.log(MyStorage.entries())
         },
         clear_pokemon_sprite_settings() {
             this.imageXOffset = 0
@@ -381,18 +449,18 @@ const app = Vue.createApp({
             this.set_pokemon_prop("imageYOffset", this.imageYOffset)
             this.set_pokemon_prop("imageScale", this.imageScale)
             this.set_pokemon_prop("imageFlip", this.imageFlip)
-            console.log(MyStorage.entries())
+            // console.log(MyStorage.entries())
         },
-        load_pokemon_sprite_settings() {
-            this.imageXOffset = MyStorage[this.starterName]?.imageXOffset ?? 0
-            this.imageYOffset = MyStorage[this.starterName]?.imageYOffset ?? 0
-            this.imageScale = MyStorage[this.starterName]?.imageScale ?? 1
-            this.imageFlip = MyStorage[this.starterName]?.imageFlip ?? false
-            if (MyStorage[this.starterName]?.overlay_color) {
-                this.overlay_color = MyStorage[this.starterName]?.overlay_color
+        load_pokemon_sprite_settings(pokemon_species) {
+            this.imageXOffset = MyStorage[pokemon_species]?.imageXOffset ?? 0
+            this.imageYOffset = MyStorage[pokemon_species]?.imageYOffset ?? 0
+            this.imageScale = MyStorage[pokemon_species]?.imageScale ?? 1
+            this.imageFlip = MyStorage[pokemon_species]?.imageFlip ?? false
+            if (MyStorage[pokemon_species]?.overlay_color) {
+                this.overlay_color = MyStorage[pokemon_species]?.overlay_color
             }
             else {
-                this.overlay_color = `var(--${this.s1dynamicReset.type1.toLowerCase()})`
+                this.overlay_color = `var(--${this.s1dynamicReset.type1})`
             }
         },
         load_starter_pokemon_settings() {
@@ -1029,25 +1097,42 @@ const app = Vue.createApp({
         await this.mapper.connect()
         this.starterName = MyStorage.currentStarter ?? "Venomoth"
         this.load_all_settings()
-        this.load_pokemon_sprite_settings()
 
         // reset tracking
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {
-            if (newProp.value == 0 && oldProp.value > 0) {
+            if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
                 this.playerResets++;
             } 
-            // if (newProp.value > 0 && oldProp.value == 0 && this.mapper.properties.player.name.value == "NINTEN") {
-            //     this.playerResets = 0;
-            // }
-            // else if (newProp.value > 0 && this.mapper.properties.player.name.value == "NINTEN" && this.mapper.properties.gameTime.minutes.value == 0) {
-            //     this.playerResets = 0;
-            // }
         })
         this.mapper.properties.player.playerId.change((newProp) => {
-            if (newProp.value > 0) {
+            if (newProp.value > 0 && this.game_over == false) {
                 if (newProp.value != this.playerId) {
                     this.playerResets = 0;
                     this.playerId = newProp.value;
+                }
+            }
+        })
+        this.mapper.properties.events.beatChampion.change((newProp) => {
+            if (newProp.value == true) {
+                this.game_over = true;
+            }
+        })
+        this.mapper.properties.player.name.change((newProp) => {
+            if (this.game_over == true && newProp.value == "NINTEN") {
+                this.game_over = false;
+            }
+        })
+        //track when the player has a blackout
+        this.mapper.properties.player.team[0].hp.change((newProp, oldProp) => {
+            if (newProp.value == 0 && this.g1stateVariable == `Battle`) {
+                this.blackout = true;
+            }
+            if (this.g1stateVariable == `Base Stats`) {
+                this.blackout = false;
+            }
+            if (this.blackouts_as_resets == true && this.blackout == true) {
+                if (oldProp.value == 0 && newProp.value > 0) {
+                    this.playerResets++;
                 }
             }
         })
@@ -1068,6 +1153,9 @@ const app = Vue.createApp({
         else if (this.route6 == false && this.mapper.properties.overworld.map.value == "Route 6") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
+        else if (this.rockTunnel == false && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
         else if (this.safariZone == false  && (this.mapper.properties.overworld.map.value == "Safari Zone (East)" && this.mapper.properties.overworld.map.value == "Safari Zone (West)" && this.mapper.properties.overworld.map.value == "Safari Zone (Center)" && this.mapper.properties.overworld.map.value == "Safari Zone (North)")) {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
@@ -1080,35 +1168,53 @@ const app = Vue.createApp({
         else if (this.route22 == false && this.mapper.properties.overworld.map.value == "Route 22") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
+        else if (this.victoryRoad == false && this.mapper.properties.overworld.map.value == "Victory Road") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
 
         //Set value on map change
         this.mapper.properties.overworld.encounterRate.change(async (newProp) => {
             if (this.route1 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 1") {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
-            else if (this.route3 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 3") {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            if (this.route3 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 3") {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
-            else if (this.route6 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 6") {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            if (this.route6 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 6") {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.viridianForest == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Viridian Forest") {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+            if (this.rockTunnel == false && newProp.value > 0 && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.safariZone == false && newProp.value > 0 && (this.mapper.properties.overworld.map.value == "Safari Zone (East)" || this.mapper.properties.overworld.map.value == "Safari Zone (West)" || this.mapper.properties.overworld.map.value == "Safari Zone (Center)" || this.mapper.properties.overworld.map.value == "Safari Zone (North)")) {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.mtMoon == false && newProp.value > 0 && (this.mapper.properties.overworld.map.value == "Mt Moon - 1" || this.mapper.properties.overworld.map.value == "Mt Moon - 2" || this.mapper.properties.overworld.map.value == "Mt Moon - 3")) {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.mansion == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Cinnabar Mansion") {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.route21 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 21") {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.route22 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 22") {
-                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+            if (this.victoryRoad == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Victory Road") {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+        });
+
+        this.mapper.properties.overworld.map.change(async (newProp) => {
+            if (this.rockTunnel == false && this.mapper.properties.overworld.encounterRate.value > 0 && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+            if (this.victoryRoad == false && this.mapper.properties.overworld.encounterRate.value > 0 && this.mapper.properties.overworld.map.value == "Victory Road" ) {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
         });
 
@@ -1297,7 +1403,18 @@ const app = Vue.createApp({
         this.mapper.properties.overworld.map.change(async (x) => {
             await optionsSet() //Set options to Fast Text, No Animations, Set Battle (Except during the champion fight)
             await trashCans() //Solve the trash can puzzle if it isn't already solved
+            if (this.rockTunnelDarkness == true) {
+                await this.mapper.properties.overworld.mapData.pallete.set(0, false)
+            }
         })
+
+        //watch the Pokemon species and then it changes, update the sprite
+        this.mapper.properties.player.team[0].species.change(async (x) => {
+            if (x.value == undefined) { this.load_pokemon_sprite_settings(this.starterName) }
+            this.load_pokemon_sprite_settings(x.value)
+        })
+
+        this.load_pokemon_sprite_settings(this.s1dynamicReset.species.value)
 
         //EXP BAR
         var species = this.s1dynamicReset.species.value;
@@ -1305,15 +1422,26 @@ const app = Vue.createApp({
         var expStats = this.calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value);
         this.$refs.expBar.style.width = (expStats.percent * 100) + "%";
         this.prevSpecies = species
+        this.oldExpValue = this.mapper.properties.player.team[0].expPoints.value
         this.mapper.properties.player.team[0].expPoints.change(async (newProp, oldProp) => {
+            // console.log("newProp: " + newProp.value, "oldProp: " + oldProp.value, "oldExpValue: " + this.oldExpValue)
+            if (this.mapper.properties.player.team[0].level.value == 100) {
+                this.$refs.expBar.style.width = "0%";
+                return
+            }
+            if (newProp.value < this.oldExpValue) {
+                this.$refs.expBar.style.transition = null;
+            }
             if (this.expBarAnimation == true) {
                 const currSpecies = this.s1dynamicReset.species.value;
                 const growthRate = this.g1PokemonData[currSpecies].growth_rate
-                const oldExpStats = this.calcExpStats(growthRate, oldProp.value);
+                const oldExpStats = this.calcExpStats(growthRate, this.oldExpValue);
+                // const oldExpStats = this.calcExpStats(growthRate, oldProp.value);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
                 const animationMaxDuration = 600
-
-                if (oldProp.value == newProp.value) { return }
+                if (this.oldExpValue == newProp.value) { 
+                    return 
+                }
                 if (this.g1stateVariable == `Overworld` || this.g1stateVariable == "Base Stats") {
                     this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
                 }
@@ -1345,6 +1473,7 @@ const app = Vue.createApp({
                     }
                 }
                 this.$refs.expBar.style.transition = null;
+                this.oldExpValue = newProp.value
             }
         })
     },
