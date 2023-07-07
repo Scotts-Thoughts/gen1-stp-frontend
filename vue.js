@@ -41,7 +41,7 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName: "Smeargle", //Enter starter name, Special cases: Mr. Mime, Farfetchd
+            starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             
             perfectDVs:                 true, //sets all DVs to 15
@@ -116,6 +116,9 @@ const app = Vue.createApp({
             imageYOffset: 0,
             imageScale: 1,
             imageFlip: false,
+
+            //
+            playerNameChoice: "NINTEN",
         }
     },
 
@@ -317,6 +320,11 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        isLetter(e) {
+            let char = String.fromCharCode(e.keyCode); // Get the character
+            if(/^[A-Za-z]+$/.test(char)) return true; // Match with regex 
+            else e.preventDefault(); // If not match, don't add to input text
+        },
         pkmn_type(typeNumber) {
             data = this.g1PokemonData[this.starterName]
             if (this.g1stateVariable == `Battle`) {
@@ -1111,6 +1119,12 @@ const app = Vue.createApp({
         await this.mapper.connect()
         this.starterName = MyStorage.currentStarter ?? "Venomoth"
         this.load_all_settings()
+
+        this.mapper.properties.player.name.change((newProp, oldProp) => {
+            if (oldProp.value == "NINTEN") {
+                this.mapper.properties.player.name.set(this.playerNameChoice, false)
+            }
+        })
 
         // reset tracking
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {

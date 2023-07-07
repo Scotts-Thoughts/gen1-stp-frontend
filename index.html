@@ -303,7 +303,8 @@
         <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
             <div>Compatible with gen1 (Red/Blue/Yellow)</div><br>
-            <div>Game Loaded: {{mapper?.meta?.gameName}}</div>
+            <!-- <div>Game Loaded: {{mapper?.meta?.gameName}}</div> -->
+            <input type="text" maxlength="7" @keypress="isLetter($event)" v-model="playerNameChoice"/>
             <!-- <div>Solo Pokemon:</div>
             <select v-model="starterName" @change="load_pokemon_sprite_settings(s1dynamicReset.species.value)" class="dropdownMenu">
                 <option disabled value="">Select a species</option>
