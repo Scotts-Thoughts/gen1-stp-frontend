@@ -57,6 +57,7 @@ const app = Vue.createApp({
             battlePopUps:               true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             typeCalcs:                  true, //calculates effective power based on the pokemon in battle
             showCritMultiplierInEP:     true, //shows high crit ratio moves with adjusted power if the move always scores a crit
+            show_wild_battles:          true, //shows wild battles in the battle screen
 
             help_menus: "Help",
 
@@ -1114,6 +1115,7 @@ const app = Vue.createApp({
         // reset tracking
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {
             if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
+                this.blackout = false;
                 this.playerResets++;
             } 
         })
