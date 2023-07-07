@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scott's Thoughts - Generation 1 Overlay</title>
+    <title>Scott's Thoughts - Smeargle Race Overlay</title>
     <link rel="stylesheet" href="style-yellow.css">
 </head>
 <body>
@@ -275,48 +275,38 @@
         <div class="testingArea1" style="z-index: 50000;">
             <div>Compatible with gen1 (Red/Blue/Yellow)</div><br>
             <div>Game Loaded: {{mapper?.meta?.gameName}}</div>
-            <div>Solo Pokemon:</div>
+            <!-- <div>Solo Pokemon:</div>
             <select v-model="starterName" @change="load_pokemon_sprite_settings(s1dynamicReset.species.value)" class="dropdownMenu">
                 <option disabled value="">Select a species</option>
-                <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
-            </select>
-            <div class="note">Note: Set this to the Pokemon you will be receiving as your starter. Remember, this overlay is programmed for solo challenges only.</div>
+                <option value="Smeargle">Smeargle</option>
+            </select> -->
+            <br>Smeargle Race Rules:<br>
+            <div class="rule">1. Only Smeargle in battle</div>
+            <div class="rule">2. No items in battle</div>
+            <div class="rule">3. No glitches, exploits, or rng manips in the overworld</div>
+            <div class="rule">4. No evasion boosting moves</div>
             <br>
-            <div>DV Setting:</div>
-            <select v-model="dvSetting" class="dropdownMenu">
-                <option disabled value="">Please select one</option>
-                <option>Max</option>
-                <option>Min</option>
-                <option>NPC</option>
-                <option>Random</option>
-            </select><br>
             <br>
-            <div>Pokemon Image Settings</div>
-            X-Offset: <input type="range" min="-125" max="125" v-model="imageXOffset"/><br>
-            Y-Offset: <input type="range" min="-125" max="125"v-model="imageYOffset"/><br>
-            Scale: <input type="range" min="0.3" max="2" step="0.02" v-model="imageScale"/><br>
-            Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
-            <button @click="save_pokemon_sprite_settings" class="buttonStyle">Save Pokemon Sprite Settings</button>
-            <button @click="clear_pokemon_sprite_settings" class="buttonStyle">Reset Sprite</button>
-            <div class="note">Note: this saves styling for the current Solo Pokemon listed above. If you have a different Pokemon in slot1 it will still save this configuration to the Solo Pokemon's profile.</div>
-            <br>
-            <div v-if="resetCounter == true">
-                <div>Reset Counter Settings</div>
-                <button @click="resets_clear" class="buttonStyle">Clear</button>
-                <button @click="resets_increment" class="buttonStyle">Increment</button>
-                <button @click="resets_decrement" class="buttonStyle">Decrement</button><br>
-                <div class="note">These controls are provided in case there is an<br> error with the automatic reset counter.</div>
-                Count blackouts as resets: <input class="checkBoxStyle" type="checkbox" v-model="blackouts_as_resets"/><br>
-            </div>
-            <br><br><br>
-            <button class="buttonStyle refresh" onClick="window.location.reload();">Reload Overlay</button>
-            <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button>
+            <div>Rule Clarifications:</div><br>
+            <div class="rule_clarifications">You cannot use Pokeballs for any purpose other than catching HM users</div><br>
+            <div class="rule_clarifications">You are allowed you skip Marowak with a Pokedoll</div><br>
+            <div class="rule_clarifications">The bike skip glitch is banned</div><br>
+            <div class="rule_clarifications">All in-battle battle-related glitches are allowed (badge-boost, Fly-paralysis glitch, gen1 miss, etc)</div><br>
+            <div class="rule_clarifications">Turbo-fire / Rapid-fire keys are allowed (and highly encouraged)</div><br>
+            <div class="rule_clarifications">Blackouts count as resets</div><br>
+            <div class="rule_clarifications">You must use <a href="https://livesplit.org/downloads/" target="_blank">Livesplit</a> to track real-time.</div><br>
+            <div class="rule_clarifications">It is strictly against the rules to modify any property using GameHook</div><br>
+            <div class="rule_clarifications">Save states are banned (they can be used for testing purposes only)</div><br>
+            <div class="rule_clarifications"></div><br>
+            <div class="rule_clarifications"></div><br>
+            <button class="buttonStyle save_all_settings" onClick="window.location.reload();">Reload Overlay</button>
+            <!-- <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button> -->
         </div>
         <div class="testingArea2" style="z-index: 50000;">
             <div>Secondary Menu:</div>
             <select v-model="help_menus" class="dropdownMenu">
                 <option disabled value="">Please select one</option>
-                <option>Settings</option>
+                <!-- <option>Settings</option> -->
                 <!-- <option>Advanced Options</option> -->
                 <!-- <option>Encounters</option> -->
                 <option>Help</option>
@@ -391,50 +381,27 @@
             <div class="note">Note: Turns encounters on Route1, Route3, MtMoon, and Route6 off.</div>
         </div>
         <div v-show="help_menus == `Help`" class="testingArea3" style="z-index: 50000;">
-            <div>Setup Guide: 
-                <a href="https://youtu.be/8tzOHnQyAkk" target="_blank">https://youtu.be/8tzOHnQyAkk</a><br>
-            <br>
-            </div>
+            <div><a href="https://youtu.be/8tzOHnQyAkk" target="_blank">Setup Guide</a><br></div>
             <a href="https://www.retroarch.com/" target="_blank">Retroarch</a><br>
             <a href="https://gamehook.io/" target="_blank">GameHook</a><br>
+            <a href="https://livesplit.org/downloads/" target="_blank">Livesplit</a>
+            <br>
+            <br>
             <div>Press F11 to enter or exit fullscreen</div>
             <br>
             <div>This overlay is designed to function in fullscreen at 1920x1080</div>
             <br>
-            <div>It is not compatible with save states, expect weird behavior if you choose to use them.</div>
-            <br>
             <div>In OBS use the "Window Capture" source to record the program once it is in Fullscreen.</div><br>
+            <br>
             <div>Program Launch Order:</div>
             <div>1: RetroArch - load your ROM file</div>
             <div>2: GameHook - load the mapper</div>
-            <div>3: This software</div>
+            <div>3: Smeargle Race Overlay </div>
+            <div class="note">(use the "Reload Overlay" button if you launch in the incorrect order)</div><br>
             <br>
-            <div>Only configure settings in this application after the other two are running.</div><br>
-            <br><br><br><br><br>
+            <div>For fairness of the race, this overlay does not provide the user with any user customization.</div><br>
+            <br><br><br><br>
             <div>This program is currently in development. Please report all bugs and issues to Scott's Thoughts directly on <a href="https://discord.gg/4x7RNbyKR" target="_blank">Discord</a>.</div>
-        </div>
-        <div v-show="help_menus == `Color`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
-            <div>Overlay Color Selector:</div>
-            <button @click="color_picker" class="buttonStyle">Color Picker</button>
-            <button @click="clear_overlay_color" class="buttonStyle">Reset Overlay Color</button>
-            <div>Overlay_color: {{overlay_color}}</div>
-        </div>
-        <div v-show="help_menus == `Changelog`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
-            <div>version1.2023-06-25.0</div>
-            <br>
-            <div>Changes</div>
-            <div>- Added submenu radio button</div>
-            <div>- Re-organized submenus</div>
-            <div>- Added encounter toggles</div>
-            <div>- Tested encounter toggles</div>
-            <div>- Verfied local storage & Pokemon image editing</div>
-            <div>- Fixed DV calculation formula</div>
-            <div>- Added 3 more DV settings</div>
-            <div>- Verified all DV options are working</div>
-            <div>- The program saves the users previously selected starter</div>
-            <br>
-            <div>Bugs:</div>
-            <div>- Discovered that dropdown menus don't work within OBS</div>
         </div>
         <div v-show="help_menus == `Credits`" class="testingArea3" style="z-index: 50000;">
             <div>Scott's Thoughts</div>
@@ -442,10 +409,6 @@
             <div>Flame Sage - assistance & programming</div>
             <br>
             <div>Everyone who helped with play testing.</div>
-        </div>
-        <div v-show="help_menus == `Dev Tools`" class="testingArea3" style="z-index: 50000;">
-            <div>Export Config File:</div>
-            <button onclick="downloadFile(JSON.stringify(MyStorage.entries()),Date.now()+'.txt')" class="buttonStyle">Export</button>
         </div>
     </div>
 

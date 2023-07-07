@@ -234,6 +234,13 @@ box-shadow:
 .note {
     font-size: 16px; line-height: 18px;
 }
+.rule {
+    font-size: 18px;
+    line-height: 24px;
+}
+.rule_clarifications {
+    font-size: 18px; line-height: 18px;
+}
 .dropdownMenu {
     pointer-events: auto; 
     position: relative; 
@@ -1307,7 +1314,7 @@ box-shadow:
     /* border: 1px solid #00ff0d00; */
     background-color: #ffffff;
     font-size: 16px;
-    line-height: 20px;
+    line-height: 22px;
 
     /* line-height: 35px; */
     width: 362px;

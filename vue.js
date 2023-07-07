@@ -41,14 +41,14 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
+            starterName: "Smeargle", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             
             perfectDVs:                 true, //sets all DVs to 15
             dvSetting:                  "Max", //Max, Min, NPC, or Random
             trashCans:                  true, //solves the trash can puzzle
             options:                    true, //shows the options menu when set to true
-            gametimeDisplay:            true, //shows the options menu when set to true
+            gametimeDisplay:            false, //shows the options menu when set to true
             inventory:                  true, //uses inventory when in the department store & marts
             battleGraphic:              true, //uses battle graphic with enemy moveset & stats
             showAllTrainers:            true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
@@ -58,7 +58,7 @@ const app = Vue.createApp({
             typeCalcs:                  true, //calculates effective power based on the pokemon in battle
             showCritMultiplierInEP:     true, //shows high crit ratio moves with adjusted power if the move always scores a crit
 
-            help_menus: "Settings",
+            help_menus: "Help",
 
             //ENCOUNTERS ---------------------------------------------------------------------------------------//
             route1:         MyStorage["this.route1"] ?? true,

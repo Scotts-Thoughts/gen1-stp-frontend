@@ -9418,6 +9418,62 @@ const g1PokemonData = {
         ]
         ]
     },
+"Smeargle" :
+    {
+        name: "Smeargle",
+        base_hp: 55,
+        base_atk: 20,
+        base_def: 35,
+        base_spd: 75,
+        base_spc: 20,
+        type1: "Normal",
+        type2: "Normal",
+        catch_rate: 45,
+        base_xp: 106,
+        initial_moveset: [
+        "Sketch"
+        ],
+        growth_rate: "Fast",
+        tm_hm_learnset: [],
+        levelup_moveset: [
+        [
+            11,
+            "Sketch"
+        ],
+        [
+            21,
+            "Sketch"
+        ],
+        [
+            31,
+            "Sketch"
+        ],
+        [
+            41,
+            "Sketch"
+        ],
+        [
+            51,
+            "Sketch"
+        ],
+        [
+            61,
+            "Sketch"
+        ],
+        [
+            71,
+            "Sketch"
+        ],
+        [
+            81,
+            "Sketch"
+        ],
+        [
+            91,
+            "Sketch"
+        ]
+        ]
+    },
 //backported Pokemon
 // "Kingdra" :
 //     {
