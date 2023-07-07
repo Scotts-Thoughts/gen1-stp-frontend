@@ -508,6 +508,19 @@ const app = Vue.createApp({
             const formattedMove = moveMappings[move_string];
             return formattedMove || this.capitalization_format(move_string);
         },
+        wild_pkmn_name(species_string) {
+            if (species_string == null || species_string == undefined) { return "" }
+            species_string = species_string.toLowerCase()
+            const speciesMappings = {
+              "nidoranm":     "Nidoran M",
+              "nidoranf":     "Nidoran F",
+              "mr. mime":     "Mr. Mime",
+              "farfetch'd":   "Farfetch'd",
+            };
+            const formattedMove = speciesMappings[species_string];
+            // console.log(formattedMove, species_string)
+            return formattedMove || this.capitalization_format(species_string);
+        },
 
         //ENEMY MOD STYLING
         enemyMods(modValue) {
