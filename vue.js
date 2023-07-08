@@ -33,6 +33,19 @@ function downloadFile(content, downloadFileName) {
     }, 1000);
 }
 
+function transition(fn, ms) {
+    return new Promise((resolve) => {
+        const T = performance.now()
+        function step() {
+            const t = performance.now() - T
+            fn(Math.min(t / ms, 1))
+            if (t < ms) requestAnimationFrame(step)
+            else resolve()
+        }
+        requestAnimationFrame(step)
+    })
+}
+
 const app = Vue.createApp({
     //DATA & DEFINITIONS
     data() {
@@ -50,13 +63,14 @@ const app = Vue.createApp({
             options:                    true, //shows the options menu when set to true
             gametimeDisplay:            true, //shows the options menu when set to true
             inventory:                  true, //uses inventory when in the department store & marts
-            battleGraphic:              true, //uses battle graphic with enemy moveset & stats
-            showAllTrainers:            true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
+            battleGraphic:              MyStorage["this.battleGraphic"] ?? true, //uses battle graphic with enemy moveset & stats
+            showAllTrainers:            MyStorage["this.showAllTrainers"] ?? true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
             expBarAnimation:            true,
-            showSpecialTrainerGraphics: true, //shows drawn art for defined trainers
-            battlePopUps:               true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
+            showSpecialTrainerGraphics: MyStorage["this.showSpecialTrainerGraphics"] ?? true, //shows drawn art for defined trainers
+            battlePopUps:               MyStorage["this.battlePopUps"] ?? true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             typeCalcs:                  true, //calculates effective power based on the pokemon in battle
-            showCritMultiplierInEP:     true, //shows high crit ratio moves with adjusted power if the move always scores a crit
+            showCritMultiplierInEP:     MyStorage["this.showCritMultiplierInEP"] ?? true, //shows high crit ratio moves with adjusted power if the move always scores a crit
+            show_wild_battles:          MyStorage["this.show_wild_battles"] ?? false, //shows wild battles in the battle screen
 
             help_menus: "Settings",
 
@@ -74,7 +88,7 @@ const app = Vue.createApp({
             route22:        MyStorage["this.route22"] ?? true,
             victoryRoad:    MyStorage["this.victoryRoad"] ?? true,
 
-            rockTunnelDarkness: false,
+            rockTunnelDarkness: MyStorage["this.rockTunnelDarkness"] ?? false, //if true it will make rock tunnel bright
             
 
             //DATA ---------------------------------------------------------------------------------------------//
@@ -159,8 +173,54 @@ const app = Vue.createApp({
         victoryRoad(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Victory Road") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },
-        starterName(newProp) {
-            MyStorage.currentStarter = newProp
+        async starterName(newValue, oldValue) {
+            //transition between background textures
+            this.$refs.old_background_texture.src = `images/textures/${g1PokemonData[oldValue].type1}.png`
+            this.$refs.old_background_texture.style.opacity = 1
+            
+            await transition((t) => {
+                this.$refs.old_background_texture.style.opacity = 1 - t
+            }, 500)
+            
+            this.$refs.old_background_texture.src = ""
+
+            //update the saved starter in the overlay's local storage
+            MyStorage.currentStarter = newValue
+        },
+        async s1dynamicReset(newValue, oldValue) {
+            //transition between pokemon art
+            const newSpecies = newValue.species.value
+            const oldSpecies = oldValue.species.value
+
+            const newSpeciesParameters = MyStorage[newSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
+            const oldSpeciesParameters = MyStorage[oldSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
+
+            this.$refs.old_pokemon_art.src = `images/pokemon/${oldSpecies}.png`
+            this.$refs.old_pokemon_art.style.transform = `scale(${oldSpeciesParameters.imageScale}) ${oldSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${oldSpeciesParameters.imageXOffset}px, ${-oldSpeciesParameters.imageYOffset}px)`
+            this.$refs.old_pokemon_art.style.opacity = 1
+            
+            this.$refs.pokemon_art.src = `images/pokemon/${newSpecies}.png`
+            this.$refs.pokemon_art.style.transform = `scale(${newSpeciesParameters.imageScale}) ${newSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${newSpeciesParameters.imageXOffset}px, ${-newSpeciesParameters.imageYOffset}px)`
+            this.$refs.pokemon_art.style.opacity = 0
+            
+            await transition((t) => {
+                this.$refs.old_pokemon_art.style.opacity = 1 - t
+                this.$refs.pokemon_art.style.opacity = t
+            }, 500)
+            
+            this.$refs.old_pokemon_art.src = ""
+        },
+        imageXOffset() {
+            this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
+        },
+        imageYOffset() {
+            this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
+        },
+        imageScale() {
+            this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
+        },
+        imageFlip() {
+            this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
         },
         playerId() {
             this.game_over = false;
@@ -185,7 +245,8 @@ const app = Vue.createApp({
             else {
                 return
             }
-        },   
+        },  
+
     },
 
     computed: {
@@ -350,6 +411,13 @@ const app = Vue.createApp({
             this.set_setting_prop("this.victoryRoad", this.victoryRoad)
             this.set_setting_prop("this.powerPlant", this.powerPlant)
             this.set_setting_prop("this.blackouts_as_resets", this.blackouts_as_resets)
+            this.set_setting_prop("this.showCritMultiplierInEP", this.showCritMultiplierInEP)
+            this.set_setting_prop("this.show_wild_battles", this.show_wild_battles)
+            this.set_setting_prop("this.battleGraphic", this.battleGraphic)
+            this.set_setting_prop("this.showAllTrainers", this.showAllTrainers)
+            this.set_setting_prop("this.showSpecialTrainerGraphics", this.showSpecialTrainerGraphics)
+            this.set_setting_prop("this.battlePopUps", this.battlePopUps)
+            this.set_setting_prop("this.rockTunnelDarkness", this.rockTunnelDarkness)
             // console.log(MyStorage.entries())
         },
         load_all_settings() {
@@ -373,6 +441,13 @@ const app = Vue.createApp({
             this.victoryRoad = MyStorage["this.victoryRoad"] ?? true
             this.powerPlant = MyStorage["this.powerPlant"] ?? true
             this.blackouts_as_resets = MyStorage["this.blackouts_as_resets"] ?? true
+            this.show_wild_battles = MyStorage["this.show_wild_battles"] ?? false
+            this.showCritMultiplierInEP = MyStorage["this.showCritMultiplierInEP"] ?? true
+            this.showCritMultiplierInEP = MyStorage["this.battleGraphic"] ?? true
+            this.showCritMultiplierInEP = MyStorage["this.showAllTrainers"] ?? true
+            this.showCritMultiplierInEP = MyStorage["this.showSpecialTrainerGraphics"] ?? true
+            this.showCritMultiplierInEP = MyStorage["this.battlePopUps"] ?? true
+            this.showCritMultiplierInEP = MyStorage["this.rockTunnelDarkness"] ?? false
         },
         //string can be: clear, increment, decrement
         resets_clear() {
@@ -404,6 +479,15 @@ const app = Vue.createApp({
         },
         warn(...vars) {
             console.log(...vars)
+        },
+        reset_advanced_settings() {
+            this.battleGraphic = true
+            this.showAllTrainers = true
+            this.showSpecialTrainerGraphics = true
+            this.show_wild_battles = false
+            this.battlePopUps = true
+            this.showCritMultiplierInEP = true
+            this.rockTunnelDarkness = false
         },
         first_playthrough_settings() {
             this.route1 = true
@@ -507,6 +591,20 @@ const app = Vue.createApp({
             };
             const formattedMove = moveMappings[move_string];
             return formattedMove || this.capitalization_format(move_string);
+        },
+
+        wild_pkmn_name(species_string) {
+            if (species_string == null || species_string == undefined) { return "" }
+            species_string = species_string.toLowerCase()
+            const speciesMappings = {
+              "nidoranm":     "Nidoran M",
+              "nidoranf":     "Nidoran F",
+              "mr. mime":     "Mr. Mime",
+              "farfetch'd":   "Farfetch'd",
+            };
+            const formattedMove = speciesMappings[species_string];
+            // console.log(formattedMove, species_string)
+            return formattedMove || this.capitalization_format(species_string);
         },
 
         //ENEMY MOD STYLING
@@ -1098,9 +1196,16 @@ const app = Vue.createApp({
         this.starterName = MyStorage.currentStarter ?? "Venomoth"
         this.load_all_settings()
 
+        //image transition
+        await transition(t => {
+            // this part gets called at every frame of the browser
+            // the variable t starts at 0 and advances to 1
+            }, 500)
+
         // reset tracking
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {
             if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
+                this.blackout = false;
                 this.playerResets++;
             } 
         })
@@ -1404,7 +1509,7 @@ const app = Vue.createApp({
             await optionsSet() //Set options to Fast Text, No Animations, Set Battle (Except during the champion fight)
             await trashCans() //Solve the trash can puzzle if it isn't already solved
             if (this.rockTunnelDarkness == true) {
-                await this.mapper.properties.overworld.mapData.pallete.set(0, false)
+                await this.mapper.properties.overworld.mapData.palette.set(0, false)
             }
         })
 

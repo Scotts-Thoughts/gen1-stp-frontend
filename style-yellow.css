@@ -232,7 +232,7 @@ box-shadow:
 }
 
 .note {
-    font-size: 16px; line-height: 18px;
+    font-size: 15px; line-height: 16px;
 }
 .dropdownMenu {
     pointer-events: auto; 
@@ -317,8 +317,8 @@ box-shadow:
     filter: drop-shadow(0px 4px 4px #000000c5);
     position: absolute;
     font-family: play;
-    font-size: 24px;
-    line-height: 26px;
+    font-size: 22px;
+    line-height: 24px;
     top: 55px;
     left: 975px;
     width: 520px;
@@ -330,8 +330,8 @@ box-shadow:
     padding: 8px;
     position: absolute;
     font-family: play;
-    font-size: 24px;
-    line-height: 26px;
+    font-size: 22px;
+    line-height: 24px;
     top: 145px;
     left: 975px;
     width: 520px;
@@ -1342,11 +1342,15 @@ box-shadow:
 .movepoolTable {
     font-size: 17px;
 }
-tr:nth-child(odd) {
+.movepoolDemo tr:nth-child(odd) {
     background-color: #cfcfcf;
 }
-
-
+.ui_table {
+    text-align: left;
+}
+.ui_table tr:nth-child(odd) {
+    background-color: #cfcfcf00;
+}
 
 /* NEW STAT AREA CLASSES */
 .posAbs {

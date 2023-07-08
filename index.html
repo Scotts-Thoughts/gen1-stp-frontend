@@ -12,21 +12,31 @@
             <div class="mainContainer">
                 <!-- GRAPHICS ---------------------------------------------------------------------------------->
                 <div>
-                    <img class="canvas" :src="`images/textures/${g1PokemonData[starterName].type1}.png`" />
+                    <img class="canvas" ref="background_texture" :src="`images/textures/${g1PokemonData[starterName].type1}.png`" />
+                    <img class="canvas" ref="old_background_texture" style="opacity: 0" />
                     <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
-                    <img class="pokemon_art" :style="{
-                        'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`, 
-                    }" :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
+                    <img class="pokemon_art" ref="pokemon_art" />
+                    <img class="pokemon_art" ref="old_pokemon_art" style="opacity: 0"/>
+
+                    <!-- <img class="pokemon_art" ref="pokemon_art"
+                    :style="{'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`, }" 
+                    :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
+                    <img class="pokemon_art" ref="old_pokemon_art"
+                    :style="{
+                        'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px); opacity: 0;`, 
+                    }" /> -->
                     <img class="canvas" :src="`images/left_ui/${g1PokemonData[starterName].type1}.png`" />
                     <!-- <div class="colored-image" style="--url: url(images/left_ui/Electric.png)"></div> -->
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
                     <div class="exp_growthRate">{{ growthRate }}</div>
-                    <div v-show="gametimeDisplay == false" class="genericLabels timerLabel">time played at 4x game speed</div>
-                    <div v-show="gametimeDisplay == true" class="genericLabels timerLabel">gametime</div>
+                    <transition name="fade"><div v-show="gametimeDisplay == false" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
+                    <transition name="fade"><div v-show="gametimeDisplay == true" class="genericLabels timerLabel">gametime</div></transition>
                     <div class="genericLabels resetsLabel">resets</div>
+                    <!-- <div v-if="blackouts_as_resets == true" class="genericLabels resetsLabel" style="font-size: 17px; top: 330px">failures</div> -->
+                    <!-- <div v-if="blackouts_as_resets == false" class="genericLabels resetsLabel">resets</div> -->
                 </div>
                 <!-- TYPE ICONS -------------------------------------------------------------------------------->
                 <div class="typeContainer">
@@ -155,7 +165,7 @@
                 </div>
                 <!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade">
-                    <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1>
+                    <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true && mapper.properties.battle.type.value == `Trainer`" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <img class="enemyPng" :src="`images/enemy_area/${g1PokemonData[starterName].type1}.png`" :style="battlePokemonCrop()"/>
                         <!-- <div class="colored-image" style="--url: url(images/enemy_area/Electric.png);"></div> -->
@@ -179,6 +189,31 @@
                                     <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpecial.value != `0`" class="enemyMods specialMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpecial.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpecial.value}}</div></transition>
                                     <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpeed.value != `0`" class="enemyMods speedMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpeed.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpeed.value}}</div></transition>
                                 </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div v-if="mapper.properties.battle.type.value == `Wild` && show_wild_battles == true" style="position: absolute;">
+                        <div class="trainerLabel">{{"Wild " + wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
+                        <img class="enemyPng" :src="`images/enemy_area/${g1PokemonData[starterName].type1}.png`" style="height: 242px;"/>
+                        <!-- <div class="colored-image" style="--url: url(images/enemy_area/Electric.png);"></div> -->
+                        <div class="enemyGraphic">
+                            <div class="ePkmnStyle ePkmn1">
+                                <img class="ePkmnSprite" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).faint" :src="`images/pokemon/${mapper.properties.battle.enemyPokemon.species.value}.png`"/>
+                                <div class="ePkmnSpecies opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).species">{{wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
+                                <img class="enemyStatsArea" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).faintStats" :src="`images/enemy_area/stats/0.png`"/>
+                                <div class="ePkmnMoveStyle ePkmnMove1 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move1.value)}}</div>
+                                <div class="ePkmnMoveStyle ePkmnMove2 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move2.value)}}</div>
+                                <div class="ePkmnMoveStyle ePkmnMove3 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move3.value)}}</div>
+                                <div class="ePkmnMoveStyle ePkmnMove4 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move4.value)}}</div>
+                                <div class="ePkmnStatsStyle ePkmnHp opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon.hp}}</div>
+                                <div class="ePkmnStatsStyle ePkmnAtk opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.attack.value}}</div>
+                                <div class="ePkmnStatsStyle ePkmnDef opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.defense.value}}</div>
+                                <div class="ePkmnStatsStyle ePkmnSpd opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.speed.value}}</div>
+                                <div class="ePkmnStatsStyle ePkmnSpc opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.special.value}}</div>
+                                <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageAttack.value != `0`" class="enemyMods attackMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageAttack.value)[1]}`">{{batt.enemyPokemon.modEnemyStageAttack.value}}</div></transition>
+                                <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageDefense.value != `0`" class="enemyMods defenseMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageDefense.value)[1]}`">{{batt.enemyPokemon.modEnemyStageDefense.value}}</div></transition>
+                                <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageSpecial.value != `0`" class="enemyMods specialMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpecial.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpecial.value}}</div></transition>
+                                <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageSpeed.value != `0`" class="enemyMods speedMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpeed.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpeed.value}}</div></transition>
                             </div>
                         </div> 
                     </div>
@@ -261,20 +296,22 @@
                     <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
                 </div>
                 <!---------- GAMETIME ------------------------------------------------------------------------------------------------------------------->
-                <div v-show="gametimeDisplay == true" class="gametime">
+                <transition name="fade"><div v-show="gametimeDisplay == true" class="gametime">
                     <div class="gametimeClock">{{gametimeHMS}}</div>
                     <div class="gametimeFrames">.{{gametime_frames}}</div>
-                </div>
+                </div></transition>
                 <!---------- RESET ------------------------------------------------------------------------------------------------------------------->
-                <div v-show="resetCounter == true" class="resets">
+                <transition name="fade"><div v-show="resetCounter == true" class="resets">
                     <div>{{playerResets}}</div>
-                </div>
+                </div></transition>
             </div>
         </div>
         <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
             <div>Compatible with gen1 (Red/Blue/Yellow)</div><br>
             <div>Game Loaded: {{mapper?.meta?.gameName}}</div>
+            <!-- <div>g1StateVariable: {{g1stateVariable}}</div> -->
+            <!-- <div>enemyState: {{enemyState}}</div> -->
             <div>Solo Pokemon:</div>
             <select v-model="starterName" @change="load_pokemon_sprite_settings(s1dynamicReset.species.value)" class="dropdownMenu">
                 <option disabled value="">Select a species</option>
@@ -300,14 +337,14 @@
             <button @click="clear_pokemon_sprite_settings" class="buttonStyle">Reset Sprite</button>
             <div class="note">Note: this saves styling for the current Solo Pokemon listed above. If you have a different Pokemon in slot1 it will still save this configuration to the Solo Pokemon's profile.</div>
             <br>
-            <div v-if="resetCounter == true">
+            <transition name="fade"><div v-if="resetCounter == true">
                 <div>Reset Counter Settings</div>
                 <button @click="resets_clear" class="buttonStyle">Clear</button>
                 <button @click="resets_increment" class="buttonStyle">Increment</button>
                 <button @click="resets_decrement" class="buttonStyle">Decrement</button><br>
                 <div class="note">These controls are provided in case there is an<br> error with the automatic reset counter.</div>
                 Count blackouts as resets: <input class="checkBoxStyle" type="checkbox" v-model="blackouts_as_resets"/><br>
-            </div>
+            </div></transition>
             <br><br><br>
             <button class="buttonStyle refresh" onClick="window.location.reload();">Reload Overlay</button>
             <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button>
@@ -317,7 +354,7 @@
             <select v-model="help_menus" class="dropdownMenu">
                 <option disabled value="">Please select one</option>
                 <option>Settings</option>
-                <!-- <option>Advanced Options</option> -->
+                <option>Advanced Options</option>
                 <!-- <option>Encounters</option> -->
                 <option>Help</option>
                 <!-- <option>Color</option> -->
@@ -343,37 +380,92 @@
             <div class="note">Counts resets while you play.</div>
             <div class="note">This number clears when you select "New Game".</div>
             <br>
-            <!-- Rock Tunnel Darkness: <input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/><br>
-            <div class="note">When enabled Flash is automatically applied in Rock Tunnel.</div>
-            <br> -->
+
             Encounters:<br>
             <div class="note">These settings are for encounters on certain areas of the game where you may want to control for luck.</div>
-            Route1: <input class="checkBoxStyle" type="checkbox" v-model="route1"/><br>
-            Viridian Forest: <input class="checkBoxStyle" type="checkbox" v-model="viridianForest"/><br>
-            Route3: <input class="checkBoxStyle" type="checkbox" v-model="route3"/><br>
-            Mt. Moon: <input class="checkBoxStyle" type="checkbox" v-model="mtMoon"/><br>
-            Route 6: <input class="checkBoxStyle" type="checkbox" v-model="route6"/><br>
-            Rock Tunnel: <input class="checkBoxStyle" type="checkbox" v-model="rockTunnel"/><br>
-            Safari Zone: <input class="checkBoxStyle" type="checkbox" v-model="safariZone"/><br>
-            Pkmn Mansion: <input class="checkBoxStyle" type="checkbox" v-model="mansion"/><br>
-            Route 21: <input class="checkBoxStyle" type="checkbox" v-model="route21"/><br>
-            Route 22: <input class="checkBoxStyle" type="checkbox" v-model="route22"/><br>
-            Victory Road: <input class="checkBoxStyle" type="checkbox" v-model="victoryRoad"/><br>
+            <table class="ui_table">
+                <tr>
+                    <th>Route1:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="route1"/></th>
+                </tr>
+                <tr>
+                    <th>Viridian Forest:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="viridianForest"/></th>
+                </tr>
+                <tr>
+                    <th>Route3:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="route3"/></th>
+                </tr>
+                <tr>
+                    <th>Mt. Moon:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="mtMoon"/></th>
+                </tr>
+                <tr>
+                    <th>Route 6:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="route6"/></th>
+                </tr>
+                <tr>
+                    <th>Rock Tunnel:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="rockTunnel"/></th>
+                </tr>
+                <tr>
+                    <th>Safari Zone:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="safariZone"/></th>
+                </tr>
+                <tr>
+                    <th>Pkmn Mansion:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="mansion"/></th>
+                </tr>
+                <tr>
+                    <th>Route 21:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="route21"/></th>
+                </tr>
+                <tr>
+                    <th>Route 22:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="route22"/></th>
+                </tr>
+                <tr>
+                    <th>Victory Road:</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="victoryRoad"/></th>
+                </tr>
+            </table>
+            <br>
             <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
             <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
             <div class="note">These are the two settings used for Scott's Thoughts videos.</div>
         </div>
         <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
-            Info Toggles:<br>
+            <div style="text-decoration: underline;">Graphics Toggles:</div>
             <!-- inventory: <input class="checkBoxStyle" type="checkbox" v-model="inventory"/><br> -->
-            battleGraphic: <input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/><br>
-            showAllTrainers: <input class="checkBoxStyle" type="checkbox" v-model="showAllTrainers"/><br>
-            expBarAnimation: <input class="checkBoxStyle" type="checkbox" v-model="expBarAnimation"/><br>
-            showSpecialTrainerGraphics: <input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/><br>
-            Accuracy, Evasion, and Screens: <input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/><br>
-            Effective Power with Type Effectiveness: <input class="checkBoxStyle" type="checkbox" v-model="typeCalcs"/><br>
-            Show Effective Power with Guarenteed Crits: <input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/><br>
+            <!-- expBarAnimation: <input class="checkBoxStyle" type="checkbox" v-model="expBarAnimation"/><br> -->
+            <!-- Effective Power with Type Effectiveness: <input class="checkBoxStyle" type="checkbox" v-model="typeCalcs"/><br> -->
+            Trainer Teams: <input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/><br>
+            <div class="note">Displays the enemy trainer's team while battling them. This option must be enabled for the following option "All Trainers" to work.</div>
             <br>
+            All Trainers: <input class="checkBoxStyle" type="checkbox" v-model="showAllTrainers"/><br>
+            <div class="note">When disabled the overlay will only display the teams of key trainers (Rivals, Gym Leaders, E4, Champion).</div>
+            <br>
+            Show Trainer Illustrations: <input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/><br>
+            <div class="note">When enabled this will display illustrations of the trainer under their team when you fight them.</div>
+            <br>
+            Show Wild Pokemon: <input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/><br>
+            <div class="note">Displays wild Pokemon in the same way as trainer Pokemon when this option is checked.</div>
+            <br>
+            Show screens, accruacy, and evasion: <input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/><br>
+            <div class="note">The overlay will display pop ups when your Pokemon is behind a screen or has had its accuracy or evasion modified.</div>
+            <br>
+            <br>
+            <div style="text-decoration: underline;">Calculation Toggles:</div>
+            Show Guarenteed Crits in Effective Power: <input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/><br>
+            <div class="note">If the Pokemon is guarenteed a critical hit using a high-crit-rate move the overlay will calculate in the crit multiplier when displaying effective power. High-crit-rate moves are: Crabhammer, Karate Chop, Slash, Razor Leaf.</div>
+            <br>
+            <br>
+            <div style="text-decoration: underline;">Gameplay Toggles:</div>
+            Rock Tunnel Darkness: <input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/><br>
+            <div class="note">When enabled Flash is automatically applied in Rock Tunnel.</div>
+            <br>
+            <br>
+            <button @click="reset_advanced_settings" class="buttonStyle">Reset All Advanced Options</button>
         </div>
         <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000;">
             Encounters:<br>
