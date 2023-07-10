@@ -116,7 +116,7 @@ const app = Vue.createApp({
             playerId: 0,
             playerName: "NINTEN",
             resetCatcher: "NINTEN",
-            playerResets: 0,
+            playerResets: MyStorage["playerResets"] ?? 0,
             resetCounter: true,
             game_over: false,
 
@@ -187,43 +187,45 @@ const app = Vue.createApp({
             //update the saved starter in the overlay's local storage
             MyStorage.currentStarter = newValue
         },
-        async s1dynamicReset(newValue, oldValue) {
-            //transition between pokemon art
-            const newSpecies = newValue.species.value
-            const oldSpecies = oldValue.species.value
+        // async s1dynamicReset(newValue, oldValue) {
+        //     //transition between pokemon art
+        //     const newSpecies = newValue.species.value
+        //     const oldSpecies = oldValue.species.value
+        //     console.log(newSpecies, oldSpecies)
 
-            const newSpeciesParameters = MyStorage[newSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
-            const oldSpeciesParameters = MyStorage[oldSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
+        //     const newSpeciesParameters = MyStorage[newSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
+        //     const oldSpeciesParameters = MyStorage[oldSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
 
-            this.$refs.old_pokemon_art.src = `images/pokemon/${oldSpecies}.png`
-            this.$refs.old_pokemon_art.style.transform = `scale(${oldSpeciesParameters.imageScale}) ${oldSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${oldSpeciesParameters.imageXOffset}px, ${-oldSpeciesParameters.imageYOffset}px)`
-            this.$refs.old_pokemon_art.style.opacity = 1
+        //     this.$refs.old_pokemon_art.src = `images/pokemon/${oldSpecies}.png`
+        //     this.$refs.old_pokemon_art.style.transform = `scale(${oldSpeciesParameters.imageScale}) ${oldSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${oldSpeciesParameters.imageXOffset}px, ${-oldSpeciesParameters.imageYOffset}px)`
+        //     this.$refs.old_pokemon_art.style.opacity = 1
             
-            this.$refs.pokemon_art.src = `images/pokemon/${newSpecies}.png`
-            this.$refs.pokemon_art.style.transform = `scale(${newSpeciesParameters.imageScale}) ${newSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${newSpeciesParameters.imageXOffset}px, ${-newSpeciesParameters.imageYOffset}px)`
-            this.$refs.pokemon_art.style.opacity = 0
+        //     this.$refs.pokemon_art.src = `images/pokemon/${newSpecies}.png`
+        //     this.$refs.pokemon_art.style.transform = `scale(${newSpeciesParameters.imageScale}) ${newSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${newSpeciesParameters.imageXOffset}px, ${-newSpeciesParameters.imageYOffset}px)`
+        //     this.$refs.pokemon_art.style.opacity = 0
             
-            await transition((t) => {
-                this.$refs.old_pokemon_art.style.opacity = 1 - t
-                this.$refs.pokemon_art.style.opacity = t
-            }, 500)
+        //     await transition((t) => {
+        //         this.$refs.old_pokemon_art.style.opacity = 1 - t
+        //         this.$refs.pokemon_art.style.opacity = t
+        //     }, 500)
             
-            this.$refs.old_pokemon_art.src = ""
-        },
-        imageXOffset() {
-            this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
-        },
-        imageYOffset() {
-            this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
-        },
-        imageScale() {
-            this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
-        },
-        imageFlip() {
-            this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
-        },
+        //     this.$refs.old_pokemon_art.src = ""
+        // },
+        // imageXOffset() {
+        //     this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
+        // },
+        // imageYOffset() {
+        //     this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
+        // },
+        // imageScale() {
+        //     this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
+        // },
+        // imageFlip() {
+        //     this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
+        // },
         playerId() {
             this.game_over = false;
+            MyStorage["playerResets"] = 0
             this.playerResets = 0;
         },    
         overlay_color(newColor) {
@@ -231,6 +233,7 @@ const app = Vue.createApp({
         }, 
         playerResets() {
             if (this.playerResets < 0) {
+                MyStorage["playerResets"] = 0
                 this.playerResets = 0;
             }
             this.blackout == false
@@ -448,16 +451,20 @@ const app = Vue.createApp({
             this.showCritMultiplierInEP = MyStorage["this.showSpecialTrainerGraphics"] ?? true
             this.showCritMultiplierInEP = MyStorage["this.battlePopUps"] ?? true
             this.showCritMultiplierInEP = MyStorage["this.rockTunnelDarkness"] ?? false
+            this.playerResets = MyStorage["playerResets"] ?? 0
         },
         //string can be: clear, increment, decrement
         resets_clear() {
             this.playerResets = 0
+            MyStorage["playerResets"] = 0
         },
         resets_increment() {
             this.playerResets++
+            MyStorage["playerResets"] = this.playerResets
         },
         resets_decrement() {
             this.playerResets--
+            MyStorage["playerResets"] = this.playerResets
         },
         async colorPick() {
             return new EyeDropper().open().then(res => res.sRGBHex)
@@ -1193,6 +1200,10 @@ const app = Vue.createApp({
         this.mapper.onConnected = (x) => this.ready = true
         this.mapper.onDisconnected = (x) => this.ready = false
         await this.mapper.connect()
+        
+        //prevent windows scaling from affecting the programs dimensions
+        document.body.style.scale = 1 / window.devicePixelRatio
+
         this.starterName = MyStorage.currentStarter ?? "Venomoth"
         this.load_all_settings()
 
@@ -1202,17 +1213,45 @@ const app = Vue.createApp({
             // the variable t starts at 0 and advances to 1
             }, 500)
 
+        this.mapper.properties.player.team[0].species.change(async (newValue, oldValue) => {
+            //transition between pokemon art
+            const newSpecies = newValue.species.value
+            const oldSpecies = oldValue.species.value
+            console.log(newSpecies, oldSpecies)
+
+            const newSpeciesParameters = MyStorage[newSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
+            const oldSpeciesParameters = MyStorage[oldSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
+
+            this.$refs.old_pokemon_art.src = `images/pokemon/${oldSpecies}.png`
+            this.$refs.old_pokemon_art.style.transform = `scale(${oldSpeciesParameters.imageScale}) ${oldSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${oldSpeciesParameters.imageXOffset}px, ${-oldSpeciesParameters.imageYOffset}px)`
+            this.$refs.old_pokemon_art.style.opacity = 1
+            
+            this.$refs.pokemon_art.src = `images/pokemon/${newSpecies}.png`
+            this.$refs.pokemon_art.style.transform = `scale(${newSpeciesParameters.imageScale}) ${newSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${newSpeciesParameters.imageXOffset}px, ${-newSpeciesParameters.imageYOffset}px)`
+            this.$refs.pokemon_art.style.opacity = 0
+            
+            await transition((t) => {
+                this.$refs.old_pokemon_art.style.opacity = 1 - t
+                this.$refs.pokemon_art.style.opacity = t
+            }, 500)
+            
+            this.$refs.old_pokemon_art.src = ""
+        })
+        
+
         // reset tracking
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {
             if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
                 this.blackout = false;
                 this.playerResets++;
+                MyStorage["playerResets"] = this.playerResets
             } 
         })
         this.mapper.properties.player.playerId.change((newProp) => {
             if (newProp.value > 0 && this.game_over == false) {
                 if (newProp.value != this.playerId) {
                     this.playerResets = 0;
+                    MyStorage["playerResets"] = this.playerResets
                     this.playerId = newProp.value;
                 }
             }
@@ -1238,10 +1277,12 @@ const app = Vue.createApp({
             if (this.blackouts_as_resets == true && this.blackout == true) {
                 if (oldProp.value == 0 && newProp.value > 0) {
                     this.playerResets++;
+                    MyStorage["playerResets"] = this.playerResets
                 }
             }
         })
 
+        
         // Encounters (set initial value)
         if (this.route1 == false && this.mapper.properties.overworld.map.value == "Route 1") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 

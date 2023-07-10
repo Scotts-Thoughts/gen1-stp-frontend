@@ -188,6 +188,7 @@ html {
 body {
     height: 100%;
     width: 100%;
+    transform-origin: top left;
     overflow: hidden; /* Hide scrollbars */
     background-color: #ffffff;
 }

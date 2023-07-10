@@ -9578,9 +9578,9 @@ const g1YellowTrainers = {
         "money": 380,
         "route_one_offset": "0x3A1C9"
     },
-    "Rocker 1": {
-        "trainer_class": "Rocker",
-        "trainer_name": "Rocker 1",
+    "ROCKER 1": {
+        "trainer_class": "ROCKER",
+        "trainer_name": "ROCKER 1",
         "trainer_location": "Vermilion Gym",
         "pokemon": [
             {
@@ -9632,9 +9632,9 @@ const g1YellowTrainers = {
         "money": 500,
         "route_one_offset": "0x3A1CC"
     },
-    "Rocker 2": {
-        "trainer_class": "Rocker",
-        "trainer_name": "Rocker 2",
+    "ROCKER 2": {
+        "trainer_class": "ROCKER",
+        "trainer_name": "ROCKER 2",
         "trainer_location": "Route 12",
         "pokemon": [
             {
