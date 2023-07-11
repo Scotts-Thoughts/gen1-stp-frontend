@@ -9431,7 +9431,7 @@ const g1PokemonData = {
         catch_rate: 45,
         base_xp: 106,
         initial_moveset: [
-        "Sketch"
+        "Sketch",
         ],
         growth_rate: "Fast",
         tm_hm_learnset: [],

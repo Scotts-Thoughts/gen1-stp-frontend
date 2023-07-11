@@ -12,20 +12,23 @@
             <div class="mainContainer">
                 <!-- GRAPHICS ---------------------------------------------------------------------------------->
                 <div>
-                    <img class="canvas" :src="`images/textures/${g1PokemonData[starterName].type1}.png`" />
+                    <img class="canvas" :src="`images/textures/Smeargle.png`" />
+                    <!-- <img class="canvas" :src="`images/textures/${g1PokemonData[starterName].type1}.png`" /> -->
                     <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
-                    <img class="pokemon_art" :style="{
+                    <img class="pokemon_art" :src="`images/pokemon/Smeargle.png`" />
+                    <!-- <img class="pokemon_art" :style="{
                         'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`, 
-                    }" :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
-                    <img class="canvas" :src="`images/left_ui/${g1PokemonData[starterName].type1}.png`" />
-                    <!-- <div class="colored-image" style="--url: url(images/left_ui/Electric.png)"></div> -->
+                    }" :src="`images/pokemon/${s1dynamicReset.species.value}.png`" /> -->
+                    <!-- <img class="canvas" :src="`images/left_ui/${g1PokemonData[starterName].type1}.png`" /> -->
+                    <div class="colored-image" style="--url: url(images/left_ui/Smeargle.png)"></div>
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
                     <div class="exp_growthRate">{{ growthRate }}</div>
-                    <div v-show="gametimeDisplay == false" class="genericLabels timerLabel">time played at 4x game speed</div>
-                    <div v-show="gametimeDisplay == true" class="genericLabels timerLabel">gametime</div>
+                    <div class="genericLabels timerLabel">time played at 4x game speed</div>
+                    <!-- <div v-show="gametimeDisplay == false" class="genericLabels timerLabel">time played at 4x game speed</div> -->
+                    <!-- <div v-show="gametimeDisplay == true" class="genericLabels timerLabel">gametime</div> -->
                     <div class="genericLabels resetsLabel">resets</div>
                 </div>
                 <!-- TYPE ICONS -------------------------------------------------------------------------------->
@@ -38,15 +41,6 @@
                         <img :src="`images/elements/types/${pkmn_type(2)}.png`" />
                     </div>
                 </div>
-                <!-- <div class="typeContainer">
-                    <div v-if="pkmnType(1, s1.type1.value, s1.type2.value) == pkmnType(2, s1.type1.value, s1.type2.value)" class="type">
-                        <img :src="pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
-                    </div>
-                    <div v-else class="type">
-                        <img :src="pkmnType(1, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
-                        <img :src="pkmnType(2, s1dynamicReset.type1.value, s1dynamicReset.type2.value)" />
-                    </div>
-                </div> -->
                 <!-- BADGE ICONS ------------------------------------------------------------------------------->
                 <div class="badgesBar">          
                     <img v-show="map.player.badges.badge1.value === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" style="top: 914px; opacity: .3; left: 22px; z-index: 2;" />
@@ -155,12 +149,12 @@
                 </div>
                 <!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade">
-                    <div v-if="battle_fade == true && battleGraphic == true" style="position: absolute;" key=1>
+                    <div v-if="battle_fade == true && battleGraphic == true && this.mapper.properties.battle.specialType.value != `Old Man Battle`" style="position: absolute;" key=1>
                     <!-- <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1> -->
                         <div v-if="mapper.properties.battle.type.value == `Wild`">
                             <div class="trainerLabel">{{"Wild " + wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
-                            <img class="enemyPng" :src="`images/enemy_area/${g1PokemonData[starterName].type1}.png`" style="height: 242px;"/>
-                            <!-- <div class="colored-image" style="--url: url(images/enemy_area/Electric.png);"></div> -->
+                            <!-- <img class="enemyPng" :src="`images/enemy_area/${g1PokemonData[starterName].type1}.png`" style="height: 242px;"/> -->
+                            <div class="colored-image" style="--url: url(images/enemy_area/Smeargle.png);" :style="battlePokemonCrop()"></div>
                             <div class="enemyGraphic">
                                 <div class="ePkmnStyle ePkmn1">
                                     <img class="ePkmnSprite" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).faint" :src="`images/pokemon/${mapper.properties.battle.enemyPokemon.species.value}.png`"/>
@@ -185,8 +179,8 @@
                         
                         <div v-if="mapper.properties.battle.type.value == `Trainer`">
                             <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
-                            <img class="enemyPng" :src="`images/enemy_area/${g1PokemonData[starterName].type1}.png`" :style="battlePokemonCrop()"/>
-                            <!-- <div class="colored-image" style="--url: url(images/enemy_area/Electric.png);"></div> -->
+                            <!-- <img class="enemyPng" :src="`images/enemy_area/${g1PokemonData[starterName].type1}.png`" :style="battlePokemonCrop()"/> -->
+                            <div class="colored-image" style="--url: url(images/enemy_area/Smeargle.png);" :style="battlePokemonCrop()"></div>
                             <div class="enemyGraphic">
                                 <div v-for="x in pkmnSlots">
                                     <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmnStyle ePkmn${x + 1}`">
@@ -221,7 +215,7 @@
                                 <th class="movepool_header movepool_tableC">Acc.</th>
                                 <th class="movepool_header movepool_tableC">PP</th>
                             </tr>
-                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial">
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, starterName).initial">
                                 <td class="movepool_way">1</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${x.Type.toLowerCase()})`}">{{x.Type}}</td>
@@ -229,7 +223,7 @@
                                 <td class="movepool_tableC">{{x.Accuracy}}%</td>
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
-                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).level">
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, starterName).level">
                                 <td class="movepool_way">{{x.Level}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${x.Type.toLowerCase()})`}">{{x.Type}}</td>
@@ -237,7 +231,7 @@
                                 <td class="movepool_tableC">{{x.Accuracy}}%</td>
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
-                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).tmhm">
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, starterName).tmhm">
                                 <td class="movepool_way">{{x.tmhm}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
@@ -246,8 +240,8 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <img class="canvas" :src="`images/movepool_border/${g1PokemonData[starterName].type1}.png`"/>
-                        <!-- <div class="colored-image" style="--url: url(images/movepool_border/Electric.png)"></div> -->
+                        <!-- <img class="canvas" :src="`images/movepool_border/${g1PokemonData[starterName].type1}.png`"/> -->
+                        <div class="colored-image" style="--url: url(images/movepool_border/Normal.png)"></div>
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                 </transition>
@@ -260,24 +254,24 @@
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/accuracy/${g1PokemonData[starterName].type1}.png`" style="position: absolute;">
-                            <!-- <div class="colored-image" style="--url: url(images/pop_ups/accuracy/Electric.png)"></div> -->
+                            <!-- <img :src="`images/pop_ups/accuracy/${g1PokemonData[starterName].type1}.png`" style="position: absolute;"> -->
+                            <div class="colored-image" style="--url: url(images/pop_ups/accuracy/Normal.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/evasion/${g1PokemonData[starterName].type1}.png`" style="position: absolute;">
-                            <!-- <div class="colored-image" style="--url: url(images/pop_ups/evasion/Electric.png)"></div> -->
+                            <!-- <img :src="`images/pop_ups/evasion/${g1PokemonData[starterName].type1}.png`" style="position: absolute;"> -->
+                            <div class="colored-image" style="--url: url(images/pop_ups/evasion/Normal.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
-                            <img :src="`images/pop_ups/screens/${g1PokemonData[starterName].type1}.png`" style="position: absolute;">
-                            <!-- <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div> -->
+                            <!-- <img :src="`images/pop_ups/screens/${g1PokemonData[starterName].type1}.png`" style="position: absolute;"> -->
+                            <div class="colored-image" style="--url: url(images/pop_ups/screens/Normal.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>
@@ -289,11 +283,16 @@
                     <div class="expTextGen2">Exp:</div>
                     <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
                 </div>
+                <!---------- REALTIME ------------------------------------------------------------------------------------------------------------------->
+                <div class="gametime">
+                    <div class="gametimeClock">{{timer_formatted_time[0]}}</div>
+                    <div class="gametimeFrames">{{timer_formatted_time[1]}}</div>
+                </div>
                 <!---------- GAMETIME ------------------------------------------------------------------------------------------------------------------->
-                <div v-show="gametimeDisplay == true" class="gametime">
+                <!-- <div v-show="gametimeDisplay == true" class="gametime">
                     <div class="gametimeClock">{{gametimeHMS}}</div>
                     <div class="gametimeFrames">.{{gametime_frames}}</div>
-                </div>
+                </div> -->
                 <!---------- RESET ------------------------------------------------------------------------------------------------------------------->
                 <div v-show="resetCounter == true" class="resets">
                     <div>{{playerResets}}</div>
@@ -302,30 +301,34 @@
         </div>
         <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
-            <div>Compatible with gen1 (Red/Blue/Yellow)</div><br>
-            <!-- <div>Game Loaded: {{mapper?.meta?.gameName}}</div> -->
-            <input type="text" maxlength="7" @keypress="isLetter($event)" v-model="playerNameChoice"/>
+            <div>Pokemon Yellow - Smeargle Race</div>
+            <!-- <div>{{timer_pause}}</div><br> -->
+            <!-- <div>{{retro?.connected}}</div><br> -->
+            <button class="buttonStyle" style="width: 420px; background-color: hsl(36, 80%, 62%);" @click="pauseUnpauseTime">Pause/Unpause Timer & Gameplay</button><br><br>
+            <div>Enter your name here (1-7 characters)</div>
+            <input class="text_entry_box" type="text" maxlength="7" @keypress="isLetter($event)" v-model="playerNameChoice"/><br>
             <!-- <div>Solo Pokemon:</div>
             <select v-model="starterName" @change="load_pokemon_sprite_settings(s1dynamicReset.species.value)" class="dropdownMenu">
                 <option disabled value="">Select a species</option>
                 <option value="Smeargle">Smeargle</option>
             </select> -->
-            <br>Smeargle Race Rules:<br>
+            <br>Rules:<br>
             <div class="rule">1. Only Smeargle in battle</div>
             <div class="rule">2. No items in battle</div>
             <div class="rule">3. No glitches, exploits, or rng manips in the overworld</div>
             <div class="rule">4. No evasion boosting moves</div>
             <br>
-            <br>
-            <div>Rule Clarifications:</div><br>
+            <div>Rule Clarifications:</div>
+            <div class="rule_clarifications">You must name yourself. It must be family-friendly.</div><br>
             <div class="rule_clarifications">You cannot use Pokeballs for any purpose other than catching HM users</div><br>
-            <div class="rule_clarifications">You are allowed you skip Marowak with a Pokedoll</div><br>
+            <div class="rule_clarifications">You are allowed to skip Marowak with a Pokedoll</div><br>
             <div class="rule_clarifications">The bike skip glitch is banned</div><br>
             <div class="rule_clarifications">All in-battle battle-related glitches are allowed (badge-boost, Fly-paralysis glitch, gen1 miss, etc)</div><br>
             <div class="rule_clarifications">Turbo-fire / Rapid-fire keys are allowed (and highly encouraged)</div><br>
             <div class="rule_clarifications">Blackouts count as resets</div><br>
-            <div class="rule_clarifications">You must use <a href="https://livesplit.org/downloads/" target="_blank">Livesplit</a> to track real-time.</div><br>
-            <div class="rule_clarifications">It is strictly against the rules to modify any property using GameHook</div><br>
+            <div class="rule_clarifications">You must use this software's timer to track real-time.</div><br>
+            <!-- <div class="rule_clarifications">You must use <a href="https://livesplit.org/downloads/" target="_blank">Livesplit</a> to track real-time.</div><br> -->
+            <div class="rule_clarifications">It is strictly against the rules to modify GameHook properties or the output csv file</div><br>
             <div class="rule_clarifications">Save states are banned (they can be used for testing purposes only)</div><br>
             <div class="rule_clarifications">You must play on 4x game-speed</div><br>
             <div class="rule_clarifications"></div><br>
@@ -341,13 +344,11 @@
                 <!-- <option>Encounters</option> -->
                 <option>Help</option>
                 <!-- <option>Color</option> -->
-                <!-- <option>Changelog</option> -->
                 <option>Credits</option>
                 <!-- <option>Dev Tools</option> -->
             </select>
         </div>
         <div v-show="help_menus == `Settings`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
-            <!-- Perfect DVs: <input class="checkBoxStyle" type="checkbox" v-model="perfectDVs"/><br> -->
             Trash Cans Solved: <input class="checkBoxStyle" type="checkbox" v-model="trashCans"/><br>
             <div class="note">Automatically solves the puzzle in Lt. Surge's gym.</div>
             <br>
@@ -355,10 +356,10 @@
             <div class="note">Fast text, no battle animations, set battle-style.</div>
             <div class="note">Animations are turned on for the Champion battle.</div>
             <br>
-            Show Gametime: <input class="checkBoxStyle" type="checkbox" v-model="gametimeDisplay"/><br>
+            <!-- Show Gametime: <input class="checkBoxStyle" type="checkbox" v-model="gametimeDisplay"/><br>
             <div class="note">Shows the gametime in the top left.</div>
             <div class="note">Use Livesplit or a similar timer application to show realtime.</div>
-            <br>
+            <br> -->
             Reset Counter: <input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/><br>
             <div class="note">Counts resets while you play.</div>
             <div class="note">This number clears when you select "New Game".</div>
@@ -385,7 +386,6 @@
         </div>
         <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             Info Toggles:<br>
-            <!-- inventory: <input class="checkBoxStyle" type="checkbox" v-model="inventory"/><br> -->
             battleGraphic: <input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/><br>
             showAllTrainers: <input class="checkBoxStyle" type="checkbox" v-model="showAllTrainers"/><br>
             expBarAnimation: <input class="checkBoxStyle" type="checkbox" v-model="expBarAnimation"/><br>
@@ -411,17 +411,10 @@
             <div class="note">Note: Turns encounters on Route1, Route3, MtMoon, and Route6 off.</div>
         </div>
         <div v-show="help_menus == `Help`" class="testingArea3" style="z-index: 50000;">
-            <div><a href="https://youtu.be/8tzOHnQyAkk" target="_blank">Setup Guide</a><br></div>
+            <div><a href="https://youtu.be/xry40W2pM0g" target="_blank">Overlay Setup Guide</a><br></div>
             <a href="https://www.retroarch.com/" target="_blank">Retroarch</a><br>
             <a href="https://gamehook.io/" target="_blank">GameHook</a><br>
-            <a href="https://livesplit.org/downloads/" target="_blank">Livesplit</a>
-            <br>
-            <br>
-            <div>Press F11 to enter or exit fullscreen</div>
-            <br>
-            <div>This overlay is designed to function in fullscreen at 1920x1080</div>
-            <br>
-            <div>In OBS use the "Window Capture" source to record the program once it is in Fullscreen.</div><br>
+            <!-- <a href="https://livesplit.org/downloads/" target="_blank">Livesplit</a> -->
             <br>
             <div>Program Launch Order:</div>
             <div>1: RetroArch - load your ROM file</div>
@@ -429,9 +422,14 @@
             <div>3: Smeargle Race Overlay </div>
             <div class="note">(use the "Reload Overlay" button if you launch in the incorrect order)</div><br>
             <br>
+            <br>
+            <div>Press F11 to enter or exit fullscreen</div>
+            <br>
+            <div>This overlay is designed to function in fullscreen at 1920x1080</div>
+            <br>
+            <div>In OBS use the "Window Capture" source to record the program once it is in Fullscreen.</div><br>
+            <br><br><br><br><br><br><br><br><br>
             <div>For fairness of the race, this overlay does not provide the user with any user customization.</div><br>
-            <br><br><br><br>
-            <div>This program is currently in development. Please report all bugs and issues to Scott's Thoughts directly on <a href="https://discord.gg/4x7RNbyKR" target="_blank">Discord</a>.</div>
         </div>
         <div v-show="help_menus == `Credits`" class="testingArea3" style="z-index: 50000;">
             <div>Scott's Thoughts</div>

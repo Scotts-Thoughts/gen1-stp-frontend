@@ -178,7 +178,8 @@
     background-color: var(--overlay-color);
     -webkit-mask-image: var(--url); /* fallback, just to be safe */
     mask-image: var(--url); /* use the alpha channel of provided image as a mask of this layer */
-    mix-blend-mode: color; /* color blend mode, I'm not sure if 'color' is the right one - might need to be changed */
+    mix-blend-mode: color; /* color blend mode, I'm not sure if 'color' is the right one - might need to be changed
+    /* mix-blend-mode: multiply; color blend mode, I'm not sure if 'color' is the right one - might need to be changed */
 }
 
 html {
@@ -264,6 +265,18 @@ box-shadow:
     background: #72fd4f; 
     font-family: Play;
     border-radius: 10px;
+}
+.text_entry_box {
+    pointer-events: auto; 
+    position: relative; 
+    padding: 8px;
+    width: 170px; 
+    height: 40px; 
+    font-size: 24px; 
+    background: #d1ecca; 
+    font-family: Play;
+    border-radius: 10px;
+    filter: drop-shadow(0px 0px 2px #000000c5);
 }
 .buttonStyle {
     pointer-events: auto; 
@@ -355,10 +368,26 @@ box-shadow:
     filter: drop-shadow(3px 2px 2px #000000c5);
     filter: drop-shadow(6px 3px 3px #0000009c);
     top: 360px;
+    left: 0px;
+    width: 420px;
+    height: 420px;
+    transform: scale(.8);
+}
+/* .pokemon_art {
+    display: block;
+    border: 4px solid #ff000000;
+    padding: 8px;
+    position: absolute;
+    font-family: play;
+    font-size: 24px;
+    line-height: 26px;
+    filter: drop-shadow(3px 2px 2px #000000c5);
+    filter: drop-shadow(6px 3px 3px #0000009c);
+    top: 360px;
     left: -10px;
     width: 420px;
     height: 420px;
-}
+} */
 
 .enemyPng {
     display: block;
