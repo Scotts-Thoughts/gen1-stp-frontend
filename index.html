@@ -32,8 +32,8 @@
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
                     <div class="exp_growthRate">{{ growthRate }}</div>
-                    <transition name="fade"><div v-show="gametimeDisplay == false" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
-                    <transition name="fade"><div v-show="gametimeDisplay == true" class="genericLabels timerLabel">gametime</div></transition>
+                    <transition name="fade"><div v-show="timer_settings == `Real-Time`" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
+                    <transition name="fade"><div v-show="timer_settings == `Game-Time`" class="genericLabels timerLabel">gametime</div></transition>
                     <div class="genericLabels resetsLabel">resets</div>
                     <!-- <div v-if="blackouts_as_resets == true" class="genericLabels resetsLabel" style="font-size: 17px; top: 330px">failures</div> -->
                     <!-- <div v-if="blackouts_as_resets == false" class="genericLabels resetsLabel">resets</div> -->
@@ -287,13 +287,18 @@
                     <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
                 </div>
                 <!---------- GAMETIME ------------------------------------------------------------------------------------------------------------------->
-                <transition name="fade"><div v-show="gametimeDisplay == true" class="gametime">
+                <transition name="fade"><div v-show="timer_settings == `Game-Time`" class="gametime">
                     <div class="gametimeClock">{{gametimeHMS}}</div>
                     <div class="gametimeFrames">.{{gametime_frames}}</div>
                 </div></transition>
+                <!---------- REALTIME ------------------------------------------------------------------------------------------------------------------->
+                <transition name="fade"><div v-show="timer_settings == `Real-Time` class="gametime">
+                    <div class="gametimeClock">{{timer_formatted_time[0]}}</div>
+                    <div class="gametimeFrames">{{timer_formatted_time[1]}}</div>
+                </div></transition>
                 <!---------- RESET ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade"><div v-show="resetCounter == true" class="resets">
-                    <div>{{playerResets}}</div>
+                    <div if="reset_counter">{{playerResets}}</div>
                 </div></transition>
             </div>
         </div>
@@ -361,13 +366,22 @@
             <div class="note">Fast text, no battle animations, set battle-style.</div>
             <div class="note">Animations are turned on for the Champion battle.</div>
             <br>
-            Show Gametime: <input class="checkBoxStyle" type="checkbox" v-model="gametimeDisplay"/><br>
+            <!-- Show Gametime: <input class="checkBoxStyle" type="checkbox" v-model="gametimeDisplay"/><br>
             <div class="note">Shows the gametime in the top left.</div>
             <div class="note">Use Livesplit or a similar timer application to show realtime.</div>
-            <br>
+            <br> -->
             Reset Counter: <input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/><br>
             <div class="note">Counts resets while you play.</div>
             <div class="note">This number clears when you select "New Game".</div>
+            <br>
+            <div>Timer Setting:</div>
+            <select v-model="timer_settings" class="dropdownMenu">
+                <option disabled value="">Please select one</option>
+                <option>Real-Time</option>
+                <option>Game-Time</option>
+                <option>Turn off</option>
+            </select><br>
+            <div class="note">Display either real-time or game-time, or turn it off to use another program like livesplit.</div>
             <br>
 
             Encounters:<br>

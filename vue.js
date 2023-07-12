@@ -18,6 +18,11 @@ const MyStorage = new Proxy({}, {
     }
 });
 
+// Open the folder ./splits/ in the file explorer with node.js
+function openFolder() {
+    require('child_process').exec('start .\\splits\\');
+}
+
 function downloadFile(content, downloadFileName) {
     const blob = new Blob([content], {type: "application/octet-stream"});
     const url = window.URL.createObjectURL(blob);
@@ -31,6 +36,74 @@ function downloadFile(content, downloadFileName) {
     setTimeout(function() {
         return window.URL.revokeObjectURL(url);
     }, 1000);
+}
+
+class RetroArchHook {
+    client = undefined
+    connected = false
+    resolve = () => {}
+    
+    constructor() {
+        if (!require) {
+            console.error('RetroArchHook: require is not defined')
+            return
+        }
+
+        this.client = require('dgram').createSocket('udp4');
+
+        this.client.on('message', (msg, info) => {
+            const s = String.fromCharCode(...msg).split(" ")
+            if (s[0] === 'GET_STATUS') {
+                this.resolve(s[1])
+            }
+        });
+        
+        this.client.connect(55355, '127.0.0.1', (err) => {
+            console.log(err)
+            if (!err) {
+                this.connected = true
+            }
+        });
+    }
+
+    async get_status() {
+        // returns 'CONTENTLESS' | 'PLAYING' | 'PAUSED'
+        return new Promise((resolve, reject) => {
+            this.resolve = resolve
+            this.client.send('GET_STATUS');
+        })
+    }
+    
+    async pause() {
+        const status = await this.get_status()
+        if (status === 'PLAYING') {
+            this.client.send('PAUSE_TOGGLE');
+        }
+    }
+
+    async resume() {
+        const status = await this.get_status()
+        if (status === 'PAUSED') {
+            this.client.send('PAUSE_TOGGLE');
+        }
+    }
+
+    async fastForward() {
+        this.client.send('FAST_FORWARD');
+    }
+}
+
+const retro = new RetroArchHook()
+
+function logToFile(str, file_name, playerName) {
+    return new Promise((resolve, reject) => {
+        require("fs").mkdir("./splits/", { recursive: true }, console.log)
+        require("fs").appendFile(`./splits/${playerName}-attempt${file_name}.csv`, str, (err) => err ? reject(err) : resolve())
+    }) 
+}
+
+function hash(s) {
+    return [...s].reduce((h, x) => Math.imul(31, h) + x.charCodeAt(0), 0) >>> 0
 }
 
 function transition(fn, ms) {
@@ -129,10 +202,39 @@ const app = Vue.createApp({
             imageYOffset: 0,
             imageScale: 1,
             imageFlip: false,
+
+            //
+            playerNameChoice: MyStorage["playerNameChoice"] ?? "NINTEN",
+
+            //timer variables
+            timer_startTime: MyStorage["timer_startTime"] ?? 0,
+            timer_pause: true,
+            timer_pause: MyStorage["timer_pause"] ?? false,
+            timer_formatted_time: ["0", ".00"],
+            timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
+            battle_start: 0,
+            timer_settings: "Real-Time",
+
+            //splits
+            split_data: MyStorage["split_data"] ?? [],
         }
     },
 
     watch: {
+        //splits
+        split_data() {
+            MyStorage["split_data"] = this.split_data
+        },
+        //timer functions
+        timer_pause() {
+            MyStorage["timer_pause"] = this.timer_pause
+        },
+        timer_startTime() {
+            MyStorage["timer_startTime"] = this.timer_startTime
+        },
+        timer_pause_time() {
+            MyStorage["timer_pause_time"] = this.timer_pause_time
+        },
         //Encounter Checkboxes
         route1(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
@@ -232,11 +334,21 @@ const app = Vue.createApp({
             document.documentElement.style.setProperty('--overlay-color', newColor);
         }, 
         playerResets() {
+            if (newProp.toString().length == 1) {
+                document.getElementById("reset_counter").style.fontSize = "75px"
+            }
+            if (newProp.toString().length == 3) {
+                document.getElementById("reset_counter").style.fontSize = "54px"
+            }
+            if (newProp.toString().length == 4) {
+                document.getElementById("reset_counter").style.fontSize = "40px"
+            }
+            
             if (this.playerResets < 0) {
-                MyStorage["playerResets"] = 0
                 this.playerResets = 0;
             }
             this.blackout == false
+            MyStorage["playerResets"] = this.playerResets
         },
         rockTunnelDarkness() {
             if (this.rockTunnelDarkness == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
@@ -249,7 +361,11 @@ const app = Vue.createApp({
                 return
             }
         },  
-
+        playerNameChoice() {
+            this.overlay_color = `lch(75% 100 ${hash(this.playerNameChoice) % 360})`
+            MyStorage["playerNameChoice"] = this.playerNameChoice
+            MyStorage["overlay_color"] = this.overlay_color
+        }
     },
 
     computed: {
@@ -1207,6 +1323,16 @@ const app = Vue.createApp({
         this.starterName = MyStorage.currentStarter ?? "Venomoth"
         this.load_all_settings()
 
+        if (this.playerResets.toString().length == 1) {
+            document.getElementById("reset_counter").style.fontSize = "75px"
+        }
+        if (this.playerResets.toString().length == 3) {
+            document.getElementById("reset_counter").style.fontSize = "54px"
+        }
+        if (this.playerResets.toString().length == 4) {
+            document.getElementById("reset_counter").style.fontSize = "40px"
+        }
+
         //image transition
         await transition(t => {
             // this part gets called at every frame of the browser
@@ -1244,14 +1370,16 @@ const app = Vue.createApp({
             if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
                 this.blackout = false;
                 this.playerResets++;
-                MyStorage["playerResets"] = this.playerResets
             } 
         })
         this.mapper.properties.player.playerId.change((newProp) => {
             if (newProp.value > 0 && this.game_over == false) {
                 if (newProp.value != this.playerId) {
                     this.playerResets = 0;
-                    MyStorage["playerResets"] = this.playerResets
+                    this.attempt_number++;
+                    MyStorage["attempt_number"] = this.attempt_number;
+                    console.log(`Attempt ${this.attempt_number}`)
+                    this.startTime();
                     this.playerId = newProp.value;
                 }
             }
