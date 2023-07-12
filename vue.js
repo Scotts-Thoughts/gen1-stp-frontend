@@ -192,6 +192,7 @@ const app = Vue.createApp({
             playerResets: MyStorage["playerResets"] ?? 0,
             resetCounter: true,
             game_over: false,
+            attempt_number: 0,
 
             blackouts_as_resets:        true, //counts blackouts as resets
             blackout:                   false,
@@ -333,7 +334,7 @@ const app = Vue.createApp({
         overlay_color(newColor) {
             document.documentElement.style.setProperty('--overlay-color', newColor);
         }, 
-        playerResets() {
+        playerResets(newProp) {
             if (newProp.toString().length == 1) {
                 document.getElementById("reset_counter").style.fontSize = "75px"
             }
@@ -496,6 +497,60 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        //*timer methods
+        //start the timer
+        startTime() {
+            this.timer_startTime = Date.now()
+            this.timer_pause = false
+            this.updateTime()
+        },
+        //stop the timer
+        stopTime() {
+            this.timer_pause = true
+        },
+        //animate the timer
+        updateTime() {
+            var time = Date.now() - this.timer_startTime
+            if (this.timer_pause == true) {
+                time = this.timer_pause_time - this.timer_startTime
+            }
+            var f = (x) => x.toString().padStart(2, "0")
+            var c = (Math.floor(time / 10) % 100)
+            var s = (Math.floor(time / 1000) % 60)
+            var m = (Math.floor(time / 60000) % 60)
+            var h = (Math.floor(time / 3600000))
+            if (h != 0) 
+                this.timer_formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(c) ]
+            else if (m != 0) 
+                this.timer_formatted_time = [ m + ":" + f(s), "." + f(c) ]
+            else 
+                this.timer_formatted_time = [ s, "." + f(c) ]
+            if (this.timer_pause == false) {
+                requestAnimationFrame(this.updateTime)
+            }
+        },
+        //pause the timer
+        pauseUnpauseTime() {
+            if (this.timer_pause == true) {
+                this.timer_pause = false
+                this.timer_startTime += Date.now() - this.timer_pause_time
+                this.updateTime()
+                retro.resume()
+            }
+            else {
+                this.timer_pause = true
+                this.timer_pause_time = Date.now()
+                retro.pause()
+            }
+        },
+
+        //*text methods
+        //only allow letters to be typed in the name input
+        isLetter(e) {
+            let char = String.fromCharCode(e.keyCode); // Get the character
+            if(/^[A-Za-z]+$/.test(char)) return true; // Match with regex 
+            else e.preventDefault(); // If not match, don't add to input text
+        },
         pkmn_type(typeNumber) {
             data = this.g1PokemonData[this.starterName]
             if (this.g1stateVariable == `Battle`) {
@@ -1682,7 +1737,7 @@ const app = Vue.createApp({
             }
         })
 
-        //watch the Pokemon species and then it changes, update the sprite
+        //the Pokemon species and then it changes, update the sprite
         this.mapper.properties.player.team[0].species.change(async (x) => {
             if (x.value == undefined) { this.load_pokemon_sprite_settings(this.starterName) }
             this.load_pokemon_sprite_settings(x.value)

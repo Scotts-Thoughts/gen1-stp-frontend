@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scott's Thoughts - Generation 1 Overlay - v1.0.1</title>
+    <title>Scott's Thoughts - Generation 1 Overlay - v1.1.0</title>
     <link rel="stylesheet" href="style-yellow.css">
 </head>
 <body>
@@ -32,8 +32,8 @@
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
                     <div class="exp_growthRate">{{ growthRate }}</div>
-                    <transition name="fade"><div v-show="timer_settings == `Real-Time`" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
-                    <transition name="fade"><div v-show="timer_settings == `Game-Time`" class="genericLabels timerLabel">gametime</div></transition>
+                    <transition name="fade"><div v-show="timer_settings == `Off - Real-Time Label` || timer_settings == `Real-Time`" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
+                    <transition name="fade"><div v-show="timer_settings == `Off - Game-Time Label` || timer_settings == `Game-Time`" class="genericLabels timerLabel">gametime</div></transition>
                     <div class="genericLabels resetsLabel">resets</div>
                     <!-- <div v-if="blackouts_as_resets == true" class="genericLabels resetsLabel" style="font-size: 17px; top: 330px">failures</div> -->
                     <!-- <div v-if="blackouts_as_resets == false" class="genericLabels resetsLabel">resets</div> -->
@@ -292,13 +292,13 @@
                     <div class="gametimeFrames">.{{gametime_frames}}</div>
                 </div></transition>
                 <!---------- REALTIME ------------------------------------------------------------------------------------------------------------------->
-                <transition name="fade"><div v-show="timer_settings == `Real-Time` class="gametime">
+                <transition name="fade"><div v-show="timer_settings == `Real-Time`" class="gametime">
                     <div class="gametimeClock">{{timer_formatted_time[0]}}</div>
                     <div class="gametimeFrames">{{timer_formatted_time[1]}}</div>
                 </div></transition>
                 <!---------- RESET ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade"><div v-show="resetCounter == true" class="resets">
-                    <div if="reset_counter">{{playerResets}}</div>
+                    <div id="reset_counter">{{playerResets}}</div>
                 </div></transition>
             </div>
         </div>
@@ -339,7 +339,8 @@
                 <div class="note">These controls are provided in case there is an<br> error with the automatic reset counter.</div>
                 Count blackouts as resets: <input class="checkBoxStyle" type="checkbox" v-model="blackouts_as_resets"/><br>
             </div></transition>
-            <br><br><br>
+            <br><br>
+            <button class="buttonStyle" style="top: -20px; width: 420px; background-color: hsl(59, 48%, 59%);" @click="pauseUnpauseTime">Toggle Pause Timer & Gameplay</button><br><br>
             <button class="buttonStyle refresh" onClick="window.location.reload();">Reload Overlay</button>
             <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button>
         </div>
@@ -379,7 +380,8 @@
                 <option disabled value="">Please select one</option>
                 <option>Real-Time</option>
                 <option>Game-Time</option>
-                <option>Turn off</option>
+                <option>Off - Real-Time Label</option>
+                <option>Off - Game-Time Label</option>
             </select><br>
             <div class="note">Display either real-time or game-time, or turn it off to use another program like livesplit.</div>
             <br>
