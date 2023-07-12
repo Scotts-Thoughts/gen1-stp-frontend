@@ -1,11 +1,3 @@
-//!TODO BEFORE RACE
-// - Fix reset counter error for blackouts
-//!TO TEST BEFORE RACE
-// - Color change to overlay
-// - Add splits reporting
-// - Real-time timer
-// - Player automatic naming
-
 const MyStorage = new Proxy({}, {
     set: (_, prop, value) => {
         if (value === undefined || value === null)
@@ -25,6 +17,11 @@ const MyStorage = new Proxy({}, {
         return JSON.parse(localStorage.getItem(prop));
     }
 });
+
+// Open the folder ./splits/ in the file explorer with node.js
+function openFolder() {
+    require('child_process').exec('start .\\splits\\');
+}
 
 function downloadFile(content, downloadFileName) {
     const blob = new Blob([content], {type: "application/octet-stream"});
@@ -92,8 +89,6 @@ class RetroArchHook {
     }
 
     async fastForward() {
-        // const status = await this.get_status()
-        // console.log(status)
         this.client.send('FAST_FORWARD');
     }
 }
@@ -139,7 +134,7 @@ const app = Vue.createApp({
             showCritMultiplierInEP:     true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             show_wild_battles:          true, //shows wild battles in the battle screen
 
-            help_menus: "Help",
+            help_menus: "Info",
 
             //ENCOUNTERS ---------------------------------------------------------------------------------------//
             route1:         true,
@@ -183,13 +178,13 @@ const app = Vue.createApp({
             playerId: 0,
             playerName: "NINTEN",
             resetCatcher: "NINTEN",
-            playerResets: 0,
+            playerResets: MyStorage["playerResets"] ?? 0,
             resetCounter: true,
             game_over: false,
             attempt_number: 0,
 
-            blackouts_as_resets:        true, //counts blackouts as resets
-            blackout:                   false,
+            blackouts_as_resets: true, //counts blackouts as resets
+            blackout:            false,
 
             //Pokemon settings for local storage
             overlay_color:   "#000000",
@@ -203,14 +198,23 @@ const app = Vue.createApp({
 
             //timer variables
             timer_startTime: MyStorage["timer_startTime"] ?? 0,
+            timer_pause: true,
             timer_pause: MyStorage["timer_pause"] ?? false,
             timer_formatted_time: ["0", ".00"],
             timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
             battle_start: 0,
+
+            //splits
+            split_data: MyStorage["split_data"] ?? [],
         }
     },
 
     watch: {
+        //splits
+        split_data() {
+            MyStorage["split_data"] = this.split_data
+        },
+        //timer functions
         timer_pause() {
             MyStorage["timer_pause"] = this.timer_pause
         },
@@ -270,11 +274,24 @@ const app = Vue.createApp({
         overlay_color(newColor) {
             document.documentElement.style.setProperty('--overlay-color', newColor);
         }, 
-        playerResets() {
+        playerResets(newProp) {
+            console.log(this.playerResets.toString().length)
+            console.log(newProp.toString().length)
+            if (newProp.toString().length == 1) {
+                document.getElementById("reset_counter").style.fontSize = "75px"
+            }
+            if (newProp.toString().length == 3) {
+                document.getElementById("reset_counter").style.fontSize = "54px"
+            }
+            if (newProp.toString().length == 4) {
+                document.getElementById("reset_counter").style.fontSize = "40px"
+            }
+
             if (this.playerResets < 0) {
                 this.playerResets = 0;
             }
             this.blackout == false
+            MyStorage["playerResets"] = this.playerResets
         },
         rockTunnelDarkness() {
             if (this.rockTunnelDarkness == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
@@ -499,6 +516,9 @@ const app = Vue.createApp({
         //animate the timer
         updateTime() {
             var time = Date.now() - this.timer_startTime
+            if (this.timer_pause == true) {
+                time = this.timer_pause_time - this.timer_startTime
+            }
             var f = (x) => x.toString().padStart(2, "0")
             var c = (Math.floor(time / 10) % 100)
             var s = (Math.floor(time / 1000) % 60)
@@ -529,12 +549,14 @@ const app = Vue.createApp({
             }
         },
 
-        //*other methods
+        //*text methods
+        //only allow letters to be typed in the name input
         isLetter(e) {
             let char = String.fromCharCode(e.keyCode); // Get the character
             if(/^[A-Za-z]+$/.test(char)) return true; // Match with regex 
             else e.preventDefault(); // If not match, don't add to input text
         },
+
         pkmn_type(typeNumber) {
             data = this.g1PokemonData[this.starterName]
             if (this.g1stateVariable == `Battle`) {
@@ -580,19 +602,17 @@ const app = Vue.createApp({
             this.route6 = true
             this.safariZone = true
             this.mansion = true
-            this.help_menus = "Help"
+            this.help_menus = "Info"
             this.dvSetting = "Max"
             this.trashCans = true
             this.options = true
             this.gametimeDisplay = false
             this.resetCounter = true
-            this.playerResets = MyStorage["this.playerResets"] ?? 0
             this.route21 = true
             this.route22 = true
             this.victoryRoad = true
             this.powerPlant = true
             this.blackouts_as_resets = true
-            this.playerNameChoice = MyStorage["playerNameChoice"] ?? "NINTEN"
         },
         //string can be: clear, increment, decrement
         resets_clear() {
@@ -1330,8 +1350,19 @@ const app = Vue.createApp({
         await this.mapper.connect()
 
         this.starterName = MyStorage.currentStarter ?? "Venomoth"
+        this.updateTime()
         this.load_all_settings()
         // retro.fastForward()
+
+        if (this.playerResets.toString().length == 1) {
+            document.getElementById("reset_counter").style.fontSize = "75px"
+        }
+        if (this.playerResets.toString().length == 3) {
+            document.getElementById("reset_counter").style.fontSize = "54px"
+        }
+        if (this.playerResets.toString().length == 4) {
+            document.getElementById("reset_counter").style.fontSize = "40px"
+        }
 
         // use this to set the color based on the playerName
         this.overlay_color = `lch(75% 100 ${hash(this.playerNameChoice) % 360})`
@@ -1362,6 +1393,7 @@ const app = Vue.createApp({
                 if (newProp.value != this.playerId) {
                     this.playerResets = 0;
                     this.attempt_number++;
+                    MyStorage["attempt_number"] = this.attempt_number;
                     console.log(`Attempt ${this.attempt_number}`)
                     this.startTime();
                     this.playerId = newProp.value;
@@ -1391,18 +1423,20 @@ const app = Vue.createApp({
 
         //write to file at the end of a key battle
         this.mapper.properties.battle.lowHealthAlarm.change((prop) => {
+            d = new Date()
+            battle_end = Date.now()
             var log_end = (x) => console.log(`Autosplitter: Battle Ended - Split: ${this.mapper.properties.battle.trainer.class.value} at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`)
             var write_split_data = (x) => {
                 log_end()
+                this.split_data.push(str)
                 logToFile(str, this.attempt_number, this.playerNameChoice)
             }
             var end_run = (x) => {
                 this.stopTime()
                 log_end()
+                this.split_data.push(str)
                 logToFile(str, this.attempt_number, this.playerNameChoice)
             }
-            d = new Date()
-            battle_end = Date.now()
 
             player_name = this.playerNameChoice
             date_string = (d.getMonth() + 1) + "-" + d.getDate().toString().padStart(2, "0")
@@ -1414,7 +1448,7 @@ const app = Vue.createApp({
             level = this.mapper.properties.player.team[0].level.value.toString()
             game_time = this.gametimeSplit.toString()
             battle_duration = (battle_end - this.battle_start)/1000
-            
+
             str = player_name + "," + date_string + "," + time_string + "," + trainer_name + "," + real_time_total + "," + real_time_hmmss + "," + resets + "," + level + "," + game_time + "," + battle_duration + "\n"
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL1")    { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL2")    { write_split_data() }
@@ -1447,6 +1481,7 @@ const app = Vue.createApp({
             if (this.blackouts_as_resets == true && this.blackout == true) {
                 if (oldProp.value == 0 && newProp.value > 0) {
                     this.playerResets++;
+                    MyStorage["playerResets"] = this.playerResets;
                 }
             }
         })
@@ -1722,7 +1757,7 @@ const app = Vue.createApp({
             }
         })
 
-        //watch the Pokemon species and then it changes, update the sprite
+        // the Pokemon species and then it changes, update the sprite
         this.mapper.properties.player.team[0].species.change(async (x) => {
             if (x.value == undefined) { this.load_pokemon_sprite_settings(this.starterName) }
             this.load_pokemon_sprite_settings(x.value)

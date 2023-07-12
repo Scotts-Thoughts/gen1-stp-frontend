@@ -171,15 +171,23 @@
     isolation: isolate; /* optional: this restricts the color blending only to this layer, just to be safe */
 }
 
-.colored-image::after { /* ::after generates a pseudo element inside the div */
-    content: ''; /* content of the pseudo element, needs to be provided */
+.colored-image::before {
+    content: '';
     position: absolute;
-    inset: 0; /* sets top/left/bottom/right to 0 */
+    inset: 0;
     background-color: var(--overlay-color);
-    -webkit-mask-image: var(--url); /* fallback, just to be safe */
-    mask-image: var(--url); /* use the alpha channel of provided image as a mask of this layer */
-    mix-blend-mode: color; /* color blend mode, I'm not sure if 'color' is the right one - might need to be changed
-    /* mix-blend-mode: multiply; color blend mode, I'm not sure if 'color' is the right one - might need to be changed */
+    -webkit-mask-image: var(--url); 
+    mask-image: var(--url);
+    mix-blend-mode: color;
+}
+.colored-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url(./images/splatter/splatter.png);
+    -webkit-mask-image: var(--url); 
+    mask-image: var(--url);
+    mix-blend-mode: color;
 }
 
 html {
@@ -301,9 +309,13 @@ box-shadow:
     position: absolute;
     top: 870px;
 }
+.clear_all_settings {
+    position: absolute;
+    top: 785px;
+}
 .save_all_settings {
     position: absolute;
-    top: 916px;
+    top: 830px;
 }
 .checkBoxStyle {
     pointer-events: auto; 
@@ -350,7 +362,7 @@ box-shadow:
     padding: 8px;
     position: absolute;
     font-family: play;
-    font-size: 24px;
+    font-size: 21px;
     line-height: 26px;
     top: 145px;
     left: 975px;
@@ -365,29 +377,13 @@ box-shadow:
     font-family: play;
     font-size: 24px;
     line-height: 26px;
-    filter: drop-shadow(3px 2px 2px #000000c5);
-    filter: drop-shadow(6px 3px 3px #0000009c);
+    filter: drop-shadow(6px 3px 3px #000000c0) saturate(1.35);
     top: 360px;
     left: 0px;
     width: 420px;
     height: 420px;
     transform: scale(.8);
 }
-/* .pokemon_art {
-    display: block;
-    border: 4px solid #ff000000;
-    padding: 8px;
-    position: absolute;
-    font-family: play;
-    font-size: 24px;
-    line-height: 26px;
-    filter: drop-shadow(3px 2px 2px #000000c5);
-    filter: drop-shadow(6px 3px 3px #0000009c);
-    top: 360px;
-    left: -10px;
-    width: 420px;
-    height: 420px;
-} */
 
 .enemyPng {
     display: block;
@@ -1341,9 +1337,9 @@ box-shadow:
     display: block;
     position: absolute;
     /* border: 1px solid #00ff0d00; */
-    background-color: #ffffff;
+    background-color: #ffffffe1;
     font-size: 16px;
-    line-height: 22px;
+    line-height: 23px;
 
     /* line-height: 35px; */
     width: 362px;

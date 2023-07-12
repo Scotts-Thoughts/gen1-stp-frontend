@@ -150,11 +150,10 @@
                 <!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade">
                     <div v-if="battle_fade == true && battleGraphic == true && this.mapper.properties.battle.specialType.value != `Old Man Battle`" style="position: absolute;" key=1>
-                    <!-- <div v-if="(battle_fade == true && g1trainerEnemySelector(batt.trainer.class.value) == 1) && battleGraphic == true" style="position: absolute;" key=1> -->
                         <div v-if="mapper.properties.battle.type.value == `Wild`">
                             <div class="trainerLabel">{{"Wild " + wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
                             <!-- <img class="enemyPng" :src="`images/enemy_area/${g1PokemonData[starterName].type1}.png`" style="height: 242px;"/> -->
-                            <div class="colored-image" style="--url: url(images/enemy_area/Smeargle.png);" :style="battlePokemonCrop()"></div>
+                            <div class="colored-image" style="--url: url(images/enemy_area/Smeargle.png);" :style="`height: 242px;`"></div>
                             <div class="enemyGraphic">
                                 <div class="ePkmnStyle ePkmn1">
                                     <img class="ePkmnSprite" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).faint" :src="`images/pokemon/${mapper.properties.battle.enemyPokemon.species.value}.png`"/>
@@ -295,7 +294,7 @@
                 </div> -->
                 <!---------- RESET ------------------------------------------------------------------------------------------------------------------->
                 <div v-show="resetCounter == true" class="resets">
-                    <div>{{playerResets}}</div>
+                    <div id="reset_counter">{{playerResets}}</div>
                 </div>
             </div>
         </div>
@@ -304,7 +303,7 @@
             <div>Pokemon Yellow - Smeargle Race</div>
             <!-- <div>{{timer_pause}}</div><br> -->
             <!-- <div>{{retro?.connected}}</div><br> -->
-            <button class="buttonStyle" style="width: 420px; background-color: hsl(36, 80%, 62%);" @click="pauseUnpauseTime">Pause/Unpause Timer & Gameplay</button><br><br>
+            <button class="buttonStyle" style="width: 420px; background-color: hsl(59, 55%, 64%);" @click="pauseUnpauseTime">Pause/Unpause Timer & Gameplay</button><br><br>
             <div>Enter your name here (1-7 characters)</div>
             <input class="text_entry_box" type="text" maxlength="7" @keypress="isLetter($event)" v-model="playerNameChoice"/><br>
             <!-- <div>Solo Pokemon:</div>
@@ -332,7 +331,6 @@
             <div class="rule_clarifications">Save states are banned (they can be used for testing purposes only)</div><br>
             <div class="rule_clarifications">You must play on 4x game-speed</div><br>
             <div class="rule_clarifications"></div><br>
-            <button class="buttonStyle save_all_settings" onClick="window.location.reload();">Reload Overlay</button>
             <!-- <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button> -->
         </div>
         <div class="testingArea2" style="z-index: 50000;">
@@ -342,6 +340,7 @@
                 <!-- <option>Settings</option> -->
                 <!-- <option>Advanced Options</option> -->
                 <!-- <option>Encounters</option> -->
+                <option>Info</option>
                 <option>Help</option>
                 <!-- <option>Color</option> -->
                 <option>Credits</option>
@@ -395,6 +394,19 @@
             Show Effective Power with Guarenteed Crits: <input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/><br>
             <br>
         </div>
+        <div v-show="help_menus == `Info`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
+            <div>Links:</div>
+            <div><a href="https://youtu.be/xry40W2pM0g" target="_blank">Overlay Setup Guide</a><br></div>
+            <a href="https://www.retroarch.com/" target="_blank">Retroarch Download</a><br>
+            <a href="https://gamehook.io/" target="_blank">GameHook Download</a><br>
+            <br><br>
+            <div>Submissions must be received BEFORE:</div>
+            <div style="position: relative; left: 40px; font-size: 24px;">Monday July 24th 2023</div><br>
+            <div>Submit footage & csv containing split data in a GoogleDrive, Dropbox, or OneDrive link emailed to:</div>
+            <div style="position: relative; left: 40px; font-size: 24px;">scottsthoughtspokemon@gmail.com</div><br>
+            <div style="font-size: 14px;">Note: The link must remain active until July 31st 2023.</div>
+            <button class="buttonStyle" onClick="openFolder()">Open Splits Folder</button>
+        </div>
         <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000;">
             Encounters:<br>
             Route1: <input class="checkBoxStyle" type="checkbox" v-model="route1"/><br>
@@ -414,22 +426,25 @@
             <div><a href="https://youtu.be/xry40W2pM0g" target="_blank">Overlay Setup Guide</a><br></div>
             <a href="https://www.retroarch.com/" target="_blank">Retroarch</a><br>
             <a href="https://gamehook.io/" target="_blank">GameHook</a><br>
-            <!-- <a href="https://livesplit.org/downloads/" target="_blank">Livesplit</a> -->
             <br>
             <div>Program Launch Order:</div>
             <div>1: RetroArch - load your ROM file</div>
             <div>2: GameHook - load the mapper</div>
             <div>3: Smeargle Race Overlay </div>
             <div class="note">(use the "Reload Overlay" button if you launch in the incorrect order)</div><br>
-            <br>
-            <br>
-            <div>Press F11 to enter or exit fullscreen</div>
-            <br>
-            <div>This overlay is designed to function in fullscreen at 1920x1080</div>
-            <br>
-            <div>In OBS use the "Window Capture" source to record the program once it is in Fullscreen.</div><br>
-            <br><br><br><br><br><br><br><br><br>
+            <div>Press F11 to enter or exit fullscreen</div><br>
+            <div>This overlay is designed to function in fullscreen at 1920x1080</div><br>
+            <div>In OBS:</div><br>
+            <div> - Use "Window Capture" sources to record this overlay & RetroArch.</div><br>
+            <div> - Your video </div><br>
             <div>For fairness of the race, this overlay does not provide the user with any user customization.</div><br>
+            <br>
+            <br>
+            <br>
+            <!-- <div>Submit footage & splits csv with a GoogleDrive, DropBox, or OneDrive link emailed to:<br>scottsthoughtspokemon@gmail.com</div><br> -->
+            <!-- <div>Submissions must be received BEFORE: <br>Monday July 24th 2023</div><br> -->
+            <!-- <button class="buttonStyle clear_all_settings" @click="localStorage.clear();">Clear Overlay Settings</button> -->
+            <button class="buttonStyle save_all_settings" onClick="window.location.reload();">Refresh Overlay</button>
         </div>
         <div v-show="help_menus == `Credits`" class="testingArea3" style="z-index: 50000;">
             <div>Scott's Thoughts</div>
