@@ -166,6 +166,7 @@ const app = Vue.createApp({
             //VARS ---------------------------------------------------------------------------------------------//
             pkmnMoves:       ["move1","move2","move3","move4"],
             pkmnSlots:       [0, 1, 2, 3, 4, 5],
+            badges:       [0, 1, 2, 3, 4, 5, 6, 7, 8],
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
             g1stateVariable: "Base Stats",
@@ -602,7 +603,6 @@ const app = Vue.createApp({
             this.route6 = true
             this.safariZone = true
             this.mansion = true
-            this.help_menus = "Info"
             this.dvSetting = "Max"
             this.trashCans = true
             this.options = true

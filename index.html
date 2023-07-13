@@ -340,6 +340,7 @@
                 <!-- <option>Settings</option> -->
                 <!-- <option>Advanced Options</option> -->
                 <!-- <option>Encounters</option> -->
+                <!-- <option>Development Features</option> -->
                 <option>Info</option>
                 <option>Help</option>
                 <!-- <option>Color</option> -->
@@ -394,6 +395,36 @@
             Show Effective Power with Guarenteed Crits: <input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/><br>
             <br>
         </div>
+        <div v-show="help_menus == `Development Features`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
+            <div>Properties:</div>
+            <div>Player Name: {{mapper?.properties?.player?.name?.value}}</div>
+            <div>Crits: {{mapper?.properties?.patch.battle_info.hits.criticalsDealt}}</div>
+            <div>Saves: {{mapper?.properties?.patch?.saves?.saveCount}}</div>
+            <div>Bonks: {{mapper?.properties?.patch?.steps?.bonks}}</div>
+            <div>Trainer Battles: {{mapper?.properties?.patch?.battles?.trainerBattles}}</div>
+            <div>Wild Batles: {{mapper?.properties?.patch?.battles?.wildBattles}}</div>
+            <div>Items: {{mapper?.properties?.player?.itemCount}}/20</div>
+            <div v-show="mapper?.properties?.overworld?.repelCount > 0">Repel Count: {{mapper?.properties?.overworld?.repelCount}}</div>
+            <br>
+            <div>Badge1: {{mapper?.properties?.player?.badges?.badge1.value}}</div>
+            <img src="images\badges\badge case\badge1.png" />
+            <div>Badge2: {{mapper?.properties?.player?.badges?.badge2.value}}</div>
+            <img src="images\badges\badge case\badge2.png" />
+            <div>Badge3: {{mapper?.properties?.player?.badges?.badge3.value}}</div>
+            <img src="images\badges\badge case\badge3.png" />
+            <div>Badge4: {{mapper?.properties?.player?.badges?.badge4.value}}</div>
+            <img src="images\badges\badge case\badge4.png" />
+            <div>Badge5: {{mapper?.properties?.player?.badges?.badge5.value}}</div>
+            <img src="images\badges\badge case\badge5.png" />
+            <div>Badge6: {{mapper?.properties?.player?.badges?.badge6.value}}</div>
+            <img src="images\badges\badge case\badge6.png" />
+            <div>Badge7: {{mapper?.properties?.player?.badges?.badge7.value}}</div>
+            <img src="images\badges\badge case\badge7.png" />
+            <div>Badge8: {{mapper?.properties?.player?.badges?.badge8.value}}</div>
+            <img src="images\badges\badge case\badge8.png" />
+
+            <button class="buttonStyle save_all_settings" style="left: 8px;" onClick="window.location.reload();">Refresh Overlay</button>
+        </div>
         <div v-show="help_menus == `Info`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             <div>Links:</div>
             <div><a href="https://youtu.be/xry40W2pM0g" target="_blank">Overlay Setup Guide</a><br></div>
@@ -406,6 +437,7 @@
             <div style="position: relative; left: 40px; font-size: 24px;">scottsthoughtspokemon@gmail.com</div><br>
             <div style="font-size: 14px;">Note: The link must remain active until July 31st 2023.</div>
             <button class="buttonStyle" onClick="openFolder()">Open Splits Folder</button>
+            <button class="buttonStyle save_all_settings" style="left: 8px;" onClick="window.location.reload();">Refresh Overlay</button>
         </div>
         <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000;">
             Encounters:<br>
