@@ -106,14 +106,25 @@ function hash(s) {
     return [...s].reduce((h, x) => Math.imul(31, h) + x.charCodeAt(0), 0) >>> 0
 }
 
+function transition(fn, ms) {
+    return new Promise((resolve) => {
+        const T = performance.now()
+        function step() {
+            const t = performance.now() - T
+            fn(Math.min(t / ms, 1))
+            if (t < ms) requestAnimationFrame(step)
+            else resolve()
+        }
+        requestAnimationFrame(step)
+    })
+}
+
 const app = Vue.createApp({
     //DATA & DEFINITIONS
     data() {
         return {
             ready: false,
             mapper: null,
-
-            // retro: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
             starterName: "Smeargle", //Enter starter name, Special cases: Mr. Mime, Farfetchd
@@ -166,7 +177,6 @@ const app = Vue.createApp({
             //VARS ---------------------------------------------------------------------------------------------//
             pkmnMoves:       ["move1","move2","move3","move4"],
             pkmnSlots:       [0, 1, 2, 3, 4, 5],
-            badges:       [0, 1, 2, 3, 4, 5, 6, 7, 8],
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
             g1stateVariable: "Base Stats",
@@ -204,6 +214,7 @@ const app = Vue.createApp({
             timer_formatted_time: ["0", ".00"],
             timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
             battle_start: 0,
+            timer_settings: "Real-Time",
 
             //splits
             split_data: MyStorage["split_data"] ?? [],
@@ -270,14 +281,13 @@ const app = Vue.createApp({
         },
         playerId() {
             this.game_over = false;
+            MyStorage["playerResets"] = 0
             this.playerResets = 0;
         },    
         overlay_color(newColor) {
             document.documentElement.style.setProperty('--overlay-color', newColor);
         }, 
         playerResets(newProp) {
-            console.log(this.playerResets.toString().length)
-            console.log(newProp.toString().length)
             if (newProp.toString().length == 1) {
                 document.getElementById("reset_counter").style.fontSize = "75px"
             }
@@ -441,10 +451,6 @@ const app = Vue.createApp({
             var type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
             return { "type1": type1, "type2": type2 }
         },
-        // timer_state_translate() {
-        //     if (this.timer_pause == true) { return "Unpaused" }
-        //     if (this.timer_pause == false) { return "Pause" }
-        // },
     },
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
@@ -645,6 +651,15 @@ const app = Vue.createApp({
         warn(...vars) {
             console.log(...vars)
         },
+        reset_advanced_settings() {
+            this.battleGraphic = true
+            this.showAllTrainers = true
+            this.showSpecialTrainerGraphics = true
+            this.show_wild_battles = false
+            this.battlePopUps = true
+            this.showCritMultiplierInEP = true
+            this.rockTunnelDarkness = false
+        },
         first_playthrough_settings() {
             this.route1 = true
             this.viridianForest = true
@@ -748,6 +763,7 @@ const app = Vue.createApp({
             const formattedMove = moveMappings[move_string];
             return formattedMove || this.capitalization_format(move_string);
         },
+
         wild_pkmn_name(species_string) {
             if (species_string == null || species_string == undefined) { return "" }
             species_string = species_string.toLowerCase()
@@ -1348,6 +1364,9 @@ const app = Vue.createApp({
         this.mapper.onConnected = (x) => this.ready = true
         this.mapper.onDisconnected = (x) => this.ready = false
         await this.mapper.connect()
+
+        //prevent windows scaling from affecting the programs dimensions
+        document.body.style.scale = 1 / window.devicePixelRatio
 
         this.starterName = MyStorage.currentStarter ?? "Venomoth"
         this.updateTime()
