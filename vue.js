@@ -1528,13 +1528,13 @@ const app = Vue.createApp({
             var write_split_data = (x) => {
                 log_end()
                 this.split_data.push(str)
-                logToFile(str, real_time_file_label, this.starterName)
+                logToFile(str, this.attempt_number, this.starterName)
             }
             var end_run = (x) => {
                 this.stopTime()
                 log_end()
                 this.split_data.push(str)
-                logToFile(str, real_time_file_label, this.starterName)
+                logToFile(str, this.attempt_number, this.starterName)
             }
 
             player_name = this.playerNameChoice
