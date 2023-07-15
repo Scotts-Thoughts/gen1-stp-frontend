@@ -326,12 +326,10 @@
             <div class="rule_clarifications">Turbo-fire / Rapid-fire keys are allowed (and highly encouraged)</div><br>
             <div class="rule_clarifications">Blackouts count as resets</div><br>
             <div class="rule_clarifications">You must use this software's timer to track real-time.</div><br>
-            <!-- <div class="rule_clarifications">You must use <a href="https://livesplit.org/downloads/" target="_blank">Livesplit</a> to track real-time.</div><br> -->
             <div class="rule_clarifications">It is strictly against the rules to modify GameHook properties or the output csv file</div><br>
             <div class="rule_clarifications">Save states are banned (they can be used for testing purposes only)</div><br>
             <div class="rule_clarifications">You must play on 4x game-speed</div><br>
             <div class="rule_clarifications"></div><br>
-            <!-- <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button> -->
         </div>
         <div class="testingArea2" style="z-index: 50000;">
             <div>Secondary Menu:</div>
@@ -395,7 +393,7 @@
             Show Effective Power with Guarenteed Crits: <input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/><br>
             <br>
         </div>
-        <div v-show="help_menus == `Development Features`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
+        <!-- <div v-show="help_menus == `Development Features`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             <div>Properties:</div>
             <div>Player Name: {{mapper?.properties?.player?.name?.value}}</div>
             <div>Crits: {{mapper?.properties?.patch.battle_info.hits.criticalsDealt}}</div>
@@ -424,7 +422,7 @@
             <img src="images\badges\badge case\badge8.png" />
 
             <button class="buttonStyle save_all_settings" style="left: 8px;" onClick="window.location.reload();">Refresh Overlay</button>
-        </div>
+        </div> -->
         <div v-show="help_menus == `Info`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             <div>Links:</div>
             <div>Custom trainer illustrations by <a href="https://twitter.com/SarinaVail" target="_blank">Sarina Vail</a><br></div>
@@ -468,16 +466,14 @@
             <div class="note">(use the "Reload Overlay" button if you launch in the incorrect order)</div><br>
             <div>Press F11 to enter or exit fullscreen</div><br>
             <div>This overlay is designed to function in fullscreen at 1920x1080</div><br>
-            <div>In OBS:</div><br>
-            <div> - Use "Window Capture" sources to record this overlay & RetroArch.</div><br>
-            <div> - Your video </div><br>
-            <div>For fairness of the race, this overlay does not provide the user with any user customization.</div><br>
+            <div>In OBS:</div>
+            <div> - Use "Window Capture" sources to record this overlay & RetroArch.</div>
+            <div> - The RetroArch sources must have an "Area" filter.</div>
+            <div> - RetroArch should have a resolution of 1120x1008 and be centered to the screen.</div>
             <br>
             <br>
-            <br>
-            <!-- <div>Submit footage & splits csv with a GoogleDrive, DropBox, or OneDrive link emailed to:<br>scottsthoughtspokemon@gmail.com</div><br> -->
-            <!-- <div>Submissions must be received BEFORE: <br>Monday July 24th 2023</div><br> -->
-            <!-- <button class="buttonStyle clear_all_settings" @click="localStorage.clear();">Clear Overlay Settings</button> -->
+            <div>For fairness of the race, this overlay does not provide the user with any user customization.</div>
+
             <button class="buttonStyle save_all_settings" onClick="window.location.reload();">Refresh Overlay</button>
         </div>
         <div v-show="help_menus == `Credits`" class="testingArea3" style="z-index: 50000;">

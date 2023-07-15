@@ -518,6 +518,7 @@ const app = Vue.createApp({
         },
         //stop the timer
         stopTime() {
+            this.timer_pause_time = Date.now()
             this.timer_pause = true
         },
         //animate the timer
@@ -1413,7 +1414,7 @@ const app = Vue.createApp({
                     this.playerResets = 0;
                     this.attempt_number++;
                     MyStorage["attempt_number"] = this.attempt_number;
-                    console.log(`Attempt ${this.attempt_number}`)
+                    // console.log(`Attempt ${this.attempt_number}`)
                     this.startTime();
                     this.playerId = newProp.value;
                 }
