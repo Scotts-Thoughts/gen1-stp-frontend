@@ -95,10 +95,10 @@ class RetroArchHook {
 
 const retro = new RetroArchHook()
 
-function logToFile(str, file_name, playerName) {
+function logToFile(str, file_name, starterName) {
     return new Promise((resolve, reject) => {
         require("fs").mkdir("./splits/", { recursive: true }, console.log)
-        require("fs").appendFile(`./splits/${playerName}-attempt${file_name}.csv`, str, (err) => err ? reject(err) : resolve())
+        require("fs").appendFile(`./splits/${starterName}-${file_name}.csv`, str, (err) => err ? reject(err) : resolve())
     }) 
 }
 
@@ -565,6 +565,7 @@ const app = Vue.createApp({
         },
         //stop the timer
         stopTime() {
+            this.timer_pause_time = Date.now()
             this.timer_pause = true
         },
         //animate the timer
@@ -579,11 +580,11 @@ const app = Vue.createApp({
             var m = (Math.floor(time / 60000) % 60)
             var h = (Math.floor(time / 3600000))
             if (h != 0) 
-                this.timer_formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(c) ]
+                this.timer_formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
             else if (m != 0) 
-                this.timer_formatted_time = [ m + ":" + f(s), "." + f(c) ]
+                this.timer_formatted_time = [ m + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
             else 
-                this.timer_formatted_time = [ s, "." + f(c) ]
+                this.timer_formatted_time = [ s, "." + f(c), h + "h" + m + "m" + s + "s", ]
             if (this.timer_pause == false) {
                 requestAnimationFrame(this.updateTime)
             }
@@ -1527,13 +1528,13 @@ const app = Vue.createApp({
             var write_split_data = (x) => {
                 log_end()
                 this.split_data.push(str)
-                logToFile(str, this.attempt_number, this.playerNameChoice)
+                logToFile(str, real_time_file_label, this.starterName)
             }
             var end_run = (x) => {
                 this.stopTime()
                 log_end()
                 this.split_data.push(str)
-                logToFile(str, this.attempt_number, this.playerNameChoice)
+                logToFile(str, real_time_file_label, this.starterName)
             }
 
             player_name = this.playerNameChoice
@@ -1542,6 +1543,7 @@ const app = Vue.createApp({
             trainer_name = this.format_trainer_name(this.mapper.properties.battle.trainer.class.value, this.mapper.properties.battle.trainer.number.value)
             real_time_total = this.timer_formatted_time[0].toString() + this.timer_formatted_time[1].toString()
             real_time_hmmss = this.timer_formatted_time[0].toString()
+            real_time_file_label = this.timer_formatted_time[2].toString()
             resets = this.playerResets.toString()
             level = this.mapper.properties.player.team[0].level.value.toString()
             game_time = this.gametimeSplit.toString()

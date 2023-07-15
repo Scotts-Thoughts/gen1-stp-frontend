@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scott's Thoughts - Generation 1 Overlay - v1.1.0</title>
+    <title>Scott's Thoughts - Generation 1 Overlay - v1.2.2</title>
     <link rel="stylesheet" href="style-yellow.css">
 </head>
 <body>
@@ -304,7 +304,7 @@
         </div>
         <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
-            <div>Compatible with gen1 (Red/Blue/Yellow)</div><br>
+            <div>Compatible with Gen1 (Red/Blue/Yellow)</div><br>
             <div>Game Loaded: {{mapper?.meta?.gameName}}</div>
             <div>Solo Pokemon:</div>
             <select v-model="starterName" @change="load_pokemon_sprite_settings(s1dynamicReset.species.value)" class="dropdownMenu">
@@ -329,7 +329,7 @@
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
             <button @click="save_pokemon_sprite_settings" class="buttonStyle">Save Pokemon Sprite Settings</button>
             <button @click="clear_pokemon_sprite_settings" class="buttonStyle">Reset Sprite</button>
-            <div class="note">Note: this saves styling for the current Solo Pokemon listed above. If you have a different Pokemon in slot1 it will still save this configuration to the Solo Pokemon's profile.</div>
+            <div class="note">Note: This saves styling for the current Solo Pokemon listed above.</div>
             <br>
             <transition name="fade"><div v-if="resetCounter == true">
                 <div>Reset Counter Settings</div>
@@ -337,10 +337,11 @@
                 <button @click="resets_increment" class="buttonStyle">Increment</button>
                 <button @click="resets_decrement" class="buttonStyle">Decrement</button><br>
                 <div class="note">These controls are provided in case there is an<br> error with the automatic reset counter.</div>
-                Count blackouts as resets: <input class="checkBoxStyle" type="checkbox" v-model="blackouts_as_resets"/><br>
+                <span class="note">Count blackouts as resets: <input class="checkBoxStyle" type="checkbox" v-model="blackouts_as_resets"/></span><br>
             </div></transition>
             <br><br>
-            <button class="buttonStyle" style="top: -20px; width: 420px; background-color: hsl(59, 48%, 59%);" @click="pauseUnpauseTime">Toggle Pause Timer & Gameplay</button><br><br>
+            <button class="buttonStyle splits_folder" onClick="openFolder()">Open Splits Folder</button>
+            <button class="buttonStyle" style="top: -30px; width: 420px; background-color: hsl(59, 48%, 59%);" @click="pauseUnpauseTime">Toggle Pause Timer & Gameplay</button><br><br>
             <button class="buttonStyle refresh" onClick="window.location.reload();">Reload Overlay</button>
             <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button>
         </div>

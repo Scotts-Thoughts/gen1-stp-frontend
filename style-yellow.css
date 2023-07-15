@@ -278,6 +278,10 @@ box-shadow:
     transform: translateY(2px);
   }
 
+.splits_folder {
+    position: absolute;
+    top: 825px;
+}
 .refresh {
     position: absolute;
     top: 870px;
