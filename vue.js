@@ -211,7 +211,7 @@ const app = Vue.createApp({
             timer_startTime: MyStorage["timer_startTime"] ?? 0,
             timer_pause: true,
             timer_pause: MyStorage["timer_pause"] ?? false,
-            timer_formatted_time: ["0", ".00"],
+            timer_formatted_time: ["0", ".00", "0h0m0s",],
             timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
             battle_start: 0,
             timer_settings: "Real-Time",
@@ -533,11 +533,11 @@ const app = Vue.createApp({
             var m = (Math.floor(time / 60000) % 60)
             var h = (Math.floor(time / 3600000))
             if (h != 0) 
-                this.timer_formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(c) ]
+                this.timer_formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
             else if (m != 0) 
-                this.timer_formatted_time = [ m + ":" + f(s), "." + f(c) ]
+                this.timer_formatted_time = [ m + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
             else 
-                this.timer_formatted_time = [ s, "." + f(c) ]
+                this.timer_formatted_time = [ s, "." + f(c), h + "h" + m + "m" + s + "s", ]
             if (this.timer_pause == false) {
                 requestAnimationFrame(this.updateTime)
             }
@@ -1464,6 +1464,7 @@ const app = Vue.createApp({
             trainer_name = this.format_trainer_name(this.mapper.properties.battle.trainer.class.value, this.mapper.properties.battle.trainer.number.value)
             real_time_total = this.timer_formatted_time[0].toString() + this.timer_formatted_time[1].toString()
             real_time_hmmss = this.timer_formatted_time[0].toString()
+            real_time_file_label = this.timer_formatted_time[2].toString()
             resets = this.playerResets.toString()
             level = this.mapper.properties.player.team[0].level.value.toString()
             game_time = this.gametimeSplit.toString()
