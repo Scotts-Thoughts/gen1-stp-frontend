@@ -986,6 +986,7 @@ const app = Vue.createApp({
                 (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 3) || //koga juggler 1
                 (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 4) || //koga juggler 1
                 (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 38) || //hypno rocket
+                (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 25) || //hypno sandwich
                 (trainerClass == "CHANNELER" && this.mapper.properties.battle.trainer.number == 10) //2 gastly channeler
                 )
                 ) {
@@ -1144,6 +1145,8 @@ const app = Vue.createApp({
                   return "images/trainers/LASS_3.png";
                 case "JR TRAINER F_1":
                   return "images/trainers/GOLDEEN.png";
+                case "ROCKET_25":
+                  return "images/trainers/HYPNO_SANDWICH.png";
                 case "JR TRAINER F_3":
                   return "images/trainers/JR TRAINER F_3.png";
                 case "CHANNELER_10":
