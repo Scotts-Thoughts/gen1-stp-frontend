@@ -98,7 +98,7 @@ const retro = new RetroArchHook()
 function logToFile(str, file_name, playerName) {
     return new Promise((resolve, reject) => {
         require("fs").mkdir("./splits/", { recursive: true }, console.log)
-        require("fs").appendFile(`./splits/${playerName}-attempt${file_name}.csv`, str, (err) => err ? reject(err) : resolve())
+        require("fs").appendFile(`./splits/${playerName}.csv`, str, (err) => err ? reject(err) : resolve())
     }) 
 }
 
@@ -140,7 +140,7 @@ const app = Vue.createApp({
             showAllTrainers:            true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
             expBarAnimation:            true,
             showSpecialTrainerGraphics: true, //shows drawn art for defined trainers
-            battlePopUps:               true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
+            battlePopUps:               false, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             typeCalcs:                  true, //calculates effective power based on the pokemon in battle
             showCritMultiplierInEP:     true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             show_wild_battles:          true, //shows wild battles in the battle screen
@@ -188,6 +188,7 @@ const app = Vue.createApp({
             //resets
             playerId: 0,
             playerName: "NINTEN",
+            overlay_name: MyStorage["overlay_name"] ?? "NINTEN",
             resetCatcher: "NINTEN",
             playerResets: MyStorage["playerResets"] ?? 0,
             resetCounter: true,
@@ -209,8 +210,7 @@ const app = Vue.createApp({
 
             //timer variables
             timer_startTime: MyStorage["timer_startTime"] ?? 0,
-            timer_pause: true,
-            timer_pause: MyStorage["timer_pause"] ?? false,
+            timer_pause: MyStorage["timer_pause"] ?? true,
             timer_formatted_time: ["0", ".00", "0h0m0s",],
             timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
             battle_start: 0,
@@ -222,6 +222,9 @@ const app = Vue.createApp({
     },
 
     watch: {
+        overlay_name() {
+            MyStorage["overlay_name"] = this.overlay_name
+        },
         //splits
         split_data() {
             MyStorage["split_data"] = this.split_data
@@ -657,7 +660,7 @@ const app = Vue.createApp({
             this.showAllTrainers = true
             this.showSpecialTrainerGraphics = true
             this.show_wild_battles = false
-            this.battlePopUps = true
+            this.battlePopUps = false
             this.showCritMultiplierInEP = true
             this.rockTunnelDarkness = false
         },
@@ -1470,15 +1473,16 @@ const app = Vue.createApp({
             game_time = this.gametimeSplit.toString()
             battle_duration = (battle_end - this.battle_start)/1000
 
-            str = player_name + "," + date_string + "," + time_string + "," + trainer_name + "," + real_time_total + "," + real_time_hmmss + "," + resets + "," + level + "," + game_time + "," + battle_duration + "\n"
+            str = player_name + "," + this.attempt_number + "," + date_string + "," + time_string + "," + trainer_name + "," + real_time_total + "," + real_time_hmmss + "," + resets + "," + level + "," + game_time + "," + battle_duration + "\n"
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL1")    { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL2")    { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BROCK" )    { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "MISTY" )    { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LT.SURGE" ) { write_split_data() }
+            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "HIKER" && this.mapper.properties.battle.trainer.number.value == 9) { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "ERIKA" )    { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "KOGA" )     { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "SARBINA" )  { write_split_data() }
+            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "SABRINA" )  { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BLAINE" )   { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "GIOVANNI" && this.mapper.properties.battle.trainer.number.value == 2) { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "GIOVANNI" && this.mapper.properties.battle.trainer.number.value == 3) { write_split_data() }

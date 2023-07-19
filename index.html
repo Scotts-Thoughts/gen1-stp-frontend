@@ -22,6 +22,7 @@
                     }" :src="`images/pokemon/${s1dynamicReset.species.value}.png`" /> -->
                     <!-- <img class="canvas" :src="`images/left_ui/${g1PokemonData[starterName].type1}.png`" /> -->
                     <div class="colored-image" style="--url: url(images/left_ui/Smeargle.png)"></div>
+                    <div class="colored-image" style="--url: url(images/overlay_name/Smeargle.png)"></div>
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
@@ -287,25 +288,24 @@
                     <div class="gametimeClock">{{timer_formatted_time[0]}}</div>
                     <div class="gametimeFrames">{{timer_formatted_time[1]}}</div>
                 </div>
-                <!---------- GAMETIME ------------------------------------------------------------------------------------------------------------------->
-                <!-- <div v-show="gametimeDisplay == true" class="gametime">
-                    <div class="gametimeClock">{{gametimeHMS}}</div>
-                    <div class="gametimeFrames">.{{gametime_frames}}</div>
-                </div> -->
-                <!---------- RESET ------------------------------------------------------------------------------------------------------------------->
+                <!---------- RESET ---------------------------------------------------------------------------------------------------------------------->
                 <div v-show="resetCounter == true" class="resets">
                     <div id="reset_counter">{{playerResets}}</div>
+                </div>
+                <!---------- OVERLAY NAME --------------------------------------------------------------------------------------------------------------->
+                <div>
+                    <div style="position: absolute; font-size: 25px; z-index: 50000; top: 332px; left: 126px; text-align: center; border: 1px solid #ff000000; width: 260px; height: 38px;">{{overlay_name}}</div>
                 </div>
             </div>
         </div>
         <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
-            <div>Pokemon Yellow - Smeargle Race</div>
-            <!-- <div>{{timer_pause}}</div><br> -->
-            <!-- <div>{{retro?.connected}}</div><br> -->
+            <div class="rule_clarifications">Pokemon Yellow - Smeargle Race</div>
             <button class="buttonStyle" style="width: 420px; background-color: hsl(59, 55%, 64%);" @click="pauseUnpauseTime">Pause/Unpause Timer & Gameplay</button><br><br>
-            <div>Enter your name here (1-7 characters)</div>
+            <div class="rule_clarifications">In-game name (1-7 characters)</div>
             <input class="text_entry_box" type="text" maxlength="7" @keypress="isLetter($event)" v-model="playerNameChoice"/><br>
+            <div class="rule_clarifications">Overlay name (1-7 chars)</div>
+            <input class="text_entry_box" type="text" maxlength="17" v-model="overlay_name"/><br>
             <!-- <div>Solo Pokemon:</div>
             <select v-model="starterName" @change="load_pokemon_sprite_settings(s1dynamicReset.species.value)" class="dropdownMenu">
                 <option disabled value="">Select a species</option>
@@ -335,15 +335,9 @@
             <div>Secondary Menu:</div>
             <select v-model="help_menus" class="dropdownMenu">
                 <option disabled value="">Please select one</option>
-                <!-- <option>Settings</option> -->
-                <!-- <option>Advanced Options</option> -->
-                <!-- <option>Encounters</option> -->
-                <!-- <option>Development Features</option> -->
                 <option>Info</option>
                 <option>Help</option>
-                <!-- <option>Color</option> -->
                 <option>Credits</option>
-                <!-- <option>Dev Tools</option> -->
             </select>
         </div>
         <div v-show="help_menus == `Settings`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
@@ -354,17 +348,10 @@
             <div class="note">Fast text, no battle animations, set battle-style.</div>
             <div class="note">Animations are turned on for the Champion battle.</div>
             <br>
-            <!-- Show Gametime: <input class="checkBoxStyle" type="checkbox" v-model="gametimeDisplay"/><br>
-            <div class="note">Shows the gametime in the top left.</div>
-            <div class="note">Use Livesplit or a similar timer application to show realtime.</div>
-            <br> -->
             Reset Counter: <input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/><br>
             <div class="note">Counts resets while you play.</div>
             <div class="note">This number clears when you select "New Game".</div>
             <br>
-            <!-- Rock Tunnel Darkness: <input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/><br>
-            <div class="note">When enabled Flash is automatically applied in Rock Tunnel.</div>
-            <br> -->
             Encounters:<br>
             <div class="note">These settings are for encounters on certain areas of the game where you may want to control for luck.</div>
             Route1: <input class="checkBoxStyle" type="checkbox" v-model="route1"/><br>
@@ -431,12 +418,16 @@
             GameHook <a href="https://github.com/gamehook-io/gamehook/releases" target="_blank">Download</a><br>
             OBS <a href="https://obsproject.com/download" target="_blank">Download</a><br>
             <br><br>
+            <div style="font-size: 18px;">Tips:</div>
+            <div style="font-size: 18px;">- Use 'Up + B + Select' to clear save data before starting a new run.</div>
+            <div style="font-size: 18px;">- Don't forget to place your ROM in the root folder!</div>
+            <br><br>
             <div>Submissions must be received BEFORE:</div>
             <div style="position: relative; left: 40px; font-size: 24px;">Monday July 24th 2023</div><br>
             <div>Submit footage & csv containing split data in a GoogleDrive, Dropbox, or OneDrive link emailed to:</div>
             <div style="position: relative; left: 40px; font-size: 24px;">scottsthoughtspokemon@gmail.com</div><br>
             <div style="font-size: 14px;">Note: The link must remain active until July 31st 2023.</div>
-            <button class="buttonStyle" onClick="openFolder()">Open Splits Folder</button>
+            <button class="buttonStyle" onClick="openFolder()">Open Splits Folder</button><br>
             <button class="buttonStyle save_all_settings" style="left: 8px;" onClick="window.location.reload();">Refresh Overlay</button>
         </div>
         <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000;">
