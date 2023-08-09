@@ -199,6 +199,7 @@ body {
     width: 100%;
     overflow: hidden; /* Hide scrollbars */
     background-color: #ffffff;
+    transform-origin: top left;
 }
 .absolute {
     position: absolute;
