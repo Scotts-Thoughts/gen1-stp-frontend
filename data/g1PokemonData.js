@@ -6896,12 +6896,12 @@ const g1PokemonData = {
             "Seismic Toss"
         ],
         [
-            46,
-            "Thrash"
-        ],
-        [
             45,
             "Screech"
+        ],
+        [
+            46,
+            "Thrash"
         ]
         ]
     },

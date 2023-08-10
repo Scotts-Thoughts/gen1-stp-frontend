@@ -209,8 +209,7 @@ const app = Vue.createApp({
 
             //timer variables
             timer_startTime: MyStorage["timer_startTime"] ?? 0,
-            timer_pause: true,
-            timer_pause: MyStorage["timer_pause"] ?? false,
+            timer_pause: MyStorage["timer_pause"] ?? true,
             timer_formatted_time: ["0", ".00"],
             timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
             battle_start: 0,
@@ -353,10 +352,10 @@ const app = Vue.createApp({
         },
         rockTunnelDarkness() {
             if (this.rockTunnelDarkness == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
-                this.mapper.properties.overworld.mapData.pallete.set(0, false)
+                this.mapper.properties.overworld.mapData.palette.set(0, false)
             }
             else if (this.rockTunnelDarkness == false && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
-                this.mapper.properties.overworld.mapData.pallete.set(6, false)
+                this.mapper.properties.overworld.mapData.palette.set(6, false)
             }
             else {
                 return
@@ -1047,6 +1046,7 @@ const app = Vue.createApp({
                 (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 3) || //koga juggler 1
                 (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 4) || //koga juggler 1
                 (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 38) || //hypno rocket
+                (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 25) || //hypno sandwich
                 (trainerClass == "CHANNELER" && this.mapper.properties.battle.trainer.number == 10) //2 gastly channeler
                 )
                 ) {
@@ -1205,6 +1205,8 @@ const app = Vue.createApp({
                   return "images/trainers/LASS_3.png";
                 case "JR TRAINER F_1":
                   return "images/trainers/GOLDEEN.png";
+                  case "ROCKET_25":
+                    return "images/trainers/HYPNO_SANDWICH.png";
                 case "JR TRAINER F_3":
                   return "images/trainers/JR TRAINER F_3.png";
                 case "CHANNELER_10":
@@ -1493,7 +1495,7 @@ const app = Vue.createApp({
                     this.playerResets = 0;
                     this.attempt_number++;
                     MyStorage["attempt_number"] = this.attempt_number;
-                    console.log(`Attempt ${this.attempt_number}`)
+                    // console.log(`Attempt ${this.attempt_number}`)
                     this.startTime();
                     this.playerId = newProp.value;
                 }
@@ -1557,7 +1559,7 @@ const app = Vue.createApp({
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LT.SURGE" ) { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "ERIKA" )    { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "KOGA" )     { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "SARBINA" )  { write_split_data() }
+            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "SABRINA" )  { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BLAINE" )   { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "GIOVANNI" && this.mapper.properties.battle.trainer.number.value == 2) { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "GIOVANNI" && this.mapper.properties.battle.trainer.number.value == 3) { write_split_data() }
@@ -1853,7 +1855,7 @@ const app = Vue.createApp({
             await optionsSet() //Set options to Fast Text, No Animations, Set Battle (Except during the champion fight)
             await trashCans() //Solve the trash can puzzle if it isn't already solved
             if (this.rockTunnelDarkness == true) {
-                await this.mapper.properties.overworld.mapData.pallete.set(0, false)
+                await this.mapper.properties.overworld.mapData.palette.set(0, false)
             }
         })
 
