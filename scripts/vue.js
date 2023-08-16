@@ -6,9 +6,9 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Celebi", //string name
+            starterName:     "Persian", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
-            secondPlaythrough:   true, //used to mitigate luck on second playthroughs
+            secondPlaythrough:   false, //used to mitigate luck on second playthroughs
             moonEncounters:      true, //true turns Mt Moon encounters off for second playthroughs
             
             developmentFeatures: true, //turn on new features
@@ -879,7 +879,9 @@ const app = Vue.createApp({
         // MOVE MANAGEMENT
         movePower(y) { //y = move1.value
             if (y) {
-                if (y.toLowerCase() == "smokescreen") { return "-"}
+                // if (y) { y = y.toUpperCase()}
+                if (y.toUpperCase() == "SMOKESCREEN") { return "-"}
+                if (y.toUpperCase() == "BUBBLEBEAM") { return "65"}
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
                 var move = this.g1MoveData[y]
                 if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP")) {
@@ -967,7 +969,7 @@ const app = Vue.createApp({
                 
                 var move_type          = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Type
                 var move_info          = this.typeData.find(x => x.moveType === move_type)
-                var move_power         = this.movePower(move_name)
+                var move_power         = this.movePower(this.capitalization_format(move_name))
                 var move_category      = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Category
                 var attacker_type1     = pkmnData.type1.value
                 var attacker_type2     = pkmnData.type2.value
@@ -1165,6 +1167,20 @@ const app = Vue.createApp({
             speed = Math.floor((((this.pokemon(this.starterName).base_spd + 15) * 2 * this.customLevel) / 100) + 5)
             //only recalculate stats when DVs change if the player is in Oak's Lab, at level 5, with exactly 1 Pokemon
             if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == false) {
+                if (this.starterName == "Shedinja") {
+                    await Promise.all([
+                        await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false), //Set DVs perfect and freeze them
+                        await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
+                        await this.mapper.properties.player.team[0].dvSpeed.setBytes([perfectDVs], false),
+                        await this.mapper.properties.player.team[0].dvSpecial.setBytes([perfectDVs], false),
+                        await this.mapper.properties.player.team[0].attack.setBytes([0x00, attack], false), 
+                        await this.mapper.properties.player.team[0].defense.setBytes([0x00, defense], false),
+                        await this.mapper.properties.player.team[0].special.setBytes([0x00, special], false),
+                        await this.mapper.properties.player.team[0].speed.setBytes([0x00, speed], false),
+                    ])
+                }
+            }
+            else if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == false) {
                 await Promise.all([
                     await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false), //Set DVs perfect and freeze them
                     await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
