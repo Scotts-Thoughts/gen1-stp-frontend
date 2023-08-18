@@ -320,6 +320,16 @@ const gen1moves = [
     Description: "A GHOST-type attack. Highly accurate, it inflicts damage regardless of the target's type."
   },
   {
+    Move: "Shadow Ball",
+    Type: "Ghost",
+    Power: "80",
+    Accuracy: "100",
+    PP: 15,
+    Category: "Physical",
+    CategoryST: "Fixed",
+    Description: "A generation 2 GHOST-type attack that was ported back by Snowy."
+  },
+  {
     Move: "Absorb",
     Type: "Grass",
     Power: 20,
