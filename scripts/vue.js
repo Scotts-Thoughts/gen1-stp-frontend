@@ -6,10 +6,12 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Shedinja", //string name
+            starterName:     "Arbok", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
-            secondPlaythrough:   false, //used to mitigate luck on second playthroughs
-            moonEncounters:      true, //true turns Mt Moon encounters off for second playthroughs
+            secondPlaythrough:   true, //used to mitigate luck on second playthroughs
+            earlyEncountersWithRoute1:    false, //route1 encounters on
+            earlyEncountersWithoutRoute1: true, //route1 encounters off
+            moonEncounters:               false, //true turns Mt Moon encounters off for second playthroughs
             
             developmentFeatures: true, //turn on new features
             pick:            true, //turns on the ability to pick your starter
@@ -1166,19 +1168,17 @@ const app = Vue.createApp({
             special = Math.floor((((this.pokemon(this.starterName).base_spc + 15) * 2 * this.customLevel) / 100) + 5)
             speed = Math.floor((((this.pokemon(this.starterName).base_spd + 15) * 2 * this.customLevel) / 100) + 5)
             //only recalculate stats when DVs change if the player is in Oak's Lab, at level 5, with exactly 1 Pokemon
-            if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == false) {
-                if (this.starterName == "Shedinja") {
-                    await Promise.all([
-                        await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false), //Set DVs perfect and freeze them
-                        await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
-                        await this.mapper.properties.player.team[0].dvSpeed.setBytes([perfectDVs], false),
-                        await this.mapper.properties.player.team[0].dvSpecial.setBytes([perfectDVs], false),
-                        await this.mapper.properties.player.team[0].attack.setBytes([0x00, attack], false), 
-                        await this.mapper.properties.player.team[0].defense.setBytes([0x00, defense], false),
-                        await this.mapper.properties.player.team[0].special.setBytes([0x00, special], false),
-                        await this.mapper.properties.player.team[0].speed.setBytes([0x00, speed], false),
-                    ])
-                }
+            if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == false && this.starterName == "Shedinja") {
+                await Promise.all([
+                    await this.mapper.properties.player.team[0].dvAttack.setBytes([perfectDVs], false), //Set DVs perfect and freeze them
+                    await this.mapper.properties.player.team[0].dvDefense.setBytes([perfectDVs], false),
+                    await this.mapper.properties.player.team[0].dvSpeed.setBytes([perfectDVs], false),
+                    await this.mapper.properties.player.team[0].dvSpecial.setBytes([perfectDVs], false),
+                    await this.mapper.properties.player.team[0].attack.setBytes([0x00, attack], false), 
+                    await this.mapper.properties.player.team[0].defense.setBytes([0x00, defense], false),
+                    await this.mapper.properties.player.team[0].special.setBytes([0x00, special], false),
+                    await this.mapper.properties.player.team[0].speed.setBytes([0x00, speed], false),
+                ])
             }
             else if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1 && this.customMoves == false) {
                 await Promise.all([
@@ -1321,7 +1321,7 @@ const app = Vue.createApp({
             const moonparas = 0x6D
             const paraslevelone = 0x0A
             const parasleveltwo = 0x0C
-            if (this.secondPlaythrough == true && this.mapper.meta.gameName == `Pokemon Yellow`) {
+            if (this.secondPlaythrough == true && this.mapper.meta.gameName == `Pokemon Yellow` && this.earlyEncounters == false) {
                 if (this.mapper.properties.overworld.map.value == `Route 1` || 
                 this.mapper.properties.overworld.map.value == `Route 3` || 
                 this.mapper.properties.overworld.map.value == `Route 6` || 
@@ -1331,7 +1331,6 @@ const app = Vue.createApp({
                 this.mapper.properties.overworld.map.value == `Mt Moon - 3` || 
                 this.mapper.properties.overworld.map.value == `Rock Tunnel` || 
                 this.mapper.properties.overworld.map.value == `Rock Tunnel - 1`) {
-                    console.log("secondRun")
                     await Promise.all([
                         await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
                     ])  
@@ -1358,6 +1357,35 @@ const app = Vue.createApp({
                     ])  
                 }
             }
+            else if (this.secondPlaythrough == true && this.mapper.meta.gameName == `Pokemon Yellow` && this.earlyEncountersWithoutRoute1 == true) {
+                if (this.mapper.properties.overworld.map.value == `Route 1` || 
+                this.mapper.properties.overworld.map.value == `Route 3` || 
+                this.mapper.properties.overworld.map.value == `Route 6` || 
+                this.mapper.properties.overworld.map.value == `Route 10` || 
+                this.mapper.properties.overworld.map.value == `Mt Moon - 1` || 
+                this.mapper.properties.overworld.map.value == `Mt Moon - 2` || 
+                this.mapper.properties.overworld.map.value == `Mt Moon - 3` || 
+                this.mapper.properties.overworld.map.value == `Rock Tunnel` || 
+                this.mapper.properties.overworld.map.value == `Rock Tunnel - 1`) {
+                    await Promise.all([
+                        await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
+                    ])  
+                }
+            }
+            else if (this.secondPlaythrough == true && this.mapper.meta.gameName == `Pokemon Yellow` && this.earlyEncountersWithRoute1 == true) {
+                if ( this.mapper.properties.overworld.map.value == `Route 3` || 
+                this.mapper.properties.overworld.map.value == `Route 6` || 
+                this.mapper.properties.overworld.map.value == `Route 10` || 
+                this.mapper.properties.overworld.map.value == `Mt Moon - 1` || 
+                this.mapper.properties.overworld.map.value == `Mt Moon - 2` || 
+                this.mapper.properties.overworld.map.value == `Mt Moon - 3` || 
+                this.mapper.properties.overworld.map.value == `Rock Tunnel` || 
+                this.mapper.properties.overworld.map.value == `Rock Tunnel - 1`) {
+                    await Promise.all([
+                        await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
+                    ])  
+                }
+            }
             else if (this.secondPlaythrough == true && this.mapper.meta.gameName == `Pokemon Red and Blue`) {
                 if (this.mapper.properties.overworld.map.value == `Route 1` || 
                 this.mapper.properties.overworld.map.value == `Route 6` || 
@@ -1367,7 +1395,6 @@ const app = Vue.createApp({
                 this.mapper.properties.overworld.map.value == `Viridian Forest` || 
                 this.mapper.properties.overworld.map.value == `Rock Tunnel` || 
                 this.mapper.properties.overworld.map.value == `Rock Tunnel - 1`) {
-                    console.log("secondRun")
                     await Promise.all([
                         await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
                     ])  

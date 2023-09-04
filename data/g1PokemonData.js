@@ -3672,7 +3672,7 @@ const g1PokemonData = {
         base_xp: 137,
         initial_moveset: [
         "Pound",
-        "lovely_kiss"
+        "Lovely Kiss"
         ],
         growth_rate: "Medium Fast",
         tm_hm_learnset: [
