@@ -154,6 +154,7 @@ const app = Vue.createApp({
             mtMoon:         MyStorage["this.mtMoon"] ?? true,
             route6:         MyStorage["this.route6"] ?? true,
             rockTunnel:     MyStorage["this.rockTunnel"] ?? true,
+            pokemonTower:   MyStorage["this.pokemonTower"] ?? true,
             safariZone:     MyStorage["this.safariZone"] ?? true,
             powerPlant:     MyStorage["this.powerPlant"] ?? true,
             mansion:        MyStorage["this.mansion"] ?? true,
@@ -259,6 +260,14 @@ const app = Vue.createApp({
         rockTunnel(newProp) {
             if (newProp == false && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) { this.mapper.properties.overworld.encounterRate.set(0, false) }
             if (newProp == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) { this.mapper.properties.overworld.encounterRate.set(15, false) }
+        },            
+        pokemonTower(newProp) {
+            if (newProp == false && (this.mapper.properties.overworld.map.value == "Pokemon Tower - 2F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 3F" || 
+            this.mapper.properties.overworld.map.value == "Pokemon Tower - 4F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 5F" || 
+            this.mapper.properties.overworld.map.value == "Pokemon Tower - 6F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 7F")) { this.mapper.properties.overworld.encounterRate.set(0, false) }
+            if (newProp == true && (this.mapper.properties.overworld.map.value == "Pokemon Tower - 2F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 3F" || 
+            this.mapper.properties.overworld.map.value == "Pokemon Tower - 4F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 5F" || 
+            this.mapper.properties.overworld.map.value == "Pokemon Tower - 6F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 7F")) { this.mapper.properties.overworld.encounterRate.set(10, false) }
         },            
         safariZone(newProp) {
             if (newProp == false && (this.mapper.properties.overworld.map.value == "Safari Zone (East)" || this.mapper.properties.overworld.map.value == "Safari Zone (West)" || this.mapper.properties.overworld.map.value == "Safari Zone (Center)" || this.mapper.properties.overworld.map.value == "Safari Zone (North)")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
@@ -631,6 +640,7 @@ const app = Vue.createApp({
             this.set_setting_prop("this.mtMoon", this.mtMoon)
             this.set_setting_prop("this.route6", this.route6)
             this.set_setting_prop("this.rockTunnel", this.rockTunnel)
+            this.set_setting_prop("this.pokemonTower", this.pokemonTower)
             this.set_setting_prop("this.safariZone", this.safariZone)
             this.set_setting_prop("this.mansion", this.mansion)
             this.set_setting_prop("this.help_menus", this.help_menus)
@@ -661,6 +671,7 @@ const app = Vue.createApp({
             this.mtMoon = MyStorage["this.mtMoon"] ?? true
             this.route6 = MyStorage["this.route6"] ?? true
             this.route6 = MyStorage["this.rockTunnel"] ?? true
+            this.route6 = MyStorage["this.pokemonTower"] ?? true
             this.safariZone = MyStorage["this.safariZone"] ?? true
             this.mansion = MyStorage["this.mansion"] ?? true
             this.help_menus = MyStorage["this.help_menus"] ?? "Settings"
@@ -731,6 +742,7 @@ const app = Vue.createApp({
             this.mtMoon = true
             this.route6 = true
             this.rockTunnel = true
+            this.pokemonTower = true
             this.safariZone = true
             this.powerPlant = true
             this.mansion = true
@@ -745,6 +757,7 @@ const app = Vue.createApp({
             this.mtMoon = false
             this.route6 = false
             this.rockTunnel = true
+            this.pokemonTower = true
             this.safariZone = true
             this.powerPlant = true
             this.mansion = true
@@ -1607,6 +1620,10 @@ const app = Vue.createApp({
         else if (this.rockTunnel == false && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
+        else if (this.pokemonTower == false && (this.mapper.properties.overworld.map.value == "Pokemon Tower - 2F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 3F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 4F"
+        || this.mapper.properties.overworld.map.value == "Pokemon Tower - 5F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 6F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 7F")) {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
         else if (this.safariZone == false  && (this.mapper.properties.overworld.map.value == "Safari Zone (East)" && this.mapper.properties.overworld.map.value == "Safari Zone (West)" && this.mapper.properties.overworld.map.value == "Safari Zone (Center)" && this.mapper.properties.overworld.map.value == "Safari Zone (North)")) {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
@@ -1638,6 +1655,10 @@ const app = Vue.createApp({
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.rockTunnel == false && newProp.value > 0 && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+            if (this.pokemonTower == false && newProp.value > 0 && (this.mapper.properties.overworld.map.value == "Pokemon Tower - 2F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 3F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 4F"
+            || this.mapper.properties.overworld.map.value == "Pokemon Tower - 5F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 6F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 7F")) {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.safariZone == false && newProp.value > 0 && (this.mapper.properties.overworld.map.value == "Safari Zone (East)" || this.mapper.properties.overworld.map.value == "Safari Zone (West)" || this.mapper.properties.overworld.map.value == "Safari Zone (Center)" || this.mapper.properties.overworld.map.value == "Safari Zone (North)")) {
