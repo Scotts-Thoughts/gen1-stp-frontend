@@ -6,12 +6,12 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Arbok", //string name
+            starterName:     "Pinsir", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough:   true, //used to mitigate luck on second playthroughs
             earlyEncountersWithRoute1:    false, //route1 encounters on
             earlyEncountersWithoutRoute1: true, //route1 encounters off
-            moonEncounters:               false, //true turns Mt Moon encounters off for second playthroughs
+            moonEncounters:               true, //true turns Mt Moon encounters off for second playthroughs
             
             developmentFeatures: true, //turn on new features
             pick:            true, //turns on the ability to pick your starter
@@ -880,10 +880,13 @@ const app = Vue.createApp({
 
         // MOVE MANAGEMENT
         movePower(y) { //y = move1.value
+            // var moveName = this.capitalization_format(y)
             if (y) {
                 // if (y) { y = y.toUpperCase()}
                 if (y.toUpperCase() == "SMOKESCREEN") { return "-"}
                 if (y.toUpperCase() == "BUBBLEBEAM") { return "65"}
+                if (y.toUpperCase() == "THUNDERPUNCH") { return "75"}
+                if (y.toUpperCase() == "VICEGRIP") { return "55"}
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
                 var move = this.g1MoveData[y]
                 if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP")) {
