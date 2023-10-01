@@ -88,7 +88,7 @@
                         <div class="statsLabelStyle statsLabelsColumn2">
                             <br>
                             Spc:<br>
-                            Spd:<br>
+                            Spe:<br>
                         </div>
                         <div class="statsheader">Base Stats</div>
                         <div class="statsColumnStyle statsColumn1">
@@ -305,6 +305,12 @@
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>
                     </transition>
+                    <div v-show="bonk_counter == true && g1stateVariable != `Battle`" class="posAbs">
+                        <img :src="`images/pop_ups/screens/${starterName.toLowerCase()}${overlayName}.png`" style="position: absolute;">
+                        <!-- <img class="posAbs" :src="`images/pop_ups/screens/farfetch'd.png`" style="position: absolute;"> -->
+                        <div class="posAbs popUpsStyle popUpLabelStyle screensLabel">Bonks</div>
+                        <div class="posAbs popUpsStyle screensValue" style="top: 454px; font-size: 34px; font-family: obs;">{{ mapper.properties.patch.steps.bonks.value }}</div>
+                    </div>
                 </div>
                 
 <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->

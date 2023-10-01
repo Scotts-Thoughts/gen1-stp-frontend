@@ -6,7 +6,7 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Pinsir", //string name
+            starterName:     "Farfetch'd", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough:   true, //used to mitigate luck on second playthroughs
             earlyEncountersWithRoute1:    false, //route1 encounters on
@@ -23,7 +23,8 @@ const app = Vue.createApp({
             showSpecialTrainerGraphics: true, //shows drawn art for defined trainers
             battlePopUps:    true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             typeCalcs:       true, //calculates effective power based on the pokemon in battle
-            
+            bonk_counter:    true, //counts the number of bonks
+
             showCritMultiplierInEP: true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             
             // CUSTOM STARTING MOVES
@@ -673,6 +674,7 @@ const app = Vue.createApp({
                 (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 3) || //koga juggler 1
                 (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 4) || //koga juggler 1
                 (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 38) || //hypno rocket
+                (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 25) || //hypno sandwich
                 (trainerClass == "CHANNELER" && this.mapper.properties.battle.trainer.number == 10) //2 gastly channeler
                 )
                 ) {
@@ -770,6 +772,8 @@ const app = Vue.createApp({
                   return "images/trainers/KOGA.png";
                 case "GIOVANNI_3":
                   return "images/trainers/GIOVANNI.png";
+                case "ROCKET_25":
+                  return "images/trainers/HYPNO_SANDWICH.png";
                 default:
                   return null;
               }
@@ -1019,10 +1023,10 @@ const app = Vue.createApp({
         this.mapper.onDisconnected = (x) => this.ready = false
         await this.mapper.connect()
 
-        for (var species of Object.keys(g1PokemonData)) {
-            var image = new Image();
-            image.src = `images/pokemon/${species}.png`;
-        }
+        // for (var species of Object.keys(g1PokemonData)) {
+        //     var image = new Image();
+        //     image.src = `images/pokemon/${species}.png`;
+        // }
 
         // reset tracking
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {

@@ -2205,9 +2205,9 @@ const g1PokemonData = {
         ]
         ]
     },
-"Farfetchd" :
+"Farfetch'd" :
     {
-        name: "Farfetchd",
+        name: "Farfetch'd",
         base_hp: 52,
         base_atk: 65,
         base_def: 55,
