@@ -148,6 +148,10 @@
     src: url(fonts/Play-Bold.ttf);
     font-family: play;
 }
+@font-face {
+    src: url(fonts/OSB.ttf);
+    font-family: timer;
+}
 html {
     height: 100%;
     width: 100%;
@@ -171,6 +175,14 @@ body {
     display: grid;
     grid-template-columns: 8px 384px 8px 1120px 8px 384px 8px;
     grid-template-rows: repeat(60, 1fr);
+}
+.bonksLabelStyle {
+    font-family: titan;
+    font-size: 18px;
+    position: absolute;
+    /* opacity: .72;
+    top: 329px;
+    left: 30px; */
 }
 .round-gradient {
     position: absolute;
@@ -1075,6 +1087,14 @@ box-shadow:
     left: 13px;
     width: 103px;
     top: 438px;
+}
+.bonksLabel {
+    font-size: 15px;
+    left: 13px;
+    width: 103px;
+    top: 438px;
+    text-decoration: none;
+
 }
 .screensValue {
     font-size: 20px;

@@ -6,7 +6,7 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Farfetch'd", //string name
+            starterName:     "Hypno", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough:   true, //used to mitigate luck on second playthroughs
             earlyEncountersWithRoute1:    false, //route1 encounters on
@@ -23,7 +23,7 @@ const app = Vue.createApp({
             showSpecialTrainerGraphics: true, //shows drawn art for defined trainers
             battlePopUps:    true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             typeCalcs:       true, //calculates effective power based on the pokemon in battle
-            bonk_counter:    true, //counts the number of bonks
+            bonk_counter:    false, //counts the number of bonks
 
             showCritMultiplierInEP: true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             
