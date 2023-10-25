@@ -6,7 +6,7 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Hypno", //string name
+            starterName:     "Pinsir", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough:   true, //used to mitigate luck on second playthroughs
             earlyEncountersWithRoute1:    false, //route1 encounters on
@@ -890,6 +890,7 @@ const app = Vue.createApp({
                 if (y.toUpperCase() == "SMOKESCREEN") { return "-"}
                 if (y.toUpperCase() == "BUBBLEBEAM") { return "65"}
                 if (y.toUpperCase() == "THUNDERPUNCH") { return "75"}
+                if (y.toUpperCase() == "POISONPOWDER") { return "-"}
                 if (y.toUpperCase() == "VICEGRIP") { return "55"}
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
                 var move = this.g1MoveData[y]
@@ -1333,6 +1334,7 @@ const app = Vue.createApp({
                 this.mapper.properties.overworld.map.value == `Route 3` || 
                 this.mapper.properties.overworld.map.value == `Route 6` || 
                 this.mapper.properties.overworld.map.value == `Route 10` || 
+                this.mapper.properties.overworld.map.value == `Route 22` || 
                 this.mapper.properties.overworld.map.value == `Mt Moon - 1` || 
                 this.mapper.properties.overworld.map.value == `Mt Moon - 2` || 
                 this.mapper.properties.overworld.map.value == `Mt Moon - 3` || 
@@ -1369,6 +1371,7 @@ const app = Vue.createApp({
                 this.mapper.properties.overworld.map.value == `Route 3` || 
                 this.mapper.properties.overworld.map.value == `Route 6` || 
                 this.mapper.properties.overworld.map.value == `Route 10` || 
+                this.mapper.properties.overworld.map.value == `Route 22` || 
                 this.mapper.properties.overworld.map.value == `Mt Moon - 1` || 
                 this.mapper.properties.overworld.map.value == `Mt Moon - 2` || 
                 this.mapper.properties.overworld.map.value == `Mt Moon - 3` || 
