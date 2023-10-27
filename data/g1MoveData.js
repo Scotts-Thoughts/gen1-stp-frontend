@@ -1685,6 +1685,26 @@ const g1MoveData = {
   Category: "Physical",
   Description: "A generation 2 move that was ported back by WaielAl. It's Heracross's signature move."
   },
+"Psycho Cut" :  {
+    Move: "Psycho Cut",
+    Type: "Psychic",
+    Power: 70,
+    Accuracy: 100,
+    PP: 20,
+    Category: "Special",
+    CategoryST: "Special",
+    Description: ""
+  },
+"Night Slash" :  {
+    Move: "Night Slash",
+    Type: "Dark",
+    Power: 70,
+    Accuracy: 100,
+    PP: 15,
+    Category: "Special",
+    CategoryST: "Special",
+    Description: "Used mainly by Pokémon with shells. By withdrawing into the shell, DEFENSE is increased."
+  },
 "Present" :  {
   Move: "Present",
   Type: "Normal",

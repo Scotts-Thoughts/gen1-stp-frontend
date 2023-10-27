@@ -16,6 +16,7 @@ const typeData = [
         Ice:      1,
         Ghost:    0,
         Dragon:   1,
+        Dark:     1,
     },
     {    
         moveType: "Fighting",    
@@ -34,6 +35,7 @@ const typeData = [
         Ice:      2,
         Ghost:    1,
         Dragon:   1,
+        Dark:     2,
     },
     {    
         moveType: "Grass",    
@@ -52,6 +54,7 @@ const typeData = [
         Ice:      1,
         Ghost:    1,
         Dragon:   0.5,
+        Dark:     1,
     },
     {    
         moveType: "Water",    
@@ -70,6 +73,7 @@ const typeData = [
         Ice:      1,
         Ghost:    1,
         Dragon:   0.5,
+        Dark:     1,
     },
     {    
         moveType: "Fire",    
@@ -88,6 +92,7 @@ const typeData = [
         Ice:      2,
         Ghost:    1,
         Dragon:   0.5,
+        Dark:     1,
     },
     {    
         moveType: "Electric",    
@@ -106,6 +111,7 @@ const typeData = [
         Ice:      1,
         Ghost:    1,
         Dragon:   0.5,
+        Dark:     1,
     },
     {    
         moveType: "Ground",    
@@ -124,6 +130,7 @@ const typeData = [
         Ice:      1,
         Ghost:    1,
         Dragon:   1,
+        Dark:     1,
     },
     {    
         moveType: "Rock",    
@@ -142,6 +149,7 @@ const typeData = [
         Ice:      2,
         Ghost:    1,
         Dragon:   1,
+        Dark:     1,
     },
     {    
         moveType: "Psychic",    
@@ -160,6 +168,7 @@ const typeData = [
         Ice:      1,
         Ghost:    1,
         Dragon:   1,
+        Dark:     0,
     },
     {    
         moveType: "Flying",    
@@ -178,6 +187,7 @@ const typeData = [
         Ice:      1,
         Ghost:    1,
         Dragon:   1,
+        Dark:     1,
     },
     {    
         moveType: "Bug",    
@@ -196,6 +206,7 @@ const typeData = [
         Ice:      1,
         Ghost:    0.5,
         Dragon:   1,
+        Dark:     2,
     },
     {    
         moveType: "Poison",    
@@ -214,6 +225,7 @@ const typeData = [
         Ice:      1,
         Ghost:    0.5,
         Dragon:   1,
+        Dark:     1,
     },
     {    
         moveType: "Ghost",    
@@ -232,6 +244,7 @@ const typeData = [
         Ice:      1,
         Ghost:    2,
         Dragon:   1,
+        Dark:     0.5,
     },
     {    
         moveType: "Ice",    
@@ -250,6 +263,7 @@ const typeData = [
         Ice:      0.5,
         Ghost:    1,
         Dragon:   2,
+        Dark:     1,
     },
     {    
         moveType: "Dragon",    
@@ -268,5 +282,25 @@ const typeData = [
         Ice:      1,
         Ghost:    1,
         Dragon:   2,
+        Dark:     1,
+    },
+    {    
+        moveType: "Dark",    
+        Normal:   1,
+        Fighting: 0.5,
+        Grass:    1,
+        Fire:     1,
+        Water:    1,
+        Electric: 1,
+        Rock:     1,
+        Ground:   1,
+        Psychic:  2,
+        Flying:   1,
+        Bug:      1,
+        Poison:   1,
+        Ice:      1,
+        Ghost:    2,
+        Dragon:   1,
+        Dark:     0.5,
     },
 ]

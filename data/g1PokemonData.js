@@ -10061,4 +10061,61 @@ const g1PokemonData = {
             ], 
         ]
     },
+"Malamar" :
+    {
+        name: "Malamar",
+        base_hp: 86,
+        base_atk: 92,
+        base_def: 88,
+        base_spd: 73,
+        base_spc: 75,
+        type1: "Dark",
+        type2: "Psychic",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+            "Peck",
+            "Tackle",
+            "Hypnosis",
+            "Wrap"
+        ],
+        growth_rate: "Medium Fast",
+        tm_hm_learnset: [
+            "Toxic",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Submission",
+            "Counter",
+            "Seismic Toss",
+            "Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Psychic",
+            "Teleport",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Swift",
+            "Skull Bash",
+            "Dream Eater",
+            "Rest",
+            "Psywave",
+            "Rock Slide",
+            "Substitute"
+        ],
+        levelup_moveset: [
+            [ 12, "Constrict" ], 
+            [ 15, "Reflect" ], 
+            [ 18, "Psybeam" ], 
+            [ 21, "Confuse Ray" ], 
+            [ 24, "Slash" ], 
+            [ 27, "Night Slash" ], 
+            [ 33, "Psycho Cut" ], 
+            [ 37, "Light Screen" ], 
+            [ 42, "Psychic" ], 
+            [ 47, "Submission" ]
+        ]
+    }
 }

@@ -1660,6 +1660,26 @@ const gen1moves = [
     Description: "Used mainly by Pokémon with shells. By withdrawing into the shell, DEFENSE is increased."
   },
   {
+    Move: "Psycho Cut",
+    Type: "Psychic",
+    Power: 70,
+    Accuracy: 100,
+    PP: 20,
+    Category: "Special",
+    CategoryST: "Special",
+    Description: "Used mainly by Pokémon with shells. By withdrawing into the shell, DEFENSE is increased."
+  },
+  {
+    Move: "Night Slash",
+    Type: "Dark",
+    Power: 70,
+    Accuracy: 100,
+    PP: 15,
+    Category: "Special",
+    CategoryST: "Special",
+    Description: "Used mainly by Pokémon with shells. By withdrawing into the shell, DEFENSE is increased."
+  },
+  {
     Move: " ",
     Type: " ",
     Power: " ",

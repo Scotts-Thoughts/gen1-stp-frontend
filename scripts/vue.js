@@ -6,7 +6,7 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Pinsir", //string name
+            starterName:     "Malamar", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough:   true, //used to mitigate luck on second playthroughs
             earlyEncountersWithRoute1:    false, //route1 encounters on
@@ -894,7 +894,7 @@ const app = Vue.createApp({
                 if (y.toUpperCase() == "VICEGRIP") { return "55"}
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
                 var move = this.g1MoveData[y]
-                if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP")) {
+                if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP" || y.toUpperCase() == "NIGHT SLASH" || y.toUpperCase() == "PSYCHO CUT")) {
                     level = this.mapper.properties.player.team[0].level.value
                     critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
                     power = move.Power
