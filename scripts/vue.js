@@ -6,7 +6,7 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Malamar", //string name
+            starterName:     "Gastly", //string name
             overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough:   true, //used to mitigate luck on second playthroughs
             earlyEncountersWithRoute1:    false, //route1 encounters on
@@ -760,16 +760,20 @@ const app = Vue.createApp({
                   return "images/trainers/RIVAL2.png";
                 case "RIVAL2_1":
                   return "images/trainers/RIVAL2.png";
-                case "BROCK":
-                  return "images/trainers/BROCK.png";
-                case "MISTY":
-                  return "images/trainers/MISTY.png";
-                case "LT.SURGE":
-                  return "images/trainers/LTSURGE.png";
-                case "ERIKA":
-                  return "images/trainers/ERIKA.png";
-                case "KOGA":
-                  return "images/trainers/KOGA.png";
+                case "BROCK_1":
+                  return "images/trainers/brock.png";
+                case "MISTY_1":
+                  return "images/trainers/misty.png";
+                case "LT.SURGE_1":
+                  return "images/trainers/ltsurge.png";
+                case "ERIKA_1":
+                  return "images/trainers/erika.png";
+                case "KOGA_1":
+                  return "images/trainers/koga.png";
+                case "BLAINE_1":
+                  return "images/trainers/blaine.png";
+                case "SABRINA_1":
+                  return "images/trainers/sabrina.png";
                 case "GIOVANNI_3":
                   return "images/trainers/GIOVANNI.png";
                 case "ROCKET_25":
