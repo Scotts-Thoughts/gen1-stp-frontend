@@ -6,12 +6,17 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName:     "Gastly", //string name
-            overlayName:     "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
+            starterName: "Primeape", //string name
+            overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             secondPlaythrough:   true, //used to mitigate luck on second playthroughs
+            refined_forset:              true, //sets special cases for the forest
             earlyEncountersWithRoute1:    false, //route1 encounters on
             earlyEncountersWithoutRoute1: true, //route1 encounters off
             moonEncounters:               true, //true turns Mt Moon encounters off for second playthroughs
+            //refined forest paramenters
+            goal: "pidgey", //level, speed, pidgey, none
+            goal_level: 15, //level goal (10 for lowest damage rounding for Onix)
+            goal_speed: 22, //speed goal (default 24 to move first against Onix)
             
             developmentFeatures: true, //turn on new features
             pick:            true, //turns on the ability to pick your starter
@@ -180,6 +185,11 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        removeSpecialChars(str) {
+            // This will replace any character that is not a lowercase letter or number with an empty string
+            // and convert the string to lowercase
+            return str.replace(/[^a-z0-9]/gi, '').toLowerCase();
+        },
         //string can be: clear, increment, decrement
         resets_controller(string) {
             if (string == "clear")  {
@@ -1333,7 +1343,85 @@ const app = Vue.createApp({
             const moonparas = 0x6D
             const paraslevelone = 0x0A
             const parasleveltwo = 0x0C
-            if (this.secondPlaythrough == true && this.mapper.meta.gameName == `Pokemon Yellow` && this.earlyEncounters == false) {
+            //SETS ENCOUNTER VALUES WITH REFINED FOREST VALUES
+            if (this.secondPlaythrough == true && this.refined_forset == true) {
+                if (this.mapper.properties.overworld.map.value == `Route 1` || 
+                this.mapper.properties.overworld.map.value == `Route 3` || 
+                this.mapper.properties.overworld.map.value == `Route 6` || 
+                this.mapper.properties.overworld.map.value == `Route 10` || 
+                this.mapper.properties.overworld.map.value == `Route 22` || 
+                this.mapper.properties.overworld.map.value == `Mt Moon - 1` || 
+                this.mapper.properties.overworld.map.value == `Mt Moon - 2` || 
+                this.mapper.properties.overworld.map.value == `Mt Moon - 3` || 
+                this.mapper.properties.overworld.map.value == `Rock Tunnel` || 
+                this.mapper.properties.overworld.map.value == `Rock Tunnel - 1`) {
+                    await Promise.all([
+                        await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
+                    ])  
+                }
+                else if (this.mapper.properties.overworld.map.value == `Viridian Forest`) {
+                    if (this.mapper.properties.player.team[1].species.value == undefined || this.goal == "pidgey") {
+                        await Promise.all([
+                            await this.mapper.properties.overworld.encounters.common[0].level.setBytes([pidgeyLevelFour], false),
+                            await this.mapper.properties.overworld.encounters.common[0].pokemon.setBytes([viridianForestPidgey], false),
+                            await this.mapper.properties.overworld.encounters.common[1].level.setBytes([pidgeyLevelFour], false),
+                            await this.mapper.properties.overworld.encounters.common[1].pokemon.setBytes([viridianForestPidgey], false),
+                            await this.mapper.properties.overworld.encounters.common[2].level.setBytes([pidgeyLevelFour], false),
+                            await this.mapper.properties.overworld.encounters.common[2].pokemon.setBytes([viridianForestPidgey], false),
+                            await this.mapper.properties.overworld.encounters.common[3].level.setBytes([pidgeyLevelFour], false),
+                            await this.mapper.properties.overworld.encounters.common[3].pokemon.setBytes([viridianForestPidgey], false),
+                            await this.mapper.properties.overworld.encounters.uncommon[0].level.setBytes([pidgeyLevelSix], false),
+                            await this.mapper.properties.overworld.encounters.uncommon[0].pokemon.setBytes([viridianForestPidgey], false),
+                            await this.mapper.properties.overworld.encounters.uncommon[1].level.setBytes([pidgeyLevelSix], false),
+                            await this.mapper.properties.overworld.encounters.uncommon[1].pokemon.setBytes([viridianForestPidgey], false),
+                            await this.mapper.properties.overworld.encounters.uncommon[2].level.setBytes([pidgeyLevelSix], false),
+                            await this.mapper.properties.overworld.encounters.uncommon[2].pokemon.setBytes([viridianForestPidgey], false),
+                            await this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([pidgeyLevelSix], false),
+                            await this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([viridianForestPidgey], false),
+                            await this.mapper.properties.overworld.encounterRate.setBytes([viridianForestEncounterRate], false),
+                        ])  
+                    }
+                    if (this.goal == "pidgey" && this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                        await Promise.all([
+                            // await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
+                            // await this.sleep(250),
+                            await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
+                        ])  
+                    }
+                    if (this.goal == "level" && this.mapper.properties.player.team[0].level.value >= this.goal_level && this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                        await Promise.all([
+                            // await this.sleep(250),
+                            await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
+                        ])  
+                    }
+                    if (this.goal == "speed" && this.mapper.properties.player.team[0].speed.value >= this.goal_speed  && this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                        await Promise.all([
+                            // await this.sleep(250),
+                            await this.mapper.properties.overworld.encounterRate.setBytes([noEncounters], false),
+                        ])  
+                    }
+                    // await Promise.all([
+                    //     await this.mapper.properties.overworld.encounters.common[0].level.setBytes([pidgeyLevelFour], false),
+                    //     await this.mapper.properties.overworld.encounters.common[0].pokemon.setBytes([viridianForestPidgey], false),
+                    //     await this.mapper.properties.overworld.encounters.common[1].level.setBytes([pidgeyLevelFour], false),
+                    //     await this.mapper.properties.overworld.encounters.common[1].pokemon.setBytes([viridianForestPidgey], false),
+                    //     await this.mapper.properties.overworld.encounters.common[2].level.setBytes([pidgeyLevelFour], false),
+                    //     await this.mapper.properties.overworld.encounters.common[2].pokemon.setBytes([viridianForestPidgey], false),
+                    //     await this.mapper.properties.overworld.encounters.common[3].level.setBytes([pidgeyLevelFour], false),
+                    //     await this.mapper.properties.overworld.encounters.common[3].pokemon.setBytes([viridianForestPidgey], false),
+                    //     await this.mapper.properties.overworld.encounters.uncommon[0].level.setBytes([pidgeyLevelSix], false),
+                    //     await this.mapper.properties.overworld.encounters.uncommon[0].pokemon.setBytes([viridianForestPidgey], false),
+                    //     await this.mapper.properties.overworld.encounters.uncommon[1].level.setBytes([pidgeyLevelSix], false),
+                    //     await this.mapper.properties.overworld.encounters.uncommon[1].pokemon.setBytes([viridianForestPidgey], false),
+                    //     await this.mapper.properties.overworld.encounters.uncommon[2].level.setBytes([pidgeyLevelSix], false),
+                    //     await this.mapper.properties.overworld.encounters.uncommon[2].pokemon.setBytes([viridianForestPidgey], false),
+                    //     await this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([pidgeyLevelSix], false),
+                    //     await this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([viridianForestPidgey], false),
+                    //     await this.mapper.properties.overworld.encounterRate.setBytes([viridianForestEncounterRate], false),
+                    // ])  
+                }
+            }
+            if (this.secondPlaythrough == true &&  this.refined_forset == false && this.mapper.meta.gameName == `Pokemon Yellow` && this.earlyEncounters == false) {
                 if (this.mapper.properties.overworld.map.value == `Route 1` || 
                 this.mapper.properties.overworld.map.value == `Route 3` || 
                 this.mapper.properties.overworld.map.value == `Route 6` || 
@@ -1481,6 +1569,21 @@ const app = Vue.createApp({
             await secondPlaythrough()
         })
         this.mapper.properties.overworld.encounterRate.change(async (x) => {
+            await secondPlaythrough()
+        })
+        this.mapper.properties.player.team[1].species.change(async (x) => {
+            await secondPlaythrough()
+        })
+        this.mapper.properties.player.team[0].species.change(async (x) => {
+            await secondPlaythrough()
+        })
+        this.mapper.properties.player.team[0].level.change(async (x) => {
+            await secondPlaythrough()
+        })
+        this.mapper.properties.player.team[0].speed.change(async (x) => {
+            await secondPlaythrough()
+        })
+        this.mapper.properties.battle.type.change(async (x) => {
             await secondPlaythrough()
         })
 
