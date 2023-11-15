@@ -162,6 +162,9 @@ const app = Vue.createApp({
             route22:        MyStorage["this.route22"] ?? true,
             victoryRoad:    MyStorage["this.victoryRoad"] ?? true,
 
+            goal_level:    MyStorage["this.goal_level"] ?? 13,
+            goal_speed:    MyStorage["this.goal_speed"] ?? 24,
+
             rockTunnelDarkness: MyStorage["this.rockTunnelDarkness"] ?? false, //if true it will make rock tunnel bright
             
 
@@ -191,6 +194,7 @@ const app = Vue.createApp({
             playerName: "NINTEN",
             resetCatcher: "NINTEN",
             playerResets: MyStorage["playerResets"] ?? 0,
+            blackout_counter: MyStorage["blackout_counter"] ?? 0,
             resetCounter: true,
             game_over: false,
             attempt_number: 0,
@@ -215,6 +219,7 @@ const app = Vue.createApp({
             timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
             battle_start: 0,
             timer_settings: "Real-Time",
+            viridian_forest: MyStorage["viridian_forest"] ?? "Encounters On",
 
             //splits
             split_data: MyStorage["split_data"] ?? [],
@@ -241,10 +246,10 @@ const app = Vue.createApp({
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
             if (newProp == true && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.set(25, false) }
         },   
-        viridianForest(newProp) {
-            if (newProp == false && this.mapper.properties.overworld.map.value == "Viridian Forest") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
-            if (newProp == true && this.mapper.properties.overworld.map.value == "Viridian Forest") { this.mapper.properties.overworld.encounterRate.set(25, false) }
-        },   
+        // viridianForest(newProp) {
+        //     if (newProp == false && this.mapper.properties.overworld.map.value == "Viridian Forest") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        //     if (newProp == true && this.mapper.properties.overworld.map.value == "Viridian Forest") { this.mapper.properties.overworld.encounterRate.set(25, false) }
+        // },   
         route3(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 3") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
             if (newProp == true && this.mapper.properties.overworld.map.value == "Route 3") { this.mapper.properties.overworld.encounterRate.set(20, false) }
@@ -283,6 +288,52 @@ const app = Vue.createApp({
         },
         victoryRoad(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Victory Road") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },
+        goal_level(newProp) {
+            if (this.mapper.properties.player.team[0].level.value >= newProp && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[1].species.value == "Pidgey") { 
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            }
+            if (this.mapper.properties.player.team[0].level.value < newProp) {
+                this.viridianEncounterEnable()
+            }
+        },
+        goal_speed(newProp) {
+            if (this.mapper.properties.player.team[0].speed.value >= newProp && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[1].species.value == "Pidgey") { 
+                this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+            }
+            if (this.mapper.properties.player.team[0].speed.value < newProp) {
+                this.viridianEncounterEnable()
+            }
+        },
+        viridian_forest(newProp) {
+            const encountersOff = 0x00
+            if (newProp == "Pidgey") {
+                if (this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                    this.mapper.properties.overworld.encounterRate.setBytes([encountersOff], false)
+                }
+                else {
+                    this.viridianEncounterEnable()
+                }
+            }
+            if (newProp == "Level") {
+                if (this.mapper.properties.player.team[0].level.value >= this.goal_level && this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                    this.mapper.properties.overworld.encounterRate.setBytes([encountersOff], false)
+                }
+                else {
+                    this.viridianEncounterEnable()
+                }
+            }
+            if (newProp == "Speed") {
+                if (this.mapper.properties.player.team[0].speed.value >= this.goal_speed && this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                    this.mapper.properties.overworld.encounterRate.setBytes([encountersOff], false)
+                }
+                else {
+                    this.viridianEncounterEnable()
+                }
+            }
+            if (newProp == "Encounters On") {
+                this.viridianEncounterEnable()
+            }
         },
         async starterName(newValue, oldValue) {
             //transition between background textures
@@ -338,6 +389,8 @@ const app = Vue.createApp({
             this.game_over = false;
             MyStorage["playerResets"] = 0
             this.playerResets = 0;
+            MyStorage["blackout_counter"] = 0
+            this.blackout_counter = 0;
         },    
         overlay_color(newColor) {
             document.documentElement.style.setProperty('--overlay-color', newColor);
@@ -384,8 +437,8 @@ const app = Vue.createApp({
             }
         },
         pokemon_version_specific_data() {
-            if (this.mapper.meta.gameName == "Pokemon Yellow") { return this.g1PokemonData }
-            if (this.mapper.meta.gameName == "Pokemon Red and Blue") { return this.g1PokemonDataRB }
+            if (this.mapper.properties.meta.gameName.value == "Pokemon Yellow") { return this.g1PokemonData }
+            if (this.mapper.properties.meta.gameName.value == "Pokemon Red and Blue") { return this.g1PokemonDataRB }
         },
         gametimeHMS() {
             h = this.mapper.properties.gameTime.hours
@@ -419,8 +472,8 @@ const app = Vue.createApp({
             return f
         },
         currentTrainer() {
-            if (this.mapper.meta.gameName == "Pokemon Yellow") { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
-            else if (this.mapper.meta.gameName == "Pokemon Red and Blue") { return g1RedBlueTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
+            if (this.mapper.properties.meta.gameName.value == "Pokemon Yellow") { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
+            else if (this.mapper.properties.meta.gameName.value == "Pokemon Red and Blue") { return g1RedBlueTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
             else { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
         },
         //shorthands
@@ -510,7 +563,32 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
-                //*autosplitter methods
+        //enables encounters in viridian forest and resets all the Pokemon you can find to default
+        viridianEncounterEnable() {
+            const encounterRate = 0x19
+            const caterpie = 0x7B
+            const metapod = 0x7C
+            const pidgey = 0x24
+            const pidgeotto = 0x96
+            this.mapper.properties.overworld.encounters.common[0].level.setBytes([0x03], false),
+            this.mapper.properties.overworld.encounters.common[0].pokemon.setBytes([caterpie], false),
+            this.mapper.properties.overworld.encounters.common[1].level.setBytes([0x04], false),
+            this.mapper.properties.overworld.encounters.common[1].pokemon.setBytes([metapod], false),
+            this.mapper.properties.overworld.encounters.common[2].level.setBytes([0x04], false),
+            this.mapper.properties.overworld.encounters.common[2].pokemon.setBytes([caterpie], false),
+            this.mapper.properties.overworld.encounters.common[3].level.setBytes([0x05], false),
+            this.mapper.properties.overworld.encounters.common[3].pokemon.setBytes([caterpie], false),
+            this.mapper.properties.overworld.encounters.uncommon[0].level.setBytes([0x04], false),
+            this.mapper.properties.overworld.encounters.uncommon[0].pokemon.setBytes([pidgey], false),
+            this.mapper.properties.overworld.encounters.uncommon[1].level.setBytes([0x06], false),
+            this.mapper.properties.overworld.encounters.uncommon[1].pokemon.setBytes([pidgey], false),
+            this.mapper.properties.overworld.encounters.uncommon[2].level.setBytes([0x06], false),
+            this.mapper.properties.overworld.encounters.uncommon[2].pokemon.setBytes([caterpie], false),
+            this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([0x06], false),
+            this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([metapod], false),
+            this.mapper.properties.overworld.encounterRate.setBytes([encounterRate], false)
+        },
+            //*autosplitter methods
         //format trainer names so they can be written to csv
         format_trainer_name(trainer_class, trainer_number) {
             //rivals
@@ -662,11 +740,16 @@ const app = Vue.createApp({
             this.set_setting_prop("this.showSpecialTrainerGraphics", this.showSpecialTrainerGraphics)
             this.set_setting_prop("this.battlePopUps", this.battlePopUps)
             this.set_setting_prop("this.rockTunnelDarkness", this.rockTunnelDarkness)
+            this.set_setting_prop("this.goal_level", this.goal_level)
+            this.set_setting_prop("this.goal_speed", this.goal_speed)
+            this.set_setting_prop("this.viridian_forest", this.viridian_forest)
             // console.log(MyStorage.entries())
         },
         load_all_settings() {
             this.route1 = MyStorage["this.route1"] ?? true
             this.viridianForest = MyStorage["this.viridianForest"] ?? true
+            this.goal_level = MyStorage["this.goal_level"] ?? 13
+            this.goal_speed = MyStorage["this.goal_speed"] ?? 24
             this.route3 = MyStorage["this.route3"] ?? true
             this.mtMoon = MyStorage["this.mtMoon"] ?? true
             this.route6 = MyStorage["this.route6"] ?? true
@@ -694,6 +777,9 @@ const app = Vue.createApp({
             this.showCritMultiplierInEP = MyStorage["this.battlePopUps"] ?? true
             this.showCritMultiplierInEP = MyStorage["this.rockTunnelDarkness"] ?? false
             this.playerResets = MyStorage["playerResets"] ?? 0
+            this.goal_level = MyStorage["goal_level"] ?? 13
+            this.goal_speed = MyStorage["goal_speed"] ?? 24
+            this.viridian_forest = MyStorage["viridian_forest"] ?? "Encounters On"
         },
         //string can be: clear, increment, decrement
         resets_clear() {
@@ -1072,7 +1158,7 @@ const app = Vue.createApp({
         },
 
         fixTrainerName(trainerName, trainerNumber) {
-            const gameName = this.mapper.meta.gameName;
+            const gameName = this.mapper.properties.meta.gameName.value;
             const rival1Teams = ["rival1's team", "rival1A's team", "rival2's team"];
             const rival2Teams = [
               "rival3's team",
@@ -1137,7 +1223,7 @@ const app = Vue.createApp({
         specialTrainerGraphics() {
             if (this.showSpecialTrainerGraphics) {
               const { class: trainerClass, number: trainerNumber } = this.mapper.properties.battle.trainer;
-              if (this.mapper.meta.gameName == "Pokemon Yellow") {
+              if (this.mapper.properties.meta.gameName.value == "Pokemon Yellow") {
                 switch (`${trainerClass}_${trainerNumber}`) {
                     case "LT.SURGE_1":
                         return "images/trainers/ltsurge.png";
@@ -1163,7 +1249,7 @@ const app = Vue.createApp({
                         return "images/trainers/RIVAL2.png";
                 }
               }
-              if (this.mapper.meta.gameName == "Pokemon Red and Blue") {
+              if (this.mapper.properties.meta.gameName.value == "Pokemon Red and Blue") {
                 switch (`${trainerClass}_${trainerNumber}`) {
                     case "LT.SURGE_1":
                         return "images/trainers/LTSURGE-RED.png";
@@ -1563,8 +1649,12 @@ const app = Vue.createApp({
             level = this.mapper.properties.player.team[0].level.value.toString()
             game_time = this.gametimeSplit.toString()
             battle_duration = (battle_end - this.battle_start)/1000
+            move1 = this.mapper.properties.player.team[0].move1.value
+            move2 = this.mapper.properties.player.team[0].move2.value
+            move3 = this.mapper.properties.player.team[0].move3.value
+            move4 = this.mapper.properties.player.team[0].move4.value
 
-            str = player_name + "," + date_string + "," + time_string + "," + trainer_name + "," + real_time_total + "," + real_time_hmmss + "," + resets + "," + level + "," + game_time + "," + battle_duration + "\n"
+            str = player_name + "," + date_string + "," + time_string + "," + trainer_name + "," + real_time_total + "," + real_time_hmmss + "," + resets + "," + level + "," + game_time + "," + battle_duration + "," + move1 + "," + move2 + "," + move3 + "," + move4 + "\n"
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL1")    { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL2")    { write_split_data() }
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BROCK" )    { write_split_data() }
@@ -1589,6 +1679,7 @@ const app = Vue.createApp({
         this.mapper.properties.player.team[0].hp.change((newProp, oldProp) => {
             if (newProp.value == 0 && this.g1stateVariable == `Battle`) {
                 this.blackout = true;
+                this.blackout_counter++;
             }
             if (this.g1stateVariable == `Base Stats`) {
                 this.blackout = false;
@@ -1605,7 +1696,16 @@ const app = Vue.createApp({
         if (this.route1 == false && this.mapper.properties.overworld.map.value == "Route 1") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
-        else if (this.viridianForest == false && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+        // else if (this.viridianForest == false && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+        //     this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        // }
+        else if (this.viridian_forest == "Level" && this.mapper.properties.player.team[0].level.value >= this.goal_level && this.mapper.properties.player.team[1].species.value == "Pidgey") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+        else if (this.viridian_forest == "Speed" && this.mapper.properties.player.team[0].speed.value >= this.goal_speed && this.mapper.properties.player.team[1].species.value == "Pidgey") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+        else if (this.viridian_forest == "Pidgey" && this.mapper.properties.player.team[1].species.value == "Pidgey") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
         else if (this.route3 == false && this.mapper.properties.overworld.map.value == "Route 3") {
@@ -1651,9 +1751,46 @@ const app = Vue.createApp({
             if (this.route6 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 6") {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
-            if (this.viridianForest == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+            if (this.viridian_forest == "Level" && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[0].level.value >= this.goal_level && this.mapper.properties.player.team[1].species.value == "Pidgey") {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
+            if (this.viridian_forest == "Speed" && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[0].speed.value >= this.goal_speed && this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+            if (this.viridian_forest == "Pidgey" && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+                if (this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                    this.mapper.properties.overworld.encounterRate.set(0, false) 
+                }
+                else if (this.mapper.properties.player.team[1].species.value == undefined) {
+                    const viridianForestPidgey = 0x24
+                    const viridianForestEncounterRate = 0x19
+                    const pidgeyLevelFour = 0x04
+                    const pidgeyLevelSix = 0x06
+                    const pidgeyLevelEight = 0x08
+                    await Promise.all([
+                        await this.mapper.properties.overworld.encounters.common[0].level.setBytes([pidgeyLevelFour], false),
+                        await this.mapper.properties.overworld.encounters.common[0].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.common[1].level.setBytes([pidgeyLevelFour], false),
+                        await this.mapper.properties.overworld.encounters.common[1].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.common[2].level.setBytes([pidgeyLevelFour], false),
+                        await this.mapper.properties.overworld.encounters.common[2].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.common[3].level.setBytes([pidgeyLevelSix], false),
+                        await this.mapper.properties.overworld.encounters.common[3].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[0].level.setBytes([pidgeyLevelSix], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[0].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[1].level.setBytes([pidgeyLevelSix], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[1].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[2].level.setBytes([pidgeyLevelEight], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[2].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([pidgeyLevelEight], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounterRate.setBytes([viridianForestEncounterRate], false),
+                    ])  
+                }
+            }
+            // if (this.viridianForest == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+            //     this.mapper.properties.overworld.encounterRate.set(0, false) 
+            // }
             if (this.rockTunnel == false && newProp.value > 0 && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
@@ -1678,6 +1815,60 @@ const app = Vue.createApp({
             }
             if (this.victoryRoad == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Victory Road") {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+        });
+
+        this.mapper.properties.battle.type.change(async (newProp) => {
+            if (this.viridian_forest == "Level" && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[0].level.value >= this.goal_level && this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+            if (this.viridian_forest == "Speed" && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[0].speed.value >= this.goal_speed && this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+            if (this.viridian_forest == "Pidgey" && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+                if (this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                    this.mapper.properties.overworld.encounterRate.set(0, false) 
+                }
+                else if (this.mapper.properties.player.team[1].species.value == undefined) {
+                    const viridianForestPidgey = 0x24
+                    const viridianForestEncounterRate = 0x19
+                    const pidgeyLevelFour = 0x04
+                    const pidgeyLevelSix = 0x06
+                    const pidgeyLevelEight = 0x08
+                    await Promise.all([
+                        await this.mapper.properties.overworld.encounters.common[0].level.setBytes([pidgeyLevelFour], false),
+                        await this.mapper.properties.overworld.encounters.common[0].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.common[1].level.setBytes([pidgeyLevelFour], false),
+                        await this.mapper.properties.overworld.encounters.common[1].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.common[2].level.setBytes([pidgeyLevelFour], false),
+                        await this.mapper.properties.overworld.encounters.common[2].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.common[3].level.setBytes([pidgeyLevelSix], false),
+                        await this.mapper.properties.overworld.encounters.common[3].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[0].level.setBytes([pidgeyLevelSix], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[0].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[1].level.setBytes([pidgeyLevelSix], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[1].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[2].level.setBytes([pidgeyLevelEight], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[2].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([pidgeyLevelEight], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounterRate.setBytes([viridianForestEncounterRate], false),
+                    ])  
+                }
+            }
+        });
+
+        this.mapper.properties.player.team[1].species.change((newProp) => {
+            if (this.mapper.properties.overworld.map.value == "Viridian Forest") {
+                if (this.viridian_forest == "Level" && this.mapper.properties.player.team[0].level.value >= this.goal_level && newProp.value == "Pidgey") {
+                    this.mapper.properties.overworld.encounterRate.set(0, false) 
+                }
+                else if (this.viridian_forest == "Speed" && this.mapper.properties.player.team[0].speed.value >= this.goal_speed && newProp.value == "Pidgey") {
+                    this.mapper.properties.overworld.encounterRate.set(0, false) 
+                }
+                else if (this.viridian_forest == "Pidgey" && newProp.value == "Pidgey") {
+                    this.mapper.properties.overworld.encounterRate.set(0, false) 
+                }
             }
         });
 
