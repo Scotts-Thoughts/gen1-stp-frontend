@@ -95,6 +95,43 @@ class RetroArchHook {
 
 const retro = new RetroArchHook()
 
+const keyhook = new KeyHook();
+// keyhook.isShiftDown
+// keyhook.isCtrlDown
+// keyhook.isAltDown
+// keyhook.isKeyDown(keyName)
+
+// // example
+// if (keyhook.isKeyDown('A') && keyhook.isCtrlDown) {
+//     // ...
+// }
+// // format of data:
+// // {
+// //     type: 'down',
+// //     keyCode: 65,
+// //     key: 'A',
+// //     alt: true,
+// //     ctrl: true,
+// //     shift: false,
+// //     time: 979376656
+// // }
+// keyhook.on("down", (data) => {
+//     if (data.key == 'A' && data.ctrl && data.alt)
+//       console.log('CTRL+Alt+A pressed');
+    
+//     if (data.key == 'S' && data.ctrl)
+//       console.log('CTRL+S pressed');
+// });
+// keyhook.on("up", (data) => {
+//     // ...
+// });
+// keyhook.on("repeat", (data) => {
+//     // ...
+// });
+// keyhook.registerShortCut('CTRL+Alt+A', () => {
+//     console.log("CTRL+Alt+A pressed");
+// })
+
 // function logToFile(str, file_name, starterName) {
 //     return new Promise((resolve, reject) => {
 //         require("fs").mkdir("./splits/", { recursive: true }, console.log)
@@ -312,6 +349,9 @@ const app = Vue.createApp({
 
             //splits
             split_data: MyStorage["split_data"] ?? [],
+
+            // keyhook
+            keyhookTest: "",
         }
     },
 
@@ -2251,6 +2291,10 @@ const app = Vue.createApp({
                 this.$refs.expBar.style.transition = null;
                 this.oldExpValue = newProp.value
             }
+        })
+
+        keyhook.registerShortCut('CTRL+Alt+A', () => {
+            this.keyhookTest = "CTRL+Alt+A pressed";
         })
     },
 }).mount('#app')
