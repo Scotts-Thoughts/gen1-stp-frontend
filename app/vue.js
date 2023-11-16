@@ -95,11 +95,100 @@ class RetroArchHook {
 
 const retro = new RetroArchHook()
 
-function logToFile(str, file_name, starterName) {
+// function logToFile(str, file_name, starterName) {
+//     return new Promise((resolve, reject) => {
+//         require("fs").mkdir("./splits/", { recursive: true }, console.log)
+//         require("fs").appendFile(`./splits/${starterName}-${file_name}.csv`, str, (err) => err ? reject(err) : resolve())
+//     }) 
+// }
+
+const fs = require("fs");
+const path = require("path");
+function logToFile_BattleSummary(str, file_name, starterName, time, trainer, id) {
     return new Promise((resolve, reject) => {
-        require("fs").mkdir("./splits/", { recursive: true }, console.log)
-        require("fs").appendFile(`./splits/${starterName}-${file_name}.csv`, str, (err) => err ? reject(err) : resolve())
-    }) 
+        const dirPath = "./battle_summaries/";
+        const filePath = path.join(dirPath, `/${starterName}-${file_name}/${time}-${trainer}-${id}.csv`);
+
+        fs.mkdir(dirPath, { recursive: true }, (err) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+                return;
+            }
+
+            if (!fs.existsSync(filePath)) {
+                fs.writeFile(filePath, header, (err) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        fs.appendFile(filePath, str, (err) => {
+                            err ? reject(err) : resolve();
+                        });
+                    }
+                });
+            } else {
+                fs.appendFile(filePath, str, (err) => err ? reject(err) : resolve());
+            }
+        });
+    });
+}
+function logToFileSimpleSplits(str, file_name, starterName) {
+    return new Promise((resolve, reject) => {
+        const dirPath = "./splits/";
+        const filePath = path.join(dirPath, `${starterName}-${file_name}-simple.csv`);
+        const header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4\n"; // Replace with your actual header
+
+        fs.mkdir(dirPath, { recursive: true }, (err) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+                return;
+            }
+
+            if (!fs.existsSync(filePath)) {
+                fs.writeFile(filePath, header, (err) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        fs.appendFile(filePath, str, (err) => {
+                            err ? reject(err) : resolve();
+                        });
+                    }
+                });
+            } else {
+                fs.appendFile(filePath, str, (err) => err ? reject(err) : resolve());
+            }
+        });
+    });
+}
+function logToFileFullSplits(str, file_name, starterName) {
+    return new Promise((resolve, reject) => {
+        const dirPath = "./splits/";
+        const filePath = path.join(dirPath, `${starterName}-${file_name}-full.csv`);
+        const header = "date_string,time_string,player_name,pokemon,trainer_name,total_pokemon,real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4,saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns,itemsInBag,money,rivalTeam\n"; // Replace with your actual header
+
+        fs.mkdir(dirPath, { recursive: true }, (err) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+                return;
+            }
+
+            if (!fs.existsSync(filePath)) {
+                fs.writeFile(filePath, header, (err) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        fs.appendFile(filePath, str, (err) => {
+                            err ? reject(err) : resolve();
+                        });
+                    }
+                });
+            } else {
+                fs.appendFile(filePath, str, (err) => err ? reject(err) : resolve());
+            }
+        });
+    });
 }
 
 function hash(s) {
@@ -199,7 +288,7 @@ const app = Vue.createApp({
             game_over: false,
             attempt_number: 0,
 
-            blackouts_as_resets: true, //counts blackouts as resets
+            blackouts_as_resets: false, //counts blackouts as resets
             blackout:            false,
 
             //Pokemon settings for local storage
@@ -349,42 +438,6 @@ const app = Vue.createApp({
             //update the saved starter in the overlay's local storage
             MyStorage.currentStarter = newValue
         },
-        // async s1dynamicReset(newValue, oldValue) {
-        //     //transition between pokemon art
-        //     const newSpecies = newValue.species.value
-        //     const oldSpecies = oldValue.species.value
-        //     console.log(newSpecies, oldSpecies)
-
-        //     const newSpeciesParameters = MyStorage[newSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
-        //     const oldSpeciesParameters = MyStorage[oldSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
-
-        //     this.$refs.old_pokemon_art.src = `images/pokemon/${oldSpecies}.png`
-        //     this.$refs.old_pokemon_art.style.transform = `scale(${oldSpeciesParameters.imageScale}) ${oldSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${oldSpeciesParameters.imageXOffset}px, ${-oldSpeciesParameters.imageYOffset}px)`
-        //     this.$refs.old_pokemon_art.style.opacity = 1
-            
-        //     this.$refs.pokemon_art.src = `images/pokemon/${newSpecies}.png`
-        //     this.$refs.pokemon_art.style.transform = `scale(${newSpeciesParameters.imageScale}) ${newSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${newSpeciesParameters.imageXOffset}px, ${-newSpeciesParameters.imageYOffset}px)`
-        //     this.$refs.pokemon_art.style.opacity = 0
-            
-        //     await transition((t) => {
-        //         this.$refs.old_pokemon_art.style.opacity = 1 - t
-        //         this.$refs.pokemon_art.style.opacity = t
-        //     }, 500)
-            
-        //     this.$refs.old_pokemon_art.src = ""
-        // },
-        // imageXOffset() {
-        //     this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
-        // },
-        // imageYOffset() {
-        //     this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
-        // },
-        // imageScale() {
-        //     this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
-        // },
-        // imageFlip() {
-        //     this.$refs.pokemon_art.style.transform = `scale(${this.imageScale}) ${this.imageFlip ? 'rotateY(180deg)' : ''} translate(${this.imageXOffset}px, ${-this.imageYOffset}px)`
-        // },
         playerId() {
             this.game_over = false;
             MyStorage["playerResets"] = 0
@@ -689,6 +742,20 @@ const app = Vue.createApp({
                 retro.pause()
             }
         },
+        resetTime() {
+            this.timer_pause = true
+            this.timer_formatted_time = [ "0", ".00" ]
+        },
+        newRun() {
+            this.updateTime()
+            this.timer_pause = true
+            this.timer_formatted_time = [ "0", ".00" ]
+            this.playerResets = 0
+            this.blackout_counter = 0
+            this.playerId = 0
+            this.playerName = "NINTEN"
+            this.second_playthrough_settings()
+        },
 
         //*text methods
         //only allow letters to be typed in the name input
@@ -771,11 +838,11 @@ const app = Vue.createApp({
             this.blackouts_as_resets = MyStorage["this.blackouts_as_resets"] ?? true
             this.show_wild_battles = MyStorage["this.show_wild_battles"] ?? false
             this.showCritMultiplierInEP = MyStorage["this.showCritMultiplierInEP"] ?? true
-            this.showCritMultiplierInEP = MyStorage["this.battleGraphic"] ?? true
-            this.showCritMultiplierInEP = MyStorage["this.showAllTrainers"] ?? true
-            this.showCritMultiplierInEP = MyStorage["this.showSpecialTrainerGraphics"] ?? true
-            this.showCritMultiplierInEP = MyStorage["this.battlePopUps"] ?? true
-            this.showCritMultiplierInEP = MyStorage["this.rockTunnelDarkness"] ?? false
+            this.battleGraphic = MyStorage["this.battleGraphic"] ?? true
+            this.showAllTrainers = MyStorage["this.showAllTrainers"] ?? true
+            this.showSpecialTrainerGraphics = MyStorage["this.showSpecialTrainerGraphics"] ?? true
+            this.battlePopUps = MyStorage["this.battlePopUps"] ?? true
+            this.rockTunnelDarkness = MyStorage["this.rockTunnelDarkness"] ?? false
             this.playerResets = MyStorage["playerResets"] ?? 0
             this.goal_level = MyStorage["goal_level"] ?? 13
             this.goal_speed = MyStorage["goal_speed"] ?? 24
@@ -850,6 +917,22 @@ const app = Vue.createApp({
             this.route21 = true
             this.route22 = true
             this.victoryRoad = true
+            this.viridian_forest == "Pidgey"
+        },
+        all_off() {
+            this.route1 = false
+            this.viridianForest = false
+            this.route3 = false
+            this.mtMoon = false
+            this.route6 = false
+            this.rockTunnel = false
+            this.pokemonTower = false
+            this.safariZone = false
+            this.powerPlant = false
+            this.mansion = false
+            this.route21 = false
+            this.route22 = false
+            this.victoryRoad = false
         },
         save_pokemon_sprite_settings() {
             this.set_pokemon_prop("imageXOffset", this.imageXOffset)
@@ -1626,52 +1709,80 @@ const app = Vue.createApp({
             d = new Date()
             battle_end = Date.now()
             var log_end = (x) => console.log(`Autosplitter: Battle Ended - Split: ${this.mapper.properties.battle.trainer.class.value} at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`)
-            var write_split_data = (x) => {
+
+            //data to be collected with the autosplitter
+            let date_string = (d.getMonth() + 1) + "-" + d.getDate().toString().padStart(2, "0")
+            let time_string = d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0")
+            let player_name = this.playerNameChoice
+            let pokemon = this.starterName
+            let trainer_name = this.format_trainer_name(this.mapper.properties.battle.trainer.class.value, this.mapper.properties.battle.trainer.number.value)
+            // let location = this.mapper.properties.overworld.map.value
+            let total_pokemon = this.mapper.properties.battle.trainer.totalPokemon
+            let real_time_total = this.timer_formatted_time[0].toString() + this.timer_formatted_time[1].toString()
+            let real_time_hmmss = this.timer_formatted_time[0].toString()
+            let real_time_file_label = this.timer_formatted_time[2].toString()
+            let resets = this.playerResets.toString()
+            let blackouts = this.blackout_counter.toString()
+            let level = this.mapper.properties.player.team[0].level.value.toString()
+            let game_time = this.gametimeSplit.toString()
+            let battle_duration = (battle_end - this.battle_start)/1000 
+            let move1 = this.mapper.properties.player.team[0].move1.value
+            let move2 = this.mapper.properties.player.team[0].move2.value
+            let move3 = this.mapper.properties.player.team[0].move3.value
+            let move4 = this.mapper.properties.player.team[0].move4.value
+            let saves = this.mapper.properties.patch.saves.saveCount.value
+            let steps = this.mapper.properties.patch.steps.stepsCount.value
+            let bonks = this.mapper.properties.patch.steps.bonks.value
+            let trainerBattles = this.mapper.properties.patch.battles.trainerBattles.value
+            let wildBattles = this.mapper.properties.patch.battles.wildBattles.value
+            let battleTurns = this.mapper.properties.patch.battle_info.turns.battleTurns.value
+            let playerTurns = this.mapper.properties.patch.battle_info.turns.playerTurns.value
+            let enemyTurns = this.mapper.properties.patch.battle_info.turns.enemyTurns.value
+            let itemsInBag = this.mapper.properties.player.itemCount.value
+            let money = this.mapper.properties.player.money.value
+            let rivalTeam = this.mapper.properties.rival.finalTeam.value
+
+            let simple_data = [player_name, pokemon, trainer_name, real_time_hmmss, resets, blackouts, level, game_time, battle_duration, move1, move2, move3, move4 ]
+            let full_data = [date_string, time_string, player_name, pokemon, trainer_name, total_pokemon, real_time_total, real_time_hmmss, real_time_file_label, resets, blackouts, level, game_time, battle_duration, move1, move2, move3, move4, saves, steps, bonks, trainerBattles, wildBattles, battleTurns, playerTurns, enemyTurns, itemsInBag, money, rivalTeam]
+            let simple_data_str = simple_data.join(",") + "\n";
+            let full_data_str = full_data.join(",") + "\n";
+
+            var write_simple_split_data = (x) => {
                 log_end()
-                this.split_data.push(str)
-                logToFile(str, this.attempt_number, this.starterName)
+                this.split_data.push(simple_data_str)
+                logToFileSimpleSplits(simple_data_str, this.attempt_number, this.starterName)
+            }
+            var write_full_split_data = (x) => {
+                log_end()
+                this.split_data.push(full_data)
+                logToFileFullSplits(full_data_str, this.attempt_number, this.starterName)
             }
             var end_run = (x) => {
                 this.stopTime()
                 log_end()
-                this.split_data.push(str)
-                logToFile(str, this.attempt_number, this.starterName)
+                this.split_data.push(simple_data_str)
+                logToFileSimpleSplits(simple_data_str, this.attempt_number, this.starterName)
+                logToFileFullSplits(full_data_str, this.attempt_number, this.starterName)
             }
 
-            player_name = this.playerNameChoice
-            date_string = (d.getMonth() + 1) + "-" + d.getDate().toString().padStart(2, "0")
-            time_string = d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0")
-            trainer_name = this.format_trainer_name(this.mapper.properties.battle.trainer.class.value, this.mapper.properties.battle.trainer.number.value)
-            real_time_total = this.timer_formatted_time[0].toString() + this.timer_formatted_time[1].toString()
-            real_time_hmmss = this.timer_formatted_time[0].toString()
-            real_time_file_label = this.timer_formatted_time[2].toString()
-            resets = this.playerResets.toString()
-            level = this.mapper.properties.player.team[0].level.value.toString()
-            game_time = this.gametimeSplit.toString()
-            battle_duration = (battle_end - this.battle_start)/1000
-            move1 = this.mapper.properties.player.team[0].move1.value
-            move2 = this.mapper.properties.player.team[0].move2.value
-            move3 = this.mapper.properties.player.team[0].move3.value
-            move4 = this.mapper.properties.player.team[0].move4.value
-
-            str = player_name + "," + date_string + "," + time_string + "," + trainer_name + "," + real_time_total + "," + real_time_hmmss + "," + resets + "," + level + "," + game_time + "," + battle_duration + "," + move1 + "," + move2 + "," + move3 + "," + move4 + "\n"
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL1")    { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL2")    { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BROCK" )    { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "MISTY" )    { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LT.SURGE" ) { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "ERIKA" )    { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "KOGA" )     { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "SABRINA" )  { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BLAINE" )   { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "GIOVANNI" && this.mapper.properties.battle.trainer.number.value == 2) { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "GIOVANNI" && this.mapper.properties.battle.trainer.number.value == 3) { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LORELEI" )  { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BRUNO" )    { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "AGATHA" )   { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LANCE" )    { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "ROCKET" && this.mapper.properties.battle.trainer.number.value == 5)   { write_split_data() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL3") { end_run() }
+            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL1")    { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL2")    { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BROCK" )    { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "MISTY" )    { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LT.SURGE" ) { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "ERIKA" )    { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "KOGA" )     { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "SABRINA" )  { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BLAINE" )   { write_simple_split_data() }
+            // else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "GIOVANNI" && this.mapper.properties.battle.trainer.number.value == 2) { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "GIOVANNI" && this.mapper.properties.battle.trainer.number.value == 3) { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LORELEI" )  { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BRUNO" )    { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "AGATHA" )   { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LANCE" )    { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "ROCKET" && this.mapper.properties.battle.trainer.number.value == 5)   { write_simple_split_data() }
+            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL3") { end_run() }
+            if (prop.value == "Disabled" && this.mapper.properties.battle.type.value == "Trainer") { write_full_split_data() }
         }); 
         
         //*blackout tracking
@@ -1696,9 +1807,9 @@ const app = Vue.createApp({
         if (this.route1 == false && this.mapper.properties.overworld.map.value == "Route 1") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
-        // else if (this.viridianForest == false && this.mapper.properties.overworld.map.value == "Viridian Forest") {
-        //     this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
-        // }
+        else if (this.viridianForest == false && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
         else if (this.viridian_forest == "Level" && this.mapper.properties.player.team[0].level.value >= this.goal_level && this.mapper.properties.player.team[1].species.value == "Pidgey") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
@@ -2006,6 +2117,10 @@ const app = Vue.createApp({
             if (this.dvSetting == "NPC") { 
                 dv = [8,9,8,8,8]
                 dvHex = [0x88,0x98,0x98,0x88,0x88]
+            }
+            if (this.dvSetting == "Max with Min Atk") { 
+                dv = [15,1,15,15,15]
+                dvHex = [0xff,0x1f,0x1f,0xff,0xff]
             }
 
             //calculates the Pokemon's starting stats with the desired DVs
