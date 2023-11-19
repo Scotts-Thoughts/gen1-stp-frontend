@@ -553,7 +553,7 @@ const app = Vue.createApp({
             blackout_counter: MyStorage["blackout_counter"] ?? 0,
             resetCounter: true,
             game_over: false,
-            attempt_number: 0,
+            attempt_number: MyStorage["this.attempt_number"] ?? 0,
             most_recent_move: "",
 
             blackouts_as_resets: false, //counts blackouts as resets
@@ -575,8 +575,8 @@ const app = Vue.createApp({
             timer_formatted_time: ["0", ".00"],
             timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
             battle_start: 0,
-            timer_settings: "Real-Time",
-            viridian_forest: MyStorage["viridian_forest"] ?? "Encounters On",
+            timer_settings: MyStorage["this.timer_settings"] ?? "Real-Time",
+            viridian_forest: MyStorage["this.viridian_forest"] ?? "Encounters On",
 
             //splits
             split_data: MyStorage["split_data"] ?? [],
@@ -592,9 +592,15 @@ const app = Vue.createApp({
         }
     },
     watch: {
+        starterName() {
+            MyStorage["this.starterName"] = this.starterName
+        },
+        timer_settings() {
+            MyStorage["this.timer_settings"] = this.timer_settings
+        },
         //splits
         attempt_number() {
-            MyStorage["attempt_number"] = this.attempt_number
+            MyStorage["this.attempt_number"] = this.attempt_number
         },
         split_data() {
             MyStorage["split_data"] = this.split_data
@@ -1171,7 +1177,7 @@ const app = Vue.createApp({
             this.goal_level = MyStorage["goal_level"] ?? 13
             this.goal_speed = MyStorage["goal_speed"] ?? 24
             this.attempt_number = MyStorage["attempt_number"] ?? 0
-            this.viridian_forest = MyStorage["viridian_forest"] ?? "Encounters On"
+            this.viridian_forest = MyStorage["this.viridian_forest"] ?? "Encounters On"
             this.pb_splits = MyStorage[`${this.starterName}_pb_splits`] ?? ["","","",""]
         },
         //string can be: clear, increment, decrement
