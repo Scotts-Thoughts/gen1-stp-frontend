@@ -279,6 +279,10 @@ box-shadow:
     transform: translateY(2px);
   }
 
+.save_pb_splits {
+    position: absolute;
+    top: 780px;
+}
 .splits_folder {
     position: absolute;
     top: 825px;
@@ -590,8 +594,9 @@ box-shadow:
     left: 32px;
 }
 .resetsLabel {
-    top: 329px;
-    left: 30px;
+    font-size: 15px;
+    top: 330px;
+    left: 28px;
 }
 .expTextGen1 {
     position: absolute;

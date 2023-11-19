@@ -28,7 +28,8 @@
                     <div class="exp_growthRate">{{ growthRate }}</div>
                     <transition name="fade"><div v-show="timer_settings == `Off - Real-Time Label` || timer_settings == `Real-Time`" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
                     <transition name="fade"><div v-show="timer_settings == `Off - Game-Time Label` || timer_settings == `Game-Time`" class="genericLabels timerLabel">gametime</div></transition>
-                    <div class="genericLabels resetsLabel">resets</div>
+                    <div v-show="key_F16 == `resets`" class="genericLabels resetsLabel">resets</div>
+                    <div v-show="key_F16 == `blackouts`" class="genericLabels resetsLabel">blackouts</div>
                     <!-- <div v-if="blackouts_as_resets == true" class="genericLabels resetsLabel" style="font-size: 17px; top: 330px">failures</div> -->
                     <!-- <div v-if="blackouts_as_resets == false" class="genericLabels resetsLabel">resets</div> -->
                 </div>
@@ -52,7 +53,7 @@
                 <!--  STATS ------------------------------------------------------------------------------------->
                 <div class="statsContainer">  
                     <!-- BASE STATS --------------------------------------------------------------------------->
-                    <div v-if="g1stateVariable == `Base Stats`">
+                    <div v-if="state == `Base Stats`">
                         <div class="statsLabelStyle statsLabelsColumn1">HP:<br>Atk:<br>Def:<br></div>
                         <div class="statsLabelStyle statsLabelsColumn2"><br>Spc:<br>Spd:<br></div>
                         <div class="statsheader">Base Stats</div>
@@ -61,7 +62,7 @@
                         <div class="statsColumnStyle statsColumn2"><br>{{ g1PokemonData[starterName].base_spc }}<br>{{ g1PokemonData[starterName].base_spd }}<br></div>
                     </div>
                     <!-- OVERWORLD STATS --------------------------------------------------------------------------->
-                    <div v-if="g1stateVariable == `Overworld` || g1stateVariable == `To Battle`">
+                    <div v-if="state == `Overworld` || state == `To Battle`">
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP:<br></span>
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Atk:<br></span>
@@ -103,7 +104,7 @@
                         </div>
                     </div>
                     <!-- BATTLE STATS ----------------------------------------------------------------------------->
-                    <div v-if="g1stateVariable == `Battle` || g1stateVariable == `From Battle`">
+                    <div v-if="state == `Battle` || state == `From Battle`">
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span>HP:<br></span>
                             <span :style="{ opacity: statLabelOpacity(batt.yourPokemon.modStageAttack) }">Atk:<br></span>
@@ -203,7 +204,7 @@
                             </div>
                         </div> 
                     </div>
-                    <div v-else key=3>
+                    <div v-else-if="key_F14 == true" key=3>
                         <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
                             <tr class="movepool_header" :style="{'background-color': `var(--${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
                                 <th class="movepool_header movepool_way">Way</th>
@@ -251,7 +252,7 @@
                 <!--------- BATTLE POP UPS -------------------------------------------------------------------------------------------------------------------->
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
-                        <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
+                        <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (state == `Battle` || state == `From Battle`)">
                             <!-- <img :src="`images/pop_ups/accuracy/${g1PokemonData[starterName].type1.toLowerCase()}.png`" style="position: absolute;"> -->
                             <div class="colored-image" style="--url: url(images/pop_ups/accuracy/Electric.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
@@ -259,7 +260,7 @@
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
+                        <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (state == `Battle` || state == `From Battle`)">
                             <!-- <img :src="`images/pop_ups/evasion/${g1PokemonData[starterName].type1.toLowerCase()}.png`" style="position: absolute;"> -->
                             <div class="colored-image" style="--url: url(images/pop_ups/evasion/Electric.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
@@ -267,11 +268,19 @@
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (g1stateVariable == `Battle` || g1stateVariable == `From Battle`)">
+                        <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (state == `Battle` || state == `From Battle`)">
                             <!-- <img :src="`images/pop_ups/screens/${g1PokemonData[starterName].type1.toLowerCase()}.png`" style="position: absolute;"> -->
                             <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
+                        </div>
+                    </transition>
+                    <transition name="fade">
+                        <div v-if="key_F17 == `bonks`">
+                            <!-- <img :src="`images/pop_ups/screens/${g1PokemonData[starterName].type1.toLowerCase()}.png`" style="position: absolute;"> -->
+                            <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div>
+                            <div class="popUpsStyle popUpLabelStyle screensLabel">Bonks</div>
+                            <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ map?.patch?.steps?.bonks }}</div>
                         </div>
                     </transition>
                 </div>
@@ -293,7 +302,8 @@
                 </div></transition>
                 <!---------- RESET ------------------------------------------------------------------------------------------------------------------->
                 <transition name="fade"><div v-show="resetCounter == true" class="resets">
-                    <div id="reset_counter">{{playerResets}}</div>
+                    <div v-show="key_F16 == `resets`" id="reset_counter">{{playerResetsDisplay}}</div>
+                    <div v-show="key_F16 == `blackouts`" id="reset_counter">{{blackout_counter}}</div>
                 </div></transition>
             </div>
         </div>
@@ -331,9 +341,10 @@
             <br>
             <transition name="fade"><div v-if="resetCounter == true">
                 <div>Reset Counter Settings</div>
-                <button @click="resets_clear" class="buttonStyle">Clear</button>
+                <button @click="resets_clear" class="buttonStyle">Clear (resets and blackouts)</button>
                 <button @click="resets_increment" class="buttonStyle">Increment</button>
                 <button @click="resets_decrement" class="buttonStyle">Decrement</button><br>
+                <button @click="toggleDataType" class="buttonStyle">Toggle Data Type</button><br>
                 <span class="note">Count blackouts as resets: <input class="checkBoxStyle" type="checkbox" v-model="blackouts_as_resets"/></span><span class="note">Blackouts: {{blackout_counter}}</span><br>
             </div></transition>
             <br>
@@ -347,6 +358,7 @@
             </select><br>
             <button class="buttonStyle" @click="resetTime">Reset Timer</button>
             <br>
+            <button class="buttonStyle save_pb_splits" @click="save_pb_splits">Save PB Splits</button>
             <button class="buttonStyle splits_folder" onClick="openFolder()">Open Splits Folder</button>
             <!-- <button class="buttonStyle" style="top: -30px; width: 420px; background-color: hsl(59, 48%, 59%);" @click="pauseUnpauseTime">Toggle Pause Timer & Gameplay</button><br><br> -->
             <button class="buttonStyle refresh" onClick="window.location.reload();">Reload Overlay</button>
@@ -360,6 +372,9 @@
                 <option>Advanced Options</option>
                 <option>Style</option>
                 <option>Data</option>
+                <option>Splits</option>
+                <option>Hotkeys</option>
+                <option>Dev Console</option>
             </select>
         </div>
         <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
@@ -427,9 +442,9 @@
             <input v-if="viridian_forest == `Speed`" v-model="goal_speed" placeholder="Target Speed">
             <br>
             <br>
-            <button @click="first_playthrough_settings" class="buttonStyle">First Playthrough Settings</button>
-            <button @click="second_playthrough_settings" class="buttonStyle">Second Playthrough Settings</button>
-            <button @click="all_off" class="buttonStyle">All Off</button>
+            <button @click="apply_settings('first_playthrough_settings')" class="buttonStyle">First Playthrough Settings</button>
+            <button @click="apply_settings('second_playthrough_settings')" class="buttonStyle">Second Playthrough Settings</button>
+            <button @click="apply_settings('all_off')" class="buttonStyle">All Off</button>
         </div>
         <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             <div style="text-decoration: underline;">Graphics Toggles:</div>
@@ -506,7 +521,7 @@
                 <tr><th>Game:</th><th style="text-align: right;">{{map?.meta?.gameName}}</th></tr>
                 <tr><th>Generation:</th><th style="text-align: right;">{{map?.meta?.generation}}</th></tr>
                 <tr><th>Mapper:</th><th style="text-align: right;">{{map?.meta?.mapperType}}</th></tr>
-                <tr><th>State:</th><th style="text-align: right;">{{g1stateVariable}}</th></tr> -->
+                <tr><th>State:</th><th style="text-align: right;">{{state}}</th></tr> -->
                 <tr><th>-- Custom Props for Testing --</th></tr>
                 <tr><th>wasConfused:</th><th style="text-align: right;">{{map?.patch?.battle_info.status.wasConfused}}</th></tr>
                 <tr><th>enemyBecameConfused</th><th style="text-align: right;">{{map?.patch?.battle_info.status.enemyBecameConfused}}</th></tr>
@@ -532,11 +547,50 @@
                 <tr><th>enemyTurnsParalyzedFully</th><th style="text-align: right;">{{map?.patch?.battle_info.status.enemyTurnsParalyzedFully}}</th></tr>
                 <tr><th>PlayerTurnsAsleep</th><th style="text-align: right;">{{map?.patch?.battle_info.status.PlayerTurnsAsleep}}</th></tr>
                 <tr><th>EnemyTurnsAsleep</th><th style="text-align: right;">{{map?.patch?.battle_info.status.EnemyTurnsAsleep}}</th></tr>
-                <tr><th>keyhookTest: {{keyhookTest}}</th></tr>
+            </table>
+        </div>
+        <div v-show="help_menus == `Splits`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
+            <!-- <div>{{this.pb_splits}}</div> -->
+            <table style="text-align: left; line-height: 16px;">
+                <tr><th>{{this.starterName}}, attempt: {{this.attempt_number}}</th></tr>
+                <tr v-for="split in this.split_data">
+                    <th>{{split[2]}}</th>
+                    <th style="text-align: right;">{{split[3]}}</th>
+                    <!-- <th v-if="pb_split(split[2])[3]" style="text-align: right;">{{pb_split(split[2])[3]}}</th> -->
+                    <!-- <th v-if="split_offset_calculation(split[3], pb_split(split[2])[3])" style="text-align: right;">{{split_offset_calculation(split[3], pb_split(split[2])[3])}}</th> -->
+                </tr>
+            </table>
+            <button class="buttonStyle" @click="save_pb_splits">Save PB Splits</button>
+            <button class="buttonStyle" @click="splits_clear">Clear Splits</button>
+        </div>
+        <div v-show="help_menus == `Hotkeys`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
+            <table style="text-align: left; line-height: 16px;">
+                <tr><th>-- Hotkeys --</th></tr>
+                <tr><th>key_F13: {{key_F13}}</th></tr>
+                <tr><th>key_F14: {{key_F14}}</th></tr>
+                <tr><th>key_F15: {{key_F15}}</th></tr>
+                <tr><th>key_F16: {{key_F16}}</th></tr>
+                <tr><th>key_F17: {{key_F17}}</th></tr>
+                <tr><th>key_F18: {{key_F18}}</th></tr>
+                <tr><th>key_F19: {{key_F19}}</th></tr>
+                <tr><th>key_F20: {{key_F20}}</th></tr>
+                <tr><th>key_F21: {{key_F21}}</th></tr>
+                <tr><th>key_F22: {{key_F22}}</th></tr>
+                <tr><th>key_F23: {{key_F23}}</th></tr>
+                <tr><th>key_F24: {{key_F24}}</th></tr>
             </table>
         </div>
         <div v-show="help_menus == `Playthrough Info`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>Items:</div>
+        </div>
+        <div v-show="help_menus == `Dev Console`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
+            <div>State: {{this.state}}</div>
+            <br>
+            <div>Most Recently Learnt Move: {{this.most_recent_move}}</div>
+            <div>Power: {{g1MoveData[capitalization_format(this.most_recent_move)]?.Power}}</div>
+            <div>Accuracy: {{g1MoveData[capitalization_format(this.most_recent_move)]?.Accuracy}}</div>
+            <div>PP: {{g1MoveData[capitalization_format(this.most_recent_move)]?.PP}}</div>
+            <div>Move Description: {{g1MoveData[capitalization_format(this.most_recent_move)]?.Description}}</div>
         </div>
     </div>
 
@@ -553,6 +607,6 @@
     <script src="data/type-effectiveness.js"></script>
     <script src="data/stage-modifiers.js"></script>
     <script src="data/tmhmmapping.js"></script>
-    <script src="data/keyhook.js"></script>
+    <script src="data/settings.js"></script>
     <script type="text/javascript" src="vue.js"></script>
 </body>

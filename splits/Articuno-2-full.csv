@@ -1,0 +1,2 @@
+date_string,time_string,player_name,pokemon,trainer_name,total_pokemon,real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4,saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns,itemsInBag,money,rivalTeam
+11-18,15:21:08,NINTEN,Articuno,Rival1-Lab,1,47.76,47,0h0m47s,0,0,5,0:02,8.094,PECK,ICE BEAM,,,0,72,2,1,1,3,3,2,0,3000,Jolteon

@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Articuno,Lorelei,2:07,4,5,55,3:02,17.096,ICE BEAM,FLY,SKY ATTACK,AGILITY
+NINTEN,Articuno,Bruno,2:17,4,5,56,3:04,4.922,ICE BEAM,FLY,SKY ATTACK,AGILITY
+NINTEN,Articuno,Agatha,2:28,4,5,57,3:06,6.937,ICE BEAM,FLY,SKY ATTACK,AGILITY
+NINTEN,Articuno,Lance,2:38,4,5,58,3:09,6.031,ICE BEAM,FLY,SKY ATTACK,AGILITY

@@ -1,0 +1,2 @@
+date_string,time_string,player_name,pokemon,trainer_name, trainer_id,location,total_pokemon,real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4,saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns,itemsInBag,money,rivalTeam
+11-18,19:10:54,NINTEN,Articuno,Rival1-Lab,1,Pallet Town - Oak's Lab,1,6:00.99,6:00,0h6m0s,0,0,5,0:35,9.328,PECK,ICE BEAM,,,0,73,22,1,1,4,4,3,0,3000,Jolteon

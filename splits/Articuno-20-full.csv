@@ -1,0 +1,9 @@
+date_string,time_string,player_name,pokemon,trainer_name,total_pokemon,real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4,saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns,itemsInBag,money,rivalTeam
+11-18,18:11:42,NINTEN,Articuno,Rival1-Lab,1,Pallet Town - Oak's Lab,1,13.59,13,0h0m13s,0,0,5,0:02,2.328,PECK,ICE BEAM,,,0,72,2,1,1,3,3,2,0,3000,Jolteon
+11-18,18:12:15,NINTEN,Articuno,Bug Catcher,3,Viridian Forest,1,46.49,46,0h0m46s,0,0,7,0:10,2.687,ICE BEAM,PECK,,,0,605,65,2,11,9,9,5,1,3175,Flareon
+11-18,18:12:21,NINTEN,Articuno,Brock,1,Pewter City - Gym,2,53.12,53,0h0m53s,0,0,9,0:11,2.641,ICE BEAM,PECK,,,0,709,66,3,12,11,11,6,1,3275,Flareon
+11-18,18:12:30,NINTEN,Articuno,Bug Catcher,4,Route 3,3,1:01.50,1:01,0h1m1s,0,0,10,0:13,4.688,ICE BEAM,PECK,,,0,786,66,4,12,17,17,11,2,4463,Flareon
+11-18,18:12:32,NINTEN,Articuno,Youngster,1,Route 3,2,1:04.24,1:04,0h1m4s,0,0,10,0:14,1.829,ICE BEAM,PECK,,,0,790,66,5,12,19,19,11,2,4563,Flareon
+11-18,18:12:38,NINTEN,Articuno,Bug Catcher,5,Route 3,4,1:09.77,1:09,0h1m9s,0,0,11,0:15,4.719,ICE BEAM,PECK,,,0,794,67,6,12,25,25,13,2,4728,Flareon
+11-18,18:12:43,NINTEN,Articuno,Bug Catcher,6,Route 3,2,1:14.85,1:14,0h1m14s,0,0,12,0:17,3.251,ICE BEAM,PECK,,,0,804,67,7,12,29,29,15,2,4818,Flareon
+11-18,18:12:51,NINTEN,Articuno,Super Nerd,1,Mt Moon - 1,2,1:23.13,1:23,0h1m23s,0,0,13,0:19,2.42,ICE BEAM,PECK,,,0,945,86,8,12,32,32,16,2,4928,Flareon

@@ -95,49 +95,252 @@ class RetroArchHook {
 
 const retro = new RetroArchHook()
 
-const keyhook = new KeyHook();
-// keyhook.isShiftDown
-// keyhook.isCtrlDown
-// keyhook.isAltDown
-// keyhook.isKeyDown(keyName)
-
-// // example
-// if (keyhook.isKeyDown('A') && keyhook.isCtrlDown) {
-//     // ...
-// }
-// // format of data:
-// // {
-// //     type: 'down',
-// //     keyCode: 65,
-// //     key: 'A',
-// //     alt: true,
-// //     ctrl: true,
-// //     shift: false,
-// //     time: 979376656
-// // }
-// keyhook.on("down", (data) => {
-//     if (data.key == 'A' && data.ctrl && data.alt)
-//       console.log('CTRL+Alt+A pressed');
+const Keys = {
+    "ESCAPE":         0x1B,
+    "BACKSPACE":      0x08,
+    "TAB":            0x09,
     
-//     if (data.key == 'S' && data.ctrl)
-//       console.log('CTRL+S pressed');
-// });
-// keyhook.on("up", (data) => {
-//     // ...
-// });
-// keyhook.on("repeat", (data) => {
-//     // ...
-// });
-// keyhook.registerShortCut('CTRL+Alt+A', () => {
-//     console.log("CTRL+Alt+A pressed");
-// })
+    "LEFT":           0x25,
+    "UP":             0x26,
+    "RIGHT":          0x27,
+    "DOWN":           0x28,
+    
+    "CAPS_LOCK":      0x14,
+    "NUM_LOCK":       0x90,
+    "SCROLL_LOCK":    0x91,
+    
+    "SHIFT":          0x10,
+    "L_SHIFT":        0xA0,
+    "R_SHIFT":        0xA1,
 
-// function logToFile(str, file_name, starterName) {
-//     return new Promise((resolve, reject) => {
-//         require("fs").mkdir("./splits/", { recursive: true }, console.log)
-//         require("fs").appendFile(`./splits/${starterName}-${file_name}.csv`, str, (err) => err ? reject(err) : resolve())
-//     }) 
-// }
+    "CTRL":           0x11,
+    "L_CTRL":         0xA2,
+    "R_CTRL":         0xA3,
+    
+    "ALT":            0x12,
+    "L_ALT":          0xA4,
+    "R_ALT":          0xA5,
+    
+    "L_WIN":          0x5B,
+    "R_WIN":          0x5C,
+
+    "0":              0x30,
+    "1":              0x31,
+    "2":              0x32,
+    "3":              0x33,
+    "4":              0x34,
+    "5":              0x35,
+    "6":              0x36,
+    "7":              0x37,
+    "8":              0x38,
+    "9":              0x39,
+
+    "A":              0x41,
+    "B":              0x42,
+    "C":              0x43,
+    "D":              0x44,
+    "E":              0x45,
+    "F":              0x46,
+    "G":              0x47,
+    "H":              0x48,
+    "I":              0x49,
+    "J":              0x4A,
+    "K":              0x4B,
+    "L":              0x4C,
+    "M":              0x4D,
+    "N":              0x4E,
+    "O":              0x4F,
+    "P":              0x50,
+    "Q":              0x51,
+    "R":              0x52,
+    "S":              0x53,
+    "T":              0x54,
+    "U":              0x55,
+    "V":              0x56,
+    "W":              0x57,
+    "X":              0x58,
+    "Y":              0x59,
+    "Z":              0x5A,
+
+    "NUMPAD0":        0x60,
+    "NUMPAD1":        0x61,
+    "NUMPAD2":        0x62,
+    "NUMPAD3":        0x63,
+    "NUMPAD4":        0x64,
+    "NUMPAD5":        0x65,
+    "NUMPAD6":        0x66,
+    "NUMPAD7":        0x67,
+    "NUMPAD8":        0x68,
+    "NUMPAD9":        0x69,
+    "SEPARATOR":      0x6C,
+    "DECIMAL":        0x6E,
+
+    "MULTIPLY":       0x6A,
+    "ADD":            0x6B,
+    "SUBTRACT":       0x6D,
+    "DIVIDE":         0x6F,
+    
+    "F1":             0x70,
+    "F2":             0x71,
+    "F3":             0x72,
+    "F4":             0x73,
+    "F5":             0x74,
+    "F6":             0x75,
+    "F7":             0x76,
+    "F8":             0x77,
+    "F9":             0x78,
+    "F10":            0x79,
+    "F11":            0x7A,
+    "F12":            0x7B,
+    "F13":            0x7C,
+    "F14":            0x7D,
+    "F15":            0x7E,
+    "F16":            0x7F,
+    "F17":            0x80,
+    "F18":            0x81,
+    "F19":            0x82,
+    "F20":            0x83,
+    "F21":            0x84,
+    "F22":            0x85,
+    "F23":            0x86,
+    "F24":            0x87,
+
+
+    "APPS":           0x5D,
+    "CLEAR":          0x0C,
+    "RETURN":         0x0D,
+    "PAUSE":          0x13,
+
+    "CONVERT":        0x1C,
+    "NONCONVERT":     0x1D,
+    "ACCEPT":         0x1E,
+    "MODECHANGE":     0x1F,
+
+    "SPACE":          0x20,
+    "PRIOR":          0x21,
+    "NEXT":           0x22,
+    "END":            0x23,
+    "HOME":           0x24,
+    "SELECT":         0x29,
+    "PRINT":          0x2A,
+    "EXECUTE":        0x2B,
+    "SNAPSHOT":       0x2C,
+    "INSERT":         0x2D,
+    "DELETE":         0x2E,
+    "HELP":           0x2F,
+    "SLEEP":          0x5F,
+}
+
+Object.entries(Keys).forEach(([k, v]) => Keys[v] = k);
+
+class KeyHook {
+    constructor() {
+        // start the keyboard hook
+        this.process = require("child_process").spawn("keyhook.exe");
+
+        // general logging
+        this.process.on("spawn", () => console.log("Keyboard hook started!"));
+        this.process.stderr.on("data", (data) => console.error(`${data}`));
+        
+        // handle output of the keyboard hook
+        this.process.stdout.on("data", (data) => {
+            for (const line of data.toString().split(/[\n\r]+/)) {
+                const parts = line.split(",").map(x => parseInt(x, 10));
+                const [down, key, time] = parts;
+                
+                if (parts.length !== 3 || parts.some(isNaN)) continue;
+                this._processKey(down === 1, key, time);
+            }
+        });  
+    
+        // general initialization
+        for (let i=0; i<256; i++)
+            this._keyState[i] = false;
+    }
+        
+    _listeners = {};
+    _keyState = [];
+    _processKey(down, keyCode, time) {
+        const oldState = this._keyState[keyCode] == true;
+        this._keyState[keyCode] = down;
+        const key = Keys[keyCode];
+        let type = "unknown";
+
+        if (oldState && down)
+            type = "repeat";
+        else if (down)
+            type = "down";
+        else
+            type = "up";
+
+        if (!this._listeners[type]) return;
+        for (const listener of this._listeners[type]) {
+            listener({
+                type, 
+                keyCode, 
+                key, 
+                alt: this.isAltDown,
+                ctrl: this.isCtrlDown,
+                shift: this.isShiftDown,
+                time,
+            });
+        }
+    }
+  
+    get isShiftDown() { return this._keyState[Keys.L_SHIFT] || this._keyState[Keys.R_SHIFT] || this._keyState[Keys.SHIFT]; }
+    get isCtrlDown()  { return this._keyState[Keys.L_CTRL]  || this._keyState[Keys.R_CTRL]  || this._keyState[Keys.CTRL]; }
+    get isAltDown()   { return this._keyState[Keys.L_ALT]   || this._keyState[Keys.R_ALT]   || this._keyState[Keys.ALT]; }
+
+    isKeyDown(key) { 
+        if (typeof key === 'string') key = Keys[key.toUpperCase()];
+        return this._keyState[key];
+    }
+    
+    on(event, callback) {
+        if (this._listeners[event] === undefined)
+            this._listeners[event] = [];
+        this._listeners[event].push(callback);
+    }
+
+    registerShortCut(shortCut, callback) {
+        // transform the shortcut into an array of key codes
+        if (typeof shortCut === 'number')
+            shortCut = [shortCut];
+        if (typeof shortCut === 'string')
+            shortCut = shortCut.toUpperCase().split("+").map(x => Keys[x.trim()]);
+            shortCut = shortCut.map(x => {
+            if (typeof x === 'string') x = Keys[x.toUpperCase()];
+            if (x === Keys.L_SHIFT || x === Keys.R_SHIFT) x = Keys.SHIFT;
+            if (x === Keys.L_CTRL || x === Keys.R_CTRL) x = Keys.CTRL;
+            if (x === Keys.L_ALT || x === Keys.R_ALT) x = Keys.ALT;
+            return x;
+        });
+
+        const checkAlt = shortCut.includes(Keys.ALT);
+        const checkCtrl = shortCut.includes(Keys.CTRL);
+        const checkShift = shortCut.includes(Keys.SHIFT);
+        const checkKeys = shortCut.filter(x => x !== Keys.ALT && x !== Keys.CTRL && x !== Keys.SHIFT);
+
+        if (checkKeys.some(x => typeof x !== 'number')) 
+            throw new Error("Invalid key code");
+
+        this.on("down", (data) => {
+            if (
+                checkAlt === data.alt &&
+                checkCtrl === data.ctrl &&
+                checkShift === data.shift &&
+                checkKeys.every(x => this.isKeyDown(x))
+            ) {
+                callback();
+            }
+        });
+    }
+
+    stop() {
+        return this.process.kill();
+    }
+}
+const keyhook = new KeyHook();
 
 const fs = require("fs");
 const path = require("path");
@@ -202,7 +405,7 @@ function logToFileFullSplits(str, file_name, starterName) {
     return new Promise((resolve, reject) => {
         const dirPath = "./splits/";
         const filePath = path.join(dirPath, `${starterName}-${file_name}-full.csv`);
-        const header = "date_string,time_string,player_name,pokemon,trainer_name,total_pokemon,real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4,saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns,itemsInBag,money,rivalTeam\n"; // Replace with your actual header
+        const header = "date_string,time_string,player_name,pokemon,trainer_name, trainer_id,location,total_pokemon,real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4,saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns,itemsInBag,money,rivalTeam\n"; // Replace with your actual header
 
         fs.mkdir(dirPath, { recursive: true }, (err) => {
             if (err) {
@@ -270,8 +473,33 @@ const app = Vue.createApp({
             typeCalcs:                  true, //calculates effective power based on the pokemon in battle
             showCritMultiplierInEP:     MyStorage["this.showCritMultiplierInEP"] ?? true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             show_wild_battles:          MyStorage["this.show_wild_battles"] ?? false, //shows wild battles in the battle screen
+            automaticallySavePBSplits:  true, //saves splits if the player beats their PB (this overwrites currently saved PB splits)
+
 
             help_menus: "Settings",
+
+            //KEYHOOK SHORTCUTS
+            lastExecuted: 0,
+            cycleValues_rightDisplay: ["movepool", "inventory", "splits", "none"], //F13
+            cycleIndex_rightDisplay: MyStorage["this.cycleIndex_rightDisplay"] ?? 0, //F13
+            cycleValues_stats: ["base", "stats", "evs", "ivs"], //F15
+            cycleIndex_stats: MyStorage["this.cycleIndex_stats"] ?? 0, //F15
+            cycleValues_failures: ["resets", "blackouts"], //F16
+            cycleIndex_failures: MyStorage["this.cycleIndex_failures"] ?? 0, //F17
+            cycleValues_screens: ["screens", "bonks"], //F17
+            cycleIndex_screens: MyStorage["this.cycleIndex_screens"] ?? 0, //F16
+            key_F13: MyStorage["this.key_F13"] ?? "movepool", //rightDisplay
+            key_F14: MyStorage["this.key_F14"] ?? true, //show movepool
+            key_F15: MyStorage["this.key_F15"] ?? "stats", //stat display type
+            key_F16: MyStorage["this.key_F16"] ?? "resets",
+            key_F17: MyStorage["this.key_F17"] ?? "screens",
+            key_F18: MyStorage["this.key_F18"] ?? "",
+            key_F19: MyStorage["this.key_F19"] ?? "",
+            key_F20: MyStorage["this.key_F20"] ?? "",
+            key_F21: MyStorage["this.key_F21"] ?? "",
+            key_F22: MyStorage["this.key_F22"] ?? "",
+            key_F23: MyStorage["this.key_F23"] ?? "",
+            key_F24: MyStorage["this.key_F24"] ?? "",
 
             //ENCOUNTERS ---------------------------------------------------------------------------------------//
             route1:         MyStorage["this.route1"] ?? true,
@@ -303,6 +531,7 @@ const app = Vue.createApp({
             typeData:           typeData,
             stageModifiersData: stageModifiersData,
             tmhmMapping:        tmhmMapping,
+            settings:           settings,
             
             //VARS ---------------------------------------------------------------------------------------------//
             pkmnMoves:       ["move1","move2","move3","move4"],
@@ -310,6 +539,7 @@ const app = Vue.createApp({
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
             g1stateVariable: "Base Stats",
+            state: "Base Stats",
             prevSpecies:     undefined,
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
@@ -324,16 +554,17 @@ const app = Vue.createApp({
             resetCounter: true,
             game_over: false,
             attempt_number: 0,
+            most_recent_move: "",
 
             blackouts_as_resets: false, //counts blackouts as resets
             blackout:            false,
 
             //Pokemon settings for local storage
-            overlay_color:   "#000000",
-            imageXOffset: 0,
-            imageYOffset: 0,
-            imageScale: 1,
-            imageFlip: false,
+            overlay_color: MyStorage["this.overlay_color"] ?? "#000000",
+            imageXOffset:  MyStorage["this.imageXOffset"] ?? 0,
+            imageYOffset:  MyStorage["this.imageYOffset"] ?? 0,
+            imageScale:    MyStorage["this.imageScale"] ?? 1,
+            imageFlip:     MyStorage["this.imageFlip"] ?? false,
 
             //
             playerNameChoice: MyStorage["playerNameChoice"] ?? "NINTEN",
@@ -349,14 +580,22 @@ const app = Vue.createApp({
 
             //splits
             split_data: MyStorage["split_data"] ?? [],
-
-            // keyhook
-            keyhookTest: "",
+            pb_splits: MyStorage[`${this.starterName}_pb_splits`] ?? [],
         }
     },
 
+    created() {
+        for (let i = 13; i <= 24; i++) {
+            this.$watch(`key_F${i}`, function (newValue) {
+                MyStorage[`this.key_F${i}`] = newValue;
+            });
+        }
+    },
     watch: {
         //splits
+        attempt_number() {
+            MyStorage["attempt_number"] = this.attempt_number
+        },
         split_data() {
             MyStorage["split_data"] = this.split_data
         },
@@ -505,6 +744,12 @@ const app = Vue.createApp({
             this.blackout == false
             MyStorage["playerResets"] = this.playerResets
         },
+        blackout_counter(newProp) {
+            if (this.blackout_counter < 0) {
+                this.blackout_counter = 0;
+            }
+            MyStorage["blackout_counter"] = this.blackout_counter
+        },
         rockTunnelDarkness() {
             if (this.rockTunnelDarkness == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
                 this.mapper.properties.overworld.mapData.palette.set(0, false)
@@ -524,6 +769,14 @@ const app = Vue.createApp({
     },
 
     computed: {
+        playerResetsDisplay() {
+            if (this.blackouts_as_resets == true) {
+                return this.playerResets + this.blackout_counter
+            }
+            else {
+                return this.playerResets
+            }
+        },
         mew_movepool_style() {
             if (this.starterName == "Mew") {
                 return "font-size: 15px; line-height: 15.5px;"
@@ -583,7 +836,7 @@ const app = Vue.createApp({
             return this.mapper?.properties?.battle?.enemyPokemon
         },
         s1dynamic() {
-            if (this.g1stateVariable == `Battle`) {
+            if (this.state == `Battle`) {
                 return this.mapper?.properties?.battle?.yourPokemon
             }
             else {
@@ -591,10 +844,10 @@ const app = Vue.createApp({
             }
         },
         s1dynamicReset() {
-            if (this.g1stateVariable == `Battle`) {
+            if (this.state == `Battle`) {
                 return this.mapper?.properties?.battle?.yourPokemon
             }
-            else if (this.g1stateVariable == `Base Stats` || this.mapper?.properties?.player?.team[0].species.value == null) {
+            else if (this.state == `Base Stats` || this.mapper?.properties?.player?.team[0].species.value == null) {
                 var data = this.g1PokemonData?.[this.starterName]
                 return {
                     species: { value: data.name },
@@ -606,7 +859,7 @@ const app = Vue.createApp({
             }
         },
         starting_type_fix() {
-            if (this.map.overworld.map.value == "Pallet Town - Oak's Lab" || this.g1stateVariable == "Base Stats") {
+            if (this.map.overworld.map.value == "Pallet Town - Oak's Lab" || this.state == "Base Stats") {
                 return [this.g1PokemonData[this.starterName].type1.toLowerCase(), this.g1PokemonData[this.starterName].type2.toLowerCase()]
             }
             else {
@@ -619,9 +872,9 @@ const app = Vue.createApp({
             const trainerClasses = ["LORELEI", "BRUNO", "AGATHA", "LANCE", "RIVAL3"];
             const validStates = ["To Battle", "Battle", "From Battle"];
           
-            if (validStates.includes(this.g1stateVariable) &&
+            if (validStates.includes(this.state) &&
                 (trainerClasses.includes(this.batt.trainer.class.value) ||
-                 this.g1stateVariable != "From Battle")) {
+                 this.state != "From Battle")) {
               return true;
             } else {
               return false;
@@ -656,6 +909,17 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        toggleDataType() {
+            // Cycle through the values
+            this.key_F16 = this.cycleValues_failures[this.cycleIndex_failures];
+            this.cycleIndex_failures = (this.cycleIndex_failures + 1) % this.cycleValues_failures.length;
+            this.set_setting_prop("this.cycleIndex_failures", this.cycleIndex_failures)
+        },
+        removeSpecialChars(str) {
+            // This will replace any character that is not a lowercase letter or number with an empty string
+            // and convert the string to lowercase
+            return str.replace(/[^a-z0-9]/gi, '').toLowerCase();
+        },
         //enables encounters in viridian forest and resets all the Pokemon you can find to default
         viridianEncounterEnable() {
             const encounterRate = 0x19
@@ -784,11 +1048,16 @@ const app = Vue.createApp({
         },
         resetTime() {
             this.timer_pause = true
+            this.timer_startTime = 0
+            this.timer_pause_time = 0
             this.timer_formatted_time = [ "0", ".00" ]
         },
         newRun() {
-            this.updateTime()
             this.timer_pause = true
+            this.most_recent_move = ""
+            this.timer_startTime = 0
+            this.timer_pause_time = 0
+            this.attempt_number++;
             this.timer_formatted_time = [ "0", ".00" ]
             this.playerResets = 0
             this.blackout_counter = 0
@@ -807,13 +1076,13 @@ const app = Vue.createApp({
 
         pkmn_type(typeNumber) {
             data = this.g1PokemonData[this.starterName]
-            if (this.g1stateVariable == `Battle`) {
+            if (this.state == `Battle`) {
                 return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value.toLowerCase()
             }
-            if (this.g1stateVariable == `Overworld` || this.g1stateVariable == `To Battle` || this.g1stateVariable == `From Battle`) {
+            if (this.state == `Overworld` || this.state == `To Battle` || this.state == `From Battle`) {
                 return this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()].value.toLowerCase()
             }
-            if (this.g1stateVariable != `Battle`) {
+            if (this.state != `Battle`) {
                 return data["type" + typeNumber.toString()].toLowerCase()
             }
         },
@@ -850,7 +1119,21 @@ const app = Vue.createApp({
             this.set_setting_prop("this.goal_level", this.goal_level)
             this.set_setting_prop("this.goal_speed", this.goal_speed)
             this.set_setting_prop("this.viridian_forest", this.viridian_forest)
-            // console.log(MyStorage.entries())
+        },
+        save_all_settings() {
+            const propertiesToSave = [
+                "route1", "viridianForest", "route3", "mtMoon", "route6", 
+                "rockTunnel", "pokemonTower", "safariZone", "mansion", "help_menus", 
+                "dvSetting", "trashCans", "options", "gametimeDisplay", "resetCounter", 
+                "playerResets", "route21", "route22", "victoryRoad", "powerPlant", 
+                "blackouts_as_resets", "showCritMultiplierInEP", "show_wild_battles", 
+                "battleGraphic", "showAllTrainers", "showSpecialTrainerGraphics", 
+                "battlePopUps", "rockTunnelDarkness", "goal_level", "goal_speed", 
+                "viridian_forest, blackout_counter"
+            ];
+            propertiesToSave.forEach(prop => {
+                this.set_setting_prop(`this.${prop}`, this[prop]);
+            });
         },
         load_all_settings() {
             this.route1 = MyStorage["this.route1"] ?? true
@@ -876,6 +1159,7 @@ const app = Vue.createApp({
             this.victoryRoad = MyStorage["this.victoryRoad"] ?? true
             this.powerPlant = MyStorage["this.powerPlant"] ?? true
             this.blackouts_as_resets = MyStorage["this.blackouts_as_resets"] ?? true
+            this.blackout_counter = MyStorage["this.blackout_counter"] ?? 0
             this.show_wild_battles = MyStorage["this.show_wild_battles"] ?? false
             this.showCritMultiplierInEP = MyStorage["this.showCritMultiplierInEP"] ?? true
             this.battleGraphic = MyStorage["this.battleGraphic"] ?? true
@@ -886,17 +1170,30 @@ const app = Vue.createApp({
             this.playerResets = MyStorage["playerResets"] ?? 0
             this.goal_level = MyStorage["goal_level"] ?? 13
             this.goal_speed = MyStorage["goal_speed"] ?? 24
+            this.attempt_number = MyStorage["attempt_number"] ?? 0
             this.viridian_forest = MyStorage["viridian_forest"] ?? "Encounters On"
+            this.pb_splits = MyStorage[`${this.starterName}_pb_splits`] ?? ["","","",""]
         },
         //string can be: clear, increment, decrement
         resets_clear() {
             this.playerResets = 0
+            this.blackout_counter = 0
         },
         resets_increment() {
-            this.playerResets++
+            if (this.key_F16 == "blackouts") {
+                this.blackout_counter++
+            }
+            if (this.key_F16 == "resets") {
+                this.playerResets++
+            }
         },
         resets_decrement() {
-            this.playerResets--
+            if (this.key_F16 == "blackouts") {
+                this.blackout_counter--
+            }
+            if (this.key_F16 == "resets") {
+                this.playerResets--
+            }
         },
         async colorPick() {
             return new EyeDropper().open().then(res => res.sRGBHex)
@@ -974,6 +1271,13 @@ const app = Vue.createApp({
             this.route22 = false
             this.victoryRoad = false
         },
+        apply_settings(setting_group) { //pass in the name of the group of settings that are to have values assigned
+            keys = this.settings[setting_group]
+
+            Object.keys(keys).forEach(key => {
+                this[key] = keys[key];
+            });
+        },
         save_pokemon_sprite_settings() {
             this.set_pokemon_prop("imageXOffset", this.imageXOffset)
             this.set_pokemon_prop("imageYOffset", this.imageYOffset)
@@ -981,6 +1285,80 @@ const app = Vue.createApp({
             this.set_pokemon_prop("imageFlip", this.imageFlip)
             // console.log(MyStorage.entries())
         },
+        save_pb_splits() {
+            this.set_setting_prop(`${this.starterName}_pb_splits`, this.split_data)
+            this.pb_splits = this.split_data
+        },
+        pb_split(splitName) {
+            if (this.pb_splits) {
+                let result = this.pb_splits.find(x => x.includes(splitName))
+                if (result) {
+                    return result
+                }
+                else {
+                    return null
+                }
+            }
+            else {
+                return null
+            }
+        },
+        splits_clear() {
+            this.split_data = []
+        },
+        split_offset_calculation(duration1, duration2) {
+            const totalSeconds = this.convertDurationToSeconds(duration1) - this.convertDurationToSeconds(duration2);
+            return this.convertSecondsToDuration(totalSeconds);
+        },
+        convertDurationToSeconds(duration) {
+            const parts = duration.split(':').map(part => parseInt(part, 10));
+            if (parts.length === 1) {
+                return parts[0];
+            } else if (parts.length === 2) {
+                return parts[0] * 60 + parts[1];
+            } else if (parts.length === 3) {
+                return parts[0] * 3600 + parts[1] * 60 + parts[2];
+            }
+        },
+        convertSecondsToDuration(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const remainingSeconds = seconds % 60;
+        
+            if (hours > 0) {
+                return `${hours}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+            } else if (minutes > 0) {
+                return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
+            } else {
+                return String(remainingSeconds);
+            }
+        },
+        addDurations(duration1, duration2) {
+            const totalSeconds = convertDurationToSeconds(duration1) + convertDurationToSeconds(duration2);
+            return convertSecondsToDuration(totalSeconds);
+        },
+        subtractDurations(duration1, duration2) {
+            const totalSeconds = convertDurationToSeconds(duration1) - convertDurationToSeconds(duration2);
+            return convertSecondsToDuration(totalSeconds);
+        },
+        convertTimeToSeconds(time) {
+            const [minutes, seconds] = time.split(':').map(Number);
+            return minutes * 60 + seconds;
+        },
+        convertSecondsToTime(seconds) {
+            const absoluteSeconds = Math.abs(seconds);
+            const minutes = Math.floor(absoluteSeconds / 60);
+            const remainingSeconds = absoluteSeconds % 60;
+            const sign = seconds < 0 ? '-' : '+';
+            return `${sign}${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        },
+        timeUntilSplit(currentTime, splitTime) {
+            const currentTimeInSeconds = convertTimeToSeconds(currentTime);
+            const splitTimeInSeconds = convertTimeToSeconds(splitTime);
+            const differenceInSeconds = currentTimeInSeconds - splitTimeInSeconds;
+            return convertSecondsToTime(differenceInSeconds);
+        },
+        
         clear_pokemon_sprite_settings() {
             this.imageXOffset = 0
             this.imageYOffset = 0
@@ -1066,7 +1444,7 @@ const app = Vue.createApp({
 
         //ENEMY MOD STYLING
         enemyMods(modValue) {
-            if (this.g1stateVariable != "Battle") { return this.enemyModColour }
+            if (this.state != "Battle") { return this.enemyModColour }
             var neutral = ["0", "background: #a1a1a1;"]
             var raised = [modValue, "background: #d84444;"]
             var lowered = [modValue, "background: #21c500"]
@@ -1075,7 +1453,7 @@ const app = Vue.createApp({
             return this.enemyModColour 
         },
         enemyDynamic(activePkmn, currentSlot) {
-            if (activePkmn == currentSlot && this.g1stateVariable == "Battle") {
+            if (activePkmn == currentSlot && this.state == "Battle") {
                 return this.mapper?.properties?.battle?.enemyPokemon
             }
             else { 
@@ -1086,6 +1464,7 @@ const app = Vue.createApp({
         //Movepool Graphic
         dataSearch(dataObject, pointerValue) {
             if (!pointerValue) return ""
+            if (!dataObject) return ""
             const key = Object.keys(dataObject).find(x => x.toLowerCase() == pointerValue.toLowerCase())
             return dataObject[key] || "ERROR"
         },
@@ -1153,7 +1532,7 @@ const app = Vue.createApp({
         },
         //TYPE ICONS FOR THE STARTER SELECTION
         pkmnType(typeNumber, type1, type2) {
-            if (type1 && this.g1stateVariable != `Base Stats`) {
+            if (type1 && this.state != `Base Stats`) {
                 if (type1 == type2) {
                     return `images/elements/types/${type1.toLowerCase()}.png`
                 }
@@ -1214,11 +1593,11 @@ const app = Vue.createApp({
 
         // STAGE MULTIPLIERS
         activeSlot(activePkmn, currentSlot, statLabel, stat, side) {
-            if (this.enemyState == "Fainted" || this.g1stateVariable == "From Battle") {
+            if (this.enemyState == "Fainted" || this.state == "From Battle") {
                 return stat 
             }
             else if (this.enemyState == "Pokemon" || this.enemyState == "Pokemon Sent Out" || this.enemyState == "Fainting") {
-                if (activePkmn == currentSlot && this.g1stateVariable == "Battle") {
+                if (activePkmn == currentSlot && this.state == "Battle") {
                     return this.mapper.properties.battle[side][statLabel].value
                 }
                 else { 
@@ -1581,7 +1960,7 @@ const app = Vue.createApp({
                 var currentAccuracyModStage = this.batt.yourPokemon.modStageAccuracy.value
                 var evasionStageMods = this.stageModifiersData.find(x => x.modType === "evasion")
                 var currentEvasionModStage = this.batt.enemyPokemon.modEnemyStageEvasion.value
-                if (this.g1stateVariable == `Battle` || this.g1stateVariable == `From Battle`) {
+                if (this.state == `Battle` || this.state == `From Battle`) {
                     if (moveAccuracy == `-`) {
                         return `-`
                     }
@@ -1633,7 +2012,7 @@ const app = Vue.createApp({
 
                 //return if further updates aren't required
                 if (move_power == "-")                { return move_power } //returns "-" if the move has no power
-                if (this.g1stateVariable != `Battle`) { return Math.floor(move_power * multiplier_stab) } //returns the move's base power if not in battle
+                if (this.state != `Battle`) { return Math.floor(move_power * multiplier_stab) } //returns the move's base power if not in battle
 
                 //calculate the move's effective power
                 return Math.floor(move_power * multiplier_stab * multiplier_type1 * multiplier_type2 * screen_reflect * screen_lightscreen)
@@ -1715,7 +2094,9 @@ const app = Vue.createApp({
             if (newProp.value > 0 && this.game_over == false) {
                 if (newProp.value != this.playerId) {
                     this.playerResets = 0;
+                    this.blackout_counter = 0;
                     this.attempt_number++;
+                    this.most_recent_move = "";
                     MyStorage["attempt_number"] = this.attempt_number;
                     // console.log(`Attempt ${this.attempt_number}`)
                     this.startTime();
@@ -1756,7 +2137,8 @@ const app = Vue.createApp({
             let player_name = this.playerNameChoice
             let pokemon = this.starterName
             let trainer_name = this.format_trainer_name(this.mapper.properties.battle.trainer.class.value, this.mapper.properties.battle.trainer.number.value)
-            // let location = this.mapper.properties.overworld.map.value
+            let trainer_id = this.mapper.properties.battle.trainer.number.value
+            let location = this.mapper.properties.overworld.map.value
             let total_pokemon = this.mapper.properties.battle.trainer.totalPokemon
             let real_time_total = this.timer_formatted_time[0].toString() + this.timer_formatted_time[1].toString()
             let real_time_hmmss = this.timer_formatted_time[0].toString()
@@ -1783,24 +2165,23 @@ const app = Vue.createApp({
             let rivalTeam = this.mapper.properties.rival.finalTeam.value
 
             let simple_data = [player_name, pokemon, trainer_name, real_time_hmmss, resets, blackouts, level, game_time, battle_duration, move1, move2, move3, move4 ]
-            let full_data = [date_string, time_string, player_name, pokemon, trainer_name, total_pokemon, real_time_total, real_time_hmmss, real_time_file_label, resets, blackouts, level, game_time, battle_duration, move1, move2, move3, move4, saves, steps, bonks, trainerBattles, wildBattles, battleTurns, playerTurns, enemyTurns, itemsInBag, money, rivalTeam]
+            let full_data = [date_string, time_string, player_name, pokemon, trainer_name, trainer_id, location, total_pokemon, real_time_total, real_time_hmmss, real_time_file_label, resets, blackouts, level, game_time, battle_duration, move1, move2, move3, move4, saves, steps, bonks, trainerBattles, wildBattles, battleTurns, playerTurns, enemyTurns, itemsInBag, money, rivalTeam]
             let simple_data_str = simple_data.join(",") + "\n";
             let full_data_str = full_data.join(",") + "\n";
 
             var write_simple_split_data = (x) => {
                 log_end()
-                this.split_data.push(simple_data_str)
+                this.split_data.push(simple_data)
                 logToFileSimpleSplits(simple_data_str, this.attempt_number, this.starterName)
             }
             var write_full_split_data = (x) => {
                 log_end()
-                this.split_data.push(full_data)
                 logToFileFullSplits(full_data_str, this.attempt_number, this.starterName)
             }
             var end_run = (x) => {
                 this.stopTime()
                 log_end()
-                this.split_data.push(simple_data_str)
+                this.split_data.push(simple_data)
                 logToFileSimpleSplits(simple_data_str, this.attempt_number, this.starterName)
                 logToFileFullSplits(full_data_str, this.attempt_number, this.starterName)
             }
@@ -1828,20 +2209,21 @@ const app = Vue.createApp({
         //*blackout tracking
         //track when the player has a blackout
         this.mapper.properties.player.team[0].hp.change((newProp, oldProp) => {
-            if (newProp.value == 0 && this.g1stateVariable == `Battle`) {
+            if (newProp.value > 0 && this.blackout == true) {
+                this.blackout = false;
+                this.blackout_counter++;
+            }
+            if (newProp.value == 0 && this.state == `Battle`) {
                 this.blackout = true;
                 this.blackout_counter++;
             }
-            if (this.g1stateVariable == `Base Stats`) {
+            if (this.state == `Base Stats`) {
                 this.blackout = false;
             }
-            if (this.blackouts_as_resets == true && this.blackout == true) {
-                if (oldProp.value == 0 && newProp.value > 0) {
-                    this.playerResets++;
-                    MyStorage["playerResets"] = this.playerResets;
-                }
-            }
         })
+        this.mapper.properties.player.team[0].hp.change((newProp) => {
+
+        });
 
         // Encounters (set initial value)
         if (this.route1 == false && this.mapper.properties.overworld.map.value == "Route 1") {
@@ -2031,59 +2413,12 @@ const app = Vue.createApp({
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
         });
-
-        //Functions to track the game's state
-        // set initial gamestate value when the layout is loaded
-        if (this.mapper.properties.player.team[0].level.value == 0) 
-            this.g1stateVariable = "Base Stats";
-        else if (this.mapper.properties.battle.type.value == "None")
-            this.g1stateVariable = "Overworld";
-        else if (this.mapper.properties.battle.turnInfo.battleStart.value == 0)
-            this.g1stateVariable = "To Battle";
-        else if (this.mapper.properties.battle.lowHealthAlarm.value ==  "Disabled")
-            this.g1stateVariable = "From Battle";
-        else
-            this.g1stateVariable = "Battle";
-
-        // wait for events to change the state
-        this.mapper.properties.player.team[0].level.change((prop) => {
-            if (prop.value == 0) {
-                this.g1stateVariable = "Base Stats";
-            } else if (this.g1stateVariable == "Base Stats" && this.map.overworld.map.value == "Pallet Town - Oak's Lab") {
-                this.g1stateVariable = "Base Stats";
-            } else if (this.g1stateVariable == "Base Stats") {
-                this.g1stateVariable = "Overworld";
+        this.mapper.properties.meta.state.change(async (newProp) => {
+            if (newProp.value == "No Pokemon") {
+                this.state = "Base Stats"
             }
-        });
-        this.mapper.properties.battle.type.change((prop) => {
-            if (this.g1stateVariable == "Base Stats" && this.map.overworld.map.value == "Pallet Town - Oak's Lab") { //FIX for graphical flicker in Oak's lab
-                this.g1stateVariable = "To Battle";
-            }; 
-            if (this.g1stateVariable == "Base Stats") return; // ignore everything if we still dont have a pokemon
-
-            if (prop.value == "Wild" || prop.value == "Trainer") {
-                this.g1stateVariable = "To Battle";
-            } else if (prop.value == "None") {
-                this.g1stateVariable = "Overworld";
-            }
-        });
-        this.mapper.properties.battle.turnInfo.battleStart.change((prop) => {
-            if (this.g1stateVariable == "Base Stats") return; // ignore everything if we still dont have a pokemon
-
-            if (prop.value != 0 && this.g1stateVariable == "To Battle") {
-                this.g1stateVariable = "Battle";
-            }
-        });
-        this.mapper.properties.battle.lowHealthAlarm.change((prop) => {
-            if (this.g1stateVariable == "Base Stats") return; // ignore everything if we still dont have a pokemon
-
-            if (prop.value == "Disabled") {
-                this.g1stateVariable = "From Battle";
-            }
-        });
-        this.mapper.properties.overworld.map.change((newProp, oldProp) => {
-            if (newProp == "Lance's Room" && oldProp == "Agatha's Room") { 
-                this.g1stateVariable = "Overworld"
+            else {
+                this.state = newProp.value
             }
         });
 
@@ -2116,7 +2451,7 @@ const app = Vue.createApp({
             }
         });
         this.mapper.properties.battle.turnInfo.battleStart.change((prop) => {
-            if (prop.value != 0 && this.g1stateVariable == "To Battle") {
+            if (prop.value != 0 && this.state == "To Battle") {
                 this.enemyState = "Pokemon";
             }
         });
@@ -2210,6 +2545,21 @@ const app = Vue.createApp({
                 ])
         }
         
+        //Move info popups
+        this.mapper.properties.player.team[0].move1.change(async (newProp, oldProp) => {
+           if (newProp.value) { this.most_recent_move = newProp.value }
+        });
+        this.mapper.properties.player.team[0].move2.change(async (newProp, oldProp) => {
+            if (newProp.value) { this.most_recent_move = newProp.value }
+        });
+        this.mapper.properties.player.team[0].move3.change(async (newProp, oldProp) => {
+            if (newProp.value) { this.most_recent_move = newProp.value }
+        });
+        this.mapper.properties.player.team[0].move4.change(async (newProp, oldProp) => {
+            if (newProp.value) { this.most_recent_move = newProp.value }
+        });
+
+
         //Recalculate starting stats when the DVs in slot 1 change (when you receive your starter)
         this.mapper.properties.player.team[0].level.change(async (x) => { await setStartingStats() })
         this.mapper.properties.player.team[0].dvAttack.change(async (x) => { await setStartingStats() })
@@ -2258,7 +2608,7 @@ const app = Vue.createApp({
                 if (this.oldExpValue == newProp.value) { 
                     return 
                 }
-                if (this.g1stateVariable == `Overworld` || this.g1stateVariable == "Base Stats") {
+                if (this.state == `Overworld` || this.state == "Base Stats") {
                     this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
                 }
                 else if (this.prevSpecies != currSpecies) {
@@ -2293,8 +2643,52 @@ const app = Vue.createApp({
             }
         })
 
-        keyhook.registerShortCut('CTRL+Alt+A', () => {
-            this.keyhookTest = "CTRL+Alt+A pressed";
-        })
+        keyhook.registerShortCut('F14', async () => {
+            const now = Date.now();
+            if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
+                this.key_F14 = !this.key_F14;
+                this.lastExecuted = Date.now();
+            }
+        });
+        keyhook.registerShortCut('F13', async () => {
+            const now = Date.now();
+            if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
+                // Cycle through the values
+                this.key_F13 = this.cycleValues_rightDisplay[this.cycleIndex_rightDisplay];
+                this.cycleIndex_rightDisplay = (this.cycleIndex_rightDisplay + 1) % this.cycleValues_rightDisplay.length;
+                this.set_setting_prop("this.cycleIndex_rightDisplay", this.cycleIndex_rightDisplay)
+                this.lastExecuted = Date.now();
+            }
+        });
+        keyhook.registerShortCut('F15', async () => {
+            const now = Date.now();
+            if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
+                // Cycle through the values
+                this.key_F15 = this.cycleValues_stats[this.cycleIndex_stats];
+                this.cycleIndex_stats = (this.cycleIndex_stats + 1) % this.cycleValues_stats.length;
+                this.set_setting_prop("this.cycleIndex_stats", this.cycleIndex_stats)
+                this.lastExecuted = Date.now();
+            }
+        });
+        keyhook.registerShortCut('F16', async () => {
+            const now = Date.now();
+            if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
+                // Cycle through the values
+                this.key_F16 = this.cycleValues_failures[this.cycleIndex_failures];
+                this.cycleIndex_failures = (this.cycleIndex_failures + 1) % this.cycleValues_failures.length;
+                this.set_setting_prop("this.cycleIndex_failures", this.cycleIndex_failures)
+                this.lastExecuted = Date.now();
+            }
+        });
+        keyhook.registerShortCut('F17', async () => {
+            const now = Date.now();
+            if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
+                // Cycle through the values
+                this.key_F17 = this.cycleValues_screens[this.cycleIndex_screens];
+                this.cycleIndex_screens = (this.cycleIndex_screens + 1) % this.cycleValues_screens.length;
+                this.set_setting_prop("this.cycleIndex_screens", this.cycleIndex_screens)
+                this.lastExecuted = Date.now();
+            }
+        });
     },
 }).mount('#app')
