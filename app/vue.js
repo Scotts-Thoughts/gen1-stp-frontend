@@ -127,11 +127,11 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
-            starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
+            starterName: MyStorage["this.starterName"] ?? "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             
             perfectDVs:                 true, //sets all DVs to 15
-            dvSetting:                  "Max", //Max, Min, NPC, or Random
+            dvSetting:                  MyStorage["this.dvSetting"] ?? "Max", //Max, Min, NPC, or Random
             trashCans:                  true, //solves the trash can puzzle
             options:                    true, //shows the options menu when set to true
             gametimeDisplay:            MyStorage["this.gametimeDisplay"] ?? false, //shows the options menu when set to true
@@ -145,7 +145,7 @@ const app = Vue.createApp({
             showCritMultiplierInEP:     MyStorage["this.showCritMultiplierInEP"] ?? true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             show_wild_battles:          MyStorage["this.show_wild_battles"] ?? false, //shows wild battles in the battle screen
 
-            help_menus: "Settings",
+            help_menus: MyStorage["this.help_menus"] ?? "Settings",
 
             //ENCOUNTERS ---------------------------------------------------------------------------------------//
             route1:         MyStorage["this.route1"] ?? true,
@@ -218,8 +218,8 @@ const app = Vue.createApp({
             timer_formatted_time: ["0", ".00"],
             timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
             battle_start: 0,
-            timer_settings: "Real-Time",
-            viridian_forest: MyStorage["viridian_forest"] ?? "Encounters On",
+            timer_settings: MyStorage["this.timer_settings"] ?? "Real-Time",
+            viridian_forest: MyStorage["this.viridian_forest"] ?? "Encounters On",
 
             //splits
             split_data: MyStorage["split_data"] ?? [],
@@ -227,6 +227,19 @@ const app = Vue.createApp({
     },
 
     watch: {
+        help_menus() {
+            this.set_setting_prop("this.help_menus", this.help_menus)
+        },
+        starterName() {
+            this.set_setting_prop("this.starterName", this.starterName)
+        },
+        dvSetting() {
+            this.set_setting_prop("this.dvSetting", this.dvSetting)
+        },
+        timer_settings() {
+            this.set_setting_prop("this.timer_settings", this.timer_settings)
+            console.log(this.timer_settings)
+        },
         //splits
         split_data() {
             MyStorage["split_data"] = this.split_data
@@ -307,6 +320,8 @@ const app = Vue.createApp({
         },
         viridian_forest(newProp) {
             const encountersOff = 0x00
+            this.set_setting_prop("this.viridian_forest", this.viridian_forest)
+            console.log(this.viridian_forest)
             if (newProp == "Pidgey") {
                 if (this.mapper.properties.player.team[1].species.value == "Pidgey") {
                     this.mapper.properties.overworld.encounterRate.setBytes([encountersOff], false)
@@ -742,7 +757,7 @@ const app = Vue.createApp({
             this.set_setting_prop("this.rockTunnelDarkness", this.rockTunnelDarkness)
             this.set_setting_prop("this.goal_level", this.goal_level)
             this.set_setting_prop("this.goal_speed", this.goal_speed)
-            this.set_setting_prop("this.viridian_forest", this.viridian_forest)
+            // this.set_setting_prop("this.viridian_forest", this.viridian_forest)
             // console.log(MyStorage.entries())
         },
         load_all_settings() {
@@ -753,8 +768,8 @@ const app = Vue.createApp({
             this.route3 = MyStorage["this.route3"] ?? true
             this.mtMoon = MyStorage["this.mtMoon"] ?? true
             this.route6 = MyStorage["this.route6"] ?? true
-            this.route6 = MyStorage["this.rockTunnel"] ?? true
-            this.route6 = MyStorage["this.pokemonTower"] ?? true
+            this.rockTunnel = MyStorage["this.rockTunnel"] ?? true
+            this.pokemonTower = MyStorage["this.pokemonTower"] ?? true
             this.safariZone = MyStorage["this.safariZone"] ?? true
             this.mansion = MyStorage["this.mansion"] ?? true
             this.help_menus = MyStorage["this.help_menus"] ?? "Settings"
@@ -779,7 +794,7 @@ const app = Vue.createApp({
             this.playerResets = MyStorage["playerResets"] ?? 0
             this.goal_level = MyStorage["goal_level"] ?? 13
             this.goal_speed = MyStorage["goal_speed"] ?? 24
-            this.viridian_forest = MyStorage["viridian_forest"] ?? "Encounters On"
+            // this.viridian_forest = MyStorage["this.viridian_forest"] ?? "Encounters On"
         },
         //string can be: clear, increment, decrement
         resets_clear() {
@@ -1230,7 +1245,7 @@ const app = Vue.createApp({
                     case "SABRINA_1":
                         return "images/trainers/sabrina.png";
                     case "BLAINE_1":
-                        return "images/trainers/BLAINE.png";
+                        return "images/trainers/blaine.png";
                     case "RIVAL1_1":
                         return "images/trainers/RIVAL1.png";
                     case "RIVAL1_2":
