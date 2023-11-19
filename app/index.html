@@ -358,10 +358,12 @@
             </select><br>
             <button class="buttonStyle" @click="resetTime">Reset Timer</button>
             <br>
-            <button class="buttonStyle save_pb_splits" @click="save_pb_splits">Save PB Splits</button>
-            <button class="buttonStyle splits_folder" onClick="openFolder()">Open Splits Folder</button>
-            <button class="buttonStyle refresh" onClick="window.location.reload();">Reload Overlay</button>
-            <!-- <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button> -->
+            <br>
+            <div>General Settings:</div>
+            <button class="buttonStyle" @click="save_pb_splits">Save PB Splits</button>
+            <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
+            <button class="buttonStyle" onClick="openFolder('battle_summaries')">Battle Summaries</button>
+            <button class="buttonStyle" onClick="window.location.reload();">Reload Overlay</button>
         </div>
         <div class="testingArea2" style="z-index: 50000;">
             <div>Secondary Menu:</div>

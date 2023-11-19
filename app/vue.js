@@ -19,8 +19,8 @@ const MyStorage = new Proxy({}, {
 });
 
 // Open the folder ./splits/ in the file explorer with node.js
-function openFolder() {
-    require('child_process').exec('start .\\splits\\');
+function openFolder(folderName) {
+    require('child_process').exec(`start .\\${folderName}\\`);
 }
 
 function downloadFile(content, downloadFileName) {
@@ -609,26 +609,26 @@ const app = Vue.createApp({
                 }
             );
         }
-        // for (let i = 0; i < this.sprite_settings.length; i++) {
-        //     let propName = this.sprite_settings[i];
-        //     this.$watch(
-        //         () => this[propName],
-        //         (newValue) => {
-        //             // Ensure that MyStorage[this.starterName] is an object
-        //             if (!MyStorage[this.starterName]) {
-        //                 MyStorage[this.starterName] = {};
-        //             }
+        for (let i = 0; i < this.sprite_settings.length; i++) {
+            let propName = this.sprite_settings[i];
+            this.$watch(
+                () => this[propName],
+                (newValue) => {
+                    // Ensure that MyStorage[this.starterName] is an object
+                    if (!MyStorage[this.starterName]) {
+                        MyStorage[this.starterName] = {};
+                    }
         
-        //             // Set the new value
-        //             MyStorage[this.starterName][propName] = newValue;
+                    // Set the new value
+                    MyStorage[this.starterName][propName] = newValue;
         
-        //             // Corrected logging
-        //             console.log("Sprite setting " + propName + " changed to value: " + newValue);
-        //             console.log("Starter:" + this.starterName + " Prop Name: " + propName + " Value: " + newValue);
-        //             console.log(MyStorage[this.starterName]);
-        //         }
-        //     );
-        // }
+                    // Corrected logging
+                    console.log("Sprite setting " + propName + " changed to value: " + newValue);
+                    console.log("Starter:" + this.starterName + " Prop Name: " + propName + " Value: " + newValue);
+                    console.log(MyStorage[this.starterName]);
+                }
+            );
+        }
     },
     watch: {
         //Encounter Checkboxes
