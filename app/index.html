@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scott's Thoughts - Generation 1 Overlay - v1.2.3</title>
+    <title>Scott's Thoughts - Generation 1 Overlay - v2.0.0</title>
     <link rel="stylesheet" href="style-yellow.css">
 </head>
 <body>
@@ -360,9 +360,8 @@
             <br>
             <button class="buttonStyle save_pb_splits" @click="save_pb_splits">Save PB Splits</button>
             <button class="buttonStyle splits_folder" onClick="openFolder()">Open Splits Folder</button>
-            <!-- <button class="buttonStyle" style="top: -30px; width: 420px; background-color: hsl(59, 48%, 59%);" @click="pauseUnpauseTime">Toggle Pause Timer & Gameplay</button><br><br> -->
             <button class="buttonStyle refresh" onClick="window.location.reload();">Reload Overlay</button>
-            <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button>
+            <!-- <button @click="save_all_settings" class="buttonStyle save_all_settings">Save All Settings</button> -->
         </div>
         <div class="testingArea2" style="z-index: 50000;">
             <div>Secondary Menu:</div>
@@ -384,10 +383,6 @@
                     <th>Route1:</th>
                     <th><input class="checkBoxStyle" type="checkbox" v-model="route1"/></th>
                 </tr>
-                <!-- <tr>
-                    <th>Viridian Forest:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="viridianForest"/></th>
-                </tr> -->
                 <tr>
                     <th>Route3:</th>
                     <th><input class="checkBoxStyle" type="checkbox" v-model="route3"/></th>
@@ -416,10 +411,6 @@
                     <th>Pkmn Mansion:</th>
                     <th><input class="checkBoxStyle" type="checkbox" v-model="mansion"/></th>
                 </tr>
-                <!-- <tr>
-                    <th>Route 21:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="route21"/></th>
-                </tr> -->
                 <tr>
                     <th>Route 22:</th>
                     <th><input class="checkBoxStyle" type="checkbox" v-model="route22"/></th>
@@ -608,5 +599,6 @@
     <script src="data/stage-modifiers.js"></script>
     <script src="data/tmhmmapping.js"></script>
     <script src="data/settings.js"></script>
+    <script src="data/saved_settings.js"></script>
     <script type="text/javascript" src="vue.js"></script>
 </body>

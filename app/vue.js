@@ -456,27 +456,27 @@ const app = Vue.createApp({
             mapper: null,
 
             // USER CONFIG --------------------------------------------------------------------------------------//
+            // Most settings here save automatically to MyStorage. If you want to add a new setting and have it save define it within "saved_settings.js"
             starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             
-            perfectDVs:                 true, //sets all DVs to 15
-            dvSetting:                  "Max", //Max, Min, NPC, or Random
-            trashCans:                  true, //solves the trash can puzzle
-            options:                    true, //shows the options menu when set to true
+            dvSetting:                  "Max", //Max, Min, NPC, Max with Min Atk, or Random
+            trashCans:                  MyStorage["this.trashCans"] ?? true, //solves the trash can puzzle
+            options:                    MyStorage["this.options"] ?? true, //shows the options menu when set to true
             gametimeDisplay:            MyStorage["this.gametimeDisplay"] ?? false, //shows the options menu when set to true
-            inventory:                  true, //uses inventory when in the department store & marts
+            inventory:                  MyStorage["this.inventory"] ?? true, //uses inventory when in the department store & marts
             battleGraphic:              MyStorage["this.battleGraphic"] ?? true, //uses battle graphic with enemy moveset & stats
             showAllTrainers:            MyStorage["this.showAllTrainers"] ?? true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
-            expBarAnimation:            true,
+            expBarAnimation:            MyStorage["this.expBarAnimation"] ?? true,
             showSpecialTrainerGraphics: MyStorage["this.showSpecialTrainerGraphics"] ?? true, //shows drawn art for defined trainers
             battlePopUps:               MyStorage["this.battlePopUps"] ?? true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
-            typeCalcs:                  true, //calculates effective power based on the pokemon in battle
+            typeCalcs:                  MyStorage["this.typeCalcs"] ?? true, //calculates effective power based on the pokemon in battle
             showCritMultiplierInEP:     MyStorage["this.showCritMultiplierInEP"] ?? true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             show_wild_battles:          MyStorage["this.show_wild_battles"] ?? false, //shows wild battles in the battle screen
-            automaticallySavePBSplits:  true, //saves splits if the player beats their PB (this overwrites currently saved PB splits)
+            automaticallySavePBSplits:  MyStorage["this.automaticallySavePBSplits"] ?? true, //saves splits if the player beats their PB (this overwrites currently saved PB splits)
 
 
-            help_menus: "Settings",
+            help_menus: MyStorage["this.help_menus"] ?? "Settings",
 
             //KEYHOOK SHORTCUTS
             lastExecuted: 0,
@@ -532,13 +532,13 @@ const app = Vue.createApp({
             stageModifiersData: stageModifiersData,
             tmhmMapping:        tmhmMapping,
             settings:           settings,
+            auto_save_settings: auto_save_settings,
             
             //VARS ---------------------------------------------------------------------------------------------//
             pkmnMoves:       ["move1","move2","move3","move4"],
             pkmnSlots:       [0, 1, 2, 3, 4, 5],
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
-            g1stateVariable: "Base Stats",
             state: "Base Stats",
             prevSpecies:     undefined,
             enemyModColour:  ["0", "background: #d84444;"],
@@ -556,7 +556,7 @@ const app = Vue.createApp({
             attempt_number: MyStorage["this.attempt_number"] ?? 0,
             most_recent_move: "",
 
-            blackouts_as_resets: false, //counts blackouts as resets
+            blackouts_as_resets: MyStorage["this.blackouts_as_resets"] ?? false, //counts blackouts as resets
             blackout:            false,
 
             //Pokemon settings for local storage
@@ -565,6 +565,13 @@ const app = Vue.createApp({
             imageYOffset:  MyStorage["this.imageYOffset"] ?? 0,
             imageScale:    MyStorage["this.imageScale"] ?? 1,
             imageFlip:     MyStorage["this.imageFlip"] ?? false,
+            // sprite_settings: [
+            //     "overlay_color",
+            //     "imageXOffset",
+            //     "imageYOffset",
+            //     "imageScale",
+            //     "imageFlip",
+            // ],
 
             //
             playerNameChoice: MyStorage["playerNameChoice"] ?? "NINTEN",
@@ -585,36 +592,45 @@ const app = Vue.createApp({
     },
 
     created() {
-        for (let i = 13; i <= 24; i++) {
-            this.$watch(`key_F${i}`, function (newValue) {
-                MyStorage[`this.key_F${i}`] = newValue;
-            });
+        if (MyStorage[this.starterName]) {
+            this.overlay_color = MyStorage[this.starterName]['overlay_color'] ?? "#000000";
+            this.imageXOffset = MyStorage[this.starterName]['imageXOffset'] ?? 0;
+            this.imageYOffset = MyStorage[this.starterName]['imageYOffset'] ?? 0;
+            this.imageScale = MyStorage[this.starterName]['imageScale'] ?? 1;
+            this.imageFlip = MyStorage[this.starterName]['imageFlip'] ?? false;
         }
+        for (let i = 0; i < this.auto_save_settings.length; i++) {
+            let propName = this.auto_save_settings[i];
+            this.$watch(
+                () => this[propName], // Using a function to return the property's value
+                (newValue) => {
+                    MyStorage[`this.${propName}`] = newValue;
+                    console.log("Setting Saved: " + propName)
+                }
+            );
+        }
+        // for (let i = 0; i < this.sprite_settings.length; i++) {
+        //     let propName = this.sprite_settings[i];
+        //     this.$watch(
+        //         () => this[propName],
+        //         (newValue) => {
+        //             // Ensure that MyStorage[this.starterName] is an object
+        //             if (!MyStorage[this.starterName]) {
+        //                 MyStorage[this.starterName] = {};
+        //             }
+        
+        //             // Set the new value
+        //             MyStorage[this.starterName][propName] = newValue;
+        
+        //             // Corrected logging
+        //             console.log("Sprite setting " + propName + " changed to value: " + newValue);
+        //             console.log("Starter:" + this.starterName + " Prop Name: " + propName + " Value: " + newValue);
+        //             console.log(MyStorage[this.starterName]);
+        //         }
+        //     );
+        // }
     },
     watch: {
-        starterName() {
-            MyStorage["this.starterName"] = this.starterName
-        },
-        timer_settings() {
-            MyStorage["this.timer_settings"] = this.timer_settings
-        },
-        //splits
-        attempt_number() {
-            MyStorage["this.attempt_number"] = this.attempt_number
-        },
-        split_data() {
-            MyStorage["split_data"] = this.split_data
-        },
-        //timer functions
-        timer_pause() {
-            MyStorage["timer_pause"] = this.timer_pause
-        },
-        timer_startTime() {
-            MyStorage["timer_startTime"] = this.timer_startTime
-        },
-        timer_pause_time() {
-            MyStorage["timer_pause_time"] = this.timer_pause_time
-        },
         //Encounter Checkboxes
         route1(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
@@ -1093,39 +1109,39 @@ const app = Vue.createApp({
             }
         },
         //! Refactor with co-pilot
-        save_all_settings() {
-            this.set_setting_prop("this.route1", this.route1)
-            this.set_setting_prop("this.viridianForest", this.viridianForest)
-            this.set_setting_prop("this.route3", this.route3)
-            this.set_setting_prop("this.mtMoon", this.mtMoon)
-            this.set_setting_prop("this.route6", this.route6)
-            this.set_setting_prop("this.rockTunnel", this.rockTunnel)
-            this.set_setting_prop("this.pokemonTower", this.pokemonTower)
-            this.set_setting_prop("this.safariZone", this.safariZone)
-            this.set_setting_prop("this.mansion", this.mansion)
-            this.set_setting_prop("this.help_menus", this.help_menus)
-            this.set_setting_prop("this.dvSetting", this.dvSetting)
-            this.set_setting_prop("this.trashCans", this.trashCans)
-            this.set_setting_prop("this.options", this.options)
-            this.set_setting_prop("this.gametimeDisplay", this.gametimeDisplay)
-            this.set_setting_prop("this.resetCounter", this.resetCounter)
-            this.set_setting_prop("this.playerResets", this.playerResets)
-            this.set_setting_prop("this.route21", this.route21)
-            this.set_setting_prop("this.route22", this.route22)
-            this.set_setting_prop("this.victoryRoad", this.victoryRoad)
-            this.set_setting_prop("this.powerPlant", this.powerPlant)
-            this.set_setting_prop("this.blackouts_as_resets", this.blackouts_as_resets)
-            this.set_setting_prop("this.showCritMultiplierInEP", this.showCritMultiplierInEP)
-            this.set_setting_prop("this.show_wild_battles", this.show_wild_battles)
-            this.set_setting_prop("this.battleGraphic", this.battleGraphic)
-            this.set_setting_prop("this.showAllTrainers", this.showAllTrainers)
-            this.set_setting_prop("this.showSpecialTrainerGraphics", this.showSpecialTrainerGraphics)
-            this.set_setting_prop("this.battlePopUps", this.battlePopUps)
-            this.set_setting_prop("this.rockTunnelDarkness", this.rockTunnelDarkness)
-            this.set_setting_prop("this.goal_level", this.goal_level)
-            this.set_setting_prop("this.goal_speed", this.goal_speed)
-            this.set_setting_prop("this.viridian_forest", this.viridian_forest)
-        },
+        // save_all_settings() {
+        //     this.set_setting_prop("this.route1", this.route1)
+        //     this.set_setting_prop("this.viridianForest", this.viridianForest)
+        //     this.set_setting_prop("this.route3", this.route3)
+        //     this.set_setting_prop("this.mtMoon", this.mtMoon)
+        //     this.set_setting_prop("this.route6", this.route6)
+        //     this.set_setting_prop("this.rockTunnel", this.rockTunnel)
+        //     this.set_setting_prop("this.pokemonTower", this.pokemonTower)
+        //     this.set_setting_prop("this.safariZone", this.safariZone)
+        //     this.set_setting_prop("this.mansion", this.mansion)
+        //     this.set_setting_prop("this.help_menus", this.help_menus)
+        //     this.set_setting_prop("this.dvSetting", this.dvSetting)
+        //     this.set_setting_prop("this.trashCans", this.trashCans)
+        //     this.set_setting_prop("this.options", this.options)
+        //     this.set_setting_prop("this.gametimeDisplay", this.gametimeDisplay)
+        //     this.set_setting_prop("this.resetCounter", this.resetCounter)
+        //     this.set_setting_prop("this.playerResets", this.playerResets)
+        //     this.set_setting_prop("this.route21", this.route21)
+        //     this.set_setting_prop("this.route22", this.route22)
+        //     this.set_setting_prop("this.victoryRoad", this.victoryRoad)
+        //     this.set_setting_prop("this.powerPlant", this.powerPlant)
+        //     this.set_setting_prop("this.blackouts_as_resets", this.blackouts_as_resets)
+        //     this.set_setting_prop("this.showCritMultiplierInEP", this.showCritMultiplierInEP)
+        //     this.set_setting_prop("this.show_wild_battles", this.show_wild_battles)
+        //     this.set_setting_prop("this.battleGraphic", this.battleGraphic)
+        //     this.set_setting_prop("this.showAllTrainers", this.showAllTrainers)
+        //     this.set_setting_prop("this.showSpecialTrainerGraphics", this.showSpecialTrainerGraphics)
+        //     this.set_setting_prop("this.battlePopUps", this.battlePopUps)
+        //     this.set_setting_prop("this.rockTunnelDarkness", this.rockTunnelDarkness)
+        //     this.set_setting_prop("this.goal_level", this.goal_level)
+        //     this.set_setting_prop("this.goal_speed", this.goal_speed)
+        //     this.set_setting_prop("this.viridian_forest", this.viridian_forest)
+        // },
         save_all_settings() {
             const propertiesToSave = [
                 "route1", "viridianForest", "route3", "mtMoon", "route6", 
@@ -1153,7 +1169,7 @@ const app = Vue.createApp({
             this.route6 = MyStorage["this.pokemonTower"] ?? true
             this.safariZone = MyStorage["this.safariZone"] ?? true
             this.mansion = MyStorage["this.mansion"] ?? true
-            this.help_menus = MyStorage["this.help_menus"] ?? "Settings"
+            // this.help_menus = MyStorage["this.help_menus"] ?? "Settings"
             this.dvSetting = MyStorage["this.dvSetting"] ?? "Max"
             this.trashCans = MyStorage["this.trashCans"] ?? true
             this.options = MyStorage["this.options"] ?? true
@@ -1289,7 +1305,7 @@ const app = Vue.createApp({
             this.set_pokemon_prop("imageYOffset", this.imageYOffset)
             this.set_pokemon_prop("imageScale", this.imageScale)
             this.set_pokemon_prop("imageFlip", this.imageFlip)
-            // console.log(MyStorage.entries())
+            console.log(MyStorage.entries())
         },
         save_pb_splits() {
             this.set_setting_prop(`${this.starterName}_pb_splits`, this.split_data)
@@ -2487,7 +2503,6 @@ const app = Vue.createApp({
         // SETTING THE STARTER POKEMON'S STATS ----------------------------------------------------------------------------------------------//
         const setStartingStats = async () => {
             const pkmn = this.pokemon(this.starterName) // slot 1 species
-            const perfectDVs = 0xff // desired DV value
             var dv = [15,15,15,15,15]
             var dvHex = [0xff,0xff,0xff,0xff,0xff]
             if (this.dvSetting == "Random") { return }
