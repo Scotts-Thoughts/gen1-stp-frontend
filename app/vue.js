@@ -2238,6 +2238,52 @@ const app = Vue.createApp({
                 logToFileFullSplits(full_data_str, this.attempt_number, this.starterName)
             }
 
+            //Compatibility layer for old split formatting
+            //!THIS LIST NEEDS TO BE COMPLETED
+            const oldSplits = {
+                "RIVAL1_1": "Rival (Lab)",
+                "RIVAL1_2": "Rival (Optional)",
+                "BROCK_1": "Brock",
+                "RIVAL1_3": "Rival (Nugget Bridge)",
+                "Oddish Lass",
+                "MISTY_1": "Misty",
+                "Rocket",
+                "Rival (SS Anne)",
+                "LT.SURGE_1": "Lt. Surge",
+                "RTG1 - Wrapping Lass",
+                "RTG2 - Pokemaniac 1",
+                "RTG3 - Pokemaniac 2",
+                "RTG4 - Status Jr Trainer",
+                "RTG5 - Self-destructing Hiker",
+                "RTG6 - Finisher",
+                "Rival (Pokemon Tower)",
+                "ERIKA_1": "Erika",
+                "Rival (Silph Co.)",
+                "GIOVANNI_2": "Giovanni (Silph)",
+                "SABRINA_1": "Sabrina",
+                "KOGA_1": "Koga",
+                "BLAINE_1": "Blaine",
+                "GIOVANNI_3": "Giovanni",
+                "Rival (Final)",
+                "LORELEI_1": "Lorelei",
+                "BRUNO_1": "Bruno",
+                "AGATHA_1": "Agatha",
+                "LANCE_1": "Lance",
+                "RIVAL3_1": "Champion",
+                "RIVAL3_2": "Champion",
+                "RIVAL3_3": "Champion",
+            }
+            //check to see if it is one of the trainers logged in my olds splits
+            let oldBattleCheck = false
+            let trainer = this.mapper.properties.battle.trainer.class.value + "_" + this.mapper.properties.battle.trainer.number.value
+            if (oldSplits[trainer]) {
+                oldBattleCheck = true
+            }
+            //write splits to file if needed
+            if (oldBattleCheck == true) {
+
+            }
+
             if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL1")    { write_simple_split_data() }
             else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL2")    { write_simple_split_data() }
             else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BROCK" )    { write_simple_split_data() }
