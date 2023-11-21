@@ -12,14 +12,33 @@
             <div class="mainContainer">
                 <!-- GRAPHICS ---------------------------------------------------------------------------------->
                 <div>
-                    <img class="canvas" ref="background_texture" :src="`images/textures/${g1PokemonData[starterName].type1}.png`" />
+                    <img class="canvas" ref="background_texture" :src="`images/textures/${g1PokemonData[starterName].type1}.png`" 
+                        :style="{ 
+                            'filter': `blur(${backgroundBlur}px)`,
+                            'transform': `scale(${backgroundScale}%)`
+                        }"/>
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
                     <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
-
-                    <img class="pokemon_art" ref="pokemon_art"
+                    <!-- <img class="pokemon_art shadow" ref="pokemon_art"
                     :style="{'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`, }" 
-                    :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
+                    :src="`images/pokemon/${s1dynamicReset.species.value}.png`" /> -->
+                    <!-- Image with Dynamic Saturation -->
+                    <img class="pokemon_art shadow" ref="pokemon_art"
+                        :style="{
+                            'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`,
+                            'filter': `saturate(${imageSat}%)
+                            drop-shadow(0 0 0.5px #000)
+                            drop-shadow(0 0 0.5px #000)
+                            drop-shadow(0 0 0.5px #000)
+                            drop-shadow(0 0 0.5px #000)
+                            drop-shadow(0 0 0.5px #000)
+                            drop-shadow(0 0 0.5px #000)
+                            drop-shadow(5px 5px 5px #000)
+                            `
+                        }" 
+                        :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
+
                     <!-- <img class="canvas" :src="`images/left_ui/${g1PokemonData[starterName].type1.toLowerCase()}.png`" /> -->
                     <div class="colored-image" style="--url: url(images/left_ui/Electric.png)"></div>
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
@@ -334,6 +353,7 @@
             X-Offset: <input type="range" min="-125" max="125" v-model="imageXOffset"/><br>
             Y-Offset: <input type="range" min="-125" max="125"v-model="imageYOffset"/><br>
             Scale: <input type="range" min="0.3" max="2" step="0.02" v-model="imageScale"/><br>
+            Saturation: <input type="range" min="90" max="150" step="1" v-model="imageSat"/><br>
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
             <button @click="save_pokemon_sprite_settings" class="buttonStyle">Save Pokemon Sprite Settings</button>
             <button @click="clear_pokemon_sprite_settings" class="buttonStyle">Reset Sprite</button>
@@ -480,6 +500,13 @@
             <button @click="color_picker" class="buttonStyle">Color Picker</button>
             <button @click="clear_overlay_color" class="buttonStyle">Reset Overlay Color</button>
             <div>Overlay_color: {{overlay_color}}</div>
+            <br>
+            <div>Background Texture:</div>
+            <div>Use Custom Background:<input class="checkBoxStyle" type="checkbox" v-model="use_custom_background"/></div>
+            <div v-if="use_custom_background == true"><input v-model="imageUrl" placeholder="Input Custom Texture URL Here"><br></div>
+            Blur: <input type="range" min="0" max="10" v-model="backgroundBlur"/><br>
+            Scale: <input type="range" min="100" max="200" v-model="backgroundScale"/><br>
+            
         </div>
         <div v-show="help_menus == `Internal Monitor`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>Splits:</div>
@@ -555,6 +582,8 @@
             </table>
             <button class="buttonStyle" @click="save_pb_splits">Save PB Splits</button>
             <button class="buttonStyle" @click="splits_clear">Clear Splits</button>
+            <button @click="increment('attempt_number')" class="buttonStyle">Increment</button>
+            <button @click="decrement('attempt_number')" class="buttonStyle">Decrement</button><br>
         </div>
         <div v-show="help_menus == `Hotkeys`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <table style="text-align: left; line-height: 16px;">

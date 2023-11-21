@@ -560,21 +560,35 @@ const app = Vue.createApp({
             blackout:            false,
 
             //Pokemon settings for local storage
-            overlay_color: MyStorage["this.overlay_color"] ?? "#000000",
-            imageXOffset:  MyStorage["this.imageXOffset"] ?? 0,
-            imageYOffset:  MyStorage["this.imageYOffset"] ?? 0,
-            imageScale:    MyStorage["this.imageScale"] ?? 1,
-            imageFlip:     MyStorage["this.imageFlip"] ?? false,
-            // sprite_settings: [
-            //     "overlay_color",
-            //     "imageXOffset",
-            //     "imageYOffset",
-            //     "imageScale",
-            //     "imageFlip",
-            // ],
+            overlay_color: MyStorage["overlay_color"] ?? "#000000",
+            imageXOffset:  MyStorage["imageXOffset"] ?? 0,
+            imageYOffset:  MyStorage["imageYOffset"] ?? 0,
+            imageScale:    MyStorage["imageScale"] ?? 1,
+            imageFlip:     MyStorage["imageFlip"] ?? false,
+            imageSat:      MyStorage["imageSat"] ?? 100,
+
+            //background texture settings
+            backgroundBlur:        MyStorage["backgroundBlur"] ?? 0,
+            backgroundScale:       MyStorage["backgroundScale"] ?? 100,
+            backgroundUrl:         MyStorage["backgroundUrl"] ?? "",
+            use_custom_background: MyStorage["use_custom_background"] ?? false,
 
             //
             playerNameChoice: MyStorage["playerNameChoice"] ?? "NINTEN",
+
+            //backed up style settings
+            style_settings: [
+                "overlay_color",
+                "imageXOffset",
+                "imageYOffset",
+                "imageScale",
+                "imageFlip",
+                "imageSat",
+                "backgroundBlur",
+                "backgroundScale",
+                "backgroundUrl",
+                "use_custom_background",
+            ],
 
             //timer variables
             timer_startTime: MyStorage["timer_startTime"] ?? 0,
@@ -609,8 +623,8 @@ const app = Vue.createApp({
                 }
             );
         }
-        for (let i = 0; i < this.sprite_settings.length; i++) {
-            let propName = this.sprite_settings[i];
+        for (let i = 0; i < this.style_settings.length; i++) {
+            let propName = this.style_settings[i];
             this.$watch(
                 () => this[propName],
                 (newValue) => {
@@ -620,12 +634,14 @@ const app = Vue.createApp({
                     }
         
                     // Set the new value
-                    MyStorage[this.starterName][propName] = newValue;
-        
-                    // Corrected logging
-                    console.log("Sprite setting " + propName + " changed to value: " + newValue);
-                    console.log("Starter:" + this.starterName + " Prop Name: " + propName + " Value: " + newValue);
-                    console.log(MyStorage[this.starterName]);
+                    MyStorage[this.starterName] = {
+                            ...MyStorage[this.starterName],
+                            [propName]: newValue
+                        };
+                    // // Corrected logging
+                    // console.log("Sprite setting " + propName + " changed to value: " + newValue);
+                    // console.log("Starter:" + this.starterName + " Prop Name: " + propName + " Value: " + newValue);
+                    // console.log(MyStorage[this.starterName]);
                 }
             );
         }
@@ -1217,6 +1233,15 @@ const app = Vue.createApp({
                 this.playerResets--
             }
         },
+        increment(property) {
+            this[property]++;
+        },
+        decrement(property) {
+            if (this[property] == 0) {
+                return 0
+            }
+            this[property]--;
+        },
         async colorPick() {
             return new EyeDropper().open().then(res => res.sRGBHex)
         },
@@ -1397,11 +1422,16 @@ const app = Vue.createApp({
             this.imageYOffset = MyStorage[pokemon_species]?.imageYOffset ?? 0
             this.imageScale = MyStorage[pokemon_species]?.imageScale ?? 1
             this.imageFlip = MyStorage[pokemon_species]?.imageFlip ?? false
+            this.imageSat = MyStorage[pokemon_species]?.imageSat ?? 100
+            this.backgroundBlur = MyStorage[pokemon_species]?.backgroundBlur ?? 0
+            this.backgroundScale = MyStorage[pokemon_species]?.backgroundScale ?? 100
+            this.backgroundUrl = MyStorage[pokemon_species]?.backgroundUrl ?? false
             if (MyStorage[pokemon_species]?.overlay_color) {
                 this.overlay_color = MyStorage[pokemon_species]?.overlay_color
             }
             else {
-                this.overlay_color = `var(--${this.s1dynamicReset.type1})`
+                this.overlay_color = MyStorage[this.starterName]?.overlay_color
+                // this.overlay_color = `var(--${this.s1dynamicReset.type1})`
             }
         },
         load_starter_pokemon_settings() {
