@@ -87,6 +87,7 @@ const auto_save_settings = [
     "battle_start",
     "timer_settings",
     "viridian_forest",
-    "split_data",
-    "pb_splits"
+    // "split_data",
+    "pb_splits",
+    "autosplitter_toggle",
 ]

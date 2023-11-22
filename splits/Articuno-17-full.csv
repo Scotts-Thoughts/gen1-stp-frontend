@@ -1,4 +1,0 @@
-date_string,time_string,player_name,pokemon,trainer_name,total_pokemon,real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4,saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns,itemsInBag,money,rivalTeam
-11-18,18:03:36,NINTEN,Articuno,Rival6-Route 22,6,11.52,11,0h0m11s,0,0,49,2:29,1700355816.846,ICE BEAM,FLY,PECK,BLIZZARD,9,6399,758,67,31,323,273,146,20,51622,Flareon
-11-18,18:04:19,NINTEN,Articuno,Cooltrainer F,3,54.32,54,0h0m54s,0,0,49,2:40,2.673,ICE BEAM,FLY,PECK,BLIZZARD,9,6962,894,69,33,332,279,149,20,56142,Flareon
-11-18,18:04:31,NINTEN,Articuno,Juggler,4,1:06.41,1:06,0h1m6s,0,0,50,2:43,6.375,ICE BEAM,FLY,PECK,BLIZZARD,9,7018,925,70,33,344,285,154,20,57647,Flareon

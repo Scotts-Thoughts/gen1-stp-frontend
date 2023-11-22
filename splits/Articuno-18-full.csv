@@ -1,5 +1,0 @@
-date_string,time_string,player_name,pokemon,trainer_name,total_pokemon,real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4,saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns,itemsInBag,money,rivalTeam
-11-18,18:07:00,NINTEN,Articuno,Lorelei,5,2:07.65,2:07,0h2m7s,4,5,55,3:02,17.096,ICE BEAM,FLY,SKY ATTACK,AGILITY,12,7855,1060,72,33,401,316,198,18,19341,Flareon
-11-18,18:07:10,NINTEN,Articuno,Bruno,5,2:17.00,2:17,0h2m17s,4,5,56,3:04,4.922,ICE BEAM,FLY,SKY ATTACK,AGILITY,13,7870,1062,73,33,407,322,199,18,24885,Flareon
-11-18,18:07:21,NINTEN,Articuno,Agatha,5,2:28.27,2:28,0h2m28s,4,5,57,3:06,6.937,ICE BEAM,FLY,SKY ATTACK,AGILITY,14,7881,1064,74,33,417,331,203,18,30627,Flareon
-11-18,18:07:31,NINTEN,Articuno,Lance,5,2:38.58,2:38,0h2m38s,4,5,58,3:09,6.031,ICE BEAM,FLY,SKY ATTACK,AGILITY,15,7931,1065,75,33,424,338,205,18,36567,Flareon

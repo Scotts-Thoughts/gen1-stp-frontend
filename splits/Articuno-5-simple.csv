@@ -1,7 +1,0 @@
-player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
-NINTEN,Articuno,Rival5-Silph,11,0,0,41,1:54,10.611,ICE BEAM,PECK,FLY,
-NINTEN,Articuno,Koga,57,0,0,44,2:05,7.112,ICE BEAM,PECK,FLY,
-NINTEN,Articuno,Sabrina,1:42,0,0,45,2:16,7.161,ICE BEAM,PECK,FLY,BLIZZARD
-NINTEN,Articuno,Blaine,2:02,0,0,46,2:20,4.423,ICE BEAM,PECK,FLY,BLIZZARD
-NINTEN,Articuno,Giovanni,2:25,0,0,47,2:25,6.156,ICE BEAM,FLY,PECK,BLIZZARD
-NINTEN,Articuno,Rival6-Route 22,2:53,1,1,49,2:29,9.935,ICE BEAM,FLY,PECK,BLIZZARD

@@ -1,3 +1,5 @@
+//Count down to split
+
 const MyStorage = new Proxy({}, {
     set: (_, prop, value) => {
         if (value === undefined || value === null)
@@ -344,125 +346,125 @@ const keyhook = new KeyHook();
 
 const fs = require("fs");
 const path = require("path");
-function logToFile_BattleSummary(str, file_name, starterName, time, trainer, id) {
-    return new Promise((resolve, reject) => {
-        const dirPath = "./battle_summaries/";
-        const filePath = path.join(dirPath, `/${starterName}-${file_name}/${time}-${trainer}-${id}.csv`);
-
-        fs.mkdir(dirPath, { recursive: true }, (err) => {
-            if (err) {
-                console.log(err);
-                reject(err);
-                return;
-            }
-
-            if (!fs.existsSync(filePath)) {
-                fs.writeFile(filePath, header, (err) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        fs.appendFile(filePath, str, (err) => {
-                            err ? reject(err) : resolve();
-                        });
-                    }
-                });
-            } else {
-                fs.appendFile(filePath, str, (err) => err ? reject(err) : resolve());
-            }
-        });
-    });
-}
-function logSplits(str, file_name, starterName, splitType) {
-    const dirPath = "./splits/";
+const { finished } = require('stream');
+function logData(gameName, str, file_name, starterName, log_type) {
+    const dirPath = `./splits/${gameName}/${starterName}/attempts/`;
     let filePath = path.join(dirPath, `${starterName}-${file_name}-simple.csv`);
-    let header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4\n"; // Replace with your actual header
-    if (splitType == "Simple") {
-
+    let header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,failures,level,game_time,battle_duration,move1,move2,move3,move4\n";
+    if (log_type == "Simple") {
+        header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time," +
+        "battle_duration,move1,move2,move3,move4\n";
     }
-    else if (splitType == "Full") {
+    else if (log_type == "Full") {
         filePath = path.join(dirPath, `${starterName}-${file_name}-full.csv`);
-        header = "date_string,time_string,player_name,pokemon,trainer_name, trainer_id,location,total_pokemon,real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4,saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns,itemsInBag,money,rivalTeam\n"; // Replace with your actual header
+        header = "date_string,time_string,player_name,pokemon,trainer_name,trainer_id,location,total_pokemon," +
+            "real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,failures,level,game_time,battle_duration," + 
+            "move1,move2,move3,move4,move1pp,move2pp,move3pp,move4pp,move1ppUp,move2ppUp,move3ppUp,move4ppUp," +
+            "saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns," +
+            "itemsInBag,money,rivalTeam," +
+            "statusCondition,type1,type2,experience," +
+            "ROM,Species,Trainer,Start Time,Real Time,Game Time,Level,Resets," +
+            "RTHours,RTMinutes,RTSeconds,RTMilliseconds,Move 1,Move 2,Move 3,Move 4," +
+            "Hp,Max HP,Attack,Defense,Sp. Attack,Sp. Defense,Speed," +
+            "StatExp HP,StatExp Attack,StatExp Def,StatExp Sp. Attack,StatExp Sp. Defense,StatExp Speed," +
+            "Attack Stage,Defense Stage,Sp. Attack Stage,Sp. Defense Stage,Speed Stage,Accuracy Stage,Evasion Stage," +
+            "Battle Attack,Battle Defense,Battle Sp. Attack,Battle Sp. Defense,Battle Speed," +
+            "Frame Count,Overworld Frame Count,Battle Frame Count,Menu Frame Count,Intro Frame Count," +
+            "Save Count,Reload Count,Clock Reset Count,Steps Count,Steps Count Walk,Steps Count Bike,Steps Count Surf,Bonks," + 
+            "Battles,Trainer Battles,Wild Battles,Battles Fled,Failed Runs," +
+            "Total Damage Dealt,Actual Damage Dealt,Total Damage Taken,Actual Damage Taken," +
+            "Own Moves Hit,Own Moves Missed,Enemy Moves Hit,Enemy Moves Missed," +
+            "Own Moves Super Effective,Own Moves Not Very Effective,Enemy Moves Super Effective,Enemy Moves Not Very Effective," +
+            "Criticals Dealt,OHKOs Dealt,Criticals Taken,OHKOs Taken," +
+            "Was Confused,Enemy Became Confused,Was Paralyzed,Enemy Was Paralyzed,Was Burned,Enemy Was Burned," +
+            "Was Frozen,Enemy Was Frozen,Was Poisoned,Enemy Was Poisoned,Was Badly Poisoned,Enemy Was Badly Poisoned," +
+            "Fell Asleep,Enemy Fell Asleep,Player Turns Confused,Player Turns Confused Hit Self,Player Turns Paralyzed," +
+            "Player Turns Paralyzed Fully,Enemy Turns Confused,Enemy Turns Confused Hit Self,Enemy Turns Paralyzed," +
+            "Enemy Turns Paralyzed Fully, Player Turns Asleep, Enemy Turns Asleep,Player HP Healed,Enemy HP Healed," +
+            "Player Pokemon Fainted,Enemy Pokemon Fainted," +
+            "Experience Gained,Switchouts," +
+            "Money Made,Money Spent,Money Lost," +
+            "Items Picked Up,Items Bought,Items Sold," +
+            "Balls Thrown,Pokemon Caught In Balls,Moves Learnt," +
+            "Blackouts,Attempt Number,Failures, Rival's Team\n";
     }
-    else if (splitType == "Deprecated") {
+    else if (log_type == "Deprecated") {
         filePath = path.join(dirPath, `${starterName}-${file_name}-deprecated.csv`);
-        header = "ROM,Species,Trainer,Start Time,Real Time,Game Time,Level,Resets,RTHours,RTMinutes,RTSeconds,RTMilliseconds,Move 1,Move 2,Move 3,Move 4,Attack,Defense,Sp. Attack,Sp. Defense,Speed,Attack Stage,Defense Stage,Sp. Attack Stage,Sp. Defense Stage,Speed Stage,Accuracy Stage,Evasion Stage,Battle Attack,Battle Defense,Battle Sp. Attack,Battle Sp. Defense,Battle Speed,Frame Count,Overworld Frame Count,Battle Frame Count,Menu Frame Count,Intro Frame Count,Save Count,Reload Count,Clock Reset Count,Steps Count,Steps Count Walk,Steps Count Bike,Steps Count Surf,Bonks,Battles,Trainer Battles,Wild Battles,Battles Fled,Failed Runs,Total Damage Dealt,Actual Damage Dealt,Total Damage Taken,Actual Damage Taken,Own Moves Hit,Own Moves Missed,Enemy Moves Hit,Enemy Moves Missed,Own Moves Super Effective,Own Moves Not Very Effective,Enemy Moves Super Effective,Enemy Moves Not Very Effective,Criticals Dealt,OHKOs Dealt,Criticals Taken,OHKOs Taken,Was Confused,Enemy Became Confused,Was Paralyzed,Enemy Was Paralyzed,Was Burned,Enemy Was Burned,Was Frozen,Enemy Was Frozen,Was Poisoned,Enemy Was Poisoned,Was Badly Poisoned,Enemy Was Badly Poisoned,Fell Asleep,Enemy Fell Asleep,Player Turns Confused,Player Turns Confused Hit Self,Player Turns Paralyzed,Player Turns Paralyzed Fully,Enemy Turns Confused,Enemy Turns Confused Hit Self,Enemy Turns Paralyzed,Enemy Turns Paralyzed Fully,Player HP Healed,Enemy HP Healed,Player Pokemon Fainted,Enemy Pokemon Fainted,Experience Gained,Switchouts,Money Made,Money Spent,Money Lost,Items Picked Up,Items Bought,Items Sold,Balls Thrown,Pokemon Caught In Balls,Moves Learnt\n"; // Replace with your actual header
+        header = "ROM,Species,Trainer,Start Time,Real Time,Game Time,Level,Resets," +
+            "RTHours,RTMinutes,RTSeconds,RTMilliseconds,Move 1,Move 2,Move 3,Move 4," +
+            "Attack,Defense,Sp. Attack,Sp. Defense,Speed," +
+            "Attack Stage,Defense Stage,Sp. Attack Stage,Sp. Defense Stage,Speed Stage,Accuracy Stage,Evasion Stage," +
+            "Battle Attack,Battle Defense,Battle Sp. Attack,Battle Sp. Defense,Battle Speed," +
+            "Frame Count,Overworld Frame Count,Battle Frame Count,Menu Frame Count,Intro Frame Count," +
+            "Save Count,Reload Count,Clock Reset Count,Steps Count,Steps Count Walk,Steps Count Bike,Steps Count Surf,Bonks," + 
+            "Battles,Trainer Battles,Wild Battles,Battles Fled,Failed Runs," +
+            "Total Damage Dealt,Actual Damage Dealt,Total Damage Taken,Actual Damage Taken," +
+            "Own Moves Hit,Own Moves Missed,Enemy Moves Hit,Enemy Moves Missed," +
+            "Own Moves Super Effective,Own Moves Not Very Effective,Enemy Moves Super Effective,Enemy Moves Not Very Effective," +
+            "Criticals Dealt,OHKOs Dealt,Criticals Taken,OHKOs Taken," +
+            "Was Confused,Enemy Became Confused,Was Paralyzed,Enemy Was Paralyzed,Was Burned,Enemy Was Burned," +
+            "Was Frozen,Enemy Was Frozen,Was Poisoned,Enemy Was Poisoned,Was Badly Poisoned,Enemy Was Badly Poisoned," +
+            "Fell Asleep,Enemy Fell Asleep,Player Turns Confused,Player Turns Confused Hit Self,Player Turns Paralyzed," +
+            "Player Turns Paralyzed Fully,Enemy Turns Confused,Enemy Turns Confused Hit Self,Enemy Turns Paralyzed," +
+            "Enemy Turns Paralyzed Fully,Player HP Healed,Enemy HP Healed," +
+            "Player Pokemon Fainted,Enemy Pokemon Fainted," +
+            "Experience Gained,Switchouts," +
+            "Money Made,Money Spent,Money Lost," +
+            "Items Picked Up,Items Bought,Items Sold," +
+            "Balls Thrown,Pokemon Caught In Balls,Moves Learnt," +
+            //new properties
+            "Blackouts,Attempt Number,Failures, Rival's Team\n"
+    }
+    else if (log_type == "Battle Summary") {
+        filePath = path.join(dirPath, `${starterName}-${file_name}-battleSummary.csv`);
+        header = "Unknown"
     }
     fs.mkdir(dirPath, { recursive: true }, (err) => {
-        if (err) {
-            console.log(err);
-            reject(err);
-            return;
-        }
-
         if (!fs.existsSync(filePath)) {
             fs.writeFile(filePath, header, (err) => {
                 if (err) {
-                    reject(err);
+                    console.error(err);
                 } else {
                     fs.appendFile(filePath, str, (err) => {
-                        err ? reject(err) : resolve();
+                        if (err) {
+                            console.error(err);
+                        }
                     });
                 }
             });
         } else {
-            fs.appendFile(filePath, str, (err) => err ? reject(err) : resolve());
+            fs.appendFile(filePath, str, (err) => {
+                if (err) {
+                    console.error(err);
+                }
+            });   
         }
     });
 }
-function logToFileSimpleSplits(str, file_name, starterName) {
-    return new Promise((resolve, reject) => {
-        const dirPath = "./splits/";
-        const filePath = path.join(dirPath, `${starterName}-${file_name}-simple.csv`);
-        const header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4\n"; // Replace with your actual header
 
-        fs.mkdir(dirPath, { recursive: true }, (err) => {
+function logCopy(gameName, file_name, starterName, finished_run_count) {
+    var dirPathAttempts = `./splits/${gameName}/${starterName}/attempts/`;
+    var dirPathFinishes = `./splits/${gameName}/${starterName}/finishes/`;
+    fs.mkdir(dirPathFinishes, { recursive: true }, (err) => {
+        fs.copyFile(
+            path.join(dirPathAttempts, `${starterName}-${file_name}-simple.csv`), 
+            path.join(dirPathFinishes, `${starterName}-${finished_run_count}-simple.csv`), (err) => {
             if (err) {
-                console.log(err);
-                reject(err);
-                return;
-            }
-
-            if (!fs.existsSync(filePath)) {
-                fs.writeFile(filePath, header, (err) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        fs.appendFile(filePath, str, (err) => {
-                            err ? reject(err) : resolve();
-                        });
-                    }
-                });
-            } else {
-                fs.appendFile(filePath, str, (err) => err ? reject(err) : resolve());
+                console.error(err);
             }
         });
-    });
-}
-function logToFileFullSplits(str, file_name, starterName) {
-    return new Promise((resolve, reject) => {
-        const dirPath = "./splits/";
-        const filePath = path.join(dirPath, `${starterName}-${file_name}-full.csv`);
-        const header = "date_string,time_string,player_name,pokemon,trainer_name, trainer_id,location,total_pokemon,real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4,saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns,itemsInBag,money,rivalTeam\n"; // Replace with your actual header
-
-        fs.mkdir(dirPath, { recursive: true }, (err) => {
+        fs.copyFile(
+            path.join(dirPathAttempts, `${starterName}-${file_name}-full.csv`), 
+            path.join(dirPathFinishes, `${starterName}-${finished_run_count}-full.csv`), (err) => {
             if (err) {
-                console.log(err);
-                reject(err);
-                return;
+                console.error(err);
             }
-
-            if (!fs.existsSync(filePath)) {
-                fs.writeFile(filePath, header, (err) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        fs.appendFile(filePath, str, (err) => {
-                            err ? reject(err) : resolve();
-                        });
-                    }
-                });
-            } else {
-                fs.appendFile(filePath, str, (err) => err ? reject(err) : resolve());
+        });
+        fs.copyFile(
+            path.join(dirPathAttempts, `${starterName}-${file_name}-deprecated.csv`), 
+            path.join(dirPathFinishes, `${starterName}-${finished_run_count}-deprecated.csv`), (err) => {
+            if (err) {
+                console.error(err);
             }
         });
     });
@@ -511,7 +513,7 @@ const app = Vue.createApp({
             showCritMultiplierInEP:     MyStorage["this.showCritMultiplierInEP"] ?? true, //shows high crit ratio moves with adjusted power if the move always scores a crit
             show_wild_battles:          MyStorage["this.show_wild_battles"] ?? false, //shows wild battles in the battle screen
             automaticallySavePBSplits:  MyStorage["this.automaticallySavePBSplits"] ?? true, //saves splits if the player beats their PB (this overwrites currently saved PB splits)
-            autosplitter:               false,
+            autosplitter_toggle:        MyStorage["this.autosplitter_toggle"] ?? true,
 
             help_menus: MyStorage["this.help_menus"] ?? "Settings",
 
@@ -552,6 +554,7 @@ const app = Vue.createApp({
             route21:        MyStorage["this.route21"] ?? true,
             route22:        MyStorage["this.route22"] ?? true,
             victoryRoad:    MyStorage["this.victoryRoad"] ?? true,
+            route24:        MyStorage["this.route24"] ?? true,
 
             goal_level:    MyStorage["this.goal_level"] ?? 13,
             goal_speed:    MyStorage["this.goal_speed"] ?? 24,
@@ -571,6 +574,7 @@ const app = Vue.createApp({
             settings:                settings,
             auto_save_settings:      auto_save_settings,
             deprecated_autosplitter: deprecated_autosplitter,
+            autosplitter:            autosplitter,
             
             //VARS ---------------------------------------------------------------------------------------------//
             pkmnMoves:       ["move1","move2","move3","move4"],
@@ -591,11 +595,22 @@ const app = Vue.createApp({
             blackout_counter: MyStorage["blackout_counter"] ?? 0,
             resetCounter: true,
             game_over: false,
-            attempt_number: MyStorage["this.attempt_number"] ?? 0,
+            finished_logs: false,
+            attempt_number: 0,
+            finished_run_count: 0,
+            pb_time: "None",
             most_recent_move: "",
+            split_logStr: "",
+            simple_data_str: MyStorage["simple_data_str"] ?? "",
+            full_data_str: MyStorage["full_data_str"] ?? "",
+            deprecated_data_str: MyStorage["deprecated_data_str"] ?? "",
+            simple_data: MyStorage["simple_data"] ?? "",
 
             blackouts_as_resets: MyStorage["this.blackouts_as_resets"] ?? false, //counts blackouts as resets
             blackout:            false,
+
+            //pokemon specific settings
+
 
             //Pokemon settings for local storage
             overlay_color: MyStorage["overlay_color"] ?? "#000000",
@@ -614,8 +629,8 @@ const app = Vue.createApp({
             //
             playerNameChoice: MyStorage["playerNameChoice"] ?? "NINTEN",
 
-            //backed up style settings
-            style_settings: [
+            //backed up pokemon specific settings
+            pokemon_settings: [
                 "overlay_color",
                 "imageXOffset",
                 "imageYOffset",
@@ -626,12 +641,15 @@ const app = Vue.createApp({
                 "backgroundScale",
                 "backgroundUrl",
                 "use_custom_background",
+                "attempt_number",
+                "finished_run_count",
+                "pb_time",
             ],
 
             //timer variables
             timer_startTime: MyStorage["timer_startTime"] ?? 0,
             timer_pause: MyStorage["timer_pause"] ?? true,
-            timer_formatted_time: ["0", ".00"],
+            timer_formatted_time: MyStorage["timer_formatted_time"] ?? ["0", ".00"],
             timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
             time_h: 0,
             time_m: 0,
@@ -662,12 +680,11 @@ const app = Vue.createApp({
                 () => this[propName], // Using a function to return the property's value
                 (newValue) => {
                     MyStorage[`this.${propName}`] = newValue;
-                    // console.log("Setting Saved: " + propName)
                 }
             );
         }
-        for (let i = 0; i < this.style_settings.length; i++) {
-            let propName = this.style_settings[i];
+        for (let i = 0; i < this.pokemon_settings.length; i++) {
+            let propName = this.pokemon_settings[i];
             this.$watch(
                 () => this[propName],
                 (newValue) => {
@@ -681,15 +698,23 @@ const app = Vue.createApp({
                             ...MyStorage[this.starterName],
                             [propName]: newValue
                         };
-                    // // Corrected logging
-                    // console.log("Sprite setting " + propName + " changed to value: " + newValue);
-                    // console.log("Starter:" + this.starterName + " Prop Name: " + propName + " Value: " + newValue);
-                    // console.log(MyStorage[this.starterName]);
                 }
             );
         }
     },
     watch: {
+        timer_formatted_time(value) {
+            MyStorage["timer_formatted_time"] = value
+        },
+        timer_startTime(value) {
+            MyStorage["timer_startTime"] = value
+        },
+        timer_pause(value) {
+            MyStorage["timer_pause"] = value
+        },
+        timer_pause_time(value) {
+            MyStorage["timer_pause_time"] = value
+        },
         //Encounter Checkboxes
         route1(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
@@ -738,6 +763,9 @@ const app = Vue.createApp({
         victoryRoad(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Victory Road") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },
+        route24(newProp) {
+            if (newProp == false && this.mapper.properties.overworld.map.value == "Route 24") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
+        },
         goal_level(newProp) {
             if (this.mapper.properties.player.team[0].level.value >= newProp && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[1].species.value == "Pidgey") { 
                 this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
@@ -785,6 +813,8 @@ const app = Vue.createApp({
             }
         },
         async starterName(newValue, oldValue) {
+            this.attempt_number = MyStorage[`${newValue}`].attempt_number ?? 0
+            this.finished_run_count = MyStorage[`${newValue}`].finished_run_count ?? 0
             //transition between background textures
             this.$refs.old_background_texture.src = `images/textures/${g1PokemonData[oldValue].type1}.png`
             this.$refs.old_background_texture.style.opacity = 1
@@ -802,6 +832,7 @@ const app = Vue.createApp({
             this.game_over = false;
             MyStorage["playerResets"] = 0
             this.playerResets = 0;
+            this.finished_logs == false;
             MyStorage["blackout_counter"] = 0
             this.blackout_counter = 0;
         },    
@@ -850,6 +881,16 @@ const app = Vue.createApp({
     },
 
     computed: {
+        splitCountdown() {
+            if (!this.ready) { return }
+            var trainer = this.mapper?.properties?.battle?.trainer?.class?.value + "_" + this.mapper?.properties?.battle?.trainer?.number?.value
+            var splitName = this.autosplitter[this.mapper?.properties?.meta?.gameName?.value][trainer]
+            if (!splitName) { return }
+            console.log(splitName)
+            var personalBestSplitTime = this.convertDurationToSeconds(this.pb_splits.find(subArray => subArray[2] == (splitName))[3] ?? "0")
+            var currentTime = this.convertDurationToSeconds(this.timer_formatted_time[0]) + (this.time_ms / 100)
+            return personalBestSplitTime - currentTime
+        },
         playerResetsDisplay() {
             if (this.blackouts_as_resets == true) {
                 return this.playerResets + this.blackout_counter
@@ -1099,7 +1140,7 @@ const app = Vue.createApp({
             this.timer_pause = true
         },
         padTime(time) {
-            time.toString().padStart(2, "0")
+            return time.toString().padStart(2, "0")
         },
         //animate the timer
         updateTime() {
@@ -1116,12 +1157,15 @@ const app = Vue.createApp({
             this.time_m = m
             this.time_s = s
             this.time_ms = c
-            if (h != 0) 
+            if (h != 0) {
                 this.timer_formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
-            else if (m != 0) 
+            }
+            else if (m != 0) {
                 this.timer_formatted_time = [ m + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
-            else 
+            }
+            else {
                 this.timer_formatted_time = [ s, "." + f(c), h + "h" + m + "m" + s + "s", ]
+            }
             if (this.timer_pause == false) {
                 requestAnimationFrame(this.updateTime)
             }
@@ -1151,9 +1195,9 @@ const app = Vue.createApp({
             this.most_recent_move = ""
             this.timer_startTime = 0
             this.timer_pause_time = 0
-            this.attempt_number++;
             this.timer_formatted_time = [ "0", ".00" ]
             this.playerResets = 0
+            this.finished_logs == false;
             this.blackout_counter = 0
             this.playerId = 0
             this.playerName = "NINTEN"
@@ -1171,55 +1215,24 @@ const app = Vue.createApp({
         pkmn_type(typeNumber) {
             data = this.g1PokemonData[this.starterName]
             if (this.state == `Battle`) {
-                return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value.toLowerCase()
+                return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value?.toLowerCase()
             }
             if (this.state == `Overworld` || this.state == `To Battle` || this.state == `From Battle`) {
-                return this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()].value.toLowerCase()
+                return this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value?.toLowerCase()
             }
             if (this.state != `Battle`) {
                 return data["type" + typeNumber.toString()].toLowerCase()
             }
+            if (this.state == "No Pokemon" || this.mapper.properties.player.team[0].species.value == null) {
+                return this.g1PokemonData[this.starterName]["type" + typeNumber.toString()]?.toLowerCase()
+            }
         },
-        //! Refactor with co-pilot
-        // save_all_settings() {
-        //     this.set_setting_prop("this.route1", this.route1)
-        //     this.set_setting_prop("this.viridianForest", this.viridianForest)
-        //     this.set_setting_prop("this.route3", this.route3)
-        //     this.set_setting_prop("this.mtMoon", this.mtMoon)
-        //     this.set_setting_prop("this.route6", this.route6)
-        //     this.set_setting_prop("this.rockTunnel", this.rockTunnel)
-        //     this.set_setting_prop("this.pokemonTower", this.pokemonTower)
-        //     this.set_setting_prop("this.safariZone", this.safariZone)
-        //     this.set_setting_prop("this.mansion", this.mansion)
-        //     this.set_setting_prop("this.help_menus", this.help_menus)
-        //     this.set_setting_prop("this.dvSetting", this.dvSetting)
-        //     this.set_setting_prop("this.trashCans", this.trashCans)
-        //     this.set_setting_prop("this.options", this.options)
-        //     this.set_setting_prop("this.gametimeDisplay", this.gametimeDisplay)
-        //     this.set_setting_prop("this.resetCounter", this.resetCounter)
-        //     this.set_setting_prop("this.playerResets", this.playerResets)
-        //     this.set_setting_prop("this.route21", this.route21)
-        //     this.set_setting_prop("this.route22", this.route22)
-        //     this.set_setting_prop("this.victoryRoad", this.victoryRoad)
-        //     this.set_setting_prop("this.powerPlant", this.powerPlant)
-        //     this.set_setting_prop("this.blackouts_as_resets", this.blackouts_as_resets)
-        //     this.set_setting_prop("this.showCritMultiplierInEP", this.showCritMultiplierInEP)
-        //     this.set_setting_prop("this.show_wild_battles", this.show_wild_battles)
-        //     this.set_setting_prop("this.battleGraphic", this.battleGraphic)
-        //     this.set_setting_prop("this.showAllTrainers", this.showAllTrainers)
-        //     this.set_setting_prop("this.showSpecialTrainerGraphics", this.showSpecialTrainerGraphics)
-        //     this.set_setting_prop("this.battlePopUps", this.battlePopUps)
-        //     this.set_setting_prop("this.rockTunnelDarkness", this.rockTunnelDarkness)
-        //     this.set_setting_prop("this.goal_level", this.goal_level)
-        //     this.set_setting_prop("this.goal_speed", this.goal_speed)
-        //     this.set_setting_prop("this.viridian_forest", this.viridian_forest)
-        // },
         save_all_settings() {
             const propertiesToSave = [
                 "route1", "viridianForest", "route3", "mtMoon", "route6", 
                 "rockTunnel", "pokemonTower", "safariZone", "mansion", "help_menus", 
                 "dvSetting", "trashCans", "options", "gametimeDisplay", "resetCounter", 
-                "playerResets", "route21", "route22", "victoryRoad", "powerPlant", 
+                "playerResets", "route21", "route22", "victoryRoad", "route24", "powerPlant", 
                 "blackouts_as_resets", "showCritMultiplierInEP", "show_wild_battles", 
                 "battleGraphic", "showAllTrainers", "showSpecialTrainerGraphics", 
                 "battlePopUps", "rockTunnelDarkness", "goal_level", "goal_speed", 
@@ -1237,8 +1250,8 @@ const app = Vue.createApp({
             this.route3 = MyStorage["this.route3"] ?? true
             this.mtMoon = MyStorage["this.mtMoon"] ?? true
             this.route6 = MyStorage["this.route6"] ?? true
-            this.route6 = MyStorage["this.rockTunnel"] ?? true
-            this.route6 = MyStorage["this.pokemonTower"] ?? true
+            this.rockTunnel = MyStorage["this.rockTunnel"] ?? true
+            this.pokemonTower = MyStorage["this.pokemonTower"] ?? true
             this.safariZone = MyStorage["this.safariZone"] ?? true
             this.mansion = MyStorage["this.mansion"] ?? true
             // this.help_menus = MyStorage["this.help_menus"] ?? "Settings"
@@ -1251,6 +1264,7 @@ const app = Vue.createApp({
             this.route21 = MyStorage["this.route21"] ?? true
             this.route22 = MyStorage["this.route22"] ?? true
             this.victoryRoad = MyStorage["this.victoryRoad"] ?? true
+            this.route24 = MyStorage["this.route24"] ?? true
             this.powerPlant = MyStorage["this.powerPlant"] ?? true
             this.blackouts_as_resets = MyStorage["this.blackouts_as_resets"] ?? true
             this.blackout_counter = MyStorage["this.blackout_counter"] ?? 0
@@ -1264,9 +1278,11 @@ const app = Vue.createApp({
             this.playerResets = MyStorage["playerResets"] ?? 0
             this.goal_level = MyStorage["goal_level"] ?? 13
             this.goal_speed = MyStorage["goal_speed"] ?? 24
-            this.attempt_number = MyStorage["attempt_number"] ?? 0
             this.viridian_forest = MyStorage["this.viridian_forest"] ?? "Encounters On"
             this.pb_splits = MyStorage[`${this.starterName}_pb_splits`] ?? ["","","",""]
+            this.attempt_number = MyStorage[`${this.starterName}`].attempt_number ?? 0
+            this.finished_run_count = MyStorage[`${this.starterName}`].finished_run_count ?? 0
+            this.pb_time = MyStorage[`${this.starterName}`].pb_time ?? "None"
         },
         //string can be: clear, increment, decrement
         resets_clear() {
@@ -1342,6 +1358,7 @@ const app = Vue.createApp({
             this.route21 = true
             this.route22 = true
             this.victoryRoad = true
+            this.route24 = true
         },
         second_playthrough_settings() {
             this.route1 = false
@@ -1357,6 +1374,7 @@ const app = Vue.createApp({
             this.route21 = true
             this.route22 = true
             this.victoryRoad = true
+            this.route24 = true
             this.viridian_forest == "Pidgey"
         },
         all_off() {
@@ -1373,6 +1391,7 @@ const app = Vue.createApp({
             this.route21 = false
             this.route22 = false
             this.victoryRoad = false
+            this.route24 = false
         },
         apply_settings(setting_group) { //pass in the name of the group of settings that are to have values assigned
             keys = this.settings[setting_group]
@@ -1381,16 +1400,16 @@ const app = Vue.createApp({
                 this[key] = keys[key];
             });
         },
-        save_pokemon_sprite_settings() {
-            this.set_pokemon_prop("imageXOffset", this.imageXOffset)
-            this.set_pokemon_prop("imageYOffset", this.imageYOffset)
-            this.set_pokemon_prop("imageScale", this.imageScale)
-            this.set_pokemon_prop("imageFlip", this.imageFlip)
-            console.log(MyStorage.entries())
-        },
         save_pb_splits() {
-            this.set_setting_prop(`${this.starterName}_pb_splits`, this.split_data)
             this.pb_splits = this.split_data
+            const championSplit = this.split_data.find(subArray => subArray.includes("Champion"));
+            if (championSplit) {
+                this.pb_time = championSplit[3]
+            }
+            MyStorage[this.starterName] = {
+                ...MyStorage[this.starterName],
+                pb_splits: this.split_data,
+            }
         },
         pb_split(splitName) {
             if (this.pb_splits) {
@@ -1408,6 +1427,11 @@ const app = Vue.createApp({
         },
         splits_clear() {
             this.split_data = []
+            MyStorage[this.starterName] = {
+                ...MyStorage[this.starterName],
+                split_data: [],
+            }
+            MyStorage["split_data"] = []
         },
         split_offset_calculation(duration1, duration2) {
             const totalSeconds = this.convertDurationToSeconds(duration1) - this.convertDurationToSeconds(duration2);
@@ -1437,12 +1461,12 @@ const app = Vue.createApp({
             }
         },
         addDurations(duration1, duration2) {
-            const totalSeconds = convertDurationToSeconds(duration1) + convertDurationToSeconds(duration2);
-            return convertSecondsToDuration(totalSeconds);
+            const totalSeconds = this.convertDurationToSeconds(duration1) + this.convertDurationToSeconds(duration2);
+            return this.convertSecondsToDuration(totalSeconds);
         },
         subtractDurations(duration1, duration2) {
-            const totalSeconds = convertDurationToSeconds(duration1) - convertDurationToSeconds(duration2);
-            return convertSecondsToDuration(totalSeconds);
+            const totalSeconds = this.convertDurationToSeconds(duration1) - this.convertDurationToSeconds(duration2);
+            return this.convertSecondsToDuration(totalSeconds);
         },
         convertTimeToSeconds(time) {
             const [minutes, seconds] = time.split(':').map(Number);
@@ -1456,12 +1480,33 @@ const app = Vue.createApp({
             return `${sign}${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
         },
         timeUntilSplit(currentTime, splitTime) {
-            const currentTimeInSeconds = convertTimeToSeconds(currentTime);
-            const splitTimeInSeconds = convertTimeToSeconds(splitTime);
-            const differenceInSeconds = currentTimeInSeconds - splitTimeInSeconds;
-            return convertSecondsToTime(differenceInSeconds);
+            const differenceInSeconds = currentTime - splitTime;
+            var diff = differenceInSeconds;
+            var duration = this.convertSecondsToDuration(differenceInSeconds);
+            if (diff > 0) {
+                return "+" + duration
+            }
+            else if (diff < 0) {
+                return "" + duration
+            }
+            else {
+                return "" + duration
+            }
         },
+        splitTextColor(current, pbTime) {
+            current = this.convertDurationToSeconds(current);
+            pbTime = this.convertDurationToSeconds(pbTime);
         
+            if (current < pbTime) {
+                return "color: rgb(21, 153, 32);"; // green for worse times
+            }
+            else if (current > pbTime) {
+                return "color: rgb(202, 53, 33);"; // red for better times
+            }
+            else {
+                return "color: rgb(0, 0, 0);"; // black for equal times
+            }
+        },
         clear_pokemon_sprite_settings() {
             this.imageXOffset = 0
             this.imageYOffset = 0
@@ -1471,7 +1516,6 @@ const app = Vue.createApp({
             this.set_pokemon_prop("imageYOffset", this.imageYOffset)
             this.set_pokemon_prop("imageScale", this.imageScale)
             this.set_pokemon_prop("imageFlip", this.imageFlip)
-            // console.log(MyStorage.entries())
         },
         load_pokemon_sprite_settings(pokemon_species) {
             this.imageXOffset = MyStorage[pokemon_species]?.imageXOffset ?? 0
@@ -2203,20 +2247,24 @@ const app = Vue.createApp({
                 if (newProp.value != this.playerId) {
                     this.playerResets = 0;
                     this.blackout_counter = 0;
+                    this.finished_logs == false;
                     this.attempt_number++;
                     this.most_recent_move = "";
-                    MyStorage["attempt_number"] = this.attempt_number;
+                    MyStorage[`${this.starterName}`] = {
+                        ...MyStorage[`${this.starterName}`],
+                        attempt_number: this.attempt_number
+                    }
                     // console.log(`Attempt ${this.attempt_number}`)
                     this.startTime();
                     this.playerId = newProp.value;
                 }
             }
         })
-        this.mapper.properties.events.beatChampion.change((newProp) => {
-            if (newProp.value == true) {
-                this.game_over = true;
-            }
-        })
+        // this.mapper.properties.events.beatChampion.change((newProp) => {
+        //     if (newProp.value == true) {
+        //         this.game_over = true;
+        //     }
+        // })
         this.mapper.properties.player.name.change((newProp) => {
             if (this.game_over == true && newProp.value == "NINTEN") {
                 this.game_over = false;
@@ -2226,253 +2274,368 @@ const app = Vue.createApp({
         //*autosplitter
         //log the start of a battle
         this.mapper.properties.battle.type.change((newProp) => {
-            var log_start = (x) => console.log(`Autosplitter: Battle Started - Tracked Battle: ${this.mapper.properties.battle.trainer.class.value} started at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`)
+            var logStr = `Autosplitter - Battle Started: ${this.mapper.properties.battle.trainer.class.value} started at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`
+            var log_start = (x) => console.log(logStr)
             if (newProp.value == "Trainer") {
+                this.split_logStr = logStr
                 this.battle_start = Date.now()
-                this.time_split_start = this.time_h.toString() + this.time_m.toString() + this.time_s.toString() + this.time_ms.toString()
+                this.time_split_start = this.padTime(this.time_h) + ":" + this.padTime(this.time_m) + ":" + this.padTime(this.time_s) + "." + this.padTime(this.time_ms)
                 log_start()
             }
         });
 
+        const log_split = (x) => console.log(`Autosplitter - Battle Ended: Split: ${this.mapper.properties.battle.trainer.class.value} at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`)
+        const autosplitter_process = () => {
+            if (this.autosplitter_toggle == true) {
+                d = new Date()
+                battle_end = Date.now()
+                //values
+                let gameTimeH = this.mapper.properties.gameTime?.hours?.value
+                let gameTimeM = this.mapper.properties.gameTime?.minutes?.value
+                let gameTimeS = this.mapper.properties.gameTime?.seconds?.value
+                let gameTimeF = this.mapper.properties.gameTime?.frames?.value
+
+                //data to be collected with the autosplitter
+                let date_string = (d.getMonth() + 1) + "-" + d.getDate().toString().padStart(2, "0")
+                let time_string = d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0")
+                let player_name = this.playerNameChoice
+                let pokemon = this.starterName
+                let trainer_name = this.format_trainer_name(this.mapper.properties.battle.trainer.class.value, this.mapper.properties.battle.trainer.number.value)
+                let trainer_id = this.mapper.properties.battle.trainer.number.value
+                let location = this.mapper.properties.overworld.map.value
+                let total_pokemon = this.mapper.properties.battle.trainer.totalPokemon
+                let real_time_total = this.timer_formatted_time[0].toString() + this.timer_formatted_time[1].toString()
+                let real_time_hmmss = this.timer_formatted_time[0].toString()
+                let real_time_file_label = this.timer_formatted_time[2].toString()
+                let resets = this.playerResets.toString()
+                let blackouts = this.blackout_counter.toString()
+                let failures = this.playerResets + this.blackout_counter
+                let level = this.mapper.properties.player.team[0].level.value.toString()
+                let game_time = this.gametimeSplit.toString()
+                let battle_duration = (battle_end - this.battle_start)/1000 
+                let move1 = this.mapper.properties.player.team[0].move1.value
+                let move2 = this.mapper.properties.player.team[0].move2.value
+                let move3 = this.mapper.properties.player.team[0].move3.value
+                let move4 = this.mapper.properties.player.team[0].move4.value
+                let move1pp = this.mapper.properties.player.team[0].move1pp.value
+                let move2pp = this.mapper.properties.player.team[0].move2pp.value
+                let move3pp = this.mapper.properties.player.team[0].move3pp.value
+                let move4pp = this.mapper.properties.player.team[0].move4pp.value
+                let move1ppUp = this.mapper.properties.player.team[0].move1ppUp.value
+                let move2ppUp = this.mapper.properties.player.team[0].move2ppUp.value
+                let move3ppUp = this.mapper.properties.player.team[0].move3ppUp.value
+                let move4ppUp = this.mapper.properties.player.team[0].move4ppUp.value
+                let saves = this.mapper.properties.patch.saves.saveCount.value
+                let steps = this.mapper.properties.patch.steps.stepsCount.value
+                let bonks = this.mapper.properties.patch.steps.bonks.value
+                let trainerBattles = this.mapper.properties.patch.battles.trainerBattles.value
+                let wildBattles = this.mapper.properties.patch.battles.wildBattles.value
+                let battleTurns = this.mapper.properties.patch.battle_info.turns.battleTurns.value
+                let playerTurns = this.mapper.properties.patch.battle_info.turns.playerTurns.value
+                let enemyTurns = this.mapper.properties.patch.battle_info.turns.enemyTurns.value
+                let itemsInBag = this.mapper.properties.player.itemCount.value
+                let money = this.mapper.properties.player.money.value
+                let rivalTeam = this.mapper.properties.rival.finalTeam.value
+                let statusCondition = this.mapper.properties.player.team[0].statusCondition.value
+                let type1 = this.mapper.properties.player.team[0].type1.value
+                let type2 = this.mapper.properties.player.team[0].type2.value
+                let experience = this.mapper.properties.player.team[0].expPoints.value
+                //deprecated properties
+                let runIdentifier = this.starterName.toString() + this.attempt_number.toString()
+                let trainerName = this.deprecated_autosplitter[this.mapper.properties.meta.gameName.value][this.mapper.properties.battle.trainer.class.value.toString() + "_" + this.mapper.properties.battle.trainer.number.value.toString()]
+                let RTHours = this.time_h
+                let RTMinutes = this.time_m
+                let RTSeconds = this.time_s
+                let RTMilliseconds = this.time_ms
+                let startTime = this.time_split_start
+                let realTime = this.padTime(this.time_h) + ":" + this.padTime(this.time_m) + ":" + this.padTime(this.time_s) + "." + this.padTime(this.time_ms)
+                let gameTime = this.padTime(gameTimeH) + ":" + this.padTime(gameTimeM) + ":" + this.padTime(gameTimeS) + "." + this.padTime(gameTimeF)
+                let hp = this.mapper.properties.player.team[0].hp.value
+                let maxHp = this.mapper.properties.player.team[0].maxHp.value
+                let atk = this.mapper.properties.player.team[0].attack.value
+                let def = this.mapper.properties.player.team[0].defense.value
+                let spA = this.mapper.properties.player.team[0].special.value
+                let spD = this.mapper.properties.player.team[0].special.value
+                let spe = this.mapper.properties.player.team[0].speed.value
+                let statExp_hp = this.mapper.properties.player.team[0].statExpHp.value
+                let statExp_atk = this.mapper.properties.player.team[0].statExpAttack.value
+                let statExp_def = this.mapper.properties.player.team[0].statExpDefense.value
+                let statExp_spA = this.mapper.properties.player.team[0].statExpSpecial.value
+                let statExp_spD = this.mapper.properties.player.team[0].statExpSpecial.value
+                let statExp_spe = this.mapper.properties.player.team[0].statExpSpeed.value
+                let mod_atk = this.mapper.properties.battle.yourPokemon.modStageAttack.value
+                let mod_def = this.mapper.properties.battle.yourPokemon.modStageDefense.value
+                let mod_spA = this.mapper.properties.battle.yourPokemon.modStageSpecial.value
+                let mod_spD = this.mapper.properties.battle.yourPokemon.modStageSpecial.value
+                let mod_spe = this.mapper.properties.battle.yourPokemon.modStageSpeed.value
+                let mod_acc = this.mapper.properties.battle.yourPokemon.modStageAccuracy.value
+                let mod_eva = this.mapper.properties.battle.yourPokemon.modStageEvasion.value
+                let battle_atk = this.mapper.properties.battle.yourPokemon.attack.value
+                let battle_def = this.mapper.properties.battle.yourPokemon.defense.value
+                let battle_spA = this.mapper.properties.battle.yourPokemon.special.value
+                let battle_spD = this.mapper.properties.battle.yourPokemon.special.value
+                let battle_spe = this.mapper.properties.battle.yourPokemon.speed.value
+                //patch properties
+                let patch_frameCount = this.mapper.properties.patch.time?.frameCount?.value ?? 0
+                let patch_oWFrameCount = this.mapper.properties.patch.time?.oWFrameCount?.value ?? 0
+                let patch_battleFrameCount = this.mapper.properties.patch.time?.battleFrameCount?.value ?? 0
+                let patch_menuFrameCount = this.mapper.properties.patch.time?.menuFrameCount?.value ?? 0
+                let patch_introsFrameCount = this.mapper.properties.patch.time?.introsFrameCount?.value ?? 0
+                let patch_saveCount = this.mapper.properties.patch.saves?.saveCount?.value ?? 0
+                let patch_reloadCount = this.mapper.properties.patch.saves?.reloadCount?.value ?? 0
+                let patch_clockResetCount = this.mapper.properties.patch.saves?.clockResetCount?.value ?? 0
+                let patch_stepsCount = this.mapper.properties.patch.steps?.stepsCount.value ?? 0
+                let patch_stepsCountWalk = this.mapper.properties.patch.steps?.stepsCountWalk.value ?? 0
+                let patch_stepsCountBike = this.mapper.properties.patch.steps?.stepsCountBike.value ?? 0
+                let patch_stepsCountSurf = this.mapper.properties.patch.steps?.stepsCountSurf.value ?? 0
+                let patch_bonks = this.mapper.properties.patch.steps?.bonks.value ?? 0
+                let patch_battles = this.mapper.properties.patch.battles?.trainerBattles.value + this.mapper.properties.patch.battles?.wildBattles.value ?? 0
+                let patch_trainerBattles = this.mapper.properties.patch.battles?.trainerBattles.value ?? 0
+                let patch_wildBattles = this.mapper.properties.patch.battles?.wildBattles.value ?? 0
+                let patch_battlesFled = this.mapper.properties.patch.battles?.battlesFled.value ?? 0
+                let patch_failedRuns = this.mapper.properties.patch.battles?.failedRuns.value ?? 0
+                let patch_totalDamageDealt = this.mapper.properties.patch.battle_info.damage?.totalDamageDealt?.value ?? 0
+                let patch_actualDamageDealt = this.mapper.properties.patch.battle_info.damage?.actualDamageDealt?.value ?? 0
+                let patch_totalDamageTaken = this.mapper.properties.patch.battle_info.damage?.totalDamageTaken?.value ?? 0
+                let patch_actualDamageTaken = this.mapper.properties.patch.battle_info.damage?.actualDamageTaken?.value ?? 0
+                let patch_ownMovesHit = this.mapper.properties.patch.battle_info.hits?.ownMovesHit?.value ?? 0
+                let patch_ownMovesMissed = this.mapper.properties.patch.battle_info.hits?.ownMovesMissed?.value ?? 0
+                let patch_enemyMovesHit = this.mapper.properties.patch.battle_info.hits?.enemyMovesHit?.value ?? 0
+                let patch_enemyMovesMissed = this.mapper.properties.patch.battle_info.hits?.enemyMovesMissed?.value ?? 0
+                let patch_ownMovesSE = this.mapper.properties.patch.battle_info.hits?.ownMovesSE?.value ?? 0
+                let patch_ownMovesNVE = this.mapper.properties.patch.battle_info.hits?.ownMovesNVE?.value ?? 0
+                let patch_enemyMovesSE = this.mapper.properties.patch.battle_info.hits?.enemyMovesSE?.value ?? 0
+                let patch_enemyMovesNVE = this.mapper.properties.patch.battle_info.hits?.enemyMovesNVE?.value ?? 0
+                let patch_criticalsDealt = this.mapper.properties.patch.battle_info.hits?.criticalsDealt?.value ?? 0
+                let patch_oHKOsDealt = this.mapper.properties.patch.battle_info.hits?.oHKOsDealt?.value ?? 0
+                let patch_criticalsTaken = this.mapper.properties.patch.battle_info.hits?.criticalsTaken?.value ?? 0
+                let patch_oHKOsTaken = this.mapper.properties.patch.battle_info.hits?.oHKOsTaken?.value ?? 0
+                let patch_wasConfused = this.mapper.properties.patch.battle_info.status?.wasConfused?.value ?? 0
+                let patch_enemyBecameConfused = this.mapper.properties.patch.battle_info.status?.enemyBecameConfused?.value ?? 0
+                let patch_wasParalyzed = this.mapper.properties.patch.battle_info.status?.wasParalyzed?.value ?? 0
+                let patch_enemyWasParalyzed = this.mapper.properties.patch.battle_info.status?.enemyWasParalyzed?.value ?? 0
+                let patch_wasBurned = this.mapper.properties.patch.battle_info.status?.wasBurned?.value ?? 0
+                let patch_enemyWasBurned = this.mapper.properties.patch.battle_info.status?.enemyWasBurned?.value ?? 0
+                let patch_wasFrozen = this.mapper.properties.patch.battle_info.status?.wasFrozen?.value ?? 0
+                let patch_enemyWasFrozen = this.mapper.properties.patch.battle_info.status?.enemyWasFrozen?.value ?? 0
+                let patch_wasPoisoned = this.mapper.properties.patch.battle_info.status?.wasPoisoned?.value ?? 0
+                let patch_enemyWasPoisoned = this.mapper.properties.patch.battle_info.status?.enemyWasPoisoned?.value ?? 0
+                let patch_wasPoisonedBadly = this.mapper.properties.patch.battle_info.status?.wasPoisonedBadly?.value ?? 0
+                let patch_enemyWasPoisonedBadly = this.mapper.properties.patch.battle_info.status?.enemyWasPoisonedBadly?.value ?? 0
+                let patch_fellAsleep = this.mapper.properties.patch.battle_info.status?.fellAsleep?.value ?? 0
+                let patch_enemyFellAsleep = this.mapper.properties.patch.battle_info.status?.enemyFellAsleep?.value ?? 0
+                let patch_playerTurnsConfused = this.mapper.properties.patch.battle_info.status?.playerTurnsConfused?.value ?? 0
+                let patch_enemyTurnsConfused = this.mapper.properties.patch.battle_info.status?.enemyTurnsConfused?.value ?? 0
+                let patch_playerTurnsConfusedHitSelf = this.mapper.properties.patch.battle_info.status?.playerTurnsConfusedHitSelf?.value ?? 0
+                let patch_enemyTurnsConfusedHitSelf = this.mapper.properties.patch.battle_info.status?.enemyTurnsConfusedHitSelf?.value ?? 0
+                let patch_playerTurnsParalyzed = this.mapper.properties.patch.battle_info.status?.playerTurnsParalyzed?.value ?? 0
+                let patch_enemyTurnsParalyzed = this.mapper.properties.patch.battle_info.status?.enemyTurnsParalyzed?.value ?? 0
+                let patch_playerTurnsParalyzedFully = this.mapper.properties.patch.battle_info.status?.playerTurnsParalyzedFully?.value ?? 0
+                let patch_enemyTurnsParalyzedFully = this.mapper.properties.patch.battle_info.status?.enemyTurnsParalyzedFully?.value ?? 0
+                let patch_PlayerTurnsAsleep = this.mapper.properties.patch.battle_info.status.PlayerTurnsAsleep.value ?? 0
+                let patch_EnemyTurnsAsleep = this.mapper.properties.patch.battle_info.status.EnemyTurnsAsleep.value ?? 0
+                let patch_playerHpHealed = 0 //not working in yellow
+                let patch_enemyHpHealed = 0 //not working in yellow
+                let patch_playerPokemonFainted = this.mapper.properties.patch.battle_info?.playerPokemonFainted?.value ?? 0
+                let patch_enemyPokemonFainted = this.mapper.properties.patch.battle_info?.enemyPokemonFainted?.value ?? 0
+                let patch_experienceGained = this.mapper.properties.patch.battle_info?.experienceGained?.value ?? 0
+                let patch_switchout = this.mapper.properties.patch.battle_info?.switchout?.value ?? 0
+                let patch_moneyMade = this.mapper.properties.patch.money?.moneyMade?.value ?? 0
+                let patch_moneySpent = this.mapper.properties.patch.money?.moneySpent?.value ?? 0
+                let patch_moneyLost = this.mapper.properties.patch.money?.moneyLost?.value ?? 0
+                let patch_itemsPickedUp = this.mapper.properties.patch.items?.itemsPickedUp?.value ?? 0
+                let patch_itemsBought = this.mapper.properties.patch.items?.itemsBought?.value ?? 0
+                let patch_itemsSold = this.mapper.properties.patch.items?.itemsSold?.value ?? 0
+                let patch_ballsThrown = this.mapper.properties.patch.catching?.ballsThrown?.value ?? 0
+                let patch_pokemonCaughtInBalls = this.mapper.properties.patch.catching?.pokemonCaughtInBalls ?? 0
+                let patch_movesLearnt = this.mapper.properties.patch.movesLearnt ?? 0
+
+                //definitions for what split data is logged to file
+                let simple_data = [
+                    player_name, pokemon, trainer_name, real_time_hmmss, 
+                    resets, blackouts, level, game_time, battle_duration, 
+                    move1, move2, move3, move4
+                ]
+                let full_data = [
+                    date_string, time_string, player_name, pokemon, trainer_name, 
+                    trainer_id, location, total_pokemon, real_time_total, 
+                    real_time_hmmss, real_time_file_label, resets, blackouts, failures, 
+                    level, game_time, battle_duration, move1, move2, move3, move4, 
+                    saves, steps, bonks, trainerBattles, wildBattles, battleTurns, 
+                    playerTurns, enemyTurns, itemsInBag, money, rivalTeam,
+                    statusCondition, type1, type2, experience,
+                    runIdentifier, this.starterName, trainerName,
+                    startTime, realTime, gameTime, level, this.playerResets,
+                    RTHours, RTMinutes, RTSeconds, RTMilliseconds,
+                    move1, move2, move3, move4, move1pp, move2pp, move3pp, move4pp, move1ppUp, move2ppUp, move3ppUp, move4ppUp,
+                    hp, maxHp, atk, def, spA, spD, spe,
+                    statExp_hp, statExp_atk, statExp_def, statExp_spA, statExp_spD, statExp_spe,
+                    mod_atk, mod_def, mod_spA, mod_spD, mod_spe, mod_acc, mod_eva,
+                    battle_atk, battle_def, battle_spA, battle_spD, battle_spe,
+                    patch_frameCount, patch_oWFrameCount, patch_battleFrameCount, patch_menuFrameCount, patch_introsFrameCount,
+                    patch_saveCount, patch_reloadCount, patch_clockResetCount,
+                    patch_stepsCount, patch_stepsCountWalk, patch_stepsCountBike, patch_stepsCountSurf, patch_bonks,
+                    patch_battles, patch_trainerBattles, patch_wildBattles, patch_battlesFled, patch_failedRuns,
+                    patch_totalDamageDealt, patch_actualDamageDealt, patch_totalDamageTaken, patch_actualDamageTaken,
+                    patch_ownMovesHit, patch_ownMovesMissed, patch_enemyMovesHit, patch_enemyMovesMissed, 
+                    patch_ownMovesSE, patch_ownMovesNVE, patch_enemyMovesSE, patch_enemyMovesNVE, 
+                    patch_criticalsDealt, patch_oHKOsDealt, patch_criticalsTaken, patch_oHKOsTaken,
+                    patch_wasConfused, patch_enemyBecameConfused, patch_wasParalyzed, patch_enemyWasParalyzed, 
+                    patch_wasBurned, patch_enemyWasBurned, patch_wasFrozen, patch_enemyWasFrozen,
+                    patch_wasPoisoned, patch_enemyWasPoisoned, patch_wasPoisonedBadly, patch_enemyWasPoisonedBadly,
+                    patch_fellAsleep, patch_enemyFellAsleep, patch_playerTurnsConfused, patch_playerTurnsConfusedHitSelf, 
+                    patch_playerTurnsParalyzed, patch_playerTurnsParalyzedFully, patch_enemyTurnsConfused, patch_enemyTurnsConfusedHitSelf, 
+                    patch_enemyTurnsParalyzed, patch_enemyTurnsParalyzedFully, patch_PlayerTurnsAsleep, patch_EnemyTurnsAsleep,
+                    patch_playerHpHealed, patch_enemyHpHealed, 
+                    patch_playerPokemonFainted, patch_enemyPokemonFainted, patch_experienceGained, patch_switchout,
+                    patch_moneyMade, patch_moneySpent, patch_moneyLost,
+                    patch_itemsPickedUp, patch_itemsBought, patch_itemsSold,
+                    patch_ballsThrown, patch_pokemonCaughtInBalls,
+                    patch_movesLearnt,
+                    //new properties
+                    blackouts, this.attempt_number, failures, rivalTeam
+                ]
+                let deprecated_data = [
+                    runIdentifier, this.starterName, trainerName,
+                    startTime, realTime, gameTime, level, this.playerResets,
+                    RTHours, RTMinutes, RTSeconds, RTMilliseconds,
+                    move1, move2, move3, move4,
+                    atk, def, spA, spD, spe,
+                    mod_atk, mod_def, mod_spA, mod_spD, mod_spe, mod_acc, mod_eva,
+                    battle_atk, battle_def, battle_spA, battle_spD, battle_spe,
+                    patch_frameCount, patch_oWFrameCount, patch_battleFrameCount, patch_menuFrameCount, patch_introsFrameCount,
+                    patch_saveCount, patch_reloadCount, patch_clockResetCount,
+                    patch_stepsCount, patch_stepsCountWalk, patch_stepsCountBike, patch_stepsCountSurf, patch_bonks,
+                    patch_battles, patch_trainerBattles, patch_wildBattles, patch_battlesFled, patch_failedRuns,
+                    patch_totalDamageDealt, patch_actualDamageDealt, patch_totalDamageTaken, patch_actualDamageTaken,
+                    patch_ownMovesHit, patch_ownMovesMissed, patch_enemyMovesHit, patch_enemyMovesMissed, 
+                    patch_ownMovesSE, patch_ownMovesNVE, patch_enemyMovesSE, patch_enemyMovesNVE, 
+                    patch_criticalsDealt, patch_oHKOsDealt, patch_criticalsTaken, patch_oHKOsTaken,
+                    patch_wasConfused, patch_enemyBecameConfused, patch_wasParalyzed, patch_enemyWasParalyzed, 
+                    patch_wasBurned, patch_enemyWasBurned, patch_wasFrozen, patch_enemyWasFrozen,
+                    patch_wasPoisoned, patch_enemyWasPoisoned, patch_wasPoisonedBadly, patch_enemyWasPoisonedBadly,
+                    patch_fellAsleep, patch_enemyFellAsleep, patch_playerTurnsConfused, patch_playerTurnsConfusedHitSelf, 
+                    patch_playerTurnsParalyzed, patch_playerTurnsParalyzedFully, patch_enemyTurnsConfused, patch_enemyTurnsConfusedHitSelf, 
+                    patch_enemyTurnsParalyzed, patch_enemyTurnsParalyzedFully,
+                    patch_playerHpHealed, patch_enemyHpHealed, 
+                    patch_playerPokemonFainted, patch_enemyPokemonFainted, patch_experienceGained, patch_switchout,
+                    patch_moneyMade, patch_moneySpent, patch_moneyLost,
+                    patch_itemsPickedUp, patch_itemsBought, patch_itemsSold,
+                    patch_ballsThrown, patch_pokemonCaughtInBalls,
+                    patch_movesLearnt,
+                    //new properties
+                    blackouts, this.attempt_number, failures, rivalTeam
+                ]
+                
+                let simple_data_str = simple_data.join(",") + "\n";
+                let full_data_str = full_data.join(",") + "\n";
+                let deprecated_data_str = deprecated_data.join(",") + "\n";
+                MyStorage["simple_data_str"] = simple_data_str
+                MyStorage["full_data_str"] = full_data_str
+                MyStorage["deprecated_data_str"] = deprecated_data_str
+                MyStorage["simple_data"] = simple_data
+                this.simple_data_str = simple_data_str
+                this.full_data_str = full_data_str
+                this.deprecated_data_str = deprecated_data_str
+                this.simple_data = simple_data
+            }
+        }
+
         //write to file at the end of a key battle
         this.mapper.properties.battle.lowHealthAlarm.change((prop) => {
-            if (this.autosplitter == true) {
-
-            }
-            d = new Date()
-            battle_end = Date.now()
-            var log_end = (x) => console.log(`Autosplitter: Battle Ended - Split: ${this.mapper.properties.battle.trainer.class.value} at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`)
-            //values
-            let gameTimeH = this.mapper.properties.gameTime.hours.value
-            let gameTimeM = this.mapper.properties.gameTime.minutes.value
-            let gameTimeS = this.mapper.properties.gameTime.seconds.value
-            let gameTimeF = this.mapper.properties.gameTime.frames.value
-
-            //data to be collected with the autosplitter
-            let date_string = (d.getMonth() + 1) + "-" + d.getDate().toString().padStart(2, "0")
-            let time_string = d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0")
-            let player_name = this.playerNameChoice
-            let pokemon = this.starterName
-            let trainer_name = this.format_trainer_name(this.mapper.properties.battle.trainer.class.value, this.mapper.properties.battle.trainer.number.value)
-            let trainer_id = this.mapper.properties.battle.trainer.number.value
-            let location = this.mapper.properties.overworld.map.value
-            let total_pokemon = this.mapper.properties.battle.trainer.totalPokemon
-            let real_time_total = this.timer_formatted_time[0].toString() + this.timer_formatted_time[1].toString()
-            let real_time_hmmss = this.timer_formatted_time[0].toString()
-            let real_time_file_label = this.timer_formatted_time[2].toString()
-            let resets = this.playerResets.toString()
-            let blackouts = this.blackout_counter.toString()
-            let level = this.mapper.properties.player.team[0].level.value.toString()
-            let game_time = this.gametimeSplit.toString()
-            let battle_duration = (battle_end - this.battle_start)/1000 
-            let move1 = this.mapper.properties.player.team[0].move1.value
-            let move2 = this.mapper.properties.player.team[0].move2.value
-            let move3 = this.mapper.properties.player.team[0].move3.value
-            let move4 = this.mapper.properties.player.team[0].move4.value
-            let saves = this.mapper.properties.patch.saves.saveCount.value
-            let steps = this.mapper.properties.patch.steps.stepsCount.value
-            let bonks = this.mapper.properties.patch.steps.bonks.value
-            let trainerBattles = this.mapper.properties.patch.battles.trainerBattles.value
-            let wildBattles = this.mapper.properties.patch.battles.wildBattles.value
-            let battleTurns = this.mapper.properties.patch.battle_info.turns.battleTurns.value
-            let playerTurns = this.mapper.properties.patch.battle_info.turns.playerTurns.value
-            let enemyTurns = this.mapper.properties.patch.battle_info.turns.enemyTurns.value
-            let itemsInBag = this.mapper.properties.player.itemCount.value
-            let money = this.mapper.properties.player.money.value
-            let rivalTeam = this.mapper.properties.rival.finalTeam.value
-            //deprecated properties
-            let runIdentifier = this.starterName.toString() + this.attempt_number.toString() ?? "Error Run Identifier"
-            let startTime = this.time_split_start
-            let realTime = this.padTime(this.time_h) + ":" + this.padTime(this.time_m) + ":" + this.padTime(this.time_s) + "." + this.padTime(this.time_ms) ?? "Error realTime"
-            let gameTime = this.padTime(gameTimeH) + ":" + this.padTime(gameTimeM) + ":" + this.padTime(gameTimeS) + "." + this.padTime(gameTimeF) ?? "Error gameTime"
-            let RTHours = this.time_h
-            let RTMinutes = this.time_m
-            let RTSeconds = this.time_s
-            let RTMilliseconds = this.time_ms
-            let atk = this.mapper.properties.player.team[0].attack.value
-            let def = this.mapper.properties.player.team[0].defense.value
-            let spA = this.mapper.properties.player.team[0].specialAttack.value ?? this.mapper.properties.player.team[0].special.value
-            let spD = this.mapper.properties.player.team[0].specialDefense.value ?? this.mapper.properties.player.team[0].attack.value
-            let spe = this.mapper.properties.player.team[0].speed.value
-            let mod_atk = this.mapper.properties.battle.yourPokemon.modStageAttack.value
-            let mod_def = this.mapper.properties.battle.yourPokemon.modStageDefense.value
-            let mod_spA = this.mapper.properties.battle.yourPokemon.modStageSpecialAttack.value ?? this.mapper.properties.battle.yourPokemon.modStageSpecial.value
-            let mod_spD = this.mapper.properties.battle.yourPokemon.modStageSpecialDefense.value ?? this.mapper.properties.battle.yourPokemon.modStageSpecial.value
-            let mod_spe = this.mapper.properties.battle.yourPokemon.modStageSpeed.value
-            let mod_acc = this.mapper.properties.battle.yourPokemon.modStageAccuracy.value
-            let mod_eva = this.mapper.properties.battle.yourPokemon.modStageEvasion.value
-            let battle_atk = this.mapper.properties.battle.yourPokemon.attack.value
-            let battle_def = this.mapper.properties.battle.yourPokemon.defense.value
-            let battle_spA = this.mapper.properties.battle.yourPokemon.specialAttack.value ?? this.mapper.properties.battle.yourPokemon.special.value
-            let battle_spD = this.mapper.properties.battle.yourPokemon.specialDefense.value ?? this.mapper.properties.battle.yourPokemon.special.value
-            let battle_spe = this.mapper.properties.battle.yourPokemon.speed.value
-            //patch properties
-            let patch_frameCount = this.mapper.properties.patch.time.frameCount.value ?? 0
-            let patch_oWFrameCount = this.mapper.properties.patch.time.oWFrameCount.value ?? 0
-            let patch_battleFrameCount = this.mapper.properties.patch.time.battleFrameCount.value ?? 0
-            let patch_menuFrameCount = this.mapper.properties.patch.time.menuFrameCount.value ?? 0
-            let patch_introsFrameCount = this.mapper.properties.patch.time.introsFrameCount.value ?? 0
-            let patch_saveCount = this.mapper.properties.patch.saves.saveCount.value ?? 0
-            let patch_reloadCount = this.mapper.properties.patch.saves.reloadCount.value ?? 0
-            let patch_clockResetCount = this.mapper.properties.patch.saves.clockResetCount.value ?? 0
-            let patch_stepsCount = this.mapper.properties.patch.steps.stepsCount.value ?? 0
-            let patch_stepsCountWalk = this.mapper.properties.patch.steps.stepsCountWalk.value ?? 0
-            let patch_stepsCountBike = this.mapper.properties.patch.steps.stepsCountBike.value ?? 0
-            let patch_stepsCountSurf = this.mapper.properties.patch.steps.stepsCountSurf.value ?? 0
-            let patch_bonks = this.mapper.properties.patch.steps.bonks.value ?? 0
-            let patch_trainerBattles = this.mapper.properties.patch.battles.trainerBattles.value ?? 0
-            let patch_wildBattles = this.mapper.properties.patch.battles.wildBattles.value ?? 0
-            let patch_battlesFled = this.mapper.properties.patch.battles.battlesFled.value ?? 0
-            let patch_failedRuns = this.mapper.properties.patch.battles.failedRuns.value ?? 0
-            let patch_totalDamageDealt = this.mapper.properties.patch.battle_info.damage.totalDamageDealt.value ?? 0
-            let patch_actualDamageDealt = this.mapper.properties.patch.battle_info.damage.actualDamageDealt.value ?? 0
-            let patch_totalDamageTaken = this.mapper.properties.patch.battle_info.damage.totalDamageTaken.value ?? 0
-            let patch_actualDamageTaken = this.mapper.properties.patch.battle_info.damage.actualDamageTaken.value ?? 0
-            let patch_ownMovesHit = this.mapper.properties.patch.battle_info.hits.ownMovesHit.value ?? 0
-            let patch_ownMovesMissed = this.mapper.properties.patch.battle_info.hits.ownMovesMissed.value ?? 0
-            let patch_enemyMovesHit = this.mapper.properties.patch.battle_info.hits.enemyMovesHit.value ?? 0
-            let patch_enemyMovesMissed = this.mapper.properties.patch.battle_info.hits.enemyMovesMissed.value ?? 0
-            let patch_ownMovesSE = this.mapper.properties.patch.battle_info.hits.ownMovesSE.value ?? 0
-            let patch_ownMovesNVE = this.mapper.properties.patch.battle_info.hits.ownMovesNVE.value ?? 0
-            let patch_enemyMovesSE = this.mapper.properties.patch.battle_info.hits.enemyMovesSE.value ?? 0
-            let patch_enemyMovesNVE = this.mapper.properties.patch.battle_info.hits.enemyMovesNVE.value ?? 0
-            let patch_criticalsDealt = this.mapper.properties.patch.battle_info.hits.criticalsDealt.value ?? 0
-            let patch_oHKOsDealt = this.mapper.properties.patch.battle_info.hits.oHKOsDealt.value ?? 0
-            let patch_criticalsTaken = this.mapper.properties.patch.battle_info.hits.criticalsTaken.value ?? 0
-            let patch_oHKOsTaken = this.mapper.properties.patch.battle_info.hits.oHKOsTaken.value ?? 0
-            let patch_wasConfused = this.mapper.properties.patch.battle_info.status.wasConfused.value ?? 0
-            let patch_enemyBecameConfused = this.mapper.properties.patch.battle_info.status.enemyBecameConfused.value ?? 0
-            let patch_wasParalyzed = this.mapper.properties.patch.battle_info.status.wasParalyzed.value ?? 0
-            let patch_enemyWasParalyzed = this.mapper.properties.patch.battle_info.status.enemyWasParalyzed.value ?? 0
-            let patch_wasBurned = this.mapper.properties.patch.battle_info.status.wasBurned.value ?? 0
-            let patch_enemyWasBurned = this.mapper.properties.patch.battle_info.status.enemyWasBurned.value ?? 0
-            let patch_wasFrozen = this.mapper.properties.patch.battle_info.status.wasFrozen.value ?? 0
-            let patch_enemyWasFrozen = this.mapper.properties.patch.battle_info.status.enemyWasFrozen.value ?? 0
-            let patch_wasPoisoned = this.mapper.properties.patch.battle_info.status.wasPoisoned.value ?? 0
-            let patch_enemyWasPoisoned = this.mapper.properties.patch.battle_info.status.enemyWasPoisoned.value ?? 0
-            let patch_wasPoisonedBadly = this.mapper.properties.patch.battle_info.status.wasPoisonedBadly.value ?? 0
-            let patch_enemyWasPoisonedBadly = this.mapper.properties.patch.battle_info.status.enemyWasPoisonedBadly.value ?? 0
-            let patch_fellAsleep = this.mapper.properties.patch.battle_info.status.fellAsleep.value ?? 0
-            let patch_enemyFellAsleep = this.mapper.properties.patch.battle_info.status.enemyFellAsleep.value ?? 0
-            let patch_playerTurnsConfused = this.mapper.properties.patch.battle_info.status.playerTurnsConfused.value ?? 0
-            let patch_enemyTurnsConfused = this.mapper.properties.patch.battle_info.status.enemyTurnsConfused.value ?? 0
-            let patch_playerTurnsConfusedHitSelf = this.mapper.properties.patch.battle_info.status.playerTurnsConfusedHitSelf.value ?? 0
-            let patch_enemyTurnsConfusedHitSelf = this.mapper.properties.patch.battle_info.status.enemyTurnsConfusedHitSelf.value ?? 0
-            let patch_playerTurnsParalyzed = this.mapper.properties.patch.battle_info.status.playerTurnsParalyzed.value ?? 0
-            let patch_enemyTurnsParalyzed = this.mapper.properties.patch.battle_info.status.enemyTurnsParalyzed.value ?? 0
-            let patch_playerTurnsParalyzedFully = this.mapper.properties.patch.battle_info.status.playerTurnsParalyzedFully.value ?? 0
-            let patch_enemyTurnsParalyzedFully = this.mapper.properties.patch.battle_info.status.enemyTurnsParalyzedFully.value ?? 0
-            // let patch_PlayerTurnsAsleep = this.mapper.properties.patch.battle_info.status.PlayerTurnsAsleep.value ?? 0
-            // let patch_EnemyTurnsAsleep = this.mapper.properties.patch.battle_info.status.EnemyTurnsAsleep.value ?? 0
-            let patch_playerPokemonFainted = this.mapper.properties.patch.battle_info.playerPokemonFainted.value ?? 0
-            let patch_enemyPokemonFainted = this.mapper.properties.patch.battle_info.enemyPokemonFainted.value ?? 0
-            let patch_experienceGained = this.mapper.properties.patch.battle_info.experienceGained.value ?? 0
-            let patch_switchout = this.mapper.properties.patch.battle_info.switchout.value ?? 0
-            let patch_moneyMade = this.mapper.properties.patch.money.moneyMade.value ?? 0
-            let patch_moneySpent = this.mapper.properties.patch.money.moneySpent.value ?? 0
-            let patch_moneyLost = this.mapper.properties.patch.money.moneyLost.value ?? 0
-            let patch_itemsPickedUp = this.mapper.properties.patch.items.itemsPickedUp.value ?? 0
-            let patch_itemsBought = this.mapper.properties.patch.items.itemsBought.value ?? 0
-            let patch_itemsSold = this.mapper.properties.patch.items.itemsSold.value ?? 0
-            let patch_ballsThrown = this.mapper.properties.patch.catching.ballsThrown.value ?? 0
-            let patch_pokemonCaughtInBalls = this.mapper.properties.patch.catching.pokemonCaughtInBalls.value ?? 0
-            let patch_movesLearnt = this.mapper.properties.patch.movesLearnt.value ?? 0
-
-            //definitions for what split data is logged to file
-            let simple_data = [
-                player_name, pokemon, trainer_name, real_time_hmmss, 
-                resets, blackouts, level, game_time, battle_duration, 
-                move1, move2, move3, move4
-            ]
-            let full_data = [
-                date_string, time_string, player_name, pokemon, trainer_name, 
-                trainer_id, location, total_pokemon, real_time_total, 
-                real_time_hmmss, real_time_file_label, resets, blackouts, 
-                level, game_time, battle_duration, move1, move2, move3, move4, 
-                saves, steps, bonks, trainerBattles, wildBattles, battleTurns, 
-                playerTurns, enemyTurns, itemsInBag, money, rivalTeam
-            ]
-            let deprecated_data = [
-                runIdentifier, this.starterName, trainer_name,
-                startTime, realTime, gameTime, level, this.playerResets,
-                RTHours, RTMinutes, RTSeconds, RTMilliseconds,
-                move1, move2, move3, move4,
-                atk, def, spA, spD, spe,
-                mod_atk, mod_def, mod_spA, mod_spD, mod_spe, mod_acc, mod_eva,
-                battle_atk, battle_def, battle_spA, battle_spD, battle_spe,
-                patch_frameCount, patch_oWFrameCount, patch_battleFrameCount, patch_menuFrameCount, patch_introsFrameCount,
-                patch_saveCount, patch_reloadCount, patch_clockResetCount,
-                patch_stepsCount, patch_stepsCountWalk, patch_stepsCountBike, patch_stepsCountSurf, patch_bonks,
-                patch_trainerBattles, patch_wildBattles, patch_battlesFled, patch_failedRuns,
-                patch_totalDamageDealt, patch_actualDamageDealt, patch_totalDamageTaken, patch_actualDamageTaken,
-                patch_ownMovesHit, patch_ownMovesMissed, patch_enemyMovesHit, patch_enemyMovesMissed, 
-                patch_ownMovesSE, patch_ownMovesNVE, patch_enemyMovesSE, patch_enemyMovesNVE, 
-                patch_criticalsDealt, patch_oHKOsDealt, patch_criticalsTaken, patch_oHKOsTaken,
-                patch_wasConfused, patch_enemyBecameConfused, patch_wasParalyzed, patch_enemyWasParalyzed, 
-                patch_wasBurned, patch_enemyWasBurned, patch_wasFrozen, patch_enemyWasFrozen,
-                patch_wasPoisoned, patch_enemyWasPoisoned, patch_wasPoisonedBadly, patch_enemyWasPoisonedBadly,
-                patch_fellAsleep, patch_enemyFellAsleep, patch_playerTurnsConfused, patch_enemyTurnsConfused,
-                patch_playerTurnsConfusedHitSelf, patch_enemyTurnsConfusedHitSelf, patch_playerTurnsParalyzed, patch_enemyTurnsParalyzed,
-                patch_playerTurnsParalyzedFully, patch_enemyTurnsParalyzedFully,
-                patch_playerPokemonFainted, patch_enemyPokemonFainted, patch_experienceGained, patch_switchout,
-                patch_moneyMade, patch_moneySpent, patch_moneyLost,
-                patch_itemsPickedUp, patch_itemsBought, patch_itemsSold,
-                patch_ballsThrown, patch_pokemonCaughtInBalls,
-                patch_movesLearnt,
-            ]
-            let simple_data_str = simple_data.join(",") + "\n";
-            let full_data_str = full_data.join(",") + "\n";
-            let deprecated_data_str = deprecated_data.join(",") + "\n";
-
-            var write_simple_split_data = (x) => {
-                log_end()
-                this.split_data.push(simple_data)
-                logToFileSimpleSplits(simple_data_str, this.attempt_number, this.starterName)
-            }
-            var write_full_split_data = (x) => {
-                log_end()
-                logToFileFullSplits(full_data_str, this.attempt_number, this.starterName)
-            }
-            var end_run = (x) => {
-                this.stopTime()
-                log_end()
-                this.split_data.push(simple_data)
-                logToFileSimpleSplits(simple_data_str, this.attempt_number, this.starterName)
-                logToFileFullSplits(full_data_str, this.attempt_number, this.starterName)
-            }
-
-            //check to see if it is one of the trainers logged in my olds splits
-            let deprecatedBattleCheck = false
-            let trainer = this.mapper.properties.battle.trainer.class.value + "_" + this.mapper.properties.battle.trainer.number.value
-            if (this.deprecated_autosplitter[this.mapper.properties.meta.gameName.value][trainer]) {
-                deprecatedBattleCheck = true
-            }
-            //write splits to file if needed
-            if (deprecatedBattleCheck == true) {
-                logSplits(deprecated_data_str, this.attempt_number, this.starterName, "Deprecated")
-                deprecatedBattleCheck = false //likely not needed
-            }
-
-            if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL1")    { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL2")    { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BROCK" )    { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "MISTY" )    { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LT.SURGE" ) { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "ERIKA" )    { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "KOGA" )     { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "SABRINA" )  { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BLAINE" )   { write_simple_split_data() }
-            // else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "GIOVANNI" && this.mapper.properties.battle.trainer.number.value == 2) { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "GIOVANNI" && this.mapper.properties.battle.trainer.number.value == 3) { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LORELEI" )  { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "BRUNO" )    { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "AGATHA" )   { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "LANCE" )    { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "ROCKET" && this.mapper.properties.battle.trainer.number.value == 5)   { write_simple_split_data() }
-            else if (prop.value == "Disabled" && this.mapper.properties.battle.trainer.class.value == "RIVAL3") { end_run() }
-            if (prop.value == "Disabled" && this.mapper.properties.battle.type.value == "Trainer") { write_full_split_data() }
-        }); 
+            autosplitter_process()
+            if (prop.value == "Disabled" && this.mapper.properties.battle.type.value == "Trainer") {
+                let trainer = this.mapper.properties.battle.trainer.class.value
+                let id = this.mapper.properties.battle.trainer.number.value
+                let unique = trainer + "_" + id
+                let gameName = this.mapper.properties.meta.gameName.value
+                
+                //write full split data
+                logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full")
+                
+                //write deprecated split data
+                if (this.autosplitter[this.mapper.properties.meta.gameName.value][unique]) {
+                    logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated")
+                }
+                
+                //write simple split data
+                const simpleSplit = () => {
+                    log_split()
+                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple")
+                    this.split_data.push(this.simple_data)
+                    MyStorage["split_data"] = this.split_data
+                    MyStorage[this.starterName] = {
+                        ...MyStorage[this.starterName],
+                        split_data: this.split_data
+                    }
+                }
+                switch (trainer) {
+                    case "RIVAL1":  
+                    case "RIVAL2":  
+                    case "RIVAL3":  
+                    case "BROCK":   
+                    case "MISTY":   
+                    case "LT.SURGE":
+                    case "ERIKA":   
+                    case "KOGA":    
+                    case "SABRINA": 
+                    case "BLAINE":  
+                    case "LORELEI": 
+                    case "BRUNO":   
+                    case "AGATHA":  
+                    case "LANCE": { simpleSplit() }
+                }
+                switch (unique) {
+                    case "GIOVANNI_3":
+                    case "ROCKET_5":   { simpleSplit() }
+                }
+                
+                //stop timer
+                if (trainer == "RIVAL3") {
+                    log_split()
+                    this.finished_run_count++
+                    this.stopTime()
+                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple")
+                    this.split_data.push(this.simple_data)
+                    MyStorage["split_data"] = this.split_data
+                    MyStorage[this.starterName] = {
+                        ...MyStorage[this.starterName],
+                        split_data: this.split_data
+                    }
+                }
+            }   
+        });
         
+        //log the final times with the final gametime
+        this.mapper.properties.screen.tiles.column1.tile1.change((newProp) => {
+            if (newProp.value == 122) {
+                autosplitter_process()
+                if (this.mapper.properties.events.beatChampion.value == true && this.mapper.properties.overworld.map.value == "Hall of Fame") {
+                    let gameName = this.mapper.properties.meta.gameName.value
+                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple")
+                    logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated")
+                    logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full")
+                    this.split_data.push(this.simple_data)
+                    MyStorage["split_data"] = this.split_data
+                    MyStorage[this.starterName] = {
+                        ...MyStorage[this.starterName],
+                        split_data: this.split_data
+                    }
+                    console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
+                    this.game_over = true;
+                }
+            }
+        });
+
+        this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
+            let gameName = this.mapper.properties.meta.gameName.value
+            if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
+                logCopy(gameName, this.attempt_number, this.starterName, this.finished_run_count)
+                console.log("Run complete - moving attempt files to finished folder.")
+                this.finished_logs = true
+            }
+        });
+
         //*blackout tracking
         //track when the player has a blackout
         this.mapper.properties.player.team[0].hp.change((newProp, oldProp) => {
@@ -2482,15 +2645,11 @@ const app = Vue.createApp({
             }
             if (newProp.value == 0 && this.state == `Battle`) {
                 this.blackout = true;
-                this.blackout_counter++;
             }
             if (this.state == `Base Stats`) {
                 this.blackout = false;
             }
         })
-        this.mapper.properties.player.team[0].hp.change((newProp) => {
-
-        });
 
         // Encounters (set initial value)
         if (this.route1 == false && this.mapper.properties.overworld.map.value == "Route 1") {
@@ -2537,6 +2696,9 @@ const app = Vue.createApp({
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
         else if (this.victoryRoad == false && this.mapper.properties.overworld.map.value == "Victory Road") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
+        else if (this.route24 == false && this.mapper.properties.overworld.map.value == "Route 24") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
 
@@ -2614,6 +2776,9 @@ const app = Vue.createApp({
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.victoryRoad == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Victory Road") {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+            if (this.route24 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 24") {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
         });

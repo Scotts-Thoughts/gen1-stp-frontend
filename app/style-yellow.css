@@ -269,7 +269,18 @@ box-shadow:
     background: #72fd4f; 
     font-family: Play;
     border-radius: 10px;
-    filter: drop-shadow(0px 0px 2px #000000c5);
+    /* filter: drop-shadow(0px 0px 1px #000000c5); */
+}
+.smallButtonStyle {
+    pointer-events: auto; 
+    position: relative; 
+    font-size: 16px; 
+    background: #72fd4f; 
+    font-family: Play;
+    border-radius: 10px;
+    padding-left: 4px;
+    padding-right: 4px;
+    /* filter: drop-shadow(0px 0px 1px #000000c5); */
 }
 .buttonStyle:hover {
     background: #11ce18; 

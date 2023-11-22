@@ -20,10 +20,6 @@
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
                     <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
-                    <!-- <img class="pokemon_art shadow" ref="pokemon_art"
-                    :style="{'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`, }" 
-                    :src="`images/pokemon/${s1dynamicReset.species.value}.png`" /> -->
-                    <!-- Image with Dynamic Saturation -->
                     <img class="pokemon_art shadow" ref="pokemon_art"
                         :style="{
                             'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`,
@@ -34,12 +30,10 @@
                             drop-shadow(0 0 0.5px #000)
                             drop-shadow(0 0 0.5px #000)
                             drop-shadow(0 0 0.5px #000)
-                            drop-shadow(5px 5px 5px #000)
+                            drop-shadow(4px 4px 4px #000)
                             `
                         }" 
                         :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
-
-                    <!-- <img class="canvas" :src="`images/left_ui/${g1PokemonData[starterName].type1.toLowerCase()}.png`" /> -->
                     <div class="colored-image" style="--url: url(images/left_ui/Electric.png)"></div>
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
@@ -49,8 +43,6 @@
                     <transition name="fade"><div v-show="timer_settings == `Off - Game-Time Label` || timer_settings == `Game-Time`" class="genericLabels timerLabel">gametime</div></transition>
                     <div v-show="key_F16 == `resets`" class="genericLabels resetsLabel">resets</div>
                     <div v-show="key_F16 == `blackouts`" class="genericLabels resetsLabel">blackouts</div>
-                    <!-- <div v-if="blackouts_as_resets == true" class="genericLabels resetsLabel" style="font-size: 17px; top: 330px">failures</div> -->
-                    <!-- <div v-if="blackouts_as_resets == false" class="genericLabels resetsLabel">resets</div> -->
                 </div>
                 <!-- TYPE ICONS -------------------------------------------------------------------------------->
                 <div class="typeContainer">
@@ -190,10 +182,10 @@
                                     <div class="ePkmnStatsStyle ePkmnDef opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"defense",currentTrainer.pokemon[x]?.def,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnSpd opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",currentTrainer.pokemon[x]?.spd,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnSpc opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",currentTrainer.pokemon[x]?.spc,"enemyPokemon")}}</div>
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageAttack.value != `0`" class="enemyMods attackMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageAttack.value)[1]}`">{{batt.enemyPokemon.modEnemyStageAttack.value}}</div></transition>
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageDefense.value != `0`" class="enemyMods defenseMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageDefense.value)[1]}`">{{batt.enemyPokemon.modEnemyStageDefense.value}}</div></transition>
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpecial.value != `0`" class="enemyMods specialMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpecial.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpecial.value}}</div></transition>
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpeed.value != `0`" class="enemyMods speedMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpeed.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpeed.value}}</div></transition>
+                                    <!-- <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageAttack.value != `0`" class="enemyMods attackMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageAttack.value)[1]}`">{{batt.enemyPokemon.modEnemyStageAttack.value}}</div></transition> -->
+                                    <!-- <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageDefense.value != `0`" class="enemyMods defenseMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageDefense.value)[1]}`">{{batt.enemyPokemon.modEnemyStageDefense.value}}</div></transition> -->
+                                    <!-- <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpecial.value != `0`" class="enemyMods specialMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpecial.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpecial.value}}</div></transition> -->
+                                    <!-- <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpeed.value != `0`" class="enemyMods speedMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpeed.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpeed.value}}</div></transition> -->
                                 </div>
                             </div>
                         </div> 
@@ -258,7 +250,6 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <!-- <img class="canvas" :src="`images/movepool_border/${g1PokemonData[starterName].type1.toLowerCase()}.png`"/> -->
                         <div class="colored-image" style="--url: url(images/movepool_border/Electric.png)"></div>
                         <div class="movepoolLabel">Movepool</div>
                     </div>
@@ -272,7 +263,6 @@
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (state == `Battle` || state == `From Battle`)">
-                            <!-- <img :src="`images/pop_ups/accuracy/${g1PokemonData[starterName].type1.toLowerCase()}.png`" style="position: absolute;"> -->
                             <div class="colored-image" style="--url: url(images/pop_ups/accuracy/Electric.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
@@ -280,7 +270,6 @@
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (state == `Battle` || state == `From Battle`)">
-                            <!-- <img :src="`images/pop_ups/evasion/${g1PokemonData[starterName].type1.toLowerCase()}.png`" style="position: absolute;"> -->
                             <div class="colored-image" style="--url: url(images/pop_ups/evasion/Electric.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
@@ -288,7 +277,6 @@
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (state == `Battle` || state == `From Battle`)">
-                            <!-- <img :src="`images/pop_ups/screens/${g1PokemonData[starterName].type1.toLowerCase()}.png`" style="position: absolute;"> -->
                             <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
@@ -296,7 +284,6 @@
                     </transition>
                     <transition name="fade">
                         <div v-if="key_F17 == `bonks`">
-                            <!-- <img :src="`images/pop_ups/screens/${g1PokemonData[starterName].type1.toLowerCase()}.png`" style="position: absolute;"> -->
                             <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle screensLabel">Bonks</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ map?.patch?.steps?.bonks }}</div>
@@ -328,7 +315,6 @@
         </div>
         <!-- UI ----------------------------------------------------------------------------------------->
         <div class="testingArea1" style="z-index: 50000;">
-            <!-- <div>Mapper: {{mapper?.meta?.gameName}}</div> -->
             <div>Solo Pokemon:</div>
             <select v-model="starterName" @change="load_pokemon_sprite_settings(s1dynamicReset.species.value)" class="dropdownMenu">
                 <option disabled value="">Select a species</option>
@@ -346,6 +332,9 @@
             </select>
             <br>
             <br>
+            <div>Attempt: {{this.attempt_number}}<button @click="increment('attempt_number')" class="smallButtonStyle">^</button><button @click="decrement('attempt_number')" class="smallButtonStyle">v</button></div>
+            <div>Finished Runs: {{this.finished_run_count}}<button @click="increment('finished_run_count')" class="smallButtonStyle">^</button><button @click="decrement('finished_run_count')" class="smallButtonStyle">v</button></div>
+            <br>
             <button class="buttonStyle" @click="newRun">New Run</button>
             <br>
             <br>
@@ -355,9 +344,6 @@
             Scale: <input type="range" min="0.3" max="2" step="0.02" v-model="imageScale"/><br>
             Saturation: <input type="range" min="90" max="150" step="1" v-model="imageSat"/><br>
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
-            <button @click="save_pokemon_sprite_settings" class="buttonStyle">Save Pokemon Sprite Settings</button>
-            <button @click="clear_pokemon_sprite_settings" class="buttonStyle">Reset Sprite</button>
-            <br>
             <br>
             <transition name="fade"><div v-if="resetCounter == true">
                 <div>Reset Counter Settings</div>
@@ -367,16 +353,6 @@
                 <button @click="toggleDataType" class="buttonStyle">Toggle Data Type</button><br>
                 <span class="note">Count blackouts as resets: <input class="checkBoxStyle" type="checkbox" v-model="blackouts_as_resets"/></span><span class="note">Blackouts: {{blackout_counter}}</span><br>
             </div></transition>
-            <br>
-            <div>Timer Setting:</div>
-            <select v-model="timer_settings" class="dropdownMenu">
-                <option disabled value="">Please select one</option>
-                <option>Real-Time</option>
-                <option>Game-Time</option>
-                <option>Off - Real-Time Label</option>
-                <option>Off - Game-Time Label</option>
-            </select><br>
-            <button class="buttonStyle" @click="resetTime">Reset Timer</button>
             <br>
             <br>
             <div>General Settings:</div>
@@ -441,6 +417,10 @@
                     <th>Victory Road:</th>
                     <th><input class="checkBoxStyle" type="checkbox" v-model="victoryRoad"/></th>
                 </tr>
+                <tr>
+                    <th>Route 24</th>
+                    <th><input class="checkBoxStyle" type="checkbox" v-model="route24"/></th>
+                </tr>
             </table>
             <br>
             Viridian Forest:<br>
@@ -460,6 +440,15 @@
             <button @click="apply_settings('all_off')" class="buttonStyle">All Off</button>
         </div>
         <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
+            <div>Timer Setting:</div>
+            <select v-model="timer_settings" class="dropdownMenu">
+                <option disabled value="">Please select one</option>
+                <option>Real-Time</option>
+                <option>Game-Time</option>
+                <option>Off - Real-Time Label</option>
+                <option>Off - Game-Time Label</option>
+            </select><br>
+            <button class="buttonStyle" @click="resetTime">Reset Timer</button>
             <div style="text-decoration: underline;">Graphics Toggles:</div>
             <!-- inventory: <input class="checkBoxStyle" type="checkbox" v-model="inventory"/><br> -->
             <!-- expBarAnimation: <input class="checkBoxStyle" type="checkbox" v-model="expBarAnimation"/><br> -->
@@ -506,7 +495,6 @@
             <div v-if="use_custom_background == true"><input v-model="imageUrl" placeholder="Input Custom Texture URL Here"><br></div>
             Blur: <input type="range" min="0" max="10" v-model="backgroundBlur"/><br>
             Scale: <input type="range" min="100" max="200" v-model="backgroundScale"/><br>
-            
         </div>
         <div v-show="help_menus == `Internal Monitor`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>Splits:</div>
@@ -571,19 +559,29 @@
         </div>
         <div v-show="help_menus == `Splits`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <!-- <div>{{this.pb_splits}}</div> -->
+            <div style="font-size: 24px;">{{this.starterName}}</div>
+            <div>{{split_logStr}}</div>
+            <div>PB Time: {{this.pb_time}}</div>
+            <!-- <div>Split Countdown: {{this.splitCountdown}}</div> -->
             <table style="text-align: left; line-height: 16px;">
-                <tr><th>{{this.starterName}}, attempt: {{this.attempt_number}}</th></tr>
+                <tr>
+                    <th style="text-decoration: underline; width: 160px; text-align: left;">Split</th>
+                    <th style="text-decoration: underline; width: 40px; text-align: right;">Current</th>
+                    <th style="text-decoration: underline; width: 40px; text-align: right;">PB</th>
+                    <th style="text-decoration: underline; width: 45px; text-align: right;">diff</th>
+                </tr>
                 <tr v-for="split in this.split_data">
-                    <th>{{split[2]}}</th>
+                    <th>{{split[2]}}:</th>
                     <th style="text-align: right;">{{split[3]}}</th>
-                    <!-- <th v-if="pb_split(split[2])[3]" style="text-align: right;">{{pb_split(split[2])[3]}}</th> -->
-                    <!-- <th v-if="split_offset_calculation(split[3], pb_split(split[2])[3])" style="text-align: right;">{{split_offset_calculation(split[3], pb_split(split[2])[3])}}</th> -->
+                    <th v-if="pb_split(split[2]) != null" style="text-align: right;">{{pb_split(split[2])[3]}}</th>
+                    <th v-if="pb_split(split[2]) != null" style="text-align: right;" :style="splitTextColor(split[3], pb_split(split[2])[3])">{{timeUntilSplit(convertDurationToSeconds(split[3]), convertDurationToSeconds(pb_split(split[2])[3]))}}</th>
                 </tr>
             </table>
+            <br>
             <button class="buttonStyle" @click="save_pb_splits">Save PB Splits</button>
             <button class="buttonStyle" @click="splits_clear">Clear Splits</button>
-            <button @click="increment('attempt_number')" class="buttonStyle">Increment</button>
-            <button @click="decrement('attempt_number')" class="buttonStyle">Decrement</button><br>
+            <div></div>
+            <br>
         </div>
         <div v-show="help_menus == `Hotkeys`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <table style="text-align: left; line-height: 16px;">
@@ -617,7 +615,6 @@
     </div>
 
 <!------ JAVASCRIPT --------------------------------------------------------------------------------------------------------------------->
-    <!-- <script src="https://unpkg.com/@microsoft/signalr@latest/dist/browser/signalr.min.js"></script>  -->
     <script src="https://unpkg.com/@microsoft/signalr@7.0.14/dist/browser/signalr.min.js"></script> 
     <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script>
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
@@ -632,5 +629,6 @@
     <script src="data/settings.js"></script>
     <script src="data/saved_settings.js"></script>
     <script src="data/deprecated_autosplitter.js"></script>
+    <script src="data/autosplitter.js"></script>
     <script type="text/javascript" src="vue.js"></script>
 </body>
