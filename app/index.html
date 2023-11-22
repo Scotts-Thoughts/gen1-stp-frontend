@@ -24,13 +24,13 @@
                         :style="{
                             'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`,
                             'filter': `saturate(${imageSat}%)
-                            drop-shadow(0 0 0.5px #000)
-                            drop-shadow(0 0 0.5px #000)
-                            drop-shadow(0 0 0.5px #000)
-                            drop-shadow(0 0 0.5px #000)
-                            drop-shadow(0 0 0.5px #000)
-                            drop-shadow(0 0 0.5px #000)
-                            drop-shadow(4px 4px 4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(3px 3px 3px #000)
                             `
                         }" 
                         :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
@@ -356,7 +356,7 @@
             <br>
             <br>
             <div>General Settings:</div>
-            <button class="buttonStyle" @click="save_pb_splits">Save PB Splits</button>
+            <!-- <button class="buttonStyle" onClick="openVersionSplits()">Open Splits Folder</button> -->
             <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
             <button class="buttonStyle" onClick="openFolder('battle_summaries')">Battle Summaries</button>
             <button class="buttonStyle" onClick="window.location.reload();">Reload Overlay</button>

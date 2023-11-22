@@ -167,6 +167,7 @@
     height: 1080px;
     opacity: 0.9;
     background-image: var(--url);
+    /* filter: drop-shadow(1px 1px 1px #000000c5); */
     /* background-image: url(images/enemy_area/Electric.png); */
     pointer-events: none; /* optional: this makes the image not clickable, so you can click the elements behind it */
     isolation: isolate; /* optional: this restricts the color blending only to this layer, just to be safe */

@@ -24,6 +24,31 @@ const MyStorage = new Proxy({}, {
 function openFolder(folderName) {
     require('child_process').exec(`start .\\${folderName}\\`);
 }
+// // Open the folder ./splits/ in the file explorer with node.js
+// function openVersionSplits() {
+//     var gameName = this.mapper.properties.meta.gameName
+//     var folderName = "splits\\Pokemon Yellow"
+//     if (gameName == "Pokemon Yellow") {
+//         folderName = "splits\\Pokemon Yellow"
+//     }
+//     if (gameName == "Pokemon Red and Blue") {
+//         folderName = "splits\\Pokemon Red and Blue"
+//     }
+//     if (gameName == "Pokemon Crystal") {
+//         folderName = "splits\\Pokemon Crystal"
+//     }
+//     if (gameName == "Pokemon Emerald") {
+//         folderName = "splits\\Pokemon Emerald"
+//     }
+//     if (gameName == "Pokemon FireRed") {
+//         folderName = "splits\\Pokemon FireRed"
+//     }
+//     if (gameName == "Pokemon FireRed") {
+//         folderName = "splits\\Pokemon FireRed"
+//     }
+//     console.log(`.\\${folderName}\\`)
+//     require('child_process').exec(`start .\\${folderName}\\`);
+// }
 
 function downloadFile(content, downloadFileName) {
     const blob = new Blob([content], {type: "application/octet-stream"});
@@ -365,7 +390,7 @@ function logData(gameName, str, file_name, starterName, log_type) {
             "statusCondition,type1,type2,experience," +
             "ROM,Species,Trainer,Start Time,Real Time,Game Time,Level,Resets," +
             "RTHours,RTMinutes,RTSeconds,RTMilliseconds,Move 1,Move 2,Move 3,Move 4," +
-            "Hp,Max HP,Attack,Defense,Sp. Attack,Sp. Defense,Speed," +
+            "Hp,Max HP,Attack,Defense,Sp. Attack,Sp. Defense,Speed,Attack DV,Defense DV,Speed DV,Special DV," +
             "StatExp HP,StatExp Attack,StatExp Def,StatExp Sp. Attack,StatExp Sp. Defense,StatExp Speed," +
             "Attack Stage,Defense Stage,Sp. Attack Stage,Sp. Defense Stage,Speed Stage,Accuracy Stage,Evasion Stage," +
             "Battle Attack,Battle Defense,Battle Sp. Attack,Battle Sp. Defense,Battle Speed," +
@@ -2339,6 +2364,10 @@ const app = Vue.createApp({
                 let statExp_spA = this.mapper.properties.player.team[0].statExpSpecial.value
                 let statExp_spD = this.mapper.properties.player.team[0].statExpSpecial.value
                 let statExp_spe = this.mapper.properties.player.team[0].statExpSpeed.value
+                let dvAttack = this.mapper.properties.player.team[0].dvAttack.value
+                let dvDefense = this.mapper.properties.player.team[0].dvDefense.value
+                let dvSpeed = this.mapper.properties.player.team[0].dvSpeed.value
+                let dvSpecial = this.mapper.properties.player.team[0].dvSpecial.value
                 let mod_atk = this.mapper.properties.battle.yourPokemon.modStageAttack.value
                 let mod_def = this.mapper.properties.battle.yourPokemon.modStageDefense.value
                 let mod_spA = this.mapper.properties.battle.yourPokemon.modStageSpecial.value
@@ -2446,6 +2475,7 @@ const app = Vue.createApp({
                     move1, move2, move3, move4, move1pp, move2pp, move3pp, move4pp, move1ppUp, move2ppUp, move3ppUp, move4ppUp,
                     hp, maxHp, atk, def, spA, spD, spe,
                     statExp_hp, statExp_atk, statExp_def, statExp_spA, statExp_spD, statExp_spe,
+                    dvAttack, dvDefense, dvSpeed, dvSpecial,
                     mod_atk, mod_def, mod_spA, mod_spD, mod_spe, mod_acc, mod_eva,
                     battle_atk, battle_def, battle_spA, battle_spD, battle_spe,
                     patch_frameCount, patch_oWFrameCount, patch_battleFrameCount, patch_menuFrameCount, patch_introsFrameCount,
