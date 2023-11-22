@@ -499,7 +499,7 @@ const app = Vue.createApp({
             starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             
-            dvSetting:                  "Max", //Max, Min, NPC, Max with Min Atk, or Random
+            dvSetting:                  MyStorage["this.dvSetting"] ?? "Max", //Max, Min, NPC, Max with Min Atk, or Random
             trashCans:                  MyStorage["this.trashCans"] ?? true, //solves the trash can puzzle
             options:                    MyStorage["this.options"] ?? true, //shows the options menu when set to true
             gametimeDisplay:            MyStorage["this.gametimeDisplay"] ?? false, //shows the options menu when set to true
@@ -720,10 +720,6 @@ const app = Vue.createApp({
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
             if (newProp == true && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.set(25, false) }
         },   
-        // viridianForest(newProp) {
-        //     if (newProp == false && this.mapper.properties.overworld.map.value == "Viridian Forest") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
-        //     if (newProp == true && this.mapper.properties.overworld.map.value == "Viridian Forest") { this.mapper.properties.overworld.encounterRate.set(25, false) }
-        // },   
         route3(newProp) {
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 3") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
             if (newProp == true && this.mapper.properties.overworld.map.value == "Route 3") { this.mapper.properties.overworld.encounterRate.set(20, false) }
@@ -1184,12 +1180,12 @@ const app = Vue.createApp({
                 retro.pause()
             }
         },
-        resetTime() {
-            this.timer_pause = true
-            this.timer_startTime = 0
-            this.timer_pause_time = 0
-            this.timer_formatted_time = [ "0", ".00" ]
-        },
+        // resetTime() {
+        //     this.timer_pause = true
+        //     this.timer_startTime = 0
+        //     this.timer_pause_time = 0
+        //     this.timer_formatted_time = [ "0", ".00" ]
+        // },
         newRun() {
             this.timer_pause = true
             this.most_recent_move = ""
@@ -1226,21 +1222,6 @@ const app = Vue.createApp({
             if (this.state == "No Pokemon" || this.mapper.properties.player.team[0].species.value == null) {
                 return this.g1PokemonData[this.starterName]["type" + typeNumber.toString()]?.toLowerCase()
             }
-        },
-        save_all_settings() {
-            const propertiesToSave = [
-                "route1", "viridianForest", "route3", "mtMoon", "route6", 
-                "rockTunnel", "pokemonTower", "safariZone", "mansion", "help_menus", 
-                "dvSetting", "trashCans", "options", "gametimeDisplay", "resetCounter", 
-                "playerResets", "route21", "route22", "victoryRoad", "route24", "powerPlant", 
-                "blackouts_as_resets", "showCritMultiplierInEP", "show_wild_battles", 
-                "battleGraphic", "showAllTrainers", "showSpecialTrainerGraphics", 
-                "battlePopUps", "rockTunnelDarkness", "goal_level", "goal_speed", 
-                "viridian_forest, blackout_counter"
-            ];
-            propertiesToSave.forEach(prop => {
-                this.set_setting_prop(`this.${prop}`, this[prop]);
-            });
         },
         load_all_settings() {
             this.route1 = MyStorage["this.route1"] ?? true
@@ -2260,11 +2241,6 @@ const app = Vue.createApp({
                 }
             }
         })
-        // this.mapper.properties.events.beatChampion.change((newProp) => {
-        //     if (newProp.value == true) {
-        //         this.game_over = true;
-        //     }
-        // })
         this.mapper.properties.player.name.change((newProp) => {
             if (this.game_over == true && newProp.value == "NINTEN") {
                 this.game_over = false;
