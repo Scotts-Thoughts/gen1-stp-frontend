@@ -2729,7 +2729,7 @@ const app = Vue.createApp({
                 if (this.mapper.properties.player.team[1].species.value == "Pidgey") {
                     this.mapper.properties.overworld.encounterRate.set(0, false) 
                 }
-                else if (this.mapper.properties.player.team[1].species.value == undefined) {
+                else if (this.mapper.properties.player.team[1].species == null) {
                     const viridianForestPidgey = 0x24
                     const viridianForestEncounterRate = 0x19
                     const pidgeyLevelFour = 0x04
@@ -2800,7 +2800,7 @@ const app = Vue.createApp({
                 if (this.mapper.properties.player.team[1].species.value == "Pidgey") {
                     this.mapper.properties.overworld.encounterRate.set(0, false) 
                 }
-                else if (this.mapper.properties.player.team[1].species.value == undefined) {
+                else if (this.mapper.properties.player.team[1].species == null) {
                     const viridianForestPidgey = 0x24
                     const viridianForestEncounterRate = 0x19
                     const pidgeyLevelFour = 0x04

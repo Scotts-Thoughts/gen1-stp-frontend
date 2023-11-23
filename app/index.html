@@ -610,6 +610,11 @@
             <div>Accuracy: {{g1MoveData[capitalization_format(this.most_recent_move)]?.Accuracy}}</div>
             <div>PP: {{g1MoveData[capitalization_format(this.most_recent_move)]?.PP}}</div>
             <div>Move Description: {{g1MoveData[capitalization_format(this.most_recent_move)]?.Description}}</div>
+            <div>Game Over: {{game_over}}</div>
+            <div>PlayerID: {{mapper?.properties?.player.playerId.value}}</div>
+            <div>Internal PlayerID: {{playerId}}</div>
+            <div>Viridian Forest: {{viridian_forest}}</div>
+            <div>Species1: {{mapper?.properties.player.team[1].species}}</div>
         </div>
     </div>
 
