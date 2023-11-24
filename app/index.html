@@ -34,7 +34,7 @@
                             `
                         }" 
                         :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
-                    <div class="colored-image" style="--url: url(images/left_ui/Electric.png)"></div>
+                    <div class="colored-image" style="--url: url(images/left_ui/ui.png)"></div>
                     <img class="canvas" src="images/elements/overlay/gen1&2/gamearea.png" />
                     <img class="canvas" src="images/exp_bar/stats.png"/>
                     <img class="canvas" src="images/exp_bar/exp_bar.png" style="left: 1px;"/>
@@ -69,7 +69,7 @@
                         <div class="statsLabelStyle statsLabelsColumn2"><br>Spc:<br>Spd:<br></div>
                         <div class="statsheader">Base Stats</div>
                         <div class="statsColumnStyle statsColumn1">{{ g1PokemonData[starterName].base_hp }}<br>{{ g1PokemonData[starterName].base_atk }}<br>{{ g1PokemonData[starterName].base_def }}<br></div>
-                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName].base_spd) }}%</div>
+                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]?.base_spd) }}%</div>
                         <div class="statsColumnStyle statsColumn2"><br>{{ g1PokemonData[starterName].base_spc }}<br>{{ g1PokemonData[starterName].base_spd }}<br></div>
                     </div>
                     <!-- OVERWORLD STATS --------------------------------------------------------------------------->
@@ -250,7 +250,7 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <div class="colored-image" style="--url: url(images/movepool_border/Electric.png)"></div>
+                        <div class="colored-image" style="--url: url(images/movepool_border/ui.png)"></div>
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                 </transition>
@@ -611,10 +611,10 @@
             <div>PP: {{g1MoveData[capitalization_format(this.most_recent_move)]?.PP}}</div>
             <div>Move Description: {{g1MoveData[capitalization_format(this.most_recent_move)]?.Description}}</div>
             <div>Game Over: {{game_over}}</div>
-            <div>PlayerID: {{mapper?.properties?.player.playerId.value}}</div>
+            <!-- <div>PlayerID: {{mapper?.properties?.player.playerId.value}}</div>
             <div>Internal PlayerID: {{playerId}}</div>
             <div>Viridian Forest: {{viridian_forest}}</div>
-            <div>Species1: {{mapper?.properties.player.team[1].species}}</div>
+            <div>Species1: {{mapper?.properties.player.team[1].species}}</div> -->
         </div>
     </div>
 
