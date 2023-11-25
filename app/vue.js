@@ -518,6 +518,7 @@ const app = Vue.createApp({
         return {
             ready: false,
             mapper: null,
+            state: "Base Stats",
 
             // USER CONFIG --------------------------------------------------------------------------------------//
             // Most settings here save automatically to MyStorage. If you want to add a new setting and have it save define it within "saved_settings.js"
@@ -600,20 +601,20 @@ const app = Vue.createApp({
             auto_save_settings:      auto_save_settings,
             deprecated_autosplitter: deprecated_autosplitter,
             autosplitter:            autosplitter,
+            textures:                textures,
             
             //VARS ---------------------------------------------------------------------------------------------//
             pkmnMoves:       ["move1","move2","move3","move4"],
             pkmnSlots:       [0, 1, 2, 3, 4, 5],
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
-            state: "Base Stats",
             prevSpecies:     undefined,
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
             oldExpValue: 0,
 
             //resets
-            playerId: 0,
+            playerId: MyStorage["playerId"] ?? 0,
             playerName: "NINTEN",
             resetCatcher: "NINTEN",
             playerResets: MyStorage["playerResets"] ?? 0,
@@ -650,7 +651,12 @@ const app = Vue.createApp({
             backgroundScale:       MyStorage["backgroundScale"] ?? 100,
             backgroundUrl:         MyStorage["backgroundUrl"] ?? "",
             use_custom_background: MyStorage["use_custom_background"] ?? false,
-
+            backgroundXOffset:     MyStorage["backgroundXOffset"] ?? 0,
+            backgroundYOffset:     MyStorage["backgroundYOffset"] ?? 0,
+            backgroundTexture:     MyStorage["backgroundTexture"] ?? 'Bug 1',
+            backgroundBrightness:  MyStorage["backgroundBrightness"] ?? 100,
+            backgroundContrast:    MyStorage["backgroundContrast"] ?? 100,
+            backgroundSaturation:  MyStorage["backgroundSaturation"] ?? 100,
             //
             playerNameChoice: MyStorage["playerNameChoice"] ?? "NINTEN",
 
@@ -669,6 +675,12 @@ const app = Vue.createApp({
                 "attempt_number",
                 "finished_run_count",
                 "pb_time",
+                "backgroundXOffset",
+                "backgroundYOffset",
+                "backgroundTexture",
+                "backgroundBrightness",
+                "backgroundContrast",
+                "backgroundSaturation",
             ],
 
             //timer variables
@@ -693,11 +705,19 @@ const app = Vue.createApp({
 
     created() {
         if (MyStorage[this.starterName]) {
-            this.overlay_color = MyStorage[this.starterName]['overlay_color'] ?? "#000000";
-            this.imageXOffset = MyStorage[this.starterName]['imageXOffset'] ?? 0;
-            this.imageYOffset = MyStorage[this.starterName]['imageYOffset'] ?? 0;
-            this.imageScale = MyStorage[this.starterName]['imageScale'] ?? 1;
-            this.imageFlip = MyStorage[this.starterName]['imageFlip'] ?? false;
+            this.overlay_color = MyStorage[this.starterName].overlay_color ?? "#000000";
+            this.imageXOffset = MyStorage[this.starterName].imageXOffset ?? 0;
+            this.imageYOffset = MyStorage[this.starterName].imageYOffset ?? 0;
+            this.imageScale = MyStorage[this.starterName].imageScale ?? 1;
+            this.imageFlip = MyStorage[this.starterName].imageFlip ?? false;
+            this.imageSat = MyStorage[this.starterName].imageSat ?? 100
+            this.backgroundBlur = MyStorage[this.starterName].backgroundBlur ?? 0
+            this.backgroundScale = MyStorage[this.starterName].backgroundScale ?? 100
+            this.backgroundUrl = MyStorage[this.starterName].backgroundUrl ?? ""
+            this.use_custom_background = MyStorage[this.starterName].use_custom_background ?? false
+            this.backgroundXOffset = MyStorage[this.starterName].backgroundXOffset ?? 0
+            this.backgroundYOffset = MyStorage[this.starterName].backgroundYOffset ?? 0
+            this.backgroundTexture = MyStorage[this.starterName].backgroundTexture ?? 0
         }
         for (let i = 0; i < this.auto_save_settings.length; i++) {
             let propName = this.auto_save_settings[i];
@@ -849,7 +869,8 @@ const app = Vue.createApp({
             //update the saved starter in the overlay's local storage
             MyStorage.currentStarter = newValue
         },
-        playerId() {
+        playerId(newValue) {
+            MyStorage["playerId"] = newValue
             this.game_over = false;
             MyStorage["playerResets"] = 0
             this.playerResets = 0;
@@ -902,6 +923,19 @@ const app = Vue.createApp({
     },
 
     computed: {
+        dropdownDownMenuKeys() {
+            return {
+                textures: Object.keys(this.textures)
+            }
+        },
+        // dropshadowFix() {
+        //     if (imageFlip) {
+        //         return ""
+        //     }
+        //     else {
+        //         return "-"
+        //     }
+        // },
         splitCountdown() {
             if (!this.ready) { return }
             var trainer = this.mapper?.properties?.battle?.trainer?.class?.value + "_" + this.mapper?.properties?.battle?.trainer?.number?.value
@@ -1244,7 +1278,7 @@ const app = Vue.createApp({
             if (this.state != `Battle`) {
                 return data["type" + typeNumber.toString()].toLowerCase()
             }
-            if (this.state == "No Pokemon" || this.mapper.properties.player.team[0].species.value == null) {
+            if (this.state == "Base Stats" || this.mapper.properties.player.team[0].species.value == null) {
                 return this.g1PokemonData[this.starterName]["type" + typeNumber.toString()]?.toLowerCase()
             }
         },
@@ -1289,6 +1323,27 @@ const app = Vue.createApp({
             this.attempt_number = MyStorage[`${this.starterName}`].attempt_number ?? 0
             this.finished_run_count = MyStorage[`${this.starterName}`].finished_run_count ?? 0
             this.pb_time = MyStorage[`${this.starterName}`].pb_time ?? "None"
+            this.playerId = MyStorage["playerId"] ?? 0
+
+            //Pokemon settings for local storage
+            this.overlay_color = MyStorage[this.starterName].overlay_color ?? "#000000"
+            this.imageXOffset =  MyStorage[this.starterName].imageXOffset ?? 0
+            this.imageYOffset =  MyStorage[this.starterName].imageYOffset ?? 0
+            this.imageScale =    MyStorage[this.starterName].imageScale ?? 1
+            this.imageFlip =     MyStorage[this.starterName].imageFlip ?? false
+            this.imageSat =      MyStorage[this.starterName].imageSat ?? 100
+
+            //background texture settings
+            this.backgroundBlur =        MyStorage[this.starterName].backgroundBlur ?? 0
+            this.backgroundScale =       MyStorage[this.starterName].backgroundScale ?? 100
+            this.backgroundUrl =         MyStorage[this.starterName].backgroundUrl ?? ""
+            this.use_custom_background = MyStorage[this.starterName].use_custom_background ?? false
+            this.backgroundXOffset =     MyStorage[this.starterName].backgroundXOffset ?? 0
+            this.backgroundYOffset =     MyStorage[this.starterName].backgroundYOffset ?? 0
+            this.backgroundTexture =     MyStorage[this.starterName].backgroundTexture ?? 'Bug 1'
+            this.backgroundBrightness =  MyStorage[this.starterName].backgroundBrightness ?? 100
+            this.backgroundContrast =    MyStorage[this.starterName].backgroundContrast ?? 100
+            this.backgroundSaturation =  MyStorage[this.starterName].backgroundSaturation ?? 100
         },
         //string can be: clear, increment, decrement
         resets_clear() {
@@ -1554,8 +1609,14 @@ const app = Vue.createApp({
         select_starter(pokemon_species) {
             this.starterName = pokemon_species
         },
-        g1CritRate(baseSpeed) {
-            return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
+        g1CritRate(pkmnData) {
+            var baseSpeed = pkmnData?.base_spd
+            if (baseSpeed) {
+                return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
+            }
+            else {
+                return this.g1PokemonData[this.starterName].crit_rate
+            }
         },
         move_name(move_string) {
             if (move_string == null) { return "" }
@@ -1630,16 +1691,16 @@ const app = Vue.createApp({
             const pkmn = this.dataSearch(gen1PkmnData, species)
             if (pkmn.initial_moveset == undefined) {  }
             let obj = {
-                initial: pkmn.initial_moveset.map(x => {
+                initial: pkmn.initial_moveset?.map(x => {
                     return this.dataSearch(moveData, x)
                 }),
-                level: pkmn.levelup_moveset.map(x => {
+                level: pkmn.levelup_moveset?.map(x => {
                     return {
                         ...{Level: x[0]},
                         ...this.dataSearch(moveData, x[1]) //searching for index 1
                     }
                 }),     
-                tmhm: pkmn.tm_hm_learnset.map(x => {
+                tmhm: pkmn.tm_hm_learnset?.map(x => {
                     return {
                         ...{tmhm: tmhmMapping.find(y => y.Move == x)?.tmhmIndex??"TM01"},
                         ...this.dataSearch(moveData, x)
@@ -2645,17 +2706,28 @@ const app = Vue.createApp({
         //*blackout tracking
         //track when the player has a blackout
         this.mapper.properties.player.team[0].hp.change((newProp, oldProp) => {
-            if (newProp.value > 0 && this.blackout == true) {
-                this.blackout = false;
-                this.blackout_counter++;
-            }
+            // if (newProp.value > 0 && this.blackout == true) {
+            //     this.blackout = false;
+            //     this.blackout_counter++;
+            // }
+            // this.blackout = true;
+
             if (newProp.value == 0 && this.state == `Battle`) {
                 this.blackout = true;
             }
-            if (this.state == `Base Stats`) {
+            console.log(`HP changed to ${newProp.value} and the blackout flag is ${this.blackout}`)
+            console.log(`Blackout Flag ${this.blackout}`)
+            // if (this.state == `Base Stats`) {
+            //     this.blackout = false;
+            // }
+        })
+        //new blackout tracking for loop processed gamestate
+        this.mapper.properties.meta.state.change((newProp, oldProp) => {
+            if (newProp.value == "Overworld" && oldProp.value == "Battle" && this.blackout == true) {
+                this.blackout_counter++;
                 this.blackout = false;
             }
-        })
+        });
 
         // Encounters (set initial value)
         if (this.route1 == false && this.mapper.properties.overworld.map.value == "Route 1") {
@@ -2729,7 +2801,7 @@ const app = Vue.createApp({
                 if (this.mapper.properties.player.team[1].species.value == "Pidgey") {
                     this.mapper.properties.overworld.encounterRate.set(0, false) 
                 }
-                else if (this.mapper.properties.player.team[1].species == null) {
+                else if (this.mapper.properties.player.team[1].species.value == null) {
                     const viridianForestPidgey = 0x24
                     const viridianForestEncounterRate = 0x19
                     const pidgeyLevelFour = 0x04
@@ -2800,7 +2872,7 @@ const app = Vue.createApp({
                 if (this.mapper.properties.player.team[1].species.value == "Pidgey") {
                     this.mapper.properties.overworld.encounterRate.set(0, false) 
                 }
-                else if (this.mapper.properties.player.team[1].species == null) {
+                else if (this.mapper.properties.player.team[1].species.value == null) {
                     const viridianForestPidgey = 0x24
                     const viridianForestEncounterRate = 0x19
                     const pidgeyLevelFour = 0x04
@@ -3014,12 +3086,10 @@ const app = Vue.createApp({
         })
 
         //the Pokemon species and then it changes, update the sprite
-        this.mapper.properties.player.team[0].species.change(async (x) => {
-            if (x.value == undefined) { this.load_pokemon_sprite_settings(this.starterName) }
-            this.load_pokemon_sprite_settings(x.value)
-        })
-
-        this.load_pokemon_sprite_settings(this.s1dynamicReset.species.value)
+        // this.mapper.properties.player.team[0].species.change(async (x) => {
+        //     if (x.value == undefined) { this.load_pokemon_sprite_settings(this.starterName) }
+        //     this.load_pokemon_sprite_settings(x.value)
+        // })
 
         //EXP BAR
         var species = this.s1dynamicReset.species.value;
@@ -3126,6 +3196,9 @@ const app = Vue.createApp({
                 this.set_setting_prop("this.cycleIndex_screens", this.cycleIndex_screens)
                 this.lastExecuted = Date.now();
             }
+        });
+        keyhook.registerShortCut('F24', async () => {
+            this.pauseUnpauseTime()
         });
     },
 }).mount('#app')

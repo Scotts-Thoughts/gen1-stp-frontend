@@ -234,6 +234,25 @@ box-shadow:
     ;
 }
 
+.ui_timer {
+    width: 1920px;
+    height: 1080px;
+}
+
+.svg-container {
+    width: 1920px; /* Set to the width of your canvas */
+    height: 1080px; /* Set to the height of your canvas */
+    overflow: hidden; /* Prevents any potential overflow if the viewbox is smaller */
+    position: absolute;
+}
+
+.svg-image {
+    width: 100%;
+    height: auto;
+    /* display: block;  */
+    /* position: absolute; */
+}
+
 .note {
     font-size: 15px; line-height: 16px;
 }
@@ -401,7 +420,18 @@ box-shadow:
       drop-shadow(0 0 var(--shadow-size) var(--shadow-color))
       drop-shadow(5px 5px 5px var(--shadow-color));
 }
-
+.shadow_flipped {
+    --shadow-size: 0.5px;
+    --shadow-color: black;
+    filter:
+      drop-shadow(0 0 var(--shadow-size) var(--shadow-color))
+      drop-shadow(0 0 var(--shadow-size) var(--shadow-color))
+      drop-shadow(0 0 var(--shadow-size) var(--shadow-color))
+      drop-shadow(0 0 var(--shadow-size) var(--shadow-color))
+      drop-shadow(0 0 var(--shadow-size) var(--shadow-color))
+      drop-shadow(0 0 var(--shadow-size) var(--shadow-color))
+      drop-shadow(-5px 5px 5px var(--shadow-color));
+}
 .enemyPng {
     display: block;
     position: absolute;
@@ -726,7 +756,7 @@ box-shadow:
     justify-content: center; 
     align-items: center;
     align-content: center;
-    border: 1px solid #ff0000;
+    border: 1px solid #ff000000;
     filter: drop-shadow(8px 8px 15px #000000);
     width: 400px;
     height: 200px;
@@ -1038,6 +1068,9 @@ box-shadow:
     filter: drop-shadow(1px 1px 2px #000)
 }
 /* UI ELEMENTS */
+.ui_shadow {
+    filter: drop-shadow(0px 0px 3px #0000004b)
+}
 .timerUI {
 	display: block;
     max-width:1920px;
