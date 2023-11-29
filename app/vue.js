@@ -2715,8 +2715,6 @@ const app = Vue.createApp({
             if (newProp.value == 0 && this.state == `Battle`) {
                 this.blackout = true;
             }
-            console.log(`HP changed to ${newProp.value} and the blackout flag is ${this.blackout}`)
-            console.log(`Blackout Flag ${this.blackout}`)
             // if (this.state == `Base Stats`) {
             //     this.blackout = false;
             // }
