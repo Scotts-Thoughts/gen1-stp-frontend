@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Exeggutor,Rival1-Lab,46,0,0,5,0:02,10.998,BARRAGE,HYPNOSIS,,
+NINTEN,Exeggutor,Brock,12:23,1,0,13,0:42,75.094,BARRAGE,HYPNOSIS,,
+NINTEN,Exeggutor,Misty,21:23,1,0,21,1:18,31.578,BARRAGE,HYPNOSIS,BIDE,
+NINTEN,Exeggutor,Rival2-Nugget Bridge,22:14,1,0,21,1:21,27.407,BARRAGE,HYPNOSIS,BIDE,

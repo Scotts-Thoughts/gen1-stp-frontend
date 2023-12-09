@@ -868,6 +868,7 @@ const app = Vue.createApp({
 
             //update the saved starter in the overlay's local storage
             MyStorage.currentStarter = newValue
+            this.load_all_settings()
         },
         playerId(newValue) {
             MyStorage["playerId"] = newValue

@@ -273,7 +273,7 @@
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (state == `Battle` || state == `From Battle`)">
                             <!-- <div class="colored-image" style="--url: url(ui/ui_accuracy.svg)"></div> -->
-                            <div class="colored-image" style="--url: url(images/pop_ups/accuracy/Electric.png)"></div>
+                            <div class="colored-image" style="--url: url(images/pop_ups/accuracy/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
@@ -281,7 +281,7 @@
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (state == `Battle` || state == `From Battle`)">
                             <!-- <div class="colored-image" style="--url: url(ui/ui_evasion.svg)"></div> -->
-                            <div class="colored-image" style="--url: url(images/pop_ups/evasion/Electric.png)"></div>
+                            <div class="colored-image" style="--url: url(images/pop_ups/evasion/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
@@ -289,7 +289,7 @@
                     <transition name="fade">
                         <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (state == `Battle` || state == `From Battle`)">
                             <!-- <div class="colored-image" style="--url: url(ui/ui_screens.svg)"></div> -->
-                            <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div>
+                            <div class="colored-image" style="--url: url(images/pop_ups/screens/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>
@@ -297,7 +297,7 @@
                     <transition name="fade">
                         <div v-if="key_F17 == `bonks`">
                             <!-- <div class="colored-image" style="--url: url(ui/ui_bonks.svg)"></div> -->
-                            <div class="colored-image" style="--url: url(images/pop_ups/screens/Electric.png)"></div>
+                            <div class="colored-image" style="--url: url(images/pop_ups/screens/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle screensLabel">Bonks</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ map?.patch?.steps?.bonks }}</div>
                         </div>
