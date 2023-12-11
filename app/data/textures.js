@@ -9,6 +9,7 @@ const textures = {
     'Grass 1': 'images\\textures\\grass.png',
     'Ground 1': 'images\\textures\\ground.png',
     'Ice 1': 'images\\textures\\ice.png',
+    'Ice 2': 'images\\textures\\aurora.jpg',
     'Normal 1': 'images\\textures\\normal.png',
     'Poison 1': 'images\\textures\\poison.png',
     'Psychic 1': 'images\\textures\\psychic.png',

@@ -695,7 +695,7 @@ const app = Vue.createApp({
             time_split_start: "00:00:00:00",
             battle_start: 0,
             timer_settings: MyStorage["this.timer_settings"] ?? "Real-Time",
-            viridian_forest: MyStorage["this.viridian_forest"] ?? "Encounters On",
+            viridian_forest: MyStorage["viridian_forest"] ?? "Encounters On",
 
             //splits
             split_data: MyStorage["split_data"] ?? [],
@@ -824,6 +824,7 @@ const app = Vue.createApp({
             }
         },
         viridian_forest(newProp) {
+            MyStorage["viridian_forest"] = newProp
             const encountersOff = 0x00
             if (newProp == "Pidgey") {
                 if (this.mapper.properties.player.team[1].species.value == "Pidgey") {
@@ -1319,7 +1320,7 @@ const app = Vue.createApp({
             this.playerResets = MyStorage["playerResets"] ?? 0
             this.goal_level = MyStorage["goal_level"] ?? 13
             this.goal_speed = MyStorage["goal_speed"] ?? 24
-            this.viridian_forest = MyStorage["this.viridian_forest"] ?? "Encounters On"
+            this.viridian_forest = MyStorage["viridian_forest"] ?? "Encounters On"
             this.pb_splits = MyStorage[`${this.starterName}_pb_splits`] ?? ["","","",""]
             this.attempt_number = MyStorage[`${this.starterName}`].attempt_number ?? 0
             this.finished_run_count = MyStorage[`${this.starterName}`].finished_run_count ?? 0
@@ -2735,6 +2736,9 @@ const app = Vue.createApp({
         else if (this.viridianForest == false && this.mapper.properties.overworld.map.value == "Viridian Forest") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
+        else if (this.viridian_forest == "Encounters Off") {
+            this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
+        }
         else if (this.viridian_forest == "Level" && this.mapper.properties.player.team[0].level.value >= this.goal_level && this.mapper.properties.player.team[1].species.value == "Pidgey") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
@@ -2788,6 +2792,9 @@ const app = Vue.createApp({
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.route6 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 6") {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
+            if (this.viridian_forest == "Encounters Off" && this.mapper.properties.overworld.map.value == "Viridian Forest") {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
             if (this.viridian_forest == "Level" && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[0].level.value >= this.goal_level && this.mapper.properties.player.team[1].species.value == "Pidgey") {
@@ -2861,6 +2868,9 @@ const app = Vue.createApp({
         });
 
         this.mapper.properties.battle.type.change(async (newProp) => {
+            if (this.viridian_forest == "Encounters Off" && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+                this.mapper.properties.overworld.encounterRate.set(0, false) 
+            }
             if (this.viridian_forest == "Level" && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[0].level.value >= this.goal_level && this.mapper.properties.player.team[1].species.value == "Pidgey") {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
             }
