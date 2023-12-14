@@ -2901,6 +2901,40 @@ const app = Vue.createApp({
             }
         });
 
+        this.mapper.properties.overworld.encounters.common[0].pokemon.change(async (newProp) => {
+            if (this.viridian_forest == "Pidgey" && newProp.value == "Caterpie" && this.mapper.properties.overworld.map.value == "Viridian Forest") {
+                const viridianForestPidgey = 0x24
+                const viridianForestEncounterRate = 0x19
+                const pidgeyLevelFour = 0x04
+                const pidgeyLevelSix = 0x06
+                const pidgeyLevelEight = 0x08
+                if (this.mapper.properties.player.team[1].species.value == "Pidgey") {
+                    this.mapper.properties.overworld.encounterRate.set(0, false) 
+                }
+                else {
+                    await Promise.all([
+                        await this.mapper.properties.overworld.encounters.common[0].level.setBytes([pidgeyLevelFour], false),
+                        await this.mapper.properties.overworld.encounters.common[0].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.common[1].level.setBytes([pidgeyLevelFour], false),
+                        await this.mapper.properties.overworld.encounters.common[1].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.common[2].level.setBytes([pidgeyLevelFour], false),
+                        await this.mapper.properties.overworld.encounters.common[2].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.common[3].level.setBytes([pidgeyLevelSix], false),
+                        await this.mapper.properties.overworld.encounters.common[3].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[0].level.setBytes([pidgeyLevelSix], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[0].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[1].level.setBytes([pidgeyLevelSix], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[1].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[2].level.setBytes([pidgeyLevelEight], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[2].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([pidgeyLevelEight], false),
+                        await this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([viridianForestPidgey], false),
+                        await this.mapper.properties.overworld.encounterRate.setBytes([viridianForestEncounterRate], false),
+                    ]) 
+                }
+            }
+        });
+
         this.mapper.properties.battle.type.change(async (newProp) => {
             if (this.viridian_forest == "Encounters Off" && this.mapper.properties.overworld.map.value == "Viridian Forest") {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 

@@ -1,0 +1,7 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Zapdos,Rival1-Lab,40,0,0,5,0:02,6.25,DRILL PECK,THUNDERSHOCK,,
+NINTEN,Zapdos,Brock,3:35,0,0,11,0:13,27.109,DRILL PECK,THUNDERSHOCK,,
+NINTEN,Zapdos,Misty,6:33,0,0,17,0:25,13.25,DRILL PECK,THUNDERSHOCK,,
+NINTEN,Zapdos,Rival2-Nugget Bridge,7:15,0,0,18,0:28,20.249,DRILL PECK,THUNDERSHOCK,,
+NINTEN,Zapdos,Cerulean Rocket,9:56,0,0,21,0:38,6.718,DRILL PECK,THUNDERSHOCK,,
+NINTEN,Zapdos,Rival3-SS Anne,11:56,0,0,24,0:46,13.703,DRILL PECK,THUNDERSHOCK,,
