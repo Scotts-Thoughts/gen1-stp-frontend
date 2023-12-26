@@ -602,6 +602,7 @@ const app = Vue.createApp({
             deprecated_autosplitter: deprecated_autosplitter,
             autosplitter:            autosplitter,
             textures:                textures,
+            // platinum_moves:          platinum_moves,
             
             //VARS ---------------------------------------------------------------------------------------------//
             pkmnMoves:       ["move1","move2","move3","move4"],
@@ -2673,7 +2674,6 @@ const app = Vue.createApp({
                 switch (trainer) {
                     case "RIVAL1":  
                     case "RIVAL2":  
-                    case "RIVAL3":  
                     case "BROCK":   
                     case "MISTY":   
                     case "LT.SURGE":
