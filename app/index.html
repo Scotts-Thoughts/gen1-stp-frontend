@@ -20,7 +20,7 @@
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
                     <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
-                    <img class="pokemon_art" ref="pokemon_art"
+                    <img v-show="mapper.properties.meta.gameName == 'Yellow'" class="pokemon_art" ref="pokemon_art"
                         :style="{
                             'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`,
                             'filter': `saturate(${imageSat}%)
@@ -34,6 +34,20 @@
                             `
                         }" 
                         :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
+                    <img v-show="mapper.properties.meta.gameName == 'Red and Blue'" class="pokemon_art2" ref="pokemon_art"
+                        :style="{
+                            'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`,
+                            'filter': `saturate(${imageSat}%)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(${imageFlip ? '-3px' : '3px'} 3px 3px #000)
+                            `
+                        }" 
+                        :src="`images/pokemon/Red_and_Blue/${s1dynamicReset.species.value}.png`" />
                     <div class="colored-image" style="--url: url(images/left_ui/ui.png)"></div>
                     <!-- <div class="svg-container">
                         <div class="colored-image" style="--url: url(ui/ui_timer.svg)"></div>
@@ -179,7 +193,8 @@
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
                                 <div v-show="currentTrainer.pokemon[x]?.name != undefined" :class="`ePkmnStyle ePkmn${x + 1}`">
-                                    <img class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/${currentTrainer.pokemon[x]?.name}.png`"/>
+                                    <img v-if="mapper.properties.meta.gameName == 'Yellow'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/${currentTrainer.pokemon[x]?.name}.png`"/>
+                                    <img v-else-if="mapper.properties.meta.gameName == 'Red and Blue'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/Red_and_Blue/${currentTrainer.pokemon[x]?.name}.png`"/>
                                     <div class="ePkmnSpecies opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).species">{{currentTrainer.pokemon[x]?.name}}</div>
                                     <img class="enemyStatsArea" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faintStats" :src="`images/enemy_area/stats/${x}.png`"/>
                                     <div class="ePkmnMoveStyle ePkmnMove1 opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{move_name(currentTrainer.pokemon[x]?.moves[0])}}</div>
@@ -296,9 +311,8 @@
                     </transition>
                     <transition name="fade">
                         <div v-if="key_F17 == `bonks`">
-                            <!-- <div class="colored-image" style="--url: url(ui/ui_bonks.svg)"></div> -->
                             <div class="colored-image" style="--url: url(images/pop_ups/screens/default.png)"></div>
-                            <div class="popUpsStyle popUpLabelStyle screensLabel">Bonks</div>
+                            <div class="genericLabels resetsLabel bonksLabel">Bonks</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ map?.patch?.steps?.bonks }}</div>
                         </div>
                     </transition>
@@ -306,7 +320,8 @@
                 <!--------- EXP BAR -------------------------------------------------------------------------------------------------------------------->
                 <div class="expBar">
                     <img class="expLabelGen1" src="images/exp_bar/exp_label.png"/>
-                    <div class="expTextGen2">Exp:</div>
+                    <div class="expPercentage">78%</div>
+                    <!-- <div class="expTextGen2">Exp:</div> -->
                     <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
                 </div>
                 <!---------- GAMETIME ------------------------------------------------------------------------------------------------------------------->
@@ -352,8 +367,8 @@
             <br>
             <br>
             <div>Pokemon Image Settings</div>
-            X-Offset: <input type="range" min="-125" max="125" v-model="imageXOffset"/><br>
-            Y-Offset: <input type="range" min="-125" max="125"v-model="imageYOffset"/><br>
+            X-Offset: <input type="range" min="-400" max="400" v-model="imageXOffset"/><br>
+            Y-Offset: <input type="range" min="-400" max="400"v-model="imageYOffset"/><br>
             Scale: <input type="range" min="0.3" max="2" step="0.02" v-model="imageScale"/><br>
             Saturation: <input type="range" min="90" max="150" step="1" v-model="imageSat"/><br>
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
@@ -647,6 +662,10 @@
             <div>Resets: {{playerResets}}</div>
             <div>Blackouts: {{blackout_counter}}</div>
             <div>Blackout Flag: {{blackout}}</div>
+            <br>
+            <div>Trainer: {{mapper?.properties?.battle?.trainer?.class?.value}}_{{mapper?.properties?.battle?.trainer?.number?.value}}</div>
+            <div>GameName: {{mapper?.properties?.meta?.gameName?.value}}</div>
+            <div>Generation: {{mapper?.properties?.meta?.generation?.value}}</div>
             <!-- <div>PlayerID: {{mapper?.properties?.player.playerId.value}}</div>
             <div>Internal PlayerID: {{playerId}}</div>
             <div>Viridian Forest: {{viridian_forest}}</div>

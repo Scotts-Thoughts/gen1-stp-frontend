@@ -1,5 +1,6 @@
 const textures = {
     'Bug 1': 'images\\textures\\bug.png',
+    'Bug 2 (Honey Comb)': 'images\\textures\\bug2.jpg',
     'Dragon 1': 'images\\textures\\Dragon.png',
     'Electric 1': 'images\\textures\\electric.png',
     'Fighting 1': 'images\\textures\\fighting.png',

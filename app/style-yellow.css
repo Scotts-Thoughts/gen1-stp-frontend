@@ -407,6 +407,19 @@ box-shadow:
     width: 420px;
     height: 420px;
 }
+.pokemon_art2 {
+    display: block;
+    /* border: 4px solid #ff0000; */
+    padding: 8px;
+    position: absolute;
+    font-family: play;
+    font-size: 24px;
+    line-height: 26px;
+    top: 340px;
+    left: -10px;
+    width: auto;
+    height: auto;
+}
 
 .shadow {
     --shadow-size: 0.5px;
@@ -648,9 +661,18 @@ box-shadow:
     left: 32px;
 }
 .resetsLabel {
-    font-size: 15px;
+    font-size: 13px;
     top: 330px;
     left: 28px;
+}
+.bonksLabel {
+    position: absolute;
+    border: 1px solid #00000000;
+    text-align: center;
+    width: 100px;
+    top: 438px;
+    left: 15px;
+    text-decoration: underline;
 }
 .expTextGen1 {
     position: absolute;
@@ -665,6 +687,19 @@ box-shadow:
     font-family: play;
     top: 46px;
     left: 25px;
+    z-index: 1005;
+    opacity: .55;
+}
+.expPercentage {
+    position: absolute;
+    border: 1px solid #00000000;
+    text-align: center;
+    width: 60px;
+    height: 40px;
+    font-size: 24px;
+    font-family: play;
+    top: 45px;
+    left: 21px;
     z-index: 1005;
     opacity: .55;
 }
@@ -1210,7 +1245,7 @@ box-shadow:
     position: absolute;
     font-size: 16px;
     font-family: titan;
-    top: 5px;
+    top: 3px;
     opacity: .72;
 }
 .labelMoves { left: 21px; }

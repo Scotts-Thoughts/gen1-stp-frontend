@@ -970,8 +970,8 @@ const app = Vue.createApp({
             }
         },
         pokemon_version_specific_data() {
-            if (this.mapper.properties.meta.gameName.value == "Pokemon Yellow") { return this.g1PokemonData }
-            if (this.mapper.properties.meta.gameName.value == "Pokemon Red and Blue") { return this.g1PokemonDataRB }
+            if (this.mapper.properties.meta.gameName.value == "Yellow") { return this.g1PokemonData }
+            if (this.mapper.properties.meta.gameName.value == "Red and Blue") { return this.g1PokemonDataRB }
         },
         gametimeHMS() {
             h = this.mapper.properties.gameTime.hours
@@ -1005,10 +1005,10 @@ const app = Vue.createApp({
             return f
         },
         currentTrainer() {
-            if (this.mapper.properties.meta.gameName.value == "Pokemon Yellow") { 
+            if (this.mapper.properties.meta.gameName.value == "Yellow") { 
                 return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] 
             }
-            else if (this.mapper.properties.meta.gameName.value == "Pokemon Red and Blue") { 
+            else if (this.mapper.properties.meta.gameName.value == "Red and Blue") { 
                 return g1RedBlueTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] 
             }
             else { 
@@ -1929,7 +1929,7 @@ const app = Vue.createApp({
               "rival6's team",
             ];
           
-            if (gameName == "Pokemon Yellow") {
+            if (gameName == "Yellow") {
               if (trainerName == "RIVAL1") {
                 return rival1Teams[trainerNumber - 1];
               } 
@@ -1943,7 +1943,7 @@ const app = Vue.createApp({
                 return trainerName.toLowerCase() + "'s team";
               }
             } 
-            else if (gameName == "Pokemon Red and Blue") {
+            else if (gameName == "Red and Blue") {
               if (trainerName == "RIVAL1" && (trainerNumber == 1 || trainerNumber == 2 || trainerNumber == 3)) {
                 return "rival1's team";
               } 
@@ -1978,8 +1978,9 @@ const app = Vue.createApp({
         //! Requires testing
         specialTrainerGraphics() {
             if (this.showSpecialTrainerGraphics) {
-              const { class: trainerClass, number: trainerNumber } = this.mapper.properties.battle.trainer;
-              if (this.mapper.properties.meta.gameName.value == "Pokemon Yellow") {
+              const trainerClass = this.mapper.properties.battle.trainer.class.value
+              const trainerNumber = this.mapper.properties.battle.trainer.number.value
+              if (this.mapper.properties.meta.gameName.value == "Yellow") {
                 switch (`${trainerClass}_${trainerNumber}`) {
                     case "LT.SURGE_1":
                         return "images/trainers/ltsurge.png";
@@ -2003,79 +2004,129 @@ const app = Vue.createApp({
                         return "images/trainers/RIVAL2.png";
                     case "RIVAL2_1":
                         return "images/trainers/RIVAL2.png";
+                    case "JR TRAINER F_5":
+                        return "images/trainers/JR TRAINER F_5.png";
+                    case "YOUNGSTER_1":
+                        return "images/trainers/BEN.png";
+                    case "POKEMANIAC_7":
+                        return "images/trainers/POKEMANIAC_7.png";
+                    case "SUPER NERD_2":
+                        return "images/trainers/FOSSIL_NERD.png";
+                    case "LASS_10":
+                        return "images/trainers/ODDISH_LASS.png";
+                    case "JR TRAINER F_10":
+                        return "images/trainers/JR TRAINER F_10.png";
+                    case "ROCKET_38":
+                        return "images/trainers/ROCKET_38.png";
+                    case "HIKER_9":
+                        return "images/trainers/HIKER_9.png";
+                    case "LASS_3":
+                        return "images/trainers/LASS_3.png";
+                    case "JR TRAINER F_1":
+                        return "images/trainers/GOLDEEN.png";
+                    case "ROCKET_25":
+                        return "images/trainers/HYPNO_SANDWICH.png";
+                    case "JR TRAINER F_3":
+                        return "images/trainers/JR TRAINER F_3.png";
+                    case "CHANNELER_10":
+                        return "images/trainers/AGATHAJR.png";
+                    case "BROCK_1":
+                        return "images/trainers/brock.png";
+                    case "MISTY_1":
+                        return "images/trainers/misty.png";
+                    case "ERIKA_1":
+                        return "images/trainers/erika.png";
+                    case "KOGA_1":
+                        return "images/trainers/koga.png";
+                    case "LORELEI_1":
+                        return "images/trainers/lorelei.png";
+                    case "BRUNO_1":
+                        return "images/trainers/bruno.png";
+                    case "AGATHA_1":
+                        return "images/trainers/agatha.png";
+                    case "LANCE_1":
+                        return "images/trainers/lance.png";
+                    default:
+                        return null;
                 }
               }
-              if (this.mapper.properties.meta.gameName.value == "Pokemon Red and Blue") {
+              if (this.mapper.properties.meta.gameName == "Red and Blue") {
                 switch (`${trainerClass}_${trainerNumber}`) {
                     case "LT.SURGE_1":
-                        return "images/trainers/LTSURGE-RED.png";
+                        return "images/trainers/Red_and_Blue/ltsurge.png";
                     case "SABRINA_1":
-                        return "images/trainers/SABRINA-RED.png";
+                        return "images/trainers/Red_and_Blue/sabrina.png";
                     case "BLAINE_1":
-                        return "images/trainers/BLAINE-RED.png";
+                        return "images/trainers/Red_and_Blue/blaine.png";
                     case "RIVAL1_1":
-                        return "images/trainers/RIVAL1.png";
+                        return "images/trainers/Red_and_Blue/RIVAL1.png";
                     case "RIVAL1_2":
-                        return "images/trainers/RIVAL1.png";
+                        return "images/trainers/Red_and_Blue/RIVAL1.png";
                     case "RIVAL1_3":
-                        return "images/trainers/RIVAL1.png";
+                        return "images/trainers/Red_and_Blue/RIVAL1.png";
                     case "RIVAL1_4":
-                        return "images/trainers/RIVAL1.png";
+                        return "images/trainers/Red_and_Blue/RIVAL1.png";
                     case "RIVAL1_5":
-                        return "images/trainers/RIVAL1.png";
+                        return "images/trainers/Red_and_Blue/RIVAL1.png";
                     case "RIVAL1_6":
-                        return "images/trainers/RIVAL1.png";
+                        return "images/trainers/Red_and_Blue/RIVAL1.png";
                     case "RIVAL1_7":
-                        return "images/trainers/RIVAL2.png";
+                        return "images/trainers/Red_and_Blue/RIVAL2.png";
                     case "RIVAL1_8":
-                        return "images/trainers/RIVAL2.png";
+                        return "images/trainers/Red_and_Blue/RIVAL2.png";
                     case "RIVAL1_9":
-                        return "images/trainers/RIVAL2.png";
+                        return "images/trainers/Red_and_Blue/RIVAL2.png";
                     case "RIVAL2_1":
-                        return "images/trainers/RIVAL2.png";
+                        return "images/trainers/Red_and_Blue/RIVAL2.png";
                     case "RIVAL2_2":
-                        return "images/trainers/RIVAL2.png";
+                        return "images/trainers/Red_and_Blue/RIVAL2.png";
                     case "RIVAL2_3":
-                        return "images/trainers/RIVAL2.png";
+                        return "images/trainers/Red_and_Blue/RIVAL2.png";
+                    case "JR TRAINER F_5":
+                        return "images/trainers/Red_and_Blue/JR TRAINER F_5.png";
+                    case "YOUNGSTER_1":
+                        return "images/trainers/Red_and_Blue/BEN.png";
+                    case "POKEMANIAC_7":
+                        return "images/trainers/Red_and_Blue/POKEMANIAC_7.png";
+                    case "SUPER NERD_2":
+                        return "images/trainers/Red_and_Blue/FOSSIL_NERD.png";
+                    case "LASS_10":
+                        return "images/trainers/Red_and_Blue/ODDISH_LASS.png";
+                    case "JR TRAINER F_10":
+                        return "images/trainers/Red_and_Blue/JR TRAINER F_10.png";
+                    case "ROCKET_38":
+                        return "images/trainers/Red_and_Blue/ROCKET_38.png";
+                    case "HIKER_9":
+                        return "images/trainers/Red_and_Blue/HIKER_9.png";
+                    case "LASS_3":
+                        return "images/trainers/Red_and_Blue/LASS_3.png";
+                    case "JR TRAINER F_1":
+                        return "images/trainers/Red_and_Blue/GOLDEEN.png";
+                    case "ROCKET_25":
+                        return "images/trainers/Red_and_Blue/HYPNO_SANDWICH.png";
+                    case "JR TRAINER F_3":
+                        return "images/trainers/Red_and_Blue/JR TRAINER F_3.png";
+                    case "CHANNELER_10":
+                        return "images/trainers/Red_and_Blue/AGATHAJR.png";
+                    case "BROCK_1":
+                        return "images/trainers/Red_and_Blue/brock.png";
+                    case "MISTY_1":
+                        return "images/trainers/Red_and_Blue/misty.png";
+                    case "ERIKA_1":
+                        return "images/trainers/Red_and_Blue/erika.png";
+                    case "KOGA_1":
+                        return "images/trainers/Red_and_Blue/koga.png";
+                    case "LORELEI_1":
+                        return "images/trainers/lorelei.png";
+                    case "BRUNO_1":
+                        return "images/trainers/bruno.png";
+                    case "AGATHA_1":
+                        return "images/trainers/agatha.png";
+                    case "LANCE_1":
+                        return "images/trainers/lance.png";
+                    default:
+                        return null;
                 }
-              }
-              switch (`${trainerClass}_${trainerNumber}`) {
-                case "JR TRAINER F_5":
-                  return "images/trainers/JR TRAINER F_5.png";
-                case "YOUNGSTER_1":
-                  return "images/trainers/BEN.png";
-                case "POKEMANIAC_7":
-                  return "images/trainers/POKEMANIAC_7.png";
-                case "SUPER NERD_2":
-                  return "images/trainers/FOSSIL_NERD.png";
-                case "LASS_10":
-                  return "images/trainers/ODDISH_LASS.png";
-                case "JR TRAINER F_10":
-                  return "images/trainers/JR TRAINER F_10.png";
-                case "ROCKET_38":
-                  return "images/trainers/ROCKET_38.png";
-                case "HIKER_9":
-                  return "images/trainers/HIKER_9.png";
-                case "LASS_3":
-                  return "images/trainers/LASS_3.png";
-                case "JR TRAINER F_1":
-                  return "images/trainers/GOLDEEN.png";
-                  case "ROCKET_25":
-                    return "images/trainers/HYPNO_SANDWICH.png";
-                case "JR TRAINER F_3":
-                  return "images/trainers/JR TRAINER F_3.png";
-                case "CHANNELER_10":
-                  return "images/trainers/AGATHAJR.png";
-                case "BROCK_1":
-                  return "images/trainers/brock.png";
-                case "MISTY_1":
-                  return "images/trainers/misty.png";
-                case "ERIKA_1":
-                  return "images/trainers/erika.png";
-                case "KOGA_1":
-                  return "images/trainers/koga.png";
-                default:
-                  return null;
               }
             }
         },
