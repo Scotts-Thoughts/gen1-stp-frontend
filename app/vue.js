@@ -933,6 +933,62 @@ const app = Vue.createApp({
     },
 
     computed: {
+        g1trainerEnemySelector() {
+            if (this.ready) {
+                let trainerClass = this.mapper.properties.battle.trainer.class.value
+                if (this.showAllTrainers == false && (
+                    trainerClass == "BROCK" ||
+                    trainerClass == "MISTY" ||
+                    trainerClass == "LT.SURGE" ||
+                    trainerClass == "ERIKA" ||
+                    trainerClass == "KOGA" ||
+                    trainerClass == "SABRINA" ||
+                    trainerClass == "BLAINE" ||
+                    (trainerClass == "GIOVANNI" && this.mapper.properties.battle.trainer.number == 3) ||
+                    trainerClass == "LORELEI" ||
+                    trainerClass == "BRUNO" ||
+                    trainerClass == "AGATHA" ||
+                    trainerClass == "LANCE" ||
+                    trainerClass == "RIVAL1" ||
+                    trainerClass == "RIVAL2" ||
+                    trainerClass == "RIVAL3" ||
+                    (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3) || //pidgey jr trainer
+                    (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5) || //wrapping lass
+                    (trainerClass == "SUPER NERD" && this.mapper.properties.battle.trainer.number == 2) || //fossil nerd
+                    (trainerClass == "POKEMANIAC" && this.mapper.properties.battle.trainer.number == 7) || //cubone slowpoke maniac
+                    (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10) || //status condition jr trainer
+                    (trainerClass == "HIKER" && this.mapper.properties.battle.trainer.number == 9) || //Selfdestructing hiker
+                    (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 18) || //finisher
+                    (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 3) || //koga juggler 1
+                    (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 4) || //koga juggler 1
+                    (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 38) || //hypno rocket
+                    (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 25) || //hypno sandwich
+                    (trainerClass == "CHANNELER" && this.mapper.properties.battle.trainer.number == 10) //2 gastly channeler
+                    )
+                    ) {
+                        return 1
+                    }
+                else if (this.showAllTrainers == true && this.mapper.properties.battle.type.value == "Trainer")
+                    return 1
+                else
+                    return 0
+            }
+        },
+        currentTrainer() {
+            const trainer_class = this.mapper.properties.battle.trainer.class
+            const trainer_number = this.mapper.properties.battle.trainer.number
+            const trainer_identifier = `${trainer_class} ${trainer_number}`
+            console.log(trainer_identifier)
+            if (this.mapper.properties.meta.gameName == "Yellow") { 
+                return g1YellowTrainers[trainer_identifier] 
+            }
+            else if (this.mapper.properties.meta.gameName == "Red and Blue") { 
+                return g1RedBlueTrainers[trainer_identifier] 
+            }
+            else { 
+                return g1YellowTrainers[trainer_identifier] 
+            }
+        },
         dropdownDownMenuKeys() {
             return {
                 textures: Object.keys(this.textures)
@@ -1004,17 +1060,6 @@ const app = Vue.createApp({
             if (f < 10) f = "0" + f.toString();
             return f
         },
-        currentTrainer() {
-            if (this.mapper.properties.meta.gameName.value == "Yellow") { 
-                return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] 
-            }
-            else if (this.mapper.properties.meta.gameName.value == "Red and Blue") { 
-                return g1RedBlueTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] 
-            }
-            else { 
-                return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] 
-            }
-        },
         //shorthands
         s1() {
             return this.mapper?.properties?.player?.team[0]
@@ -1063,8 +1108,10 @@ const app = Vue.createApp({
         //CO-PILOT REFACTOR
         battle_fade() {
             const trainerClasses = ["LORELEI", "BRUNO", "AGATHA", "LANCE", "RIVAL3"];
-            const validStates = ["To Battle", "Battle", "From Battle"];
-          
+            const validStates = ["To Battle", "From Battle"];
+            if (this.state == "Battle") {
+              return true;
+            }
             if (validStates.includes(this.state) &&
                 (trainerClasses.includes(this.batt.trainer.class.value) ||
                  this.state != "From Battle")) {
@@ -1654,7 +1701,7 @@ const app = Vue.createApp({
             }
         },
         move_name(move_string) {
-            if (move_string == null) { return "" }
+            if (!move_string) { return "" }
             move_string = move_string.toLowerCase()
             const moveMappings = {
               "vicegrip":     "ViceGrip",
@@ -1874,45 +1921,6 @@ const app = Vue.createApp({
             return null
         },
 
-        g1trainerEnemySelector(trainerClass) {
-            if (this.showAllTrainers == false && (
-                trainerClass == "BROCK" ||
-                trainerClass == "MISTY" ||
-                trainerClass == "LT.SURGE" ||
-                trainerClass == "ERIKA" ||
-                trainerClass == "KOGA" ||
-                trainerClass == "SABRINA" ||
-                trainerClass == "BLAINE" ||
-                (trainerClass == "GIOVANNI" && this.mapper.properties.battle.trainer.number == 3) ||
-                trainerClass == "LORELEI" ||
-                trainerClass == "BRUNO" ||
-                trainerClass == "AGATHA" ||
-                trainerClass == "LANCE" ||
-                trainerClass == "RIVAL1" ||
-                trainerClass == "RIVAL2" ||
-                trainerClass == "RIVAL3" ||
-                (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3) || //pidgey jr trainer
-                (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5) || //wrapping lass
-                (trainerClass == "SUPER NERD" && this.mapper.properties.battle.trainer.number == 2) || //fossil nerd
-                (trainerClass == "POKEMANIAC" && this.mapper.properties.battle.trainer.number == 7) || //cubone slowpoke maniac
-                (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10) || //status condition jr trainer
-                (trainerClass == "HIKER" && this.mapper.properties.battle.trainer.number == 9) || //Selfdestructing hiker
-                (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 18) || //finisher
-                (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 3) || //koga juggler 1
-                (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 4) || //koga juggler 1
-                (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 38) || //hypno rocket
-                (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 25) || //hypno sandwich
-                (trainerClass == "CHANNELER" && this.mapper.properties.battle.trainer.number == 10) //2 gastly channeler
-                )
-                ) {
-                    return 1
-                }
-            else if (this.showAllTrainers == true && this.mapper.properties.battle.type.value == "Trainer")
-                return 1
-            else
-                return 0
-        },
-
         fixTrainerName(trainerName, trainerNumber) {
             const gameName = this.mapper.properties.meta.gameName;
             const rival1Teams = ["rival1's team", "rival1A's team", "rival2's team"];
@@ -1978,8 +1986,8 @@ const app = Vue.createApp({
         //! Requires testing
         specialTrainerGraphics() {
             if (this.showSpecialTrainerGraphics) {
-              const trainerClass = this.mapper.properties.battle.trainer.class.value
-              const trainerNumber = this.mapper.properties.battle.trainer.number.value
+              const trainerClass = this.mapper.properties.battle.trainer.class
+              const trainerNumber = this.mapper.properties.battle.trainer.number
               if (this.mapper.properties.meta.gameName.value == "Yellow") {
                 switch (`${trainerClass}_${trainerNumber}`) {
                     case "LT.SURGE_1":
@@ -2341,6 +2349,12 @@ const app = Vue.createApp({
         //prevent windows scaling from affecting the programs dimensions
         document.body.style.scale = 1 / window.devicePixelRatio
 
+        if (this.mapper.properties.meta.state.value == "No Pokemon") {
+            this.state = "Base Stats"
+        }
+        else {
+            this.state = this.mapper.properties.meta.state.value
+        }
         this.starterName = MyStorage.currentStarter ?? "Venomoth"
         this.updateTime()
         this.load_all_settings()
