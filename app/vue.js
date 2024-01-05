@@ -454,8 +454,8 @@ const app = Vue.createApp({
             }
         },
         pokemon_version_specific_data() {
-            if (this.mapper.properties.meta.gameName.value == "Pokemon Yellow") { return this.g1PokemonData }
-            if (this.mapper.properties.meta.gameName.value == "Pokemon Red and Blue") { return this.g1PokemonDataRB }
+            if (this.mapper.properties.meta.gameName.value == "Yellow") { return this.g1PokemonData }
+            if (this.mapper.properties.meta.gameName.value == "Red and Blue") { return this.g1PokemonDataRB }
         },
         gametimeHMS() {
             h = this.mapper.properties.gameTime.hours
@@ -489,8 +489,8 @@ const app = Vue.createApp({
             return f
         },
         currentTrainer() {
-            if (this.mapper.properties.meta.gameName.value == "Pokemon Yellow") { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
-            else if (this.mapper.properties.meta.gameName.value == "Pokemon Red and Blue") { return g1RedBlueTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
+            if (this.mapper.properties.meta.gameName.value == "Yellow") { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
+            else if (this.mapper.properties.meta.gameName.value == "Red and Blue") { return g1RedBlueTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
             else { return g1YellowTrainers[this.mapper.properties.battle.trainer.class.value + " " + this.mapper.properties.battle.trainer.number.value] }
         },
         //shorthands
@@ -1190,7 +1190,7 @@ const app = Vue.createApp({
               "rival6's team",
             ];
           
-            if (gameName == "Pokemon Yellow") {
+            if (gameName == "Yellow") {
               if (trainerName == "RIVAL1") {
                 return rival1Teams[trainerNumber - 1];
               } 
@@ -1204,7 +1204,7 @@ const app = Vue.createApp({
                 return trainerName.toLowerCase() + "'s team";
               }
             } 
-            else if (gameName == "Pokemon Red and Blue") {
+            else if (gameName == "Red and Blue") {
               if (trainerName == "RIVAL1" && (trainerNumber == 1 || trainerNumber == 2 || trainerNumber == 3)) {
                 return "rival1's team";
               } 
@@ -1240,7 +1240,7 @@ const app = Vue.createApp({
         specialTrainerGraphics() {
             if (this.showSpecialTrainerGraphics) {
               const { class: trainerClass, number: trainerNumber } = this.mapper.properties.battle.trainer;
-              if (this.mapper.properties.meta.gameName.value == "Pokemon Yellow") {
+              if (this.mapper.properties.meta.gameName.value == "Yellow") {
                 switch (`${trainerClass}_${trainerNumber}`) {
                     case "LT.SURGE_1":
                         return "images/trainers/ltsurge.png";
@@ -1266,7 +1266,7 @@ const app = Vue.createApp({
                         return "images/trainers/RIVAL2.png";
                 }
               }
-              if (this.mapper.properties.meta.gameName.value == "Pokemon Red and Blue") {
+              if (this.mapper.properties.meta.gameName.value == "Red and Blue") {
                 switch (`${trainerClass}_${trainerNumber}`) {
                     case "LT.SURGE_1":
                         return "images/trainers/LTSURGE-RED.png";
