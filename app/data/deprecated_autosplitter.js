@@ -1,5 +1,5 @@
 const deprecated_autosplitter = {
-    "Pokemon Yellow": {
+    "Yellow": {
         //Gym Leaders
         "BROCK_1":         "Brock",
         "MISTY_1":         "Misty",
@@ -42,7 +42,7 @@ const deprecated_autosplitter = {
         "HIKER_10":        "RTG5 - Self-destructing Hiker",
         "JR TRAINER F_18": "RTG6 - Finisher",
     },
-    "Pokemon Red and Blue": {
+    "Red and Blue": {
         //Gym Leaders
         "BROCK_1":         "Brock",
         "MISTY_1":         "Misty",

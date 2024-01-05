@@ -86,7 +86,7 @@ class RetroArchHook {
         });
         
         this.client.connect(55355, '127.0.0.1', (err) => {
-            console.log(err)
+            // console.log(err)
             if (!err) {
                 this.connected = true
             }
@@ -2504,7 +2504,7 @@ const app = Vue.createApp({
                 let experience = this.mapper.properties.player.team[0].expPoints.value
                 //deprecated properties
                 let runIdentifier = this.starterName.toString() + this.attempt_number.toString()
-                let trainerName = this.deprecated_autosplitter[this.mapper.properties.meta.gameName.value][this.mapper.properties.battle.trainer.class.value.toString() + "_" + this.mapper.properties.battle.trainer.number.value.toString()]
+                let trainerName = this.deprecated_autosplitter[this.mapper.properties.meta.gameName.value][`${this.mapper.properties.battle.trainer.class}_${this.mapper.properties.battle.trainer.number}`]
                 let RTHours = this.time_h
                 let RTMinutes = this.time_m
                 let RTSeconds = this.time_s
@@ -2714,11 +2714,12 @@ const app = Vue.createApp({
             if (prop.value == "Disabled" && this.mapper.properties.battle.type.value == "Trainer") {
                 let trainer = this.mapper.properties.battle.trainer.class.value
                 let id = this.mapper.properties.battle.trainer.number.value
-                let unique = trainer + "_" + id
+                let unique = `${trainer}_${id}`
                 let gameName = this.mapper.properties.meta.gameName.value
                 
                 //write full split data
                 logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full")
+                console.log("Got to here")
                 
                 //write deprecated split data
                 if (this.autosplitter[this.mapper.properties.meta.gameName.value][unique]) {
@@ -2775,9 +2776,9 @@ const app = Vue.createApp({
         //log the final times with the final gametime
         this.mapper.properties.screen.tiles.column1.tile1.change((newProp) => {
             if (newProp.value == 122) {
-                autosplitter_process()
-                console.log("Run Ended - Backing up split data now...")
                 if (this.mapper.properties.events.beatChampion.value == true && this.mapper.properties.overworld.map.value == "Hall of Fame") {
+                    autosplitter_process()
+                    console.log("Run Ended - Backing up split data now...")
                     let gameName = this.mapper.properties.meta.gameName.value
                     logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple")
                     logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated")
