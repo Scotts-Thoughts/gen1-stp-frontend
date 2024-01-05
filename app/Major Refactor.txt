@@ -1,0 +1,7 @@
+Major Refactor
+
+
+FEATURE-Realtime game data edits
+FEATURE-Autosplitter
+FEATURE-Data visualization (in components)
+FEATURE-Pop ups

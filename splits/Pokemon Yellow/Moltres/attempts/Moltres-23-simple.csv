@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Moltres,Rival1-Lab,40,0,0,5,0:02,7.093,PECK,FIRE SPIN,,
+NINTEN,Moltres,Brock,3:32,0,0,11,0:13,22.265,PECK,FIRE SPIN,,
+NINTEN,Moltres,Rival2-Nugget Bridge,6:53,0,0,16,0:26,22.328,PECK,FIRE SPIN,,
+NINTEN,Moltres,Cerulean Rocket,10:23,0,0,20,0:40,12.484,PECK,FIRE SPIN,,
