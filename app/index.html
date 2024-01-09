@@ -12,7 +12,7 @@
             <div class="mainContainer">
                 <!-- GRAPHICS ---------------------------------------------------------------------------------->
                 <div>
-                    <img class="canvas" ref="background_texture" :src="`images/textures/${g1PokemonData[starterName].type1}.png`" />
+                    <img class="canvas" ref="background_texture" :src="`images/textures/${g1PokemonData[starterName].type1.toLowerCase()}.png`" />
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
                     <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
