@@ -670,7 +670,7 @@ box-shadow:
 }
 .resetsLabel {
     font-size: 13px;
-    top: 330px;
+    top: 332px;
     left: 28px;
 }
 .bonksLabel {
@@ -1362,18 +1362,24 @@ box-shadow:
     top: 438px;
 }
 .bonksLabel {
-    font-size: 15px;
+    font-size: 14px;
     left: 13px;
     width: 103px;
     top: 438px;
-    text-decoration: none;
-
+    text-decoration: underline;
 }
 .screensValue {
     font-size: 20px;
     left: 13px;
     width: 103px;
     top: 460px;
+}
+.bonksValue {
+    font-size: 34px;
+    left: 13px;
+    width: 103px;
+    top: 448px;
+    font-family: oseb;
 }
 .rightBar {
     display: block;

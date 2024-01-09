@@ -337,8 +337,9 @@
                     <transition name="fade">
                         <div v-if="key_F17 == `bonks`">
                             <div class="colored-image" style="--url: url(images/pop_ups/screens/default.png)"></div>
-                            <div class="genericLabels resetsLabel bonksLabel">Bonks</div>
-                            <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ map?.patch?.steps?.bonks }}</div>
+                            <div class="genericLabels resetsLabel bonksLabel">bonks</div>
+                            <!-- <div class="popUpsStyle bonksValue">1500</div> -->
+                            <div class="popUpsStyle bonksValue">{{ map?.patch?.steps?.bonks }}</div>
                         </div>
                     </transition>
                 </div>
