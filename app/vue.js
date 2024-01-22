@@ -2347,7 +2347,7 @@ const app = Vue.createApp({
         await this.mapper.connect()
         
         //prevent windows scaling from affecting the programs dimensions
-        document.body.style.scale = 1 / window.devicePixelRatio
+        // document.body.style.scale = 1 / window.devicePixelRatio
 
         if (this.mapper.properties.meta.state.value == "No Pokemon") {
             this.state = "Base Stats"
