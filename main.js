@@ -17,7 +17,28 @@ function createWindow() {
     },
   })
 
+  mainWindow.on('resize', () => {
+    // Get the new size of the window
+    const { width } = mainWindow.getContentBounds();
+    const { height } = mainWindow.getContentBounds();
+    const horizontalZoomFactor = width / 1920;
+    const verticalZoomFactor = height / 1080;
+    let zoomFactor = 1;
+    //take the smaller factor
+    if(horizontalZoomFactor > verticalZoomFactor){
+      zoomFactor = verticalZoomFactor;
+    }
+    else {
+      zoomFactor = horizontalZoomFactor;
+    }
+    mainWindow.webContents.setZoomFactor(zoomFactor);
+  })
+
   mainWindow.on('ready-to-show', () => {
+    const contentBounds = mainWindow.getContentBounds()
+    const titleBarHeight = 1080 - contentBounds.height
+    const borderWidth = (1920 - contentBounds.width) / 2
+    mainWindow.setSize(1920 + borderWidth * 2, 1080 + titleBarHeight)
     mainWindow.show()
     // mainWindow.webContents.openDevTools()
   })
@@ -29,6 +50,7 @@ function createWindow() {
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'app/index.html'))
+  
 }
 
 // This method will be called when Electron has finished
