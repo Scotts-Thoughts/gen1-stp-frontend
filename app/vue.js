@@ -3356,6 +3356,9 @@ const app = Vue.createApp({
                 this.lastExecuted = Date.now();
             }
         });
+        keyhook.registerShortCut('F23', async () => {
+            this.newRun()
+        });
         keyhook.registerShortCut('F24', async () => {
             this.pauseUnpauseTime()
         });
