@@ -1,4 +1,246 @@
 const g1PokemonData = {
+    "Rayquaza": {
+        name: "Rayquaza",
+        base_hp: 105,
+        base_atk: 150,
+        base_def: 90,
+        base_spd: 95,
+        base_spc: 150,
+        ev_yield: null,
+        type1: "Dragon",
+        type2: "Flying",
+        catch_rate: 3,
+        base_xp: 220,
+        initial_moveset: [
+            "Gust"
+        ],
+        growth_rate: "Slow",
+        levelup_moveset: [
+            [5, "String Shot"],
+            [15, "Rock Throw"],
+            [20, "Dragon Rage"],
+            [30, "Meditate"],
+            [31, "Agility"],
+            [35, "Tri Attack"],
+            [45, "Fly"],
+            [50, "Rest"],
+            [60, "Body Slam"],
+            [65, "Flamethrower"],
+            [75, "Hyper Beam"]
+        ],
+        tm_hm_learnset: [
+            "Whirlwind",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "BubbleBeam",
+            "Water Gun",
+            "Ice Beam",
+            "Blizzard",
+            "Hyper Beam",
+            "Submission",
+            "Rage",
+            "SolarBeam",
+            "Dragon Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Earthquake",
+            "Fissure",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Metronome",
+            "Fire Blast",
+            "Rest",
+            "Thunder Wave",
+            "Rock Slide",
+            "Tri Attack",
+            "Substitute",
+            "Fly",
+            "Surf"
+        ]
+    },
+    "Groudon": {
+        name: "Groudon",
+        base_hp: 100,
+        base_atk: 150,
+        base_def: 140,
+        base_spd: 90,
+        base_spc: 125,
+        type1: "Ground",
+        type2: "Ground",
+        catch_rate: 3,
+        base_xp: 218,
+        initial_moveset: [
+            "Bone Club"
+            ],
+        growth_rate: "Slow",
+        abilities: [],
+        levelup_moveset: [
+            [5, "String Shot"],
+            [15, "Rock Throw"],
+            [20, "Slash"],
+            [30, "Meditate"],
+            [31, "Harden"],
+            [35, "Earthquake"],
+            [45, "Fire Blast"],
+            [50, "Rest"],
+            [60, "Fissure"],
+            [65, "SolarBeam"],
+            [75, "Fire Blast"]
+        ],
+        tm_hm_learnset: [
+            "Mega Punch",
+            "Swords Dance",
+            "Whirlwind",
+            "Mega Kick",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Submission",
+            "Counter",
+            "Rage",
+            "SolarBeam",
+            "Dragon Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Earthquake",
+            "Fissure",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Metronome",
+            "Fire Blast",
+            "Swift",
+            "Sky Attack",
+            "Rest",
+            "Thunder Wave",
+            "Rock Slide",
+            "Substitute",
+            "Cut",
+            "Strength"
+        ]
+    },
+    "Kyogre": {
+        name: "Kyogre",
+        base_hp: 100,
+        base_atk: 100,
+        base_def: 90,
+        base_spd: 90,
+        base_spc: 187,
+        type1: "Water",
+        type2: "Water",
+        catch_rate: 3,
+        base_xp: 218,
+        initial_moveset: [
+            "BubbleBeam"
+        ],
+        growth_rate: "Slow",
+        levelup_moveset: [
+            [5, "String Shot"],
+            [15, "Rock Throw"],
+            [20, "Body Slam"],
+            [30, "Amnesia"],
+            [35, "Ice Beam"],
+            [45, "Hydro Pump"],
+            [50, "Rest"],
+            [60, "Fissure"],
+            [65, "Double-Edge"],
+            [75, "Crabhammer"]
+        ],
+        tm_hm_learnset: [
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "BubbleBeam",
+            "Water Gun",
+            "Ice Beam",
+            "Blizzard",
+            "Hyper Beam",
+            "Submission",
+            "Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Earthquake",
+            "Fissure",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Metronome",
+            "Skull Bash",
+            "Rest",
+            "Substitute",
+            "Surf",
+            "Strength"
+        ]
+    },
+"Hoothoot" :  
+    {
+        name: "Hoothoot",
+        base_hp: 60,
+        base_atk: 30,
+        base_def: 30,
+        base_spd: 50,
+        base_spc: 56,
+        type1: "Normal",
+        type2: "Flying",
+        catch_rate: 255,
+        base_xp: 58,
+        initial_moveset: [
+        "Tackle",
+        "Growl"
+        ],
+        growth_rate: "Medium Fast",
+        tm_hm_learnset: [
+        "Razor Wind",
+        "Whirlwind",
+        "Toxic",
+        "Take Down",
+        "Double-Edge",
+        "Rage",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Swift",
+        "Dream Eater",
+        "Rest",
+        "Substitute",
+        "Fly",
+        "Flash"
+        ],
+        levelup_moveset: [
+            [
+                11,
+                "Peck"
+            ],
+            [
+                16,
+                "Hypnosis"
+            ],
+            [
+                22,
+                "Reflect"
+            ],
+            [
+                28,
+                "Take Down"
+            ],
+            [
+                34,
+                "Confusion"
+            ],
+            [
+                48,
+                "Dream Eater"
+            ]
+        ]
+    },
 "Abra" :  
     {
         name: "Abra",
@@ -41,7 +283,8 @@ const g1PokemonData = {
         "Substitute",
         "Flash"
         ],
-        levelup_moveset: []
+        levelup_moveset: [
+        ]
     },
 "Aerodactyl" :  
     {

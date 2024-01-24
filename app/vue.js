@@ -525,6 +525,8 @@ const app = Vue.createApp({
             starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
             
+            gamehook_disable_settings:  MyStorage["gamehook_disable_settings"] ?? false,
+            gamehook_encounter_writes:  MyStorage["gamehook_encounter_writes"] ?? false,
             dvSetting:                  MyStorage["this.dvSetting"] ?? "Max", //Max, Min, NPC, Max with Min Atk, or Random
             trashCans:                  MyStorage["this.trashCans"] ?? true, //solves the trash can puzzle
             options:                    MyStorage["this.options"] ?? true, //shows the options menu when set to true
@@ -622,6 +624,7 @@ const app = Vue.createApp({
             blackout_counter: MyStorage["blackout_counter"] ?? 0,
             resetCounter: true,
             game_over: false,
+            lance_defeated: false,
             finished_logs: false,
             attempt_number: 0,
             finished_run_count: 0,
@@ -749,6 +752,12 @@ const app = Vue.createApp({
         }
     },
     watch: {
+        gamehook_disable_settings(value) {
+            MyStorage["gamehook_disable_settings"] = value
+        },
+        gamehook_encounter_writes(value) {
+            MyStorage["gamehook_encounter_writes"] = value
+        },
         timer_formatted_time(value) {
             MyStorage["timer_formatted_time"] = value
         },
@@ -863,8 +872,8 @@ const app = Vue.createApp({
             }
         },
         async starterName(newValue, oldValue) {
-            this.attempt_number = MyStorage[`${newValue}`].attempt_number ?? 0
-            this.finished_run_count = MyStorage[`${newValue}`].finished_run_count ?? 0
+            this.attempt_number = MyStorage[`${newValue}`]?.attempt_number ?? 0
+            this.finished_run_count = MyStorage[`${newValue}`]?.finished_run_count ?? 0
             //transition between background textures
             this.$refs.old_background_texture.src = `images/textures/${g1PokemonData[oldValue].type1}.png`
             this.$refs.old_background_texture.style.opacity = 1
@@ -876,7 +885,7 @@ const app = Vue.createApp({
             this.$refs.old_background_texture.src = ""
 
             //update the saved starter in the overlay's local storage
-            MyStorage.currentStarter = newValue
+            MyStorage['starterName'] = newValue
             this.load_all_settings()
         },
         playerId(newValue) {
@@ -1365,6 +1374,9 @@ const app = Vue.createApp({
             }
         },
         load_all_settings() {
+            this.starterName = MyStorage["starterName"] ?? "Venomoth"
+            this.gamehook_disable_settings = MyStorage["gamehook_disable_settings"] ?? false,
+            this.gamehook_encounter_writes = MyStorage["gamehook_encounter_writes"] ?? false,
             this.route1 = MyStorage["this.route1"] ?? true
             this.viridianForest = MyStorage["this.viridianForest"] ?? true
             this.goal_level = MyStorage["goal_level"] ?? 13
@@ -1402,7 +1414,7 @@ const app = Vue.createApp({
             this.goal_speed = MyStorage["goal_speed"] ?? 24
             this.viridian_forest = MyStorage["viridian_forest"] ?? "Pidgey"
             this.pb_splits = MyStorage[`${this.starterName}_pb_splits`] ?? ["","","",""]
-            this.attempt_number = MyStorage[`${this.starterName}`].attempt_number ?? 0
+            this.attempt_number = MyStorage[`${this.starterName}`]?.attempt_number ?? 0
             this.finished_run_count = MyStorage[`${this.starterName}`].finished_run_count ?? 0
             this.pb_time = MyStorage[`${this.starterName}`].pb_time ?? "None"
             this.playerId = MyStorage["playerId"] ?? 0
@@ -1749,10 +1761,26 @@ const app = Vue.createApp({
             var neutral = ["0", "background: #a1a1a1;"]
             var raised = [modValue, "background: #d84444;"]
             var lowered = [modValue, "background: #21c500"]
-            if (modValue < 0) { this.enemyModColour = raised }
-            if (modValue > 0) { this.enemyModColour = lowered }
+            if (modValue < 0) { 
+                this.enemyModColour = raised 
+                return raised
+            }
+            if (modValue > 0) { 
+                this.enemyModColour = lowered 
+                return lowered
+            }
             return this.enemyModColour 
         },
+        // //ENEMY MOD STYLING
+        // enemyMods(modValue) {
+        //     if (this.state != "Battle") { return this.enemyModColour }
+        //     var neutral = ["0", "background: #a1a1a1;"]
+        //     var raised = [modValue, "background: #d84444;"]
+        //     var lowered = [modValue, "background: #21c500"]
+        //     if (modValue < 0) { this.enemyModColour = raised }
+        //     if (modValue > 0) { this.enemyModColour = lowered }
+        //     return this.enemyModColour 
+        // },
         enemyDynamic(activePkmn, currentSlot) {
             if (activePkmn == currentSlot && this.state == "Battle") {
                 return this.mapper?.properties?.battle?.enemyPokemon
@@ -1813,13 +1841,15 @@ const app = Vue.createApp({
             else return mod
         },
 
-        //REMOVES CAPITALIZATION (TACKLE -> Tackle) OR (Tail Whip -> Tail whip)
+        //REMOVES CAPITALIZATION (TACKLE -> Tackle) OR (Tail whip -> Tail Whip)
         capitalization_format(str) {
             if (str == null) { return "" }
             return str.toLowerCase().replace(/(^|\s|\-|\.)(\w)/g, function(match, p1, p2) {
               return p1 + p2.toUpperCase();
             });
         },
+        //Determine the number of vitamins that can still be used on the Pokemon
+        //stat exp ranges from 0 - 65535
         statExp(statExp) {
             const vitaminsUsed = statExp / 2560;
             const usableVitamins = Math.ceil(10 - vitaminsUsed);
@@ -1832,6 +1862,7 @@ const app = Vue.createApp({
                 return trainerClass
         },
         //TYPE ICONS FOR THE STARTER SELECTION
+        //lookup type data from the static data objects
         pkmnType(typeNumber, type1, type2) {
             if (type1 && this.state != `Base Stats`) {
                 if (type1 == type2) {
@@ -1893,6 +1924,8 @@ const app = Vue.createApp({
         },
 
         // STAGE MULTIPLIERS
+        //edge case management (prevent flickering of the stat values due to overlay stage multipliers being applied on Pokemon that are not yet in battle)
+        //determine which Pokemon is currently in battle and display only their stage multipliers
         activeSlot(activePkmn, currentSlot, statLabel, stat, side) {
             if (this.enemyState == "Fainted" || this.state == "From Battle") {
                 return stat 
@@ -1984,6 +2017,7 @@ const app = Vue.createApp({
 
         //! TODO Why do trainer graphics not appear in Red & Blue?
         //! Requires testing
+        //pick the trainer graphic based on the trainer class and number
         specialTrainerGraphics() {
             if (this.showSpecialTrainerGraphics) {
               const trainerClass = this.mapper.properties.battle.trainer.class
@@ -2139,6 +2173,9 @@ const app = Vue.createApp({
             }
         },
 
+        //determine if the player is in a `Mart` or `Department` store.
+        //this is currently used to display the number of remaining vitamins that can be used on each stat
+        //in the future it can be used to display the player's inventory (a feature that is not yet implemented)
         g1martSelector(map) {
             if (!this.inventory) {
               return "Overworld";
@@ -2177,7 +2214,7 @@ const app = Vue.createApp({
             }
         },
 
-        //CO-PILOT REFACTOR
+        //Sets the crop on the UI image for the enemy team so that unused party slots are not present
         battlePokemonCrop() {
             const totalPokemon = this.mapper.properties.battle.trainer.totalPokemon;
             const heights = {
@@ -2192,6 +2229,8 @@ const app = Vue.createApp({
         },
         
         //GAMETIME FUNCTIONS
+        //formats the gametime so that it is displayed correctly
+        //0:00 is the minimum values
         gameTimeHM(h, m) {
             if (h <= 0) return m;
             if (m < 10) m = "0" + m.toString();
@@ -2206,10 +2245,6 @@ const app = Vue.createApp({
             if (s < 10) s = "0" + s.toString();
             if (m < 10) m = "0" + m.toString();
             return `${h}:${m}:${s}`;
-        },
-        leadZero(y) {
-            if (y < 10) return "0" + y.toString();
-            return y;
         },
 
         //EXPERIENCE FUNCTIONS
@@ -2374,37 +2409,14 @@ const app = Vue.createApp({
         await transition(t => {
             // this part gets called at every frame of the browser
             // the variable t starts at 0 and advances to 1
-            }, 500)
-
-        // this.mapper.properties.player.team[0].species.change(async (newValue, oldValue) => {
-        //     //transition between pokemon art
-        //     const newSpecies = newValue.value
-        //     const oldSpecies = oldValue.value
-        //     console.log(newSpecies, oldSpecies)
-
-        //     const newSpeciesParameters = MyStorage[newSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
-        //     const oldSpeciesParameters = MyStorage[oldSpecies] ?? { imageXOffset: 0, imageYOffset: 0, imageScale: 1, imageFlip: false }
-
-        //     this.$refs.old_pokemon_art.src = `images/pokemon/${oldSpecies}.png`
-        //     this.$refs.old_pokemon_art.style.transform = `scale(${oldSpeciesParameters.imageScale}) ${oldSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${oldSpeciesParameters.imageXOffset}px, ${-oldSpeciesParameters.imageYOffset}px)`
-        //     this.$refs.old_pokemon_art.style.opacity = 1
-            
-        //     this.$refs.pokemon_art.src = `images/pokemon/${newSpecies}.png`
-        //     this.$refs.pokemon_art.style.transform = `scale(${newSpeciesParameters.imageScale}) ${newSpeciesParameters.imageFlip ? 'rotateY(180deg)' : ''} translate(${newSpeciesParameters.imageXOffset}px, ${-newSpeciesParameters.imageYOffset}px)`
-        //     this.$refs.pokemon_art.style.opacity = 0
-            
-        //     await transition((t) => {
-        //         this.$refs.old_pokemon_art.style.opacity = 1 - t
-        //         this.$refs.pokemon_art.style.opacity = t
-        //     }, 500)
-            
-        //     this.$refs.old_pokemon_art.src = ""
-        // })
-        
+        }, 500)
 
         // reset tracking
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {
-            if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
+            if (this.lance_defeated == true) {
+                this.lance_defeated = false
+            }
+            else if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
                 this.blackout = false;
                 this.playerResets++;
             } 
@@ -2434,7 +2446,7 @@ const app = Vue.createApp({
         })
         
         //*autosplitter
-        //log the start of a battle
+        //log the start of a battle to the console
         this.mapper.properties.battle.type.change((newProp) => {
             var logStr = `Autosplitter - Battle Started: ${this.mapper.properties.battle.trainer.class.value} started at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`
             var log_start = (x) => console.log(logStr)
@@ -2446,7 +2458,10 @@ const app = Vue.createApp({
             }
         });
 
+        //this function can be reused to log data to the console
         const log_split = (x) => console.log(`Autosplitter - Battle Ended: Split: ${this.mapper.properties.battle.trainer.class.value} at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`)
+        
+        // this function assigns split data to arrays so that it can be written to CSV on disc
         const autosplitter_process = () => {
             if (this.autosplitter_toggle == true) {
                 d = new Date()
@@ -2502,7 +2517,7 @@ const app = Vue.createApp({
                 let type1 = this.mapper.properties.player.team[0].type1.value
                 let type2 = this.mapper.properties.player.team[0].type2.value
                 let experience = this.mapper.properties.player.team[0].expPoints.value
-                //deprecated properties
+                //deprecated properties (these are used by all of my legacy software)
                 let runIdentifier = this.starterName.toString() + this.attempt_number.toString()
                 let trainerName = this.deprecated_autosplitter[this.mapper.properties.meta.gameName.value][`${this.mapper.properties.battle.trainer.class}_${this.mapper.properties.battle.trainer.number}`]
                 let RTHours = this.time_h
@@ -2541,7 +2556,7 @@ const app = Vue.createApp({
                 let battle_spA = this.mapper.properties.battle.yourPokemon.special.value
                 let battle_spD = this.mapper.properties.battle.yourPokemon.special.value
                 let battle_spe = this.mapper.properties.battle.yourPokemon.speed.value
-                //patch properties
+                //patch properties (these are going to be used by new software in the future; ROM patch required)
                 let patch_frameCount = this.mapper.properties.patch.time?.frameCount?.value ?? 0
                 let patch_oWFrameCount = this.mapper.properties.patch.time?.oWFrameCount?.value ?? 0
                 let patch_battleFrameCount = this.mapper.properties.patch.time?.battleFrameCount?.value ?? 0
@@ -2600,8 +2615,8 @@ const app = Vue.createApp({
                 let patch_enemyTurnsParalyzedFully = this.mapper.properties.patch.battle_info.status?.enemyTurnsParalyzedFully?.value ?? 0
                 let patch_PlayerTurnsAsleep = this.mapper.properties.patch.battle_info.status.PlayerTurnsAsleep.value ?? 0
                 let patch_EnemyTurnsAsleep = this.mapper.properties.patch.battle_info.status.EnemyTurnsAsleep.value ?? 0
-                let patch_playerHpHealed = 0 //not working in yellow
-                let patch_enemyHpHealed = 0 //not working in yellow
+                let patch_playerHpHealed = 0 //not working in yellow; there is no ROM implementation of this
+                let patch_enemyHpHealed = 0 //not working in yellow; there is no ROM implementation of this
                 let patch_playerPokemonFainted = this.mapper.properties.patch.battle_info?.playerPokemonFainted?.value ?? 0
                 let patch_enemyPokemonFainted = this.mapper.properties.patch.battle_info?.enemyPokemonFainted?.value ?? 0
                 let patch_experienceGained = this.mapper.properties.patch.battle_info?.experienceGained?.value ?? 0
@@ -2697,18 +2712,20 @@ const app = Vue.createApp({
                 let simple_data_str = simple_data.join(",") + "\n";
                 let full_data_str = full_data.join(",") + "\n";
                 let deprecated_data_str = deprecated_data.join(",") + "\n";
-                MyStorage["simple_data_str"] = simple_data_str
-                MyStorage["full_data_str"] = full_data_str
-                MyStorage["deprecated_data_str"] = deprecated_data_str
-                MyStorage["simple_data"] = simple_data
-                this.simple_data_str = simple_data_str
-                this.full_data_str = full_data_str
-                this.deprecated_data_str = deprecated_data_str
-                this.simple_data = simple_data
+                MyStorage["simple_data_str"] = simple_data_str // backup in my storage
+                MyStorage["full_data_str"] = full_data_str // backup in my storage
+                MyStorage["deprecated_data_str"] = deprecated_data_str // backup in my storage
+                MyStorage["simple_data"] = simple_data // backup in my storage
+                this.simple_data_str = simple_data_str // assign within Data so it can be recalled on future loops
+                this.full_data_str = full_data_str // assign within Data so it can be recalled on future loops
+                this.deprecated_data_str = deprecated_data_str // assign within Data so it can be recalled on future loops
+                this.simple_data = simple_data // assign within Data so it can be recalled on future loops
             }
         }
 
         //write to file at the end of a key battle
+        // the `lowHealthAlarm` property is used to play the Red-bar sound effect
+        // it is turned off as soon as "Player defeated Trainer" starts to render in the textbox
         this.mapper.properties.battle.lowHealthAlarm.change((prop) => {
             autosplitter_process()
             if (prop.value == "Disabled" && this.mapper.properties.battle.type.value == "Trainer") {
@@ -2717,16 +2734,18 @@ const app = Vue.createApp({
                 let unique = `${trainer}_${id}`
                 let gameName = this.mapper.properties.meta.gameName.value
                 
-                //write full split data
+                //write full split data (this is written for every single battle)
                 logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full")
                 console.log("Got to here")
                 
-                //write deprecated split data
+                //write deprecated split data (this is written for only pre-defined trainers)
+                //a list of these trainers can be found within `autosplitter.js` and inside the parent `Yellow` or `Red and Blue`
                 if (this.autosplitter[this.mapper.properties.meta.gameName.value][unique]) {
                     logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated")
                 }
                 
                 //write simple split data
+                //a list of these can be found within `autosplitter.js` and inside the parent `Simple`
                 const simpleSplit = () => {
                     log_split()
                     logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple")
@@ -2737,6 +2756,7 @@ const app = Vue.createApp({
                         split_data: this.split_data
                     }
                 }
+                //log simple data for only these trainers
                 switch (trainer) {
                     case "RIVAL1":  
                     case "RIVAL2":  
@@ -2753,27 +2773,32 @@ const app = Vue.createApp({
                     case "LANCE": { simpleSplit() }
                 }
                 switch (unique) {
-                    case "GIOVANNI_3":
-                    case "ROCKET_5":   { simpleSplit() }
+                    case "GIOVANNI_3": //this is the Giovanni fight in the 8th gym
+                    case "ROCKET_5":   { simpleSplit() } //this is the rocket outside of Cerulean city, collecting this data allows for better comparisons for Pokemon that take different choices in Cerulean Nugget->Misty or Misty->Nugget
                 }
                 
+                if (trainer == "CHAMPION") { //this is the champion fight in Pokemon Crystal (this code is likely unnessecary in gen1)
+                    this.lance_defeated = true //setting this to true prevents the reset counter from incrementing when I reset after entering the hall of fame to resume gameplay ASAP
+                }
+
                 //stop timer
-                if (trainer == "RIVAL3") {
-                    log_split()
-                    this.finished_run_count++
-                    this.stopTime()
-                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple")
-                    this.split_data.push(this.simple_data)
-                    MyStorage["split_data"] = this.split_data
+                if (trainer == "RIVAL3") { //this is the champion in gen1
+                    log_split() //log the final split
+                    this.finished_run_count++ //increment finished count (this must persist, a watcher is setup on this to ensure it is migrated to MyStorage)
+                    this.stopTime() //stop the timer
+                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple") //log a simple split
+                    this.split_data.push(this.simple_data) //push the split data into the data variable
+                    MyStorage["split_data"] = this.split_data //backup the split data
                     MyStorage[this.starterName] = {
                         ...MyStorage[this.starterName],
-                        split_data: this.split_data
+                        split_data: this.split_data //backup the split data within the `starterName` object
                     }
                 }
             }   
         });
         
         //log the final times with the final gametime
+        //I am watching tile1 for a specifc tile that appears when the gametime displays on screen
         this.mapper.properties.screen.tiles.column1.tile1.change((newProp) => {
             if (newProp.value == 122) {
                 if (this.mapper.properties.events.beatChampion.value == true && this.mapper.properties.overworld.map.value == "Hall of Fame") {
@@ -2790,15 +2815,16 @@ const app = Vue.createApp({
                         split_data: this.split_data
                     }
                     console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
-                    this.game_over = true;
+                    this.game_over = true; //stop incrementing resets
                 }
             }
         });
 
+        //when the triangular cursor appears on the screen, log the gametime
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
             let gameName = this.mapper.properties.meta.gameName.value
             if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
-                logCopy(gameName, this.attempt_number, this.starterName, this.finished_run_count)
+                logCopy(gameName, this.attempt_number, this.starterName, this.finished_run_count) //copy the current `attempt_number` split data to the finished folder
                 console.log("Run complete - moving attempt files to finished folder.")
                 this.finished_logs = true
             }
@@ -2807,18 +2833,9 @@ const app = Vue.createApp({
         //*blackout tracking
         //track when the player has a blackout
         this.mapper.properties.player.team[0].hp.change((newProp, oldProp) => {
-            // if (newProp.value > 0 && this.blackout == true) {
-            //     this.blackout = false;
-            //     this.blackout_counter++;
-            // }
-            // this.blackout = true;
-
             if (newProp.value == 0 && this.state == `Battle`) {
                 this.blackout = true;
             }
-            // if (this.state == `Base Stats`) {
-            //     this.blackout = false;
-            // }
         })
         //new blackout tracking for loop processed gamestate
         this.mapper.properties.meta.state.change((newProp, oldProp) => {
@@ -2828,7 +2845,7 @@ const app = Vue.createApp({
             }
         });
 
-        // Encounters (set initial value)
+        // Encounters (set the initial value when the program first runs or is refreshed)
         if (this.route1 == false && this.mapper.properties.overworld.map.value == "Route 1") {
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
@@ -2882,7 +2899,7 @@ const app = Vue.createApp({
             this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
         }
 
-        //Set value on map change
+        //Set the encounter rate when the value on map change
         this.mapper.properties.overworld.encounterRate.change(async (newProp) => {
             if (this.route1 == false && newProp.value > 0 && this.mapper.properties.overworld.map.value == "Route 1") {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
@@ -2967,6 +2984,7 @@ const app = Vue.createApp({
             }
         });
 
+        //watch for encounter table changes to account for an edge case in certain dungeon maps where the encounters seem to be set twice
         this.mapper.properties.overworld.encounters.common[0].pokemon.change(async (newProp) => {
             if (this.viridian_forest == "Pidgey" && newProp.value == "Caterpie" && this.mapper.properties.overworld.map.value == "Viridian Forest") {
                 const viridianForestPidgey = 0x24
@@ -3001,6 +3019,7 @@ const app = Vue.createApp({
             }
         });
 
+        //ensure that viridian forest encounters are set correctly when exiting a battle
         this.mapper.properties.battle.type.change(async (newProp) => {
             if (this.viridian_forest == "Encounters Off" && this.mapper.properties.overworld.map.value == "Viridian Forest") {
                 this.mapper.properties.overworld.encounterRate.set(0, false) 
@@ -3044,6 +3063,7 @@ const app = Vue.createApp({
             }
         });
 
+        //watch slot2's species so that we detect when a Pidgey is obtained and can take appropriate action
         this.mapper.properties.player.team[1].species.change((newProp) => {
             if (this.mapper.properties.overworld.map.value == "Viridian Forest") {
                 if (this.viridian_forest == "Level" && this.mapper.properties.player.team[0].level.value >= this.goal_level && newProp.value == "Pidgey") {
@@ -3175,17 +3195,19 @@ const app = Vue.createApp({
 
         // SETTING THE STARTER POKEMON'S STATS ----------------------------------------------------------------------------------------------//
         const optionsSet = async () => {
-            const regularOptions = 0xC1
-            const championOptions = 0x41
-            if (this.options == true) {
-                if (this.mapper.properties.overworld.map.bytes === 0x78)
-                await Promise.all([
-                    await this.mapper.properties.options.soloChallenge.setBytes([championOptions]),
-                ])
-            else
-                await Promise.all([
-                    await this.mapper.properties.options.soloChallenge.setBytes([regularOptions]),
-                ])
+            if (this.gamehook_disable_settings == false) {
+                const regularOptions = 0xC1
+                const championOptions = 0x41
+                if (this.options == true) {
+                    if (this.mapper.properties.overworld.map.bytes === 0x78)
+                    await Promise.all([
+                        await this.mapper.properties.options.soloChallenge.setBytes([championOptions]),
+                    ])
+                else
+                    await Promise.all([
+                        await this.mapper.properties.options.soloChallenge.setBytes([regularOptions]),
+                    ])
+                }
             }
         }
         // SETTING THE STARTER POKEMON'S STATS ----------------------------------------------------------------------------------------------//
@@ -3227,12 +3249,6 @@ const app = Vue.createApp({
                 await this.mapper.properties.overworld.mapData.palette.set(0, false)
             }
         })
-
-        //the Pokemon species and then it changes, update the sprite
-        // this.mapper.properties.player.team[0].species.change(async (x) => {
-        //     if (x.value == undefined) { this.load_pokemon_sprite_settings(this.starterName) }
-        //     this.load_pokemon_sprite_settings(x.value)
-        // })
 
         //EXP BAR
         var species = this.s1dynamicReset.species.value;

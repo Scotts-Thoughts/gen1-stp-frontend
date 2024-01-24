@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Spearow,Rival1-Lab,47,0,0,6,0:02,8.764,PECK,GROWL,,
+NINTEN,Spearow,Brock,10:23,0,12,15,0:40,51.94,PECK,GROWL,LEER,FURY ATTACK
