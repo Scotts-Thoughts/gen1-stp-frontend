@@ -14,7 +14,7 @@
                 <div>
                     <img class="canvas" ref="background_texture" :src="textures[backgroundTexture]" 
                         :style="{ 
-                            'filter': `blur(${backgroundBlur}px) brightness(${backgroundBrightness}%) contrast(${backgroundContrast}%) saturate(${backgroundSaturation}%)` ,
+                            'filter': `blur(${backgroundBlur}px) hue-rotate(${backgroundHue}deg) brightness(${backgroundBrightness}%) contrast(${backgroundContrast}%) saturate(${backgroundSaturation}%)` ,
                             'transform': `scale(${backgroundScale}%) translate(${backgroundXOffset}px, ${-backgroundYOffset}px)`
                         }"/>
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
@@ -512,6 +512,7 @@
             Contrast: <input type="range" min="0" max="200" v-model="backgroundContrast"/><br>
             Saturation: <input type="range" min="0" max="200" v-model="backgroundSaturation"/><br>
             Blur: <input type="range" min="0" max="10" v-model="backgroundBlur"/><br>
+            Hue: <input type="range" min="0" max="358" v-model="backgroundHue"/><br>
         </div>
         <div v-show="help_menus == `Internal Monitor`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>Splits:</div>

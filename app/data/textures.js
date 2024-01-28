@@ -3,6 +3,8 @@ const textures = {
     'Bug 2 (Honey Comb)': 'images\\textures\\bug2.jpg',
     'Dragon 1': 'images\\textures\\Dragon.png',
     'Electric 1': 'images\\textures\\electric.png',
+    'Electric 2': 'images\\textures\\electric_2.jpg',
+    'Electric 3': 'images\\textures\\electric_3.jpg',
     'Fighting 1': 'images\\textures\\fighting.png',
     'Fire 1': 'images\\textures\\fire.png',
     'Flying 1': 'images\\textures\\flying.png',

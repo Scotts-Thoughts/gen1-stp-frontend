@@ -661,6 +661,7 @@ const app = Vue.createApp({
             backgroundBrightness:  MyStorage["backgroundBrightness"] ?? 100,
             backgroundContrast:    MyStorage["backgroundContrast"] ?? 100,
             backgroundSaturation:  MyStorage["backgroundSaturation"] ?? 100,
+            backgroundHue:         MyStorage["backgroundHue"] ?? 0,
             //
             playerNameChoice: MyStorage["playerNameChoice"] ?? "NINTEN",
 
@@ -685,6 +686,7 @@ const app = Vue.createApp({
                 "backgroundBrightness",
                 "backgroundContrast",
                 "backgroundSaturation",
+                "backgroundHue",
             ],
 
             //timer variables
@@ -1438,6 +1440,7 @@ const app = Vue.createApp({
             this.backgroundBrightness =  MyStorage[this.starterName].backgroundBrightness ?? 100
             this.backgroundContrast =    MyStorage[this.starterName].backgroundContrast ?? 100
             this.backgroundSaturation =  MyStorage[this.starterName].backgroundSaturation ?? 100
+            this.backgroundHue =         MyStorage[this.starterName].backgroundHue ?? 0
         },
         //string can be: clear, increment, decrement
         resets_clear() {
