@@ -944,6 +944,16 @@ const app = Vue.createApp({
     },
 
     computed: {
+        species() {
+            const mapping = {
+                0xBF: "Rayquaza",
+            }
+            const bytes = this.mapper.properties.player.team[0].species.bytes
+            const value = this.mapper.properties.player.team[0].species.value
+            if (bytes > 0 && value === null) {
+                return mapper[bytes]
+            }
+        },
         g1trainerEnemySelector() {
             if (this.ready) {
                 let trainerClass = this.mapper.properties.battle.trainer.class.value
@@ -1719,26 +1729,26 @@ const app = Vue.createApp({
             if (!move_string) { return "" }
             move_string = move_string.toLowerCase()
             const moveMappings = {
-              "vicegrip":     "ViceGrip",
-              "doubleslap":   "DoubleSlap",
-              "double-edge":  "Double-Edge",
-              "solarbeam":    "SolarBeam",
-              "extremespeed": "ExtremeSpeed",
-              "dynamicpunch": "DynamicPunch",
-              "thunderpunch": "ThunderPunch",
-              "bubblebeam":   "BubbleBeam",
-              "grasswhistle": "GrassWhistle",
-              "softboiled":   "Softboiled",
-              "sand-attack":  "Sand-Attack",
-              "mud-slap":     "Mud-Slap",
-              "featherdance": "FeatherDance",
-              "poisonpowder": "PoisonPowder",
-              "dragonbreath": "DragonBreath",
-              "ancientpower": "AncientPower",
-              "smellingsalt": "SmellingSalt",
-              "selfdestruct": "Selfdestruct",
-              "smokescreen":  "SmokeScreen",
-              "sonicboom":    "SonicBoom"
+                "vicegrip":     "ViceGrip",
+                "doubleslap":   "DoubleSlap",
+                "double-edge":  "Double-Edge",
+                "solarbeam":    "SolarBeam",
+                "extremespeed": "ExtremeSpeed",
+                "dynamicpunch": "DynamicPunch",
+                "thunderpunch": "ThunderPunch",
+                "bubblebeam":   "BubbleBeam",
+                "grasswhistle": "GrassWhistle",
+                "softboiled":   "Softboiled",
+                "sand-attack":  "Sand-Attack",
+                "mud-slap":     "Mud-Slap",
+                "featherdance": "FeatherDance",
+                "poisonpowder": "PoisonPowder",
+                "dragonbreath": "DragonBreath",
+                "ancientpower": "AncientPower",
+                "smellingsalt": "SmellingSalt",
+                "selfdestruct": "Selfdestruct",
+                "smokescreen":  "SmokeScreen",
+                "sonicboom":    "SonicBoom"
             };
             const formattedMove = moveMappings[move_string];
             return formattedMove || this.capitalization_format(move_string);
