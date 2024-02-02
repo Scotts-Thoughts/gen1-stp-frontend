@@ -46,19 +46,20 @@ const g1PokemonData = {
             "Thunderbolt",
             "Thunder",
             "Earthquake",
-            "Fissure",
             "Mimic",
             "Double Team",
             "Bide",
             "Metronome",
             "Fire Blast",
+            "Sky Attack",
             "Rest",
             "Thunder Wave",
             "Rock Slide",
             "Tri Attack",
             "Substitute",
             "Fly",
-            "Surf"
+            "Surf",
+            "Strength"
         ]
     },
     "Groudon": {
