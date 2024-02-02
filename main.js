@@ -38,6 +38,7 @@ function createWindow() {
     const contentBounds = mainWindow.getContentBounds()
     const titleBarHeight = 1080 - contentBounds.height
     const borderWidth = (1920 - contentBounds.width) / 2
+    if(titleBarHeight > 0 && borderWidth > 0)
     mainWindow.setSize(1920 + borderWidth * 2, 1080 + titleBarHeight)
     mainWindow.show()
     // mainWindow.webContents.openDevTools()
