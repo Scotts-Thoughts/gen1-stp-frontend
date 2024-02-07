@@ -1,0 +1,13 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Magneton,Rival1-Lab,40,0,0,6,0:02,6.794,SonicBoom,TACKLE,THUNDERSHOCK,
+NINTEN,Magneton,Rival1-Lab,40,0,0,6,0:02,6.792,SonicBoom,TACKLE,THUNDERSHOCK,
+NINTEN,Magneton,Brock,2:34,0,0,9,0:09,10.982,SonicBoom,TACKLE,THUNDERSHOCK,
+NINTEN,Magneton,Rival2-Nugget Bridge,5:48,0,0,16,0:22,19.561,THUNDERSHOCK,TACKLE,SonicBoom,
+NINTEN,Magneton,Misty,8:57,0,0,21,0:34,9.084,THUNDERSHOCK,TACKLE,SonicBoom,
+NINTEN,Magneton,Cerulean Rocket,9:19,0,0,22,0:36,10.545,THUNDERSHOCK,TACKLE,SonicBoom,
+NINTEN,Magneton,Rival3-SS Anne,11:18,0,0,24,0:44,17.486,THUNDERSHOCK,TACKLE,SonicBoom,REST
+NINTEN,Magneton,Surge,12:31,1,0,25,0:48,11.472,THUNDERSHOCK,TACKLE,SonicBoom,REST
+NINTEN,Magneton,Rival4-Pkmn Tower,21:01,1,0,31,1:21,20.115,THUNDERBOLT,BIDE,SonicBoom,REST
+NINTEN,Magneton,Rival5-Silph,31:12,4,0,41,1:53,32.621,THUNDERBOLT,DOUBLE-EDGE,SonicBoom,REST
+NINTEN,Magneton,Erika,33:47,4,0,44,2:04,15.38,THUNDERBOLT,DOUBLE-EDGE,REFLECT,REST
+NINTEN,Magneton,Koga,35:41,4,0,46,2:11,22.475,THUNDERBOLT,DOUBLE-EDGE,SWIFT,REST

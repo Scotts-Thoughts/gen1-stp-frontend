@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Magneton,Rival1-Lab,41,0,0,6,0:02,6.917,SonicBoom,TACKLE,THUNDERSHOCK,
+NINTEN,Magneton,Brock,2:47,0,0,9,0:10,16.404,SonicBoom,TACKLE,THUNDERSHOCK,
