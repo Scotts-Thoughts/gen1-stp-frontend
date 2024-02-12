@@ -22,7 +22,7 @@
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
                     <img v-show="mapper.properties.meta.gameName == 'Yellow'" class="pokemon_art" ref="pokemon_art"
                         :style="{
-                            'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`,
+                            'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px) rotate(${imageRotation}deg)`,
                             'filter': `saturate(${imageSat}%)
                             drop-shadow(0 0 0.4px #000)
                             drop-shadow(0 0 0.4px #000)
@@ -355,6 +355,7 @@
             Y-Offset: <input type="range" min="-400" max="400"v-model="imageYOffset"/><br>
             Scale: <input type="range" min="0.3" max="2" step="0.02" v-model="imageScale"/><br>
             Saturation: <input type="range" min="90" max="150" step="1" v-model="imageSat"/><br>
+            Rotation: <input type="range" min="0" max="360" step="1" v-model="imageRotation"/><br>
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
             <br>
             <transition name="fade"><div v-if="resetCounter == true">

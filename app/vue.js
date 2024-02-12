@@ -649,6 +649,7 @@ const app = Vue.createApp({
             imageScale:    MyStorage["imageScale"] ?? 1,
             imageFlip:     MyStorage["imageFlip"] ?? false,
             imageSat:      MyStorage["imageSat"] ?? 100,
+            imageRotation: MyStorage["imageRotation"] ?? 0,
 
             //background texture settings
             backgroundBlur:        MyStorage["backgroundBlur"] ?? 0,
@@ -673,6 +674,7 @@ const app = Vue.createApp({
                 "imageScale",
                 "imageFlip",
                 "imageSat",
+                "imageRotation",
                 "backgroundBlur",
                 "backgroundScale",
                 "backgroundUrl",
@@ -717,6 +719,7 @@ const app = Vue.createApp({
             this.imageScale = MyStorage[this.starterName].imageScale ?? 1;
             this.imageFlip = MyStorage[this.starterName].imageFlip ?? false;
             this.imageSat = MyStorage[this.starterName].imageSat ?? 100
+            this.imageRotation = MyStorage[this.starterName].imageRotation ?? 0
             this.backgroundBlur = MyStorage[this.starterName].backgroundBlur ?? 0
             this.backgroundScale = MyStorage[this.starterName].backgroundScale ?? 100
             this.backgroundUrl = MyStorage[this.starterName].backgroundUrl ?? ""
@@ -1359,7 +1362,7 @@ const app = Vue.createApp({
             this.blackout_counter = 0
             this.playerId = 0
             this.playerName = "NINTEN"
-            this.second_playthrough_settings()
+            // this.second_playthrough_settings()
         },
 
         //*text methods
@@ -1438,6 +1441,7 @@ const app = Vue.createApp({
             this.imageScale =    MyStorage[this.starterName].imageScale ?? 1
             this.imageFlip =     MyStorage[this.starterName].imageFlip ?? false
             this.imageSat =      MyStorage[this.starterName].imageSat ?? 100
+            this.imageRotation = MyStorage[this.starterName].imageRotation ?? 0
 
             //background texture settings
             this.backgroundBlur =        MyStorage[this.starterName].backgroundBlur ?? 0
