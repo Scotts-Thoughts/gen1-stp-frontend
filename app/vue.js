@@ -372,7 +372,7 @@ const keyhook = new KeyHook();
 const fs = require("fs");
 const path = require("path");
 const { finished } = require('stream');
-for (folder in folders = ['splits', 'splits/Yellow', 'splits/Red and Blue']) {
+for (let folder of folders = ['splits', 'splits/Yellow', 'splits/Red and Blue']) {
     if (!fs.existsSync(folder)) {
         fs.mkdirSync(folder);
     }
