@@ -381,7 +381,7 @@
                 <option>Advanced Options</option>
                 <option>Style</option>
                 <option>Splits</option>
-                <option>Dev Console</option>
+                <!-- <option>Dev Console</option> -->
             </select>
         </div>
         <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
@@ -504,6 +504,7 @@
                     {{ key }}
                 </option>
             </select>
+            <br>
             <!-- <div>Use Custom Background:<input class="checkBoxStyle" type="checkbox" v-model="use_custom_background"/></div> -->
             <!-- <div v-if="use_custom_background == true"><input v-model="imageUrl" placeholder="Input Custom Texture URL Here"><br></div> -->
             X-Offset: <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
@@ -543,7 +544,7 @@
         <div v-show="help_menus == `Playthrough Info`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>Items:</div>
         </div>
-        <div v-show="help_menus == `Dev Console`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
+        <!-- <div v-show="help_menus == `Dev Console`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>State: {{this.state}}</div>
             <br>
             <div>Most Recently Learnt Move: {{this.most_recent_move}}</div>
@@ -574,7 +575,7 @@
             <div>{{battleGraphic}}</div>
             <div>{{mapper?.properties?.battle?.type?.value}}</div>
             <div>State: {{state}}</div>
-        </div>
+        </div> -->
     </div>
 
 <!------ JAVASCRIPT --------------------------------------------------------------------------------------------------------------------->
