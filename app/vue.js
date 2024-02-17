@@ -2068,7 +2068,7 @@ const app = Vue.createApp({
                     case "SABRINA_1":
                         return "images/trainers/sabrina.png";
                     case "BLAINE_1":
-                        return "images/trainers/BLAINE.png";
+                        return "images/trainers/blaine.png";
                     case "RIVAL1_1":
                         return "images/trainers/RIVAL1.png";
                     case "RIVAL1_2":
