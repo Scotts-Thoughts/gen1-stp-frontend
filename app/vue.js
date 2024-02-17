@@ -2775,7 +2775,6 @@ const app = Vue.createApp({
                 
                 //write full split data (this is written for every single battle)
                 logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full")
-                console.log("Got to here")
                 
                 //write deprecated split data (this is written for only pre-defined trainers)
                 //a list of these trainers can be found within `autosplitter.js` and inside the parent `Yellow` or `Red and Blue`

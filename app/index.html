@@ -274,21 +274,21 @@
                 <!--------- BATTLE POP UPS -------------------------------------------------------------------------------------------------------------------->
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
-                        <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.value != 0 && (state == `Battle` || state == `From Battle`)">
+                        <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.bytes != 0x07 && batt.yourPokemon.modStageAccuracy.bytes != 0x00 && batt.yourPokemon.modStageAccuracy.bytes != 0xFF && (state == `Battle` || state == `From Battle`)">
                             <div class="colored-image" style="--url: url(images/pop_ups/accuracy/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.value != 0 && (state == `Battle` || state == `From Battle`)">
+                        <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.bytes != 0x07 && batt.yourPokemon.modStageEvasion.bytes != 0x00 && batt.yourPokemon.modStageEvasion.bytes != 0xFF && (state == `Battle` || state == `From Battle`)">
                             <div class="colored-image" style="--url: url(images/pop_ups/evasion/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-if="battle_fade == true && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (state == `Battle` || state == `From Battle`)">
+                        <div v-if="battle_fade == true && batt.yourPokemon.effects.reflect.bytes != 0xFF && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (state == `Battle` || state == `From Battle`)">
                             <div class="colored-image" style="--url: url(images/pop_ups/screens/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
@@ -504,8 +504,8 @@
                     {{ key }}
                 </option>
             </select>
-            <div>Use Custom Background:<input class="checkBoxStyle" type="checkbox" v-model="use_custom_background"/></div>
-            <div v-if="use_custom_background == true"><input v-model="imageUrl" placeholder="Input Custom Texture URL Here"><br></div>
+            <!-- <div>Use Custom Background:<input class="checkBoxStyle" type="checkbox" v-model="use_custom_background"/></div> -->
+            <!-- <div v-if="use_custom_background == true"><input v-model="imageUrl" placeholder="Input Custom Texture URL Here"><br></div> -->
             X-Offset: <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
             Y-Offset: <input type="range" min="-125" max="125"v-model="backgroundYOffset"/><br>
             Scale: <input type="range" min="100" max="200" v-model="backgroundScale"/><br>
