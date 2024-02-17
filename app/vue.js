@@ -372,6 +372,12 @@ const keyhook = new KeyHook();
 const fs = require("fs");
 const path = require("path");
 const { finished } = require('stream');
+for (folder in folders = ['splits', 'splits/Yellow', 'splits/Red and Blue']) {
+    if (!fs.existsSync(folder)) {
+        fs.mkdirSync(folder);
+    }
+}
+
 function logData(gameName, str, file_name, starterName, log_type) {
     const dirPath = `./splits/${gameName}/${starterName}/attempts/`;
     let filePath = path.join(dirPath, `${starterName}-${file_name}-simple.csv`);
@@ -713,20 +719,20 @@ const app = Vue.createApp({
 
     created() {
         if (MyStorage[this.starterName]) {
-            this.overlay_color = MyStorage[this.starterName].overlay_color ?? "#000000";
-            this.imageXOffset = MyStorage[this.starterName].imageXOffset ?? 0;
-            this.imageYOffset = MyStorage[this.starterName].imageYOffset ?? 0;
-            this.imageScale = MyStorage[this.starterName].imageScale ?? 1;
-            this.imageFlip = MyStorage[this.starterName].imageFlip ?? false;
-            this.imageSat = MyStorage[this.starterName].imageSat ?? 100
-            this.imageRotation = MyStorage[this.starterName].imageRotation ?? 0
-            this.backgroundBlur = MyStorage[this.starterName].backgroundBlur ?? 0
-            this.backgroundScale = MyStorage[this.starterName].backgroundScale ?? 100
-            this.backgroundUrl = MyStorage[this.starterName].backgroundUrl ?? ""
+            this.overlay_color         = MyStorage[this.starterName].overlay_color ?? "#000000";
+            this.imageXOffset          = MyStorage[this.starterName].imageXOffset ?? 0;
+            this.imageYOffset          = MyStorage[this.starterName].imageYOffset ?? 0;
+            this.imageScale            = MyStorage[this.starterName].imageScale ?? 1;
+            this.imageFlip             = MyStorage[this.starterName].imageFlip ?? false;
+            this.imageSat              = MyStorage[this.starterName].imageSat ?? 100
+            this.imageRotation         = MyStorage[this.starterName].imageRotation ?? 0
+            this.backgroundBlur        = MyStorage[this.starterName].backgroundBlur ?? 0
+            this.backgroundScale       = MyStorage[this.starterName].backgroundScale ?? 100
+            this.backgroundUrl         = MyStorage[this.starterName].backgroundUrl ?? ""
             this.use_custom_background = MyStorage[this.starterName].use_custom_background ?? false
-            this.backgroundXOffset = MyStorage[this.starterName].backgroundXOffset ?? 0
-            this.backgroundYOffset = MyStorage[this.starterName].backgroundYOffset ?? 0
-            this.backgroundTexture = MyStorage[this.starterName].backgroundTexture ?? 0
+            this.backgroundXOffset     = MyStorage[this.starterName].backgroundXOffset ?? 0
+            this.backgroundYOffset     = MyStorage[this.starterName].backgroundYOffset ?? 0
+            this.backgroundTexture     = MyStorage[this.starterName].backgroundTexture ?? 0
         }
         for (let i = 0; i < this.auto_save_settings.length; i++) {
             let propName = this.auto_save_settings[i];
@@ -949,12 +955,12 @@ const app = Vue.createApp({
     computed: {
         species() {
             const mapping = {
-                0xBF: "Rayquaza",
+                0xBF: this.starterName,
             }
             const bytes = this.mapper.properties.player.team[0].species.bytes
             const value = this.mapper.properties.player.team[0].species.value
             if (bytes > 0 && value === null) {
-                return mapper[bytes]
+                return mapping[bytes]
             }
         },
         g1trainerEnemySelector() {
@@ -1107,17 +1113,33 @@ const app = Vue.createApp({
         },
         s1dynamicReset() {
             if (this.state == `Battle`) {
-                return this.mapper?.properties?.battle?.yourPokemon
+                const battle_data = this.mapper?.properties?.battle?.yourPokemon
+                var species = battle_data.species.value
+                if (species == null) {
+                    species = this.starterName
+                }
+                return {
+                    ...battle_data,
+                    species: { value: species }
+                }
             }
             else if (this.state == `Base Stats` || this.mapper?.properties?.player?.team[0].species.value == null) {
-                var data = this.g1PokemonData?.[this.starterName]
+                const pokedex_data = this.g1PokemonData?.[this.starterName]
                 return {
-                    species: { value: data.name },
-                    ...data
+                    species: { value: pokedex_data.name },
+                    ...pokedex_data
                 }
             }
             else {
-                return this.mapper?.properties?.player?.team[0]
+                const party_data = this.mapper?.properties?.player?.team[0]
+                var species = party_data.species.value
+                if (species == null) {
+                    species = this.starterName
+                }
+                return {
+                    ...party_data,
+                    species: { value: species }
+                }
             }
         },
         starting_type_fix() {
