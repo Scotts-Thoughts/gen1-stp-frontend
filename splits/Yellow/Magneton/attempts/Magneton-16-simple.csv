@@ -1,0 +1,7 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Magneton,Rival1-Lab,41,0,0,6,0:02,7.316,SonicBoom,TACKLE,THUNDERSHOCK,
+NINTEN,Magneton,Brock,2:38,0,0,9,0:09,10.284,SonicBoom,TACKLE,THUNDERSHOCK,
+NINTEN,Magneton,Misty,5:50,0,0,17,0:22,11.421,THUNDERSHOCK,TACKLE,SonicBoom,
+NINTEN,Magneton,Rival2-Nugget Bridge,7:04,0,1,19,0:27,16.799,THUNDERSHOCK,TACKLE,SonicBoom,
+NINTEN,Magneton,Cerulean Rocket,9:56,0,1,22,0:38,10.463,THUNDERSHOCK,TACKLE,SonicBoom,
+NINTEN,Magneton,Rival3-SS Anne,12:58,0,1,25,0:50,73.635,THUNDERSHOCK,TACKLE,SonicBoom,REST

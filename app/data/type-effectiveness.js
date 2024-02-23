@@ -33,7 +33,7 @@ const typeData = [
         Bug:      0.5,
         Poison:   0.5,
         Ice:      2,
-        Ghost:    1,
+        Ghost:    0,
         Dragon:   1,
         Dark:     2,
     },
