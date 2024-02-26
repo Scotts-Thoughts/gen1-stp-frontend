@@ -476,7 +476,7 @@ box-shadow:
 .ePkmnSpecies {
     position: absolute;
     /* border: 1px solid rgb(0, 255, 149); */
-    font-size: 18px;
+    font-size: 16px;
     font-family: play;
     width: 112px;
     opacity: .7;
@@ -571,6 +571,14 @@ box-shadow:
     top: 84px; 
 }
 
+.ePkmnModsStyle {
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 25px;
+    text-align: center;
+    left: 126px;
+    font-size: 15px;
+}
 .ePkmnStatsStyle {
     position: absolute;
     /* border: 1px solid rgb(255, 0, 0); */
@@ -604,6 +612,11 @@ box-shadow:
 .ePkmnLabelSpc  { top: 85px; }
 .ePkmnLabelSpd  { top: 109px;}
 .ePkmnLabelCrit { top: 133.3px;}
+
+.ePkmnModAtk  { top: 36px; }
+.ePkmnModDef  { top: 60px; }
+.ePkmnModSpc  { top: 84px; }
+.ePkmnModSpd  { top: 108px;}
 
 .eMoveIconStyle {
     position: absolute;

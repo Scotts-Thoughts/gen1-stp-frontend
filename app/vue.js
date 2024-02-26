@@ -1195,6 +1195,31 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        stat_mod(modifer, slot) {
+            let mod = modifer
+            let mod_string = ""
+            let style_string = ""
+            if (mod == 0) {
+                style_string = 'opacity: .7;'
+            }
+            if (mod > 0) {
+                mod_string = `+${mod}`
+                style_string = 'opacity: .1;'
+            }
+            if (mod < 0) {
+                mod_string = mod
+                style_string = 'opacity: .1;'
+            }
+            if (slot != this.mapper.properties.battle.enemyPokemon.partyPos.value) {
+                style_string = 'opacity: .7;'
+            }
+            let object = {
+                mod: mod_string,
+                style: style_string,
+            }
+            console.log(object)
+            return object
+        },
         enemyPkmnFaintTypes(pkmnData) {
             if (this.state == `To Battle`) {
                 return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
@@ -1842,16 +1867,6 @@ const app = Vue.createApp({
             }
             return this.enemyModColour 
         },
-        // //ENEMY MOD STYLING
-        // enemyMods(modValue) {
-        //     if (this.state != "Battle") { return this.enemyModColour }
-        //     var neutral = ["0", "background: #a1a1a1;"]
-        //     var raised = [modValue, "background: #d84444;"]
-        //     var lowered = [modValue, "background: #21c500"]
-        //     if (modValue < 0) { this.enemyModColour = raised }
-        //     if (modValue > 0) { this.enemyModColour = lowered }
-        //     return this.enemyModColour 
-        // },
         enemyDynamic(activePkmn, currentSlot) {
             if (activePkmn == currentSlot && this.state == "Battle") {
                 return this.mapper?.properties?.battle?.enemyPokemon

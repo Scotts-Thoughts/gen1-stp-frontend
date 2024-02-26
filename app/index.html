@@ -207,11 +207,11 @@
                                     <div v-if="mapper.properties.battle.trainer.team[x]?.move4.value != null" class="ePkmnMoveStyle ePkmnEffectivePower ePkmnMove4">{{enemy_effective_power(mapper.properties.battle.trainer.team[x]?.move4.value, mapper.properties.battle.trainer.team[x], x)}}</div>
 
                                     <!-- Stats -->
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelHp"  >Hp</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelAtk" >Atk.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelDef" >Def.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpc" >Spc.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpd" >Spe.</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelHp">Hp</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelAtk" :style="stat_mod(batt.enemyPokemon.modEnemyStageAttack.value, x).style">Atk.</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelDef" :style="stat_mod(batt.enemyPokemon.modEnemyStageDefense.value, x).style">Def.</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpc" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpecial.value, x).style">Spc.</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpd" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpeed.value, x).style">Spe.</div>
                                     <div class="ePkmnStatLabelStyle ePkmnLabelCrit">Crit.</div>
 
                                     <div class="ePkmnStatsStyle ePkmnHp   opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{mapper.properties.battle.trainer.team[x]?.maxHp}}</div>
@@ -222,10 +222,26 @@
                                     <div class="ePkmnStatsStyle ePkmnCrit opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{enemy_crit_rate(mapper.properties.battle.trainer.team[x])}}%</div>
                                    
                                     <!-- Modifiers -->
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageAttack.value != `0`" class="enemyMods attackMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageAttack.value)[1]}`">{{batt.enemyPokemon.modEnemyStageAttack.value}}</div></transition>
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageDefense.value != `0`" class="enemyMods defenseMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageDefense.value)[1]}`">{{batt.enemyPokemon.modEnemyStageDefense.value}}</div></transition>
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpecial.value != `0`" class="enemyMods specialMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpecial.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpecial.value}}</div></transition>
-                                    <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpeed.value != `0`" class="enemyMods speedMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpeed.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpeed.value}}</div></transition>
+                                    <div 
+                                        v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageAttack.value != `0`" 
+                                        class="ePkmnModsStyle ePkmnModAtk">
+                                        {{stat_mod(batt.enemyPokemon.modEnemyStageAttack.value, x).mod}}
+                                    </div>
+                                    <div 
+                                        v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageDefense.value != `0`"
+                                        class="ePkmnModsStyle ePkmnModDef">
+                                        {{stat_mod(batt.enemyPokemon.modEnemyStageDefense.value, x).mod}}
+                                    </div>
+                                    <div 
+                                        v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpecial.value != `0`"
+                                        class="ePkmnModsStyle ePkmnModSpc">
+                                        {{stat_mod(batt.enemyPokemon.modEnemyStageSpecial.value, x).mod}}
+                                    </div>
+                                    <div 
+                                        v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpeed.value != `0`"  
+                                        class="ePkmnModsStyle ePkmnModSpd">
+                                        {{stat_mod(batt.enemyPokemon.modEnemyStageSpeed.value, x).mod}}
+                                    </div>
                                 </div>
                             </div>
                         </div> 
