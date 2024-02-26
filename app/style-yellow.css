@@ -477,8 +477,8 @@ box-shadow:
     position: absolute;
     /* border: 1px solid rgb(0, 255, 149); */
     font-size: 18px;
-    font-family: titan;
-    width: 138px;
+    font-family: play;
+    width: 112px;
     opacity: .7;
     text-align: center;
     top: 7px;
@@ -487,10 +487,10 @@ box-shadow:
 .ePkmnSprite {
     position: absolute;
     /* border: 1px solid rgb(255, 0, 0); */
-    max-width: 115px;
-    max-height: 115px;
-    left: 18px;
-    top: 30px;
+    max-width: 107px;
+    max-height: 107px;
+    left: 9px;
+    top: 33px;
     transition: opacity 500ms ease-in-out, filter 500ms ease-in-out;
 }
 .enemyStatsArea {
@@ -541,17 +541,21 @@ box-shadow:
 .ePkmnMoveStyle {
     position: absolute;
     /* border: 1px solid rgb(47, 0, 255); */
-    width: 190px;
-    font-size: 20px;
-    line-height: 32px;
-    text-align: center;
-    left: 190px;
+    width: 110px;
+    font-size: 16px;
+    line-height: 31px;
+    text-align: left;
+    left: 232px;
+}
+.ePkmnEffectivePower {
+    left: 254px;
+    text-align: right;
 }
 .opacityTransition { transition: opacity 500ms ease-in-out;}
-.ePkmnMove1 { top: 12px; }
-.ePkmnMove2 { top: 48px; }
-.ePkmnMove3 { top: 84px; }
-.ePkmnMove4 { top: 119px; }
+.ePkmnMove1 { top: 11px; }
+.ePkmnMove2 { top: 46.5px; }
+.ePkmnMove3 { top: 82.5px; }
+.ePkmnMove4 { top: 117.5px; }
 .ePkmnRanges {
     /* left: 148px;
     width: 222px;
@@ -571,14 +575,69 @@ box-shadow:
     position: absolute;
     /* border: 1px solid rgb(255, 0, 0); */
     width: 50px;
-    text-align: center;
-    left: 146.5px;
+    text-align: right;
+    left: 142px;
+    font-size: 16px;
 }
-.ePkmnHp  { top: 11px; }
-.ePkmnAtk { top: 39px; }
-.ePkmnDef { top: 67px; }
-.ePkmnSpd { top: 124px; }
-.ePkmnSpc { top: 95px; }
+.ePkmnStatLabelStyle {
+    position: absolute;
+    /* border: 1px solid rgb(255, 0, 0); */
+    width: 50px;
+    text-align: left;
+    left: 128px;
+    font-size: 12px;
+    opacity: .7;
+}
+.ePkmnHp   { top: 11px; }
+.ePkmnAtk  { top: 35px; }
+.ePkmnDef  { top: 59px; }
+.ePkmnSpc  { top: 83px; }
+.ePkmnSpd  { top: 107px;}
+.ePkmnCrit { 
+    top: 133px;
+    font-size: 13px;
+}
+
+.ePkmnLabelHp   { top: 13px; }
+.ePkmnLabelAtk  { top: 37px; }
+.ePkmnLabelDef  { top: 61px; }
+.ePkmnLabelSpc  { top: 85px; }
+.ePkmnLabelSpd  { top: 109px;}
+.ePkmnLabelCrit { top: 133.3px;}
+
+.eMoveIconStyle {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    margin-bottom: 2px;
+    left: 204px;
+}
+.moveIcon1 {
+    top: 14px;
+}
+.moveIcon2 {
+    top: 50px;
+}
+.moveIcon3 {
+    top: 86px;
+}
+.moveIcon4 {
+    top: 122px;
+}
+
+.ePkmnTypeIcons {
+    position: absolute;
+    border: 1px solid rgba(255, 0, 0, 0);
+    width: 22px;
+    height: 22px;
+    top: 130px;
+}
+.ePkmnType_1 {
+    left: 6px;
+}
+.ePkmnType_2 {
+    left: 30px;
+}
 
 .enemyMods {
     position: absolute;

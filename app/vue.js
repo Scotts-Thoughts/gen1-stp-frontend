@@ -1195,6 +1195,31 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        enemyPkmnFaintTypes(pkmnData) {
+            if (this.state == `To Battle`) {
+                return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
+            }
+            else if (pkmnData.hp == 0 || this.state == `From Battle`) {
+                return "filter: grayscale(100%) drop-shadow(0px 0px 1px #000000c5); opacity: .5; "
+            }
+            else {
+                return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
+            }
+        },
+        enemyType1(slotNumber) {
+            const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
+            if (pkmn_species == null) { 
+                return "Normal"
+            }
+            return this.g1PokemonData[pkmn_species].type1
+        },
+        enemyType2(slotNumber) {
+            const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
+            if (pkmn_species == null) { 
+                return "Normal"
+            }
+            return this.g1PokemonData[pkmn_species].type2
+        },
         toggleDataType() {
             // Cycle through the values
             this.key_F16 = this.cycleValues_failures[this.cycleIndex_failures];
@@ -1749,6 +1774,13 @@ const app = Vue.createApp({
             }
             else {
                 return this.g1PokemonData[this.starterName].crit_rate
+            }
+        },
+        enemy_crit_rate(pkmnData) {
+            const species = pkmnData?.species.value
+            const base_speed = this.g1PokemonData[species]?.base_spd
+            if (base_speed) {
+                return Math.round(Math.round((Math.floor(base_speed/2)/256) * 10000) / 100)
             }
         },
         move_name(move_string) {
@@ -2364,6 +2396,45 @@ const app = Vue.createApp({
 
         sleep(ms) {
             return new Promise((res) => setTimeout(res, ms))
+        },
+
+        enemy_move_power(move_name) {
+            var move_power = this.g1MoveData[this.move_name(move_name)].Power ?? 0
+            if (move_power == 0) { return "—" }
+            if (move_power == 1) { return "—" }
+            if (move_power == "—") { return "—" }
+            if (move_power == "-") { return "—" }
+            if (move_power == "") { return "—" }
+            else return move_power
+        },
+        enemy_effective_power(move_name, enemy_mon, slot) {
+            const state = this.state
+            const enemy_state = this.enemyState
+            const move = this.move_name(move_name)
+            if (state == 'Battle' || state == 'From Battle') { 
+                const species = enemy_mon.species.value
+                const move_data = this.g1MoveData[move]
+                const move_type = move_data.Type
+                const move_base_power = this.enemy_move_power(move) ?? move_data.Power
+                const move_category = move_data.Category
+                const user_type_1 = this.g1PokemonData[species].type1
+                const user_type_2 = this.g1PokemonData[species].type2
+                const target_type_1 = this.mapper.properties.battle.yourPokemon.type1.value
+                const target_type_2 = this.mapper.properties.battle.yourPokemon.type2.value
+                if (move_base_power == "—" || move_base_power == "-") { return "—" }
+                var move_effective_power = move_base_power
+                var modifier_effectiveness_1 = this.typeData.find(x => x.moveType == move_type)[target_type_1]
+                var modifier_effectiveness_2 = target_type_2 && move_type && (target_type_1 != target_type_2) ? this.typeData.find(x => x.moveType == move_type)[target_type_2]
+                    : 1
+                var modifier_stab = move_type == user_type_1 ? 1.5 
+                    : move_type == user_type_2 ? 1.5 
+                    : 1
+    
+                //Calculate effective power
+                if (this.typeCalcs == true) { //Handles type effectiveness calculations in battle
+                    return Math.floor(move_base_power * modifier_stab * modifier_effectiveness_1 * modifier_effectiveness_2)
+                }
+            }
         },
 
         type_effectiveness(pkmnData, moveNumber, enemyData) { //pkmnData = team[0] etc
