@@ -207,11 +207,11 @@
                                     <div v-if="mapper.properties.battle.trainer.team[x]?.move4.value != null" class="ePkmnMoveStyle ePkmnEffectivePower ePkmnMove4">{{enemy_effective_power(mapper.properties.battle.trainer.team[x]?.move4.value, mapper.properties.battle.trainer.team[x], x)}}</div>
 
                                     <!-- Stats -->
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelHp">Hp</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelAtk" :style="stat_mod(batt.enemyPokemon.modEnemyStageAttack.value, x).style">Atk.</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelHp"  :style="stat_mod(0, x).style"                                           >Hp</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelAtk" :style="stat_mod(batt.enemyPokemon.modEnemyStageAttack.value, x).style" >Atk.</div>
                                     <div class="ePkmnStatLabelStyle ePkmnLabelDef" :style="stat_mod(batt.enemyPokemon.modEnemyStageDefense.value, x).style">Def.</div>
                                     <div class="ePkmnStatLabelStyle ePkmnLabelSpc" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpecial.value, x).style">Spc.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpd" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpeed.value, x).style">Spe.</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpd" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpeed.value, x).style"  >Spe.</div>
                                     <div class="ePkmnStatLabelStyle ePkmnLabelCrit">Crit.</div>
 
                                     <div class="ePkmnStatsStyle ePkmnHp   opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{mapper.properties.battle.trainer.team[x]?.maxHp}}</div>

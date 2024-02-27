@@ -554,7 +554,7 @@ box-shadow:
 .opacityTransition { transition: opacity 500ms ease-in-out;}
 .ePkmnMove1 { top: 11px; }
 .ePkmnMove2 { top: 46.5px; }
-.ePkmnMove3 { top: 82.5px; }
+.ePkmnMove3 { top: 82.5px; }f
 .ePkmnMove4 { top: 117.5px; }
 .ePkmnRanges {
     /* left: 148px;
@@ -564,12 +564,8 @@ box-shadow:
     width: 199px;
     border: 1px solid #a8282800;
 }
-.ePkmnPlayerRange { 
-    top: 13px; 
-}
-.ePkmnEnemyRange { 
-    top: 84px; 
-}
+.ePkmnPlayerRange { top: 13px; }
+.ePkmnEnemyRange  { top: 84px; }
 
 .ePkmnModsStyle {
     position: absolute;
@@ -625,18 +621,10 @@ box-shadow:
     margin-bottom: 2px;
     left: 204px;
 }
-.moveIcon1 {
-    top: 14px;
-}
-.moveIcon2 {
-    top: 50px;
-}
-.moveIcon3 {
-    top: 86px;
-}
-.moveIcon4 {
-    top: 122px;
-}
+.moveIcon1 { top: 14px; }
+.moveIcon2 { top: 50px; }
+.moveIcon3 { top: 86px; }
+.moveIcon4 { top: 122px; }
 
 .ePkmnTypeIcons {
     position: absolute;
@@ -645,12 +633,8 @@ box-shadow:
     height: 22px;
     top: 130px;
 }
-.ePkmnType_1 {
-    left: 6px;
-}
-.ePkmnType_2 {
-    left: 30px;
-}
+.ePkmnType_1 { left: 6px; }
+.ePkmnType_2 { left: 30px; }
 
 .enemyMods {
     position: absolute;

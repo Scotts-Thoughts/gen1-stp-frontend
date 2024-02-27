@@ -1210,8 +1210,11 @@ const app = Vue.createApp({
                 mod_string = mod
                 style_string = 'opacity: .1;'
             }
-            if (slot != this.mapper.properties.battle.enemyPokemon.partyPos.value) {
+            if (slot != this.mapper.properties.battle.enemyPokemon.partyPos.value && this.mapper.properties.battle.trainer.team[slot].hp.value > 0) {
                 style_string = 'opacity: .7;'
+            }
+            if (slot != this.mapper.properties.battle.enemyPokemon.partyPos.value && this.mapper.properties.battle.trainer.team[slot].hp.value == 0) {
+                style_string = 'opacity: .3;'
             }
             let object = {
                 mod: mod_string,
