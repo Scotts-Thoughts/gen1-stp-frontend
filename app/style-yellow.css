@@ -554,7 +554,7 @@ box-shadow:
 .opacityTransition { transition: opacity 500ms ease-in-out;}
 .ePkmnMove1 { top: 11px; }
 .ePkmnMove2 { top: 46.5px; }
-.ePkmnMove3 { top: 82.5px; }f
+.ePkmnMove3 { top: 82.5px; }
 .ePkmnMove4 { top: 117.5px; }
 .ePkmnRanges {
     /* left: 148px;
@@ -596,7 +596,7 @@ box-shadow:
 .ePkmnAtk  { top: 35px; }
 .ePkmnDef  { top: 59px; }
 .ePkmnSpc  { top: 83px; }
-.ePkmnSpd  { top: 107px;}
+.ePkmnSpe  { top: 107px;}
 .ePkmnCrit { 
     top: 133px;
     font-size: 13px;
@@ -606,7 +606,7 @@ box-shadow:
 .ePkmnLabelAtk  { top: 37px; }
 .ePkmnLabelDef  { top: 61px; }
 .ePkmnLabelSpc  { top: 85px; }
-.ePkmnLabelSpd  { top: 109px;}
+.ePkmnLabelSpe  { top: 109px;}
 .ePkmnLabelCrit { top: 133.3px;}
 
 .ePkmnModAtk  { top: 36px; }

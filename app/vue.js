@@ -621,6 +621,12 @@ const app = Vue.createApp({
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
             oldExpValue: 0,
+            stat_object: [
+                {abrv: "Atk", name: "Attack"}, 
+                {abrv: "Def", name: "Defense"}, 
+                {abrv: "Spc", name: "Special"}, 
+                {abrv: "Spe", name: "Speed"}, 
+            ], 
 
             //resets
             playerId: MyStorage["playerId"] ?? 0,
@@ -953,6 +959,14 @@ const app = Vue.createApp({
     },
 
     computed: {
+        enemy_trainer() {
+            const trainer = this.mapper.properties.battle.trainer.class.value
+            const id = this.mapper.properties.battle.trainer.number.value
+            const identifier = `${trainer} ${id}`
+            if (this.state == 'To Battle' || this.state == 'Battle' || this.state == 'From Battle') {
+                return this.g1YellowTrainers[identifier]
+            }
+        },
         species() {
             const mapping = {
                 0xBF: this.starterName,
@@ -1199,6 +1213,7 @@ const app = Vue.createApp({
             let mod = modifer
             let mod_string = ""
             let style_string = ""
+
             if (mod == 0) {
                 style_string = 'opacity: .7;'
             }
@@ -1210,17 +1225,18 @@ const app = Vue.createApp({
                 mod_string = mod
                 style_string = 'opacity: .1;'
             }
+
+            if (this.mapper.properties.battle.trainer.team[slot].hp.value == 0) {
+                style_string = 'opacity: .3;'
+            }
             if (slot != this.mapper.properties.battle.enemyPokemon.partyPos.value && this.mapper.properties.battle.trainer.team[slot].hp.value > 0) {
                 style_string = 'opacity: .7;'
             }
-            if (slot != this.mapper.properties.battle.enemyPokemon.partyPos.value && this.mapper.properties.battle.trainer.team[slot].hp.value == 0) {
-                style_string = 'opacity: .3;'
-            }
+
             let object = {
                 mod: mod_string,
                 style: style_string,
             }
-            console.log(object)
             return object
         },
         enemyPkmnFaintTypes(pkmnData) {
@@ -2429,7 +2445,7 @@ const app = Vue.createApp({
             const state = this.state
             const enemy_state = this.enemyState
             const move = this.move_name(move_name)
-            if (state == 'Battle' || state == 'From Battle') { 
+            if (state == 'To Battle' || state == 'Battle' || state == 'From Battle') { 
                 const species = enemy_mon.species.value
                 const move_data = this.g1MoveData[move]
                 const move_type = move_data.Type

@@ -189,36 +189,43 @@
                                     <img v-if="enemyType1(x) != enemyType2(x)" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_2 ds opacityTransition" :src="`images/elements/type-icons/${enemyType2(x).toLowerCase()}.png`"/>
                                     
                                     <!-- Moves -->
-                                    <img class="enemyStatsArea" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faintStats" :src="`images/stats/${x}.png`"/>
+                                    <img class="enemyStatsArea opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faintStats" :src="`images/stats/${x}.png`"/>
 
-                                    <img v-if="mapper.properties.battle.trainer.team[x].move1.value != null" class="ds eMoveIconStyle moveIcon1 opacityTransition" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" :src="`images/elements/type-icons/${g1MoveData[move_name(mapper.properties.battle.trainer.team[x].move1?.value)]?.Type?.toLowerCase()}.png`" />
-                                    <img v-if="mapper.properties.battle.trainer.team[x].move2.value != null" class="ds eMoveIconStyle moveIcon2 opacityTransition" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" :src="`images/elements/type-icons/${g1MoveData[move_name(mapper.properties.battle.trainer.team[x].move2?.value)]?.Type?.toLowerCase()}.png`" />
-                                    <img v-if="mapper.properties.battle.trainer.team[x].move3.value != null" class="ds eMoveIconStyle moveIcon3 opacityTransition" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" :src="`images/elements/type-icons/${g1MoveData[move_name(mapper.properties.battle.trainer.team[x].move3?.value)]?.Type?.toLowerCase()}.png`" />
-                                    <img v-if="mapper.properties.battle.trainer.team[x].move4.value != null" class="ds eMoveIconStyle moveIcon4 opacityTransition" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" :src="`images/elements/type-icons/${g1MoveData[move_name(mapper.properties.battle.trainer.team[x].move4?.value)]?.Type?.toLowerCase()}.png`" />
-
-                                    <div class="ePkmnMoveStyle ePkmnMove1 opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{move_name(mapper.properties.battle.trainer.team[x]?.move1.value)}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove2 opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{move_name(mapper.properties.battle.trainer.team[x]?.move2.value)}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove3 opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{move_name(mapper.properties.battle.trainer.team[x]?.move3.value)}}</div>
-                                    <div class="ePkmnMoveStyle ePkmnMove4 opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{move_name(mapper.properties.battle.trainer.team[x]?.move4.value)}}</div>
-
-                                    <div v-if="mapper.properties.battle.trainer.team[x]?.move1.value != null" class="ePkmnMoveStyle ePkmnEffectivePower ePkmnMove1">{{enemy_effective_power(mapper.properties.battle.trainer.team[x]?.move1.value, mapper.properties.battle.trainer.team[x], x)}}</div>
-                                    <div v-if="mapper.properties.battle.trainer.team[x]?.move2.value != null" class="ePkmnMoveStyle ePkmnEffectivePower ePkmnMove2">{{enemy_effective_power(mapper.properties.battle.trainer.team[x]?.move2.value, mapper.properties.battle.trainer.team[x], x)}}</div>
-                                    <div v-if="mapper.properties.battle.trainer.team[x]?.move3.value != null" class="ePkmnMoveStyle ePkmnEffectivePower ePkmnMove3">{{enemy_effective_power(mapper.properties.battle.trainer.team[x]?.move3.value, mapper.properties.battle.trainer.team[x], x)}}</div>
-                                    <div v-if="mapper.properties.battle.trainer.team[x]?.move4.value != null" class="ePkmnMoveStyle ePkmnEffectivePower ePkmnMove4">{{enemy_effective_power(mapper.properties.battle.trainer.team[x]?.move4.value, mapper.properties.battle.trainer.team[x], x)}}</div>
+                                    <div v-for="move_index in moves = [0, 1, 2, 3]">
+                                        <img v-if="mapper.properties.battle.trainer.team[x][`move${move_index + 1}`]?.value != null" 
+                                            :class="`ds eMoveIconStyle moveIcon${move_index + 1} opacityTransition`" 
+                                            :style="enemyPkmnFaintTypes(batt.trainer.team[x])" 
+                                            :src="`images/elements/type-icons/${g1MoveData[move_name(mapper.properties.battle.trainer.team[x][`move${move_index + 1}`]?.value)]?.Type?.toLowerCase()}.png`" 
+                                        />
+                                        <div :class="`ePkmnMoveStyle ePkmnMove${move_index + 1} opacityTransition`" 
+                                            :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">
+                                            {{move_name(mapper.properties.battle.trainer.team[x][`move${move_index + 1}`]?.value)}}
+                                        </div>
+                                        <div v-if="enemy_trainer.pokemon[x]?.moves[move_index] != null" 
+                                            :class="`ePkmnMoveStyle ePkmnEffectivePower ePkmnMove${move_index + 1} opacityTransition`" 
+                                            :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">
+                                            {{enemy_effective_power(enemy_trainer.pokemon[x]?.moves[move_index], mapper.properties.battle.trainer.team[x], x)}}
+                                        </div>
+                                    </div>
 
                                     <!-- Stats -->
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelHp"  :style="stat_mod(0, x).style"                                           >Hp</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelAtk" :style="stat_mod(batt.enemyPokemon.modEnemyStageAttack.value, x).style" >Atk.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelDef" :style="stat_mod(batt.enemyPokemon.modEnemyStageDefense.value, x).style">Def.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpc" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpecial.value, x).style">Spc.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpd" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpeed.value, x).style"  >Spe.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelCrit">Crit.</div>
+                                    <!-- <div v-for="stat in stat_objects"
+                                        :class="`ePkmnStatLabelStyle ePkmnLabel${stat.abrv}`" 
+                                        :style="stat_mod(batt.enemyPokemon[`modEnemyStage${stat[name]}`].value, x).style">
+                                        {{stat}}.
+                                    </div> -->
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelHp   opacityTransition" :style="stat_mod(0, x).style"                                           >Hp</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelAtk  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageAttack.value, x).style" >Atk.</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelDef  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageDefense.value, x).style">Def.</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpc  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpecial.value, x).style">Spc.</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpe  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpeed.value, x).style"  >Spe.</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelCrit opacityTransition" :style="stat_mod(0, x).style"                                           >Crit.</div>
 
                                     <div class="ePkmnStatsStyle ePkmnHp   opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{mapper.properties.battle.trainer.team[x]?.maxHp}}</div>
                                     <div class="ePkmnStatsStyle ePkmnAtk  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"attack",mapper.properties.battle.trainer.team[x]?.attack,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnDef  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"defense",mapper.properties.battle.trainer.team[x]?.defense,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnSpc  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",mapper.properties.battle.trainer.team[x]?.special,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnSpd  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",mapper.properties.battle.trainer.team[x]?.speed,"enemyPokemon")}}</div>
+                                    <div class="ePkmnStatsStyle ePkmnSpe  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",mapper.properties.battle.trainer.team[x]?.speed,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnCrit opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{enemy_crit_rate(mapper.properties.battle.trainer.team[x])}}%</div>
                                    
                                     <!-- Modifiers -->
@@ -587,38 +594,6 @@
         <div v-show="help_menus == `Playthrough Info`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>Items:</div>
         </div>
-        <!-- <div v-show="help_menus == `Dev Console`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
-            <div>State: {{this.state}}</div>
-            <br>
-            <div>Most Recently Learnt Move: {{this.most_recent_move}}</div>
-            <div>Power: {{g1MoveData[capitalization_format(this.most_recent_move)]?.Power}}</div>
-            <div>Accuracy: {{g1MoveData[capitalization_format(this.most_recent_move)]?.Accuracy}}</div>
-            <div>PP: {{g1MoveData[capitalization_format(this.most_recent_move)]?.PP}}</div>
-            <div>Move Description: {{g1MoveData[capitalization_format(this.most_recent_move)]?.Description}}</div>
-            <div>Game Over: {{game_over}}</div>
-            <br>
-            <br>
-            <br>
-            <div>HP: {{mapper?.properties?.player?.team[0].hp.value}}</div>
-            <div>State: {{state}}</div>
-            <div>Game PlayerID: {{mapper?.properties?.player?.playerId?.value}}</div>
-            <div>Vue PlayerID: {{playerId}}</div>
-            <div>PlayerName: {{mapper?.properties?.player?.name?.value}}</div>
-            <div>Resets: {{playerResets}}</div>
-            <div>Blackouts: {{blackout_counter}}</div>
-            <div>Blackout Flag: {{blackout}}</div>
-            <br>
-            <div>GameName: {{mapper?.properties?.meta?.gameName?.value}}</div>
-            <div>Generation: {{mapper?.properties?.meta?.generation?.value}}</div>
-            <br>
-            <div>Trainer: {{mapper?.properties?.battle?.trainer?.class?.value}}_{{mapper?.properties?.battle?.trainer?.number}}</div>
-            <div>TeamCount: {{mapper?.properties?.battle?.trainer?.totalPokemon?.value}}</div>
-            <div>{{battle_fade}}</div>
-            <div>{{g1trainerEnemySelector}}</div>
-            <div>{{battleGraphic}}</div>
-            <div>{{mapper?.properties?.battle?.type?.value}}</div>
-            <div>State: {{state}}</div>
-        </div> -->
     </div>
 
 <!------ JAVASCRIPT --------------------------------------------------------------------------------------------------------------------->
