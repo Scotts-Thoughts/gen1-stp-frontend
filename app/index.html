@@ -189,7 +189,7 @@
                                     <img v-if="enemyType1(x) != enemyType2(x)" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_2 ds opacityTransition" :src="`images/elements/type-icons/${enemyType2(x).toLowerCase()}.png`"/>
                                     
                                     <!-- Moves -->
-                                    <img class="enemyStatsArea opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faintStats" :src="`images/stats/${x}.png`"/>
+                                    <img class="enemyStatsArea opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint_stats_background" :src="`images/stats/${x}.png`"/>
 
                                     <div v-for="move_index in moves = [0, 1, 2, 3]">
                                         <img v-if="mapper.properties.battle.trainer.team[x][`move${move_index + 1}`]?.value != null" 

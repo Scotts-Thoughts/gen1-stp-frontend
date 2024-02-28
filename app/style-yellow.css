@@ -500,7 +500,7 @@ box-shadow:
     position: fixed;
     top: 0px;
     left: 0px;
-    transition: opacity 500ms ease-in-out, filter 500ms ease-in-out;
+    transition: opacity 500ms ease-in-out, filter 2000ms ease-in-out;
 }
 .ePkmnSpeedComparison {
     position: absolute;
