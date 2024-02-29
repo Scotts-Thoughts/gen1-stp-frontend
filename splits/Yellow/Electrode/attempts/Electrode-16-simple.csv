@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Electrode,Rival1-Lab,40,0,0,6,0:02,6.946,SonicBoom,SCREECH,TACKLE,
+NINTEN,Electrode,Brock,2:57,0,0,10,0:11,13.426,SonicBoom,SCREECH,TACKLE,
