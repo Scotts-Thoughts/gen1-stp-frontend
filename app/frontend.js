@@ -29,7 +29,6 @@ function openFolder(folderName) {
 //     var gameName = this.mapper.properties.meta.gameName
 //     var folderName = "splits\\Pokemon Yellow"
 //     if (gameName == "Pokemon Yellow") {
-//         folderName = "splits\\Pokemon Yellow"
 //     }
 //     if (gameName == "Pokemon Red and Blue") {
 //         folderName = "splits\\Pokemon Red and Blue"

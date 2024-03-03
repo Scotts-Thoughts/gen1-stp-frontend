@@ -399,14 +399,14 @@
                 <option>Random</option>
             </select>
             <br>
-            <br>
             <div>Attempt: {{this.attempt_number}}<button @click="increment('attempt_number')" class="smallButtonStyle">^</button><button @click="decrement('attempt_number')" class="smallButtonStyle">v</button></div>
             <div>Finished Runs: {{this.finished_run_count}}<button @click="increment('finished_run_count')" class="smallButtonStyle">^</button><button @click="decrement('finished_run_count')" class="smallButtonStyle">v</button></div>
+            <div>Resets: {{this.playerResets}}<button @click="increment('playerResets')" class="smallButtonStyle">^</button><button @click="decrement('playerResets')" class="smallButtonStyle">v</button></div>
+            <div>Blackouts: {{this.blackout_counter}}<button @click="increment('blackout_counter')" class="smallButtonStyle">^</button><button @click="decrement('blackout_counter')" class="smallButtonStyle">v</button></div>
             <br>
             <button class="buttonStyle" @click="newRun">New Run</button>
             <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
             Start Time Offset: <input type="text" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
-            <br>
             <br>
             <div>Pokemon Image Settings</div>
             X-Offset: <input type="range" min="-400" max="400" v-model="imageXOffset"/><br>
@@ -416,15 +416,23 @@
             Rotation: <input type="range" min="0" max="360" step="1" v-model="imageRotation"/><br>
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
             <br>
-            <transition name="fade"><div v-if="resetCounter == true">
-                <div>Reset Counter Settings</div>
-                <button @click="resets_clear" class="buttonStyle">Clear (resets and blackouts)</button>
-                <button @click="resets_increment" class="buttonStyle">Increment</button>
-                <button @click="resets_decrement" class="buttonStyle">Decrement</button><br>
-                <button @click="toggleDataType" class="buttonStyle">Toggle Data Type</button><br>
-                <span class="note">Count blackouts as resets: <input class="checkBoxStyle" type="checkbox" v-model="blackouts_as_resets"/></span><span class="note">Blackouts: {{blackout_counter}}</span><br>
-            </div></transition>
+            <div>Background:</div>
+            <button @click="color_picker" class="buttonStyle">Color Picker</button>
             <br>
+            <select v-model="backgroundTexture" class="dropdownMenu">
+                <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
+                    {{ key }}
+                </option>
+            </select>
+            <br>
+            X-Offset: <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
+            Y-Offset: <input type="range" min="-125" max="125"v-model="backgroundYOffset"/><br>
+            Scale: <input type="range" min="100" max="200" v-model="backgroundScale"/><br>
+            Brightness: <input type="range" min="0" max="200" v-model="backgroundBrightness"/><br>
+            Contrast: <input type="range" min="0" max="200" v-model="backgroundContrast"/><br>
+            Saturation: <input type="range" min="0" max="200" v-model="backgroundSaturation"/><br>
+            Blur: <input type="range" min="0" max="10" v-model="backgroundBlur"/><br>
+            Hue: <input type="range" min="0" max="358" v-model="backgroundHue"/><br>
             <br>
             <div>General Settings:</div>
             <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
@@ -550,29 +558,7 @@
             <button @click="reset_advanced_settings" class="buttonStyle">Reset All Advanced Options</button>
         </div>
         <div v-show="help_menus == `Style`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
-            <div>Overlay Color Selector:</div>
-            <button @click="color_picker" class="buttonStyle">Color Picker</button>
-            <button @click="clear_overlay_color" class="buttonStyle">Reset Overlay Color</button>
-            <div>Overlay_color: {{overlay_color}}</div>
-            <br>
-            <div>Background Texture:</div>
-            <div>Texture File:</div>
-            <select v-model="backgroundTexture" class="dropdownMenu">
-                <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
-                    {{ key }}
-                </option>
-            </select>
-            <br>
-            <!-- <div>Use Custom Background:<input class="checkBoxStyle" type="checkbox" v-model="use_custom_background"/></div> -->
-            <!-- <div v-if="use_custom_background == true"><input v-model="imageUrl" placeholder="Input Custom Texture URL Here"><br></div> -->
-            X-Offset: <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
-            Y-Offset: <input type="range" min="-125" max="125"v-model="backgroundYOffset"/><br>
-            Scale: <input type="range" min="100" max="200" v-model="backgroundScale"/><br>
-            Brightness: <input type="range" min="0" max="200" v-model="backgroundBrightness"/><br>
-            Contrast: <input type="range" min="0" max="200" v-model="backgroundContrast"/><br>
-            Saturation: <input type="range" min="0" max="200" v-model="backgroundSaturation"/><br>
-            Blur: <input type="range" min="0" max="10" v-model="backgroundBlur"/><br>
-            Hue: <input type="range" min="0" max="358" v-model="backgroundHue"/><br>
+
         </div>
         <div v-show="help_menus == `Internal Monitor`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
             <div>Splits:</div>
@@ -621,5 +607,5 @@
     <script src="data/deprecated_autosplitter.js"></script>
     <script src="data/autosplitter.js"></script>
     <script src="data/textures.js"></script>
-    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript" src="frontend.js"></script>
 </body>
