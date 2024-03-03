@@ -29,6 +29,7 @@ function openFolder(folderName) {
 //     var gameName = this.mapper.properties.meta.gameName
 //     var folderName = "splits\\Pokemon Yellow"
 //     if (gameName == "Pokemon Yellow") {
+//         folderName = "splits\\Pokemon Yellow"
 //     }
 //     if (gameName == "Pokemon Red and Blue") {
 //         folderName = "splits\\Pokemon Red and Blue"
@@ -2472,7 +2473,9 @@ const app = Vue.createApp({
                 percent: (exp - currLvlExp) / (nextLvlExp - currLvlExp),
             };
         },
-
+        decimalToPercentage(decimal) {
+            return Math.round(decimal * 100);
+        },
         // MOVE MANAGEMENT
         movePower(y) { //y = move1.value
             if (y) {

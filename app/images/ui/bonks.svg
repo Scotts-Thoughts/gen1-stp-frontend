@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Individual_Areas" data-name="Individual Areas" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="linear-gradient" x1="12" y1="471" x2="116" y2="471" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#999"/>
+      <stop offset=".04" stop-color="#a0a0a0"/>
+      <stop offset=".21" stop-color="#b8b8b8"/>
+      <stop offset=".37" stop-color="#c6c6c6"/>
+      <stop offset=".5" stop-color="#ccc"/>
+      <stop offset=".63" stop-color="#c6c6c6"/>
+      <stop offset=".79" stop-color="#b7b7b7"/>
+      <stop offset=".97" stop-color="#9d9d9d"/>
+      <stop offset="1" stop-color="#999"/>
+    </linearGradient>
+    <filter id="drop-shadow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="-1"/>
+      <feGaussianBlur result="blur" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".8"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Bonks">
+    <g id="ui">
+      <rect x="12" y="441" width="104" height="60" rx="6" ry="6" style="fill: url(#linear-gradient); stroke-width: 0px;"/>
+      <path d="m110,443c2.21,0,4,1.79,4,4v48c0,2.21-1.79,4-4,4H18c-2.21,0-4-1.79-4-4v-48c0-2.21,1.79-4,4-4h92m0-4H18c-4.42,0-8,3.58-8,8v48c0,4.42,3.58,8,8,8h92c4.42,0,8-3.58,8-8v-48c0-4.42-3.58-8-8-8h0Z" style="fill: gray; stroke-width: 0px;"/>
+      <path d="m110,441c3.31,0,6,2.69,6,6v48c0,3.31-2.69,6-6,6H18c-3.31,0-6-2.69-6-6v-48c0-3.31,2.69-6,6-6h92m0-2H18c-4.42,0-8,3.58-8,8v48c0,4.42,3.58,8,8,8h92c4.42,0,8-3.58,8-8v-48c0-4.42-3.58-8-8-8h0Z" style="fill: #4d4d4d; stroke-width: 0px;"/>
+      <path d="m110,439c4.42,0,8,3.58,8,8v48c0,4.42-3.58,8-8,8H18c-4.42,0-8-3.58-8-8v-48c0-4.42,3.58-8,8-8h92m0-1H18c-4.96,0-9,4.04-9,9v48c0,4.96,4.04,9,9,9h92c4.96,0,9-4.04,9-9v-48c0-4.96-4.04-9-9-9h0Z" style="stroke-width: 0px;"/>
+    </g>
+    <path id="style" d="m27.67,487.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h84.41c7.79,0,7.79-2,7.79-7.01v-4.32H27.67Z" style="fill: #808285; filter: url(#drop-shadow-1); opacity: .25; stroke-width: 0px;"/>
+  </g>
+</svg>
