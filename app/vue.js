@@ -656,25 +656,25 @@ const app = Vue.createApp({
 
             //Pokemon settings for local storage
             overlay_color: MyStorage["overlay_color"] ?? "#000000",
-            imageXOffset:  MyStorage["imageXOffset"] ?? 0,
-            imageYOffset:  MyStorage["imageYOffset"] ?? 0,
-            imageScale:    MyStorage["imageScale"] ?? 1,
-            imageFlip:     MyStorage["imageFlip"] ?? false,
-            imageSat:      MyStorage["imageSat"] ?? 100,
+            imageXOffset:  MyStorage["imageXOffset"]  ?? 0,
+            imageYOffset:  MyStorage["imageYOffset"]  ?? 0,
+            imageScale:    MyStorage["imageScale"]    ?? 1,
+            imageFlip:     MyStorage["imageFlip"]     ?? false,
+            imageSat:      MyStorage["imageSat"]      ?? 100,
             imageRotation: MyStorage["imageRotation"] ?? 0,
 
             //background texture settings
-            backgroundBlur:        MyStorage["backgroundBlur"] ?? 0,
-            backgroundScale:       MyStorage["backgroundScale"] ?? 100,
-            backgroundUrl:         MyStorage["backgroundUrl"] ?? "",
+            backgroundBlur:        MyStorage["backgroundBlur"]        ?? 0,
+            backgroundScale:       MyStorage["backgroundScale"]       ?? 100,
+            backgroundUrl:         MyStorage["backgroundUrl"]         ?? "",
             use_custom_background: MyStorage["use_custom_background"] ?? false,
-            backgroundXOffset:     MyStorage["backgroundXOffset"] ?? 0,
-            backgroundYOffset:     MyStorage["backgroundYOffset"] ?? 0,
-            backgroundTexture:     MyStorage["backgroundTexture"] ?? 'Bug 1',
-            backgroundBrightness:  MyStorage["backgroundBrightness"] ?? 100,
-            backgroundContrast:    MyStorage["backgroundContrast"] ?? 100,
-            backgroundSaturation:  MyStorage["backgroundSaturation"] ?? 100,
-            backgroundHue:         MyStorage["backgroundHue"] ?? 0,
+            backgroundXOffset:     MyStorage["backgroundXOffset"]     ?? 0,
+            backgroundYOffset:     MyStorage["backgroundYOffset"]     ?? 0,
+            backgroundTexture:     MyStorage["backgroundTexture"]     ?? 'Bug 1',
+            backgroundBrightness:  MyStorage["backgroundBrightness"]  ?? 100,
+            backgroundContrast:    MyStorage["backgroundContrast"]    ?? 100,
+            backgroundSaturation:  MyStorage["backgroundSaturation"]  ?? 100,
+            backgroundHue:         MyStorage["backgroundHue"]         ?? 0,
             //
             playerNameChoice: MyStorage["playerNameChoice"] ?? "NINTEN",
 
@@ -704,22 +704,23 @@ const app = Vue.createApp({
             ],
 
             //timer variables
-            timer_startTime: MyStorage["timer_startTime"] ?? 0,
-            timer_pause: MyStorage["timer_pause"] ?? true,
-            timer_formatted_time: MyStorage["timer_formatted_time"] ?? ["0", ".00"],
-            timer_pause_time: MyStorage["timer_pause_time"] ?? 0,
-            time_h: 0,
-            time_m: 0,
-            time_s: 0,
-            time_ms: 0,
-            time_split_start: "00:00:00:00",
-            battle_start: 0,
-            timer_settings: MyStorage["this.timer_settings"] ?? "Real-Time",
-            viridian_forest: MyStorage["viridian_forest"] ?? "Pidgey",
+            timer_startTimeOffset: MyStorage["timer_startTimeOffset"] ?? "00:00:00.00",
+            timer_startTime:       MyStorage["timer_startTime"]       ?? 0,
+            timer_pause:           MyStorage["timer_pause"]           ?? true,
+            timer_formatted_time:  MyStorage["timer_formatted_time"]  ?? ["0", ".00"],
+            timer_pause_time:      MyStorage["timer_pause_time"]      ?? 0,
+            time_h:                MyStorage['time_h']                ?? 0,
+            time_m:                MyStorage['time_m']                ?? 0,
+            time_s:                MyStorage['time_s']                ?? 0,
+            time_ms:               MyStorage['time_ms']               ?? 0,
+            time_split_start:      MyStorage['time_split_start']      ?? "00:00:00:00",
+            battle_start:          MyStorage['battle_start']          ?? 0,
+            timer_settings:        MyStorage["this.timer_settings"]   ?? "Real-Time",
+            viridian_forest:       MyStorage["viridian_forest"]       ?? "Pidgey",
 
             //splits
-            split_data: MyStorage["split_data"] ?? [],
-            pb_splits: MyStorage[`${this.starterName}_pb_splits`] ?? [],
+            split_data: MyStorage["split_data"]                    ?? [],
+            pb_splits:  MyStorage[`${this.starterName}_pb_splits`] ?? [],
         }
     },
 
@@ -1382,7 +1383,14 @@ const app = Vue.createApp({
         //*timer methods
         //start the timer
         startTime() {
-            this.timer_startTime = Date.now()
+            if (this.timer_pause == false) {
+                return
+            }
+            const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
+            const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
+            const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
+
+            this.timer_startTime = Date.now() - timeOffset
             this.timer_pause = false
             this.updateTime()
         },
@@ -1390,6 +1398,19 @@ const app = Vue.createApp({
         stopTime() {
             this.timer_pause_time = Date.now()
             this.timer_pause = true
+        },
+        set_timer() {
+            const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
+            const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
+            const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
+
+            this.timer_pause = true
+            this.timer_startTime = Date.now() - timeOffset
+            this.timer_pause_time = Date.now()
+            this.timer_formatted_time = [ "0", ".00" ]
+            this.finished_logs = false
+
+            this.updateTime()
         },
         padTime(time) {
             return time.toString().padStart(2, "0")
@@ -1443,17 +1464,20 @@ const app = Vue.createApp({
         //     this.timer_formatted_time = [ "0", ".00" ]
         // },
         newRun() {
-            this.timer_pause = true
+            const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
+            const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
+            const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
+            
             this.most_recent_move = ""
-            this.timer_startTime = 0
-            this.timer_pause_time = 0
+            this.timer_pause = true
+            this.timer_startTime = Date.now() - timeOffset
+            this.timer_pause_time = Date.now()
             this.timer_formatted_time = [ "0", ".00" ]
             this.playerResets = 0
             this.finished_logs = false
             this.blackout_counter = 0
             this.playerId = 0
             this.playerName = "NINTEN"
-            // this.second_playthrough_settings()
         },
 
         //*text methods

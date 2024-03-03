@@ -398,6 +398,8 @@
             <div>Finished Runs: {{this.finished_run_count}}<button @click="increment('finished_run_count')" class="smallButtonStyle">^</button><button @click="decrement('finished_run_count')" class="smallButtonStyle">v</button></div>
             <br>
             <button class="buttonStyle" @click="newRun">New Run</button>
+            <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
+            Start Time Offset: <input type="text" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
             <br>
             <br>
             <div>Pokemon Image Settings</div>
