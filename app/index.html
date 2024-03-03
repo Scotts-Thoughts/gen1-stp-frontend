@@ -382,6 +382,12 @@
                 <option disabled value="">Select a species</option>
                 <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
             </select>
+            <div>Game:</div>
+            <select v-model="game_name" @change="load_pokemon_sprite_settings(s1dynamicReset.species.value)" class="dropdownMenu">
+                <option>Yellow</option>
+                <option>Red</option>
+                <option>Blue</option>
+            </select>
             <br>
             <div>DV Setting:</div>
             <select v-model="dvSetting" class="dropdownMenu">
