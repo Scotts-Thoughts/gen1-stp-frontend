@@ -521,46 +521,46 @@ const app = Vue.createApp({
     //DATA & DEFINITIONS
     data() {
         return {
-            ready: false,
+            ready:  false,
             mapper: null,
-            state: "Base Stats",
+            state:  "Base Stats",
 
             // USER CONFIG --------------------------------------------------------------------------------------//
             // Most settings here save automatically to MyStorage. If you want to add a new setting and have it save define it within "saved_settings.js"
             starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
-            game_name: "Yellow",
+            game_name:   "Yellow",
 
-            gamehook_disable_settings:  MyStorage["gamehook_disable_settings"] ?? false,
-            gamehook_encounter_writes:  MyStorage["gamehook_encounter_writes"] ?? false,
-            dvSetting:                  MyStorage["this.dvSetting"] ?? "Max", //Max, Min, NPC, Max with Min Atk, or Random
-            trashCans:                  MyStorage["this.trashCans"] ?? true, //solves the trash can puzzle
-            options:                    MyStorage["this.options"] ?? true, //shows the options menu when set to true
-            gametimeDisplay:            MyStorage["this.gametimeDisplay"] ?? false, //shows the options menu when set to true
-            inventory:                  MyStorage["this.inventory"] ?? true, //uses inventory when in the department store & marts
-            battleGraphic:              MyStorage["this.battleGraphic"] ?? true, //uses battle graphic with enemy moveset & stats
-            showAllTrainers:            MyStorage["this.showAllTrainers"] ?? true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
-            expBarAnimation:            MyStorage["this.expBarAnimation"] ?? true,
+            gamehook_disable_settings:  MyStorage["gamehook_disable_settings"]       ?? false,
+            gamehook_encounter_writes:  MyStorage["gamehook_encounter_writes"]       ?? false,
+            dvSetting:                  MyStorage["this.dvSetting"]                  ?? "Max", //Max, Min, NPC, Max with Min Atk, or Random
+            trashCans:                  MyStorage["this.trashCans"]                  ?? true, //solves the trash can puzzle
+            options:                    MyStorage["this.options"]                    ?? true, //shows the options menu when set to true
+            gametimeDisplay:            MyStorage["this.gametimeDisplay"]            ?? false, //shows the options menu when set to true
+            inventory:                  MyStorage["this.inventory"]                  ?? true, //uses inventory when in the department store & marts
+            battleGraphic:              MyStorage["this.battleGraphic"]              ?? true, //uses battle graphic with enemy moveset & stats
+            showAllTrainers:            MyStorage["this.showAllTrainers"]            ?? true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
+            expBarAnimation:            MyStorage["this.expBarAnimation"]            ?? true,
             showSpecialTrainerGraphics: MyStorage["this.showSpecialTrainerGraphics"] ?? true, //shows drawn art for defined trainers
-            battlePopUps:               MyStorage["this.battlePopUps"] ?? true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
-            typeCalcs:                  MyStorage["this.typeCalcs"] ?? true, //calculates effective power based on the pokemon in battle
-            showCritMultiplierInEP:     MyStorage["this.showCritMultiplierInEP"] ?? true, //shows high crit ratio moves with adjusted power if the move always scores a crit
-            show_wild_battles:          MyStorage["this.show_wild_battles"] ?? false, //shows wild battles in the battle screen
-            automaticallySavePBSplits:  MyStorage["this.automaticallySavePBSplits"] ?? true, //saves splits if the player beats their PB (this overwrites currently saved PB splits)
-            autosplitter_toggle:        MyStorage["this.autosplitter_toggle"] ?? true,
+            battlePopUps:               MyStorage["this.battlePopUps"]               ?? true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
+            typeCalcs:                  MyStorage["this.typeCalcs"]                  ?? true, //calculates effective power based on the pokemon in battle
+            showCritMultiplierInEP:     MyStorage["this.showCritMultiplierInEP"]     ?? true, //shows high crit ratio moves with adjusted power if the move always scores a crit
+            show_wild_battles:          MyStorage["this.show_wild_battles"]          ?? false, //shows wild battles in the battle screen
+            automaticallySavePBSplits:  MyStorage["this.automaticallySavePBSplits"]  ?? true, //saves splits if the player beats their PB (this overwrites currently saved PB splits)
+            autosplitter_toggle:        MyStorage["this.autosplitter_toggle"]        ?? true,
 
             help_menus: MyStorage["this.help_menus"] ?? "Settings",
 
             //KEYHOOK SHORTCUTS
             lastExecuted: 0,
-            cycleValues_rightDisplay: ["movepool", "inventory", "splits", "none"], //F13
             cycleIndex_rightDisplay: MyStorage["this.cycleIndex_rightDisplay"] ?? 0, //F13
-            cycleValues_stats: ["base", "stats", "evs", "ivs"], //F15
-            cycleIndex_stats: MyStorage["this.cycleIndex_stats"] ?? 0, //F15
-            cycleValues_failures: ["resets", "blackouts"], //F16
-            cycleIndex_failures: MyStorage["this.cycleIndex_failures"] ?? 0, //F17
-            cycleValues_screens: ["screens", "bonks"], //F17
-            cycleIndex_screens: MyStorage["this.cycleIndex_screens"] ?? 0, //F16
+            cycleIndex_stats:        MyStorage["this.cycleIndex_stats"] ?? 0, //F15
+            cycleIndex_failures:     MyStorage["this.cycleIndex_failures"] ?? 0, //F17
+            cycleIndex_screens:      MyStorage["this.cycleIndex_screens"] ?? 0, //F16
+            cycleValues_rightDisplay: ["movepool", "inventory", "splits", "none"], //F13
+            cycleValues_stats:        ["base", "stats", "evs", "ivs"], //F15
+            cycleValues_failures:     ["resets", "blackouts"], //F16
+            cycleValues_screens:      ["screens", "bonks"], //F17
             key_F13: MyStorage["this.key_F13"] ?? "movepool", //rightDisplay
             key_F14: MyStorage["this.key_F14"] ?? true, //show movepool
             key_F15: MyStorage["this.key_F15"] ?? "stats", //stat display type
@@ -575,23 +575,23 @@ const app = Vue.createApp({
             key_F24: MyStorage["this.key_F24"] ?? "",
 
             //ENCOUNTERS ---------------------------------------------------------------------------------------//
-            route1:         MyStorage["this.route1"] ?? true,
+            route1:         MyStorage["this.route1"]         ?? true,
             viridianForest: MyStorage["this.viridianForest"] ?? true,
-            route3:         MyStorage["this.route3"] ?? true,
-            mtMoon:         MyStorage["this.mtMoon"] ?? true,
-            route6:         MyStorage["this.route6"] ?? true,
-            rockTunnel:     MyStorage["this.rockTunnel"] ?? true,
-            pokemonTower:   MyStorage["this.pokemonTower"] ?? true,
-            safariZone:     MyStorage["this.safariZone"] ?? true,
-            powerPlant:     MyStorage["this.powerPlant"] ?? true,
-            mansion:        MyStorage["this.mansion"] ?? true,
-            route21:        MyStorage["this.route21"] ?? true,
-            route22:        MyStorage["this.route22"] ?? true,
-            victoryRoad:    MyStorage["this.victoryRoad"] ?? true,
-            route24:        MyStorage["this.route24"] ?? true,
+            route3:         MyStorage["this.route3"]         ?? true,
+            mtMoon:         MyStorage["this.mtMoon"]         ?? true,
+            route6:         MyStorage["this.route6"]         ?? true,
+            rockTunnel:     MyStorage["this.rockTunnel"]     ?? true,
+            pokemonTower:   MyStorage["this.pokemonTower"]   ?? true,
+            safariZone:     MyStorage["this.safariZone"]     ?? true,
+            powerPlant:     MyStorage["this.powerPlant"]     ?? true,
+            mansion:        MyStorage["this.mansion"]        ?? true,
+            route21:        MyStorage["this.route21"]        ?? true,
+            route22:        MyStorage["this.route22"]        ?? true,
+            victoryRoad:    MyStorage["this.victoryRoad"]    ?? true,
+            route24:        MyStorage["this.route24"]        ?? true,
 
-            goal_level:    MyStorage["goal_level"] ?? 13,
-            goal_speed:    MyStorage["goal_speed"] ?? 24,
+            goal_level: MyStorage["goal_level"] ?? 13,
+            goal_speed: MyStorage["goal_speed"] ?? 24,
 
             rockTunnelDarkness: MyStorage["this.rockTunnelDarkness"] ?? false, //if true it will make rock tunnel bright
             
@@ -632,8 +632,8 @@ const app = Vue.createApp({
             playerId: MyStorage["playerId"] ?? 0,
             playerName: "NINTEN",
             resetCatcher: "NINTEN",
-            playerResets: MyStorage["playerResets"] ?? 0,
-            blackout_counter: MyStorage["blackout_counter"] ?? 0,
+            playerResets: 0,
+            blackout_counter: 0,
             resetCounter: true,
             game_over: false,
             lance_defeated: false,
@@ -643,10 +643,10 @@ const app = Vue.createApp({
             pb_time: "None",
             most_recent_move: "",
             split_logStr: "",
-            simple_data_str: MyStorage["simple_data_str"] ?? "",
-            full_data_str: MyStorage["full_data_str"] ?? "",
+            simple_data_str:     MyStorage["simple_data_str"]     ?? "",
+            full_data_str:       MyStorage["full_data_str"]       ?? "",
             deprecated_data_str: MyStorage["deprecated_data_str"] ?? "",
-            simple_data: MyStorage["simple_data"] ?? "",
+            simple_data:         MyStorage["simple_data"]         ?? "",
 
             blackouts_as_resets: MyStorage["this.blackouts_as_resets"] ?? false, //counts blackouts as resets
             blackout:            false,
@@ -726,39 +726,36 @@ const app = Vue.createApp({
 
     created() {
         if (MyStorage[`${this.game_name}_${this.starterName}`]) {
-            const starter = this.starterName
-            const game    = this.game_name
-            this.overlay_color         = MyStorage[`${game}_${starter}`].overlay_color         ? MyStorage[`${game}_${starter}`].overlay_color         : "#000000";
-            this.imageXOffset          = MyStorage[`${game}_${starter}`].imageXOffset          ? MyStorage[`${game}_${starter}`].imageXOffset          : 0;
-            this.imageYOffset          = MyStorage[`${game}_${starter}`].imageYOffset          ? MyStorage[`${game}_${starter}`].imageYOffset          : 0;
-            this.imageScale            = MyStorage[`${game}_${starter}`].imageScale            ? MyStorage[`${game}_${starter}`].imageScale            : 1;
-            this.imageFlip             = MyStorage[`${game}_${starter}`].imageFlip             ? MyStorage[`${game}_${starter}`].imageFlip             : false;
-            this.imageSat              = MyStorage[`${game}_${starter}`].imageSat              ? MyStorage[`${game}_${starter}`].imageSat              : 100
-            this.imageRotation         = MyStorage[`${game}_${starter}`].imageRotation         ? MyStorage[`${game}_${starter}`].imageRotation         : 0
-            this.backgroundBlur        = MyStorage[`${game}_${starter}`].backgroundBlur        ? MyStorage[`${game}_${starter}`].backgroundBlur        : 0
-            this.backgroundScale       = MyStorage[`${game}_${starter}`].backgroundScale       ? MyStorage[`${game}_${starter}`].backgroundScale       : 100
-            this.backgroundUrl         = MyStorage[`${game}_${starter}`].backgroundUrl         ? MyStorage[`${game}_${starter}`].backgroundUrl         : ""
-            this.use_custom_background = MyStorage[`${game}_${starter}`].use_custom_background ? MyStorage[`${game}_${starter}`].use_custom_background : false
-            this.backgroundXOffset     = MyStorage[`${game}_${starter}`].backgroundXOffset     ? MyStorage[`${game}_${starter}`].backgroundXOffset     : 0
-            this.backgroundYOffset     = MyStorage[`${game}_${starter}`].backgroundYOffset     ? MyStorage[`${game}_${starter}`].backgroundYOffset     : 0
-            this.backgroundTexture     = MyStorage[`${game}_${starter}`].backgroundTexture     ? MyStorage[`${game}_${starter}`].backgroundTexture     : 0
+            this.overlay_color         = MyStorage[`${this.game_name}_${this.starterName}`].overlay_color         ? MyStorage[`${this.game_name}_${this.starterName}`].overlay_color         : "#000000";
+            this.imageXOffset          = MyStorage[`${this.game_name}_${this.starterName}`].imageXOffset          ? MyStorage[`${this.game_name}_${this.starterName}`].imageXOffset          : 0;
+            this.imageYOffset          = MyStorage[`${this.game_name}_${this.starterName}`].imageYOffset          ? MyStorage[`${this.game_name}_${this.starterName}`].imageYOffset          : 0;
+            this.imageScale            = MyStorage[`${this.game_name}_${this.starterName}`].imageScale            ? MyStorage[`${this.game_name}_${this.starterName}`].imageScale            : 1;
+            this.imageFlip             = MyStorage[`${this.game_name}_${this.starterName}`].imageFlip             ? MyStorage[`${this.game_name}_${this.starterName}`].imageFlip             : false;
+            this.imageSat              = MyStorage[`${this.game_name}_${this.starterName}`].imageSat              ? MyStorage[`${this.game_name}_${this.starterName}`].imageSat              : 100
+            this.imageRotation         = MyStorage[`${this.game_name}_${this.starterName}`].imageRotation         ? MyStorage[`${this.game_name}_${this.starterName}`].imageRotation         : 0
+            this.backgroundBlur        = MyStorage[`${this.game_name}_${this.starterName}`].backgroundBlur        ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundBlur        : 0
+            this.backgroundScale       = MyStorage[`${this.game_name}_${this.starterName}`].backgroundScale       ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundScale       : 100
+            this.backgroundUrl         = MyStorage[`${this.game_name}_${this.starterName}`].backgroundUrl         ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundUrl         : ""
+            this.use_custom_background = MyStorage[`${this.game_name}_${this.starterName}`].use_custom_background ? MyStorage[`${this.game_name}_${this.starterName}`].use_custom_background : false
+            this.backgroundXOffset     = MyStorage[`${this.game_name}_${this.starterName}`].backgroundXOffset     ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundXOffset     : 0
+            this.backgroundYOffset     = MyStorage[`${this.game_name}_${this.starterName}`].backgroundYOffset     ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundYOffset     : 0
+            this.backgroundTexture     = MyStorage[`${this.game_name}_${this.starterName}`].backgroundTexture     ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundTexture     : 0
         }
         else {
-            const starter = this.starterName
-            this.overlay_color         = MyStorage[`${starter}`].overlay_color         ? MyStorage[`${starter}`].overlay_color         : "#000000";
-            this.imageXOffset          = MyStorage[`${starter}`].imageXOffset          ? MyStorage[`${starter}`].imageXOffset          : 0;
-            this.imageYOffset          = MyStorage[`${starter}`].imageYOffset          ? MyStorage[`${starter}`].imageYOffset          : 0;
-            this.imageScale            = MyStorage[`${starter}`].imageScale            ? MyStorage[`${starter}`].imageScale            : 1;
-            this.imageFlip             = MyStorage[`${starter}`].imageFlip             ? MyStorage[`${starter}`].imageFlip             : false;
-            this.imageSat              = MyStorage[`${starter}`].imageSat              ? MyStorage[`${starter}`].imageSat              : 100
-            this.imageRotation         = MyStorage[`${starter}`].imageRotation         ? MyStorage[`${starter}`].imageRotation         : 0
-            this.backgroundBlur        = MyStorage[`${starter}`].backgroundBlur        ? MyStorage[`${starter}`].backgroundBlur        : 0
-            this.backgroundScale       = MyStorage[`${starter}`].backgroundScale       ? MyStorage[`${starter}`].backgroundScale       : 100
-            this.backgroundUrl         = MyStorage[`${starter}`].backgroundUrl         ? MyStorage[`${starter}`].backgroundUrl         : ""
-            this.use_custom_background = MyStorage[`${starter}`].use_custom_background ? MyStorage[`${starter}`].use_custom_background : false
-            this.backgroundXOffset     = MyStorage[`${starter}`].backgroundXOffset     ? MyStorage[`${starter}`].backgroundXOffset     : 0
-            this.backgroundYOffset     = MyStorage[`${starter}`].backgroundYOffset     ? MyStorage[`${starter}`].backgroundYOffset     : 0
-            this.backgroundTexture     = MyStorage[`${starter}`].backgroundTexture     ? MyStorage[`${starter}`].backgroundTexture     : 0 
+            this.overlay_color         = MyStorage[`${this.starterName}`].overlay_color         ? MyStorage[`${this.starterName}`].overlay_color         : "#000000";
+            this.imageXOffset          = MyStorage[`${this.starterName}`].imageXOffset          ? MyStorage[`${this.starterName}`].imageXOffset          : 0;
+            this.imageYOffset          = MyStorage[`${this.starterName}`].imageYOffset          ? MyStorage[`${this.starterName}`].imageYOffset          : 0;
+            this.imageScale            = MyStorage[`${this.starterName}`].imageScale            ? MyStorage[`${this.starterName}`].imageScale            : 1;
+            this.imageFlip             = MyStorage[`${this.starterName}`].imageFlip             ? MyStorage[`${this.starterName}`].imageFlip             : false;
+            this.imageSat              = MyStorage[`${this.starterName}`].imageSat              ? MyStorage[`${this.starterName}`].imageSat              : 100
+            this.imageRotation         = MyStorage[`${this.starterName}`].imageRotation         ? MyStorage[`${this.starterName}`].imageRotation         : 0
+            this.backgroundBlur        = MyStorage[`${this.starterName}`].backgroundBlur        ? MyStorage[`${this.starterName}`].backgroundBlur        : 0
+            this.backgroundScale       = MyStorage[`${this.starterName}`].backgroundScale       ? MyStorage[`${this.starterName}`].backgroundScale       : 100
+            this.backgroundUrl         = MyStorage[`${this.starterName}`].backgroundUrl         ? MyStorage[`${this.starterName}`].backgroundUrl         : ""
+            this.use_custom_background = MyStorage[`${this.starterName}`].use_custom_background ? MyStorage[`${this.starterName}`].use_custom_background : false
+            this.backgroundXOffset     = MyStorage[`${this.starterName}`].backgroundXOffset     ? MyStorage[`${this.starterName}`].backgroundXOffset     : 0
+            this.backgroundYOffset     = MyStorage[`${this.starterName}`].backgroundYOffset     ? MyStorage[`${this.starterName}`].backgroundYOffset     : 0
+            this.backgroundTexture     = MyStorage[`${this.starterName}`].backgroundTexture     ? MyStorage[`${this.starterName}`].backgroundTexture     : 0 
         }
         for (let i = 0; i < this.auto_save_settings.length; i++) {
             let propName = this.auto_save_settings[i];
@@ -770,20 +767,19 @@ const app = Vue.createApp({
             );
         }
         for (let i = 0; i < this.pokemon_settings.length; i++) {
-            const starter = this.starterName
-            const game    = this.game_name
             let propName = this.pokemon_settings[i];
             this.$watch(
                 () => this[propName],
                 (newValue) => {
                     // Ensure that MyStorage[this.starterName] is an object
-                    if (!MyStorage[`${game}_${starter}`]) {
-                        MyStorage[`${game}_${starter}`] = {};
+                    if (!MyStorage[`${this.game_name}_${this.starterName}`]) {
+                        MyStorage[`${this.game_name}_${this.starterName}`] = {};
                     }
         
                     // Set the new value
-                    MyStorage[`${game}_${starter}`] = {
-                            ...MyStorage[`${game}_${starter}`],
+                    console.log(`${this.game_name}_${this.starterName}`)
+                    MyStorage[`${this.game_name}_${this.starterName}`] = {
+                            ...MyStorage[`${this.game_name}_${this.starterName}`],
                             [propName]: newValue
                         };
                 }
@@ -1525,9 +1521,8 @@ const app = Vue.createApp({
             }
         },
         load_all_settings() {
-            const starter = this.starterName
-            const game = this.game_name
             this.starterName = MyStorage["starterName"] ?? "Venomoth"
+            this.game_name = MyStorage["this.game_name"] ?? "Yellow"
             this.gamehook_disable_settings = MyStorage["gamehook_disable_settings"] ?? false,
             this.gamehook_encounter_writes = MyStorage["gamehook_encounter_writes"] ?? false,
             this.route1 = MyStorage["this.route1"] ?? true
@@ -1571,53 +1566,57 @@ const app = Vue.createApp({
             this.finished_run_count = MyStorage[`${this.starterName}`].finished_run_count ?? 0
             this.pb_time = MyStorage[`${this.starterName}`].pb_time ?? "None"
             this.playerId = MyStorage["playerId"] ?? 0
+            // if (MyStorage[this.starterName] && !MyStorage[`${game}_${starter}`]) {
+            //     //Pokemon settings for local storage
+            //     this.overlay_color = MyStorage[this.starterName].overlay_color ?? "#000000"
+            //     this.imageXOffset =  MyStorage[this.starterName].imageXOffset  ?? 0
+            //     this.imageYOffset =  MyStorage[this.starterName].imageYOffset  ?? 0
+            //     this.imageScale =    MyStorage[this.starterName].imageScale    ?? 1
+            //     this.imageFlip =     MyStorage[this.starterName].imageFlip     ?? false
+            //     this.imageSat =      MyStorage[this.starterName].imageSat      ?? 100
+            //     this.imageRotation = MyStorage[this.starterName].imageRotation ?? 0
 
-            if (MyStorage[this.starterName] && !MyStorage[`${game}_${starter}`]) {
-                //Pokemon settings for local storage
-                this.overlay_color = MyStorage[this.starterName].overlay_color ?? "#000000"
-                this.imageXOffset =  MyStorage[this.starterName].imageXOffset  ?? 0
-                this.imageYOffset =  MyStorage[this.starterName].imageYOffset  ?? 0
-                this.imageScale =    MyStorage[this.starterName].imageScale    ?? 1
-                this.imageFlip =     MyStorage[this.starterName].imageFlip     ?? false
-                this.imageSat =      MyStorage[this.starterName].imageSat      ?? 100
-                this.imageRotation = MyStorage[this.starterName].imageRotation ?? 0
+            //     //background texture settings
+            //     this.backgroundBlur =        MyStorage[this.starterName].backgroundBlur        ?? 0
+            //     this.backgroundScale =       MyStorage[this.starterName].backgroundScale       ?? 100
+            //     this.backgroundUrl =         MyStorage[this.starterName].backgroundUrl         ?? ""
+            //     this.use_custom_background = MyStorage[this.starterName].use_custom_background ?? false
+            //     this.backgroundXOffset =     MyStorage[this.starterName].backgroundXOffset     ?? 0
+            //     this.backgroundYOffset =     MyStorage[this.starterName].backgroundYOffset     ?? 0
+            //     this.backgroundTexture =     MyStorage[this.starterName].backgroundTexture     ?? 'Bug 1'
+            //     this.backgroundBrightness =  MyStorage[this.starterName].backgroundBrightness  ?? 100
+            //     this.backgroundContrast =    MyStorage[this.starterName].backgroundContrast    ?? 100
+            //     this.backgroundSaturation =  MyStorage[this.starterName].backgroundSaturation  ?? 100
+            //     this.backgroundHue =         MyStorage[this.starterName].backgroundHue         ?? 0
+            // }
+            // else {
+            //Pokemon settings for local storage
+            this.overlay_color = MyStorage[`${this.game_name}_${this.starterName}`].overlay_color ?? "#000000"
+            this.imageXOffset =  MyStorage[`${this.game_name}_${this.starterName}`].imageXOffset  ?? 0
+            this.imageYOffset =  MyStorage[`${this.game_name}_${this.starterName}`].imageYOffset  ?? 0
+            this.imageScale =    MyStorage[`${this.game_name}_${this.starterName}`].imageScale    ?? 1
+            this.imageFlip =     MyStorage[`${this.game_name}_${this.starterName}`].imageFlip     ?? false
+            this.imageSat =      MyStorage[`${this.game_name}_${this.starterName}`].imageSat      ?? 100
+            this.imageRotation = MyStorage[`${this.game_name}_${this.starterName}`].imageRotation ?? 0
 
-                //background texture settings
-                this.backgroundBlur =        MyStorage[this.starterName].backgroundBlur        ?? 0
-                this.backgroundScale =       MyStorage[this.starterName].backgroundScale       ?? 100
-                this.backgroundUrl =         MyStorage[this.starterName].backgroundUrl         ?? ""
-                this.use_custom_background = MyStorage[this.starterName].use_custom_background ?? false
-                this.backgroundXOffset =     MyStorage[this.starterName].backgroundXOffset     ?? 0
-                this.backgroundYOffset =     MyStorage[this.starterName].backgroundYOffset     ?? 0
-                this.backgroundTexture =     MyStorage[this.starterName].backgroundTexture     ?? 'Bug 1'
-                this.backgroundBrightness =  MyStorage[this.starterName].backgroundBrightness  ?? 100
-                this.backgroundContrast =    MyStorage[this.starterName].backgroundContrast    ?? 100
-                this.backgroundSaturation =  MyStorage[this.starterName].backgroundSaturation  ?? 100
-                this.backgroundHue =         MyStorage[this.starterName].backgroundHue         ?? 0
-            }
-            else {
-                //Pokemon settings for local storage
-                this.overlay_color = MyStorage[`${game}_${starter}`].overlay_color ?? "#000000"
-                this.imageXOffset =  MyStorage[`${game}_${starter}`].imageXOffset  ?? 0
-                this.imageYOffset =  MyStorage[`${game}_${starter}`].imageYOffset  ?? 0
-                this.imageScale =    MyStorage[`${game}_${starter}`].imageScale    ?? 1
-                this.imageFlip =     MyStorage[`${game}_${starter}`].imageFlip     ?? false
-                this.imageSat =      MyStorage[`${game}_${starter}`].imageSat      ?? 100
-                this.imageRotation = MyStorage[`${game}_${starter}`].imageRotation ?? 0
+            //background texture settings
+            this.backgroundBlur =        MyStorage[`${this.game_name}_${this.starterName}`].backgroundBlur        ?? 0
+            this.backgroundScale =       MyStorage[`${this.game_name}_${this.starterName}`].backgroundScale       ?? 100
+            this.backgroundUrl =         MyStorage[`${this.game_name}_${this.starterName}`].backgroundUrl         ?? ""
+            this.use_custom_background = MyStorage[`${this.game_name}_${this.starterName}`].use_custom_background ?? false
+            this.backgroundXOffset =     MyStorage[`${this.game_name}_${this.starterName}`].backgroundXOffset     ?? 0
+            this.backgroundYOffset =     MyStorage[`${this.game_name}_${this.starterName}`].backgroundYOffset     ?? 0
+            this.backgroundTexture =     MyStorage[`${this.game_name}_${this.starterName}`].backgroundTexture     ?? 'Bug 1'
+            this.backgroundBrightness =  MyStorage[`${this.game_name}_${this.starterName}`].backgroundBrightness  ?? 100
+            this.backgroundContrast =    MyStorage[`${this.game_name}_${this.starterName}`].backgroundContrast    ?? 100
+            this.backgroundSaturation =  MyStorage[`${this.game_name}_${this.starterName}`].backgroundSaturation  ?? 100
+            this.backgroundHue =         MyStorage[`${this.game_name}_${this.starterName}`].backgroundHue         ?? 0
 
-                //background texture settings
-                this.backgroundBlur =        MyStorage[`${game}_${starter}`].backgroundBlur        ?? 0
-                this.backgroundScale =       MyStorage[`${game}_${starter}`].backgroundScale       ?? 100
-                this.backgroundUrl =         MyStorage[`${game}_${starter}`].backgroundUrl         ?? ""
-                this.use_custom_background = MyStorage[`${game}_${starter}`].use_custom_background ?? false
-                this.backgroundXOffset =     MyStorage[`${game}_${starter}`].backgroundXOffset     ?? 0
-                this.backgroundYOffset =     MyStorage[`${game}_${starter}`].backgroundYOffset     ?? 0
-                this.backgroundTexture =     MyStorage[`${game}_${starter}`].backgroundTexture     ?? 'Bug 1'
-                this.backgroundBrightness =  MyStorage[`${game}_${starter}`].backgroundBrightness  ?? 100
-                this.backgroundContrast =    MyStorage[`${game}_${starter}`].backgroundContrast    ?? 100
-                this.backgroundSaturation =  MyStorage[`${game}_${starter}`].backgroundSaturation  ?? 100
-                this.backgroundHue =         MyStorage[`${game}_${starter}`].backgroundHue         ?? 0
-            }
+            this.attempt_number =   MyStorage[`${this.game_name}_${this.starterName}`].attempt_number   ?? 0
+            this.blackout_counter = MyStorage[`${this.game_name}_${this.starterName}`].blackout_counter ?? 0
+            this.playerResets =     MyStorage[`${this.game_name}_${this.starterName}`].playerResets     ?? 0
+
+            // }
         },
         //string can be: clear, increment, decrement
         resets_clear() {

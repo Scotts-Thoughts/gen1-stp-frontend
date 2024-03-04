@@ -95,4 +95,5 @@ const auto_save_settings = [
     // "split_data",
     "pb_splits",
     "autosplitter_toggle",
+    "game_name",
 ]
