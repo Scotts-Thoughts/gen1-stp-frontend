@@ -1235,6 +1235,9 @@ const app = Vue.createApp({
 
     //FUNCTIONS -----------------------------------------------------------------------------------------------//
     methods: {
+        hp_dv(atk, def, spd, spc) {
+            return (((atk % 2) * 8) + ((def % 2) * 4) + ((spd % 2) * 2) + ((spc % 2) * 1))
+        },
         stat_mod(modifer, slot) {
             let mod = modifer
             let mod_string = ""

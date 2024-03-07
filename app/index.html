@@ -86,8 +86,33 @@
                         <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
                         <div class="statsColumnStyle statsColumn2"><br>{{ g1PokemonData[starterName].base_spc }}<br>{{ g1PokemonData[starterName].base_spd }}<br></div>
                     </div>
+                    <!-- DVs --------------------------------------------------------------------------->
+                    <div v-else-if="mapper.properties.events.got_pokedex.value == false && mapper.properties.events.battled_rival_in_oaks_lab.value == true">
+                        <div class="statsLabelStyle statsLabelsColumn1">
+                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP<br></span>
+                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Atk.<br></span>
+                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Def.<br></span>
+                        </div>
+                        <div class="statsLabelStyle statsLabelsColumn2">
+                            <br>
+                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spc.<br></span>
+                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spe.<br></span>
+                        </div>
+                        <div class="statsheader">{{ map.player.team[0].species.value }}'s DVs</div>
+                        <div class="statsColumnDVStyle statsColumn1">
+                            {{ hp_dv(map.player.team[0].dvAttack.value, map.player.team[0].dvDefense.value, map.player.team[0].dvSpeed.value, map.player.team[0].dvSpecial.value) }}/15<br>
+                            {{ map.player.team[0].dvAttack.value }}/15<br>
+                            {{ map.player.team[0].dvDefense.value }}/15<br>
+                        </div>
+                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
+                        <div class="statsColumnDVStyle statsColumn2">
+                            <br>
+                            {{ map.player.team[0].dvSpecial.value  }}/15<br>
+                            {{ map.player.team[0].dvSpeed.value  }}/15<br>
+                        </div>
+                    </div>
                     <!-- OVERWORLD STATS --------------------------------------------------------------------------->
-                    <div v-if="state == `Overworld` || state == `To Battle`">
+                    <div v-else-if="state == `Overworld` || state == `To Battle`">
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP<br></span>
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Atk.<br></span>
@@ -129,7 +154,7 @@
                         </div>
                     </div>
                     <!-- BATTLE STATS ----------------------------------------------------------------------------->
-                    <div v-if="state == `Battle` || state == `From Battle`">
+                    <div v-else-if="state == `Battle` || state == `From Battle`">
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span>HP<br></span>
                             <span :style="{ opacity: statLabelOpacity(batt.yourPokemon.modStageAttack) }">Atk.<br></span>

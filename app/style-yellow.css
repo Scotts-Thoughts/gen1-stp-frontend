@@ -867,11 +867,11 @@ box-shadow:
 .statsheader {
     border: 1px solid #ff000000;
     opacity: 1;
-    font-size: 40px;
+    font-size: 34px;
     font-family: play;
     position: absolute;
     text-align: center;
-    top: -29px;
+    top: -27px;
     width: 378px;
     z-index: 1;
     /* filter: drop-shadow(1px 1px 0px rgb(70, 70, 70)); */
@@ -934,6 +934,16 @@ box-shadow:
     z-index: 4;
     line-height: 62px;
     top: 58px;
+    text-align: right;
+    font-family: osb;
+    font-weight: 500;
+}
+.statsColumnDVStyle {
+    font-size: 36px;
+    position: absolute;
+    z-index: 4;
+    line-height: 62px;
+    top: 59px;
     text-align: right;
     font-family: osb;
     font-weight: 500;
@@ -1636,7 +1646,19 @@ box-shadow:
     left: 296px;
     top: 106px;
 }
-
+.dv_stat {
+    /* position: absolute; */
+    position: relative;
+    padding-left: 1px;
+    top: 75px;
+    right: -10px;
+    text-align: right; 
+    line-height: 60px;
+    width: 52px;
+    min-width: 120px;
+    max-width: 120px;
+    font-size: 36px;
+}
 .fadeMod-enter-from   { opacity: 0; }
 .fadeMod-enter-to     { opacity: 1; }
 .fadeMod-enter-active { transition: opacity 400ms ease-in; }
