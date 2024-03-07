@@ -907,8 +907,8 @@ const app = Vue.createApp({
             }
         },
         async starterName(newValue, oldValue) {
-            this.attempt_number = MyStorage[`${newValue}`]?.attempt_number ?? 0
-            this.finished_run_count = MyStorage[`${newValue}`]?.finished_run_count ?? 0
+            this.attempt_number = MyStorage[`${this.game_name}_${newValue}`]?.attempt_number ?? 0
+            this.finished_run_count = MyStorage[`${this.game_name}_${newValue}`]?.finished_run_count ?? 0
             //transition between background textures
             this.$refs.old_background_texture.src = `images/textures/${g1PokemonData[oldValue].type1}.png`
             this.$refs.old_background_texture.style.opacity = 1
@@ -981,9 +981,17 @@ const app = Vue.createApp({
             const trainer = this.mapper.properties.battle.trainer.class.value
             const id = this.mapper.properties.battle.trainer.number.value
             const identifier = `${trainer} ${id}`
-            if (this.state == 'To Battle' || this.state == 'Battle' || this.state == 'From Battle') {
-                return this.g1YellowTrainers[identifier]
+            if (this.game_name == 'Yellow') {
+                if (this.state == 'To Battle' || this.state == 'Battle' || this.state == 'From Battle') {
+                    return this.g1YellowTrainers[identifier]
+                }
             }
+            if (this.game_name == 'Red' || this.game_name == 'Blue') {
+                if (this.state == 'To Battle' || this.state == 'Battle' || this.state == 'From Battle') {
+                    return this.g1RedBlueTrainers[identifier]
+                }
+            }
+
         },
         species() {
             const mapping = {
@@ -1562,8 +1570,8 @@ const app = Vue.createApp({
             this.goal_speed = MyStorage["goal_speed"] ?? 24
             this.viridian_forest = MyStorage["viridian_forest"] ?? "Pidgey"
             this.pb_splits = MyStorage[`${this.starterName}_pb_splits`] ?? ["","","",""]
-            this.attempt_number = MyStorage[`${this.starterName}`]?.attempt_number ?? 0
-            this.finished_run_count = MyStorage[`${this.starterName}`].finished_run_count ?? 0
+            this.attempt_number = MyStorage[`${this.game_name}_${this.starterName}`]?.attempt_number ?? 0
+            this.finished_run_count = MyStorage[`${this.game_name}_${this.starterName}`].finished_run_count ?? 0
             this.pb_time = MyStorage[`${this.starterName}`].pb_time ?? "None"
             this.playerId = MyStorage["playerId"] ?? 0
             // if (MyStorage[this.starterName] && !MyStorage[`${game}_${starter}`]) {
@@ -2665,8 +2673,8 @@ const app = Vue.createApp({
                     this.finished_logs = false;
                     this.attempt_number++;
                     this.most_recent_move = "";
-                    MyStorage[`${this.starterName}`] = {
-                        ...MyStorage[`${this.starterName}`],
+                    MyStorage[`${this.game_name}_${this.starterName}`] = {
+                        ...MyStorage[`${this.game_name}_${this.starterName}`],
                         attempt_number: this.attempt_number
                     }
                     // console.log(`Attempt ${this.attempt_number}`)
