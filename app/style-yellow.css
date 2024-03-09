@@ -949,6 +949,16 @@ box-shadow:
     font-family: osb;
     font-weight: 500;
 }
+.statsColumnDVStyle {
+    font-size: 36px;
+    position: absolute;
+    z-index: 4;
+    line-height: 62px;
+    top: 59px;
+    text-align: right;
+    font-family: osb;
+    font-weight: 500;
+}
 .statsColumn1 { right: 198px; }
 .statsColumn2 { right: 15px; }
 
@@ -1647,7 +1657,19 @@ box-shadow:
     left: 296px;
     top: 106px;
 }
-
+.dv_stat {
+    /* position: absolute; */
+    position: relative;
+    padding-left: 1px;
+    top: 75px;
+    right: -10px;
+    text-align: right; 
+    line-height: 60px;
+    width: 52px;
+    min-width: 120px;
+    max-width: 120px;
+    font-size: 36px;
+}
 .fadeMod-enter-from   { opacity: 0; }
 .fadeMod-enter-to     { opacity: 1; }
 .fadeMod-enter-active { transition: opacity 400ms ease-in; }

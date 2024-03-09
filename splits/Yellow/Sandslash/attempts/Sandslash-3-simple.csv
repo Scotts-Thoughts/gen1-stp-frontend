@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Sandslash,Rival1-Lab,52,0,0,6,0:02,9.18,SCRATCH,SAND-ATTACK,,
+NINTEN,Sandslash,Brock,13:09,3,3,12,0:28,90.802,SCRATCH,SAND-ATTACK,,
+NINTEN,Sandslash,Rival1-Lab,43,0,0,6,0:02,9.328,SCRATCH,SAND-ATTACK,,
