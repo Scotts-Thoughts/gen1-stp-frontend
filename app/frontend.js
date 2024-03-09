@@ -520,6 +520,10 @@ function transition(fn, ms) {
 const app = Vue.createApp({
     //DATA & DEFINITIONS
     data() {
+        // let battle_summary_properties = {}
+        // for (let i = 0; i < battle_summary_properties.length; i++) {
+        //     battle_summary_properties[i] = 0;
+        // }
         return {
             ready:  false,
             mapper: null,
@@ -597,19 +601,19 @@ const app = Vue.createApp({
             
 
             //DATA ---------------------------------------------------------------------------------------------//
-            g1MoveData:              g1MoveData,
-            g1PokemonData:           g1PokemonData,
-            g1PokemonDataRB:         g1PokemonDataRB,
-            g1YellowTrainers:        g1YellowTrainers,
-            g1RedBlueTrainers:       g1RedBlueTrainers,
-            typeData:                typeData,
-            stageModifiersData:      stageModifiersData,
-            tmhmMapping:             tmhmMapping,
-            settings:                settings,
-            auto_save_settings:      auto_save_settings,
-            deprecated_autosplitter: deprecated_autosplitter,
-            autosplitter:            autosplitter,
-            textures:                textures,
+            g1MoveData:                g1MoveData,
+            g1PokemonData:             g1PokemonData,
+            g1PokemonDataRB:           g1PokemonDataRB,
+            g1YellowTrainers:          g1YellowTrainers,
+            g1RedBlueTrainers:         g1RedBlueTrainers,
+            typeData:                  typeData,
+            stageModifiersData:        stageModifiersData,
+            tmhmMapping:               tmhmMapping,
+            settings:                  settings,
+            auto_save_settings:        auto_save_settings,
+            deprecated_autosplitter:   deprecated_autosplitter,
+            autosplitter:              autosplitter,
+            textures:                  textures,
             // platinum_moves:          platinum_moves,
             
             //VARS ---------------------------------------------------------------------------------------------//
@@ -720,7 +724,9 @@ const app = Vue.createApp({
 
             //splits
             split_data: MyStorage["split_data"]                    ?? [],
-            pb_splits:  MyStorage[`${this.starterName}_pb_splits`] ?? [],
+            pb_splits:  MyStorage[`pb_splits`] ?? [],
+
+            // battle_summary_properties
         }
     },
 
@@ -1575,7 +1581,7 @@ const app = Vue.createApp({
             this.pb_splits = MyStorage[`${this.starterName}_pb_splits`] ?? ["","","",""]
             this.attempt_number = MyStorage[`${this.game_name}_${this.starterName}`]?.attempt_number ?? 0
             this.finished_run_count = MyStorage[`${this.game_name}_${this.starterName}`].finished_run_count ?? 0
-            this.pb_time = MyStorage[`${this.starterName}`].pb_time ?? "None"
+            // this.pb_time = MyStorage[`${this.starterName}`].pb_time ?? "None"
             this.playerId = MyStorage["playerId"] ?? 0
             // if (MyStorage[this.starterName] && !MyStorage[`${game}_${starter}`]) {
             //     //Pokemon settings for local storage
