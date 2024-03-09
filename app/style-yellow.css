@@ -178,7 +178,7 @@
     position: absolute;
     inset: 0; /* sets top/left/bottom/right to 0 */
     background-color: var(--overlay-color);
-    filter: saturate(.6);
+    filter: saturate(1);
     background-size: 1920px 1080px;
     -webkit-mask-size: 1920px 1080px;
     -webkit-mask-image: var(--url); /* fallback, just to be safe */

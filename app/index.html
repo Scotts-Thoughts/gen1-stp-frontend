@@ -50,10 +50,10 @@
                         :src="`images/pokemon/Red_and_Blue/${s1dynamicReset.species.value}.png`" />
                     <!-- <div class="colored-image" style="--url: url(images/left_ui/ui.png)"></div> -->
 
-                    <div class="colored-image ds" style="--url: url(images/ui/timer.svg)"></div>
-                    <div class="colored-image ds" style="--url: url(images/ui/moveset.svg)"></div>
-                    <div class="colored-image ds" style="--url: url(images/ui/resets.svg)"></div>
-                    <div class="colored-image ds" style="--url: url(images/ui/stats.svg)"></div>
+                    <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/timer.svg)"></div>
+                    <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/moveset.svg)"></div>
+                    <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/resets.svg)"></div>
+                    <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/stats.svg)"></div>
                     <div class="expBar">
                         <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
                     </div>
@@ -465,10 +465,7 @@
             Blur: <input type="range" min="0" max="10" v-model="backgroundBlur"/><br>
             Hue: <input type="range" min="0" max="358" v-model="backgroundHue"/><br>
             <br>
-            <div>General Settings:</div>
-            <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
-            <button class="buttonStyle" onClick="openFolder('battle_summaries')">Battle Summaries</button>
-            <button class="buttonStyle" onClick="window.location.reload();">Reload Overlay</button>
+            <!-- <button class="buttonStyle" onClick="openFolder('battle_summaries')">Battle Summaries</button> -->
         </div>
         <div class="testingArea2" style="z-index: 50000;">
             <div>Secondary Menu:</div>
@@ -480,16 +477,17 @@
                 <option>Splits</option>
                 <!-- <option>Dev Console</option> -->
             </select>
+            <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
         </div>
         <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
             Encounters:<br>
             <table class="ui_table">
                 <tr>
-                    <th>Route1:</th>
+                    <th>Route 1:</th>
                     <th><input class="checkBoxStyle" type="checkbox" v-model="route1"/></th>
                 </tr>
                 <tr>
-                    <th>Route3:</th>
+                    <th>Route 3:</th>
                     <th><input class="checkBoxStyle" type="checkbox" v-model="route3"/></th>
                 </tr>
                 <tr>

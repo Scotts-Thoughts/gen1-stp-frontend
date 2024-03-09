@@ -22,6 +22,8 @@ const settings = {
         route21: true,
         route22: true,
         victoryRoad: true,
+        viridian_forest: "Encounters On",
+        route24: true,
     },
     second_playthrough_settings: {
         route1: false,
@@ -37,7 +39,8 @@ const settings = {
         route21: true,
         route22: true,
         victoryRoad: true,
-        viridian_forest: "Pidgey"
+        viridian_forest: "Pidgey",
+        route24: true,
     },
     all_off: {
         route1: false,
@@ -53,5 +56,7 @@ const settings = {
         route21: false,
         route22: false,
         victoryRoad: false,
+        viridian_forest: "Encounters Off",
+        route24: false,
     },
 }

@@ -683,6 +683,9 @@ const app = Vue.createApp({
             //
             playerNameChoice: MyStorage["playerNameChoice"] ?? "NINTEN",
 
+            //UI
+            ui_saturation: .6,
+
             //backed up pokemon specific settings
             pokemon_settings: [
                 "overlay_color",
@@ -1744,6 +1747,7 @@ const app = Vue.createApp({
             this.route22 = false
             this.victoryRoad = false
             this.route24 = false
+            this.viridian_forest == "No Encounters"
         },
         apply_settings(setting_group) { //pass in the name of the group of settings that are to have values assigned
             keys = this.settings[setting_group]
