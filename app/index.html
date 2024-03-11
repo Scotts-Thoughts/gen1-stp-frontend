@@ -430,10 +430,28 @@
                 <option>Random</option>
             </select>
             <br>
-            <div>Attempt: {{this.attempt_number}}<button @click="increment('attempt_number')" class="smallButtonStyle">+</button><button @click="decrement('attempt_number')" class="smallButtonStyle">-</button></div>
-            <div>Finished Runs: {{this.finished_run_count}}<button @click="increment('finished_run_count')" class="smallButtonStyle">+</button><button @click="decrement('finished_run_count')" class="smallButtonStyle">-</button></div>
-            <div>Resets: {{this.playerResets}}<button @click="increment('playerResets')" class="smallButtonStyle">+</button><button @click="decrement('playerResets')" class="smallButtonStyle">-</button></div>
-            <div>Blackouts: {{this.blackout_counter}}<button @click="increment('blackout_counter')" class="smallButtonStyle">+</button><button @click="decrement('blackout_counter')" class="smallButtonStyle">-</button></div>
+            <table>
+                <tr>
+                    <th style="text-align: left;">Attempt:</th>
+                    <th>{{this.attempt_number}}</th>
+                    <th><button @click="increment('attempt_number')" class="smallButtonStyle">+</button><button @click="decrement('attempt_number')" class="smallButtonStyle">-</button></th>
+                </tr>
+                <tr>
+                    <th style="text-align: left;">Finished Runs:</th>
+                    <th>{{this.finished_run_count}}</th>
+                    <th><button @click="increment('finished_run_count')" class="smallButtonStyle">+</button><button @click="decrement('finished_run_count')" class="smallButtonStyle">-</button></th>
+                </tr>
+                <tr>
+                    <th style="text-align: left;">Resets:</th>
+                    <th>{{this.playerResets}}</th>
+                    <th><button @click="increment('playerResets')" class="smallButtonStyle">+</button><button @click="decrement('playerResets')" class="smallButtonStyle">-</button></th>
+                </tr>
+                <tr>
+                    <th style="text-align: left;">Blackouts:</th>
+                    <th>{{this.blackout_counter}}</th>
+                    <th><button @click="increment('blackout_counter')" class="smallButtonStyle">+</button><button @click="decrement('blackout_counter')" class="smallButtonStyle">-</button></th>
+                </tr>
+            </table>
             <br>
             <button class="buttonStyle" @click="newRun">New Run</button>
             <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
@@ -470,12 +488,6 @@
             <select v-model="ui_type_colors" class="dropdownMenu">
                 <option>Bulbapedia Current</option>
                 <option>Bulbapedia Legacy</option>
-            </select>
-            <select v-model="ui_test_prop" class="dropdownMenu">
-                <option>one</option>
-                <option>two</option>
-                <option>three</option>
-                <option>four</option>
             </select>
         </div>
         <div class="testingArea2" style="z-index: 50000;">

@@ -59,7 +59,7 @@ function createWatchedObject(watcher) {
  * @param {((data:string) => void)?} options.onSave      called after the file is saved
  */
 function createStoredObject(path, file_name, { saveTimeout, onSave } = {}) {
-    saveTimeout = saveTimeout || 1000;
+    saveTimeout = saveTimeout || 250;
     onSave = onSave || (() => {});
 
     const fs = require("fs");
@@ -73,19 +73,6 @@ function createStoredObject(path, file_name, { saveTimeout, onSave } = {}) {
             return {};
         }
     };
-
-    // const loadFromFile = () => {
-    //     try {
-    //         if (!fs.existsSync(`${path}/${file_name}`)) {
-    //             saveToFile({});
-    //         }
-    //         const data = fs.readFileSync(`${path}/${file_name}`, 'utf8');
-    //         return JSON.parse(data);
-    //     } catch (err) {
-    //         console.error('[StoredObject] loadFromFile:', err.message);
-    //         return {};
-    //     }
-    // };
 
     const saveToFile = (root) => {
         const data = JSON.stringify(root, null, 4);
@@ -120,7 +107,7 @@ function createStoredObject(path, file_name, { saveTimeout, onSave } = {}) {
 
 
 const Storage = createStoredObject('./storage', 'Storage.json', {
-    saveTimeout: 1000,
+    saveTimeout: 250,
     onSave: (data) => {
         console.log('[Storage] saved:', data);
         // do something after the file is saved
@@ -375,7 +362,7 @@ class KeyHook {
         this.process = require("child_process").spawn("keyhook.exe");
 
         // general logging
-        this.process.on("spawn", () => console.log("Keyboard hook started!"));
+        // this.process.on("spawn", () => console.log("Keyboard hook started!"));
         this.process.stderr.on("data", (data) => console.error(`${data}`));
         
         // handle output of the keyboard hook
@@ -630,87 +617,12 @@ function transition(fn, ms) {
 const app = Vue.createApp({
     //DATA & DEFINITIONS
     data() {
-        // let battle_summary_properties = {}
-        // for (let i = 0; i < battle_summary_properties.length; i++) {
-        //     battle_summary_properties[i] = 0;
-        // }
         return {
             ready:  false,
             mapper: null,
             state:  "Base Stats",
 
-            // USER CONFIG --------------------------------------------------------------------------------------//
-            // Most settings here save automatically to MyStorage. If you want to add a new setting and have it save define it within "saved_settings.js"
-            starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
-            overlayName: "", // add "-yellow" or "-red" here based on the game being played (or "-type" for Venomoth's type randomizer)
-            game_name:   "Yellow",
-
-            gamehook_disable_settings:  MyStorage["gamehook_disable_settings"]       ?? false,
-            gamehook_encounter_writes:  MyStorage["gamehook_encounter_writes"]       ?? false,
-            dvSetting:                  MyStorage["this.dvSetting"]                  ?? "Max", //Max, Min, NPC, Max with Min Atk, or Random
-            trashCans:                  MyStorage["this.trashCans"]                  ?? true, //solves the trash can puzzle
-            options:                    MyStorage["this.options"]                    ?? true, //shows the options menu when set to true
-            gametimeDisplay:            MyStorage["this.gametimeDisplay"]            ?? false, //shows the options menu when set to true
-            inventory:                  MyStorage["this.inventory"]                  ?? true, //uses inventory when in the department store & marts
-            battleGraphic:              MyStorage["this.battleGraphic"]              ?? true, //uses battle graphic with enemy moveset & stats
-            showAllTrainers:            MyStorage["this.showAllTrainers"]            ?? true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
-            expBarAnimation:            MyStorage["this.expBarAnimation"]            ?? true,
-            showSpecialTrainerGraphics: MyStorage["this.showSpecialTrainerGraphics"] ?? true, //shows drawn art for defined trainers
-            battlePopUps:               MyStorage["this.battlePopUps"]               ?? true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
-            typeCalcs:                  MyStorage["this.typeCalcs"]                  ?? true, //calculates effective power based on the pokemon in battle
-            showCritMultiplierInEP:     MyStorage["this.showCritMultiplierInEP"]     ?? true, //shows high crit ratio moves with adjusted power if the move always scores a crit
-            show_wild_battles:          MyStorage["this.show_wild_battles"]          ?? false, //shows wild battles in the battle screen
-            automaticallySavePBSplits:  MyStorage["this.automaticallySavePBSplits"]  ?? true, //saves splits if the player beats their PB (this overwrites currently saved PB splits)
-            autosplitter_toggle:        MyStorage["this.autosplitter_toggle"]        ?? true,
-
-            help_menus: MyStorage["this.help_menus"] ?? "Settings",
-
-            //KEYHOOK SHORTCUTS
-            lastExecuted: 0,
-            cycleIndex_rightDisplay: MyStorage["this.cycleIndex_rightDisplay"] ?? 0, //F13
-            cycleIndex_stats:        MyStorage["this.cycleIndex_stats"] ?? 0, //F15
-            cycleIndex_failures:     MyStorage["this.cycleIndex_failures"] ?? 0, //F17
-            cycleIndex_screens:      MyStorage["this.cycleIndex_screens"] ?? 0, //F16
-            cycleValues_rightDisplay: ["movepool", "inventory", "splits", "none"], //F13
-            cycleValues_stats:        ["base", "stats", "evs", "ivs"], //F15
-            cycleValues_failures:     ["resets", "blackouts"], //F16
-            cycleValues_screens:      ["screens", "bonks"], //F17
-            key_F13: MyStorage["this.key_F13"] ?? "movepool", //rightDisplay
-            key_F14: MyStorage["this.key_F14"] ?? true, //show movepool
-            key_F15: MyStorage["this.key_F15"] ?? "stats", //stat display type
-            key_F16: MyStorage["this.key_F16"] ?? "resets",
-            key_F17: MyStorage["this.key_F17"] ?? "screens",
-            key_F18: MyStorage["this.key_F18"] ?? "",
-            key_F19: MyStorage["this.key_F19"] ?? "",
-            key_F20: MyStorage["this.key_F20"] ?? "",
-            key_F21: MyStorage["this.key_F21"] ?? "",
-            key_F22: MyStorage["this.key_F22"] ?? "",
-            key_F23: MyStorage["this.key_F23"] ?? "",
-            key_F24: MyStorage["this.key_F24"] ?? "",
-
-            //ENCOUNTERS ---------------------------------------------------------------------------------------//
-            route1:         MyStorage["this.route1"]         ?? true,
-            viridianForest: MyStorage["this.viridianForest"] ?? true,
-            route3:         MyStorage["this.route3"]         ?? true,
-            mtMoon:         MyStorage["this.mtMoon"]         ?? true,
-            route6:         MyStorage["this.route6"]         ?? true,
-            rockTunnel:     MyStorage["this.rockTunnel"]     ?? true,
-            pokemonTower:   MyStorage["this.pokemonTower"]   ?? true,
-            safariZone:     MyStorage["this.safariZone"]     ?? true,
-            powerPlant:     MyStorage["this.powerPlant"]     ?? true,
-            mansion:        MyStorage["this.mansion"]        ?? true,
-            route21:        MyStorage["this.route21"]        ?? true,
-            route22:        MyStorage["this.route22"]        ?? true,
-            victoryRoad:    MyStorage["this.victoryRoad"]    ?? true,
-            route24:        MyStorage["this.route24"]        ?? true,
-
-            goal_level: MyStorage["goal_level"] ?? 13,
-            goal_speed: MyStorage["goal_speed"] ?? 24,
-
-            rockTunnelDarkness: MyStorage["this.rockTunnelDarkness"] ?? false, //if true it will make rock tunnel bright
-            viridian_forest:    MyStorage["viridian_forest"]       ?? "Pidgey",
-
-            //DATA ---------------------------------------------------------------------------------------------//
+            // Static Data
             g1MoveData:              g1MoveData,
             g1PokemonData:           g1PokemonData,
             g1PokemonDataRB:         g1PokemonDataRB,
@@ -725,9 +637,9 @@ const app = Vue.createApp({
             autosplitter:            autosplitter,
             textures:                textures,
             application_settings:    application_settings,
-            pokemon_settings:        pokemon_settings,
-            
-            //VARS ---------------------------------------------------------------------------------------------//
+            pokemon_settings:        pokemon_settings, 
+
+            // Objects
             pkmnMoves:       ["move1","move2","move3","move4"],
             pkmnSlots:       [0, 1, 2, 3, 4, 5],
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
@@ -735,229 +647,299 @@ const app = Vue.createApp({
             prevSpecies:     undefined,
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
-            oldExpValue: 0,
-            stat_object: [
+            oldExpValue:     0,
+            stat_object:     [
                 {abrv: "Atk", name: "Attack"}, 
                 {abrv: "Def", name: "Defense"}, 
                 {abrv: "Spc", name: "Special"}, 
                 {abrv: "Spe", name: "Speed"}, 
-            ], 
+            ],
 
-            //resets
-            playerId:            MyStorage["playerId"] ?? 0,
-            playerName:          "NINTEN",
-            resetCatcher:        "NINTEN",
-            playerResets:        0,
-            blackout_counter:    0,
-            resetCounter:        true,
-            game_over:           false,
-            lance_defeated:      false,
-            finished_logs:       false,
-            attempt_number:      0,
-            finished_run_count:  0,
-            pb_time:             "None",
-            most_recent_move:    "",
-            split_logStr:        "",
-            simple_data_str:     MyStorage["simple_data_str"]          ?? "",
-            full_data_str:       MyStorage["full_data_str"]            ?? "",
-            deprecated_data_str: MyStorage["deprecated_data_str"]      ?? "",
-            simple_data:         MyStorage["simple_data"]              ?? "",
-            blackouts_as_resets: MyStorage["this.blackouts_as_resets"] ?? false, //counts blackouts as resets
-            blackout:            false,
+            // Settings:
+                // These automatically store into the `Storage` object
+                // To add a new setting place it here as well as within the the files: `application_settings.js` or `pokemon_settings.js`
+                // application_settings store within `Storage.application_settings`
+                // pokemon_settings store within `Storage.games.game.style`
 
-            //Pokemon settings for local storage
-            overlay_color: MyStorage["overlay_color"] ?? "#000000",
-            imageXOffset:  MyStorage["imageXOffset"]  ?? 0,
-            imageYOffset:  MyStorage["imageYOffset"]  ?? 0,
-            imageScale:    MyStorage["imageScale"]    ?? 1,
-            imageFlip:     MyStorage["imageFlip"]     ?? false,
-            imageSat:      MyStorage["imageSat"]      ?? 100,
-            imageRotation: MyStorage["imageRotation"] ?? 0,
+            // Application Settings
+            starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
+            game_name:   "Yellow",
 
-            //background texture settings
-            backgroundBlur:        MyStorage["backgroundBlur"]        ?? 0,
-            backgroundScale:       MyStorage["backgroundScale"]       ?? 100,
-            backgroundUrl:         MyStorage["backgroundUrl"]         ?? "",
-            use_custom_background: MyStorage["use_custom_background"] ?? false,
-            backgroundXOffset:     MyStorage["backgroundXOffset"]     ?? 0,
-            backgroundYOffset:     MyStorage["backgroundYOffset"]     ?? 0,
-            backgroundTexture:     MyStorage["backgroundTexture"]     ?? 'Bug 1',
-            backgroundBrightness:  MyStorage["backgroundBrightness"]  ?? 100,
-            backgroundContrast:    MyStorage["backgroundContrast"]    ?? 100,
-            backgroundSaturation:  MyStorage["backgroundSaturation"]  ?? 100,
-            backgroundHue:         MyStorage["backgroundHue"]         ?? 0,
-            playerNameChoice:      MyStorage["playerNameChoice"]      ?? "NINTEN",
+            gamehook_disable_settings:  false,
+            gamehook_encounter_writes:  false,
+            dvSetting:                  "Max", //Max, Min, NPC, Max with Min Atk, or Random
+            trashCans:                  true, //solves the trash can puzzle
+            options:                    true, //shows the options menu when set to true
+            gametimeDisplay:            false, //shows the options menu when set to true
+            inventory:                  true, //uses inventory when in the department store & marts
+            battleGraphic:              true, //uses battle graphic with enemy moveset & stats
+            showAllTrainers:            true, //when false only shows gym leaders and rivals, when true shows all enemy trainers
+            expBarAnimation:            true,
+            showSpecialTrainerGraphics: true, //shows drawn art for defined trainers
+            battlePopUps:               true, //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
+            typeCalcs:                  true, //calculates effective power based on the pokemon in battle
+            showCritMultiplierInEP:     true, //shows high crit ratio moves with adjusted power if the move always scores a crit
+            show_wild_battles:          false, //shows wild battles in the battle screen
+            automaticallySavePBSplits:  true, //saves splits if the player beats their PB (this overwrites currently saved PB splits)
+            autosplitter_toggle:        true,
 
-            //UI
+            help_menus: "Settings",
+
+            // Keyhook shortcuts
+            lastExecuted: 0,
+            cycleIndex_rightDisplay:  0, //F13
+            cycleIndex_stats:         0, //F15
+            cycleIndex_failures:      0, //F17
+            cycleIndex_screens:       0, //F16
+            cycleValues_rightDisplay: ["movepool", "inventory", "splits", "none"],   //F13
+            cycleValues_stats:        ["base", "stats", "evs", "ivs"],               //F15
+            cycleValues_failures:     ["resets", "blackouts"],                       //F16
+            cycleValues_screens:      ["screens", "bonks"],                          //F17
+            key_F13:                  "movepool", //rightDisplay
+            key_F14:                  true, //show movepool
+            key_F15:                  "stats", //stat display type
+            key_F16:                  "resets",
+            key_F17:                  "screens",
+            key_F18:                  "",
+            key_F19:                  "",
+            key_F20:                  "",
+            key_F21:                  "",
+            key_F22:                  "",
+            key_F23:                  "",
+            key_F24:                  "",
+
+            // Encounters
+            route1:         true,
+            viridianForest: true,
+            route3:         true,
+            mtMoon:         true,
+            route6:         true,
+            rockTunnel:     true,
+            pokemonTower:   true,
+            safariZone:     true,
+            powerPlant:     true,
+            mansion:        true,
+            route21:        true,
+            route22:        true,
+            victoryRoad:    true,
+            route24:        true,
+            goal_level:     13,
+            goal_speed:     24,
+            rockTunnelDarkness: false, //if true it will make rock tunnel bright
+            viridian_forest:    "Pidgey",
+
+            // Timer variables
+            timer_startTimeOffset:  "00:00:00.00",
+            timer_startTime:        0,
+            timer_pause:            true,
+            timer_formatted_time:   ["0", ".00"],
+            timer_pause_time:       0,
+            time_h:                 0,
+            time_m:                 0,
+            time_s:                 0,
+            time_ms:                0,
+            time_split_start:       "00:00:00:00",
+            battle_start:           0,
+            timer_settings:         "Real-Time",
+
+            // Splits
+            split_data:             [],
+            pb_splits:              [],
+
+            // Pokemon Settings
+            // Playthrough Metrics
+            playerId:              MyStorage["playerId"] ?? 0,
+            playerName:            "NINTEN",
+            resetCatcher:          "NINTEN",
+            playerResets:          0,
+            blackout_counter:      0,
+            resetCounter:          true,
+            game_over:             false,
+            lance_defeated:        false,
+            finished_logs:         false,
+            attempt_number:        0,
+            finished_run_count:    0,
+            pb_time:               "None",
+            most_recent_move:      "",
+            split_logStr:          "",
+            simple_data_str:       "",
+            full_data_str:         "",
+            deprecated_data_str:   "",
+            simple_data:           "",
+            blackouts_as_resets:   false, //counts blackouts as resets
+            blackout:              false,
+
+            // Pokemon settings for local storage
+            overlay_color:         "#000000",
+            imageXOffset:          0,
+            imageYOffset:          0,
+            imageScale:            1,
+            imageFlip:             false,
+            imageSat:              100,
+            imageRotation:         0,
+
+            // Background texture settings
+            backgroundBlur:        0,
+            backgroundScale:       100,
+            backgroundUrl:         "",
+            use_custom_background: false,
+            backgroundXOffset:     0,
+            backgroundYOffset:     0,
+            backgroundTexture:     'Bug 1',
+            backgroundBrightness:  100,
+            backgroundContrast:    100,
+            backgroundSaturation:  100,
+            backgroundHue:         0,
+            playerNameChoice:      "NINTEN",
+
+            // UI
             ui_saturation:          .6,
             ui_type_colors:         "Bulbapedia Current",
             ui_type_color_modifier: "current_",
-            ui_test_prop:           "one",
-
-            //backed up pokemon specific settings
-            pokemon_settings: [
-                [ "overlay_color",          "#000000", ],
-                [ "imageXOffset",           0,         ],
-                [ "imageYOffset",           0,         ],
-                [ "imageScale",             1,         ],
-                [ "imageFlip",              false,     ],
-                [ "imageSat",               100,       ],
-                [ "imageRotation",          0,         ],
-                [ "backgroundBlur",         0,         ],
-                [ "backgroundScale",        100,       ],
-                [ "backgroundUrl",          '',        ],
-                [ "use_custom_background",  false,     ],
-                [ "attempt_number",         0,         ],
-                [ "finished_run_count",     0,         ],
-                [ "pb_time",                '',        ],
-                [ "backgroundXOffset",      100,       ],
-                [ "backgroundYOffset",      100,       ],
-                [ "backgroundTexture",      'Bug 1'    ],
-                [ "backgroundBrightness",   100,       ],
-                [ "backgroundContrast",     100,       ],
-                [ "backgroundSaturation",   100,       ],
-                [ "backgroundHue",          0,         ],
-                [ "ui_saturation",          0.6,       ],
-                [ "ui_type_colors",         "Bulbapedia Current", ],
-                [ "ui_type_color_modifier", "current_",           ],
-            ],
-
-            //timer variables
-            timer_startTimeOffset: MyStorage["timer_startTimeOffset"] ?? "00:00:00.00",
-            timer_startTime:       MyStorage["timer_startTime"]       ?? 0,
-            timer_pause:           MyStorage["timer_pause"]           ?? true,
-            timer_formatted_time:  MyStorage["timer_formatted_time"]  ?? ["0", ".00"],
-            timer_pause_time:      MyStorage["timer_pause_time"]      ?? 0,
-            time_h:                MyStorage['time_h']                ?? 0,
-            time_m:                MyStorage['time_m']                ?? 0,
-            time_s:                MyStorage['time_s']                ?? 0,
-            time_ms:               MyStorage['time_ms']               ?? 0,
-            time_split_start:      MyStorage['time_split_start']      ?? "00:00:00:00",
-            battle_start:          MyStorage['battle_start']          ?? 0,
-            timer_settings:        MyStorage["this.timer_settings"]   ?? "Real-Time",
-
-            //splits
-            split_data: MyStorage["split_data"] ?? [],
-            pb_splits:  MyStorage[`pb_splits`]  ?? [],
         }
     },
 
     created() {
         // Initialize the Storage object
         // This creates all of the objects that will then be filled
-        if (!Storage['global_variables']) { //If the global variables don't exist, create them
+        const debug_mode = true; // This enables the printing of storage related console logs
+        const clear_storage = false; // Use this to test functionality. It resets all the data blocks within the Storage.json file to their default values
+        if (debug_mode) { console.log(`Initializing the Storage Object...`) }
+        if (!Storage['global_variables'] || clear_storage == true) { //If the global variables don't exist, create them
+            // Assigns the global variables to the Storage object
             Storage['global_variables'] = {
                 starter: this.starterName,
                 game: this.game_name,
             }
+        }
+        let starter = Storage['global_variables'].starter
+        let game = Storage['global_variables'].game
+        if (!Storage['application_settings'] || clear_storage == true) {
+            //Assigns the application settings to the Storage object, these persist when the user changes the starter Pokemon
+            Storage['application_settings'] = {}
+            this.application_settings.forEach(setting => {
+                Storage['application_settings'][setting[0]] = setting[1];
+            });
+        }
+        if (!Storage['games'] || clear_storage == true) {
+            // Assigns the game data to the Storage object, these properties will be switched between depending on the game and starter currently selected
             Storage['games'] = { //If the games object doesn't exist, create it; everything will be stored within here
-                Red: {
-                    settings:         {},
-                    style:            {},
-                    playthrough_data: {},
-                },
-                Blue: {
-                    settings:         {},
-                    style:            {},
-                    playthrough_data: {},
-                },
-                Yellow: {
-                    settings:         {},
-                    style:            {},
-                    playthrough_data: {},
-                },
+                Red:    {},
+                Blue:   {},
+                Yellow: {},
             }
         }
+        if (debug_mode) { 
+            console.log(`Success!`) 
+            console.log(`Initializing Starter Storage Object...`)
+        }
+        if (!Storage['games'][game][starter] || clear_storage == true) {
+            Storage['games'][game][starter] = {
+                style:    {},
+                settings: {},
+                splits:   {},
+                data:     {},
+            };
+            this.pokemon_settings.forEach(setting => {
+                Storage['games'][game][starter].style[setting[0]] = setting[1];
+            });
+        }
+        if (debug_mode) { console.log(`Success!`) }
 
         // Initialize watchers for all of the style properties. 
         // These are game and Pokemon specific saved within: Storage.games[game][starter]
         // Define variables
-        let starter = Storage['global_variables'].starter; // The same as this.starterName but bypasses the default 'Venomoth' assignment at the first frame of runtime
-        let game = Storage['global_variables'].game; // Red, Blue, Yellow
+        if (debug_mode) { 
+            console.log(`Stored Starter: ${starter}`) 
+            console.log(`Stored Game: ${game}`)
+        }
+        //Loop through application settings and create watchers
+        for (let i = 0; i < this.application_settings.length; i++) {
+            let [prop_name, value] = this.application_settings[i];
+            this.$watch(
+                () => this[prop_name],
+                (new_value) => {
+                    if (!Storage.application_settings) {
+                        Storage.application_settings = {};
+                    }
+                    Storage.application_settings = {
+                        ...Storage.application_settings,
+                        [prop_name]: new_value
+                    };
+                }
+            );
+        }
         //Loop through style settings that will be saved within a game and specific Pokemon
         for (let i = 0; i < this.pokemon_settings.length; i++) {
             let [prop_name, value] = this.pokemon_settings[i];
             this.$watch(
                 () => this[prop_name],
                 (new_value) => {
-                    if (!Storage.games[game].style[starter]) {
-                        Storage.games[game].style[starter] = {};
+                    if (!Storage.games[game][starter].style) {
+                        Storage.games[game][starter].style = {};
                     }
-                    Storage.games[game].style[starter] = {
-                        ...Storage.games[game].style[starter],
+                    Storage.games[game][starter].style = {
+                        ...Storage.games[game][starter].style,
                         [prop_name]: new_value
                     };
                 }
             );
         }
-        // Load All Settings
-        // This assigns values to the data() properties based on the what is stored within the Storage object
-
-
-        //MyStorage initialization
-        if (MyStorage[`${this.game_name}_${this.starterName}`]) {
-            this.overlay_color         = MyStorage[`${this.game_name}_${this.starterName}`].overlay_color         ? MyStorage[`${this.game_name}_${this.starterName}`].overlay_color         : "#000000";
-            this.imageXOffset          = MyStorage[`${this.game_name}_${this.starterName}`].imageXOffset          ? MyStorage[`${this.game_name}_${this.starterName}`].imageXOffset          : 0;
-            this.imageYOffset          = MyStorage[`${this.game_name}_${this.starterName}`].imageYOffset          ? MyStorage[`${this.game_name}_${this.starterName}`].imageYOffset          : 0;
-            this.imageScale            = MyStorage[`${this.game_name}_${this.starterName}`].imageScale            ? MyStorage[`${this.game_name}_${this.starterName}`].imageScale            : 1;
-            this.imageFlip             = MyStorage[`${this.game_name}_${this.starterName}`].imageFlip             ? MyStorage[`${this.game_name}_${this.starterName}`].imageFlip             : false;
-            this.imageSat              = MyStorage[`${this.game_name}_${this.starterName}`].imageSat              ? MyStorage[`${this.game_name}_${this.starterName}`].imageSat              : 100
-            this.imageRotation         = MyStorage[`${this.game_name}_${this.starterName}`].imageRotation         ? MyStorage[`${this.game_name}_${this.starterName}`].imageRotation         : 0
-            this.backgroundBlur        = MyStorage[`${this.game_name}_${this.starterName}`].backgroundBlur        ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundBlur        : 0
-            this.backgroundScale       = MyStorage[`${this.game_name}_${this.starterName}`].backgroundScale       ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundScale       : 100
-            this.backgroundUrl         = MyStorage[`${this.game_name}_${this.starterName}`].backgroundUrl         ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundUrl         : ""
-            this.use_custom_background = MyStorage[`${this.game_name}_${this.starterName}`].use_custom_background ? MyStorage[`${this.game_name}_${this.starterName}`].use_custom_background : false
-            this.backgroundXOffset     = MyStorage[`${this.game_name}_${this.starterName}`].backgroundXOffset     ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundXOffset     : 0
-            this.backgroundYOffset     = MyStorage[`${this.game_name}_${this.starterName}`].backgroundYOffset     ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundYOffset     : 0
-            this.backgroundTexture     = MyStorage[`${this.game_name}_${this.starterName}`].backgroundTexture     ? MyStorage[`${this.game_name}_${this.starterName}`].backgroundTexture     : 0
+        if (debug_mode) { 
+            console.log(`Storage finished initialization. Printing Storage object to console...`) 
+            console.log(Storage) 
+            console.log(`Loading settings from the Storage object into the application...`) 
+            console.log(Storage['global_variables'].starter) 
+            console.log(Storage['global_variables'].game) 
         }
-        else {
-            this.overlay_color         = MyStorage[`${this.starterName}`].overlay_color         ? MyStorage[`${this.starterName}`].overlay_color         : "#000000";
-            this.imageXOffset          = MyStorage[`${this.starterName}`].imageXOffset          ? MyStorage[`${this.starterName}`].imageXOffset          : 0;
-            this.imageYOffset          = MyStorage[`${this.starterName}`].imageYOffset          ? MyStorage[`${this.starterName}`].imageYOffset          : 0;
-            this.imageScale            = MyStorage[`${this.starterName}`].imageScale            ? MyStorage[`${this.starterName}`].imageScale            : 1;
-            this.imageFlip             = MyStorage[`${this.starterName}`].imageFlip             ? MyStorage[`${this.starterName}`].imageFlip             : false;
-            this.imageSat              = MyStorage[`${this.starterName}`].imageSat              ? MyStorage[`${this.starterName}`].imageSat              : 100
-            this.imageRotation         = MyStorage[`${this.starterName}`].imageRotation         ? MyStorage[`${this.starterName}`].imageRotation         : 0
-            this.backgroundBlur        = MyStorage[`${this.starterName}`].backgroundBlur        ? MyStorage[`${this.starterName}`].backgroundBlur        : 0
-            this.backgroundScale       = MyStorage[`${this.starterName}`].backgroundScale       ? MyStorage[`${this.starterName}`].backgroundScale       : 100
-            this.backgroundUrl         = MyStorage[`${this.starterName}`].backgroundUrl         ? MyStorage[`${this.starterName}`].backgroundUrl         : ""
-            this.use_custom_background = MyStorage[`${this.starterName}`].use_custom_background ? MyStorage[`${this.starterName}`].use_custom_background : false
-            this.backgroundXOffset     = MyStorage[`${this.starterName}`].backgroundXOffset     ? MyStorage[`${this.starterName}`].backgroundXOffset     : 0
-            this.backgroundYOffset     = MyStorage[`${this.starterName}`].backgroundYOffset     ? MyStorage[`${this.starterName}`].backgroundYOffset     : 0
-            this.backgroundTexture     = MyStorage[`${this.starterName}`].backgroundTexture     ? MyStorage[`${this.starterName}`].backgroundTexture     : 0 
+        // Load Settings from the Storage object
+        // Load Starter and Game
+        this.starterName = Storage['global_variables'].starter;
+        this.game_name   = Storage['global_variables'].game;
+        // // Application Settings
+        for (let key in Storage.application_settings) {
+            if (debug_mode) { 
+                console.log(`Application Setting Key: ${key}`) 
+            }
+            let application_settings = Object.entries(Storage.application_settings); // Assign the Pokemon's style settings to an array
+            for (let i = 0; i < application_settings.length; i++) { // Iterate through the array
+                this[key] = Storage.application_settings[key]; // Assign the values for each setting to the data() properties
+            }
         }
-        for (let i = 0; i < this.auto_save_settings.length; i++) {
-            let propName = this.auto_save_settings[i];
-            this.$watch(
-                () => this[propName], // Using a function to return the property's value
-                (newValue) => {
-                    MyStorage[`this.${propName}`] = newValue;
-                }
-            );
+        // Pokemon Style Settings
+        for (let key in Storage.games[game][starter].style) {
+            if (debug_mode) { 
+                console.log(`Pokemon Style Key: ${key}`) 
+                console.log(Storage.games[game][starter].style[key])
+            }
+            let style_settings = Object.entries(Storage.games[game][starter].style); // Assign the Pokemon's style settings to an array
+            for (let i = 0; i < style_settings.length; i++) { // Iterate through the array
+                this[key] = Storage.games[game][starter].style[key]; // Assign the values for each setting to the data() properties
+            }
         }
-        for (let i = 0; i < this.pokemon_settings.length; i++) {
-            let setting = this.pokemon_settings[i];
-            let propName = Object.keys(setting)[0]; // Get the property name
-            let defaultValue = setting[propName]; // Get the default value
-        
-            this.$watch(
-                () => this[propName],
-                (newValue) => {
-                    // Ensure that MyStorage[this.game_name_starterName] is an object
-                    if (!MyStorage[`${this.game_name}_${this.starterName}`]) {
-                        MyStorage[`${this.game_name}_${this.starterName}`] = {};
-                    }
-                    // Set the new value
-                    MyStorage[`${this.game_name}_${this.starterName}`] = {
-                        ...MyStorage[`${this.game_name}_${this.starterName}`],
-                        [propName]: newValue
-                    };
-                }
-            );
+        if (debug_mode) { 
+            console.log(`Success!`) 
+            console.log(`Loaded all settings from Storage.`) 
         }
     },
     watch: {
+        async starterName(newValue, oldValue) {
+            if (this.ready == false) await this.sleep(250)
+            //transition between background textures
+            this.$refs.old_background_texture.src = `images/textures/${this.g1PokemonData[oldValue].type1}.png`
+            this.$refs.old_background_texture.style.opacity = 1
+            
+            await transition((t) => {
+                this.$refs.old_background_texture.style.opacity = 1 - t
+            }, 500)
+            
+            this.$refs.old_background_texture.src = ""
+
+            //update the saved starter in the overlay's local storage
+            Storage['global_variables'].starter = newValue
+
+            this.load_all_settings()
+        },
         ui_type_colors(newValue) {
             if (newValue == "Bulbapedia Legacy") {
                 this.ui_type_color_modifier = "legacy_"
@@ -986,26 +968,33 @@ const app = Vue.createApp({
         },
         //Encounter Checkboxes
         route1(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
             if (newProp == true && this.mapper.properties.overworld.map.value == "Route 1") { this.mapper.properties.overworld.encounterRate.set(25, false) }
         },   
         route3(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 3") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
             if (newProp == true && this.mapper.properties.overworld.map.value == "Route 3") { this.mapper.properties.overworld.encounterRate.set(20, false) }
         },            
         mtMoon(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && (this.mapper.properties.overworld.map.value == "Mt Moon - 1" || this.mapper.properties.overworld.map.value == "Mt Moon - 2" || this.mapper.properties.overworld.map.value == "Mt Moon - 3")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
             if (newProp == true && (this.mapper.properties.overworld.map.value == "Mt Moon - 1" || this.mapper.properties.overworld.map.value == "Mt Moon - 2" || this.mapper.properties.overworld.map.value == "Mt Moon - 3")) { this.mapper.properties.overworld.encounterRate.set(10, false) }
         },                     
         route6(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 6") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
             if (newProp == true && this.mapper.properties.overworld.map.value == "Route 6") { this.mapper.properties.overworld.encounterRate.set(15, false) }
         },   
         rockTunnel(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) { this.mapper.properties.overworld.encounterRate.set(0, false) }
             if (newProp == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) { this.mapper.properties.overworld.encounterRate.set(15, false) }
         },            
         pokemonTower(newProp) {
+            if (this.ready == false) { return }
+
             if (newProp == false && (this.mapper.properties.overworld.map.value == "Pokemon Tower - 2F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 3F" || 
             this.mapper.properties.overworld.map.value == "Pokemon Tower - 4F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 5F" || 
             this.mapper.properties.overworld.map.value == "Pokemon Tower - 6F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 7F")) { this.mapper.properties.overworld.encounterRate.set(0, false) }
@@ -1014,24 +1003,31 @@ const app = Vue.createApp({
             this.mapper.properties.overworld.map.value == "Pokemon Tower - 6F" || this.mapper.properties.overworld.map.value == "Pokemon Tower - 7F")) { this.mapper.properties.overworld.encounterRate.set(10, false) }
         },            
         safariZone(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && (this.mapper.properties.overworld.map.value == "Safari Zone (East)" || this.mapper.properties.overworld.map.value == "Safari Zone (West)" || this.mapper.properties.overworld.map.value == "Safari Zone (Center)" || this.mapper.properties.overworld.map.value == "Safari Zone (North)")) { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },       
         mansion(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && this.mapper.properties.overworld.map.value == "Cinnabar Mansion") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },
         route21(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 21") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },
         route22(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 22") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },
         victoryRoad(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && this.mapper.properties.overworld.map.value == "Victory Road") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },
         route24(newProp) {
+            if (this.ready == false) { return }
             if (newProp == false && this.mapper.properties.overworld.map.value == "Route 24") { this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) }
         },
         goal_level(newProp) {
+            if (this.ready == false) { return }
             MyStorage["goal_level"] = newProp
             if (this.mapper.properties.player.team[0].level.value >= newProp && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[1].species.value == "Pidgey") { 
                 this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
@@ -1041,6 +1037,7 @@ const app = Vue.createApp({
             }
         },
         goal_speed(newProp) {
+            if (this.ready == false) { return }
             MyStorage["goal_speed"] = newProp
             if (this.mapper.properties.player.team[0].speed.value >= newProp && this.mapper.properties.overworld.map.value == "Viridian Forest" && this.mapper.properties.player.team[1].species.value == "Pidgey") { 
                 this.mapper.properties.overworld.encounterRate.setBytes([0x00], false) 
@@ -1050,6 +1047,7 @@ const app = Vue.createApp({
             }
         },
         viridian_forest(newProp) {
+            if (this.ready == false) { return }
             MyStorage["viridian_forest"] = newProp
             const encountersOff = 0x00
             if (this.mapper.properties.overworld.map.value == "Viridian Forest") {
@@ -1084,41 +1082,6 @@ const app = Vue.createApp({
                     this.mapper.properties.overworld.encounterRate.setBytes([encountersOff], false)
                 }
             }
-        },
-        async starterName(newValue, oldValue) {
-            this.attempt_number = MyStorage[`${this.game_name}_${newValue}`]?.attempt_number ?? 0
-            this.finished_run_count = MyStorage[`${this.game_name}_${newValue}`]?.finished_run_count ?? 0
-            //transition between background textures
-            this.$refs.old_background_texture.src = `images/textures/${g1PokemonData[oldValue].type1}.png`
-            this.$refs.old_background_texture.style.opacity = 1
-            
-            await transition((t) => {
-                this.$refs.old_background_texture.style.opacity = 1 - t
-            }, 500)
-            
-            this.$refs.old_background_texture.src = ""
-
-            //update the saved starter in the overlay's local storage
-            MyStorage['starterName'] = newValue
-
-
-            Storage['global_variables'].starter = newValue
-            let default_settings_object = this.pokemon_settings.reduce((acc, setting) => {
-                let prop_name = Object.keys(setting)[0]; // Get the property name
-                let value = setting[prop_name]; // Get the value
-                acc[prop_name] = value; // Set the value
-                return acc;
-            }, {});
-            let starter = Storage['global_variables'].starter;
-            let game = Storage['global_variables'].game;
-            console.log(starter)
-            console.log(game)
-            Storage.games[this.game_name].style = {
-                ...Storage.games[this.game_name].style,
-                [starter]: default_settings_object,
-            }
-
-            this.load_all_settings()
         },
         playerId(newValue) {
             MyStorage["playerId"] = newValue
@@ -1188,7 +1151,6 @@ const app = Vue.createApp({
                     return this.g1RedBlueTrainers[identifier]
                 }
             }
-
         },
         species() {
             const mapping = {
@@ -1729,51 +1691,51 @@ const app = Vue.createApp({
             }
         },
         load_all_settings() {
-            this.starterName = MyStorage["starterName"] ?? "Venomoth"
-            this.game_name = MyStorage["this.game_name"] ?? "Yellow"
-            this.gamehook_disable_settings = MyStorage["gamehook_disable_settings"] ?? false,
-            this.gamehook_encounter_writes = MyStorage["gamehook_encounter_writes"] ?? false,
-            this.route1 = MyStorage["this.route1"] ?? true
-            this.viridianForest = MyStorage["this.viridianForest"] ?? true
-            this.goal_level = MyStorage["goal_level"] ?? 13
-            this.goal_speed = MyStorage["goal_speed"] ?? 24
-            this.route3 = MyStorage["this.route3"] ?? true
-            this.mtMoon = MyStorage["this.mtMoon"] ?? true
-            this.route6 = MyStorage["this.route6"] ?? true
-            this.rockTunnel = MyStorage["this.rockTunnel"] ?? true
-            this.pokemonTower = MyStorage["this.pokemonTower"] ?? true
-            this.safariZone = MyStorage["this.safariZone"] ?? true
-            this.mansion = MyStorage["this.mansion"] ?? true
-            // this.help_menus = MyStorage["this.help_menus"] ?? "Settings"
-            this.dvSetting = MyStorage["this.dvSetting"] ?? "Max"
-            this.trashCans = MyStorage["this.trashCans"] ?? true
-            this.options = MyStorage["this.options"] ?? true
-            this.gametimeDisplay = MyStorage["this.gametimeDisplay"] ?? true
-            this.resetCounter = MyStorage["this.resetCounter"] ?? true
-            this.playerResets = MyStorage["this.playerResets"] ?? 0
-            this.route21 = MyStorage["this.route21"] ?? true
-            this.route22 = MyStorage["this.route22"] ?? true
-            this.victoryRoad = MyStorage["this.victoryRoad"] ?? true
-            this.route24 = MyStorage["this.route24"] ?? true
-            this.powerPlant = MyStorage["this.powerPlant"] ?? true
-            this.blackouts_as_resets = MyStorage["this.blackouts_as_resets"] ?? true
-            this.blackout_counter = MyStorage["this.blackout_counter"] ?? 0
-            this.show_wild_battles = MyStorage["this.show_wild_battles"] ?? false
-            this.showCritMultiplierInEP = MyStorage["this.showCritMultiplierInEP"] ?? true
-            this.battleGraphic = MyStorage["this.battleGraphic"] ?? true
-            this.showAllTrainers = MyStorage["this.showAllTrainers"] ?? true
-            this.showSpecialTrainerGraphics = MyStorage["this.showSpecialTrainerGraphics"] ?? true
-            this.battlePopUps = MyStorage["this.battlePopUps"] ?? true
-            this.rockTunnelDarkness = MyStorage["this.rockTunnelDarkness"] ?? false
-            this.playerResets = MyStorage["playerResets"] ?? 0
-            this.goal_level = MyStorage["goal_level"] ?? 13
-            this.goal_speed = MyStorage["goal_speed"] ?? 24
-            this.viridian_forest = MyStorage["viridian_forest"] ?? "Pidgey"
-            this.pb_splits = MyStorage[`${this.starterName}_pb_splits`] ?? ["","","",""]
-            this.attempt_number = MyStorage[`${this.game_name}_${this.starterName}`]?.attempt_number ?? 0
-            this.finished_run_count = MyStorage[`${this.game_name}_${this.starterName}`].finished_run_count ?? 0
+            // this.starterName =                MyStorage["starterName"]                 ?? "Venomoth"
+            // this.game_name =                  MyStorage["this.game_name"]              ?? "Yellow"
+            // this.gamehook_disable_settings =  MyStorage["gamehook_disable_settings"]   ?? false,
+            // this.gamehook_encounter_writes =  MyStorage["gamehook_encounter_writes"]   ?? false,
+            // this.route1 =                     MyStorage["this.route1"]                 ?? true
+            // this.viridianForest =             MyStorage["this.viridianForest"]         ?? true
+            // this.goal_level =                 MyStorage["goal_level"]                  ?? 13
+            // this.goal_speed =                 MyStorage["goal_speed"]                  ?? 24
+            // this.route3 =                     MyStorage["this.route3"]                 ?? true
+            // this.mtMoon =                     MyStorage["this.mtMoon"]                 ?? true
+            // this.route6 =                     MyStorage["this.route6"]                 ?? true
+            // this.rockTunnel =                 MyStorage["this.rockTunnel"]             ?? true
+            // this.pokemonTower =               MyStorage["this.pokemonTower"]           ?? true
+            // this.safariZone =                 MyStorage["this.safariZone"]             ?? true
+            // this.mansion =                    MyStorage["this.mansion"]                ?? true
+            // this.dvSetting =                  MyStorage["this.dvSetting"]              ?? "Max"
+            // this.trashCans =                  MyStorage["this.trashCans"]              ?? true
+            // this.options =                    MyStorage["this.options"]                ?? true
+            // this.gametimeDisplay =            MyStorage["this.gametimeDisplay"]        ?? true
+            // this.resetCounter =               MyStorage["this.resetCounter"]           ?? true
+            // this.playerResets =               MyStorage["this.playerResets"]           ?? 0
+            // this.route21 =                    MyStorage["this.route21"]                ?? true
+            // this.route22 =                    MyStorage["this.route22"]                ?? true
+            // this.victoryRoad =                MyStorage["this.victoryRoad"]            ?? true
+            // this.route24 =                    MyStorage["this.route24"]                ?? true
+            // this.powerPlant =                 MyStorage["this.powerPlant"]             ?? true
+            // this.blackouts_as_resets =        MyStorage["this.blackouts_as_resets"]    ?? true
+            // this.blackout_counter =           MyStorage["this.blackout_counter"]       ?? 0
+            // this.show_wild_battles =          MyStorage["this.show_wild_battles"]      ?? false
+            // this.showCritMultiplierInEP =     MyStorage["this.showCritMultiplierInEP"] ?? true
+            // this.battleGraphic =              MyStorage["this.battleGraphic"]          ?? true
+            // this.showAllTrainers =            MyStorage["this.showAllTrainers"]        ?? true
+            // this.showSpecialTrainerGraphics = MyStorage["this.showSpecialTrainerGraphics"] ?? true
+            // this.battlePopUps =               MyStorage["this.battlePopUps"]               ?? true
+            // this.rockTunnelDarkness =         MyStorage["this.rockTunnelDarkness"]         ?? false
+            // this.playerResets =               MyStorage["playerResets"]                    ?? 0
+            // this.goal_level =                 MyStorage["goal_level"]                      ?? 13
+            // this.goal_speed =                 MyStorage["goal_speed"]                      ?? 24
+            // this.viridian_forest =            MyStorage["viridian_forest"]                 ?? "Pidgey"
+            // this.playerId =                   MyStorage["playerId"]                        ?? 0
+            // this.pb_splits =                  MyStorage[`${this.starterName}_pb_splits`]   ?? ["","","",""]
+            // this.attempt_number =             MyStorage[`${this.game_name}_${this.starterName}`]?.attempt_number     ?? 0
+            // this.finished_run_count =         MyStorage[`${this.game_name}_${this.starterName}`]?.finished_run_count ?? 0
             // this.pb_time = MyStorage[`${this.starterName}`].pb_time ?? "None"
-            this.playerId = MyStorage["playerId"] ?? 0
+            // this.help_menus =                 MyStorage["this.help_menus"]             ?? "Settings"
             // if (MyStorage[this.starterName] && !MyStorage[`${game}_${starter}`]) {
             //     //Pokemon settings for local storage
             //     this.overlay_color = MyStorage[this.starterName].overlay_color ?? "#000000"
@@ -1798,36 +1760,36 @@ const app = Vue.createApp({
             //     this.backgroundHue =         MyStorage[this.starterName].backgroundHue         ?? 0
             // }
             // else {
-            //Pokemon settings for local storage
-            this.overlay_color = MyStorage[`${this.game_name}_${this.starterName}`].overlay_color ?? "#000000"
-            this.imageXOffset =  MyStorage[`${this.game_name}_${this.starterName}`].imageXOffset  ?? 0
-            this.imageYOffset =  MyStorage[`${this.game_name}_${this.starterName}`].imageYOffset  ?? 0
-            this.imageScale =    MyStorage[`${this.game_name}_${this.starterName}`].imageScale    ?? 1
-            this.imageFlip =     MyStorage[`${this.game_name}_${this.starterName}`].imageFlip     ?? false
-            this.imageSat =      MyStorage[`${this.game_name}_${this.starterName}`].imageSat      ?? 100
-            this.imageRotation = MyStorage[`${this.game_name}_${this.starterName}`].imageRotation ?? 0
+            // //Pokemon settings for local storage
+            // this.overlay_color = MyStorage[`${this.game_name}_${this.starterName}`].overlay_color ?? "#000000"
+            // this.imageXOffset =  MyStorage[`${this.game_name}_${this.starterName}`].imageXOffset  ?? 0
+            // this.imageYOffset =  MyStorage[`${this.game_name}_${this.starterName}`].imageYOffset  ?? 0
+            // this.imageScale =    MyStorage[`${this.game_name}_${this.starterName}`].imageScale    ?? 1
+            // this.imageFlip =     MyStorage[`${this.game_name}_${this.starterName}`].imageFlip     ?? false
+            // this.imageSat =      MyStorage[`${this.game_name}_${this.starterName}`].imageSat      ?? 100
+            // this.imageRotation = MyStorage[`${this.game_name}_${this.starterName}`].imageRotation ?? 0
 
-            //background texture settings
-            this.backgroundBlur =        MyStorage[`${this.game_name}_${this.starterName}`].backgroundBlur        ?? 0
-            this.backgroundScale =       MyStorage[`${this.game_name}_${this.starterName}`].backgroundScale       ?? 100
-            this.backgroundUrl =         MyStorage[`${this.game_name}_${this.starterName}`].backgroundUrl         ?? ""
-            this.use_custom_background = MyStorage[`${this.game_name}_${this.starterName}`].use_custom_background ?? false
-            this.backgroundXOffset =     MyStorage[`${this.game_name}_${this.starterName}`].backgroundXOffset     ?? 0
-            this.backgroundYOffset =     MyStorage[`${this.game_name}_${this.starterName}`].backgroundYOffset     ?? 0
-            this.backgroundTexture =     MyStorage[`${this.game_name}_${this.starterName}`].backgroundTexture     ?? 'Bug 1'
-            this.backgroundBrightness =  MyStorage[`${this.game_name}_${this.starterName}`].backgroundBrightness  ?? 100
-            this.backgroundContrast =    MyStorage[`${this.game_name}_${this.starterName}`].backgroundContrast    ?? 100
-            this.backgroundSaturation =  MyStorage[`${this.game_name}_${this.starterName}`].backgroundSaturation  ?? 100
-            this.backgroundHue =         MyStorage[`${this.game_name}_${this.starterName}`].backgroundHue         ?? 0
+            // //background texture settings
+            // this.backgroundBlur =        MyStorage[`${this.game_name}_${this.starterName}`].backgroundBlur        ?? 0
+            // this.backgroundScale =       MyStorage[`${this.game_name}_${this.starterName}`].backgroundScale       ?? 100
+            // this.backgroundUrl =         MyStorage[`${this.game_name}_${this.starterName}`].backgroundUrl         ?? ""
+            // this.use_custom_background = MyStorage[`${this.game_name}_${this.starterName}`].use_custom_background ?? false
+            // this.backgroundXOffset =     MyStorage[`${this.game_name}_${this.starterName}`].backgroundXOffset     ?? 0
+            // this.backgroundYOffset =     MyStorage[`${this.game_name}_${this.starterName}`].backgroundYOffset     ?? 0
+            // this.backgroundTexture =     MyStorage[`${this.game_name}_${this.starterName}`].backgroundTexture     ?? 'Bug 1'
+            // this.backgroundBrightness =  MyStorage[`${this.game_name}_${this.starterName}`].backgroundBrightness  ?? 100
+            // this.backgroundContrast =    MyStorage[`${this.game_name}_${this.starterName}`].backgroundContrast    ?? 100
+            // this.backgroundSaturation =  MyStorage[`${this.game_name}_${this.starterName}`].backgroundSaturation  ?? 100
+            // this.backgroundHue =         MyStorage[`${this.game_name}_${this.starterName}`].backgroundHue         ?? 0
             
-            this.attempt_number =   MyStorage[`${this.game_name}_${this.starterName}`].attempt_number   ?? 0
-            this.blackout_counter = MyStorage[`${this.game_name}_${this.starterName}`].blackout_counter ?? 0
-            this.playerResets =     MyStorage[`${this.game_name}_${this.starterName}`].playerResets     ?? 0
+            // this.attempt_number =   MyStorage[`${this.game_name}_${this.starterName}`].attempt_number   ?? 0
+            // this.blackout_counter = MyStorage[`${this.game_name}_${this.starterName}`].blackout_counter ?? 0
+            // this.playerResets =     MyStorage[`${this.game_name}_${this.starterName}`].playerResets     ?? 0
             
-            this.ui_saturation =          MyStorage[`${this.game_name}_${this.starterName}`].ui_saturation          ?? 0.6
-            this.ui_type_colors =         MyStorage[`${this.game_name}_${this.starterName}`].ui_type_colors         ?? "Bulbapedia Current"
-            this.ui_type_color_modifier = MyStorage[`${this.game_name}_${this.starterName}`].ui_type_color_modifier ?? "current_"
-            // }
+            // this.ui_saturation =          MyStorage[`${this.game_name}_${this.starterName}`].ui_saturation          ?? 0.6
+            // this.ui_type_colors =         MyStorage[`${this.game_name}_${this.starterName}`].ui_type_colors         ?? "Bulbapedia Current"
+            // this.ui_type_color_modifier = MyStorage[`${this.game_name}_${this.starterName}`].ui_type_color_modifier ?? "current_"
+            // // }
         },
         //string can be: clear, increment, decrement
         resets_clear() {
@@ -1881,62 +1843,62 @@ const app = Vue.createApp({
             console.log(...vars)
         },
         reset_advanced_settings() {
-            this.battleGraphic = true
-            this.showAllTrainers = true
+            this.battleGraphic =              true
+            this.showAllTrainers =            true
             this.showSpecialTrainerGraphics = true
-            this.show_wild_battles = false
-            this.battlePopUps = true
-            this.showCritMultiplierInEP = true
-            this.rockTunnelDarkness = false
+            this.show_wild_battles =          false
+            this.battlePopUps =               true
+            this.showCritMultiplierInEP =     true
+            this.rockTunnelDarkness =         false
         },
         first_playthrough_settings() {
-            this.route1 = true
+            this.route1 =         true
             this.viridianForest = true
-            this.route3 = true
-            this.mtMoon = true
-            this.route6 = true
-            this.rockTunnel = true
-            this.pokemonTower = true
-            this.safariZone = true
-            this.powerPlant = true
-            this.mansion = true
-            this.route21 = true
-            this.route22 = true
-            this.victoryRoad = true
-            this.route24 = true
+            this.route3 =         true
+            this.mtMoon =         true
+            this.route6 =         true
+            this.rockTunnel =     true
+            this.pokemonTower =   true
+            this.safariZone =     true
+            this.powerPlant =     true
+            this.mansion =        true
+            this.route21 =        true
+            this.route22 =        true
+            this.victoryRoad =    true
+            this.route24 =        true
         },
         second_playthrough_settings() {
-            this.route1 = false
+            this.route1 =         false
             this.viridianForest = true
-            this.route3 = false
-            this.mtMoon = false
-            this.route6 = false
-            this.rockTunnel = true
-            this.pokemonTower = true
-            this.safariZone = true
-            this.powerPlant = true
-            this.mansion = true
-            this.route21 = true
-            this.route22 = true
-            this.victoryRoad = true
-            this.route24 = true
+            this.route3 =         false
+            this.mtMoon =         false
+            this.route6 =         false
+            this.rockTunnel =     true
+            this.pokemonTower =   true
+            this.safariZone =     true
+            this.powerPlant =     true
+            this.mansion =        true
+            this.route21 =        true
+            this.route22 =        true
+            this.victoryRoad =    true
+            this.route24 =        true
             this.viridian_forest == "Pidgey"
         },
         all_off() {
-            this.route1 = false
+            this.route1 =         false
             this.viridianForest = false
-            this.route3 = false
-            this.mtMoon = false
-            this.route6 = false
-            this.rockTunnel = false
-            this.pokemonTower = false
-            this.safariZone = false
-            this.powerPlant = false
-            this.mansion = false
-            this.route21 = false
-            this.route22 = false
-            this.victoryRoad = false
-            this.route24 = false
+            this.route3 =         false
+            this.mtMoon =         false
+            this.route6 =         false
+            this.rockTunnel =     false
+            this.pokemonTower =   false
+            this.safariZone =     false
+            this.powerPlant =     false
+            this.mansion =        false
+            this.route21 =        false
+            this.route22 =        false
+            this.victoryRoad =    false
+            this.route24 =        false
             this.viridian_forest == "No Encounters"
         },
         apply_settings(setting_group) { //pass in the name of the group of settings that are to have values assigned
@@ -2097,9 +2059,6 @@ const app = Vue.createApp({
                 this.overlay_color = MyStorage[`${game_name}_${starter}`]?.overlay_color
                 // this.overlay_color = `var(--${this.s1dynamicReset.type1})`
             }
-        },
-        load_starter_pokemon_settings() {
-            this.starterName = MyStorage[this.currentStarter] ?? "Venomoth"
         },
         clear_overlay_color() {
             this.set_pokemon_prop("overlay_color", null)
@@ -2842,7 +2801,6 @@ const app = Vue.createApp({
         else {
             this.state = this.mapper.properties.meta.state.value
         }
-        this.starterName = MyStorage.currentStarter ?? "Venomoth"
         this.updateTime()
         this.load_all_settings()
         // retro.fastForward()
