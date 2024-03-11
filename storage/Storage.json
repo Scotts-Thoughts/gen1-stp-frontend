@@ -1,0 +1,105 @@
+{
+    "global_variables": {
+        "starter": "Mr. Mime",
+        "game": "Yellow"
+    },
+    "games": {
+        "Red": {
+            "settings": {},
+            "style": {},
+            "playthrough_data": {}
+        },
+        "Blue": {
+            "settings": {},
+            "style": {},
+            "playthrough_data": {}
+        },
+        "Yellow": {
+            "settings": {},
+            "style": {
+                "Venomoth": {
+                    "overlay_color": "#000000",
+                    "imageXOffset": 0,
+                    "imageYOffset": 0,
+                    "imageScale": 1,
+                    "imageFlip": false,
+                    "imageSat": 100,
+                    "imageRotation": 0,
+                    "backgroundBlur": 0,
+                    "backgroundScale": 100,
+                    "backgroundUrl": "",
+                    "use_custom_background": false,
+                    "attempt_number": 0,
+                    "finished_run_count": 0,
+                    "pb_time": "",
+                    "backgroundXOffset": 100,
+                    "backgroundYOffset": 0,
+                    "backgroundTexture": "Bug 1",
+                    "backgroundBrightness": 100,
+                    "backgroundContrast": 100,
+                    "backgroundSaturation": 100,
+                    "backgroundHue": "69",
+                    "ui_saturation": 0.6,
+                    "ui_type_colors": "Bulbapedia Current",
+                    "ui_type_color_modifier": "current_"
+                },
+                "Rhyhorn": {
+                    "overlay_color": "#000000",
+                    "imageXOffset": 0,
+                    "imageYOffset": 0,
+                    "imageScale": 1,
+                    "imageFlip": false,
+                    "imageSat": 100,
+                    "imageRotation": 0,
+                    "backgroundBlur": 0,
+                    "backgroundScale": 100,
+                    "backgroundUrl": false,
+                    "use_custom_background": false,
+                    "attempt_number": 0,
+                    "finished_run_count": 0,
+                    "pb_time": "",
+                    "backgroundXOffset": 100,
+                    "backgroundYOffset": 0,
+                    "backgroundTexture": "Bug 1",
+                    "backgroundBrightness": 100,
+                    "backgroundContrast": 100,
+                    "backgroundSaturation": 100,
+                    "backgroundHue": "50",
+                    "ui_saturation": "0.3",
+                    "ui_type_colors": "Bulbapedia Current",
+                    "ui_type_color_modifier": "current_"
+                },
+                "Pidgeot": {
+                    "overlay_color": "#000000",
+                    "imageXOffset": 0,
+                    "imageYOffset": 0,
+                    "imageScale": 1,
+                    "imageFlip": false,
+                    "imageSat": 100,
+                    "imageRotation": 0,
+                    "backgroundBlur": 0,
+                    "backgroundScale": 100,
+                    "backgroundUrl": "",
+                    "use_custom_background": false,
+                    "attempt_number": 0,
+                    "finished_run_count": 0,
+                    "pb_time": "",
+                    "backgroundXOffset": 100,
+                    "backgroundYOffset": 100,
+                    "backgroundTexture": "Bug 1",
+                    "backgroundBrightness": 100,
+                    "backgroundContrast": 100,
+                    "backgroundSaturation": 100,
+                    "backgroundHue": 0,
+                    "ui_saturation": 0.6,
+                    "ui_type_colors": "Bulbapedia Current",
+                    "ui_type_color_modifier": "current_"
+                },
+                "Mr. Mime": {
+                    "0": "ui_type_color_modifier"
+                }
+            },
+            "playthrough_data": {}
+        }
+    }
+}

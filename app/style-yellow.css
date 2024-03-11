@@ -7,9 +7,6 @@
     height: 1920px; /* Fixed canvas size */
     width: 1080px;
 
-    /* Color blending mode */
-    --color_Lapras: #146793;
-
     /* Overlay Colors */
     --gradient1: hsl(0, 55%, 60%);
     --gradient2: hsl(0, 55%, 63%);
@@ -39,6 +36,7 @@
     --outline3: #000000;
 
     /* Movepool Type Colours */
+    /* Bulbapedia pre-2024 */
     --normal:   #a8a878;
     --fighting: #c03028;
     --grass:    #78c850;
@@ -56,7 +54,47 @@
     --dragon:   #7038f8;
     --steel:    #b8b8d0;
     --dark:     #705848;
-    --fairy:    #ee99ac;
+    --fairy:    #ee99ac; 
+   
+    /* Bulbapedia (present) */
+    --current_normal:   #9fa19f;
+    --current_fighting: #ff8000;
+    --current_grass:    #3fa129;
+    --current_fire:     #e62829;
+    --current_water:    #2980ef;
+    --current_electric: #fac000;
+    --current_ground:   #915121;
+    --current_rock:     #afa981;
+    --current_psychic:  #ef4179;
+    --current_poison:   #9141cb;
+    --current_flying:   #81b9ef;
+    --current_bug:      #91a119;
+    --current_ice:      #3dcef3;
+    --current_ghost:    #704170;
+    --current_dragon:   #5060e1;
+    --current_steel:    #60a1b8;
+    --current_dark:     #624d4e;
+    --current_fairy:    #ef70ef;
+        
+    --legacy_normal:   #a8a878;
+    --legacy_fighting: #c03028;
+    --legacy_grass:    #78c850;
+    --legacy_fire:     #f08030;
+    --legacy_water:    #6890f0;
+    --legacy_electric: #f3d230;
+    --legacy_ground:   #e0c068;
+    --legacy_rock:     #b8a038;
+    --legacy_psychic:  #f85888;
+    --legacy_poison:   #a040a0;
+    --legacy_flying:   #a890f0;
+    --legacy_bug:      #a8b820;
+    --legacy_ice:      #98d8d8;
+    --legacy_ghost:    #705898;
+    --legacy_dragon:   #7038f8;
+    --legacy_steel:    #b8b8d0;
+    --legacy_dark:     #705848;
+    --legacy_fairy:    #ee99ac; 
+   
 
     /* Stat Colours */
     --hp:     #ff5959;
@@ -77,65 +115,128 @@
     /* Stat Gradients */
 
     /* Default Border Colours */
-    --normal1:   #6d6d4e;
-    --normal2:   #a8a878;
-    --normal3:   #c6c6a7;
-    --fighting1: #791c17;
-    --fighting2: #bf2923;
-    --fighting3: #d67873;
-    --grass1:    #497d30;
-    --grass2:    #78c850;
-    --grass3:    #a7db8d;
-    --fire1:     #9c531f;
-    --fire2:     #f08030;
-    --fire3:     #f5ac78;
-    --water1:    #445e9c;
-    --water2:    #6890f0;
-    --water3:    #9db7f5;
-    --electric1: #a1871f;
-    --electric2: #f8d030;
-    --electric3: #fae078;
-    --ground1:   #927d44;
-    --ground2:   #e0c068;
-    --ground3:   #ebd69d;
-    --rock1:     #716019;
-    --rock2:     #b89f34;
-    --rock3:     #d1c17d;
-    --psychic1:  #9c3152;
-    --psychic2:  #fa5889;
-    --psychic3:  #fa92b2;
-    --poison1:   #682a68;
-    --poison2:   #a743a7;
-    --poison3:   #c183c1;
-    --flying1:   #675797;
-    --flying2:   #b294e2;
-    --flying3:   #c6b7f5;
-    --bug1:      #697413;
-    --bug2:      #a9bf1f;
-    --bug3:      #c6d16e;
-    --ice1:      #588585;
-    --ice2:      #98dbdb;
-    --ice3:      #bce6e6;
-    --ghost1:    #4f4067;
-    --ghost2:    #6e5597;
-    --ghost3:    #a292bc;
-    --dragon1:   #3b139a;
-    --dragon2:   #6432dd;
-    --dragon3:   #a27dfa;
-    --steel1:    #737382;
-    --steel2:    #bcbcd5;
-    --steel3:    #d1d1e0;
-    --dark1:     #3b291e;
-    --dark2:     #695948;
-    --dark3:     #a29288;
-    --fairy1:    #9b6470;
-    --fairy2:    #ee99ac;
-    --fairy3:    #f4bdc9;
+    /* Bulbapedia pre-2024 */
+    --legacy_normal1:   #6d6d4e;
+    --legacy_normal2:   #a8a878;
+    --legacy_normal3:   #c6c6a7;
+    --legacy_fighting1: #791c17;
+    --legacy_fighting2: #bf2923;
+    --legacy_fighting3: #d67873;
+    --legacy_grass1:    #497d30;
+    --legacy_grass2:    #78c850;
+    --legacy_grass3:    #a7db8d;
+    --legacy_fire1:     #9c531f;
+    --legacy_fire2:     #f08030;
+    --legacy_fire3:     #f5ac78;
+    --legacy_water1:    #445e9c;
+    --legacy_water2:    #6890f0;
+    --legacy_water3:    #9db7f5;
+    --legacy_electric1: #a1871f;
+    --legacy_electric2: #f8d030;
+    --legacy_electric3: #fae078;
+    --legacy_ground1:   #927d44;
+    --legacy_ground2:   #e0c068;
+    --legacy_ground3:   #ebd69d;
+    --legacy_rock1:     #716019;
+    --legacy_rock2:     #b89f34;
+    --legacy_rock3:     #d1c17d;
+    --legacy_psychic1:  #9c3152;
+    --legacy_psychic2:  #fa5889;
+    --legacy_psychic3:  #fa92b2;
+    --legacy_poison1:   #682a68;
+    --legacy_poison2:   #a743a7;
+    --legacy_poison3:   #c183c1;
+    --legacy_flying1:   #675797;
+    --legacy_flying2:   #b294e2;
+    --legacy_flying3:   #c6b7f5;
+    --legacy_bug1:      #697413;
+    --legacy_bug2:      #a9bf1f;
+    --legacy_bug3:      #c6d16e;
+    --legacy_ice1:      #588585;
+    --legacy_ice2:      #98dbdb;
+    --legacy_ice3:      #bce6e6;
+    --legacy_ghost1:    #4f4067;
+    --legacy_ghost2:    #6e5597;
+    --legacy_ghost3:    #a292bc;
+    --legacy_dragon1:   #3b139a;
+    --legacy_dragon2:   #6432dd;
+    --legacy_dragon3:   #a27dfa;
+    --legacy_steel1:    #737382;
+    --legacy_steel2:    #bcbcd5;
+    --legacy_steel3:    #d1d1e0;
+    --legacy_dark1:     #3b291e;
+    --legacy_dark2:     #695948;
+    --legacy_dark3:     #a29288;
+    --legacy_fairy1:    #9b6470;
+    --legacy_fairy2:    #ee99ac;
+    --legacy_fairy3:    #f4bdc9; 
+
+    /* Bulbapedia (present) */
+    --current_normal1:   #676867;
+    --current_normal2:   #9FA19F;
+    --current_normal3:   #C0C1C0;
+    --current_fighting1: #A65300;
+    --current_fighting2: #FF8000;
+    --current_fighting3: #FFAC59;
+    --current_grass1:    #29681A;
+    --current_grass2:    #3FA129;
+    --current_grass3:    #82C173;
+    --current_fire1:     #951A1A;
+    --current_fire2:     #E62829;
+    --current_fire3:     #EE7373;
+    --current_water1:    #1A539B;
+    --current_water2:    #2980EF;
+    --current_water3:    #73ACF4;
+    --current_electric1: #A27C00;
+    --current_electric2: #FAC000;
+    --current_electric3: #FBD559;
+    --current_ground1:   #5E3415;
+    --current_ground2:   #915121;
+    --current_ground3:   #B78D6E;
+    --current_rock1:     #716E53;
+    --current_rock2:     #AFA981;
+    --current_rock3:     #CAC7AC;
+    --current_psychic1:  #9B2A4E;
+    --current_psychic2:  #EF4179;
+    --current_psychic3:  #F483A7;
+    --current_poison1:   #5E2A84;
+    --current_poison2:   #9141CB;
+    --current_poison3:   #B783DD;
+    --current_flying1:   #53789B;
+    --current_flying2:   #81B9EF;
+    --current_flying3:   #ACD1F4;
+    --current_bug1:      #5E6810;
+    --current_bug2:      #91A119;
+    --current_bug3:      #B7C169;
+    --current_ice1:      #27869E;
+    --current_ice2:      #3dcef3;
+    --current_ice3:      #80DFF7;
+    --current_ghost1:    #482A48;
+    --current_ghost2:    #704170;
+    --current_ghost3:    #A183A1;
+    --current_dragon1:   #343E92;
+    --current_dragon2:   #5060E1;
+    --current_dragon3:   #8D97EB;
+    --current_steel1:    #3E6877;
+    --current_steel2:    #60A1B8;
+    --current_steel3:    #97C1D0;
+    --current_dark1:     #3F3232;
+    --current_dark2:     #624D4E;
+    --current_dark3:     #988B8B;
+    --current_fairy1:    #9B489B;
+    --current_fairy2:    #EF70EF;
+    --current_fairy3:    #F4A1F4;
+    --current_unknown1:  #44685E;
+    --current_unknown2:  #68A090;
+    --current_unknown3:  #9DC1B7;
+    --current_stellar1:  #2C4070;
+    --current_stellar2:  #44628D;
+    --current_stellar3:  #8599CA;
 
     --overlay-color: #000000; /* default color */
 
     /* Exp Bar Colours */
-    --expBarBackground: linear-gradient(rgb(239, 239, 239), rgb(157, 157, 157));
+    --expBarBackground: linear-gradient(rgba(239, 239, 239, rgba(157, 157, 157, 0)157));
     --expBarExperience: linear-gradient(90deg,hsl(189, 92%, 45%), hsl(187, 100%, 69%));
 }
 /* @font-face {
@@ -178,7 +279,7 @@
     position: absolute;
     inset: 0; /* sets top/left/bottom/right to 0 */
     background-color: var(--overlay-color);
-    filter: saturate(1);
+    filter: saturate(1); /* optional: this makes the color blending more visible */
     background-size: 1920px 1080px;
     -webkit-mask-size: 1920px 1080px;
     -webkit-mask-image: var(--url); /* fallback, just to be safe */
@@ -349,7 +450,7 @@ box-shadow:
 .testingArea1 {
     display: block;
     border: 4px solid #000000;
-    background-color: #c9ffbb;
+    background-color: #c9ffbba6;
     filter: drop-shadow(0px 4px 4px #000000c5);
     padding: 8px;
     position: absolute;
@@ -365,7 +466,7 @@ box-shadow:
     display: block;
     border: 4px solid #000000;
     padding: 8px;
-    background-color: #c9ffbb;
+    background-color: #c9ffbba6;
     filter: drop-shadow(0px 4px 4px #000000c5);
     position: absolute;
     font-family: play;
@@ -693,7 +794,7 @@ box-shadow:
 }
 .typeContainer {
     border: 3px solid #b41ac200;
-    grid-row-start: 41;
+    grid-row-start: 42;
     grid-row-end: 44;
     grid-column-start: 2;
     grid-column-end: 3;
@@ -849,6 +950,13 @@ box-shadow:
     max-width:1920px;
     max-height:1080px;
     position: fixed;
+    top: 0px;
+    left: 0px;
+}
+.svg {
+    width:1920px;
+    height:1080px;
+    position: absolute;
     top: 0px;
     left: 0px;
 }

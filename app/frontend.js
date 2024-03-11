@@ -1,5 +1,3 @@
-//Count down to split
-
 const MyStorage = new Proxy({}, {
     set: (_, prop, value) => {
         if (value === undefined || value === null)
@@ -17,8 +15,119 @@ const MyStorage = new Proxy({}, {
         if (prop === "has")
             return (key) => localStorage.getItem(key) == null;
         return JSON.parse(localStorage.getItem(prop));
+    },
+});
+
+function createWatchedObject(watcher) {
+    const root = {};
+    const handler = {
+        get(target, property, receiver) {
+            const value = Reflect.get(target, property, receiver);
+            if (typeof value === 'object' && value !== null) {
+                return new Proxy(value, handler);
+            }
+            return value;
+        },
+        set(target, property, value, receiver) {
+            const result = Reflect.set(target, property, value, receiver);
+            watcher(root, {target, property, value});
+            return result;
+        },
+        deleteProperty(target, property) {
+            if (property in target) {
+                delete target[property];
+                watcher(root, {target, property, value: undefined});  
+            }
+        },
+        //* Using the deleteProperty function:
+            // MyStorage.test = 10
+            // delete MyStorage.test
+            //
+            // OR
+            //
+            // MyStorage["test"] = 20
+            // delete MyStorage["test"]
+    };
+    return new Proxy(root, handler);
+}
+
+/**
+ * @param {string} path                                  path to the file
+ * @param {string} file_name                             name of the file to save the data
+ * @param {object?} options
+ * @param {number?} options.saveTimeout                  time in milliseconds to wait before saving the file
+ * @param {((data:string) => void)?} options.onSave      called after the file is saved
+ */
+function createStoredObject(path, file_name, { saveTimeout, onSave } = {}) {
+    saveTimeout = saveTimeout || 1000;
+    onSave = onSave || (() => {});
+
+    const fs = require("fs");
+    
+    const loadFromFile = () => {
+        try {
+            const data = fs.readFileSync(`${path}/${file_name}`, 'utf8');
+            return JSON.parse(data);
+        } catch (err) {
+            console.warn('[StoredObject] loadFromFile:', err.message);
+            return {};
+        }
+    };
+
+    // const loadFromFile = () => {
+    //     try {
+    //         if (!fs.existsSync(`${path}/${file_name}`)) {
+    //             saveToFile({});
+    //         }
+    //         const data = fs.readFileSync(`${path}/${file_name}`, 'utf8');
+    //         return JSON.parse(data);
+    //     } catch (err) {
+    //         console.error('[StoredObject] loadFromFile:', err.message);
+    //         return {};
+    //     }
+    // };
+
+    const saveToFile = (root) => {
+        const data = JSON.stringify(root, null, 4);
+        if (!fs.existsSync(path)) {
+            fs.mkdirSync(path, { recursive: true });
+        }
+        fs.writeFile(`${path}/${file_name}`, data, (err) => {
+            if (err) console.error('[StoredObject] saveToFile:', err.message);
+            else onSave(data);
+        });
+    };
+
+    // after the watcher receives the first change it will wait 
+    // for "saveTimeout" milliseconds before saving the file.
+    // then it will reset the timer and wait for the next change.
+    // this is done to avoid saving the file too often when
+    // multiple changes are made in a short period of time.
+    let timeoutId = null;
+    const watcher = (root) => {
+        if (timeoutId == null) {
+            timeoutId = setTimeout(() => {
+                saveToFile(root);
+                timeoutId = null;
+            }, saveTimeout);
+        }
+    };
+
+    const obj = createWatchedObject(watcher);
+    Object.assign(obj, loadFromFile());
+    return obj;
+}
+
+
+const Storage = createStoredObject('./storage', 'Storage.json', {
+    saveTimeout: 1000,
+    onSave: (data) => {
+        console.log('[Storage] saved:', data);
+        // do something after the file is saved
+        // like creating a backup somewhere else
     }
 });
+
 
 // Open the folder ./splits/ in the file explorer with node.js
 function openFolder(folderName) {
@@ -599,23 +708,24 @@ const app = Vue.createApp({
             goal_speed: MyStorage["goal_speed"] ?? 24,
 
             rockTunnelDarkness: MyStorage["this.rockTunnelDarkness"] ?? false, //if true it will make rock tunnel bright
-            
+            viridian_forest:    MyStorage["viridian_forest"]       ?? "Pidgey",
 
             //DATA ---------------------------------------------------------------------------------------------//
-            g1MoveData:                g1MoveData,
-            g1PokemonData:             g1PokemonData,
-            g1PokemonDataRB:           g1PokemonDataRB,
-            g1YellowTrainers:          g1YellowTrainers,
-            g1RedBlueTrainers:         g1RedBlueTrainers,
-            typeData:                  typeData,
-            stageModifiersData:        stageModifiersData,
-            tmhmMapping:               tmhmMapping,
-            settings:                  settings,
-            auto_save_settings:        auto_save_settings,
-            deprecated_autosplitter:   deprecated_autosplitter,
-            autosplitter:              autosplitter,
-            textures:                  textures,
-            // platinum_moves:          platinum_moves,
+            g1MoveData:              g1MoveData,
+            g1PokemonData:           g1PokemonData,
+            g1PokemonDataRB:         g1PokemonDataRB,
+            g1YellowTrainers:        g1YellowTrainers,
+            g1RedBlueTrainers:       g1RedBlueTrainers,
+            typeData:                typeData,
+            stageModifiersData:      stageModifiersData,
+            tmhmMapping:             tmhmMapping,
+            settings:                settings,
+            auto_save_settings:      auto_save_settings,
+            deprecated_autosplitter: deprecated_autosplitter,
+            autosplitter:            autosplitter,
+            textures:                textures,
+            application_settings:    application_settings,
+            pokemon_settings:        pokemon_settings,
             
             //VARS ---------------------------------------------------------------------------------------------//
             pkmnMoves:       ["move1","move2","move3","move4"],
@@ -634,30 +744,26 @@ const app = Vue.createApp({
             ], 
 
             //resets
-            playerId: MyStorage["playerId"] ?? 0,
-            playerName: "NINTEN",
-            resetCatcher: "NINTEN",
-            playerResets: 0,
-            blackout_counter: 0,
-            resetCounter: true,
-            game_over: false,
-            lance_defeated: false,
-            finished_logs: false,
-            attempt_number: 0,
-            finished_run_count: 0,
-            pb_time: "None",
-            most_recent_move: "",
-            split_logStr: "",
-            simple_data_str:     MyStorage["simple_data_str"]     ?? "",
-            full_data_str:       MyStorage["full_data_str"]       ?? "",
-            deprecated_data_str: MyStorage["deprecated_data_str"] ?? "",
-            simple_data:         MyStorage["simple_data"]         ?? "",
-
+            playerId:            MyStorage["playerId"] ?? 0,
+            playerName:          "NINTEN",
+            resetCatcher:        "NINTEN",
+            playerResets:        0,
+            blackout_counter:    0,
+            resetCounter:        true,
+            game_over:           false,
+            lance_defeated:      false,
+            finished_logs:       false,
+            attempt_number:      0,
+            finished_run_count:  0,
+            pb_time:             "None",
+            most_recent_move:    "",
+            split_logStr:        "",
+            simple_data_str:     MyStorage["simple_data_str"]          ?? "",
+            full_data_str:       MyStorage["full_data_str"]            ?? "",
+            deprecated_data_str: MyStorage["deprecated_data_str"]      ?? "",
+            simple_data:         MyStorage["simple_data"]              ?? "",
             blackouts_as_resets: MyStorage["this.blackouts_as_resets"] ?? false, //counts blackouts as resets
             blackout:            false,
-
-            //pokemon specific settings
-
 
             //Pokemon settings for local storage
             overlay_color: MyStorage["overlay_color"] ?? "#000000",
@@ -680,35 +786,40 @@ const app = Vue.createApp({
             backgroundContrast:    MyStorage["backgroundContrast"]    ?? 100,
             backgroundSaturation:  MyStorage["backgroundSaturation"]  ?? 100,
             backgroundHue:         MyStorage["backgroundHue"]         ?? 0,
-            //
-            playerNameChoice: MyStorage["playerNameChoice"] ?? "NINTEN",
+            playerNameChoice:      MyStorage["playerNameChoice"]      ?? "NINTEN",
 
             //UI
-            ui_saturation: .6,
+            ui_saturation:          .6,
+            ui_type_colors:         "Bulbapedia Current",
+            ui_type_color_modifier: "current_",
+            ui_test_prop:           "one",
 
             //backed up pokemon specific settings
             pokemon_settings: [
-                "overlay_color",
-                "imageXOffset",
-                "imageYOffset",
-                "imageScale",
-                "imageFlip",
-                "imageSat",
-                "imageRotation",
-                "backgroundBlur",
-                "backgroundScale",
-                "backgroundUrl",
-                "use_custom_background",
-                "attempt_number",
-                "finished_run_count",
-                "pb_time",
-                "backgroundXOffset",
-                "backgroundYOffset",
-                "backgroundTexture",
-                "backgroundBrightness",
-                "backgroundContrast",
-                "backgroundSaturation",
-                "backgroundHue",
+                [ "overlay_color",          "#000000", ],
+                [ "imageXOffset",           0,         ],
+                [ "imageYOffset",           0,         ],
+                [ "imageScale",             1,         ],
+                [ "imageFlip",              false,     ],
+                [ "imageSat",               100,       ],
+                [ "imageRotation",          0,         ],
+                [ "backgroundBlur",         0,         ],
+                [ "backgroundScale",        100,       ],
+                [ "backgroundUrl",          '',        ],
+                [ "use_custom_background",  false,     ],
+                [ "attempt_number",         0,         ],
+                [ "finished_run_count",     0,         ],
+                [ "pb_time",                '',        ],
+                [ "backgroundXOffset",      100,       ],
+                [ "backgroundYOffset",      100,       ],
+                [ "backgroundTexture",      'Bug 1'    ],
+                [ "backgroundBrightness",   100,       ],
+                [ "backgroundContrast",     100,       ],
+                [ "backgroundSaturation",   100,       ],
+                [ "backgroundHue",          0,         ],
+                [ "ui_saturation",          0.6,       ],
+                [ "ui_type_colors",         "Bulbapedia Current", ],
+                [ "ui_type_color_modifier", "current_",           ],
             ],
 
             //timer variables
@@ -724,17 +835,66 @@ const app = Vue.createApp({
             time_split_start:      MyStorage['time_split_start']      ?? "00:00:00:00",
             battle_start:          MyStorage['battle_start']          ?? 0,
             timer_settings:        MyStorage["this.timer_settings"]   ?? "Real-Time",
-            viridian_forest:       MyStorage["viridian_forest"]       ?? "Pidgey",
 
             //splits
-            split_data: MyStorage["split_data"]                    ?? [],
-            pb_splits:  MyStorage[`pb_splits`] ?? [],
-
-            // battle_summary_properties
+            split_data: MyStorage["split_data"] ?? [],
+            pb_splits:  MyStorage[`pb_splits`]  ?? [],
         }
     },
 
     created() {
+        // Initialize the Storage object
+        // This creates all of the objects that will then be filled
+        if (!Storage['global_variables']) { //If the global variables don't exist, create them
+            Storage['global_variables'] = {
+                starter: this.starterName,
+                game: this.game_name,
+            }
+            Storage['games'] = { //If the games object doesn't exist, create it; everything will be stored within here
+                Red: {
+                    settings:         {},
+                    style:            {},
+                    playthrough_data: {},
+                },
+                Blue: {
+                    settings:         {},
+                    style:            {},
+                    playthrough_data: {},
+                },
+                Yellow: {
+                    settings:         {},
+                    style:            {},
+                    playthrough_data: {},
+                },
+            }
+        }
+
+        // Initialize watchers for all of the style properties. 
+        // These are game and Pokemon specific saved within: Storage.games[game][starter]
+        // Define variables
+        let starter = Storage['global_variables'].starter; // The same as this.starterName but bypasses the default 'Venomoth' assignment at the first frame of runtime
+        let game = Storage['global_variables'].game; // Red, Blue, Yellow
+        //Loop through style settings that will be saved within a game and specific Pokemon
+        for (let i = 0; i < this.pokemon_settings.length; i++) {
+            let [prop_name, value] = this.pokemon_settings[i];
+            this.$watch(
+                () => this[prop_name],
+                (new_value) => {
+                    if (!Storage.games[game].style[starter]) {
+                        Storage.games[game].style[starter] = {};
+                    }
+                    Storage.games[game].style[starter] = {
+                        ...Storage.games[game].style[starter],
+                        [prop_name]: new_value
+                    };
+                }
+            );
+        }
+        // Load All Settings
+        // This assigns values to the data() properties based on the what is stored within the Storage object
+
+
+        //MyStorage initialization
         if (MyStorage[`${this.game_name}_${this.starterName}`]) {
             this.overlay_color         = MyStorage[`${this.game_name}_${this.starterName}`].overlay_color         ? MyStorage[`${this.game_name}_${this.starterName}`].overlay_color         : "#000000";
             this.imageXOffset          = MyStorage[`${this.game_name}_${this.starterName}`].imageXOffset          ? MyStorage[`${this.game_name}_${this.starterName}`].imageXOffset          : 0;
@@ -777,26 +937,35 @@ const app = Vue.createApp({
             );
         }
         for (let i = 0; i < this.pokemon_settings.length; i++) {
-            let propName = this.pokemon_settings[i];
+            let setting = this.pokemon_settings[i];
+            let propName = Object.keys(setting)[0]; // Get the property name
+            let defaultValue = setting[propName]; // Get the default value
+        
             this.$watch(
                 () => this[propName],
                 (newValue) => {
-                    // Ensure that MyStorage[this.starterName] is an object
+                    // Ensure that MyStorage[this.game_name_starterName] is an object
                     if (!MyStorage[`${this.game_name}_${this.starterName}`]) {
                         MyStorage[`${this.game_name}_${this.starterName}`] = {};
                     }
-        
                     // Set the new value
-                    console.log(`${this.game_name}_${this.starterName}`)
                     MyStorage[`${this.game_name}_${this.starterName}`] = {
-                            ...MyStorage[`${this.game_name}_${this.starterName}`],
-                            [propName]: newValue
-                        };
+                        ...MyStorage[`${this.game_name}_${this.starterName}`],
+                        [propName]: newValue
+                    };
                 }
             );
         }
     },
     watch: {
+        ui_type_colors(newValue) {
+            if (newValue == "Bulbapedia Legacy") {
+                this.ui_type_color_modifier = "legacy_"
+            }
+            if (newValue == "Bulbapedia Current") {
+                this.ui_type_color_modifier = "current_"
+            }
+        },
         gamehook_disable_settings(value) {
             MyStorage["gamehook_disable_settings"] = value
         },
@@ -931,6 +1100,24 @@ const app = Vue.createApp({
 
             //update the saved starter in the overlay's local storage
             MyStorage['starterName'] = newValue
+
+
+            Storage['global_variables'].starter = newValue
+            let default_settings_object = this.pokemon_settings.reduce((acc, setting) => {
+                let prop_name = Object.keys(setting)[0]; // Get the property name
+                let value = setting[prop_name]; // Get the value
+                acc[prop_name] = value; // Set the value
+                return acc;
+            }, {});
+            let starter = Storage['global_variables'].starter;
+            let game = Storage['global_variables'].game;
+            console.log(starter)
+            console.log(game)
+            Storage.games[this.game_name].style = {
+                ...Storage.games[this.game_name].style,
+                [starter]: default_settings_object,
+            }
+
             this.load_all_settings()
         },
         playerId(newValue) {
@@ -1632,11 +1819,14 @@ const app = Vue.createApp({
             this.backgroundContrast =    MyStorage[`${this.game_name}_${this.starterName}`].backgroundContrast    ?? 100
             this.backgroundSaturation =  MyStorage[`${this.game_name}_${this.starterName}`].backgroundSaturation  ?? 100
             this.backgroundHue =         MyStorage[`${this.game_name}_${this.starterName}`].backgroundHue         ?? 0
-
+            
             this.attempt_number =   MyStorage[`${this.game_name}_${this.starterName}`].attempt_number   ?? 0
             this.blackout_counter = MyStorage[`${this.game_name}_${this.starterName}`].blackout_counter ?? 0
             this.playerResets =     MyStorage[`${this.game_name}_${this.starterName}`].playerResets     ?? 0
-
+            
+            this.ui_saturation =          MyStorage[`${this.game_name}_${this.starterName}`].ui_saturation          ?? 0.6
+            this.ui_type_colors =         MyStorage[`${this.game_name}_${this.starterName}`].ui_type_colors         ?? "Bulbapedia Current"
+            this.ui_type_color_modifier = MyStorage[`${this.game_name}_${this.starterName}`].ui_type_color_modifier ?? "current_"
             // }
         },
         //string can be: clear, increment, decrement
@@ -2444,7 +2634,7 @@ const app = Vue.createApp({
               5: "888px",
               6: "1080px"
             };
-            return `height: ${heights[totalPokemon]};`;
+            return `height: ${heights[totalPokemon]}; filter: saturate(${this.ui_saturation})`;
         },
         
         //GAMETIME FUNCTIONS
@@ -2572,6 +2762,8 @@ const app = Vue.createApp({
                 const target_type_1 = this.mapper.properties.battle.yourPokemon.type1.value
                 const target_type_2 = this.mapper.properties.battle.yourPokemon.type2.value
                 if (move_base_power == "—" || move_base_power == "-") { return "—" }
+                var player_reflect = this.mapper.properties.battle.yourPokemon.effects.reflect.value == true && move_category == 'Physical' ? 0.5 : 1
+                var player_light_screen = this.mapper.properties.battle.yourPokemon.effects.lightScreen.value == true && move_category == 'Special' ? 0.5 : 1 
                 var move_effective_power = move_base_power
                 var modifier_effectiveness_1 = this.typeData.find(x => x.moveType == move_type)[target_type_1]
                 var modifier_effectiveness_2 = target_type_2 && move_type && (target_type_1 != target_type_2) ? this.typeData.find(x => x.moveType == move_type)[target_type_2]
@@ -2582,7 +2774,7 @@ const app = Vue.createApp({
     
                 //Calculate effective power
                 if (this.typeCalcs == true) { //Handles type effectiveness calculations in battle
-                    return Math.floor(move_base_power * modifier_stab * modifier_effectiveness_1 * modifier_effectiveness_2)
+                    return Math.floor(move_base_power * modifier_stab * modifier_effectiveness_1 * modifier_effectiveness_2 * player_reflect * player_light_screen)
                 }
             }
         },
@@ -2593,20 +2785,20 @@ const app = Vue.createApp({
                 var move_name          = pkmnData[moveNumber].value
                 
                 if (move_name == null) { return "" } //stop the function if there is no move in that slot
-                
-                var move_type          = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Type
-                var move_info          = this.typeData.find(x => x.moveType === move_type)
-                var move_power         = this.movePower(move_name)
-                var move_category      = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Category
-                var attacker_type1     = pkmnData.type1.value
-                var attacker_type2     = pkmnData.type2.value
-                var defender_type1     = enemyData.type1.value
-                var defender_type2     = enemyData.type2.value
-                var multiplier_stab    = 1
-                var multiplier_type1   = move_info[defender_type1]
-                var multiplier_type2   = 1
-                var screen_reflect     = 1
-                var screen_lightscreen = 1
+
+                var move_type            = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Type
+                var move_info            = this.typeData.find(x => x.moveType === move_type)
+                var move_power           = this.movePower(move_name)
+                var move_category        = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Category
+                var attacker_type1       = pkmnData.type1.value
+                var attacker_type2       = pkmnData.type2.value
+                var defender_type1       = enemyData.type1.value
+                var defender_type2       = enemyData.type2.value
+                var multiplier_stab      = 1
+                var multiplier_type1     = move_info[defender_type1]
+                var multiplier_type2     = 1
+                var screen_reflect       = 1
+                var screen_lightscreen   = 1
                 
                 //update variables
                 if (move_type == attacker_type1 || move_type == attacker_type2)                { multiplier_stab = 1.5 }

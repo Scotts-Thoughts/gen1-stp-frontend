@@ -57,9 +57,9 @@
                     <div class="expBar">
                         <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
                     </div>
-                    <img class="canvas" src="images/ui/stats_backgrounds.svg"/>
-                    <img class="canvas" src="images/ui/exp_bar.svg"/>
-                    <img class="canvas" src="images/ui/gamearea.svg"/>
+                    <img class="svg" src="images/ui/stats_backgrounds.svg"/>
+                    <img class="svg" src="images/ui/exp_bar.svg"/>
+                    <img class="svg" style="opacity: .8;" src="images/ui/gamearea.svg"/>
 
 
                     <div class="exp_growthRate">{{ growthRate }}</div>
@@ -316,7 +316,7 @@
                     </div>
                     <div v-else-if="key_F14 == true" key=3>
                         <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
-                            <tr class="movepool_header" :style="{'background-color': `var(--${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                            <tr class="movepool_header" :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
                                 <th class="movepool_header movepool_way">Way</th>
                                 <th class="movepool_header movepool_move">Move</th>
                                 <th class="movepool_header movepool_type">Type</th>
@@ -327,7 +327,7 @@
                             <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial">
                                 <td class="movepool_way">1</td>
                                 <td class="movepool_move">{{x.Move}}</td>
-                                <td class="movepool_type" :style="{'background-color': `var(--${x.Type.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type.toLowerCase()})`}">{{x.Type}}</td>
                                 <td class="movepool_tableC">{{x.Power}}</td>
                                 <td class="movepool_tableC">{{x.Accuracy}}%</td>
                                 <td class="movepool_tableC">{{x.PP}}</td>
@@ -335,7 +335,7 @@
                             <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).level">
                                 <td class="movepool_way">{{x.Level}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
-                                <td class="movepool_type" :style="{'background-color': `var(--${x.Type.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type.toLowerCase()})`}">{{x.Type}}</td>
                                 <td class="movepool_tableC">{{x.Power}}</td>
                                 <td class="movepool_tableC">{{x.Accuracy}}%</td>
                                 <td class="movepool_tableC">{{x.PP}}</td>
@@ -343,13 +343,13 @@
                             <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).tmhm">
                                 <td class="movepool_way">{{x.tmhm}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
-                                <td class="movepool_type" :style="{'background-color': `var(--${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
                                 <td class="movepool_tableC">{{x.Power}}</td>
                                 <td class="movepool_tableC">{{x.Accuracy}}%</td>
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <div class="colored-image ds" style="--url: url(images/ui/movepool.svg)"></div>
+                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg)"></div>
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                 </transition>
@@ -362,28 +362,28 @@
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.bytes != 0x07 && batt.yourPokemon.modStageAccuracy.bytes != 0x00 && batt.yourPokemon.modStageAccuracy.bytes != 0xFF && (state == `Battle` || state == `From Battle`)">
-                            <div class="colored-image" style="--url: url(images/pop_ups/accuracy/default.png)"></div>
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/accuracy/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.bytes != 0x07 && batt.yourPokemon.modStageEvasion.bytes != 0x00 && batt.yourPokemon.modStageEvasion.bytes != 0xFF && (state == `Battle` || state == `From Battle`)">
-                            <div class="colored-image" style="--url: url(images/pop_ups/evasion/default.png)"></div>
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/evasion/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.effects.reflect.bytes != 0xFF && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (state == `Battle` || state == `From Battle`)">
-                            <div class="colored-image" style="--url: url(images/pop_ups/screens/default.png)"></div>
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/screens/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="key_F17 == `bonks`">
-                            <div class="colored-image" style="--url: url(images/pop_ups/screens/default.png)"></div>
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/screens/default.png)"></div>
                             <div class="genericLabels resetsLabel bonksLabel">bonks</div>
                             <div class="popUpsStyle bonksValue">{{ map?.patch?.steps?.bonks }}</div>
                         </div>
@@ -430,16 +430,16 @@
                 <option>Random</option>
             </select>
             <br>
-            <div>Attempt: {{this.attempt_number}}<button @click="increment('attempt_number')" class="smallButtonStyle">^</button><button @click="decrement('attempt_number')" class="smallButtonStyle">v</button></div>
-            <div>Finished Runs: {{this.finished_run_count}}<button @click="increment('finished_run_count')" class="smallButtonStyle">^</button><button @click="decrement('finished_run_count')" class="smallButtonStyle">v</button></div>
-            <div>Resets: {{this.playerResets}}<button @click="increment('playerResets')" class="smallButtonStyle">^</button><button @click="decrement('playerResets')" class="smallButtonStyle">v</button></div>
-            <div>Blackouts: {{this.blackout_counter}}<button @click="increment('blackout_counter')" class="smallButtonStyle">^</button><button @click="decrement('blackout_counter')" class="smallButtonStyle">v</button></div>
+            <div>Attempt: {{this.attempt_number}}<button @click="increment('attempt_number')" class="smallButtonStyle">+</button><button @click="decrement('attempt_number')" class="smallButtonStyle">-</button></div>
+            <div>Finished Runs: {{this.finished_run_count}}<button @click="increment('finished_run_count')" class="smallButtonStyle">+</button><button @click="decrement('finished_run_count')" class="smallButtonStyle">-</button></div>
+            <div>Resets: {{this.playerResets}}<button @click="increment('playerResets')" class="smallButtonStyle">+</button><button @click="decrement('playerResets')" class="smallButtonStyle">-</button></div>
+            <div>Blackouts: {{this.blackout_counter}}<button @click="increment('blackout_counter')" class="smallButtonStyle">+</button><button @click="decrement('blackout_counter')" class="smallButtonStyle">-</button></div>
             <br>
             <button class="buttonStyle" @click="newRun">New Run</button>
             <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
             Start Time Offset: <input type="text" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
             <br>
-            <div>Pokemon Image Settings</div>
+            <div>Pokemon:</div>
             X-Offset: <input type="range" min="-400" max="400" v-model="imageXOffset"/><br>
             Y-Offset: <input type="range" min="-400" max="400"v-model="imageYOffset"/><br>
             Scale: <input type="range" min="0.3" max="2" step="0.02" v-model="imageScale"/><br>
@@ -448,8 +448,6 @@
             Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
             <br>
             <div>Background:</div>
-            <button @click="color_picker" class="buttonStyle">Color Picker</button>
-            <br>
             <select v-model="backgroundTexture" class="dropdownMenu">
                 <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
                     {{ key }}
@@ -465,7 +463,20 @@
             Blur: <input type="range" min="0" max="10" v-model="backgroundBlur"/><br>
             Hue: <input type="range" min="0" max="358" v-model="backgroundHue"/><br>
             <br>
-            <!-- <button class="buttonStyle" onClick="openFolder('battle_summaries')">Battle Summaries</button> -->
+            <div>UI:</div>
+            <button @click="color_picker" class="buttonStyle">Color Picker</button>
+            Saturation: <input type="range" min="0" max="2" step="0.1" v-model="ui_saturation"/><br>
+            Type Colors:<br>
+            <select v-model="ui_type_colors" class="dropdownMenu">
+                <option>Bulbapedia Current</option>
+                <option>Bulbapedia Legacy</option>
+            </select>
+            <select v-model="ui_test_prop" class="dropdownMenu">
+                <option>one</option>
+                <option>two</option>
+                <option>three</option>
+                <option>four</option>
+            </select>
         </div>
         <div class="testingArea2" style="z-index: 50000;">
             <div>Secondary Menu:</div>
@@ -541,8 +552,8 @@
             <input v-if="viridian_forest == `Speed`" v-model="goal_speed" placeholder="Target Speed">
             <br>
             <br>
-            <button @click="apply_settings('first_playthrough_settings')" class="buttonStyle">First Playthrough Settings</button>
-            <button @click="apply_settings('second_playthrough_settings')" class="buttonStyle">Second Playthrough Settings</button>
+            <button @click="apply_settings('first_playthrough_settings')" class="buttonStyle">First Playthrough Settings</button><br>
+            <button @click="apply_settings('second_playthrough_settings')" class="buttonStyle">Second Playthrough Settings</button><br>
             <button @click="apply_settings('all_off')" class="buttonStyle">All Off</button>
         </div>
         <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
@@ -637,5 +648,7 @@
     <script src="data/autosplitter.js"></script>
     <script src="data/textures.js"></script>
     <script src="data/battle_summary_properties.js"></script>
+    <script src="settings/application_settings.js"></script>
+    <script src="settings/pokemon_settings.js"></script>
     <script type="text/javascript" src="frontend.js"></script>
 </body>
