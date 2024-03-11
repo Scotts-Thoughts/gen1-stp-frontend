@@ -427,36 +427,48 @@
                 <tr>
                     <th style="text-align: left;">Attempt:</th>
                     <th>{{this.attempt_number}}</th>
-                    <th><button @click="increment('attempt_number')" class="smallButtonStyle">+</button><button @click="decrement('attempt_number')" class="smallButtonStyle">-</button></th>
+                    <th>
+                        <button @click="increment('attempt_number')" class="smallButtonStyle increment">+</button>
+                        <button @click="decrement('attempt_number')" class="smallButtonStyle decrement">-</button>
+                    </th>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Finished Runs:</th>
                     <th>{{this.finished_run_count}}</th>
-                    <th><button @click="increment('finished_run_count')" class="smallButtonStyle">+</button><button @click="decrement('finished_run_count')" class="smallButtonStyle">-</button></th>
+                    <th>
+                        <button @click="increment('finished_run_count')" class="smallButtonStyle increment">+</button>
+                        <button @click="decrement('finished_run_count')" class="smallButtonStyle decrement">-</button>
+                    </th>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Resets:</th>
                     <th>{{this.playerResets}}</th>
-                    <th><button @click="increment('playerResets')" class="smallButtonStyle">+</button><button @click="decrement('playerResets')" class="smallButtonStyle">-</button></th>
+                    <th>
+                        <button @click="increment('playerResets')" class="smallButtonStyle increment">+</button>
+                        <button @click="decrement('playerResets')" class="smallButtonStyle decrement">-</button>
+                    </th>
                 </tr>
                 <tr>
                     <th style="text-align: left;">Blackouts:</th>
                     <th>{{this.blackout_counter}}</th>
-                    <th><button @click="increment('blackout_counter')" class="smallButtonStyle">+</button><button @click="decrement('blackout_counter')" class="smallButtonStyle">-</button></th>
+                    <th>
+                        <button @click="increment('blackout_counter')" class="smallButtonStyle increment">+</button>
+                        <button @click="decrement('blackout_counter')" class="smallButtonStyle decrement">-</button>
+                    </th>
                 </tr>
             </table>
             <br>
             <button class="buttonStyle" @click="newRun">New Run</button>
             <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
-            Start Time Offset: <input type="text" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
+            Start Time Offset: <input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
             <br>
             <div>Pokemon:</div>
-            X-Offset: <input type="range" min="-400" max="400" v-model="imageXOffset"/><br>
-            Y-Offset: <input type="range" min="-400" max="400"v-model="imageYOffset"/><br>
-            Scale: <input type="range" min="0.3" max="2" step="0.02" v-model="imageScale"/><br>
-            Saturation: <input type="range" min="90" max="150" step="1" v-model="imageSat"/><br>
-            Rotation: <input type="range" min="0" max="360" step="1" v-model="imageRotation"/><br>
-            Flip: <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
+            X-Offset:   <input type="range" min="-400" max="400" v-model="imageXOffset"/><br>
+            Y-Offset:   <input type="range" min="-400" max="400" v-model="imageYOffset"/><br>
+            Scale:      <input type="range" min="0.3"  max="2"   step="0.02" v-model="imageScale"/><br>
+            Saturation: <input type="range" min="90"   max="150" step="1"    v-model="imageSat"/><br>
+            Rotation:   <input type="range" min="0"    max="360" step="1"    v-model="imageRotation"/><br>
+            Flip:       <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
             <br>
             <div>Background:</div>
             <select v-model="backgroundTexture" class="dropdownMenu">
@@ -465,14 +477,14 @@
                 </option>
             </select>
             <br>
-            X-Offset: <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
-            Y-Offset: <input type="range" min="-125" max="125"v-model="backgroundYOffset"/><br>
-            Scale: <input type="range" min="100" max="200" v-model="backgroundScale"/><br>
-            Brightness: <input type="range" min="0" max="200" v-model="backgroundBrightness"/><br>
-            Contrast: <input type="range" min="0" max="200" v-model="backgroundContrast"/><br>
-            Saturation: <input type="range" min="0" max="200" v-model="backgroundSaturation"/><br>
-            Blur: <input type="range" min="0" max="10" v-model="backgroundBlur"/><br>
-            Hue: <input type="range" min="0" max="358" v-model="backgroundHue"/><br>
+            X-Offset:   <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
+            Y-Offset:   <input type="range" min="-125" max="125" v-model="backgroundYOffset"/><br>
+            Scale:      <input type="range" min="100"  max="200" v-model="backgroundScale"/><br>
+            Brightness: <input type="range" min="0"    max="200" v-model="backgroundBrightness"/><br>
+            Contrast:   <input type="range" min="0"    max="200" v-model="backgroundContrast"/><br>
+            Saturation: <input type="range" min="0"    max="200" v-model="backgroundSaturation"/><br>
+            Blur:       <input type="range" min="0"    max="10"  v-model="backgroundBlur"/><br>
+            Hue:        <input type="range" min="0"    max="358" v-model="backgroundHue"/><br>
             <br>
             <div>UI:</div>
             <button @click="color_picker" class="buttonStyle">Color Picker</button>

@@ -396,10 +396,9 @@ box-shadow:
     width: 280px; 
     height: 26px; 
     font-size: 18px; 
-    background: #72fd4f; 
+    background: #72fd4fb4; 
     font-family: Play;
     border-radius: 10px;
-    /* filter: drop-shadow(0px 0px 1px #000000c5); */
 }
 .smallButtonStyle {
     pointer-events: auto; 
@@ -407,10 +406,17 @@ box-shadow:
     font-size: 16px; 
     background: #72fd4f; 
     font-family: Play;
-    border-radius: 10px;
+    border-radius: 12px;
     padding-left: 4px;
     padding-right: 4px;
-    /* filter: drop-shadow(0px 0px 1px #000000c5); */
+    width: 24px;
+    height: 24px;
+}
+.increment {
+    background: #29c702;
+}
+.decrement {
+    background: #cc5353;
 }
 .buttonStyle:hover {
     background: #11ce18; 
@@ -418,8 +424,14 @@ box-shadow:
 .buttonStyle:active {
     background-color: #11ce18;
     transform: translateY(2px);
-  }
-
+}
+.inputContainer {
+    font-size: 18px; 
+    text-align: right;
+    background: #72fd4f; 
+    font-family: Play;
+    width: 130px;
+}
 .save_pb_splits {
     position: absolute;
     top: 780px;
@@ -439,8 +451,8 @@ box-shadow:
 .checkBoxStyle {
     pointer-events: auto; 
     position: relative; 
-    width: 20px; 
-    height: 20px; 
+    width: 15px; 
+    height: 15px; 
     font-size: 24px; 
     background: #649c55; 
     font-family: Play;

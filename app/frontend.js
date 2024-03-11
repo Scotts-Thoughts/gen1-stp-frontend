@@ -1,23 +1,3 @@
-const MyStorage = new Proxy({}, {
-    set: (_, prop, value) => {
-        if (value === undefined || value === null)
-            localStorage.removeItem(prop);
-        else
-            localStorage.setItem(prop, JSON.stringify(value));
-    },
-    get: (_, prop) => {
-        if (prop === "clear")
-            return () => localStorage.clear();
-        if (prop === "entries")
-            return () => Object.entries(localStorage);
-        if (prop === "keys")
-            return () => Object.keys(localStorage);
-        if (prop === "has")
-            return (key) => localStorage.getItem(key) == null;
-        return JSON.parse(localStorage.getItem(prop));
-    },
-});
-
 function createWatchedObject(watcher) {
     const root = {};
     const handler = {
@@ -40,13 +20,13 @@ function createWatchedObject(watcher) {
             }
         },
         //* Using the deleteProperty function:
-            // MyStorage.test = 10
-            // delete MyStorage.test
+            // Storage.test = 10
+            // delete Storage.test
             //
             // OR
             //
-            // MyStorage["test"] = 20
-            // delete MyStorage["test"]
+            // Storage["test"] = 20
+            // delete Storage["test"]
     };
     return new Proxy(root, handler);
 }
@@ -120,31 +100,6 @@ const Storage = createStoredObject('./storage', 'Storage.json', {
 function openFolder(folderName) {
     require('child_process').exec(`start .\\${folderName}\\`);
 }
-// // Open the folder ./splits/ in the file explorer with node.js
-// function openVersionSplits() {
-//     var gameName = this.mapper.properties.meta.gameName
-//     var folderName = "splits\\Pokemon Yellow"
-//     if (gameName == "Pokemon Yellow") {
-//         folderName = "splits\\Pokemon Yellow"
-//     }
-//     if (gameName == "Pokemon Red and Blue") {
-//         folderName = "splits\\Pokemon Red and Blue"
-//     }
-//     if (gameName == "Pokemon Crystal") {
-//         folderName = "splits\\Pokemon Crystal"
-//     }
-//     if (gameName == "Pokemon Emerald") {
-//         folderName = "splits\\Pokemon Emerald"
-//     }
-//     if (gameName == "Pokemon FireRed") {
-//         folderName = "splits\\Pokemon FireRed"
-//     }
-//     if (gameName == "Pokemon FireRed") {
-//         folderName = "splits\\Pokemon FireRed"
-//     }
-//     console.log(`.\\${folderName}\\`)
-//     require('child_process').exec(`start .\\${folderName}\\`);
-// }
 
 function downloadFile(content, downloadFileName) {
     const blob = new Blob([content], {type: "application/octet-stream"});
@@ -748,7 +703,7 @@ const app = Vue.createApp({
 
             // Pokemon Settings
             // Playthrough Metrics
-            playerId:              MyStorage["playerId"] ?? 0,
+            playerId:              0,
             playerName:            "NINTEN",
             resetCatcher:          "NINTEN",
             playerResets:          0,
@@ -1548,18 +1503,18 @@ const app = Vue.createApp({
             if (trainer_class == "LANCE")   { return "Lance" }
             //notable npcs
             if (trainer_class == "ROCKET"       && this.mapper.properties.battle.trainer.number == 5)   { return "Cerulean Rocket" }
-            // if (trainer_class == "YOUNGSTER"    && this.mapper.properties.battle.trainer.number == 1)   { return "Youngster Ben" }
-            // if (trainer_class == "LASS"         && this.mapper.properties.battle.trainer.number == 10)  { return "Oddish Lass" } 
-            // if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 1)   { return "Pecking Lass" } 
-            // if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3)   { return "Sandy" } 
+            if (trainer_class == "YOUNGSTER"    && this.mapper.properties.battle.trainer.number == 1)   { return "Youngster Ben" }
+            if (trainer_class == "LASS"         && this.mapper.properties.battle.trainer.number == 10)  { return "Oddish Lass" } 
+            if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 1)   { return "Pecking Lass" } 
+            if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3)   { return "Sandy" } 
             if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5)   { return "Wrapping Lass" } 
-            // if (trainer_class == "SUPER NERD"   && this.mapper.properties.battle.trainer.number == 2)   { return "Fossil Nerd" }
-            // if (trainer_class == "POKEMANIAC"   && this.mapper.properties.battle.trainer.number == 7)   { return "Slowbone" }
-            // if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10)  { return "Status-Condition-Jr-Trainer" }
+            if (trainer_class == "SUPER NERD"   && this.mapper.properties.battle.trainer.number == 2)   { return "Fossil Nerd" }
+            if (trainer_class == "POKEMANIAC"   && this.mapper.properties.battle.trainer.number == 7)   { return "Slowbone" }
+            if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10)  { return "Status-Condition-Jr-Trainer" }
             if (trainer_class == "HIKER"        && this.mapper.properties.battle.trainer.number == 9)   { return "Selfdestructing Hiker" }
-            // if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 18)  { return "Finisher" }
-            // if (trainer_class == "ROCKET"       && this.mapper.properties.battle.trainer.number == 38)  { return "Hypno Rocket" }
-            // if (trainer_class == "CHANNELER"    && this.mapper.properties.battle.trainer.number == 10)  { return "Agatha Jr" }
+            if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 18)  { return "Finisher" }
+            if (trainer_class == "ROCKET"       && this.mapper.properties.battle.trainer.number == 38)  { return "Hypno Rocket" }
+            if (trainer_class == "CHANNELER"    && this.mapper.properties.battle.trainer.number == 10)  { return "Agatha Jr" }
             else return this.capitalization_format(trainer_class)
         },
 
@@ -1640,12 +1595,6 @@ const app = Vue.createApp({
                 retro.pause()
             }
         },
-        // resetTime() {
-        //     this.timer_pause = true
-        //     this.timer_startTime = 0
-        //     this.timer_pause_time = 0
-        //     this.timer_formatted_time = [ "0", ".00" ]
-        // },
         newRun() {
             const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
             const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
@@ -1721,21 +1670,8 @@ const app = Vue.createApp({
         },
         async color_picker() {
             var color = await this.colorPick()
-            this.set_pokemon_prop("overlay_color", color)
+            // this.set_pokemon_prop("overlay_color", color)
             this.overlay_color = color
-            // console.log(MyStorage.entries())
-        },
-        set_pokemon_prop(property_name, value) {
-            MyStorage[this.starterName] = {
-                ...MyStorage[this.starterName],
-                [property_name]: value,
-            }
-        },
-        set_setting_prop(property_name, value) {
-            MyStorage[property_name] = value
-        },
-        warn(...vars) {
-            console.log(...vars)
         },
         reset_advanced_settings() {
             this.battleGraphic =              true
@@ -1809,10 +1745,6 @@ const app = Vue.createApp({
             if (championSplit) {
                 this.pb_time = championSplit[3]
             }
-            MyStorage[this.starterName] = {
-                ...MyStorage[this.starterName],
-                pb_splits: this.split_data,
-            }
         },
         pb_split(splitName) {
             if (this.pb_splits) {
@@ -1830,11 +1762,6 @@ const app = Vue.createApp({
         },
         splits_clear() {
             this.split_data = []
-            MyStorage[this.starterName] = {
-                ...MyStorage[this.starterName],
-                split_data: [],
-            }
-            MyStorage["split_data"] = []
         },
         split_offset_calculation(duration1, duration2) {
             const totalSeconds = this.convertDurationToSeconds(duration1) - this.convertDurationToSeconds(duration2);
@@ -2636,9 +2563,6 @@ const app = Vue.createApp({
         this.mapper.onConnected = (x) => this.ready = true
         this.mapper.onDisconnected = (x) => this.ready = false
         await this.mapper.connect()
-        
-        //prevent windows scaling from affecting the programs dimensions
-        // document.body.style.scale = 1 / window.devicePixelRatio
 
         if (this.mapper.properties.meta.state.value == "No Pokemon") {
             this.state = "Base Stats"
@@ -2647,7 +2571,6 @@ const app = Vue.createApp({
             this.state = this.mapper.properties.meta.state.value
         }
         this.updateTime()
-        // retro.fastForward()
 
         if (this.playerResets.toString().length == 1) {
             document.getElementById("reset_counter").style.fontSize = "75px"
@@ -2661,8 +2584,8 @@ const app = Vue.createApp({
 
         //image transition
         await transition(t => {
-            // this part gets called at every frame of the browser
-            // the variable t starts at 0 and advances to 1
+        // this part gets called at every frame of the browser
+        // the variable t starts at 0 and advances to 1
         }, 500)
 
         // reset tracking
@@ -2683,11 +2606,6 @@ const app = Vue.createApp({
                     this.finished_logs = false;
                     this.attempt_number++;
                     this.most_recent_move = "";
-                    MyStorage[`${this.game_name}_${this.starterName}`] = {
-                        ...MyStorage[`${this.game_name}_${this.starterName}`],
-                        attempt_number: this.attempt_number
-                    }
-                    // console.log(`Attempt ${this.attempt_number}`)
                     this.startTime();
                     this.playerId = newProp.value;
                 }
@@ -2966,10 +2884,6 @@ const app = Vue.createApp({
                 let simple_data_str = simple_data.join(",") + "\n";
                 let full_data_str = full_data.join(",") + "\n";
                 let deprecated_data_str = deprecated_data.join(",") + "\n";
-                MyStorage["simple_data_str"] = simple_data_str // backup in my storage
-                MyStorage["full_data_str"] = full_data_str // backup in my storage
-                MyStorage["deprecated_data_str"] = deprecated_data_str // backup in my storage
-                MyStorage["simple_data"] = simple_data // backup in my storage
                 this.simple_data_str = simple_data_str // assign within Data so it can be recalled on future loops
                 this.full_data_str = full_data_str // assign within Data so it can be recalled on future loops
                 this.deprecated_data_str = deprecated_data_str // assign within Data so it can be recalled on future loops
@@ -3003,11 +2917,6 @@ const app = Vue.createApp({
                     log_split()
                     logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple")
                     this.split_data.push(this.simple_data)
-                    MyStorage["split_data"] = this.split_data
-                    MyStorage[this.starterName] = {
-                        ...MyStorage[this.starterName],
-                        split_data: this.split_data
-                    }
                 }
                 //log simple data for only these trainers
                 switch (trainer) {
@@ -3037,15 +2946,10 @@ const app = Vue.createApp({
                 //stop timer
                 if (trainer == "RIVAL3") { //this is the champion in gen1
                     log_split() //log the final split
-                    this.finished_run_count++ //increment finished count (this must persist, a watcher is setup on this to ensure it is migrated to MyStorage)
+                    this.finished_run_count++ //increment finished count
                     this.stopTime() //stop the timer
                     logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple") //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
-                    MyStorage["split_data"] = this.split_data //backup the split data
-                    MyStorage[this.starterName] = {
-                        ...MyStorage[this.starterName],
-                        split_data: this.split_data //backup the split data within the `starterName` object
-                    }
                 }
             }   
         });
@@ -3062,11 +2966,6 @@ const app = Vue.createApp({
                     logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated")
                     logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full")
                     this.split_data.push(this.simple_data)
-                    MyStorage["split_data"] = this.split_data
-                    MyStorage[this.starterName] = {
-                        ...MyStorage[this.starterName],
-                        split_data: this.split_data
-                    }
                     console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
                     this.game_over = true; //stop incrementing resets
                 }
