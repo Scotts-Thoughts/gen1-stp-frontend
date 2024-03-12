@@ -818,6 +818,36 @@ box-shadow:
     grid-column-end: 7;
     position: relative;
 }
+
+
+
+/* Stats area */
+.statsheader {
+    border: 1px solid #ff000000;
+    opacity: 1;
+    font-size: 32px;
+    line-height: 40px;
+    font-family: play;
+    position: absolute;
+    text-align: center;
+    top: -2px;
+    width: 378px;
+    z-index: 1;
+    /* filter: drop-shadow(1px 1px 0px rgb(70, 70, 70)); */
+}
+.expLabelGen1 {
+    border: 1px solid rgba(255, 0, 0, 0);
+    width: 43px;
+    opacity: .7;
+    text-align: center;
+    position: absolute;
+    font-family: play;
+    line-height: 16px;
+    font-size: 15px;
+    top: 38px;
+    left: 6px;
+    z-index: 1000;
+}
 .exp_growthRate {
     position: absolute;
     font-family: play;
@@ -830,6 +860,11 @@ box-shadow:
     border: 1px solid rgba(255, 0, 0, 0);
     z-index: 500;
 }
+
+
+
+
+
 .genericLabels {
     position: absolute;
     opacity: .72;
@@ -889,19 +924,7 @@ box-shadow:
     left: 0px;
     top: 770px;
 }
-.expLabelGen1 {
-    border: 1px solid rgba(255, 0, 0, 0);
-    width: 43px;
-    opacity: .7;
-    text-align: center;
-    position: absolute;
-    font-family: play;
-    line-height: 16px;
-    font-size: 15px;
-    top: 38px;
-    left: 6px;
-    z-index: 1000;
-}
+
 
 .expLabelGen2 {
     position: absolute;
@@ -991,20 +1014,7 @@ box-shadow:
     left: -12px;
     transform: scale(.09)
 }
-/* STATS (INDEX 0 to 10) */
-.statsheader {
-    border: 1px solid #ff000000;
-    opacity: 1;
-    font-size: 32px;
-    line-height: 40px;
-    font-family: play;
-    position: absolute;
-    text-align: center;
-    top: -2px;
-    width: 378px;
-    z-index: 1;
-    /* filter: drop-shadow(1px 1px 0px rgb(70, 70, 70)); */
-}
+
 .expMeterStyle {
     border-radius: 4px;
     width: 318px;
@@ -1153,21 +1163,22 @@ box-shadow:
     filter: grayscale(100%);
 }
 .badgeBoostAtk {
-    top: 119px;
-    left: 11px;
+    top: 912px;
+    left: 19px;
 }
 .badgeBoostDef {
-    top: 181px;
-    left: 11px;
+    top: 974px;
+    left: 19px;
 }
 .badgeBoostSpc{
-    top: 119px;
-    left: 194px;
+    top: 912px;
+    left: 203px;
 }
 .badgeBoostSpd {
-    top: 181px;
-    left: 194px;
+    top: 974px;
+    left: 203px;
 }
+
 /* PACKAGE CONTENTS */
 .overlayStarter {
 	display: block;
@@ -1535,6 +1546,18 @@ box-shadow:
 .accuracyMod {
     font-size: 40px;
     left: 122px;
+    width: 126px;
+    top: 342px;
+}
+.repelLabel {
+    font-size: 16px;
+    left: 127px;
+    width: 126px;
+    top: 326px;
+}
+.repelSteps {
+    font-size: 40px;
+    left: 127px;
     width: 126px;
     top: 342px;
 }

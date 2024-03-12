@@ -594,6 +594,11 @@ const app = Vue.createApp({
             application_settings:    application_settings,
             pokemon_settings:        pokemon_settings, 
 
+            pokedex_red_blue:        pokedex_red_blue, 
+            pokedex_yellow:          pokedex_yellow, 
+            pokedex_gold_silver:     pokedex_gold_silver, 
+            pokedex_crystal:         pokedex_crystal, 
+
             // Objects
             pkmnMoves:       ["move1","move2","move3","move4"],
             pkmnSlots:       [0, 1, 2, 3, 4, 5],
@@ -1089,6 +1094,18 @@ const app = Vue.createApp({
     },
 
     computed: {
+        stats_header() {
+            if (this.mapper.properties.events.got_pokedex.value == false && this.mapper.properties.events.battled_rival_in_oaks_lab.value == true) {
+                return `${this.starterName}'s DVs`
+            }
+            switch (this.state) {
+                case "Base Stats":  return `Base Stats`
+                case "Overworld":   return `Level ${this.mapper.properties.player.team[0].level.value}`
+                case "To Battle":   return `Level ${this.mapper.properties.player.team[0].level.value}`
+                case "From Battle": return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+                case "Battle":      return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+            }
+        },
         enemy_trainer() {
             const trainer = this.mapper.properties.battle.trainer.class.value
             const id = this.mapper.properties.battle.trainer.number.value

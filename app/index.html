@@ -8,9 +8,9 @@
 <body>
     <div id="app">
         <div v-if="ready == false">Loading...</div>
-        <div v-else>
+        <div v-else-if="game_name == 'Red' || game_name == 'Blue' || game_name == 'Yellow'">
             <div class="mainContainer">
-                <!-- GRAPHICS ---------------------------------------------------------------------------------->
+                <!-- Graphics -->
                 <div>
                     <img class="canvas" ref="background_texture" :src="textures[backgroundTexture]" 
                         :style="{ 
@@ -53,12 +53,9 @@
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/moveset.svg)"></div>
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/resets.svg)"></div>
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/stats.svg)"></div>
-                    <div class="expBar">
-                        <div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div>
-                    </div>
+                    <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div></div>
                     <img class="svg" src="images/ui/stats_backgrounds.svg"/>
                     <img class="svg" style="opacity: .8; filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.svg"/>
-
 
                     <div class="exp_growthRate">{{ growthRate }}</div>
                     <transition name="fade"><div v-show="timer_settings == `Off - Real-Time Label` || timer_settings == `Real-Time`" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
@@ -66,36 +63,33 @@
                     <div v-show="key_F16 == `resets`" class="genericLabels resetsLabel">resets</div>
                     <div v-show="key_F16 == `blackouts`" class="genericLabels resetsLabel">blackouts</div>
                 </div>
-                <!-- TYPE ICONS -------------------------------------------------------------------------------->
+                <!-- Type Icons -->
                 <div class="typeContainer">
-                    <div v-if="pkmn_type(1) == pkmn_type(2)" class="type">
+                    <div class="type">
                         <img :src="`images/elements/types/${pkmn_type(1)}.png`" />
-                    </div>
-                    <div v-else class="type">
-                        <img :src="`images/elements/types/${pkmn_type(1)}.png`" />
-                        <img :src="`images/elements/types/${pkmn_type(2)}.png`" />
+                        <img v-if="pkmn_type(1) != pkmn_type(2)" :src="`images/elements/types/${pkmn_type(2)}.png`" />
                     </div>
                 </div>
-                <!-- BADGE ICONS ------------------------------------------------------------------------------->
+                <!-- Badges -->
                 <div class="badgesBar">          
-                    <img v-show="map.player.badges.badge1.value === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" style="top: 911px; opacity: .3; left: 22px; z-index: 2;" />
-                    <img v-show="map.player.badges.badge3.value === true" class="badgeBoostStyle badgeBoostDef" :src="badgeGraphic(map.player.badges.badge3)" style="top: 973px; opacity: .3; left: 22px; z-index: 2;" />                    
-                    <img v-show="map.player.badges.badge5.value === true" class="badgeBoostStyle badgeBoostSpd" :src="badgeGraphic(map.player.badges.badge5)" style="top: 973px; opacity: .3; left: 206px; z-index: 2;" />                    
-                    <img v-show="map.player.badges.badge7.value === true" class="badgeBoostStyle badgeBoostSpc" :src="badgeGraphic(map.player.badges.badge7)" style="top: 911px; opacity: .3; left: 206px; z-index: 2;"/>      
+                    <img v-show="map.player.badges.badge1.value === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" />
+                    <img v-show="map.player.badges.badge3.value === true" class="badgeBoostStyle badgeBoostDef" :src="badgeGraphic(map.player.badges.badge3)" />                    
+                    <img v-show="map.player.badges.badge5.value === true" class="badgeBoostStyle badgeBoostSpd" :src="badgeGraphic(map.player.badges.badge5)" />                    
+                    <img v-show="map.player.badges.badge7.value === true" class="badgeBoostStyle badgeBoostSpc" :src="badgeGraphic(map.player.badges.badge7)" />      
                 </div>                         
-                <!--  STATS ------------------------------------------------------------------------------------->
+                <!--  Stats -->
                 <div class="statsContainer">  
-                    <!-- BASE STATS --------------------------------------------------------------------------->
+                    <!-- Base Stats -->
+                    <div class="statsheader">{{stats_header}}</div>
+                    <div class="expLabelGen1">Exp:</div>
                     <div v-if="state == `Base Stats`">
-                        <div class="expLabelGen1">Exp:</div>
                         <div class="statsLabelStyle statsLabelsColumn1">HP<br>Atk.<br>Def.<br></div>
                         <div class="statsLabelStyle statsLabelsColumn2"><br>Spc.<br>Spe.<br></div>
-                        <div class="statsheader">Base Stats</div>
                         <div class="statsColumnStyle statsColumn1">{{ g1PokemonData[starterName].base_hp }}<br>{{ g1PokemonData[starterName].base_atk }}<br>{{ g1PokemonData[starterName].base_def }}<br></div>
                         <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
                         <div class="statsColumnStyle statsColumn2"><br>{{ g1PokemonData[starterName].base_spc }}<br>{{ g1PokemonData[starterName].base_spd }}<br></div>
                     </div>
-                    <!-- DVs --------------------------------------------------------------------------->
+                    <!-- DVs -->
                     <div v-else-if="mapper.properties.events.got_pokedex.value == false && mapper.properties.events.battled_rival_in_oaks_lab.value == true">
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP<br></span>
@@ -120,9 +114,10 @@
                             {{ map.player.team[0].dvSpeed.value  }}/15<br>
                         </div>
                     </div>
-                    <!-- OVERWORLD STATS --------------------------------------------------------------------------->
+                    <!-- Overworld Stats -->
                     <div v-if="state == `Overworld` || state == `To Battle`">
-                        <div class="expLabelGen1">{{decimalToPercentage(calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value).percent)}}%</div>
+                        <div class="statsheader">Level {{ map.player.team[0].level.value }}</div>
+                        <!-- Labels -->
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP<br></span>
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Atk.<br></span>
@@ -133,24 +128,19 @@
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spc.<br></span>
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spe.<br></span>
                         </div>
-                        <div>
-                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminHPLabel">
-                                HP Up: <br><span class="vitaminsStyle vitaminHP">{{statExp(map.player.team[0].statExpHp)}}</span>
-                            </span>
-                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminAtkLabel">
-                                Protein: <br><span class="vitaminsStyle vitaminAtk">{{statExp(map.player.team[0].statExpAttack)}}</span>
-                            </span>
-                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminDefLabel">
-                                Iron: <br><span class="vitaminsStyle vitaminDef">{{statExp(map.player.team[0].statExpDefense)}}</span>
-                            </span>
-                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminSpcLabel">
-                                Calcium: <br><span class="vitaminsStyle vitaminSpc">{{statExp(map.player.team[0].statExpSpecial)}}</span>
-                            </span>
-                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" class="vitaminLabelStyle vitaminSpdLabel">
-                                Carbos: <br><span class="vitaminsStyle vitaminSpd">{{statExp(map.player.team[0].statExpSpeed)}}</span>
+                        <!-- Vitamins -->
+                        <div v-for="stat in stats = [
+                            ['HP Up:',   'HP',  'statExpHp'     ],
+                            ['Protein:', 'Atk', 'statExpAttack' ],
+                            ['Iron:',    'Def', 'statExpDefense'],
+                            ['Calcium:', 'Spc', 'statExpSpecial'],
+                            ['Carbos:',  'Spd', 'statExpSpeed'  ],]">
+                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" :class="`vitaminLabelStyle vitamin${stat[1]}Label`">
+                                {{stat[0]}}<br>
+                                <span :class="`vitaminsStyle vitamin${stat[1]}`">{{statExp(map.player.team[0][stat[2]])}}</span>
                             </span>
                         </div>
-                        <div class="statsheader">Level {{ map.player.team[0].level.value }}</div>
+                        <!-- Values -->
                         <div class="statsColumnStyle statsColumn1">
                             {{ map.player.team[0].maxHp }}<br>
                             {{ badgeBoost(map.player.badges.badge1.value, map.player.team[0].attack.value) }}<br>
@@ -163,7 +153,7 @@
                             {{ badgeBoost(mapper.properties.player.badges.badge5.value, mapper.properties.player.team[0].speed.value) }}<br>
                         </div>
                     </div>
-                    <!-- BATTLE STATS ----------------------------------------------------------------------------->
+                    <!-- Battle Stats -->
                     <div v-else-if="state == `Battle` || state == `From Battle`">
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span>HP<br></span>
@@ -187,18 +177,18 @@
                             {{ batt.yourPokemon.battleStatSpecial }}<br>
                             {{ batt.yourPokemon.battleStatSpeed }}<br>
                         </div>
-                        <div class="atkMod">{{ stageModifiers(batt.yourPokemon.modStageAttack) }}</div>
-                        <div class="defMod">{{ stageModifiers(batt.yourPokemon.modStageDefense) }}</div>
-                        <div class="spcMod">{{ stageModifiers(batt.yourPokemon.modStageSpecial) }}</div>
-                        <div class="spdMod">{{ stageModifiers(batt.yourPokemon.modStageSpeed) }}</div>
+                        <!-- Modifiers -->
+                        <div v-for="stat in stats = [['atk', 'modStageAttack'], ['def', 'modStageDefense'], ['spc', 'modStageSpecial'], ['spd', 'modStageSpeed']]">
+                            <div :class="`${stat[0]}Mod`">{{ stageModifiers(batt.yourPokemon[stat[1]]) }}</div>
+                        </div>
                     </div>
                 </div>  
-                <!--------- MOVESET -------------------------------------------------------------------------------------------------------------->
+                <!-- Moveset -->
                 <div class="movesetContainer">
                     <div class="movesetLabel labelMoves">moves</div>
-                    <div class="movesetLabel labelPwr">pwr.</div>
-                    <div class="movesetLabel labelAcc">acc.</div>
-                    <div class="movesetLabel labelPP">pp</div>
+                    <div class="movesetLabel labelPwr"  >pwr.</div>
+                    <div class="movesetLabel labelAcc"  >acc.</div>
+                    <div class="movesetLabel labelPP"   >pp</div>
                     <div v-for="move in pkmnMoves">
                         <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0][move].value != null">
                             <img :class="`movesetStyling iconStyling ${move}icon`" :src="moveTypeIcon(s1dynamic[move].value)" />
@@ -209,7 +199,7 @@
                         </div>
                     </div>
                 </div>
-                <!------- ENEMY GRAPHIC ------------------------------------------------------------------------------------------------------------------->
+                <!-- Enemy Graphics -->
                 <transition name="fade">
                     <div v-if="state != 'Base Stats' && state != 'Overworld' && mapper.properties.battle.type.value == `Trainer`" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
@@ -259,25 +249,16 @@
                                     <div class="ePkmnStatsStyle ePkmnCrit opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{enemy_crit_rate(mapper.properties.battle.trainer.team[x])}}%</div>
                                    
                                     <!-- Modifiers -->
-                                    <div 
-                                        v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageAttack.value != `0`" 
-                                        class="ePkmnModsStyle ePkmnModAtk">
-                                        {{stat_mod(batt.enemyPokemon.modEnemyStageAttack.value, x).mod}}
-                                    </div>
-                                    <div 
-                                        v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageDefense.value != `0`"
-                                        class="ePkmnModsStyle ePkmnModDef">
-                                        {{stat_mod(batt.enemyPokemon.modEnemyStageDefense.value, x).mod}}
-                                    </div>
-                                    <div 
-                                        v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpecial.value != `0`"
-                                        class="ePkmnModsStyle ePkmnModSpc">
-                                        {{stat_mod(batt.enemyPokemon.modEnemyStageSpecial.value, x).mod}}
-                                    </div>
-                                    <div 
-                                        v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon.modEnemyStageSpeed.value != `0`"  
-                                        class="ePkmnModsStyle ePkmnModSpd">
-                                        {{stat_mod(batt.enemyPokemon.modEnemyStageSpeed.value, x).mod}}
+                                    <div v-for="mod in modifiers = [
+                                        ['modEnemyStageAttack',  'Atk',],
+                                        ['modEnemyStageDefense', 'Def',],
+                                        ['modEnemyStageSpecial', 'Spc',],
+                                        ['modEnemyStageSpeed',   'Spd',],
+                                        ]">
+                                        <div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon[mod[0]].value != `0`" 
+                                        :class="`ePkmnModsStyle ePkmnMod${mod[1]}`">
+                                            {{stat_mod(batt.enemyPokemon[mod[0]].value, x).mod}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -351,13 +332,20 @@
                         <img class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
                 </transition>
-                <!--------- BATTLE POP UPS -------------------------------------------------------------------------------------------------------------------->
+                <!-- Pop Ups -->
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.bytes != 0x07 && batt.yourPokemon.modStageAccuracy.bytes != 0x00 && batt.yourPokemon.modStageAccuracy.bytes != 0xFF && (state == `Battle` || state == `From Battle`)">
                             <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/accuracy/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
+                        </div>
+                    </transition>
+                    <transition name="fade">
+                        <div v-if="state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0">
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/accuracy/default.png)"></div>
+                            <div class="popUpsStyle popUpLabelStyle repelLabel" style="font-size: 16px;">Repel Steps:</div>
+                            <div class="popUpsStyle repelSteps">{{ mapper.properties.overworld.repelCount.value }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
@@ -382,268 +370,271 @@
                         </div>
                     </transition>
                 </div>
-                <!---------- GAMETIME ------------------------------------------------------------------------------------------------------------------->
+                <!-- Game Time -->
                 <transition name="fade"><div v-show="timer_settings == `Game-Time`" class="gametime">
                     <div class="gametimeClock">{{gametimeHMS}}</div>
                     <div class="gametimeFrames">.{{gametime_frames}}</div>
                 </div></transition>
-                <!---------- REALTIME ------------------------------------------------------------------------------------------------------------------->
+                <!-- Real Time-->
                 <transition name="fade"><div v-show="timer_settings == `Real-Time`" class="gametime">
                     <div class="gametimeClock">{{timer_formatted_time[0]}}</div>
                     <div class="gametimeFrames">{{timer_formatted_time[1]}}</div>
                 </div></transition>
-                <!---------- RESET ------------------------------------------------------------------------------------------------------------------->
+                <!-- Resets -->
                 <transition name="fade"><div v-show="resetCounter == true" class="resets">
                     <div v-show="key_F16 == `resets`" id="reset_counter">{{playerResetsDisplay}}</div>
                     <div v-show="key_F16 == `blackouts`" id="reset_counter">{{blackout_counter}}</div>
                 </div></transition>
             </div>
-        </div>
-        <!-- UI ----------------------------------------------------------------------------------------->
-        <div class="testingArea1" style="z-index: 50000;">
-            <div>Solo Pokemon:</div>
-            <select v-model="starterName" class="dropdownMenu">
-                <option disabled value="">Select a species</option>
-                <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
-            </select>
-            <div>Game:</div>
-            <select v-model="game_name" class="dropdownMenu">
-                <option>Yellow</option>
-                <option>Red</option>
-                <option>Blue</option>
-            </select>
-            <br>
-            <div>DV Setting:</div>
-            <select v-model="dvSetting" class="dropdownMenu">
-                <option disabled value="">Please select one</option>
-                <option>Max</option>
-                <option>Min</option>
-                <option>NPC</option>
-                <option>Max with Min Atk</option>
-                <option>Random</option>
-            </select>
-            <br>
-            <table>
-                <tr>
-                    <th style="text-align: left;">Attempt:</th>
-                    <th>{{this.attempt_number}}</th>
-                    <th>
-                        <button @click="increment('attempt_number')" class="smallButtonStyle increment">+</button>
-                        <button @click="decrement('attempt_number')" class="smallButtonStyle decrement">-</button>
-                    </th>
-                </tr>
-                <tr>
-                    <th style="text-align: left;">Finished Runs:</th>
-                    <th>{{this.finished_run_count}}</th>
-                    <th>
-                        <button @click="increment('finished_run_count')" class="smallButtonStyle increment">+</button>
-                        <button @click="decrement('finished_run_count')" class="smallButtonStyle decrement">-</button>
-                    </th>
-                </tr>
-                <tr>
-                    <th style="text-align: left;">Resets:</th>
-                    <th>{{this.playerResets}}</th>
-                    <th>
-                        <button @click="increment('playerResets')" class="smallButtonStyle increment">+</button>
-                        <button @click="decrement('playerResets')" class="smallButtonStyle decrement">-</button>
-                    </th>
-                </tr>
-                <tr>
-                    <th style="text-align: left;">Blackouts:</th>
-                    <th>{{this.blackout_counter}}</th>
-                    <th>
-                        <button @click="increment('blackout_counter')" class="smallButtonStyle increment">+</button>
-                        <button @click="decrement('blackout_counter')" class="smallButtonStyle decrement">-</button>
-                    </th>
-                </tr>
-            </table>
-            <br>
-            <button class="buttonStyle" @click="newRun">New Run</button>
-            <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
-            Start Time Offset: <input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
-            <br>
-            <div>Pokemon:</div>
-            X-Offset:   <input type="range" min="-400" max="400" v-model="imageXOffset"/><br>
-            Y-Offset:   <input type="range" min="-400" max="400" v-model="imageYOffset"/><br>
-            Scale:      <input type="range" min="0.3"  max="2"   step="0.02" v-model="imageScale"/><br>
-            Saturation: <input type="range" min="90"   max="150" step="1"    v-model="imageSat"/><br>
-            Rotation:   <input type="range" min="0"    max="360" step="1"    v-model="imageRotation"/><br>
-            Flip:       <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
-            <br>
-            <div>Background:</div>
-            <select v-model="backgroundTexture" class="dropdownMenu">
-                <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
-                    {{ key }}
-                </option>
-            </select>
-            <br>
-            X-Offset:   <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
-            Y-Offset:   <input type="range" min="-125" max="125" v-model="backgroundYOffset"/><br>
-            Scale:      <input type="range" min="100"  max="200" v-model="backgroundScale"/><br>
-            Brightness: <input type="range" min="0"    max="200" v-model="backgroundBrightness"/><br>
-            Contrast:   <input type="range" min="0"    max="200" v-model="backgroundContrast"/><br>
-            Saturation: <input type="range" min="0"    max="200" v-model="backgroundSaturation"/><br>
-            Blur:       <input type="range" min="0"    max="10"  v-model="backgroundBlur"/><br>
-            Hue:        <input type="range" min="0"    max="358" v-model="backgroundHue"/><br>
-            <br>
-            <div>UI:</div>
-            <button @click="color_picker" class="buttonStyle">Color Picker</button>
-            Saturation: <input type="range" min="0" max="2" step="0.1" v-model="ui_saturation"/><br>
-            Type Colors:<br>
-            <select v-model="ui_type_colors" class="dropdownMenu">
-                <option>Bulbapedia Current</option>
-                <option>Bulbapedia Legacy</option>
-            </select>
-        </div>
-        <div class="testingArea2" style="z-index: 50000;">
-            <div>Secondary Menu:</div>
-            <select v-model="help_menus" class="dropdownMenu">
-                <option disabled value="">Please select one</option>
-                <option>Encounters</option>
-                <option>Advanced Options</option>
-                <option>Splits</option>
-                <!-- <option>Dev Console</option> -->
-            </select>
-            <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
-        </div>
-        <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
-            Encounters:<br>
-            <table class="ui_table">
-                <tr>
-                    <th>Route 1:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="route1"/></th>
-                </tr>
-                <tr>
-                    <th>Route 3:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="route3"/></th>
-                </tr>
-                <tr>
-                    <th>Mt. Moon:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="mtMoon"/></th>
-                </tr>
-                <tr>
-                    <th>Route 6:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="route6"/></th>
-                </tr>
-                <tr>
-                    <th>Rock Tunnel:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="rockTunnel"/></th>
-                </tr>
-                <tr>
-                    <th>Pkmn Tower:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="pokemonTower"/></th>
-                </tr>
-                <tr>
-                    <th>Safari Zone:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="safariZone"/></th>
-                </tr>
-                <tr>
-                    <th>Pkmn Mansion:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="mansion"/></th>
-                </tr>
-                <tr>
-                    <th>Route 22:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="route22"/></th>
-                </tr>
-                <tr>
-                    <th>Victory Road:</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="victoryRoad"/></th>
-                </tr>
-                <tr>
-                    <th>Route 24</th>
-                    <th><input class="checkBoxStyle" type="checkbox" v-model="route24"/></th>
-                </tr>
-            </table>
-            <br>
-            Viridian Forest:<br>
-            <select v-model="viridian_forest" class="dropdownMenu">
-                <option disabled value="">Please select one</option>
-                <option>Encounters On</option>
-                <option>Encounters Off</option>
-                <option>Pidgey</option>
-                <option>Level</option>
-                <option>Speed</option>
-            </select>
-            <input v-if="viridian_forest == `Level`" v-model="goal_level" placeholder="Target Level">
-            <input v-if="viridian_forest == `Speed`" v-model="goal_speed" placeholder="Target Speed">
-            <br>
-            <br>
-            <button @click="apply_settings('first_playthrough_settings')" class="buttonStyle">First Playthrough Settings</button><br>
-            <button @click="apply_settings('second_playthrough_settings')" class="buttonStyle">Second Playthrough Settings</button><br>
-            <button @click="apply_settings('all_off')" class="buttonStyle">All Off</button>
-        </div>
-        <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
-            <div>Timer Setting:</div>
-            <select v-model="timer_settings" class="dropdownMenu">
-                <option disabled value="">Please select one</option>
-                <option>Real-Time</option>
-                <option>Game-Time</option>
-                <option>Off - Real-Time Label</option>
-                <option>Off - Game-Time Label</option>
-            </select><br>
-            <div style="text-decoration: underline;">Graphics Toggles:</div>
-            Trainer Teams: <input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/><br>
-            <div class="note">Displays the enemy trainer's team while battling them. This option must be enabled for the following option "All Trainers" to work.</div>
-            <br>
-            All Trainers: <input class="checkBoxStyle" type="checkbox" v-model="showAllTrainers"/><br>
-            <div class="note">When disabled the overlay will only display the teams of key trainers (Rivals, Gym Leaders, E4, Champion).</div>
-            <br>
-            Show Trainer Illustrations: <input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/><br>
-            <div class="note">When enabled this will display illustrations of the trainer under their team when you fight them.</div>
-            <br>
-            Show Wild Pokemon: <input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/><br>
-            <div class="note">Displays wild Pokemon in the same way as trainer Pokemon when this option is checked.</div>
-            <br>
-            Show screens, accruacy, and evasion: <input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/><br>
-            <div class="note">The overlay will display pop ups when your Pokemon is behind a screen or has had its accuracy or evasion modified.</div>
-            <br>
-            <br>
-            <div style="text-decoration: underline;">Calculation Toggles:</div>
-            Show Guarenteed Crits in Effective Power: <input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/><br>
-            <div class="note">If the Pokemon is guarenteed a critical hit using a high-crit-rate move the overlay will calculate in the crit multiplier when displaying effective power. High-crit-rate moves are: Crabhammer, Karate Chop, Slash, Razor Leaf.</div>
-            <br>
-            <br>
-            <div style="text-decoration: underline;">Gameplay Toggles:</div>
-            Rock Tunnel Darkness: <input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/><br>
-            <div class="note">When enabled Flash is automatically applied in Rock Tunnel.</div>
-            <br>
-            Trash Cans Solved: <input class="checkBoxStyle" type="checkbox" v-model="trashCans"/><br>
-            Automatically Set Options: <input class="checkBoxStyle" type="checkbox" v-model="options"/><br>
-            Reset Counter: <input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/><br>
-            <br>
-            <button @click="reset_advanced_settings" class="buttonStyle">Reset All Advanced Options</button>
-        </div>
-        <div v-show="help_menus == `Internal Monitor`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
-            <div>Splits:</div>
-        </div>
-        <div v-show="help_menus == `Splits`" class="testingArea3" style="z-index: 50000; font-size: 14px; overflow-y: auto;">
-            <div style="font-size: 24px;">{{this.starterName}}</div>
-            <div>{{split_logStr}}</div>
-            <div>PB Time: {{this.pb_time}}</div>
-            <table style="text-align: left; line-height: 16px;">
-                <tr>
-                    <th style="text-decoration: underline; width: 160px; text-align: left;">Split</th>
-                    <th style="text-decoration: underline; width: 40px; text-align: right;">Current</th>
-                    <th style="text-decoration: underline; width: 40px; text-align: right;">PB</th>
-                    <th style="text-decoration: underline; width: 45px; text-align: right;">diff</th>
-                </tr>
-                <button class="buttonStyle" @click="save_pb_splits">Save PB Splits</button>
-                <button class="buttonStyle" @click="splits_clear">Clear Splits</button>
-                <tr v-for="split in this.split_data">
-                    <th>{{split[2]}}:</th>
-                    <th style="text-align: right;">{{split[3]}}</th>
-                    <th v-if="pb_split(split[2]) != null" style="text-align: right;">{{pb_split(split[2])[3]}}</th>
-                    <th v-if="pb_split(split[2]) != null" style="text-align: right;" :style="splitTextColor(split[3], pb_split(split[2])[3])">{{timeUntilSplit(convertDurationToSeconds(split[3]), convertDurationToSeconds(pb_split(split[2])[3]))}}</th>
-                </tr>
-            </table>
-            <br>
-        </div>
-        <div v-show="help_menus == `Playthrough Info`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
-            <div>Items:</div>
+            <!-- UI -->
+            <div class="testingArea1" style="z-index: 50000;">
+                <div>Solo Pokemon:</div>
+                <select v-model="starterName" class="dropdownMenu">
+                    <option disabled value="">Select a species</option>
+                    <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
+                </select>
+                <div>Game:</div>
+                <select v-model="game_name" class="dropdownMenu">
+                    <option>Yellow</option>
+                    <option>Red</option>
+                    <option>Blue</option>
+                    <option>Gold</option>
+                    <option>Silver</option>
+                    <option>Crystal</option>
+                </select>
+                <br>
+                <div>DV Setting:</div>
+                <select v-model="dvSetting" class="dropdownMenu">
+                    <option disabled value="">Please select one</option>
+                    <option>Max</option>
+                    <option>Min</option>
+                    <option>NPC</option>
+                    <option>Max with Min Atk</option>
+                    <option>Random</option>
+                </select>
+                <br>
+                <table>
+                    <tr>
+                        <th style="text-align: left;">Attempt:</th>
+                        <th>{{this.attempt_number}}</th>
+                        <th>
+                            <button @click="increment('attempt_number')" class="smallButtonStyle increment">+</button>
+                            <button @click="decrement('attempt_number')" class="smallButtonStyle decrement">-</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left;">Finished Runs:</th>
+                        <th>{{this.finished_run_count}}</th>
+                        <th>
+                            <button @click="increment('finished_run_count')" class="smallButtonStyle increment">+</button>
+                            <button @click="decrement('finished_run_count')" class="smallButtonStyle decrement">-</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left;">Resets:</th>
+                        <th>{{this.playerResets}}</th>
+                        <th>
+                            <button @click="increment('playerResets')" class="smallButtonStyle increment">+</button>
+                            <button @click="decrement('playerResets')" class="smallButtonStyle decrement">-</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left;">Blackouts:</th>
+                        <th>{{this.blackout_counter}}</th>
+                        <th>
+                            <button @click="increment('blackout_counter')" class="smallButtonStyle increment">+</button>
+                            <button @click="decrement('blackout_counter')" class="smallButtonStyle decrement">-</button>
+                        </th>
+                    </tr>
+                </table>
+                <br>
+                <button class="buttonStyle" @click="newRun">New Run</button>
+                <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
+                Start Time Offset: <input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
+                <br>
+                <div>Pokemon:</div>
+                X-Offset:   <input type="range" min="-400" max="400" v-model="imageXOffset"/><br>
+                Y-Offset:   <input type="range" min="-400" max="400" v-model="imageYOffset"/><br>
+                Scale:      <input type="range" min="0.3"  max="2"   step="0.02" v-model="imageScale"/><br>
+                Saturation: <input type="range" min="90"   max="150" step="1"    v-model="imageSat"/><br>
+                Rotation:   <input type="range" min="0"    max="360" step="1"    v-model="imageRotation"/><br>
+                Flip:       <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
+                <br>
+                <div>Background:</div>
+                <select v-model="backgroundTexture" class="dropdownMenu">
+                    <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
+                        {{ key }}
+                    </option>
+                </select>
+                <br>
+                X-Offset:   <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
+                Y-Offset:   <input type="range" min="-125" max="125" v-model="backgroundYOffset"/><br>
+                Scale:      <input type="range" min="100"  max="200" v-model="backgroundScale"/><br>
+                Brightness: <input type="range" min="0"    max="200" v-model="backgroundBrightness"/><br>
+                Contrast:   <input type="range" min="0"    max="200" v-model="backgroundContrast"/><br>
+                Saturation: <input type="range" min="0"    max="200" v-model="backgroundSaturation"/><br>
+                Blur:       <input type="range" min="0"    max="10"  v-model="backgroundBlur"/><br>
+                Hue:        <input type="range" min="0"    max="358" v-model="backgroundHue"/><br>
+                <br>
+                <div>UI:</div>
+                <button @click="color_picker" class="buttonStyle">Color Picker</button>
+                Saturation: <input type="range" min="0" max="2" step="0.1" v-model="ui_saturation"/><br>
+                Type Colors:<br>
+                <select v-model="ui_type_colors" class="dropdownMenu">
+                    <option>Bulbapedia Current</option>
+                    <option>Bulbapedia Legacy</option>
+                </select>
+            </div>
+            <div class="testingArea2" style="z-index: 50000;">
+                <div>Secondary Menu:</div>
+                <select v-model="help_menus" class="dropdownMenu">
+                    <option disabled value="">Please select one</option>
+                    <option>Encounters</option>
+                    <option>Advanced Options</option>
+                    <option>Splits</option>
+                    <!-- <option>Dev Console</option> -->
+                </select>
+                <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
+            </div>
+            <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
+                Encounters:<br>
+                <table class="ui_table">
+                    <tr>
+                        <th>Route 1:</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="route1"/></th>
+                    </tr>
+                    <tr>
+                        <th>Route 3:</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="route3"/></th>
+                    </tr>
+                    <tr>
+                        <th>Mt. Moon:</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="mtMoon"/></th>
+                    </tr>
+                    <tr>
+                        <th>Route 6:</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="route6"/></th>
+                    </tr>
+                    <tr>
+                        <th>Rock Tunnel:</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="rockTunnel"/></th>
+                    </tr>
+                    <tr>
+                        <th>Pkmn Tower:</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="pokemonTower"/></th>
+                    </tr>
+                    <tr>
+                        <th>Safari Zone:</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="safariZone"/></th>
+                    </tr>
+                    <tr>
+                        <th>Pkmn Mansion:</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="mansion"/></th>
+                    </tr>
+                    <tr>
+                        <th>Route 22:</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="route22"/></th>
+                    </tr>
+                    <tr>
+                        <th>Victory Road:</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="victoryRoad"/></th>
+                    </tr>
+                    <tr>
+                        <th>Route 24</th>
+                        <th><input class="checkBoxStyle" type="checkbox" v-model="route24"/></th>
+                    </tr>
+                </table>
+                <br>
+                Viridian Forest:<br>
+                <select v-model="viridian_forest" class="dropdownMenu">
+                    <option disabled value="">Please select one</option>
+                    <option>Encounters On</option>
+                    <option>Encounters Off</option>
+                    <option>Pidgey</option>
+                    <option>Level</option>
+                    <option>Speed</option>
+                </select>
+                <input v-if="viridian_forest == `Level`" v-model="goal_level" placeholder="Target Level">
+                <input v-if="viridian_forest == `Speed`" v-model="goal_speed" placeholder="Target Speed">
+                <br>
+                <br>
+                <button @click="apply_settings('first_playthrough_settings')" class="buttonStyle">First Playthrough Settings</button><br>
+                <button @click="apply_settings('second_playthrough_settings')" class="buttonStyle">Second Playthrough Settings</button><br>
+                <button @click="apply_settings('all_off')" class="buttonStyle">All Off</button>
+            </div>
+            <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
+                <div>Timer Setting:</div>
+                <select v-model="timer_settings" class="dropdownMenu">
+                    <option disabled value="">Please select one</option>
+                    <option>Real-Time</option>
+                    <option>Game-Time</option>
+                    <option>Off - Real-Time Label</option>
+                    <option>Off - Game-Time Label</option>
+                </select><br>
+                <div style="text-decoration: underline;">Graphics Toggles:</div>
+                Trainer Teams: <input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/><br>
+                <div class="note">Displays the enemy trainer's team while battling them. This option must be enabled for the following option "All Trainers" to work.</div>
+                <br>
+                All Trainers: <input class="checkBoxStyle" type="checkbox" v-model="showAllTrainers"/><br>
+                <div class="note">When disabled the overlay will only display the teams of key trainers (Rivals, Gym Leaders, E4, Champion).</div>
+                <br>
+                Show Trainer Illustrations: <input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/><br>
+                <div class="note">When enabled this will display illustrations of the trainer under their team when you fight them.</div>
+                <br>
+                Show Wild Pokemon: <input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/><br>
+                <div class="note">Displays wild Pokemon in the same way as trainer Pokemon when this option is checked.</div>
+                <br>
+                Show screens, accruacy, and evasion: <input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/><br>
+                <div class="note">The overlay will display pop ups when your Pokemon is behind a screen or has had its accuracy or evasion modified.</div>
+                <br>
+                <br>
+                <div style="text-decoration: underline;">Calculation Toggles:</div>
+                Show Guarenteed Crits in Effective Power: <input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/><br>
+                <div class="note">If the Pokemon is guarenteed a critical hit using a high-crit-rate move the overlay will calculate in the crit multiplier when displaying effective power. High-crit-rate moves are: Crabhammer, Karate Chop, Slash, Razor Leaf.</div>
+                <br>
+                <br>
+                <div style="text-decoration: underline;">Gameplay Toggles:</div>
+                Rock Tunnel Darkness: <input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/><br>
+                <div class="note">When enabled Flash is automatically applied in Rock Tunnel.</div>
+                <br>
+                Trash Cans Solved: <input class="checkBoxStyle" type="checkbox" v-model="trashCans"/><br>
+                Automatically Set Options: <input class="checkBoxStyle" type="checkbox" v-model="options"/><br>
+                Reset Counter: <input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/><br>
+                <br>
+                <button @click="reset_advanced_settings" class="buttonStyle">Reset All Advanced Options</button>
+            </div>
+            <div v-show="help_menus == `Internal Monitor`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
+                <div>Splits:</div>
+            </div>
+            <div v-show="help_menus == `Splits`" class="testingArea3" style="z-index: 50000; font-size: 14px; overflow-y: auto;">
+                <div style="font-size: 24px;">{{this.starterName}}</div>
+                <div>{{split_logStr}}</div>
+                <div>PB Time: {{this.pb_time}}</div>
+                <table style="text-align: left; line-height: 16px;">
+                    <tr>
+                        <th style="text-decoration: underline; width: 160px; text-align: left;">Split</th>
+                        <th style="text-decoration: underline; width: 40px; text-align: right;">Current</th>
+                        <th style="text-decoration: underline; width: 40px; text-align: right;">PB</th>
+                        <th style="text-decoration: underline; width: 45px; text-align: right;">diff</th>
+                    </tr>
+                    <button class="buttonStyle" @click="save_pb_splits">Save PB Splits</button>
+                    <button class="buttonStyle" @click="splits_clear">Clear Splits</button>
+                    <tr v-for="split in this.split_data">
+                        <th>{{split[2]}}:</th>
+                        <th style="text-align: right;">{{split[3]}}</th>
+                        <th v-if="pb_split(split[2]) != null" style="text-align: right;">{{pb_split(split[2])[3]}}</th>
+                        <th v-if="pb_split(split[2]) != null" style="text-align: right;" :style="splitTextColor(split[3], pb_split(split[2])[3])">{{timeUntilSplit(convertDurationToSeconds(split[3]), convertDurationToSeconds(pb_split(split[2])[3]))}}</th>
+                    </tr>
+                </table>
+                <br>
+            </div>
+            <div v-show="help_menus == `Playthrough Info`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
+                <div>Items:</div>
+            </div>
         </div>
     </div>
 
-<!------ JAVASCRIPT --------------------------------------------------------------------------------------------------------------------->
+<!-- Imports -->
     <script src="https://unpkg.com/@microsoft/signalr@7.0.14/dist/browser/signalr.min.js"></script> 
     <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script>
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
@@ -661,6 +652,10 @@
     <script src="data/autosplitter.js"></script>
     <script src="data/textures.js"></script>
     <script src="data/battle_summary_properties.js"></script>
+    <script src="data/pokedex/pokedex_red_blue.js"></script>
+    <script src="data/pokedex/pokedex_yellow.js"></script>
+    <script src="data/pokedex/pokedex_gold_silver.js"></script>
+    <script src="data/pokedex/pokedex_crystal.js"></script>
     <script src="settings/application_settings.js"></script>
     <script src="settings/pokemon_settings.js"></script>
     <script type="text/javascript" src="frontend.js"></script>
