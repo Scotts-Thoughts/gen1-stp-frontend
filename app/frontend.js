@@ -881,6 +881,14 @@ const app = Vue.createApp({
         }
     },
     watch: {
+        ui_type_colors(newValue) {
+            if (newValue == 'Bulbapedia Current') {
+                ui_type_color_modifier = "current_"
+            }
+            if (newValue == 'Bulbapedia Legacy') {
+                ui_type_color_modifier = "legacy_"
+            }
+        },
         async starterName(newValue, oldValue) {
             if (this.ready == false) await this.sleep(250)
 
