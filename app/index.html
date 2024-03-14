@@ -115,7 +115,7 @@
                         </div>
                     </div>
                     <!-- Overworld Stats -->
-                    <div v-if="state == `Overworld` || state == `To Battle`">
+                    <div v-else-if="state == `Overworld` || state == `To Battle`">
                         <div class="statsheader">Level {{ map.player.team[0].level.value }}</div>
                         <!-- Labels -->
                         <div class="statsLabelStyle statsLabelsColumn1">
