@@ -609,10 +609,11 @@ const app = Vue.createApp({
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
             oldExpValue:     0,
             stat_object:     [
-                {abrv: "Atk", name: "Attack"}, 
-                {abrv: "Def", name: "Defense"}, 
-                {abrv: "Spc", name: "Special"}, 
-                {abrv: "Spe", name: "Speed"}, 
+                {abrv: "HP",  name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             label_row: 1, label_column: 1, value_row: 1, value_column: 2,}, 
+                {abrv: "Atk", name: "Attack",  label: "Atk.", path: "attack",  base_stat_path: "attack",         label_row: 2, label_column: 1, value_row: 2, value_column: 2,}, 
+                {abrv: "Def", name: "Defense", label: "Def.", path: "defense", base_stat_path: "defense",        label_row: 3, label_column: 1, value_row: 3, value_column: 2,}, 
+                {abrv: "Spc", name: "Special", label: "Spc.", path: "special", base_stat_path: "special_attack", label_row: 2, label_column: 3, value_row: 2, value_column: 4,}, 
+                {abrv: "Spe", name: "Speed",   label: "Spe.", path: "speed",   base_stat_path: "speed",          label_row: 3, label_column: 3, value_row: 3, value_column: 4,}, 
             ],
 
             // Settings:
@@ -642,6 +643,7 @@ const app = Vue.createApp({
             show_wild_battles:          false, //shows wild battles in the battle screen
             automaticallySavePBSplits:  true, //saves splits if the player beats their PB (this overwrites currently saved PB splits)
             autosplitter_toggle:        true,
+            display_badge_boosts:       true,
 
             help_menus: "Settings",
 
@@ -756,6 +758,13 @@ const app = Vue.createApp({
             ui_saturation:          .6,
             ui_type_colors:         "Bulbapedia Current",
             ui_type_color_modifier: "current_",
+
+            stats_display: "Automatic",
+            right_panel:   "Battle Graphic",
+            automatic_ivs: true,
+            automatic_evs: true,
+            automatic_stats: true,
+            ui_stats_styling_modifier: "2024",
         }
     },
 
@@ -1103,15 +1112,59 @@ const app = Vue.createApp({
 
     computed: {
         stats_header() {
-            if (this.mapper.properties.events.got_pokedex.value == false && this.mapper.properties.events.battled_rival_in_oaks_lab.value == true) {
-                return `${this.starterName}'s DVs`
+            const toggle    = this.automatic_stats
+            const stat_type = this.stats_display
+            const year      = this.ui_stats_styling_modifier
+            const state     = this.state
+            if (year == '2023') {
+                if (this.mapper.properties.events.got_pokedex.value == false && this.mapper.properties.events.battled_rival_in_oaks_lab.value == true) {
+                    return `${this.starterName}'s DVs`
+                }
+                switch (state) {
+                    case "Base Stats":  return `Base Stats`
+                    case "Overworld":   return `Level ${this.mapper.properties.player.team[0].level.value}`
+                    case "To Battle":   return `Level ${this.mapper.properties.player.team[0].level.value}`
+                    case "From Battle": return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+                    case "Battle":      return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+                }
             }
-            switch (this.state) {
-                case "Base Stats":  return `Base Stats`
-                case "Overworld":   return `Level ${this.mapper.properties.player.team[0].level.value}`
-                case "To Battle":   return `Level ${this.mapper.properties.player.team[0].level.value}`
-                case "From Battle": return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
-                case "Battle":      return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+            else {
+                if (toggle) {
+                    switch (stat_type) {
+                        case "Base Stats": return `Base Stats`
+                        case "DVs":        return `${this.starterName}'s DVs`
+                        case "EVs":        return `${this.starterName}'s Stat Exp`
+                        case "Automatic":  return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+                    }
+                }
+                else {
+                    switch (stat_type) {
+                        case "Base Stats": return `Base Stats`
+                        case "DVs":        return `${this.starterName}'s DVs`
+                        case "EVs":        return `${this.starterName}'s Stat Exp`
+                        case "Automatic":  return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+                    }
+                }
+            }
+        },
+        automatic_stats_type() {
+            const toggle    = this.automatic_stats
+            const stat_type = this.stats_display
+            if (toggle) {
+                switch (stat_type) {
+                    case "Base Stats": this.stats_display = "Base Stats"; break;
+                    case "DVs":        this.stats_display = "DVs"       ; break;
+                    case "EVs":        this.stats_display = "EVs"       ; break;
+                    case "Automatic":  this.stats_display = "Automatic" ; break;
+                }
+            }
+            else {
+                switch (stat_type) {
+                    case "Base Stats": this.stats_display = "Base Stats"; break;
+                    case "DVs":        this.stats_display = "DVs"       ; break;
+                    case "EVs":        this.stats_display = "EVs"       ; break;
+                    case "Automatic":  this.stats_display = "Automatic" ; break;
+                }
             }
         },
         enemy_trainer() {
@@ -1370,6 +1423,63 @@ const app = Vue.createApp({
     },
 
     methods: {
+        get_stat(stat_name) {
+            const state = this.state
+            if (state == `Overworld` || state == `To Battle`) {
+                switch (stat_name) {
+                    case "Hp":      return this.mapper.properties.player.team[0].maxHp.value
+                    case "Attack":  return this.badge_boost(this.mapper.properties.player.badges.badge1.value, this.mapper.properties.player.team[0].attack.value)
+                    case "Defense": return this.badge_boost(this.mapper.properties.player.badges.badge3.value, this.mapper.properties.player.team[0].defense.value)
+                    case "Special": return this.badge_boost(this.mapper.properties.player.badges.badge7.value, this.mapper.properties.player.team[0].special.value)
+                    case "Speed":   return this.badge_boost(this.mapper.properties.player.badges.badge5.value, this.mapper.properties.player.team[0].speed.value)
+                }
+            }
+            if (state == `Battle` || state == `From Battle`) {
+                switch (stat_name) {
+                    case "Hp":      return this.mapper.properties.battle.yourPokemon.maxHp.value
+                    case "Attack":  return this.mapper.properties.battle.yourPokemon.attack.value
+                    case "Defense": return this.mapper.properties.battle.yourPokemon.defense.value
+                    case "Special": return this.mapper.properties.battle.yourPokemon.special.value
+                    case "Speed":   return this.mapper.properties.battle.yourPokemon.speed.value
+                }
+            }
+            if (state == `Base Stats`) {
+                switch (stat_name) {
+                    case "Hp":      return this.pokedex_yellow[this.starterName].base_stats.hp
+                    case "Attack":  return this.pokedex_yellow[this.starterName].base_stats.attack
+                    case "Defense": return this.pokedex_yellow[this.starterName].base_stats.defense
+                    case "Special": return this.pokedex_yellow[this.starterName].base_stats.special_attack
+                    case "Speed":   return this.pokedex_yellow[this.starterName].base_stats.speed
+                }
+            }
+        },
+        badge_boost(badge, stat) {
+            if (this.display_badge_boosts == false) { return stat }
+            return badge ? Math.floor(stat * 1.125) : stat;
+        },
+        get_ev(stat_exp) {
+            //add more data to this function for details (stat gain in gen1, and gen3 for comparisons)
+            return Math.floor(Math.sqrt(stat_exp) / 4)
+        },
+        get_dv(stat_name) {
+            const state = this.state
+            let dv_atk = this.mapper.properties.player.team[0].dvAttack.value
+            let dv_def = this.mapper.properties.player.team[0].dvDefense.value
+            let dv_spc = this.mapper.properties.player.team[0].dvSpecial.value
+            let dv_spe = this.mapper.properties.player.team[0].dvSpeed.value
+            switch (stat_name) {
+                case "Hp":
+                    return this.hp_dv(dv_atk, dv_def, dv_spe, dv_spc)
+                case "Attack":
+                    return dv_atk
+                case "Defense":
+                    return dv_def
+                case "Special":
+                    return dv_spc
+                case "Speed":
+                    return dv_spe
+            }
+        },
         hp_dv(atk, def, spd, spc) {
             return (((atk % 2) * 8) + ((def % 2) * 4) + ((spd % 2) * 2) + ((spc % 2) * 1))
         },
@@ -3486,53 +3596,84 @@ const app = Vue.createApp({
             }
         })
 
-        keyhook.registerShortCut('F14', async () => {
-            const now = Date.now();
-            if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
-                this.key_F14 = !this.key_F14;
-                this.lastExecuted = Date.now();
-            }
+        // keyhook.registerShortCut('F14', async () => {
+        //     const now = Date.now();
+        //     if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
+        //         this.key_F14 = !this.key_F14;
+        //         this.lastExecuted = Date.now();
+        //     }
+        // });
+        // keyhook.registerShortCut('F13', async () => {
+        //     const now = Date.now();
+        //     if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
+        //         // Cycle through the values
+        //         this.key_F13 = this.cycleValues_rightDisplay[this.cycleIndex_rightDisplay];
+        //         this.cycleIndex_rightDisplay = (this.cycleIndex_rightDisplay + 1) % this.cycleValues_rightDisplay.length;
+        //         this.set_setting_prop("this.cycleIndex_rightDisplay", this.cycleIndex_rightDisplay)
+        //         this.lastExecuted = Date.now();
+        //     }
+        // });
+        // keyhook.registerShortCut('F15', async () => {
+        //     const now = Date.now();
+        //     if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
+        //         // Cycle through the values
+        //         this.key_F15 = this.cycleValues_stats[this.cycleIndex_stats];
+        //         this.cycleIndex_stats = (this.cycleIndex_stats + 1) % this.cycleValues_stats.length;
+        //         this.set_setting_prop("this.cycleIndex_stats", this.cycleIndex_stats)
+        //         this.lastExecuted = Date.now();
+        //     }
+        // });
+        // keyhook.registerShortCut('F16', async () => {
+        //     const now = Date.now();
+        //     if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
+        //         // Cycle through the values
+        //         this.key_F16 = this.cycleValues_failures[this.cycleIndex_failures];
+        //         this.cycleIndex_failures = (this.cycleIndex_failures + 1) % this.cycleValues_failures.length;
+        //         this.set_setting_prop("this.cycleIndex_failures", this.cycleIndex_failures)
+        //         this.lastExecuted = Date.now();
+        //     }
+        // });
+        // keyhook.registerShortCut('F17', async () => {
+        //     const now = Date.now();
+        //     if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
+        //         // Cycle through the values
+        //         this.key_F17 = this.cycleValues_screens[this.cycleIndex_screens];
+        //         this.cycleIndex_screens = (this.cycleIndex_screens + 1) % this.cycleValues_screens.length;
+        //         this.set_setting_prop("this.cycleIndex_screens", this.cycleIndex_screens)
+        //         this.lastExecuted = Date.now();
+        //     }
+        // });
+        //keybinds
+        keyhook.registerShortCut('F13', async () => { // Show IVs
+            console.log("Key: F13 pressed: EVs displayed.")
+            this.stats_display = "DVs";
         });
-        keyhook.registerShortCut('F13', async () => {
-            const now = Date.now();
-            if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
-                // Cycle through the values
-                this.key_F13 = this.cycleValues_rightDisplay[this.cycleIndex_rightDisplay];
-                this.cycleIndex_rightDisplay = (this.cycleIndex_rightDisplay + 1) % this.cycleValues_rightDisplay.length;
-                this.set_setting_prop("this.cycleIndex_rightDisplay", this.cycleIndex_rightDisplay)
-                this.lastExecuted = Date.now();
-            }
+        keyhook.registerShortCut('F14', async () => { // Show EVs
+            console.log("Key: F14 pressed: IVs displayed.")
+            this.stats_display = "EVs";
         });
-        keyhook.registerShortCut('F15', async () => {
-            const now = Date.now();
-            if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
-                // Cycle through the values
-                this.key_F15 = this.cycleValues_stats[this.cycleIndex_stats];
-                this.cycleIndex_stats = (this.cycleIndex_stats + 1) % this.cycleValues_stats.length;
-                this.set_setting_prop("this.cycleIndex_stats", this.cycleIndex_stats)
-                this.lastExecuted = Date.now();
-            }
+        keyhook.registerShortCut('F15', async () => { // Show Base Stats
+            console.log("Key: F15 pressed. Base Stats displayed.")
+            this.stats_display = "Base Stats";
         });
-        keyhook.registerShortCut('F16', async () => {
-            const now = Date.now();
-            if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
-                // Cycle through the values
-                this.key_F16 = this.cycleValues_failures[this.cycleIndex_failures];
-                this.cycleIndex_failures = (this.cycleIndex_failures + 1) % this.cycleValues_failures.length;
-                this.set_setting_prop("this.cycleIndex_failures", this.cycleIndex_failures)
-                this.lastExecuted = Date.now();
-            }
+        keyhook.registerShortCut('F16', async () => { // Automatic
+            console.log("Key: F16 pressed. Stats are displaying automatically now.")
+            this.stats_display = "Automatic";
         });
-        keyhook.registerShortCut('F17', async () => {
-            const now = Date.now();
-            if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
-                // Cycle through the values
-                this.key_F17 = this.cycleValues_screens[this.cycleIndex_screens];
-                this.cycleIndex_screens = (this.cycleIndex_screens + 1) % this.cycleValues_screens.length;
-                this.set_setting_prop("this.cycleIndex_screens", this.cycleIndex_screens)
-                this.lastExecuted = Date.now();
-            }
+
+        keyhook.registerShortCut('F17', async () => { // Inventory
+            console.log("Key: F17 pressed. Automatic battle graphics will be displayed.")
+            this.right_panel = "Battle Graphic";
         });
+        keyhook.registerShortCut('F18', async () => { // Trainer Graphic during Battle
+            console.log("Key: F18 pressed. Inventory displayed.")
+            this.right_panel = "Inventory";
+        });
+        keyhook.registerShortCut('F19', async () => { // Trainer Graphic during Battle
+            console.log("Key: F19 pressed. Movepool displayed.")
+            this.right_panel = "Movepool";
+        });
+
         keyhook.registerShortCut('F23', async () => {
             this.newRun()
         });

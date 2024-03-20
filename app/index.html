@@ -71,26 +71,35 @@
                     </div>
                 </div>
                 <!-- Badges -->
-                <div class="badgesBar">          
+                <div v-if="display_badge_boosts == true" class="badgesBar">          
                     <img v-show="map.player.badges.badge1.value === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" />
                     <img v-show="map.player.badges.badge3.value === true" class="badgeBoostStyle badgeBoostDef" :src="badgeGraphic(map.player.badges.badge3)" />                    
                     <img v-show="map.player.badges.badge5.value === true" class="badgeBoostStyle badgeBoostSpd" :src="badgeGraphic(map.player.badges.badge5)" />                    
                     <img v-show="map.player.badges.badge7.value === true" class="badgeBoostStyle badgeBoostSpc" :src="badgeGraphic(map.player.badges.badge7)" />      
                 </div>                         
+                <!--  New Stats -->
+                <div v-if="ui_stats_styling_modifier == '2024'" class="statsContainer"> 
+                    <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
+                    <div>
+                        <div class="statsheader">{{stats_header}}</div>
+                        <div class="expLabelGen1">Exp:</div>
+                        <div v-for="stat in stat_object">
+                            <div :class="`stat_label_style stat_row_${stat.label_row} stat_column_${stat.label_column}`">{{stat.label}}</div>
+                        </div>
+                        <div v-for="stat in stat_object">
+                            <div v-if="stats_display == 'Base Stats'" :class="`stat_value_style stat_row_${stat.value_row} stat_column_${stat.value_column}`">{{pokedex_yellow[starterName].base_stats[stat.base_stat_path]}}</div>
+                            <div v-if="stats_display == 'DVs'"        :class="`stat_value_style stat_row_${stat.value_row} stat_column_${stat.value_column} dv`">{{get_dv(`${stat.name}`)}}/15</div>
+                            <div v-if="stats_display == 'EVs'"        :class="`stat_value_style stat_row_${stat.value_row} stat_column_${stat.value_column} stat_exp`">{{mapper.properties.player.team[0][`statExp${stat.name}`].value}}</div>
+                            <div v-if="stats_display == 'Automatic'"  :class="`stat_value_style stat_row_${stat.value_row} stat_column_${stat.value_column}`">{{get_stat(`${stat.name}`)}}</div>
+                        </div>
+                    </div>
+                </div>
                 <!--  Stats -->
-                <div class="statsContainer">  
-                    <!-- Base Stats -->
+                <div v-if="ui_stats_styling_modifier == '2023'" class="statsContainer">  
                     <div class="statsheader">{{stats_header}}</div>
                     <div class="expLabelGen1">Exp:</div>
-                    <div v-if="state == `Base Stats`">
-                        <div class="statsLabelStyle statsLabelsColumn1">HP<br>Atk.<br>Def.<br></div>
-                        <div class="statsLabelStyle statsLabelsColumn2"><br>Spc.<br>Spe.<br></div>
-                        <div class="statsColumnStyle statsColumn1">{{ g1PokemonData[starterName].base_hp }}<br>{{ g1PokemonData[starterName].base_atk }}<br>{{ g1PokemonData[starterName].base_def }}<br></div>
-                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
-                        <div class="statsColumnStyle statsColumn2"><br>{{ g1PokemonData[starterName].base_spc }}<br>{{ g1PokemonData[starterName].base_spd }}<br></div>
-                    </div>
                     <!-- DVs -->
-                    <div v-else-if="mapper.properties.events.got_pokedex.value == false && mapper.properties.events.battled_rival_in_oaks_lab.value == true">
+                    <div v-if="stats == 'IVs' && g3stateVariable != 'Base Stats' || (mapper.properties.events.got_pokedex.value == false && mapper.properties.events.battled_rival_in_oaks_lab.value == true && g3stateVariable != 'Base Stats')">
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP<br></span>
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Atk.<br></span>
@@ -101,7 +110,6 @@
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spc.<br></span>
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spe.<br></span>
                         </div>
-                        <div class="statsheader">{{ map.player.team[0].species.value }}'s DVs</div>
                         <div class="statsColumnDVStyle statsColumn1">
                             {{ hp_dv(map.player.team[0].dvAttack.value, map.player.team[0].dvDefense.value, map.player.team[0].dvSpeed.value, map.player.team[0].dvSpecial.value) }}/15<br>
                             {{ map.player.team[0].dvAttack.value }}/15<br>
@@ -114,9 +122,18 @@
                             {{ map.player.team[0].dvSpeed.value  }}/15<br>
                         </div>
                     </div>
+
+                    <!-- Base Stats -->
+                    <div v-else-if="state == `Base Stats`">
+                        <div class="statsLabelStyle statsLabelsColumn1">HP<br>Atk.<br>Def.<br></div>
+                        <div class="statsLabelStyle statsLabelsColumn2"><br>Spc.<br>Spe.<br></div>
+                        <div class="statsColumnStyle statsColumn1">{{ g1PokemonData[starterName].base_hp }}<br>{{ g1PokemonData[starterName].base_atk }}<br>{{ g1PokemonData[starterName].base_def }}<br></div>
+                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
+                        <div class="statsColumnStyle statsColumn2"><br>{{ g1PokemonData[starterName].base_spc }}<br>{{ g1PokemonData[starterName].base_spd }}<br></div>
+                    </div>
+
                     <!-- Overworld Stats -->
                     <div v-else-if="state == `Overworld` || state == `To Battle`">
-                        <div class="statsheader">Level {{ map.player.team[0].level.value }}</div>
                         <!-- Labels -->
                         <div class="statsLabelStyle statsLabelsColumn1">
                             <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP<br></span>
@@ -165,7 +182,6 @@
                             <span :style="{opacity: statLabelOpacity(batt.yourPokemon.modStageSpecial) }">Spc.<br></span>
                             <span :style="{opacity: statLabelOpacity(batt.yourPokemon.modStageSpeed) }">Spe.<br></span>
                         </div>
-                        <div class="statsheader">Level {{ mapper.properties.player.team[0].level.value }}</div>
                         <div class="statsColumnStyle statsColumn1">
                             {{ mapper.properties.player.team[0].maxHp }}<br>
                             {{ batt.yourPokemon.battleStatAttack }}<br>
@@ -201,7 +217,45 @@
                 </div>
                 <!-- Enemy Graphics -->
                 <transition name="fade">
-                    <div v-if="state != 'Base Stats' && state != 'Overworld' && mapper.properties.battle.type.value == `Trainer`" style="position: absolute;" key=1>
+                    <div v-if="right_panel == 'Movepool'" key=0>
+                        <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
+                            <tr class="movepool_header" :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                <th class="movepool_header movepool_way">Way</th>
+                                <th class="movepool_header movepool_move">Move</th>
+                                <th class="movepool_header movepool_type">Type</th>
+                                <th class="movepool_header movepool_tableC">Pwr.</th>
+                                <th class="movepool_header movepool_tableC">Acc.</th>
+                                <th class="movepool_header movepool_tableC">PP</th>
+                            </tr>
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial">
+                                <td class="movepool_way">1</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).level">
+                                <td class="movepool_way">{{x.Level}}</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).tmhm">
+                                <td class="movepool_way">{{x.tmhm}}</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                        </table>
+                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg); filter: drop-shadow(0px 0px 1px #000);"></div>
+                        <div class="movepoolLabel">Movepool</div>
+                    </div>
+                    <div v-else-if="right_panel == 'Battle Graphic' && (state != 'Base Stats' && state != 'Overworld' && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <div class="colored-image ds" :style="battlePokemonCrop()" style="--url: url(images/ui/opponent.svg);"></div>
                         <div class="enemyGraphic">
@@ -264,7 +318,7 @@
                             </div>
                         </div> 
                     </div>
-                    <div v-else-if="mapper.properties.battle.type.value == `Wild` && show_wild_battles == true" style="position: absolute;">
+                    <div v-else-if="right_panel == 'Battle Graphic' && (mapper.properties.battle.type.value == `Wild` && show_wild_battles == true)" style="position: absolute;">
                         <div class="trainerLabel">{{"Wild " + wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
                         <div class="colored-image ds" :style="battlePokemonCrop()" style="--url: url(images/ui/opponent.svg);"></div>
                         <div class="enemyGraphic">
@@ -287,6 +341,32 @@
                                 <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageSpeed.value != `0`" class="enemyMods speedMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpeed.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpeed.value}}</div></transition>
                             </div>
                         </div> 
+                    </div>
+                    <div v-else-if="right_panel == 'Inventory'" key=2>
+                        <table class="inventory_demo" cellspacing="0">
+                            <tr>
+                                <th>Money:</th>
+                                <th>${{mapper.properties.player.money.value}}</th>
+                                <th>Coins:</th>
+                                <th>{{mapper.properties.player.gameCornerCoins.value}}</th>
+                            </tr>
+                            <tr>
+                                <th class="inventory_header movepool_way">Slot</th>
+                                <th class="inventory_header movepool_way">Item</th>
+                                <th class="inventory_header movepool_move">Qty</th>
+                                <th class="inventory_header movepool_type">Sale $</th>
+                                <th class="inventory_header movepool_type">Total $</th>
+                            </tr>
+                            <tr v-for="item in items = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]">
+                                <th v-if="mapper.properties.player.items[item].item.value != null" class="movepool_header movepool_way">{{item + 1}}</th>
+                                <th v-if="mapper.properties.player.items[item].item.value != null" class="movepool_header movepool_way">{{capitalization_format(mapper.properties.player.items[item].item.value)}}</th>
+                                <th v-if="mapper.properties.player.items[item].item.value != null" class="movepool_header movepool_move">{{mapper.properties.player.items[item].quantity.value}}</th>
+                                <th v-if="mapper.properties.player.items[item].item.value != null" class="movepool_header movepool_type">${{mapper.properties.player.items[item].quantity.value * 100}}</th>
+                                <th v-if="mapper.properties.player.items[item].item.value != null" class="movepool_header movepool_type">${{mapper.properties.player.items[item].quantity.value * 100 * mapper.properties.player.items[item].quantity.value}}</th>
+                            </tr>
+                        </table>
+                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/movepool.svg)"></div>
+                        <div class="movepoolLabel">Inventory</div>
                     </div>
                     <div v-else-if="key_F14 == true" key=3>
                         <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
@@ -484,6 +564,13 @@
                     <option>Bulbapedia Current</option>
                     <option>Bulbapedia Legacy</option>
                 </select>
+                <br>
+                Stats Style:<br>
+                <select v-model="ui_stats_styling_modifier" class="dropdownMenu">
+                    <option>2024</option>
+                    <option>2023</option>
+                </select>
+                
             </div>
             <div class="testingArea2" style="z-index: 50000;">
                 <div>Secondary Menu:</div>
@@ -561,6 +648,26 @@
                 <button @click="apply_settings('first_playthrough_settings')" class="buttonStyle">First Playthrough Settings</button><br>
                 <button @click="apply_settings('second_playthrough_settings')" class="buttonStyle">Second Playthrough Settings</button><br>
                 <button @click="apply_settings('all_off')" class="buttonStyle">All Off</button>
+                <br>
+                <br>
+                Stats:<br>
+                <select v-model="stats_display" class="dropdownMenu">
+                    <option>Automatic</option>
+                    <option>Base Stats</option>
+                    <option>DVs</option>
+                    <option>EVs</option>
+                </select>
+                <table>
+                    <tr><td>Automatically switch stats:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_stats"/></td>     </tr>
+                    <tr><td>Display badge boosts:</td>      <td><input class="checkBoxStyle" type="checkbox" v-model="display_badge_boosts"/></td></tr>
+                </table>
+                <br>
+                Right Panel:<br>
+                <select v-model="right_panel" class="dropdownMenu">
+                    <option>Battle Graphic</option>
+                    <option>Inventory</option>
+                    <option>Movepool</option>
+                </select>
             </div>
             <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
                 <div>Timer Setting:</div>

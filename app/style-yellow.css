@@ -466,7 +466,7 @@ box-shadow:
     position: absolute;
     font-family: play;
     font-size: 17px;
-    line-height: 22px;
+    line-height: 21px;
     top: 45px;
     left: 410px;
     width: 330px;
@@ -480,8 +480,8 @@ box-shadow:
     filter: drop-shadow(0px 4px 4px #000000c5);
     position: absolute;
     font-family: play;
-    font-size: 22px;
-    line-height: 24px;
+    font-size: 17px;
+    line-height: 21px;
     top: 45px;
     left: 750px;
     width: 760px;
@@ -514,6 +514,45 @@ box-shadow:
     left: 755px;
     width: 720px;
     height: 902px;
+}
+
+.stat_value_style {
+    position: absolute;
+    padding-left: 1px;
+    text-align: right; 
+    line-height: 58px;
+    width: 28px;
+    min-width: 120px;
+    max-width: 120px;
+    border: 1px solid #00000000;
+    font-size: 56px;
+    font-family: osb;
+}
+.stat_label_style {
+    font-size: 30px;
+    position: absolute;
+    line-height: 58px;
+    z-index: 3;
+    opacity: .63;
+    text-align: left;
+    color: rgb(0, 0, 0);
+    font-family: osb;
+    font-weight: 500;
+    width: 65px;
+    border: 1px solid #00000000;
+}
+.stat_row_1 { top: 56px; }
+.stat_row_2 { top: 118px; }
+.stat_row_3 { top: 180px; }
+.stat_column_1 { left: 12px; padding-top: 1px; padding-left: 1px; }
+.stat_column_2 { left: 60px; }
+.stat_column_3 { left: 195px; padding-top: 1px; padding-left: 1px; }
+.stat_column_4 { left: 243px; }
+.dv {
+    font-size: 33px;
+}
+.stat_exp {
+    font-size: 25px;
 }
 
 .pokemon_art {
@@ -825,12 +864,12 @@ box-shadow:
 .statsheader {
     border: 1px solid #ff000000;
     opacity: 1;
-    font-size: 32px;
+    font-size: 28px;
     line-height: 40px;
     font-family: play;
     position: absolute;
     text-align: center;
-    top: -2px;
+    top: -3px;
     width: 378px;
     z-index: 1;
     /* filter: drop-shadow(1px 1px 0px rgb(70, 70, 70)); */
@@ -1630,6 +1669,53 @@ box-shadow:
 .fadeDelayed-leave-from   { opacity: 1; }
 .fadeDelayed-leave-to     { opacity: 0; }
 .fadeDelayed-leave-active { transition: opacity 200ms ease-in-out; }
+
+.inventory_header {
+    background-color: #8d8d8d;
+    line-height: 17px;
+    font-size: 14px;
+    border: 2px solid #00000000;
+}
+.inventory_demo {
+    display: block;
+    position: absolute;
+    border: 1px solid #00ff0d00;
+    background-color: #ffffff;
+    font-size: 12px;
+    line-height: 20px;
+    line-height: 18px;
+    width: 365px;
+    height: 970px;
+    font-family: play;
+    left: 1538px;
+    top: 74px;
+    opacity: .9;
+    border: none;
+}
+.inventory_demo th:nth-child(1) {
+    width: 52px;
+}
+.inventory_demo th:nth-child(2) {
+    width: 146px;
+}
+.inventory_demo th:nth-child(3) {
+    width: 56px;
+}
+.inventory_demo th:nth-child(4) {
+    width: 56px;
+    text-align: center;
+}
+.inventory_demo th:nth-child(5) {
+    width: 56px;
+    text-align: right;
+}
+.inventory_demo th:nth-child(6) {
+    width: 56px;
+    text-align: right;
+}
+.inventory_demo tr:nth-child(odd) {
+    background-color: #cfcfcf;
+}
 
 .movepool_way {
     text-align: left;

@@ -1,6 +1,6 @@
 {
     "global_variables": {
-        "starter": "Magneton",
+        "starter": "Electrode",
         "game": "Yellow"
     },
     "games": {
@@ -490,6 +490,55 @@
                 "settings": {},
                 "splits": {},
                 "data": {}
+            },
+            "Electrode": {
+                "style": {
+                    "overlay_color": "#b37f8b",
+                    "imageXOffset": 0,
+                    "imageYOffset": "-71",
+                    "imageScale": "0.6",
+                    "imageFlip": true,
+                    "imageSat": 100,
+                    "imageRotation": 0,
+                    "backgroundBlur": 0,
+                    "backgroundScale": "135",
+                    "backgroundUrl": "",
+                    "use_custom_background": false,
+                    "attempt_number": 0,
+                    "finished_run_count": 0,
+                    "pb_time": "None",
+                    "backgroundXOffset": 100,
+                    "backgroundYOffset": "60",
+                    "backgroundTexture": "Electric 2",
+                    "backgroundBrightness": 100,
+                    "backgroundContrast": "163",
+                    "backgroundSaturation": 100,
+                    "backgroundHue": "12",
+                    "playerId": 0,
+                    "playerName": "NINTEN",
+                    "resetCatcher": "NINTEN",
+                    "playerResets": 0,
+                    "blackout_counter": 0,
+                    "resetCounter": true,
+                    "game_over": false,
+                    "lance_defeated": false,
+                    "finished_logs": false,
+                    "blackouts_as_resets": false,
+                    "blackout": false,
+                    "faults": 0,
+                    "most_recent_move": "",
+                    "split_logStr": "",
+                    "simple_data_str": "",
+                    "full_data_str": "",
+                    "deprecated_data_str": "",
+                    "simple_data": "",
+                    "ui_saturation": "1.6",
+                    "ui_type_colors": "Bulbapedia Legacy",
+                    "ui_type_color_modifier": "legacy_"
+                },
+                "settings": {},
+                "splits": {},
+                "data": {}
             }
         }
     },
@@ -568,18 +617,18 @@
         "rockTunnelDarkness": false,
         "viridian_forest": "Pidgey",
         "timer_startTimeOffset": "00:00:00.00",
-        "timer_startTime": 1710348238416,
-        "timer_pause": false,
+        "timer_startTime": 1710901082032,
+        "timer_pause": true,
         "timer_formatted_time": [
-            "2:00:37",
-            ".61",
-            "2h0m37s"
+            0,
+            ".00",
+            "0h0m0s"
         ],
-        "timer_pause_time": 1710348220476,
-        "time_h": 2,
+        "timer_pause_time": 1710901082032,
+        "time_h": 0,
         "time_m": 0,
-        "time_s": 37,
-        "time_ms": 61,
+        "time_s": 0,
+        "time_ms": 0,
         "time_split_start": "00:00:00:00",
         "battle_start": 0,
         "timer_settings": "Real-Time"
