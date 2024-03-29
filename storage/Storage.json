@@ -1,6 +1,6 @@
 {
     "global_variables": {
-        "starter": "Electrode",
+        "starter": "Articuno",
         "game": "Yellow"
     },
     "games": {
@@ -539,6 +539,55 @@
                 "settings": {},
                 "splits": {},
                 "data": {}
+            },
+            "Articuno": {
+                "style": {
+                    "overlay_color": "#000000",
+                    "imageXOffset": 0,
+                    "imageYOffset": 0,
+                    "imageScale": 1,
+                    "imageFlip": false,
+                    "imageSat": 100,
+                    "imageRotation": 0,
+                    "backgroundBlur": 0,
+                    "backgroundScale": 100,
+                    "backgroundUrl": "",
+                    "use_custom_background": false,
+                    "attempt_number": 0,
+                    "finished_run_count": 0,
+                    "pb_time": "None",
+                    "backgroundXOffset": 100,
+                    "backgroundYOffset": 100,
+                    "backgroundTexture": "Bug 1",
+                    "backgroundBrightness": 100,
+                    "backgroundContrast": 100,
+                    "backgroundSaturation": 100,
+                    "backgroundHue": 0,
+                    "playerId": 0,
+                    "playerName": "NINTEN",
+                    "resetCatcher": "NINTEN",
+                    "playerResets": 0,
+                    "blackout_counter": 0,
+                    "resetCounter": true,
+                    "game_over": false,
+                    "lance_defeated": false,
+                    "finished_logs": false,
+                    "blackouts_as_resets": false,
+                    "blackout": false,
+                    "faults": 0,
+                    "most_recent_move": "",
+                    "split_logStr": "",
+                    "simple_data_str": "",
+                    "full_data_str": "",
+                    "deprecated_data_str": "",
+                    "simple_data": "",
+                    "ui_saturation": 0.6,
+                    "ui_type_colors": "Bulbapedia Current",
+                    "ui_type_color_modifier": "current_"
+                },
+                "settings": {},
+                "splits": {},
+                "data": {}
             }
         }
     },
@@ -620,15 +669,15 @@
         "timer_startTime": 1710963374987,
         "timer_pause": false,
         "timer_formatted_time": [
-            6,
-            ".88",
-            "0h0m6s"
+            "216:45:29",
+            ".99",
+            "216h45m29s"
         ],
         "timer_pause_time": 1710901082032,
-        "time_h": 0,
-        "time_m": 0,
-        "time_s": 6,
-        "time_ms": 88,
+        "time_h": 216,
+        "time_m": 45,
+        "time_s": 29,
+        "time_ms": 99,
         "time_split_start": "00:00:00:00",
         "battle_start": 0,
         "timer_settings": "Real-Time"
