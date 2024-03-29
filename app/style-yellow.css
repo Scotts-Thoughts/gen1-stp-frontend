@@ -233,6 +233,34 @@
     --current_stellar2:  #44628D;
     --current_stellar3:  #8599CA;
 
+    --stat_hit_border: #4d9d62;
+    --stat_hit_dark:   #77f296;
+    --stat_hit_light:  #a7f7bb;
+
+    --stat_atk_border: #9f9457;
+    --stat_atk_dark:   #f4e486;
+    --stat_atk_light:  #f8edb0;
+    
+    --stat_def_border: #a5734f;
+    --stat_def_dark:   #feb17a;
+    --stat_def_light:  #fecca9;
+    
+    --stat_spc_border: #73a2cd;
+    --stat_spc_dark:   #87bff1;
+    --stat_spc_light:  #99c9f3;
+
+    --stat_spa_border: #589093;
+    --stat_spa_dark:   #88dee2;
+    --stat_spa_light:  #b2eaec;
+
+    --stat_spd_border: #5667a6;
+    --stat_spd_dark:   #859fff;
+    --stat_spd_light:  #b0c1ff;
+
+    --stat_spe_border: #8c53a6;
+    --stat_spe_dark:   #d880ff;
+    --stat_spe_light:  #e6acff;
+
     --overlay-color: #000000; /* default color */
 
     /* Exp Bar Colours */
