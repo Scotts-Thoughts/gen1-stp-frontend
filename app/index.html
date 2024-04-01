@@ -54,7 +54,7 @@
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/resets.svg)"></div>
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/stats.svg)"></div>
                     <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div></div>
-                    <img class="svg" src="images/ui/stats_backgrounds.svg"/>
+                    <img class="svg" :src="`images/ui/${ui_type_color_modifier}${ui_stat_arrangement_modifier}stats_backgrounds.svg`"/>
                     <img class="svg" style="opacity: .8; filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.svg"/>
 
                     <div class="exp_growthRate">{{ growthRate }}</div>
@@ -70,6 +70,7 @@
                         <img v-if="pkmn_type(1) != pkmn_type(2)" :src="`images/elements/types/${pkmn_type(2)}.png`" />
                     </div>
                 </div>
+                <img v-show="mapper[badge_boost_object.deprecated_path] === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" />
                 <!-- Badges -->
                 <div v-if="display_badge_boosts == true" class="badgesBar">          
                     <img v-show="map.player.badges.badge1.value === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" />
@@ -79,18 +80,26 @@
                 </div>                         
                 <!--  New Stats -->
                 <div v-if="ui_stats_styling_modifier == '2024'" class="statsContainer"> 
-                    <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
+                    <div :class="`${ui_stat_arrangement_modifier}critrate`">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
                     <div>
                         <div class="statsheader">{{stats_header}}</div>
                         <div class="expLabelGen1">Exp:</div>
                         <div v-for="stat in stat_object">
-                            <div :class="`stat_label_style stat_row_${stat.label_row} stat_column_${stat.label_column}`">{{stat.label}}</div>
+                            <div :class="`stat_label_style stat_row_${stat[`${ui_stat_arrangement_modifier}label_row`]} stat_column_${stat.label_column}`">{{stat.label}}</div>
                         </div>
                         <div v-for="stat in stat_object">
-                            <div v-if="stats_display == 'Base Stats'" :class="`stat_value_style stat_row_${stat.value_row} stat_column_${stat.value_column}`">{{pokedex_yellow[starterName].base_stats[stat.base_stat_path]}}</div>
-                            <div v-if="stats_display == 'DVs'"        :class="`stat_value_style stat_row_${stat.value_row} stat_column_${stat.value_column} dv`">{{get_dv(`${stat.name}`)}}/15</div>
-                            <div v-if="stats_display == 'EVs'"        :class="`stat_value_style stat_row_${stat.value_row} stat_column_${stat.value_column} stat_exp`">{{mapper.properties.player.team[0][`statExp${stat.name}`].value}}</div>
-                            <div v-if="stats_display == 'Automatic'"  :class="`stat_value_style stat_row_${stat.value_row} stat_column_${stat.value_column}`">{{get_stat(`${stat.name}`)}}</div>
+                            <div v-if="stats_display == 'Base Stats'"   :class="`stat_value_style stat_row_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column}`">{{pokedex_yellow[starterName].base_stats[stat.base_stat_path]}}</div>
+                            <div v-if="stats_display == 'DVs'"          :class="`stat_value_style stat_row_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} dv`">{{get_dv(`${stat.name}`)}}/15</div>
+                            <div v-if="stats_display == 'EVs'"          :class="`stat_value_style stat_row_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} stat_exp`">{{mapper.properties.player.team[0][`statExp${stat.name}`].value}}</div>
+                            <div v-if="stats_display == 'Automatic'"    :class="`stat_value_style stat_row_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column}`">{{get_stat(`${stat.name}`)}}</div>
+                            
+                            <div v-if="stats_display == 'Detailed EVs'" :class="`stat_value_style stat_row_details_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} devs`"           >{{mapper.properties.player.team[0][`statExp${stat.name}`].value}}/65535</div>
+                            <div v-if="stats_display == 'Detailed EVs'" :class="`stat_value_style stat_row_details_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} percentage_evs`" >{{decimalToPercentage(mapper.properties.player.team[0][`statExp${stat.name}`].value / 65535) }}%</div>
+                            <div v-if="stats_display == 'Detailed EVs'" :class="`stat_value_style stat_row_details_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} ev_stats_gained`">Stats: {{Math.floor(Math.sqrt(mapper.properties.player.team[0][`statExp${stat.name}`].value) / 4)}}</div>
+                            
+                            <div v-if="stats_display == 'Badge Boosts'" :class="`stat_value_style stat_row_details_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} devs`"           >Stat: {{mapper.properties.player.team[0][stat.path].value}}</div>
+                            <div v-if="stats_display == 'Badge Boosts'" :class="`stat_value_style stat_row_details_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} percentage_evs`" >Boost: {{get_bb_stat(`${stat.name}`)}}</div>
+                            <div v-if="stats_display == 'Badge Boosts'" :class="`stat_value_style stat_row_details_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} ev_stats_gained`">Increase: {{(get_stat(`${stat.name}`) - mapper.properties.player.team[0][stat.path].value) / mapper.properties.player.team[0][stat.path].value}}%</div>
                         </div>
                     </div>
                 </div>
@@ -118,8 +127,8 @@
                         <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
                         <div class="statsColumnDVStyle statsColumn2">
                             <br>
-                            {{ map.player.team[0].dvSpecial.value  }}/15<br>
-                            {{ map.player.team[0].dvSpeed.value  }}/15<br>
+                            {{ map.player.team[0].dvSpecial.value }}/15<br>
+                            {{ map.player.team[0].dvSpeed.value }}/15<br>
                         </div>
                     </div>
 
@@ -478,9 +487,6 @@
                     <option>Yellow</option>
                     <option>Red</option>
                     <option>Blue</option>
-                    <option>Gold</option>
-                    <option>Silver</option>
-                    <option>Crystal</option>
                 </select>
                 <br>
                 <div>DV Setting:</div>
@@ -532,37 +538,10 @@
                 <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
                 Start Time Offset: <input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
                 <br>
-                <div>Pokemon:</div>
-                X-Offset:   <input type="range" min="-400" max="400" v-model="imageXOffset"/><br>
-                Y-Offset:   <input type="range" min="-400" max="400" v-model="imageYOffset"/><br>
-                Scale:      <input type="range" min="0.3"  max="2"   step="0.02" v-model="imageScale"/><br>
-                Saturation: <input type="range" min="90"   max="150" step="1"    v-model="imageSat"/><br>
-                Rotation:   <input type="range" min="0"    max="360" step="1"    v-model="imageRotation"/><br>
-                Flip:       <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
-                <br>
-                <div>Background:</div>
-                <select v-model="backgroundTexture" class="dropdownMenu">
-                    <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
-                        {{ key }}
-                    </option>
-                </select>
-                <br>
-                X-Offset:   <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
-                Y-Offset:   <input type="range" min="-125" max="125" v-model="backgroundYOffset"/><br>
-                Scale:      <input type="range" min="100"  max="200" v-model="backgroundScale"/><br>
-                Brightness: <input type="range" min="0"    max="200" v-model="backgroundBrightness"/><br>
-                Contrast:   <input type="range" min="0"    max="200" v-model="backgroundContrast"/><br>
-                Saturation: <input type="range" min="0"    max="200" v-model="backgroundSaturation"/><br>
-                Blur:       <input type="range" min="0"    max="10"  v-model="backgroundBlur"/><br>
-                Hue:        <input type="range" min="0"    max="358" v-model="backgroundHue"/><br>
-                <br>
-                <div>UI:</div>
-                <button @click="color_picker" class="buttonStyle">Color Picker</button>
-                Saturation: <input type="range" min="0" max="2" step="0.1" v-model="ui_saturation"/><br>
-                Type Colors:<br>
+                Bulbapedia Colors:<br>
                 <select v-model="ui_type_colors" class="dropdownMenu">
-                    <option>Bulbapedia Current</option>
-                    <option>Bulbapedia Legacy</option>
+                    <option>Current</option>
+                    <option>Legacy</option>
                 </select>
                 <br>
                 Stats Style:<br>
@@ -570,7 +549,18 @@
                     <option>2024</option>
                     <option>2023</option>
                 </select>
-                
+                <br>
+                <div>Stat Arrangement:</div>
+                <select v-model="ui_stat_arrangement" class="dropdownMenu">
+                    <option>Hp, Atk, Def, Crit, Spc, Spe</option>
+                    <option>Hp, Atk, Def, Spe, Spc, Crit</option>
+                </select>
+                <br>
+                <br>
+                <div>Debugging:</div>
+                <table>
+                    <tr><td>State:</td><td>{{state}}</td></tr>
+                </table>
             </div>
             <div class="testingArea2" style="z-index: 50000;">
                 <div>Secondary Menu:</div>
@@ -581,6 +571,7 @@
                     <option>Splits</option>
                     <!-- <option>Dev Console</option> -->
                 </select>
+                <br>
                 <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
             </div>
             <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
@@ -653,9 +644,11 @@
                 Stats:<br>
                 <select v-model="stats_display" class="dropdownMenu">
                     <option>Automatic</option>
+                    <option>Badge Boosts</option>
                     <option>Base Stats</option>
                     <option>DVs</option>
                     <option>EVs</option>
+                    <option>Detailed EVs</option>
                 </select>
                 <table>
                     <tr><td>Automatically switch stats:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_stats"/></td>     </tr>
@@ -668,6 +661,35 @@
                     <option>Inventory</option>
                     <option>Movepool</option>
                 </select>
+            </div>
+            <div class="testingArea4">
+                <div>Pokemon:</div>
+                X-Offset:   <input type="range" min="-400" max="400" v-model="imageXOffset"/><br>
+                Y-Offset:   <input type="range" min="-400" max="400" v-model="imageYOffset"/><br>
+                Scale:      <input type="range" min="0.3"  max="2"   step="0.02" v-model="imageScale"/><br>
+                Saturation: <input type="range" min="90"   max="150" step="1"    v-model="imageSat"/><br>
+                Rotation:   <input type="range" min="0"    max="360" step="1"    v-model="imageRotation"/><br>
+                Flip:       <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
+                <br>
+                <div>Background:</div>
+                <select v-model="backgroundTexture" class="dropdownMenu">
+                    <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
+                        {{ key }}
+                    </option>
+                </select>
+                <br>
+                X-Offset:   <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
+                Y-Offset:   <input type="range" min="-125" max="125" v-model="backgroundYOffset"/><br>
+                Scale:      <input type="range" min="100"  max="200" v-model="backgroundScale"/><br>
+                Brightness: <input type="range" min="0"    max="200" v-model="backgroundBrightness"/><br>
+                Contrast:   <input type="range" min="0"    max="200" v-model="backgroundContrast"/><br>
+                Saturation: <input type="range" min="0"    max="200" v-model="backgroundSaturation"/><br>
+                Blur:       <input type="range" min="0"    max="10"  v-model="backgroundBlur"/><br>
+                Hue:        <input type="range" min="0"    max="358" v-model="backgroundHue"/><br>
+                <br>
+                <div>UI:</div>
+                <button @click="color_picker" class="buttonStyle">Color Picker</button>
+                Saturation: <input type="range" min="0" max="2" step="0.1" v-model="ui_saturation"/><br>
             </div>
             <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
                 <div>Timer Setting:</div>

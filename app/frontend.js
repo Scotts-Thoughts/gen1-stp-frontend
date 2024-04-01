@@ -608,12 +608,34 @@ const app = Vue.createApp({
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
             oldExpValue:     0,
-            stat_object:     [
-                {abrv: "HP",  name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             label_row: 1, label_column: 1, value_row: 1, value_column: 2,}, 
-                {abrv: "Atk", name: "Attack",  label: "Atk.", path: "attack",  base_stat_path: "attack",         label_row: 2, label_column: 1, value_row: 2, value_column: 2,}, 
-                {abrv: "Def", name: "Defense", label: "Def.", path: "defense", base_stat_path: "defense",        label_row: 3, label_column: 1, value_row: 3, value_column: 2,}, 
-                {abrv: "Spc", name: "Special", label: "Spc.", path: "special", base_stat_path: "special_attack", label_row: 2, label_column: 3, value_row: 2, value_column: 4,}, 
-                {abrv: "Spe", name: "Speed",   label: "Spe.", path: "speed",   base_stat_path: "speed",          label_row: 3, label_column: 3, value_row: 3, value_column: 4,}, 
+            badge_boost_object: {
+                1: [
+                    {abrv: "Atk", name: "Attack",  deprecated_path: "properties.player.badges.badge1.value", deprecated_path: 0, boost: 1.125, },
+                    {abrv: "Def", name: "Defense", deprecated_path: "properties.player.badges.badge3.value", deprecated_path: 2, boost: 1.125, },
+                    {abrv: "Spe", name: "Speed",   deprecated_path: "properties.player.badges.badge5.value", deprecated_path: 4, boost: 1.125, },
+                    {abrv: "Spc", name: "Special", deprecated_path: "properties.player.badges.badge7.value", deprecated_path: 6, boost: 1.125, },
+                ],
+                2: [
+                    {abrv: "Atk", name: "Attack",          deprecated_path: "badge1", current_path: 0, boost: 1.125, },
+                    {abrv: "Def", name: "Defense",         deprecated_path: "badge6", current_path: 2, boost: 1.125, },
+                    {abrv: "Spe", name: "Speed",           deprecated_path: "badge3", current_path: 5, boost: 1.125, },
+                    {abrv: "SpA", name: "Special Attack",  deprecated_path: "badge7", current_path: 6, boost: 1.125, },
+                    {abrv: "SpD", name: "Special Defense", deprecated_path: "badge7", current_path: 6, boost: 1.125, },
+                ],
+                3: [
+                    {abrv: "Atk", name: "Attack",          deprecated_path: "badge1", deprecated_path: 0, boost: 1.1, },
+                    {abrv: "Def", name: "Defense",         deprecated_path: "badge5", deprecated_path: 4, boost: 1.1, },
+                    {abrv: "Spe", name: "Speed",           deprecated_path: "badge3", deprecated_path: 2, boost: 1.1, },
+                    {abrv: "SpA", name: "Special Attack",  deprecated_path: "badge7", deprecated_path: 6, boost: 1.1, },
+                    {abrv: "SpD", name: "Special Defense", deprecated_path: "badge7", deprecated_path: 6, boost: 1.1, },
+                ],
+            },
+            stat_object: [
+                {abrv: "HP",  name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             hp_spe_label_row: 1, hp_spd_label_row: 1, label_column: 1, hp_spe_value_row: 1, hp_spd_value_row: 1, value_column: 2,}, 
+                {abrv: "Atk", name: "Attack",  label: "Atk.", path: "attack",  base_stat_path: "attack",         hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 1, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 2,}, 
+                {abrv: "Def", name: "Defense", label: "Def.", path: "defense", base_stat_path: "defense",        hp_spe_label_row: 3, hp_spd_label_row: 3, label_column: 1, hp_spe_value_row: 3, hp_spd_value_row: 3, value_column: 2,}, 
+                {abrv: "Spc", name: "Special", label: "Spc.", path: "special", base_stat_path: "special_attack", hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 3, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 4,}, 
+                {abrv: "Spe", name: "Speed",   label: "Spe.", path: "speed",   base_stat_path: "speed",          hp_spe_label_row: 3, hp_spd_label_row: 1, label_column: 3, hp_spe_value_row: 3, hp_spd_value_row: 1, value_column: 4,}, 
             ],
 
             // Settings:
@@ -756,8 +778,11 @@ const app = Vue.createApp({
 
             // UI
             ui_saturation:          .6,
-            ui_type_colors:         "Bulbapedia Current",
+            ui_type_colors:         "Current",
             ui_type_color_modifier: "current_",
+            ui_stat_arrangement:    "Hp, Atk, Def, Crit, Spc, Spe",
+            ui_stat_arrangement_modifier: "hp_spe_",
+
 
             stats_display: "Automatic",
             right_panel:   "Battle Graphic",
@@ -890,11 +915,19 @@ const app = Vue.createApp({
         }
     },
     watch: {
+        ui_stat_arrangement(newValue) {
+            if (newValue == 'Hp, Atk, Def, Crit, Spc, Spe') {
+                this.ui_stat_arrangement_modifier = "hp_spe_"
+            }
+            if (newValue == 'Hp, Atk, Def, Spe, Spc, Crit') {
+                this.ui_stat_arrangement_modifier = "hp_spd_"
+            }
+        },
         ui_type_colors(newValue) {
-            if (newValue == 'Bulbapedia Current') {
+            if (newValue == 'Current') {
                 this.ui_type_color_modifier = "current_"
             }
-            if (newValue == 'Bulbapedia Legacy') {
+            if (newValue == 'Legacy') {
                 this.ui_type_color_modifier = "legacy_"
             }
         },
@@ -1131,18 +1164,22 @@ const app = Vue.createApp({
             else {
                 if (toggle) {
                     switch (stat_type) {
-                        case "Base Stats": return `Base Stats`
-                        case "DVs":        return `${this.starterName}'s DVs`
-                        case "EVs":        return `${this.starterName}'s Stat Exp`
-                        case "Automatic":  return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+                        case "Base Stats":   return `Base Stats`
+                        case "DVs":          return `${this.starterName}'s DVs`
+                        case "EVs":          return `Stat Experience`
+                        case "Detailed EVs": return `Detailed Stat Experience`
+                        case "Automatic":    return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+                        case "Badge Boosts": return `Badge Boosts`
                     }
                 }
                 else {
                     switch (stat_type) {
-                        case "Base Stats": return `Base Stats`
-                        case "DVs":        return `${this.starterName}'s DVs`
-                        case "EVs":        return `${this.starterName}'s Stat Exp`
-                        case "Automatic":  return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+                        case "Base Stats":   return `Base Stats`
+                        case "DVs":          return `${this.starterName}'s DVs`
+                        case "EVs":          return `Stat Experience`
+                        case "Detailed EVs": return `Detailed Stat Experience`
+                        case "Automatic":    return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
+                        case "Badge Boosts": return `Badge Boosts`
                     }
                 }
             }
@@ -1423,6 +1460,55 @@ const app = Vue.createApp({
     },
 
     methods: {
+        get_bb_stat(stat_name) {
+            const state = this.state
+            let boosting_badge = false
+            let badge_boost_modifier = 0.125
+            //assign stats and badges
+            if (state != `Base Stats`) {
+                switch (stat_name) {
+                    case "Hp":              return 'N/A';
+                    case "Attack":          { 
+                        boosting_badge = this.mapper.properties.player.badges.badge1.value
+                        switch (boosting_badge) {
+                            case true:  return Math.floor(this.mapper.properties.player.team[0].attack.value * badge_boost_modifier)
+                            case false: return 0
+                        }
+                    }
+                    case "Defense":         { 
+                        boosting_badge = this.mapper.properties.player.badges.badge6.value
+                        switch (boosting_badge) {
+                            case true:  return Math.floor(this.mapper.properties.player.team[0].defense.value * badge_boost_modifier)
+                            case false: return 0
+                        }
+                    }
+                    case "Speed":           { 
+                        boosting_badge = this.mapper.properties.player.badges.badge3.value
+                        switch (boosting_badge) {
+                            case true:  return Math.floor(this.mapper.properties.player.team[0].speed.value * badge_boost_modifier)
+                            case false: return 0
+                        }
+                    }
+                    case "Special":  { 
+                        boosting_badge = this.mapper.properties.player.badges.badge7.value
+                        switch (boosting_badge) {
+                            case true:  return Math.floor(this.mapper.properties.player.team[0].special.value * badge_boost_modifier)
+                            case false: return 0
+                        }
+                    }
+                }
+            }
+            if (state == `Base Stats`) {
+                switch (stat_name) {
+                    case "Hp":              return 0
+                    case "Attack":          return 0
+                    case "Defense":         return 0
+                    case "Special Attack":  return 0
+                    case "Special Defense": return 0
+                    case "Speed":           return 0
+                }
+            }
+        },
         get_stat(stat_name) {
             const state = this.state
             if (state == `Overworld` || state == `To Battle`) {
@@ -3650,6 +3736,10 @@ const app = Vue.createApp({
         });
         keyhook.registerShortCut('F14', async () => { // Show EVs
             console.log("Key: F14 pressed: IVs displayed.")
+            if (this.stats_display == "EVs") {
+                this.stats_display = "Detailed EVs";
+                return
+            }
             this.stats_display = "EVs";
         });
         keyhook.registerShortCut('F15', async () => { // Show Base Stats
@@ -3658,6 +3748,10 @@ const app = Vue.createApp({
         });
         keyhook.registerShortCut('F16', async () => { // Automatic
             console.log("Key: F16 pressed. Stats are displaying automatically now.")
+            if (this.stats_display == "Automatic") {
+                this.stats_display = "Badge Boosts";
+                return
+            }
             this.stats_display = "Automatic";
         });
 

@@ -75,4 +75,10 @@ const application_settings = [
     [ "time_split_start",      "00:00:00:00", ],
     [ "battle_start",          0, ],
     [ "timer_settings",        "Real-Time", ],
+
+    [ "ui_type_colors",               "Current"],
+    [ "ui_type_color_modifier",       "current_"],
+    [ "ui_stat_arrangement",          "Hp, Atk, Def, Spe, Spc, Crit"],
+    [ "ui_stat_arrangement_modifier", "hp_spd_"],
+    [ "stats_display",                "Automatic"],
 ];

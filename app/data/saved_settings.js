@@ -90,12 +90,10 @@ const auto_save_settings = [
     "pb_splits",
     "autosplitter_toggle",
     "game_name",
-    "ui_type_colors",
-    "stats_display",
     "right_panel",
     "automatic_ivs",
     "automatic_evs",
     "ui_stats_styling_modifier",
     "automatic_stats",
-    "display_badge_boosts",
+    "display_badge_boosts", 
 ]

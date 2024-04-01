@@ -536,7 +536,7 @@ box-shadow:
     line-height: 21px;
     top: 45px;
     left: 750px;
-    width: 760px;
+    width: 360px;
     height: 988px;
 }
 /* .testingArea2 {
@@ -567,6 +567,21 @@ box-shadow:
     width: 720px;
     height: 902px;
 }
+.testingArea4 {
+    display: block;
+    border: 4px solid #000000;
+    padding: 8px;
+    background-color: #c9ffbba6;
+    filter: drop-shadow(0px 4px 4px #000000c5);
+    position: absolute;
+    font-family: play;
+    font-size: 17px;
+    line-height: 21px;
+    top: 45px;
+    left: 1120px;
+    width: 390px;
+    height: 988px;
+}
 
 .stat_value_style {
     position: absolute;
@@ -596,6 +611,9 @@ box-shadow:
 .stat_row_1 { top: 56px; }
 .stat_row_2 { top: 118px; }
 .stat_row_3 { top: 180px; }
+.stat_row_details_1 { top: 39px; }
+.stat_row_details_2 { top: 101px; }
+.stat_row_details_3 { top: 163px; }
 .stat_column_1 { left: 12px; padding-top: 1px; padding-left: 1px; }
 .stat_column_2 { left: 60px; }
 .stat_column_3 { left: 195px; padding-top: 1px; padding-left: 1px; }
@@ -1132,6 +1150,40 @@ box-shadow:
     position: absolute;
     right: 10px;
     top: 74px;
+    width: 174px;
+    opacity: 1;
+    /* border: 1px solid #00e900; */
+    line-height: 28px;
+    letter-spacing: -1.5px;
+    text-transform: lowercase;
+    font-family: osb;
+    font-weight: 700;
+    display:block;
+    z-index: 4;
+}
+.hp_spe_critrate {
+    font-size: 24px;
+    text-align: center;
+    position: absolute;
+    right: 10px;
+    top: 72px;
+    width: 174px;
+    opacity: 1;
+    /* border: 1px solid #00e900; */
+    line-height: 28px;
+    letter-spacing: -1.5px;
+    text-transform: lowercase;
+    font-family: osb;
+    font-weight: 700;
+    display:block;
+    z-index: 4;
+}
+.hp_spd_critrate {
+    font-size: 24px;
+    text-align: center;
+    position: absolute;
+    right: 10px;
+    top: 196px;
     width: 174px;
     opacity: 1;
     /* border: 1px solid #00e900; */
@@ -1948,6 +2000,27 @@ box-shadow:
     min-width: 120px;
     max-width: 120px;
     font-size: 36px;
+}
+.dv {
+    font-size: 33px;
+}
+.stat_exp {
+    font-size: 25px;
+}
+.evs {
+    font-size: 33px;
+}
+.devs {
+    padding-top: 0px;
+    font-size: 18px;
+}
+.percentage_evs {
+    padding-top: 18px;
+    font-size: 18px;
+}
+.ev_stats_gained {
+    padding-top: 36px;
+    font-size: 18px;
 }
 .fadeMod-enter-from   { opacity: 0; }
 .fadeMod-enter-to     { opacity: 1; }
