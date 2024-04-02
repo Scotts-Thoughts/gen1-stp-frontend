@@ -79,7 +79,7 @@
                     <img v-show="map.player.badges.badge7.value === true" class="badgeBoostStyle badgeBoostSpc" :src="badgeGraphic(map.player.badges.badge7)" />      
                 </div>                         
                 <!--  New Stats -->
-                <div v-if="ui_stats_styling_modifier == '2024'" class="statsContainer"> 
+                <div class="statsContainer"> 
                     <div :class="`${ui_stat_arrangement_modifier}critrate`">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
                     <div>
                         <div class="statsheader">{{stats_header}}</div>
@@ -100,111 +100,6 @@
                             <div v-if="stats_display == 'Badge Boosts'" :class="`stat_value_style stat_row_details_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} devs`"           >Stat: {{mapper.properties.player.team[0][stat.path].value}}</div>
                             <div v-if="stats_display == 'Badge Boosts'" :class="`stat_value_style stat_row_details_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} percentage_evs`" >Boost: {{get_bb_stat(`${stat.name}`)}}</div>
                             <div v-if="stats_display == 'Badge Boosts'" :class="`stat_value_style stat_row_details_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} ev_stats_gained`">Increase: {{(get_stat(`${stat.name}`) - mapper.properties.player.team[0][stat.path].value) / mapper.properties.player.team[0][stat.path].value}}%</div>
-                        </div>
-                    </div>
-                </div>
-                <!--  Stats -->
-                <div v-if="ui_stats_styling_modifier == '2023'" class="statsContainer">  
-                    <div class="statsheader">{{stats_header}}</div>
-                    <div class="expLabelGen1">Exp:</div>
-                    <!-- DVs -->
-                    <div v-if="stats == 'IVs' && g3stateVariable != 'Base Stats' || (mapper.properties.events.got_pokedex.value == false && mapper.properties.events.battled_rival_in_oaks_lab.value == true && g3stateVariable != 'Base Stats')">
-                        <div class="statsLabelStyle statsLabelsColumn1">
-                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP<br></span>
-                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Atk.<br></span>
-                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Def.<br></span>
-                        </div>
-                        <div class="statsLabelStyle statsLabelsColumn2">
-                            <br>
-                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spc.<br></span>
-                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spe.<br></span>
-                        </div>
-                        <div class="statsColumnDVStyle statsColumn1">
-                            {{ hp_dv(map.player.team[0].dvAttack.value, map.player.team[0].dvDefense.value, map.player.team[0].dvSpeed.value, map.player.team[0].dvSpecial.value) }}/15<br>
-                            {{ map.player.team[0].dvAttack.value }}/15<br>
-                            {{ map.player.team[0].dvDefense.value }}/15<br>
-                        </div>
-                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
-                        <div class="statsColumnDVStyle statsColumn2">
-                            <br>
-                            {{ map.player.team[0].dvSpecial.value }}/15<br>
-                            {{ map.player.team[0].dvSpeed.value }}/15<br>
-                        </div>
-                    </div>
-
-                    <!-- Base Stats -->
-                    <div v-else-if="state == `Base Stats`">
-                        <div class="statsLabelStyle statsLabelsColumn1">HP<br>Atk.<br>Def.<br></div>
-                        <div class="statsLabelStyle statsLabelsColumn2"><br>Spc.<br>Spe.<br></div>
-                        <div class="statsColumnStyle statsColumn1">{{ g1PokemonData[starterName].base_hp }}<br>{{ g1PokemonData[starterName].base_atk }}<br>{{ g1PokemonData[starterName].base_def }}<br></div>
-                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
-                        <div class="statsColumnStyle statsColumn2"><br>{{ g1PokemonData[starterName].base_spc }}<br>{{ g1PokemonData[starterName].base_spd }}<br></div>
-                    </div>
-
-                    <!-- Overworld Stats -->
-                    <div v-else-if="state == `Overworld` || state == `To Battle`">
-                        <!-- Labels -->
-                        <div class="statsLabelStyle statsLabelsColumn1">
-                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">HP<br></span>
-                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Atk.<br></span>
-                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Def.<br></span>
-                        </div>
-                        <div class="statsLabelStyle statsLabelsColumn2">
-                            <br>
-                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spc.<br></span>
-                            <span v-show="g1martSelector(map.overworld.map.value) != `Department`">Spe.<br></span>
-                        </div>
-                        <!-- Vitamins -->
-                        <div v-for="stat in stats = [
-                            ['HP Up:',   'HP',  'statExpHp'     ],
-                            ['Protein:', 'Atk', 'statExpAttack' ],
-                            ['Iron:',    'Def', 'statExpDefense'],
-                            ['Calcium:', 'Spc', 'statExpSpecial'],
-                            ['Carbos:',  'Spd', 'statExpSpeed'  ],]">
-                            <span v-show="g1martSelector(map.overworld.map.value) == `Department` || g1martSelector(map.overworld.map.value) == `Vitamins`" :class="`vitaminLabelStyle vitamin${stat[1]}Label`">
-                                {{stat[0]}}<br>
-                                <span :class="`vitaminsStyle vitamin${stat[1]}`">{{statExp(map.player.team[0][stat[2]])}}</span>
-                            </span>
-                        </div>
-                        <!-- Values -->
-                        <div class="statsColumnStyle statsColumn1">
-                            {{ map.player.team[0].maxHp }}<br>
-                            {{ badgeBoost(map.player.badges.badge1.value, map.player.team[0].attack.value) }}<br>
-                            {{ badgeBoost(map.player.badges.badge3.value, map.player.team[0].defense.value) }}<br>
-                        </div>
-                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
-                        <div class="statsColumnStyle statsColumn2">
-                            <br>
-                            {{ badgeBoost(mapper.properties.player.badges.badge7.value, mapper.properties.player.team[0].special.value) }}<br>
-                            {{ badgeBoost(mapper.properties.player.badges.badge5.value, mapper.properties.player.team[0].speed.value) }}<br>
-                        </div>
-                    </div>
-                    <!-- Battle Stats -->
-                    <div v-else-if="state == `Battle` || state == `From Battle`">
-                        <div class="statsLabelStyle statsLabelsColumn1">
-                            <span>HP<br></span>
-                            <span :style="{ opacity: statLabelOpacity(batt.yourPokemon.modStageAttack) }">Atk.<br></span>
-                            <span :style="{ opacity: statLabelOpacity(batt.yourPokemon.modStageDefense) }">Def.<br></span>
-                        </div>
-                        <div class="statsLabelStyle statsLabelsColumn2">
-                            <br>
-                            <span :style="{opacity: statLabelOpacity(batt.yourPokemon.modStageSpecial) }">Spc.<br></span>
-                            <span :style="{opacity: statLabelOpacity(batt.yourPokemon.modStageSpeed) }">Spe.<br></span>
-                        </div>
-                        <div class="statsColumnStyle statsColumn1">
-                            {{ mapper.properties.player.team[0].maxHp }}<br>
-                            {{ batt.yourPokemon.battleStatAttack }}<br>
-                            {{ batt.yourPokemon.battleStatDefense }}<br>
-                        </div>
-                        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[s1dynamicReset.species.value]) }}%</div>
-                        <div class="statsColumnStyle statsColumn2">
-                            <br>
-                            {{ batt.yourPokemon.battleStatSpecial }}<br>
-                            {{ batt.yourPokemon.battleStatSpeed }}<br>
-                        </div>
-                        <!-- Modifiers -->
-                        <div v-for="stat in stats = [['atk', 'modStageAttack'], ['def', 'modStageDefense'], ['spc', 'modStageSpecial'], ['spd', 'modStageSpeed']]">
-                            <div :class="`${stat[0]}Mod`">{{ stageModifiers(batt.yourPokemon[stat[1]]) }}</div>
                         </div>
                     </div>
                 </div>  
@@ -532,6 +427,11 @@
                             <button @click="decrement('blackout_counter')" class="smallButtonStyle decrement">-</button>
                         </th>
                     </tr>
+                    <tr>
+                        <th style="text-align: left;">Faults:</th>
+                        <th>{{this.playerResets + this.blackout_counter}}</th>
+                    </tr>
+                    <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
                 </table>
                 <br>
                 <button class="buttonStyle" @click="newRun">New Run</button>
@@ -544,12 +444,6 @@
                     <option>Legacy</option>
                 </select>
                 <br>
-                Stats Style:<br>
-                <select v-model="ui_stats_styling_modifier" class="dropdownMenu">
-                    <option>2024</option>
-                    <option>2023</option>
-                </select>
-                <br>
                 <div>Stat Arrangement:</div>
                 <select v-model="ui_stat_arrangement" class="dropdownMenu">
                     <option>Hp, Atk, Def, Crit, Spc, Spe</option>
@@ -560,9 +454,7 @@
                 <div>Debugging:</div>
                 <table>
                     <tr><td>State:</td><td>{{state}}</td></tr>
-                    <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
                 </table>
-                
             </div>
             <div class="testingArea2" style="z-index: 50000;">
                 <div>Secondary Menu:</div>

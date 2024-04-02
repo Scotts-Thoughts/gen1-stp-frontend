@@ -454,8 +454,8 @@
                     "playerId": 43496,
                     "playerName": "NINTEN",
                     "resetCatcher": "NINTEN",
-                    "playerResets": 0,
-                    "blackout_counter": 0,
+                    "playerResets": 3,
+                    "blackout_counter": 2,
                     "resetCounter": true,
                     "game_over": false,
                     "lance_defeated": false,
@@ -669,23 +669,23 @@
         "timer_startTime": 1711989108273,
         "timer_pause": false,
         "timer_formatted_time": [
-            "10:48:38",
-            ".93",
-            "10h48m38s"
+            "10:54:35",
+            ".90",
+            "10h54m35s"
         ],
         "timer_pause_time": 1711989101111,
         "time_h": 10,
-        "time_m": 48,
-        "time_s": 38,
-        "time_ms": 93,
+        "time_m": 54,
+        "time_s": 35,
+        "time_ms": 90,
         "time_split_start": "00:00:05.65",
         "battle_start": 1711989113947,
         "timer_settings": "Real-Time",
-        "ui_stat_arrangement": "Hp, Atk, Def, Crit, Spc, Spe",
-        "ui_stat_arrangement_modifier": "hp_spe_",
+        "ui_stat_arrangement": "Hp, Atk, Def, Spe, Spc, Crit",
+        "ui_stat_arrangement_modifier": "hp_spd_",
         "ui_type_colors": "Current",
         "ui_type_color_modifier": "current_",
-        "stats_display": "Detailed EVs",
+        "stats_display": "Automatic",
         "test_run": false
     }
 }

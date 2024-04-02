@@ -1149,41 +1149,19 @@ const app = Vue.createApp({
         stats_header() {
             const toggle    = this.automatic_stats
             const stat_type = this.stats_display
-            const year      = this.ui_stats_styling_modifier
             const state     = this.state
-            if (year == '2023') {
-                if (this.mapper.properties.events.got_pokedex.value == false && this.mapper.properties.events.battled_rival_in_oaks_lab.value == true) {
-                    return `${this.starterName}'s DVs`
-                }
-                switch (state) {
-                    case "Base Stats":  return `Base Stats`
-                    case "Overworld":   return `Level ${this.mapper.properties.player.team[0].level.value}`
-                    case "To Battle":   return `Level ${this.mapper.properties.player.team[0].level.value}`
-                    case "From Battle": return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
-                    case "Battle":      return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
-                }
-            }
-            else {
-                if (toggle) {
-                    switch (stat_type) {
-                        case "Base Stats":   return `Base Stats`
-                        case "DVs":          return `${this.starterName}'s DVs`
-                        case "EVs":          return `Stat Experience`
-                        case "Detailed EVs": return `Detailed Stat Experience`
-                        case "Automatic":    return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
-                        case "Badge Boosts": return `Badge Boosts`
+            switch (stat_type) {
+                case "Base Stats":   return `Base Stats`
+                case "DVs":          return `${this.starterName}'s DVs`
+                case "EVs":          return `Stat Experience`
+                case "Detailed EVs": return `Detailed Stat Experience`
+                case "Automatic":    {
+                    if (state == 'Base Stats') {
+                        return `Base Stats`
                     }
+                    return `Level ${this.mapper.properties.player.team[0].level.value}`
                 }
-                else {
-                    switch (stat_type) {
-                        case "Base Stats":   return `Base Stats`
-                        case "DVs":          return `${this.starterName}'s DVs`
-                        case "EVs":          return `Stat Experience`
-                        case "Detailed EVs": return `Detailed Stat Experience`
-                        case "Automatic":    return `Level ${this.mapper.properties.battle.yourPokemon.level.value}`
-                        case "Badge Boosts": return `Badge Boosts`
-                    }
-                }
+                case "Badge Boosts": return `Badge Boosts`
             }
         },
         automatic_stats_type() {
