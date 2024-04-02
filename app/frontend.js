@@ -429,16 +429,17 @@ for (let folder of folders = ['splits', 'splits/Yellow', 'splits/Red and Blue'])
     }
 }
 
-function logData(gameName, str, file_name, starterName, log_type) {
+function logData(gameName, str, file_name, starterName, log_type, testStatus) {
     const dirPath = `./splits/${gameName}/${starterName}/attempts/`;
-    let filePath = path.join(dirPath, `${starterName}-${file_name}-simple.csv`);
+    const testStatusText = testStatus ? "test_run_" : "";
+    let filePath = path.join(dirPath, `${testStatusText}${starterName}-${file_name}-simple.csv`);
     let header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,failures,level,game_time,battle_duration,move1,move2,move3,move4\n";
     if (log_type == "Simple") {
         header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time," +
         "battle_duration,move1,move2,move3,move4\n";
     }
     else if (log_type == "Full") {
-        filePath = path.join(dirPath, `${starterName}-${file_name}-full.csv`);
+        filePath = path.join(dirPath, `${testStatusText}${starterName}-${file_name}-full.csv`);
         header = "date_string,time_string,player_name,pokemon,trainer_name,trainer_id,location,total_pokemon," +
             "real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,failures,level,game_time,battle_duration," + 
             "move1,move2,move3,move4,move1pp,move2pp,move3pp,move4pp,move1ppUp,move2ppUp,move3ppUp,move4ppUp," +
@@ -471,7 +472,7 @@ function logData(gameName, str, file_name, starterName, log_type) {
             "Blackouts,Attempt Number,Failures, Rival's Team\n";
     }
     else if (log_type == "Deprecated") {
-        filePath = path.join(dirPath, `${starterName}-${file_name}-deprecated.csv`);
+        filePath = path.join(dirPath, `${testStatusText}${starterName}-${file_name}-deprecated.csv`);
         header = "ROM,Species,Trainer,Start Time,Real Time,Game Time,Level,Resets," +
             "RTHours,RTMinutes,RTSeconds,RTMilliseconds,Move 1,Move 2,Move 3,Move 4," +
             "Attack,Defense,Sp. Attack,Sp. Defense,Speed," +
@@ -498,7 +499,7 @@ function logData(gameName, str, file_name, starterName, log_type) {
             "Blackouts,Attempt Number,Failures, Rival's Team\n"
     }
     else if (log_type == "Battle Summary") {
-        filePath = path.join(dirPath, `${starterName}-${file_name}-battleSummary.csv`);
+        filePath = path.join(dirPath, `${testStatusText}${starterName}-${file_name}-battleSummary.csv`);
         header = "Unknown"
     }
     fs.mkdir(dirPath, { recursive: true }, (err) => {
@@ -666,6 +667,7 @@ const app = Vue.createApp({
             automaticallySavePBSplits:  true, //saves splits if the player beats their PB (this overwrites currently saved PB splits)
             autosplitter_toggle:        true,
             display_badge_boosts:       true,
+            test_run:                   false,
 
             help_menus: "Settings",
 
@@ -2825,7 +2827,9 @@ const app = Vue.createApp({
                     this.playerResets = 0;
                     this.blackout_counter = 0;
                     this.finished_logs = false;
-                    this.attempt_number++;
+                    if (this.test_run == false) {
+                        this.attempt_number++
+                    };
                     this.most_recent_move = "";
                     this.startTime();
                     this.playerId = newProp.value;
@@ -3124,19 +3128,19 @@ const app = Vue.createApp({
                 let gameName = this.mapper.properties.meta.gameName.value
                 
                 //write full split data (this is written for every single battle)
-                logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full")
+                logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run)
                 
                 //write deprecated split data (this is written for only pre-defined trainers)
                 //a list of these trainers can be found within `autosplitter.js` and inside the parent `Yellow` or `Red and Blue`
                 if (this.autosplitter[this.mapper.properties.meta.gameName.value][unique]) {
-                    logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated")
+                    logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated", this.test_run)
                 }
                 
                 //write simple split data
                 //a list of these can be found within `autosplitter.js` and inside the parent `Simple`
                 const simpleSplit = () => {
                     log_split()
-                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple")
+                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run)
                     this.split_data.push(this.simple_data)
                 }
                 //log simple data for only these trainers
@@ -3167,9 +3171,11 @@ const app = Vue.createApp({
                 //stop timer
                 if (trainer == "RIVAL3") { //this is the champion in gen1
                     log_split() //log the final split
-                    this.finished_run_count++ //increment finished count
+                    if (this.test_run == false) {
+                        this.finished_run_count++ //increment finished count if this is not a test run
+                    };
                     this.stopTime() //stop the timer
-                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple") //log a simple split
+                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }
             }   
@@ -3183,9 +3189,9 @@ const app = Vue.createApp({
                     autosplitter_process()
                     console.log("Run Ended - Backing up split data now...")
                     let gameName = this.mapper.properties.meta.gameName.value
-                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple")
-                    logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated")
-                    logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full")
+                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run)
+                    logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated", this.test_run)
+                    logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run)
                     this.split_data.push(this.simple_data)
                     console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
                     this.game_over = true; //stop incrementing resets

@@ -669,15 +669,15 @@
         "timer_startTime": 1711989108273,
         "timer_pause": false,
         "timer_formatted_time": [
-            "29:23",
-            ".42",
-            "0h29m23s"
+            "10:48:38",
+            ".93",
+            "10h48m38s"
         ],
         "timer_pause_time": 1711989101111,
-        "time_h": 0,
-        "time_m": 29,
-        "time_s": 23,
-        "time_ms": 42,
+        "time_h": 10,
+        "time_m": 48,
+        "time_s": 38,
+        "time_ms": 93,
         "time_split_start": "00:00:05.65",
         "battle_start": 1711989113947,
         "timer_settings": "Real-Time",
@@ -685,6 +685,7 @@
         "ui_stat_arrangement_modifier": "hp_spe_",
         "ui_type_colors": "Current",
         "ui_type_color_modifier": "current_",
-        "stats_display": "Detailed EVs"
+        "stats_display": "Detailed EVs",
+        "test_run": false
     }
 }

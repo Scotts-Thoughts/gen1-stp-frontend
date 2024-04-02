@@ -81,4 +81,5 @@ const application_settings = [
     [ "ui_stat_arrangement",          "Hp, Atk, Def, Spe, Spc, Crit"],
     [ "ui_stat_arrangement_modifier", "hp_spd_"],
     [ "stats_display",                "Automatic"],
+    [ "test_run",                     false],
 ];
