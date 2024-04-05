@@ -463,7 +463,6 @@
                     <option>Encounters</option>
                     <option>Advanced Options</option>
                     <option>Splits</option>
-                    <!-- <option>Dev Console</option> -->
                 </select>
                 <br>
                 <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
@@ -641,6 +640,7 @@
                         <th style="text-decoration: underline; width: 45px; text-align: right;">diff</th>
                     </tr>
                     <button class="buttonStyle" @click="save_pb_splits">Save PB Splits</button>
+                    <br>
                     <button class="buttonStyle" @click="splits_clear">Clear Splits</button>
                     <tr v-for="split in this.split_data">
                         <th>{{split[2]}}:</th>
