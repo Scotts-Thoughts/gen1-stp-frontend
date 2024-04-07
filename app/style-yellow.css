@@ -285,6 +285,26 @@
     --bulbapedia_category_physical_border: #99381a;
     --bulbapedia_category_special_border:  #243b74;
 
+    /* Bulbapedia colors 2024-04-07 */
+    --bulbapedia_stats_20240407-hp-light:  #9EE865;
+    --bulbapedia_stats_20240407-hp-color:  #69DC12;
+    --bulbapedia_stats_20240407-hp-heavy:  #448F0C;
+    --bulbapedia_stats_20240407-atk-light: #F5DE69;
+    --bulbapedia_stats_20240407-atk-color: #EFCC18;
+    --bulbapedia_stats_20240407-atk-heavy: #9B8510;
+    --bulbapedia_stats_20240407-def-light: #F09A65;
+    --bulbapedia_stats_20240407-def-color: #E86412;
+    --bulbapedia_stats_20240407-def-heavy: #97410C;
+    --bulbapedia_stats_20240407-spa-light: #66D8F6;
+    --bulbapedia_stats_20240407-spa-color: #14C3F1;
+    --bulbapedia_stats_20240407-spa-heavy: #0D7F9D;
+    --bulbapedia_stats_20240407-spd-light: #899EEA;
+    --bulbapedia_stats_20240407-spd-color: #4A6ADF;
+    --bulbapedia_stats_20240407-spd-heavy: #304591;
+    --bulbapedia_stats_20240407-spe-light: #E46CCA;
+    --bulbapedia_stats_20240407-spe-color: #D51DAD;
+    --bulbapedia_stats_20240407-spe-heavy: #8B1370;
+
     --overlay-color: #000000; /* default color */
 
     /* Exp Bar Colours */
