@@ -394,6 +394,10 @@
                     <option>Random</option>
                 </select>
                 <br>
+                <button class="buttonStyle" @click="newRun">New Run</button>
+                <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
+                Start Time Offset: <input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
+                <br>
                 <table>
                     <tr>
                         <th style="text-align: left;">Attempt:</th>
@@ -433,10 +437,6 @@
                     </tr>
                     <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
                 </table>
-                <br>
-                <button class="buttonStyle" @click="newRun">New Run</button>
-                <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
-                Start Time Offset: <input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
                 <br>
                 Bulbapedia Colors:<br>
                 <select v-model="ui_type_colors" class="dropdownMenu">

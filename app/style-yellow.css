@@ -647,6 +647,7 @@ box-shadow:
 
 .pokemon_art {
     display: block;
+    image-rendering: optimizeQuality;
     border: 4px solid #ff000000;
     padding: 8px;
     position: absolute;
@@ -660,6 +661,7 @@ box-shadow:
 }
 .pokemon_art2 {
     display: block;
+    image-rendering: optimizeQuality;
     /* border: 4px solid #ff0000; */
     padding: 8px;
     position: absolute;
