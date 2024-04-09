@@ -602,7 +602,7 @@
                     "backgroundScale": "125",
                     "backgroundUrl": "",
                     "use_custom_background": false,
-                    "attempt_number": 0,
+                    "attempt_number": 1,
                     "finished_run_count": 0,
                     "pb_time": "None",
                     "backgroundXOffset": 100,
@@ -729,18 +729,18 @@
         "rockTunnelDarkness": false,
         "viridian_forest": "Pidgey",
         "timer_startTimeOffset": "00:00:00.00",
-        "timer_startTime": 1712603702954,
+        "timer_startTime": 1712616825890,
         "timer_pause": false,
         "timer_formatted_time": [
-            7,
-            ".02",
-            "0h0m7s"
+            1,
+            ".65",
+            "0h0m1s"
         ],
-        "timer_pause_time": 1712594812268,
+        "timer_pause_time": 1712615696480,
         "time_h": 0,
         "time_m": 0,
-        "time_s": 7,
-        "time_ms": 2,
+        "time_s": 1,
+        "time_ms": 65,
         "time_split_start": "00:00:05.65",
         "battle_start": 1711989113947,
         "timer_settings": "Real-Time",
@@ -749,6 +749,6 @@
         "ui_type_colors": "Current",
         "ui_type_color_modifier": "current_",
         "stats_display": "Automatic",
-        "test_run": true
+        "test_run": false
     }
 }

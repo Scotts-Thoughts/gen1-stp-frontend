@@ -95,6 +95,18 @@ const Storage = createStoredObject('./storage', 'Storage.json', {
     }
 });
 
+async function loadCsvFile() {
+    const file = await window.showOpenFilePicker({
+        id: "SplitsFolder",
+        types: [{
+            description: "Split files",
+            accept: { "text/csv": [".csv"] }
+        }]
+    });
+    const contents = await file[0].getFile();
+    const text = await contents.text();
+    return text;
+}
 
 // Open the folder ./splits/ in the file explorer with node.js
 function openFolder(folderName) {
@@ -755,6 +767,9 @@ const app = Vue.createApp({
             blackouts_as_resets:   false, //counts blackouts as resets
             blackout:              false,
 
+            previous_splits: [],
+            current_splits:  [],
+
             // Pokemon settings for local storage
             overlay_color:         "#000000",
             imageXOffset:          0,
@@ -1146,6 +1161,34 @@ const app = Vue.createApp({
     },
 
     computed: {
+        compare_splits() {
+            const result = []
+            for (const x of this.previous_splits) {
+                const default_string = "-"
+                const cur_split = this.current_splits.find(y => y.trainer === x.trainer)
+                const prev = this.convertDurationToSeconds(x.time)
+                if (cur_split == undefined) { 
+                    result.push({trainer: x.trainer, previous_time: x.time, current_time: default_string, difference: default_string}) 
+                    continue
+                }
+                const cur = this.convertDurationToSeconds(cur_split.time)
+                const diff = cur - prev;
+                const diff_abs = Math.abs(diff);
+                const diff_sign = Math.sign(diff);
+                const diff_m = Math.floor(diff_abs / 60);
+                const diff_s = diff_abs % 60;
+                const diff_str = `${diff_sign === -1 ? "-" : "+"}${diff_m}:${diff_s.toString().padStart(2, "0")}`;
+                result.push({trainer: x.trainer, previous_time: x.time, current_time: cur_split.time, difference: diff_str})
+            }
+            console.log(result)
+            return result
+            // "+543"[0]
+            // "+543".charAt(0)
+            // "+543".at(-1) // wraps around to last element
+            // "+543".startsWith("+") // Returns true
+            // "+543".endsWith("+") // Returns false
+            // "+543".includes("+") // Returns true
+        },
         stats_header() {
             const toggle    = this.automatic_stats
             const stat_type = this.stats_display
@@ -1440,6 +1483,31 @@ const app = Vue.createApp({
     },
 
     methods: {
+        split_diff_color(difference_string) {
+            if (difference_string.charAt(0) == "+") { return "color: red" }
+            if (difference_string.charAt(0) == "-") { return "color: green" }
+            if (difference_string === "-") { return "color: black" }
+        },
+        async load_temp_splits() {
+            const text = await loadCsvFile();
+            const rows = text.split("\n").slice(1).filter(x => x !== '');
+            const results = []
+            for (const row of rows) {
+                const columns = row.split(",");
+                results.push({trainer: columns[2], time: columns[3]})
+            }
+            return results
+        },
+        async load_splits() {
+            const text = await loadCsvFile();
+            const rows = text.split("\n").slice(1).filter(x => x !== '');
+            const results = []
+            for (const row of rows) {
+                const columns = row.split(",");
+                results.push({trainer: columns[2], time: columns[3]})
+            }
+            this.previous_splits = results;
+        },
         get_bb_stat(stat_name) {
             const state = this.state
             let boosting_badge = false
