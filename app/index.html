@@ -85,9 +85,10 @@
                         <div class="statsheader">{{stats_header}}</div>
                         <div class="expLabelGen1">Exp:</div>
                         <div v-for="stat in stat_object">
-                            <div :class="`stat_label_style stat_row_${stat[`${ui_stat_arrangement_modifier}label_row`]} stat_column_${stat.label_column}`">{{stat.label}}</div>
-                        </div>
-                        <div v-for="stat in stat_object">
+                            <div v-if="stat.name != 'HP' && state == 'Battle'">
+                                <div :class="`mod_style ${ui_stat_arrangement_modifier}mod_${stat.mod_abrv}`" style="font-family: play;">{{ stageModifiers(batp()[`modStage${stat.mod_path}`]) }}</div>
+                            </div>
+                            <div :style="{ opacity: statLabelOpacity()[stat.name]}" :class="`stat_label_style stat_row_${stat[`${ui_stat_arrangement_modifier}label_row`]} stat_column_${stat.label_column}`">{{stat.label}}</div>
                             <div v-if="stats_display == 'Base Stats'"   :class="`stat_value_style stat_row_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column}`">{{pokedex_yellow[starterName].base_stats[stat.base_stat_path]}}</div>
                             <div v-if="stats_display == 'DVs'"          :class="`stat_value_style stat_row_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} dv`">{{get_dv(`${stat.name}`)}}/15</div>
                             <div v-if="stats_display == 'EVs'"          :class="`stat_value_style stat_row_${stat[`${ui_stat_arrangement_modifier}value_row`]} stat_column_${stat.value_column} stat_exp`">{{mapper.properties.player.team[0][`statExp${stat.name}`].value}}</div>
@@ -159,26 +160,68 @@
                         <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg); filter: drop-shadow(0px 0px 1px #000);"></div>
                         <div class="movepoolLabel">Movepool</div>
                     </div>
-                    <!-- <div v-else-if="right_panel == 'Splits'" key=5>
+                    <div v-else-if="right_panel == 'Splits'" key=5>
                         <div key=3>
-                            <div class="movepoolTitle">Splits</div>
+                            <div class="split_label">Splits</div>
                             <table class="splits_table" cellspacing="0">
-                                <tr>
-                                    <td style="text-decoration: underline; font-size: 16px; width: 118px; text-align: left; padding-left: 3px;">Split</td>
-                                    <td style="text-decoration: underline; font-size: 16px; width: 70px;  text-align: right;">Previous</td>
-                                    <td style="text-decoration: underline; font-size: 16px; width: 70px;  text-align: right;">Current</td>
-                                    <td style="text-decoration: underline; font-size: 16px; width: 70px;  text-align: right; padding-right: 3px;">Diff</td>
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">Split</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
+                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;">Diff</td>
                                 </tr>
                                 <tr v-for="split in compare_splits">
-                                    <td style="font-size: 16px; width: 118px; text-align: left; padding-left: 3px;">{{trainer_name_lookup[split.trainer].trainer}}</td>
-                                    <td style="font-size: 16px; width: 70px;  text-align: right;">{{split.previous_time}}</td>
-                                    <td style="font-size: 16px; width: 70px;  text-align: right;">{{split.current_time}}</td>
-                                    <td style="font-size: 16px; width: 70px;  text-align: right; padding-right: 3px;" :style="split_diff_color(split.difference)">{{split.difference}}</td>
+                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">{{trainer_name_lookup[split.trainer]?.trainer}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.previous_time}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.current_time}}</td>
+                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;" :style="split_diff_color(split.difference)">{{split.difference}}</td>
                                 </tr>
                             </table>
-                            <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg)"></div>
+                            <!-- 
+                            <div class="battle_summary_label">Second Splits Comparison</div>
+                            <table class="second_splits_table" cellspacing="0">
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">Split</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
+                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;">Diff</td>
+                                </tr>
+                                <tr v-for="split in compare_splits">
+                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">{{trainer_name_lookup[split.trainer]?.trainer}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.previous_time}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.current_time}}</td>
+                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;" :style="split_diff_color(split.difference)">{{split.difference}}</td>
+                                </tr>
+                            </table> 
+                            -->
+                            <div class="battle_summary_label">{{battle_summary_header}}</div>
+                            <table class="battle_summary_table" cellspacing="0">
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Metric</td>
+                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">Value</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Duration</td>
+                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this.battle_duration != 0 ? this.battle_duration : "-"}}</td>
+                                </tr>
+                                <tr v-for="stat in battle_summary.global">
+                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
+                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
+                                </tr>
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '1px solid #000'}"><td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Player:</td><td></td></tr>
+                                <tr v-for="stat in battle_summary.player">
+                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
+                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
+                                </tr>
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '1px solid #000'}"><td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Enemy:</td><td></td></tr>
+                                <tr v-for="stat in battle_summary.enemy">
+                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
+                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
+                                </tr>
+                            </table>
+                            <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(ui/ui_splits.svg)"></div>
                         </div>
-                    </div> -->
+                    </div>
                     <div v-else-if="right_panel == 'Battle Graphic' && (state != 'Base Stats' && state != 'Overworld' && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <div class="colored-image ds" :style="battlePokemonCrop()" style="--url: url(images/ui/opponent.svg);"></div>
@@ -332,7 +375,7 @@
                     </div>
                 </transition>
                 <transition name="fadeDelayed">
-                    <div v-if="state != 'Base Stats' && state != 'Overworld' && mapper.properties.battle.type.value == `Trainer`" style="position: absolute;" key=1>
+                    <div v-if="state != 'Base Stats' && state != 'Overworld' && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Battle Graphic'" style="position: absolute;" key=1>
                         <img class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
                 </transition>
@@ -415,9 +458,9 @@
                 </select>
                 <br>
                 <button class="buttonStyle" @click="newRun">New Run</button>
+                <button class="buttonStyle" @click="pauseUnpauseTime">Pause/Unpause Timer</button>
                 <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
                 Start Time Offset: <input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
-                <button class="buttonStyle" @click="load_splits()">Open Split File</button><br>
                 <br>
                 <table>
                     <tr>
@@ -459,6 +502,18 @@
                     <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
                 </table>
                 <br>
+                <button class="buttonStyle" @click="load_splits()">Open Split File</button><br>
+                <table>
+                    <tr>
+                        <td>Previous Splits Label: </td>
+                        <td><input type="text" class="inputContainer" v-model="previous_label" placeholder="Previous"/></td>
+                    </tr>
+                    <tr>
+                        <td>Current Splits Label: </td>
+                        <td><input type="text" class="inputContainer" v-model="current_label" placeholder="Current"/></td>
+                    </tr>
+                </table>
+                <br>
                 Bulbapedia Colors:<br>
                 <select v-model="ui_type_colors" class="dropdownMenu">
                     <option>Current</option>
@@ -483,7 +538,7 @@
                     <option disabled value="">Please select one</option>
                     <option>Encounters</option>
                     <option>Advanced Options</option>
-                    <option>Splits</option>
+                    <!-- <option>Splits</option> -->
                 </select>
                 <br>
                 <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
@@ -574,7 +629,13 @@
                     <option>Battle Graphic</option>
                     <option>Inventory</option>
                     <option>Movepool</option>
+                    <option>Splits</option>
                 </select>
+                <br>
+                <table>
+                    <tr><td>Disable right panel hotkeys:</td><td><input class="checkBoxStyle" type="checkbox" v-model="disallow_right_panel_switching"/></td></tr>
+                    <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_post_battle_splits"/></td></tr>
+                </table>
             </div>
             <div class="testingArea4" style="z-index: 50000;">
                 <div>Pokemon:</div>
@@ -649,7 +710,7 @@
             <div v-show="help_menus == `Internal Monitor`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
                 <div>Splits:</div>
             </div>
-            <div v-show="help_menus == `Splits`" class="testingArea3" style="z-index: 50000; font-size: 14px; overflow-y: auto;">
+            <!-- <div v-show="help_menus == `Splits`" class="testingArea3" style="z-index: 50000; font-size: 14px; overflow-y: auto;">
                 <div style="font-size: 24px;">{{this.starterName}}</div>
                 <div>{{split_logStr}}</div>
                 <div>PB Time: {{this.pb_time}}</div>
@@ -671,7 +732,7 @@
                     </tr>
                 </table>
                 <br>
-            </div>
+            </div> -->
             <div v-show="help_menus == `Playthrough Info`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
                 <div>Items:</div>
             </div>
@@ -702,5 +763,9 @@
     <script src="data/pokedex/pokedex_crystal.js"></script>
     <script src="settings/application_settings.js"></script>
     <script src="settings/pokemon_settings.js"></script>
+    <script src="settings/time_settings.js"></script>
+    <script src="autosplitter/trainer_name_lookup.js"></script>
+    <script src="autosplitter/split_trainers.js"></script>
+    <script src="autosplitter/battle_summary.js"></script>
     <script type="text/javascript" src="frontend.js"></script>
 </body>

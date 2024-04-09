@@ -31,6 +31,26 @@ function createWatchedObject(watcher) {
     return new Proxy(root, handler);
 }
 
+const MyStorage = new Proxy({}, {
+    set: (_, prop, value) => {
+        if (value === undefined || value === null)
+            localStorage.removeItem(prop);
+        else
+            localStorage.setItem(prop, JSON.stringify(value));
+    },
+    get: (_, prop) => {
+        if (prop === "clear")
+            return () => localStorage.clear();
+        if (prop === "entries")
+            return () => Object.entries(localStorage);
+        if (prop === "keys")
+            return () => Object.keys(localStorage);
+        if (prop === "has")
+            return (key) => localStorage.getItem(key) == null;
+        return JSON.parse(localStorage.getItem(prop));
+    }
+});
+
 /**
  * @param {string} path                                  path to the file
  * @param {string} file_name                             name of the file to save the data
@@ -97,7 +117,7 @@ const Storage = createStoredObject('./storage', 'Storage.json', {
 
 async function loadCsvFile() {
     const file = await window.showOpenFilePicker({
-        id: "SplitsFolder",
+        id: "Gen1SplitsFolder",
         types: [{
             description: "Split files",
             accept: { "text/csv": [".csv"] }
@@ -606,6 +626,10 @@ const app = Vue.createApp({
             textures:                textures,
             application_settings:    application_settings,
             pokemon_settings:        pokemon_settings, 
+            trainer_name_lookup:     trainer_name_lookup,
+            split_trainers:          split_trainers,
+            time_settings:           time_settings,
+            battle_summary:          battle_summary,
 
             pokedex_red_blue:        pokedex_red_blue, 
             pokedex_yellow:          pokedex_yellow, 
@@ -644,11 +668,11 @@ const app = Vue.createApp({
                 ],
             },
             stat_object: [
-                {abrv: "HP",  name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             hp_spe_label_row: 1, hp_spd_label_row: 1, label_column: 1, hp_spe_value_row: 1, hp_spd_value_row: 1, value_column: 2,}, 
-                {abrv: "Atk", name: "Attack",  label: "Atk.", path: "attack",  base_stat_path: "attack",         hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 1, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 2,}, 
-                {abrv: "Def", name: "Defense", label: "Def.", path: "defense", base_stat_path: "defense",        hp_spe_label_row: 3, hp_spd_label_row: 3, label_column: 1, hp_spe_value_row: 3, hp_spd_value_row: 3, value_column: 2,}, 
-                {abrv: "Spc", name: "Special", label: "Spc.", path: "special", base_stat_path: "special_attack", hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 3, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 4,}, 
-                {abrv: "Spe", name: "Speed",   label: "Spe.", path: "speed",   base_stat_path: "speed",          hp_spe_label_row: 3, hp_spd_label_row: 1, label_column: 3, hp_spe_value_row: 3, hp_spd_value_row: 1, value_column: 4,}, 
+                {abrv: "HP",  name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             mod_path: "Hp",      mod_abrv: "hp",  hp_spe_label_row: 1, hp_spd_label_row: 1, label_column: 1, hp_spe_value_row: 1, hp_spd_value_row: 1, value_column: 2,}, 
+                {abrv: "Atk", name: "Attack",  label: "Atk.", path: "attack",  base_stat_path: "attack",         mod_path: "Attack",  mod_abrv: "atk", hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 1, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 2,}, 
+                {abrv: "Def", name: "Defense", label: "Def.", path: "defense", base_stat_path: "defense",        mod_path: "Defense", mod_abrv: "def", hp_spe_label_row: 3, hp_spd_label_row: 3, label_column: 1, hp_spe_value_row: 3, hp_spd_value_row: 3, value_column: 2,}, 
+                {abrv: "Spc", name: "Special", label: "Spc.", path: "special", base_stat_path: "special_attack", mod_path: "Special", mod_abrv: "spc", hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 3, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 4,}, 
+                {abrv: "Spe", name: "Speed",   label: "Spe.", path: "speed",   base_stat_path: "speed",          mod_path: "Speed",   mod_abrv: "spe", hp_spe_label_row: 3, hp_spd_label_row: 1, label_column: 3, hp_spe_value_row: 3, hp_spd_value_row: 1, value_column: 4,}, 
             ],
 
             // Settings:
@@ -727,19 +751,20 @@ const app = Vue.createApp({
             viridian_forest:    "Pidgey",
 
             // Timer variables
-            timer_startTimeOffset:  "00:00:00.00",
-            timer_startTime:        0,
-            timer_pause:            true,
-            timer_formatted_time:   ["0", ".00"],
-            timer_pause_time:       0,
-            time_h:                 0,
-            time_m:                 0,
-            time_s:                 0,
-            time_ms:                0,
-            time_split_start:       "00:00:00:00",
-            battle_start:           0,
-            timer_settings:         "Real-Time",
-
+            timer_startTimeOffset: MyStorage["timer_startTimeOffset"] ?? "00:00:00.00",
+            timer_startTime:       MyStorage["timer_startTime"]       ?? 0,
+            timer_pause:           MyStorage["timer_pause"]           ?? true,
+            timer_formatted_time:  MyStorage["timer_formatted_time"]  ?? ["0", ".00"],
+            timer_pause_time:      MyStorage["timer_pause_time"]      ?? 0,
+            time_h:  0,
+            time_m:  0,
+            time_s:  0,
+            time_ms: 0,
+            time_split_start: "00:00:00:00",
+            battle_start:     0,
+            battle_duration:  0,
+            timer_settings:   MyStorage["timer_settings"] ?? "Real-Time",
+            
             // Splits
             split_data:             [],
             pb_splits:              [],
@@ -769,6 +794,9 @@ const app = Vue.createApp({
 
             previous_splits: [],
             current_splits:  [],
+            compared_splits: [],
+            previous_label:  "Previous",
+            current_label:   "Current",
 
             // Pokemon settings for local storage
             overlay_color:         "#000000",
@@ -803,14 +831,116 @@ const app = Vue.createApp({
 
             stats_display: "Automatic",
             right_panel:   "Battle Graphic",
+            disallow_right_panel_switching: true,
+            automatic_post_battle_splits: true,
+            automatic_splits: false,
             automatic_ivs: true,
             automatic_evs: true,
             automatic_stats: true,
             ui_stats_styling_modifier: "2024",
+
+            // Battle Summary
+            battle_summary_frames:        0,
+            battle_summary_battle_number: 0,
+            battle_summary_exp_gained:    0,
+            battle_summary_turns:         0,
+            battle_summary_player_turns:  0,
+            battle_summary_enemy_turns:   0,
+            battle_summary_player_hits:   0,
+            battle_summary_player_misses: 0,
+            battle_summary_player_crits:  0,
+            battle_summary_player_ohkos:  0,
+            battle_summary_enemy_hits:    0,
+            battle_summary_enemy_misses:  0,
+            battle_summary_enemy_crits:   0,
+            battle_summary_enemy_ohkos:   0,
+            battle_summary_player_Sx:     0,
+            battle_summary_player_4x:     0,
+            battle_summary_player_2x:     0,
+            battle_summary_player_1x:     0,
+            battle_summary_player_Hx:     0,
+            battle_summary_player_Qx:     0,
+            battle_summary_player_0x:     0,
+            battle_summary_player_con:    0,
+            battle_summary_player_par:    0,
+            battle_summary_player_brn:    0,
+            battle_summary_player_frz:    0,
+            battle_summary_player_psn:    0,
+            battle_summary_player_bpn:    0,
+            battle_summary_player_slp:    0,
+            battle_summary_enemy_Sx:      0,
+            battle_summary_enemy_4x:      0,
+            battle_summary_enemy_2x:      0,
+            battle_summary_enemy_1x:      0,
+            battle_summary_enemy_Hx:      0,
+            battle_summary_enemy_Qx:      0,
+            battle_summary_enemy_0x:      0,
+            battle_summary_enemy_con:     0,
+            battle_summary_enemy_par:     0,
+            battle_summary_enemy_brn:     0,
+            battle_summary_enemy_frz:     0,
+            battle_summary_enemy_psn:     0,
+            battle_summary_enemy_bpn:     0,
+            battle_summary_enemy_slp:     0,
+
+            temp_battle_summary_frames:        0,
+            temp_battle_summary_battle_number: 0,
+            temp_battle_summary_exp_gained:    0,
+            temp_battle_summary_turns:         0,
+            temp_battle_summary_player_turns:  0,
+            temp_battle_summary_enemy_turns:   0,
+            temp_battle_summary_player_hits:   0,
+            temp_battle_summary_player_misses: 0,
+            temp_battle_summary_player_crits:  0,
+            temp_battle_summary_player_ohkos:  0,
+            temp_battle_summary_enemy_hits:    0,
+            temp_battle_summary_enemy_misses:  0,
+            temp_battle_summary_enemy_crits:   0,
+            temp_battle_summary_enemy_ohkos:   0,
+            temp_battle_summary_player_Sx:     0,
+            temp_battle_summary_player_4x:     0,
+            temp_battle_summary_player_2x:     0,
+            temp_battle_summary_player_1x:     0,
+            temp_battle_summary_player_Hx:     0,
+            temp_battle_summary_player_Qx:     0,
+            temp_battle_summary_player_0x:     0,
+            temp_battle_summary_player_con:    0,
+            temp_battle_summary_player_par:    0,
+            temp_battle_summary_player_brn:    0,
+            temp_battle_summary_player_frz:    0,
+            temp_battle_summary_player_psn:    0,
+            temp_battle_summary_player_bpn:    0,
+            temp_battle_summary_player_slp:    0,
+            temp_battle_summary_enemy_Sx:      0,
+            temp_battle_summary_enemy_4x:      0,
+            temp_battle_summary_enemy_2x:      0,
+            temp_battle_summary_enemy_1x:      0,
+            temp_battle_summary_enemy_Hx:      0,
+            temp_battle_summary_enemy_Qx:      0,
+            temp_battle_summary_enemy_0x:      0,
+            temp_battle_summary_enemy_con:     0,
+            temp_battle_summary_enemy_par:     0,
+            temp_battle_summary_enemy_brn:     0,
+            temp_battle_summary_enemy_frz:     0,
+            temp_battle_summary_enemy_psn:     0,
+            temp_battle_summary_enemy_bpn:     0,
+            temp_battle_summary_enemy_slp:     0,
+
+            battle_summary_header: "Battle Summary",
         }
     },
 
     created() {
+        // Timer settings
+        for (let i = 0; i < this.time_settings.length; i++) {
+            let prop_name = this.time_settings[i];
+            this.$watch(
+                () => this[prop_name],
+                (new_value) => {
+                    MyStorage[`${prop_name}`] = new_value;
+                }
+            );
+        }
         // Initialize the Storage object
         // This creates all of the objects that will then be filled
         const debug_mode = false; // This enables the printing of storage related console logs
@@ -932,6 +1062,18 @@ const app = Vue.createApp({
         }
     },
     watch: {
+        // timer_startTimeOffset(newValue) { MyStorage['timer_startTimeOffset'] = newValue},
+        // timer_startTime(newValue)       { MyStorage['timer_startTime']       = newValue},
+        // timer_pause(newValue)           { MyStorage['timer_pause']           = newValue},
+        // timer_formatted_time(newValue)  { MyStorage['timer_formatted_time']  = newValue},
+        // timer_pause_time(newValue)      { MyStorage['timer_pause_time']      = newValue},
+        // time_h(newValue)                { MyStorage['time_h']                = newValue},
+        // time_m(newValue)                { MyStorage['time_m']                = newValue},
+        // time_s(newValue)                { MyStorage['time_s']                = newValue},
+        // time_ms(newValue)               { MyStorage['time_ms']               = newValue},
+        // time_split_start(newValue)      { MyStorage['time_split_start']      = newValue},
+        // battle_start(newValue)          { MyStorage['battle_start']          = newValue},
+        // timer_settings(newValue)        { MyStorage['timer_settings']        = newValue},
         ui_stat_arrangement(newValue) {
             if (newValue == 'Hp, Atk, Def, Crit, Spc, Spe') {
                 this.ui_stat_arrangement_modifier = "hp_spe_"
@@ -1164,30 +1306,26 @@ const app = Vue.createApp({
         compare_splits() {
             const result = []
             for (const x of this.previous_splits) {
-                const default_string = "-"
-                const cur_split = this.current_splits.find(y => y.trainer === x.trainer)
-                const prev = this.convertDurationToSeconds(x.time)
-                if (cur_split == undefined) { 
-                    result.push({trainer: x.trainer, previous_time: x.time, current_time: default_string, difference: default_string}) 
-                    continue
+                if (this.split_trainers.includes(x.trainer)) {
+                    const default_string = "-"
+                    const cur_split = this.current_splits.find(y => y.trainer === x.trainer)
+                    const prev = this.convertDurationToSeconds(x.time)
+                    if (cur_split == undefined) { 
+                        result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: default_string, difference: default_string}) 
+                        continue
+                    }
+                    const cur = this.convertDurationToSeconds(cur_split.time)
+                    const diff = cur - prev;
+                    const diff_abs = Math.abs(diff);
+                    const diff_sign = Math.sign(diff);
+                    const diff_m = Math.floor(diff_abs / 60);
+                    const diff_s = diff_abs % 60;
+                    const diff_str = `${diff_sign === -1 ? "-" : "+"}${diff_m}:${diff_s.toString().padStart(2, "0")}`;
+                    if (diff_str == "+0:00") { diff_str = "0:00" }
+                    result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: this.convertSecondsToDuration(cur), difference: diff_str})
                 }
-                const cur = this.convertDurationToSeconds(cur_split.time)
-                const diff = cur - prev;
-                const diff_abs = Math.abs(diff);
-                const diff_sign = Math.sign(diff);
-                const diff_m = Math.floor(diff_abs / 60);
-                const diff_s = diff_abs % 60;
-                const diff_str = `${diff_sign === -1 ? "-" : "+"}${diff_m}:${diff_s.toString().padStart(2, "0")}`;
-                result.push({trainer: x.trainer, previous_time: x.time, current_time: cur_split.time, difference: diff_str})
             }
-            console.log(result)
             return result
-            // "+543"[0]
-            // "+543".charAt(0)
-            // "+543".at(-1) // wraps around to last element
-            // "+543".startsWith("+") // Returns true
-            // "+543".endsWith("+") // Returns false
-            // "+543".includes("+") // Returns true
         },
         stats_header() {
             const toggle    = this.automatic_stats
@@ -1483,10 +1621,31 @@ const app = Vue.createApp({
     },
 
     methods: {
+        get_nested_property(obj, path) {
+            return path.split('.').reduce((o, p) => (o || {})[p], obj);
+        },
+        load_timer_settings() {
+            this.timer_startTimeOffset = MyStorage['timer_startTimeOffset'] ?? "00:00:00.00"
+            this.timer_startTime       = MyStorage['timer_startTime']       ?? 0
+            this.timer_pause           = MyStorage['timer_pause']           ?? true
+            this.timer_formatted_time  = MyStorage['timer_formatted_time']  ?? ["0", ".00"]
+            this.timer_pause_time      = MyStorage['timer_pause_time']      ?? 0
+            this.time_h                = MyStorage['time_h']                ?? 0
+            this.time_m                = MyStorage['time_m']                ?? 0
+            this.time_s                = MyStorage['time_s']                ?? 0
+            this.time_ms               = MyStorage['time_ms']               ?? 0
+            this.time_split_start      = MyStorage['time_split_start']      ?? "00:00:00:00"
+            this.battle_start          = MyStorage['battle_start']          ?? 0
+            this.timer_settings        = MyStorage['timer_settings']        ?? "Real-Time"
+        },
+        batp() { //player battle
+            return this.mapper?.properties?.battle?.yourPokemon
+        },
         split_diff_color(difference_string) {
+            if (difference_string === "-")          { return "color: black" }
+            if (difference_string === "+0:00")      { return "color: black" }
             if (difference_string.charAt(0) == "+") { return "color: red" }
             if (difference_string.charAt(0) == "-") { return "color: green" }
-            if (difference_string === "-") { return "color: black" }
         },
         async load_temp_splits() {
             const text = await loadCsvFile();
@@ -1864,11 +2023,16 @@ const app = Vue.createApp({
                 retro.pause()
             }
         },
-        newRun() {
+        async newRun() {
             const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
             const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
             const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
             
+            // this.current_splits = await this.load_temp_splits()
+            this.compared_splits = []
+            this.current_splits = []
+
+            this.battle_summary_header = "Battle Summary"
             this.most_recent_move = ""
             this.timer_pause = true
             this.timer_startTime = Date.now() - timeOffset
@@ -2056,7 +2220,23 @@ const app = Vue.createApp({
             } else if (minutes > 0) {
                 return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
             } else {
-                return String(remainingSeconds);
+                var seconds = remainingSeconds
+                if (remainingSeconds < 10) { seconds = "0" + remainingSeconds.toString() }
+                return `0:${String(seconds)}`
+            }
+        },
+        convertMSToDuration(milliseconds) {
+            const seconds = milliseconds / 1000;
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const remainingSeconds = seconds % 60;
+        
+            if (hours > 0) {
+                return `${hours}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+            } else if (minutes > 0) {
+                return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
+            } else {
+                return `${remainingSeconds}`;
             }
         },
         addDurations(duration1, duration2) {
@@ -2325,11 +2505,27 @@ const app = Vue.createApp({
                     else
                         return " "
         },
-        statLabelOpacity(x) {
-            if (x.bytes != 7)
-                return 0
-            else
-                return 1
+        // statLabelOpacity(x) {
+        //     if (x.bytes != 7)
+        //         return 0
+        //     else
+        //         return 1
+        // },
+        statLabelOpacity() {
+            let default_opacity = .63
+            let faded_opacity = .1
+            let mod_atk = this.mapper.properties.battle.yourPokemon.modStageAttack.value != '0'  && this.state == 'Battle' ? faded_opacity : default_opacity
+            let mod_def = this.mapper.properties.battle.yourPokemon.modStageDefense.value != '0' && this.state == 'Battle' ? faded_opacity : default_opacity
+            let mod_spc = this.mapper.properties.battle.yourPokemon.modStageSpecial.value != '0' && this.state == 'Battle' ? faded_opacity : default_opacity
+            let mod_spe = this.mapper.properties.battle.yourPokemon.modStageSpeed.value != '0'   && this.state == 'Battle' ? faded_opacity : default_opacity
+            let object = {
+                "Hp":      default_opacity,
+                "Attack":  mod_atk,
+                "Defense": mod_def,
+                "Speed":   mod_spe,
+                "Special": mod_spc,
+            }
+            return object
         },
 
         // STAGE MULTIPLIERS
@@ -2839,15 +3035,16 @@ const app = Vue.createApp({
         else {
             this.state = this.mapper.properties.meta.state.value
         }
+        this.load_timer_settings()
         this.updateTime()
 
-        if (this.playerResets.toString().length == 1) {
+        if (this.playerResets.toString().length == 1 && document.getElementById("reset_counter")) {
             document.getElementById("reset_counter").style.fontSize = "75px"
         }
-        if (this.playerResets.toString().length == 3) {
+        if (this.playerResets.toString().length == 3 && document.getElementById("reset_counter")) {
             document.getElementById("reset_counter").style.fontSize = "54px"
         }
-        if (this.playerResets.toString().length == 4) {
+        if (this.playerResets.toString().length == 4 && document.getElementById("reset_counter")) {
             document.getElementById("reset_counter").style.fontSize = "40px"
         }
 
@@ -2893,7 +3090,33 @@ const app = Vue.createApp({
         this.mapper.properties.battle.type.change((newProp) => {
             var logStr = `Autosplitter - Battle Started: ${this.mapper.properties.battle.trainer.class.value} started at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`
             var log_start = (x) => console.log(logStr)
+
             if (newProp.value == "Trainer") {
+                // Define the function outside the loop
+                function findDataByName(data_name, battle_summary) {
+                    for (let key in battle_summary) {
+                        if (Array.isArray(battle_summary[key])) {
+                            for (let obj of battle_summary[key]) {
+                                if (obj.data_name === data_name) {
+                                    return obj;
+                                }
+                            }
+                        }
+                    }
+                    return null; // return null if no matching data_name is found
+                }
+                // Use for...of loop to iterate over the array
+                for (let property of this.battle_summary["global_stats"]) {
+                    // usage
+                    if (property !== null) {
+                        let data = this.get_nested_property(this.mapper.properties, property.path)
+                        this[`temp_${property.data_name}`] = data
+                    } else {
+                        console.error(`Property ${property.data_name} not found in battle_summary`);
+                        continue
+                    }
+                }
+
                 this.split_logStr = logStr
                 this.battle_start = Date.now()
                 this.time_split_start = this.padTime(this.time_h) + ":" + this.padTime(this.time_m) + ":" + this.padTime(this.time_s) + "." + this.padTime(this.time_ms)
@@ -3159,6 +3382,10 @@ const app = Vue.createApp({
                 this.full_data_str = full_data_str // assign within Data so it can be recalled on future loops
                 this.deprecated_data_str = deprecated_data_str // assign within Data so it can be recalled on future loops
                 this.simple_data = simple_data // assign within Data so it can be recalled on future loops
+                this.current_splits.push({
+                    trainer: trainer_name, 
+                    time:    real_time_hmmss,
+                })
             }
         }
 
@@ -3166,13 +3393,45 @@ const app = Vue.createApp({
         // the `lowHealthAlarm` property is used to play the Red-bar sound effect
         // it is turned off as soon as "Player defeated Trainer" starts to render in the textbox
         this.mapper.properties.battle.lowHealthAlarm.change((prop) => {
+            //Collect battle starting metrics
+            function findDataByName(data_name, battle_summary) {
+                for (let key in battle_summary) {
+                    if (Array.isArray(battle_summary[key])) {
+                        for (let obj of battle_summary[key]) {
+                            if (obj.data_name === data_name) {
+                                return obj;
+                            }
+                        }
+                    }
+                }
+                return null; // return null if no matching data_name is found
+            }
             autosplitter_process()
             if (prop.value == "Disabled" && this.mapper.properties.battle.type.value == "Trainer") {
                 let trainer = this.mapper.properties.battle.trainer.class.value
                 let id = this.mapper.properties.battle.trainer.number.value
                 let unique = `${trainer}_${id}`
                 let gameName = this.mapper.properties.meta.gameName.value
-                
+
+                // Use for...of loop to iterate over the array
+                for (let property of this.battle_summary["global_stats"]) {
+                    // usage
+                    if (property !== null) {
+                        let data = this.get_nested_property(this.mapper.properties, property.path)
+                        if (trainer == "RIVAL3") {
+                            this.battle_summary_header = "Run Summary"
+                            this[property.data_name] = data
+                        }
+                        else {
+                            this[property.data_name] = data - this[`temp_${property.data_name}`]
+                        }
+                    } else {
+                        console.error(`Property ${property.data_name} not found in battle_summary`);
+                        continue
+                    }
+                }
+                this.battle_duration = this.convertMSToDuration(Date.now() - this.battle_start)
+
                 //write full split data (this is written for every single battle)
                 logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run)
                 
@@ -3203,11 +3462,23 @@ const app = Vue.createApp({
                     case "LORELEI": 
                     case "BRUNO":   
                     case "AGATHA":  
-                    case "LANCE": { simpleSplit() }
+                    case "LANCE": { 
+                        simpleSplit() 
+                        if (this.automatic_post_battle_splits == true) {
+                            this.right_panel = "Splits"
+                            this.automatic_splits = true
+                        }
+                    }
                 }
                 switch (unique) {
                     case "GIOVANNI_3": //this is the Giovanni fight in the 8th gym
-                    case "ROCKET_5":   { simpleSplit() } //this is the rocket outside of Cerulean city, collecting this data allows for better comparisons for Pokemon that take different choices in Cerulean Nugget->Misty or Misty->Nugget
+                    case "ROCKET_5":   { 
+                        simpleSplit() 
+                        if (this.automatic_post_battle_splits == true) {
+                            this.right_panel = "Splits"
+                            this.automatic_splits = true
+                        }
+                    } //this is the rocket outside of Cerulean city, collecting this data allows for better comparisons for Pokemon that take different choices in Cerulean Nugget->Misty or Misty->Nugget
                 }
                 
                 if (trainer == "CHAMPION") { //this is the champion fight in Pokemon Crystal (this code is likely unnessecary in gen1)
@@ -3267,6 +3538,10 @@ const app = Vue.createApp({
             if (newProp.value == "Overworld" && oldProp.value == "Battle" && this.blackout == true) {
                 this.blackout_counter++;
                 this.blackout = false;
+            }
+            if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") {
+                this.automatic_splits = false
+                this.right_panel = 'Battle Graphic'
             }
         });
 
@@ -3809,14 +4084,26 @@ const app = Vue.createApp({
 
         keyhook.registerShortCut('F17', async () => { // Inventory
             console.log("Key: F17 pressed. Automatic battle graphics will be displayed.")
+            if (this.disallow_right_panel_switching == true) { 
+                this.right_panel = "Battle Graphic"
+                return 
+            }
             this.right_panel = "Battle Graphic";
         });
         keyhook.registerShortCut('F18', async () => { // Trainer Graphic during Battle
-            console.log("Key: F18 pressed. Inventory displayed.")
-            this.right_panel = "Inventory";
+            console.log("Key: F18 pressed. Splits displayed.")
+            if (this.disallow_right_panel_switching == true) { 
+                this.right_panel = "Battle Graphic"
+                return 
+            }
+            this.right_panel = "Splits";
         });
         keyhook.registerShortCut('F19', async () => { // Trainer Graphic during Battle
             console.log("Key: F19 pressed. Movepool displayed.")
+            if (this.disallow_right_panel_switching == true) { 
+                this.right_panel = "Battle Graphic"
+                return 
+            }
             this.right_panel = "Movepool";
         });
 

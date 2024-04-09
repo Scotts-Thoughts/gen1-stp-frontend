@@ -1,3 +1,6 @@
 player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
 NINTEN,Spearow,Rival1-Lab,48,0,0,6,0:02,8.779,PECK,GROWL,,
 NINTEN,Spearow,Rival1a-Route 22,6:06,0,1,13,0:23,11.715,PECK,GROWL,LEER,
+NINTEN,Spearow,Rival1-Lab,20,0,0,6,0:02,3.292,SonicBoom,TACKLE,THUNDERSHOCK,
+NINTEN,Spearow,Brock,53,0,0,9,0:09,5.096,SonicBoom,TACKLE,THUNDERSHOCK,
+NINTEN,Spearow,Rival2-Nugget Bridge,10:31,0,0,16,0:22,12.741,THUNDERSHOCK,TACKLE,SonicBoom,
