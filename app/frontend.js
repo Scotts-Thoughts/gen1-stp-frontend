@@ -763,6 +763,7 @@ const app = Vue.createApp({
             time_split_start: "00:00:00:00",
             battle_start:     0,
             battle_duration:  0,
+            exp_per_second:   0,
             timer_settings:   MyStorage["timer_settings"] ?? "Real-Time",
             
             // Splits
@@ -1320,7 +1321,7 @@ const app = Vue.createApp({
                     const diff_sign = Math.sign(diff);
                     const diff_m = Math.floor(diff_abs / 60);
                     const diff_s = diff_abs % 60;
-                    const diff_str = `${diff_sign === -1 ? "-" : "+"}${diff_m}:${diff_s.toString().padStart(2, "0")}`;
+                    var diff_str = `${diff_sign === -1 ? "-" : "+"}${diff_m}:${diff_s.toString().padStart(2, "0")}`;
                     if (diff_str == "+0:00") { diff_str = "0:00" }
                     result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: this.convertSecondsToDuration(cur), difference: diff_str})
                 }
@@ -3431,6 +3432,8 @@ const app = Vue.createApp({
                     }
                 }
                 this.battle_duration = this.convertMSToDuration(Date.now() - this.battle_start)
+                this.exp_per_second = Math.round(this.battle_summary_exp_gained / this.battle_duration)
+                this.battle_summary_battle_number = this.mapper.properties.patch?.battles?.trainerBattles?.value
 
                 //write full split data (this is written for every single battle)
                 logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run)

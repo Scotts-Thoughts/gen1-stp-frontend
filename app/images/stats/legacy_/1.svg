@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Individual_Areas" data-name="Individual Areas" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="eCrit" x1="1654" y1="382" x2="1726" y2="382" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#999"/>
+      <stop offset=".04" stop-color="#a0a0a0"/>
+      <stop offset=".21" stop-color="#b8b8b8"/>
+      <stop offset=".37" stop-color="#c6c6c6"/>
+      <stop offset=".5" stop-color="#ccc"/>
+      <stop offset=".63" stop-color="#c6c6c6"/>
+      <stop offset=".79" stop-color="#b7b7b7"/>
+      <stop offset=".97" stop-color="#9d9d9d"/>
+      <stop offset="1" stop-color="#999"/>
+    </linearGradient>
+    <filter id="drop-shadow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="eSpe" x1="1654" y1="358" x2="1726" y2="358" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff55af"/>
+      <stop offset=".09" stop-color="#fd66af"/>
+      <stop offset=".24" stop-color="#fb7eb1"/>
+      <stop offset=".38" stop-color="#fa8cb1"/>
+      <stop offset=".5" stop-color="#fa92b2"/>
+      <stop offset=".62" stop-color="#fa8cb1"/>
+      <stop offset=".76" stop-color="#fb7db0"/>
+      <stop offset=".92" stop-color="#fd63af"/>
+      <stop offset="1" stop-color="#ff55af"/>
+    </linearGradient>
+    <filter id="drop-shadow-2" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur-2" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="eSpc" x1="1654" y1="334" x2="1726" y2="334" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#05c698"/>
+      <stop offset=".07" stop-color="#0dd3a4"/>
+      <stop offset=".23" stop-color="#1cebba"/>
+      <stop offset=".38" stop-color="#25f9c8"/>
+      <stop offset=".5" stop-color="#29ffcd"/>
+      <stop offset=".62" stop-color="#25f9c8"/>
+      <stop offset=".77" stop-color="#1beab9"/>
+      <stop offset=".94" stop-color="#0bd0a2"/>
+      <stop offset="1" stop-color="#05c698"/>
+    </linearGradient>
+    <filter id="drop-shadow-3" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur-3" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur-3" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="eDef" x1="1654" y1="310" x2="1726" y2="310" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d4cf00"/>
+      <stop offset=".11" stop-color="#e1d52a"/>
+      <stop offset=".22" stop-color="#ecd94c"/>
+      <stop offset=".32" stop-color="#f3dd64"/>
+      <stop offset=".42" stop-color="#f8df72"/>
+      <stop offset=".5" stop-color="#fae078"/>
+      <stop offset=".58" stop-color="#f8df72"/>
+      <stop offset=".67" stop-color="#f3dd63"/>
+      <stop offset=".78" stop-color="#ebd949"/>
+      <stop offset=".9" stop-color="#e0d426"/>
+      <stop offset="1" stop-color="#d4cf00"/>
+    </linearGradient>
+    <filter id="drop-shadow-4" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur-4" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur-4" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="eAtk" x1="1654" y1="286" x2="1726" y2="286" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ed8124"/>
+      <stop offset=".02" stop-color="#ed842a"/>
+      <stop offset=".16" stop-color="#f0954c"/>
+      <stop offset=".28" stop-color="#f3a164"/>
+      <stop offset=".4" stop-color="#f4a972"/>
+      <stop offset=".5" stop-color="#f5ac78"/>
+      <stop offset=".6" stop-color="#f4a972"/>
+      <stop offset=".72" stop-color="#f3a163"/>
+      <stop offset=".85" stop-color="#f09449"/>
+      <stop offset=".99" stop-color="#ed8226"/>
+      <stop offset="1" stop-color="#ed8124"/>
+    </linearGradient>
+    <filter id="drop-shadow-5" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur-5" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur-5" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="eHP" x1="1654" y1="262" x2="1726" y2="262" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ed1c24"/>
+      <stop offset=".09" stop-color="#f22d33"/>
+      <stop offset=".24" stop-color="#f94548"/>
+      <stop offset=".38" stop-color="#fd5354"/>
+      <stop offset=".5" stop-color="#ff5959"/>
+      <stop offset=".62" stop-color="#fd5354"/>
+      <stop offset=".76" stop-color="#f84446"/>
+      <stop offset=".92" stop-color="#f12a30"/>
+      <stop offset="1" stop-color="#ed1c24"/>
+    </linearGradient>
+    <filter id="drop-shadow-6" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur-6" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur-6" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Enemy">
+    <g id="G1_Stats_copy" data-name="G1 Stats copy">
+      <g id="Layer_64_copy" data-name="Layer 64 copy">
+        <rect id="crit" x="1654" y="372" width="72" height="20" rx="6" ry="6" style="fill: url(#eCrit); filter: url(#drop-shadow-1); stroke-width: 0px;"/>
+        <rect id="spe" x="1654" y="348" width="72" height="20" rx="6" ry="6" style="fill: url(#eSpe); filter: url(#drop-shadow-2); stroke-width: 0px;"/>
+        <rect id="spc" x="1654" y="324" width="72" height="20" rx="6" ry="6" style="fill: url(#eSpc); filter: url(#drop-shadow-3); stroke-width: 0px;"/>
+        <rect id="def" x="1654" y="300" width="72" height="20" rx="6" ry="6" style="fill: url(#eDef); filter: url(#drop-shadow-4); stroke-width: 0px;"/>
+        <rect id="atk" x="1654" y="276" width="72" height="20" rx="6" ry="6" style="fill: url(#eAtk); filter: url(#drop-shadow-5); stroke-width: 0px;"/>
+        <rect id="hp" x="1654" y="252" width="72" height="20" rx="6" ry="6" style="fill: url(#eHP); filter: url(#drop-shadow-6); stroke-width: 0px;"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -204,6 +204,10 @@
                                     <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Duration</td>
                                     <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this.battle_duration != 0 ? this.battle_duration : "-"}}</td>
                                 </tr>
+                                <tr>
+                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Experience Per Second</td>
+                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this.exp_per_second != 0 ? this.exp_per_second : "-"}}</td>
+                                </tr>
                                 <tr v-for="stat in battle_summary.global">
                                     <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
                                     <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
@@ -235,7 +239,7 @@
                                     <img v-if="enemyType1(x) != enemyType2(x)" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_2 ds opacityTransition" :src="`images/elements/type-icons/${enemyType2(x).toLowerCase()}.png`"/>
                                     
                                     <!-- Moves -->
-                                    <img class="enemyStatsArea opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint_stats_background" :src="`images/stats/${x}.png`"/>
+                                    <img class="enemyStatsArea opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint_stats_background" :src="`images/stats/${ui_type_color_modifier}/${x}.svg`"/>
 
                                     <div v-for="move_index in moves = [0, 1, 2, 3]">
                                         <img v-if="mapper.properties.battle.trainer.team[x][`move${move_index + 1}`]?.value != null" 
