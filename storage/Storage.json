@@ -1,6 +1,6 @@
 {
     "global_variables": {
-        "starter": "Vaporeon",
+        "starter": "Pidgey",
         "game": "Yellow"
     },
     "games": {
@@ -1229,7 +1229,7 @@
                     "backgroundContrast": "121",
                     "backgroundSaturation": "132",
                     "backgroundHue": "0",
-                    "playerId": 63485,
+                    "playerId": 0,
                     "playerName": "NINTEN",
                     "resetCatcher": "NINTEN",
                     "playerResets": 0,
@@ -1263,7 +1263,10 @@
                     ],
                     "ui_saturation": "0.8",
                     "ui_type_colors": "Current",
-                    "ui_type_color_modifier": "current_"
+                    "ui_type_color_modifier": "current_",
+                    "previous_label": "Pidgey 1",
+                    "compared_splits": [],
+                    "current_splits": []
                 },
                 "settings": {},
                 "splits": {},
@@ -2981,8 +2984,8 @@
         "ui_type_color_modifier": "current_",
         "stats_display": "Automatic",
         "test_run": true,
-        "right_panel": "Splits",
+        "right_panel": "Battle Graphic",
         "disallow_right_panel_switching": true,
-        "automatic_post_battle_splits": true
+        "automatic_post_battle_splits": false
     }
 }

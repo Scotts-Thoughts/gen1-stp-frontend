@@ -201,7 +201,7 @@
                                     <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">Value</td>
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Duration</td>
+                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Duration (real-time)</td>
                                     <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this.battle_duration != 0 ? this.battle_duration : "-"}}</td>
                                 </tr>
                                 <tr>
@@ -639,6 +639,7 @@
                 <table>
                     <tr><td>Disable right panel hotkeys:</td><td><input class="checkBoxStyle" type="checkbox" v-model="disallow_right_panel_switching"/></td></tr>
                     <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_post_battle_splits"/></td></tr>
+                    <tr><td>Collect battle summary data:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_split_data"/></td></tr>
                 </table>
             </div>
             <div class="testingArea4" style="z-index: 50000;">

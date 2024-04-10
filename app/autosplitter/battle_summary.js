@@ -98,13 +98,13 @@ const battle_summary = {
         { data_name: "battle_summary_player_hits",   name: "Hits",   path: "patch.battle_info.hits.ownMovesHit.value",    type: "number",},
         { data_name: "battle_summary_player_misses", name: "Misses", path: "patch.battle_info.hits.ownMovesMissed.value", type: "number",},
         { data_name: "battle_summary_player_crits",  name: "Crits",  path: "patch.battle_info.hits.criticalsDealt.value", type: "number",},
-        { data_name: "battle_summary_player_ohkos",  name: "OHKOs",  path: "patch.battle_info.hits.oHKOsDealt.value",     type: "number",},
+        // { data_name: "battle_summary_player_ohkos",  name: "OHKOs",  path: "patch.battle_info.hits.oHKOsDealt.value",     type: "number",},
     ],
     enemy: [
         { data_name: "battle_summary_enemy_turns",  name: "Turns",  path: "patch.battle_info.turns.enemyTurns.value",      type: "number",},
         { data_name: "battle_summary_enemy_hits",   name: "Hits",   path: "patch.battle_info.hits.enemyMovesHit.value",    type: "number",},
         { data_name: "battle_summary_enemy_misses", name: "Misses", path: "patch.battle_info.hits.enemyMovesMissed.value", type: "number",},
         { data_name: "battle_summary_enemy_crits",  name: "Crits",  path: "patch.battle_info.hits.criticalsTaken.value",   type: "number",},
-        { data_name: "battle_summary_enemy_ohkos",  name: "OHKOs",  path: "patch.battle_info.hits.oHKOsTaken.value",       type: "number",},
+        // { data_name: "battle_summary_enemy_ohkos",  name: "OHKOs",  path: "patch.battle_info.hits.oHKOsTaken.value",       type: "number",},
     ],
 }

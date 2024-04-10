@@ -704,6 +704,7 @@ const app = Vue.createApp({
             autosplitter_toggle:        true,
             display_badge_boosts:       true,
             test_run:                   false,
+            collect_split_data:         true,
 
             help_menus: "Settings",
 
@@ -1305,28 +1306,30 @@ const app = Vue.createApp({
 
     computed: {
         compare_splits() {
-            const result = []
-            for (const x of this.previous_splits) {
-                if (this.split_trainers.includes(x.trainer)) {
-                    const default_string = "-"
-                    const cur_split = this.current_splits.find(y => y.trainer === x.trainer)
-                    const prev = this.convertDurationToSeconds(x.time)
-                    if (cur_split == undefined) { 
-                        result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: default_string, difference: default_string}) 
-                        continue
+            if (this.collect_split_data == true) {
+                const result = []
+                for (const x of this.previous_splits) {
+                    if (this.split_trainers.includes(x.trainer)) {
+                        const default_string = "-"
+                        const cur_split = this.current_splits.find(y => y.trainer === x.trainer)
+                        const prev = this.convertDurationToSeconds(x.time)
+                        if (cur_split == undefined) { 
+                            result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: default_string, difference: default_string}) 
+                            continue
+                        }
+                        const cur = this.convertDurationToSeconds(cur_split.time)
+                        const diff = cur - prev;
+                        const diff_abs = Math.abs(diff);
+                        const diff_sign = Math.sign(diff);
+                        const diff_m = Math.floor(diff_abs / 60);
+                        const diff_s = diff_abs % 60;
+                        var diff_str = `${diff_sign === -1 ? "-" : "+"}${diff_m}:${diff_s.toString().padStart(2, "0")}`;
+                        if (diff_str == "+0:00") { diff_str = "0:00" }
+                        result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: this.convertSecondsToDuration(cur), difference: diff_str})
                     }
-                    const cur = this.convertDurationToSeconds(cur_split.time)
-                    const diff = cur - prev;
-                    const diff_abs = Math.abs(diff);
-                    const diff_sign = Math.sign(diff);
-                    const diff_m = Math.floor(diff_abs / 60);
-                    const diff_s = diff_abs % 60;
-                    var diff_str = `${diff_sign === -1 ? "-" : "+"}${diff_m}:${diff_s.toString().padStart(2, "0")}`;
-                    if (diff_str == "+0:00") { diff_str = "0:00" }
-                    result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: this.convertSecondsToDuration(cur), difference: diff_str})
                 }
+                return result
             }
-            return result
         },
         stats_header() {
             const toggle    = this.automatic_stats
@@ -3093,28 +3096,30 @@ const app = Vue.createApp({
             var log_start = (x) => console.log(logStr)
 
             if (newProp.value == "Trainer") {
-                // Define the function outside the loop
-                function findDataByName(data_name, battle_summary) {
-                    for (let key in battle_summary) {
-                        if (Array.isArray(battle_summary[key])) {
-                            for (let obj of battle_summary[key]) {
-                                if (obj.data_name === data_name) {
-                                    return obj;
+                if (this.collect_split_data == true) {
+                    // Define the function outside the loop
+                    function findDataByName(data_name, battle_summary) {
+                        for (let key in battle_summary) {
+                            if (Array.isArray(battle_summary[key])) {
+                                for (let obj of battle_summary[key]) {
+                                    if (obj.data_name === data_name) {
+                                        return obj;
+                                    }
                                 }
                             }
                         }
+                        return null; // return null if no matching data_name is found
                     }
-                    return null; // return null if no matching data_name is found
-                }
-                // Use for...of loop to iterate over the array
-                for (let property of this.battle_summary["global_stats"]) {
-                    // usage
-                    if (property !== null) {
-                        let data = this.get_nested_property(this.mapper.properties, property.path)
-                        this[`temp_${property.data_name}`] = data
-                    } else {
-                        console.error(`Property ${property.data_name} not found in battle_summary`);
-                        continue
+                    // Use for...of loop to iterate over the array
+                    for (let property of this.battle_summary["global_stats"]) {
+                        // usage
+                        if (property !== null) {
+                            let data = this.get_nested_property(this.mapper.properties, property.path)
+                            this[`temp_${property.data_name}`] = data
+                        } else {
+                            console.error(`Property ${property.data_name} not found in battle_summary`);
+                            continue
+                        }
                     }
                 }
 
@@ -3383,10 +3388,12 @@ const app = Vue.createApp({
                 this.full_data_str = full_data_str // assign within Data so it can be recalled on future loops
                 this.deprecated_data_str = deprecated_data_str // assign within Data so it can be recalled on future loops
                 this.simple_data = simple_data // assign within Data so it can be recalled on future loops
-                this.current_splits.push({
-                    trainer: trainer_name, 
-                    time:    real_time_hmmss,
-                })
+                if (this.collect_split_data == true) {
+                    this.current_splits.push({
+                        trainer: trainer_name, 
+                        time:    real_time_hmmss,
+                    })
+                }
             }
         }
 
@@ -3414,26 +3421,28 @@ const app = Vue.createApp({
                 let unique = `${trainer}_${id}`
                 let gameName = this.mapper.properties.meta.gameName.value
 
-                // Use for...of loop to iterate over the array
-                for (let property of this.battle_summary["global_stats"]) {
-                    // usage
-                    if (property !== null) {
-                        let data = this.get_nested_property(this.mapper.properties, property.path)
-                        if (trainer == "RIVAL3") {
-                            this.battle_summary_header = "Run Summary"
-                            this[property.data_name] = data
+                if (this.collect_split_data == true) {
+                    // Use for...of loop to iterate over the array
+                    for (let property of this.battle_summary["global_stats"]) {
+                        // usage
+                        if (property !== null) {
+                            let data = this.get_nested_property(this.mapper.properties, property.path)
+                            if (trainer == "RIVAL3") {
+                                this.battle_summary_header = "Run Summary"
+                                this[property.data_name] = data
+                            }
+                            else {
+                                this[property.data_name] = data - this[`temp_${property.data_name}`]
+                            }
+                        } else {
+                            console.error(`Property ${property.data_name} not found in battle_summary`);
+                            continue
                         }
-                        else {
-                            this[property.data_name] = data - this[`temp_${property.data_name}`]
-                        }
-                    } else {
-                        console.error(`Property ${property.data_name} not found in battle_summary`);
-                        continue
                     }
+                    this.battle_duration = this.convertMSToDuration(Date.now() - this.battle_start)
+                    this.exp_per_second = Math.round(this.battle_summary_exp_gained / this.battle_duration)
+                    this.battle_summary_battle_number = this.mapper.properties.patch?.battles?.trainerBattles?.value
                 }
-                this.battle_duration = this.convertMSToDuration(Date.now() - this.battle_start)
-                this.exp_per_second = Math.round(this.battle_summary_exp_gained / this.battle_duration)
-                this.battle_summary_battle_number = this.mapper.properties.patch?.battles?.trainerBattles?.value
 
                 //write full split data (this is written for every single battle)
                 logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run)
