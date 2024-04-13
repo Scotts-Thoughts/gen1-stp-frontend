@@ -1,0 +1,15 @@
+Champion - Flareon
+Magneton vs Sandslash (outspeed by 15)
+Turn1:
+    P, Bide,        "no effect", 0,  0.00%, 
+    O, Earthquake,  "quarter",   47, 26.11%,
+Turn2:
+    P, Bide,        "no effect", 0,  0.00%, 
+    O, Crit Slash,  "quarter",   47, 54.42%,
+Turn3:
+    P, Bide,        "ohko",      0,  100.00%,
+Magneton vs Alakazam (outspeed by 1)
+Turn1:
+    P, Thunderbolt, "half",  50,  50.00%, Paralysis,
+    O, Psychic,     "third", 33,  30.13%, Special Drop,
+Magneton vs Exeggutor (outspeed by 50)

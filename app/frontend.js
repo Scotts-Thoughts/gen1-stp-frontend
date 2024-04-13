@@ -705,6 +705,7 @@ const app = Vue.createApp({
             display_badge_boosts:       true,
             test_run:                   false,
             collect_split_data:         true,
+            collect_summary_files:      true,
 
             help_menus: "Settings",
 
@@ -793,6 +794,7 @@ const app = Vue.createApp({
             simple_data:           "",
             blackouts_as_resets:   false, //counts blackouts as resets
             blackout:              false,
+            battle_summary_array:  [],
 
             previous_splits: [],
             current_splits:  [],
@@ -3089,6 +3091,123 @@ const app = Vue.createApp({
             }
         })
         
+        // // Collect Battle Summary Data
+        // var summary_turn = "Player's Turn"
+        // var data_array   = []
+        // this.mapper.properties.patch.battle_info.turns.playerTurns.change((newProp) => {
+        //     if (this.collect_summary_files == true) {
+        //         let data_str = data_array.join(",") + "\n";
+        //         this.battle_summary_array.push(data_array)
+        //         console.log(this.battle_summary_array)
+
+        //         summary_turn = "Player's Turn"
+        //         const battle_data  = this.mapper.properties.battle
+        //         const patch_data   = this.mapper.properties.patch.battle_info
+        //         let turn           = patch_data.turns.battleTurns.value
+        //         let player_turn    = patch_data.turns.playerTurns.value
+                
+        //         let player_pokemon = battle_data.yourPokemon.species.value
+        //         let player_level   = battle_data.yourPokemon.level.value
+        //         let player_cur_hp  = battle_data.yourPokemon.hp.value
+        //         let player_max_hp  = battle_data.yourPokemon.maxHp.value
+        //         let player_per_hp  = this.decimalToPercentage(player_cur_hp / player_max_hp)
+        //         let playerMove     = this.move_name(battle_data.playerMove.move.value)
+        //         let damage         = battle_data.turnInfo.nextAttackDamage.value
+        //         let damage_percent = this.decimalToPercentage(damage / player_max_hp)
+                
+        //         let enemy_pokemon  = battle_data.enemyPokemon.species.value
+        //         let enemy_level    = battle_data.enemyPokemon.level.value
+        //         let enemy_cur_hp   = battle_data.enemyPokemon.hp.value
+        //         let enemy_max_hp   = battle_data.enemyPokemon.maxHp.value
+        //         let enemy_per_hp   = this.decimalToPercentage(enemy_cur_hp / enemy_max_hp)
+
+        //         data_array = [
+        //             summary_turn,
+        //             turn,
+        //             player_turn,
+        //             player_pokemon,
+        //             player_level,
+        //             player_cur_hp,
+        //             player_max_hp,
+        //             player_per_hp,
+        //             playerMove,
+        //             damage,
+        //             damage_percent,
+        //             enemy_pokemon,
+        //             enemy_level,
+        //             enemy_cur_hp,
+        //             enemy_max_hp,
+        //             enemy_per_hp
+        //         ]
+        //     }
+        // })
+        // this.mapper.properties.patch.battle_info.turns.enemyTurns.change((newProp) => {
+        //     if (this.collect_summary_files == true) {
+        //         let data_str = data_array.join(",") + "\n";
+        //         this.battle_summary_array.push(data_array)
+        //         console.log(this.battle_summary_array)
+
+        //         summary_turn = "Enemy's Turn"
+        //         const battle_data  = this.mapper.properties.battle
+        //         const patch_data   = this.mapper.properties.patch.battle_info
+        //         let turn           = patch_data.turns.battleTurns.value
+        //         let player_turn    = patch_data.turns.playerTurns.value
+                
+        //         let player_pokemon = battle_data.yourPokemon.species.value
+        //         let player_level   = battle_data.yourPokemon.level.value
+        //         let player_cur_hp  = battle_data.yourPokemon.hp.value
+        //         let player_max_hp  = battle_data.yourPokemon.maxHp.value
+        //         let player_per_hp  = this.decimalToPercentage(player_cur_hp / player_max_hp)
+        //         let enemy_move     = this.move_name(battle_data.enemyMove.move.value)
+        //         let damage         = battle_data.turnInfo.nextAttackDamage.value
+        //         let damage_percent = this.decimalToPercentage(damage / player_max_hp)
+                
+        //         let enemy_pokemon  = battle_data.enemyPokemon.species.value
+        //         let enemy_level    = battle_data.enemyPokemon.level.value
+        //         let enemy_cur_hp   = battle_data.enemyPokemon.hp.value
+        //         let enemy_max_hp   = battle_data.enemyPokemon.maxHp.value
+        //         let enemy_per_hp   = this.decimalToPercentage(enemy_cur_hp / enemy_max_hp)
+
+        //         data_array = [
+        //             summary_turn,
+        //             turn,
+        //             player_turn,
+        //             player_pokemon,
+        //             player_level,
+        //             player_cur_hp,
+        //             player_max_hp,
+        //             player_per_hp,
+        //             enemy_move,
+        //             damage,
+        //             damage_percent,
+        //             enemy_pokemon,
+        //             enemy_level,
+        //             enemy_cur_hp,
+        //             enemy_max_hp,
+        //             enemy_per_hp
+        //         ]
+        //     }
+        // })
+        // this.mapper.properties.battle.turnInfo.nextAttackDamage.change((newProp) => {
+        //     if (this.collect_summary_files == true) {
+        //         data_array[9] = newProp.value
+        //     }
+        // })
+        // this.mapper.properties.battle.yourPokemon.hp.change((newProp) => {
+        //     if (this.collect_summary_files == true) {
+        //         let data_str = data_array.join(",") + "\n";
+        //         this.battle_summary_array.push(data_array)
+        //         console.log(this.battle_summary_array) 
+        //     }  
+        // })
+        // this.mapper.properties.meta.state.change((newProp, oldProp) => {
+        //     if (oldProp.value == "Battle" && newProp.value == "From Battle" && this.collect_summary_files == true) {
+        //         let data_str = data_array.join(",") + "\n";
+        //         this.battle_summary_array.push(data_array)
+        //         console.log(this.battle_summary_array)  
+        //     }
+        // })
+
         //*autosplitter
         //log the start of a battle to the console
         this.mapper.properties.battle.type.change((newProp) => {

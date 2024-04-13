@@ -1,6 +1,6 @@
 {
     "global_variables": {
-        "starter": "Pidgey",
+        "starter": "Magneton",
         "game": "Yellow"
     },
     "games": {
@@ -1058,7 +1058,7 @@
                     "backgroundScale": "141",
                     "backgroundUrl": "",
                     "use_custom_background": false,
-                    "attempt_number": 3,
+                    "attempt_number": 4,
                     "finished_run_count": 0,
                     "pb_time": "None",
                     "backgroundXOffset": 100,
@@ -1068,10 +1068,10 @@
                     "backgroundContrast": "151",
                     "backgroundSaturation": 100,
                     "backgroundHue": "218",
-                    "playerId": 0,
+                    "playerId": 43496,
                     "playerName": "NINTEN",
                     "resetCatcher": "NINTEN",
-                    "playerResets": 0,
+                    "playerResets": 1,
                     "blackout_counter": 0,
                     "resetCounter": true,
                     "game_over": false,
@@ -1080,8 +1080,8 @@
                     "blackouts_as_resets": false,
                     "blackout": false,
                     "faults": 0,
-                    "most_recent_move": "",
-                    "split_logStr": "Autosplitter - Battle Started: RIVAL1 started at 5.65 (Gametime: 0:01)",
+                    "most_recent_move": "REST",
+                    "split_logStr": "Autosplitter - Battle Started: RIVAL3 started at 32:16.94 (Gametime: 2:56)",
                     "simple_data_str": "NINTEN,Magneton,Rival1-Lab,6,0,0,6,0:02,0.456,SonicBoom,TACKLE,THUNDERSHOCK,\n",
                     "full_data_str": "4-01,10:31:54,NINTEN,Magneton,Rival1-Lab,1,Pallet Town - Oak's Lab,1,6.09,6,0h0m6s,0,0,0,6,0:02,0.456,SonicBoom,TACKLE,THUNDERSHOCK,,0,71,2,1,1,2,2,1,0,3175,Jolteon, ,Electric,Electric,222,Magneton3,Magneton,Rival (Lab),00:00:05.65,00:00:06.09,00:02:04.52,6,0,0,0,6,9,SonicBoom,TACKLE,THUNDERSHOCK,,20,35,30,0,0,0,0,0,23,23,14,18,21,21,15,55,55,50,65,65,55,15,15,15,15,0,0,0,0,0,0,0,14,18,21,21,15,9419,4779,2685,0,1955,0,0,0,71,71,0,0,2,2,1,1,0,0,27,21,3,3,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,97,0,0,0,0,0,0,0,0,0,0,0,3,0,Jolteon\n",
                     "deprecated_data_str": "Magneton3,Magneton,Rival (Lab),00:00:05.65,00:00:06.09,00:02:04.52,6,0,0,0,6,9,SonicBoom,TACKLE,THUNDERSHOCK,,14,18,21,21,15,0,0,0,0,0,0,0,14,18,21,21,15,9419,4779,2685,0,1955,0,0,0,71,71,0,0,2,2,1,1,0,0,27,21,3,3,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,97,0,0,0,0,0,0,0,0,0,0,0,3,0,Jolteon\n",
@@ -1102,7 +1102,9 @@
                     ],
                     "ui_saturation": "1.1",
                     "ui_type_colors": "Current",
-                    "ui_type_color_modifier": "current_"
+                    "ui_type_color_modifier": "current_",
+                    "compared_splits": [],
+                    "current_splits": []
                 },
                 "settings": {},
                 "splits": {},
@@ -1219,7 +1221,7 @@
                     "backgroundScale": "125",
                     "backgroundUrl": "",
                     "use_custom_background": false,
-                    "attempt_number": 1,
+                    "attempt_number": 0,
                     "finished_run_count": 0,
                     "pb_time": "None",
                     "backgroundXOffset": 100,
@@ -1242,94 +1244,32 @@
                     "blackout": false,
                     "faults": 0,
                     "most_recent_move": "",
-                    "split_logStr": "",
-                    "simple_data_str": "NINTEN,Pidgey,Champion,0,1,0,0,8:01,605692.968,,,,\n",
-                    "full_data_str": "4-08,10:46:46,NINTEN,Pidgey,Champion,1,Pallet Town,6,0.00,0,0h0m0s,1,0,1,0,8:01,605692.968,,,,,60,13640,1525,211,60,1145,933,538,0,1666500,Jolteon, ,Normal,,0,Pidgey0,Pidgey,Champion,00:00:05.65,00:00:00.00,08:01:34.59,0,1,0,0,0,0,,,,,63,0,0,0,3,0,0,0,0,0,0,65535,65535,65535,65535,0,0,127,65503,65503,65535,11,15,15,15,0,0,0,0,6,0,0,219,200,187,187,760,1735736,744417,804510,182219,4590,60,15,0,13640,11812,1209,619,1525,271,211,60,14,0,76028,42590,4725,4643,646,200,281,0,0,0,0,0,99,0,32,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,6,1,0,0,0,0,0,0,17,1,0,0,2,584,416193,0,0,0,0,56,68,17,0,0,13,0,0,1,Jolteon\n",
-                    "deprecated_data_str": "Pidgey0,Pidgey,Champion,00:00:05.65,00:00:00.00,08:01:34.59,0,1,0,0,0,0,,,,,0,65535,65535,65535,65535,0,0,0,0,6,0,0,219,200,187,187,760,1735736,744417,804510,182219,4590,60,15,0,13640,11812,1209,619,1525,271,211,60,14,0,76028,42590,4725,4643,646,200,281,0,0,0,0,0,99,0,32,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,6,1,0,0,0,0,0,0,0,0,2,584,416193,0,0,0,0,56,68,17,0,0,13,0,0,1,Jolteon\n",
+                    "split_logStr": "Autosplitter - Battle Started: ROCKET started at 48:28.13 (Gametime: 3:08)",
+                    "simple_data_str": "NINTEN,Pidgey,Rocket,48:27,1,1,45,3:08,38.734,SWIFT,AGILITY,DOUBLE-EDGE,FLY\n",
+                    "full_data_str": "4-10,14:03:12,NINTEN,Pidgey,Rocket,30,Silph Co - 6F,4,48:27.58,48:27,0h48m27s,1,1,2,45,3:08,38.734,SWIFT,AGILITY,DOUBLE-EDGE,FLY,25,7060,633,94,42,545,470,293,16,15596,Jolteon, ,Normal,Flying,85704,Pidgey1,Pidgey,,00:47:48.85,00:48:27.58,03:08:42.51,45,1,0,48,27,58,SWIFT,AGILITY,DOUBLE-EDGE,FLY,16,30,12,12,0,0,0,0,56,116,77,67,64,64,83,11737,29180,12847,16590,16590,18023,15,15,15,15,0,0,0,0,0,0,0,86,75,63,63,82,681329,247029,371063,61093,2144,25,1,0,7060,6343,717,0,633,136,94,42,11,0,17573,11457,1178,1170,421,89,173,0,0,0,0,0,43,0,20,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,3,1,0,0,0,0,0,0,12,0,0,0,2,241,85569,0,0,0,0,38,43,14,0,0,10,1,1,2,Jolteon\n",
+                    "deprecated_data_str": "Pidgey1,Pidgey,,00:47:48.85,00:48:27.58,03:08:42.51,45,1,0,48,27,58,SWIFT,AGILITY,DOUBLE-EDGE,FLY,77,67,64,64,83,0,0,0,0,0,0,0,86,75,63,63,82,681329,247029,371063,61093,2144,25,1,0,7060,6343,717,0,633,136,94,42,11,0,17573,11457,1178,1170,421,89,173,0,0,0,0,0,43,0,20,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,3,1,0,0,0,0,0,0,0,0,2,241,85569,0,0,0,0,38,43,14,0,0,10,1,1,2,Jolteon\n",
                     "simple_data": [
                         "NINTEN",
                         "Pidgey",
-                        "Champion",
-                        "0",
+                        "Rocket",
+                        "48:27",
                         "1",
-                        "0",
-                        "0",
-                        "8:01",
-                        605692.968,
-                        null,
-                        null,
-                        null,
-                        null
+                        "1",
+                        "45",
+                        "3:08",
+                        38.734,
+                        "SWIFT",
+                        "AGILITY",
+                        "DOUBLE-EDGE",
+                        "FLY"
                     ],
                     "ui_saturation": "0.8",
                     "ui_type_colors": "Current",
                     "ui_type_color_modifier": "current_",
                     "previous_label": "Pidgey 1",
                     "compared_splits": [],
-                    "current_splits": []
-                },
-                "settings": {},
-                "splits": {},
-                "data": {}
-            },
-            "Spearow": {
-                "style": {
-                    "overlay_color": "#e07974",
-                    "imageXOffset": "2",
-                    "imageYOffset": "-57",
-                    "imageScale": "0.64",
-                    "imageFlip": false,
-                    "imageSat": 100,
-                    "imageRotation": 0,
-                    "backgroundBlur": 0,
-                    "backgroundScale": "122",
-                    "backgroundUrl": "",
-                    "use_custom_background": false,
-                    "attempt_number": 0,
-                    "finished_run_count": 0,
-                    "pb_time": "None",
-                    "backgroundXOffset": 100,
-                    "backgroundYOffset": "71",
-                    "backgroundTexture": "Flying 1",
-                    "backgroundBrightness": "79",
-                    "backgroundContrast": "137",
-                    "backgroundSaturation": "125",
-                    "backgroundHue": 0,
-                    "playerId": 23139,
-                    "playerName": "NINTEN",
-                    "resetCatcher": "NINTEN",
-                    "playerResets": 19,
-                    "blackout_counter": 15,
-                    "resetCounter": true,
-                    "game_over": false,
-                    "lance_defeated": false,
-                    "finished_logs": false,
-                    "blackouts_as_resets": false,
-                    "blackout": true,
-                    "faults": 0,
-                    "most_recent_move": "WATERFALL",
-                    "split_logStr": "Autosplitter - Battle Started: BRUNO started at 59:27.96 (Gametime: 5:39)",
-                    "simple_data_str": "NINTEN,Spearow,Lorelei,59:27,18,15,80,5:39,17.509,DRILL PECK,MIMIC,AGILITY,DOUBLE-EDGE\n",
-                    "full_data_str": "4-09,11:58:04,NINTEN,Spearow,Lorelei,1,Bruno's Room,5,59:27.44,59:27,0h59m27s,18,15,33,80,5:39,17.509,DRILL PECK,MIMIC,AGILITY,DOUBLE-EDGE,33,11856,1318,191,25,779,762,297,16,59390,Flareon, ,Normal,Flying,526849,Spearow0,Spearow,Lorelei,00:59:09.93,00:59:27.44,05:39:06.58,80,18,0,59,27,44,DRILL PECK,MIMIC,AGILITY,DOUBLE-EDGE,22,12,30,15,3,1,0,0,181,209,165,111,117,117,178,24738,42442,31061,38887,38887,36936,15,15,15,15,0,0,0,0,0,0,0,185,124,131,131,200,1222780,435084,651445,132911,3340,33,8,0,11856,9878,1330,648,1318,216,191,25,10,0,62978,33100,4731,3028,697,54,237,0,0,0,0,0,75,0,15,0,0,1,0,0,0,1,0,0,0,3,0,0,0,0,3,2,0,0,0,0,0,0,0,0,0,0,17,466,329479,0,0,0,0,54,80,18,3,2,13,15,0,33,Flareon\n",
-                    "deprecated_data_str": "Spearow0,Spearow,Lorelei,00:59:09.93,00:59:27.44,05:39:06.58,80,18,0,59,27,44,DRILL PECK,MIMIC,AGILITY,DOUBLE-EDGE,165,111,117,117,178,0,0,0,0,0,0,0,185,124,131,131,200,1222780,435084,651445,132911,3340,33,8,0,11856,9878,1330,648,1318,216,191,25,10,0,62978,33100,4731,3028,697,54,237,0,0,0,0,0,75,0,15,0,0,1,0,0,0,1,0,0,0,3,0,0,0,0,3,2,0,0,0,0,0,0,0,0,17,466,329479,0,0,0,0,54,80,18,3,2,13,15,0,33,Flareon\n",
-                    "simple_data": [
-                        "NINTEN",
-                        "Spearow",
-                        "Lorelei",
-                        "59:27",
-                        "18",
-                        "15",
-                        "80",
-                        "5:39",
-                        17.509,
-                        "DRILL PECK",
-                        "MIMIC",
-                        "AGILITY",
-                        "DOUBLE-EDGE"
-                    ],
-                    "ui_saturation": 0.6,
-                    "ui_type_colors": "Current",
-                    "ui_type_color_modifier": "current_",
+                    "current_splits": [],
+                    "current_label": "Spearow 1",
                     "previous_splits": [
                         {
                             "trainer": "Rival1-Lab",
@@ -1349,7 +1289,7 @@
                         },
                         {
                             "trainer": "Cerulean Rocket",
-                            "time": "18:32"
+                            "time": "18:31"
                         },
                         {
                             "trainer": "Rival3-SS Anne",
@@ -1405,1493 +1345,650 @@
                         },
                         {
                             "trainer": "Agatha",
-                            "time": "1:58:03"
+                            "time": "1:58:02"
                         },
                         {
                             "trainer": "Lance",
                             "time": "1:58:57"
                         },
                         {
-                            "trainer": "Champion Finish",
-                            "time": "2:02:56"
-                        },
-                        {
                             "trainer": "Champion",
-                            "time": "2:02:56"
+                            "time": "2:02:55"
                         }
+                    ]
+                },
+                "settings": {},
+                "splits": {},
+                "data": {}
+            },
+            "Spearow": {
+                "style": {
+                    "overlay_color": "#e07974",
+                    "imageXOffset": "2",
+                    "imageYOffset": "-57",
+                    "imageScale": "0.64",
+                    "imageFlip": false,
+                    "imageSat": 100,
+                    "imageRotation": 0,
+                    "backgroundBlur": 0,
+                    "backgroundScale": "122",
+                    "backgroundUrl": "",
+                    "use_custom_background": false,
+                    "attempt_number": 1,
+                    "finished_run_count": 0,
+                    "pb_time": "None",
+                    "backgroundXOffset": 100,
+                    "backgroundYOffset": "71",
+                    "backgroundTexture": "Flying 1",
+                    "backgroundBrightness": "79",
+                    "backgroundContrast": "137",
+                    "backgroundSaturation": "125",
+                    "backgroundHue": 0,
+                    "playerId": 23139,
+                    "playerName": "NINTEN",
+                    "resetCatcher": "NINTEN",
+                    "playerResets": 5,
+                    "blackout_counter": 13,
+                    "resetCounter": true,
+                    "game_over": false,
+                    "lance_defeated": false,
+                    "finished_logs": false,
+                    "blackouts_as_resets": false,
+                    "blackout": false,
+                    "faults": 0,
+                    "most_recent_move": "FURY ATTACK",
+                    "split_logStr": "Autosplitter - Battle Started: HIKER started at 30:10.04 (Gametime: 1:52)",
+                    "simple_data_str": "NINTEN,Spearow,Status-Condition-Jr-Trainer,28:48,1,13,31,1:51,30.59,DRILL PECK,GROWL,MIRROR MOVE,FURY ATTACK\n",
+                    "full_data_str": "4-10,16:00:29,NINTEN,Spearow,Status-Condition-Jr-Trainer,10,Rock Tunnel,2,28:48.73,28:48,0h28m48s,1,13,14,31,1:51,30.59,DRILL PECK,GROWL,MIRROR MOVE,FURY ATTACK,13,3801,187,65,17,360,347,205,14,16722,Flareon, ,Normal,Flying,32054,Spearow1,Spearow,RTG4 - Status Jr Trainer,00:28:18.14,00:28:48.73,01:51:56.47,31,1,0,28,48,73,DRILL PECK,GROWL,MIRROR MOVE,FURY ATTACK,19,40,20,20,0,0,0,0,80,80,57,39,39,39,64,5779,7076,6716,6213,6213,7956,15,15,15,15,0,0,0,0,0,0,0,64,39,39,39,64,404931,125010,255848,21968,2105,13,1,0,3801,3801,0,0,187,82,65,17,7,0,8007,5188,1064,1037,328,39,179,0,0,0,0,0,22,0,11,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,3,2,0,0,0,0,0,0,0,0,0,0,13,141,31929,0,0,0,0,12,24,2,1,1,6,13,1,14,Flareon\n",
+                    "deprecated_data_str": "Spearow1,Spearow,RTG4 - Status Jr Trainer,00:28:18.14,00:28:48.73,01:51:56.47,31,1,0,28,48,73,DRILL PECK,GROWL,MIRROR MOVE,FURY ATTACK,57,39,39,39,64,0,0,0,0,0,0,0,64,39,39,39,64,404931,125010,255848,21968,2105,13,1,0,3801,3801,0,0,187,82,65,17,7,0,8007,5188,1064,1037,328,39,179,0,0,0,0,0,22,0,11,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,3,2,0,0,0,0,0,0,0,0,13,141,31929,0,0,0,0,12,24,2,1,1,6,13,1,14,Flareon\n",
+                    "simple_data": [
+                        "NINTEN",
+                        "Spearow",
+                        "Status-Condition-Jr-Trainer",
+                        "28:48",
+                        "1",
+                        "13",
+                        "31",
+                        "1:51",
+                        30.59,
+                        "DRILL PECK",
+                        "GROWL",
+                        "MIRROR MOVE",
+                        "FURY ATTACK"
                     ],
-                    "current_splits": [
+                    "ui_saturation": 0.6,
+                    "ui_type_colors": "Current",
+                    "ui_type_color_modifier": "current_",
+                    "previous_splits": [
                         {
-                            "trainer": "Jr Trainer M",
-                            "time": "4:21"
+                            "trainer": "Rival1-Lab",
+                            "time": "54"
                         },
                         {
-                            "trainer": "Jr Trainer M",
-                            "time": "4:25"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "4:27"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "4:27"
+                            "trainer": "Rival1a-Route 22",
+                            "time": "4:34"
                         },
                         {
                             "trainer": "Brock",
-                            "time": "5:11"
-                        },
-                        {
-                            "trainer": "Brock",
-                            "time": "5:21"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "5:26"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "5:28"
-                        },
-                        {
-                            "trainer": "Youngster Ben",
-                            "time": "5:34"
-                        },
-                        {
-                            "trainer": "Youngster",
-                            "time": "5:35"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "5:43"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "5:48"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "5:49"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "5:52"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "5:54"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "5:58"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "6:05"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "6:09"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "6:11"
-                        },
-                        {
-                            "trainer": "Super Nerd",
-                            "time": "6:18"
-                        },
-                        {
-                            "trainer": "Super Nerd",
-                            "time": "6:20"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "6:25"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "6:27"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "6:31"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "6:34"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "6:42"
-                        },
-                        {
-                            "trainer": "Youngster",
-                            "time": "6:54"
-                        },
-                        {
-                            "trainer": "Youngster",
-                            "time": "6:55"
-                        },
-                        {
-                            "trainer": "Fossil Nerd",
-                            "time": "7:17"
-                        },
-                        {
-                            "trainer": "Fossil Nerd",
-                            "time": "7:21"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "7:31"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "7:45"
-                        },
-                        {
-                            "trainer": "Rival2-Nugget Bridge",
                             "time": "7:59"
                         },
                         {
                             "trainer": "Rival2-Nugget Bridge",
-                            "time": "8:06"
+                            "time": "14:56"
                         },
                         {
-                            "trainer": "Bug Catcher",
-                            "time": "8:13"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "8:14"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "8:20"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "8:21"
-                        },
-                        {
-                            "trainer": "Youngster",
-                            "time": "8:28"
-                        },
-                        {
-                            "trainer": "Youngster",
-                            "time": "8:30"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "8:37"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "8:38"
-                        },
-                        {
-                            "trainer": "Jr Trainer M",
-                            "time": "8:41"
-                        },
-                        {
-                            "trainer": "Jr Trainer M",
-                            "time": "8:45"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "8:53"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "8:58"
-                        },
-                        {
-                            "trainer": "Hiker",
-                            "time": "9:08"
-                        },
-                        {
-                            "trainer": "Selfdestructing Hiker",
-                            "time": "9:11"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "9:16"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "9:18"
-                        },
-                        {
-                            "trainer": "Jr Trainer M",
-                            "time": "9:23"
-                        },
-                        {
-                            "trainer": "Jr Trainer M",
-                            "time": "9:27"
-                        },
-                        {
-                            "trainer": "Oddish Lass",
-                            "time": "9:34"
-                        },
-                        {
-                            "trainer": "Sailor",
-                            "time": "10:59"
-                        },
-                        {
-                            "trainer": "Sailor",
-                            "time": "11:02"
-                        },
-                        {
-                            "trainer": "Sailor",
-                            "time": "11:07"
-                        },
-                        {
-                            "trainer": "Sailor",
-                            "time": "11:16"
-                        },
-                        {
-                            "trainer": "Fisher",
-                            "time": "11:24"
-                        },
-                        {
-                            "trainer": "Fisher",
-                            "time": "11:26"
-                        },
-                        {
-                            "trainer": "Gentleman",
-                            "time": "11:31"
-                        },
-                        {
-                            "trainer": "Gentleman",
-                            "time": "11:38"
-                        },
-                        {
-                            "trainer": "Rival3-SS Anne",
-                            "time": "11:50"
-                        },
-                        {
-                            "trainer": "Rival3-SS Anne",
-                            "time": "12:00"
-                        },
-                        {
-                            "trainer": "Rival3-SS Anne",
-                            "time": "12:08"
-                        },
-                        {
-                            "trainer": "Youngster",
-                            "time": "12:14"
-                        },
-                        {
-                            "trainer": "Youngster",
-                            "time": "12:16"
-                        },
-                        {
-                            "trainer": "Gambler",
-                            "time": "12:20"
-                        },
-                        {
-                            "trainer": "Gambler",
-                            "time": "12:22"
-                        },
-                        {
-                            "trainer": "Engineer",
-                            "time": "12:31"
-                        },
-                        {
-                            "trainer": "Engineer",
-                            "time": "12:35"
-                        },
-                        {
-                            "trainer": "Gambler",
-                            "time": "12:44"
-                        },
-                        {
-                            "trainer": "Gambler",
-                            "time": "12:46"
-                        },
-                        {
-                            "trainer": "Youngster",
-                            "time": "12:51"
-                        },
-                        {
-                            "trainer": "Youngster",
-                            "time": "13:05"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "13:09"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "13:10"
-                        },
-                        {
-                            "trainer": "Pecking Lass",
-                            "time": "13:13"
-                        },
-                        {
-                            "trainer": "Pecking Lass",
-                            "time": "13:15"
-                        },
-                        {
-                            "trainer": "Misty",
-                            "time": "13:20"
-                        },
-                        {
-                            "trainer": "Misty",
-                            "time": "13:28"
-                        },
-                        {
-                            "trainer": "Wrapping Lass",
-                            "time": "13:35"
-                        },
-                        {
-                            "trainer": "Wrapping Lass",
-                            "time": "13:37"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "13:43"
-                        },
-                        {
-                            "trainer": "Bug Catcher",
-                            "time": "13:52"
-                        },
-                        {
-                            "trainer": "Slowbone",
-                            "time": "13:57"
-                        },
-                        {
-                            "trainer": "Pokemaniac",
-                            "time": "13:59"
-                        },
-                        {
-                            "trainer": "Pokemaniac",
-                            "time": "14:02"
-                        },
-                        {
-                            "trainer": "Pokemaniac",
-                            "time": "14:03"
-                        },
-                        {
-                            "trainer": "Status-Condition-Jr-Trainer",
-                            "time": "14:12"
-                        },
-                        {
-                            "trainer": "Status-Condition-Jr-Trainer",
-                            "time": "14:24"
-                        },
-                        {
-                            "trainer": "Selfdestructing Hiker",
-                            "time": "15:20"
-                        },
-                        {
-                            "trainer": "Selfdestructing Hiker",
-                            "time": "15:25"
-                        },
-                        {
-                            "trainer": "Finisher",
-                            "time": "15:34"
-                        },
-                        {
-                            "trainer": "Finisher",
-                            "time": "15:48"
-                        },
-                        {
-                            "trainer": "Gambler",
-                            "time": "15:52"
-                        },
-                        {
-                            "trainer": "Gambler",
-                            "time": "15:53"
-                        },
-                        {
-                            "trainer": "Super Nerd",
-                            "time": "15:59"
-                        },
-                        {
-                            "trainer": "Super Nerd",
-                            "time": "16:02"
-                        },
-                        {
-                            "trainer": "Gambler",
-                            "time": "16:08"
-                        },
-                        {
-                            "trainer": "Gambler",
-                            "time": "16:26"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "16:30"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "16:47"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "16:51"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "17:58"
-                        },
-                        {
-                            "trainer": "Beauty",
+                            "trainer": "Cerulean Rocket",
                             "time": "18:31"
                         },
                         {
-                            "trainer": "Beauty",
-                            "time": "18:33"
+                            "trainer": "Rival3-SS Anne",
+                            "time": "21:26"
                         },
                         {
-                            "trainer": "Cooltrainer F",
-                            "time": "18:39"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "18:41"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "18:45"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "18:47"
-                        },
-                        {
-                            "trainer": "Jr Trainer F",
-                            "time": "18:51"
-                        },
-                        {
-                            "trainer": "Jr Trainer F",
-                            "time": "18:52"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "18:56"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "18:58"
-                        },
-                        {
-                            "trainer": "Lass",
-                            "time": "19:16"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "19:19"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "19:22"
+                            "trainer": "Misty",
+                            "time": "24:53"
                         },
                         {
                             "trainer": "Erika",
-                            "time": "19:28"
-                        },
-                        {
-                            "trainer": "Erika",
-                            "time": "19:41"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "19:46"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "19:47"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "19:51"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "19:52"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "19:55"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "19:57"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "20:02"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "20:03"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "20:08"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "20:23"
+                            "time": "35:30"
                         },
                         {
                             "trainer": "Surge",
-                            "time": "20:26"
-                        },
-                        {
-                            "trainer": "Surge",
-                            "time": "20:46"
-                        },
-                        {
-                            "trainer": "Cue Ball",
-                            "time": "23:13"
-                        },
-                        {
-                            "trainer": "Cue Ball",
-                            "time": "23:17"
-                        },
-                        {
-                            "trainer": "Biker",
-                            "time": "23:21"
-                        },
-                        {
-                            "trainer": "Biker",
-                            "time": "23:22"
-                        },
-                        {
-                            "trainer": "Cue Ball",
-                            "time": "23:25"
-                        },
-                        {
-                            "trainer": "Cue Ball",
-                            "time": "23:33"
-                        },
-                        {
-                            "trainer": "Cue Ball",
-                            "time": "23:38"
-                        },
-                        {
-                            "trainer": "Cue Ball",
-                            "time": "23:40"
-                        },
-                        {
-                            "trainer": "Biker",
-                            "time": "23:49"
-                        },
-                        {
-                            "trainer": "Biker",
-                            "time": "24:35"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "24:38"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "24:42"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "24:48"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "24:51"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "24:55"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "24:56"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "25:02"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "25:09"
-                        },
-                        {
-                            "trainer": "Scientist",
-                            "time": "25:14"
-                        },
-                        {
-                            "trainer": "Scientist",
-                            "time": "25:18"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "25:22"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "25:24"
-                        },
-                        {
-                            "trainer": "Scientist",
-                            "time": "25:33"
-                        },
-                        {
-                            "trainer": "Scientist",
-                            "time": "25:37"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "25:40"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "25:48"
-                        },
-                        {
-                            "trainer": "Scientist",
-                            "time": "25:53"
-                        },
-                        {
-                            "trainer": "Scientist",
-                            "time": "25:58"
-                        },
-                        {
-                            "trainer": "Hypno Rocket",
-                            "time": "26:04"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "26:06"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "26:12"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "26:17"
-                        },
-                        {
-                            "trainer": "Scientist",
-                            "time": "26:23"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "26:34"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "26:36"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "26:41"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "26:43"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "26:48"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "26:58"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "27:05"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "27:07"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "27:13"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "27:15"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "27:19"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "27:22"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "27:26"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "27:31"
-                        },
-                        {
-                            "trainer": "Koga",
-                            "time": "27:38"
-                        },
-                        {
-                            "trainer": "Koga",
-                            "time": "27:59"
-                        },
-                        {
-                            "trainer": "Fisher",
-                            "time": "28:06"
-                        },
-                        {
-                            "trainer": "Fisher",
-                            "time": "28:25"
-                        },
-                        {
-                            "trainer": "Scientist",
-                            "time": "28:29"
-                        },
-                        {
-                            "trainer": "Scientist",
-                            "time": "28:55"
-                        },
-                        {
-                            "trainer": "Pokemaniac",
-                            "time": "30:06"
-                        },
-                        {
-                            "trainer": "Pokemaniac",
-                            "time": "30:27"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "30:54"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "30:56"
-                        },
-                        {
-                            "trainer": "Jr Trainer F",
-                            "time": "31:00"
-                        },
-                        {
-                            "trainer": "Jr Trainer F",
-                            "time": "31:01"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "31:07"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "31:09"
-                        },
-                        {
-                            "trainer": "Bird Keeper",
-                            "time": "31:14"
-                        },
-                        {
-                            "trainer": "Bird Keeper",
-                            "time": "31:17"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "31:20"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "31:23"
-                        },
-                        {
-                            "trainer": "Jr Trainer F",
-                            "time": "31:28"
-                        },
-                        {
-                            "trainer": "Jr Trainer F",
-                            "time": "31:34"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "31:39"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "31:44"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "31:46"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "31:50"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "31:53"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "31:56"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "31:58"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "32:03"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "32:05"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "32:09"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "32:10"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "32:17"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "32:18"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "32:25"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "32:28"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "32:34"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "32:35"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "32:41"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "32:43"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "32:49"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "32:53"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "32:56"
-                        },
-                        {
-                            "trainer": "Beauty",
-                            "time": "33:09"
-                        },
-                        {
-                            "trainer": "Rival5-Silph",
-                            "time": "33:19"
-                        },
-                        {
-                            "trainer": "Rival5-Silph",
-                            "time": "33:25"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "33:32"
-                        },
-                        {
-                            "trainer": "Rocket",
-                            "time": "33:37"
-                        },
-                        {
-                            "trainer": "Giovanni-Silph",
-                            "time": "33:46"
-                        },
-                        {
-                            "trainer": "Giovanni-Silph",
-                            "time": "34:04"
-                        },
-                        {
-                            "trainer": "Psychic",
-                            "time": "34:10"
-                        },
-                        {
-                            "trainer": "Psychic",
-                            "time": "34:12"
-                        },
-                        {
-                            "trainer": "Psychic",
-                            "time": "34:16"
-                        },
-                        {
-                            "trainer": "Psychic",
-                            "time": "34:18"
-                        },
-                        {
-                            "trainer": "Psychic",
-                            "time": "34:23"
-                        },
-                        {
-                            "trainer": "Psychic",
-                            "time": "34:26"
-                        },
-                        {
-                            "trainer": "Channeler",
-                            "time": "34:29"
-                        },
-                        {
-                            "trainer": "Channeler",
-                            "time": "34:30"
-                        },
-                        {
-                            "trainer": "Channeler",
-                            "time": "34:36"
-                        },
-                        {
-                            "trainer": "Channeler",
-                            "time": "34:38"
-                        },
-                        {
-                            "trainer": "Channeler",
-                            "time": "34:42"
-                        },
-                        {
-                            "trainer": "Channeler",
-                            "time": "34:54"
-                        },
-                        {
-                            "trainer": "Psychic",
-                            "time": "35:00"
-                        },
-                        {
-                            "trainer": "Psychic",
-                            "time": "35:06"
-                        },
-                        {
-                            "trainer": "Super Nerd",
-                            "time": "35:13"
-                        },
-                        {
-                            "trainer": "Super Nerd",
-                            "time": "35:20"
-                        },
-                        {
-                            "trainer": "Sabrina",
-                            "time": "35:33"
-                        },
-                        {
-                            "trainer": "Sabrina",
-                            "time": "36:00"
-                        },
-                        {
-                            "trainer": "Sabrina",
-                            "time": "36:00"
-                        },
-                        {
-                            "trainer": "Super Nerd",
-                            "time": "36:00"
-                        },
-                        {
-                            "trainer": "Super Nerd",
-                            "time": "36:00"
-                        },
-                        {
-                            "trainer": "Super Nerd",
-                            "time": "36:08"
-                        },
-                        {
-                            "trainer": "Sabrina",
-                            "time": "36:21"
-                        },
-                        {
-                            "trainer": "Sabrina",
-                            "time": "36:57"
-                        },
-                        {
-                            "trainer": "Blaine",
-                            "time": "37:19"
-                        },
-                        {
-                            "trainer": "Blaine",
-                            "time": "37:30"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "37:34"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "37:35"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "37:39"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "37:40"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "37:45"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "37:47"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "37:52"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "37:55"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "38:01"
-                        },
-                        {
-                            "trainer": "Swimmer",
-                            "time": "39:25"
-                        },
-                        {
-                            "trainer": "Bird Keeper",
-                            "time": "39:31"
-                        },
-                        {
-                            "trainer": "Bird Keeper",
-                            "time": "39:33"
-                        },
-                        {
-                            "trainer": "Bird Keeper",
-                            "time": "39:37"
-                        },
-                        {
-                            "trainer": "Bird Keeper",
-                            "time": "39:38"
-                        },
-                        {
-                            "trainer": "Bird Keeper",
-                            "time": "39:41"
-                        },
-                        {
-                            "trainer": "Bird Keeper",
-                            "time": "39:59"
-                        },
-                        {
-                            "trainer": "Giovanni",
-                            "time": "40:32"
-                        },
-                        {
-                            "trainer": "Giovanni",
-                            "time": "40:43"
-                        },
-                        {
-                            "trainer": "Rival6-Route 22",
-                            "time": "41:01"
+                            "time": "36:33"
                         },
                         {
                             "trainer": "Rival4-Pkmn Tower",
-                            "time": "41:51"
+                            "time": "37:39"
                         },
                         {
-                            "trainer": "Cooltrainer M",
-                            "time": "41:59"
+                            "trainer": "Koga",
+                            "time": "54:54"
                         },
                         {
-                            "trainer": "Cooltrainer M",
-                            "time": "42:10"
+                            "trainer": "Rival5-Silph",
+                            "time": "1:12:42"
                         },
                         {
-                            "trainer": "Cooltrainer F",
-                            "time": "42:16"
+                            "trainer": "Sabrina",
+                            "time": "1:16:01"
                         },
                         {
-                            "trainer": "Cooltrainer F",
-                            "time": "42:21"
+                            "trainer": "Blaine",
+                            "time": "1:33:08"
                         },
                         {
-                            "trainer": "Cooltrainer F",
-                            "time": "42:27"
+                            "trainer": "Giovanni",
+                            "time": "1:39:17"
                         },
                         {
-                            "trainer": "Cooltrainer F",
-                            "time": "42:28"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "42:34"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "42:43"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "42:50"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "42:52"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "42:58"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "43:01"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "43:06"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "43:58"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "44:37"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "44:41"
-                        },
-                        {
-                            "trainer": "Pokemaniac",
-                            "time": "44:51"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "45:00"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "45:06"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "45:08"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "45:09"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "45:10"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "45:11"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "45:13"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "45:48"
+                            "trainer": "Rival6-Route 22",
+                            "time": "1:44:05"
                         },
                         {
                             "trainer": "Lorelei",
-                            "time": "46:31"
+                            "time": "1:56:24"
+                        },
+                        {
+                            "trainer": "Bruno",
+                            "time": "1:56:59"
+                        },
+                        {
+                            "trainer": "Agatha",
+                            "time": "1:58:02"
+                        },
+                        {
+                            "trainer": "Lance",
+                            "time": "1:58:57"
+                        },
+                        {
+                            "trainer": "Champion",
+                            "time": "2:02:55"
+                        }
+                    ],
+                    "current_splits": [
+                        {
+                            "trainer": "Rival1-Lab",
+                            "time": "47"
+                        },
+                        {
+                            "trainer": "Rival1-Lab",
+                            "time": "1:41"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "2:09"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "2:11"
                         },
                         {
                             "trainer": "Nobody",
-                            "time": "46:32"
+                            "time": "2:14"
                         },
                         {
                             "trainer": "Nobody",
-                            "time": "46:32"
+                            "time": "2:16"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "2:44"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "2:49"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "3:00"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "3:03"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "3:16"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "3:17"
                         },
                         {
                             "trainer": "Nobody",
-                            "time": "46:32"
+                            "time": "3:21"
                         },
                         {
                             "trainer": "Nobody",
-                            "time": "46:32"
+                            "time": "3:45"
                         },
                         {
-                            "trainer": "Cooltrainer M",
-                            "time": "46:32"
+                            "trainer": "Jr Trainer M",
+                            "time": "8:42"
                         },
                         {
-                            "trainer": "Cooltrainer M",
-                            "time": "46:32"
+                            "trainer": "Jr Trainer M",
+                            "time": "8:50"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "8:54"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "8:55"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "8:58"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "8:59"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "9:03"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "9:04"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "9:08"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "9:10"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "9:14"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "9:30"
+                        },
+                        {
+                            "trainer": "Brock",
+                            "time": "10:23"
+                        },
+                        {
+                            "trainer": "Brock",
+                            "time": "10:42"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "10:53"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "10:56"
+                        },
+                        {
+                            "trainer": "Youngster Ben",
+                            "time": "11:08"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "11:10"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "11:24"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "11:27"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "11:36"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "11:37"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "11:45"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "11:48"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "11:57"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "12:10"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "12:18"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "12:23"
+                        },
+                        {
+                            "trainer": "Super Nerd",
+                            "time": "12:37"
+                        },
+                        {
+                            "trainer": "Super Nerd",
+                            "time": "12:41"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "12:51"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "12:55"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "13:03"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "13:07"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "13:23"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "13:32"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "13:48"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "13:50"
+                        },
+                        {
+                            "trainer": "Fossil Nerd",
+                            "time": "14:33"
+                        },
+                        {
+                            "trainer": "Fossil Nerd",
+                            "time": "14:42"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "15:03"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "15:30"
+                        },
+                        {
+                            "trainer": "Rival2-Nugget Bridge",
+                            "time": "15:57"
+                        },
+                        {
+                            "trainer": "Rival2-Nugget Bridge",
+                            "time": "16:12"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "16:26"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "16:29"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "16:40"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "16:41"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "16:55"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "16:59"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "17:14"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "17:16"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "17:22"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "17:31"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "17:46"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "17:56"
+                        },
+                        {
+                            "trainer": "Hiker",
+                            "time": "18:16"
+                        },
+                        {
+                            "trainer": "Selfdestructing Hiker",
+                            "time": "18:22"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "18:33"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "18:36"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "18:47"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "18:55"
+                        },
+                        {
+                            "trainer": "Oddish Lass",
+                            "time": "19:07"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "19:42"
+                        },
+                        {
+                            "trainer": "Cerulean Rocket",
+                            "time": "19:54"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "20:15"
+                        },
+                        {
+                            "trainer": "Sandy",
+                            "time": "20:31"
+                        },
+                        {
+                            "trainer": "Sandy",
+                            "time": "20:39"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "20:51"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "21:15"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "21:58"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "22:03"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "22:15"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "22:33"
+                        },
+                        {
+                            "trainer": "Fisher",
+                            "time": "22:48"
+                        },
+                        {
+                            "trainer": "Fisher",
+                            "time": "22:52"
+                        },
+                        {
+                            "trainer": "Gentleman",
+                            "time": "23:02"
+                        },
+                        {
+                            "trainer": "Gentleman",
+                            "time": "23:16"
+                        },
+                        {
+                            "trainer": "Rival3-SS Anne",
+                            "time": "23:39"
+                        },
+                        {
+                            "trainer": "Rival3-SS Anne",
+                            "time": "23:59"
+                        },
+                        {
+                            "trainer": "Rival3-SS Anne",
+                            "time": "24:16"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "24:28"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "24:33"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "24:40"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "24:44"
+                        },
+                        {
+                            "trainer": "Engineer",
+                            "time": "25:02"
+                        },
+                        {
+                            "trainer": "Engineer",
+                            "time": "25:11"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "25:30"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "25:34"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "25:42"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "26:10"
+                        },
+                        {
+                            "trainer": "Swimmer",
+                            "time": "26:17"
+                        },
+                        {
+                            "trainer": "Swimmer",
+                            "time": "26:21"
+                        },
+                        {
+                            "trainer": "Pecking Lass",
+                            "time": "26:25"
+                        },
+                        {
+                            "trainer": "Pecking Lass",
+                            "time": "26:31"
+                        },
+                        {
+                            "trainer": "Misty",
+                            "time": "26:41"
+                        },
+                        {
+                            "trainer": "Misty",
+                            "time": "26:57"
+                        },
+                        {
+                            "trainer": "Wrapping Lass",
+                            "time": "27:10"
+                        },
+                        {
+                            "trainer": "Wrapping Lass",
+                            "time": "27:14"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "27:26"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "27:43"
+                        },
+                        {
+                            "trainer": "Slowbone",
+                            "time": "27:54"
                         },
                         {
                             "trainer": "Pokemaniac",
-                            "time": "46:32"
+                            "time": "27:58"
                         },
                         {
                             "trainer": "Pokemaniac",
-                            "time": "46:33"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "46:33"
-                        },
-                        {
-                            "trainer": "Lorelei",
-                            "time": "46:39"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "46:40"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "46:40"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "46:40"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "46:40"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "46:40"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "46:41"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "46:41"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "46:41"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "46:41"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "46:41"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "46:41"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "46:43"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "46:45"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "46:51"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "53:58"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "54:03"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "54:04"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "54:11"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "54:20"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "54:27"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "54:29"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "54:34"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "54:38"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "54:43"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "55:02"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "55:03"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "55:03"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "55:03"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "55:03"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "55:03"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "55:03"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "55:03"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "55:04"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "55:04"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "55:09"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "55:14"
-                        },
-                        {
-                            "trainer": "Cooltrainer F",
-                            "time": "55:15"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "55:22"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "55:31"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "55:38"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "55:39"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "55:45"
-                        },
-                        {
-                            "trainer": "Blackbelt",
-                            "time": "55:49"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "55:53"
-                        },
-                        {
-                            "trainer": "Tamer",
-                            "time": "56:45"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "57:24"
-                        },
-                        {
-                            "trainer": "Juggler",
-                            "time": "57:28"
+                            "time": "28:07"
                         },
                         {
                             "trainer": "Pokemaniac",
-                            "time": "57:35"
+                            "time": "28:08"
                         },
                         {
-                            "trainer": "Pokemaniac",
-                            "time": "57:39"
+                            "trainer": "Status-Condition-Jr-Trainer",
+                            "time": "28:25"
                         },
                         {
-                            "trainer": "Cooltrainer M",
-                            "time": "57:48"
-                        },
-                        {
-                            "trainer": "Cooltrainer M",
-                            "time": "57:54"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "57:55"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "57:56"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "57:58"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "57:59"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "58:00"
-                        },
-                        {
-                            "trainer": "Nobody",
-                            "time": "58:36"
-                        },
-                        {
-                            "trainer": "Lorelei",
-                            "time": "59:23"
-                        },
-                        {
-                            "trainer": "Lorelei",
-                            "time": "59:27"
+                            "trainer": "Status-Condition-Jr-Trainer",
+                            "time": "28:48"
                         }
                     ],
                     "compared_splits": [],
@@ -2983,9 +2080,9 @@
         "ui_type_colors": "Current",
         "ui_type_color_modifier": "current_",
         "stats_display": "Automatic",
-        "test_run": true,
+        "test_run": false,
         "right_panel": "Battle Graphic",
         "disallow_right_panel_switching": true,
-        "automatic_post_battle_splits": false
+        "automatic_post_battle_splits": true
     }
 }

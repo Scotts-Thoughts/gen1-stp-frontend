@@ -1,6 +1,6 @@
 const battle_summary = {
     global_stats: [
-        { data_name: "battle_summary_frames",        name: "Frames",            path: "patch.time.battleFrameCount.value",                        type: "number",},
+        { data_name: "battle_summary_frames",        name: "Battle Frames",     path: "patch.time.battleFrameCount.value",                        type: "number",},
         { data_name: "battle_summary_battle_number", name: "Battle Number",     path: "patch.battles.trainerBattles.value",                       type: "number",},
         { data_name: "battle_summary_exp_gained",    name: "Experience Gained", path: "patch.battle_info.experienceGained.value",                 type: "number",},
         { data_name: "battle_summary_turns",         name: "Battle Turns",      path: "patch.battle_info.turns.battleTurns.value",                type: "number",},
@@ -88,22 +88,22 @@ const battle_summary = {
         "battle_summary_enemy_slp",
     ],
     global: [
-        { data_name: "battle_summary_frames",        name: "Frames",            path: "patch.time.battleFrameCount.value",         type: "number",},
-        { data_name: "battle_summary_battle_number", name: "Battle Number",     path: "patch.battles.trainerBattles.value",        type: "number",},
-        { data_name: "battle_summary_exp_gained",    name: "Experience Gained", path: "patch.battle_info.experienceGained.value",  type: "number",},
+        { data_name: "battle_summary_frames",        name: "Battle Frames",     path: "patch.time.battleFrameCount.value",         type: "number",},
         { data_name: "battle_summary_turns",         name: "Battle Turns",      path: "patch.battle_info.turns.battleTurns.value", type: "number",},
+        { data_name: "battle_summary_exp_gained",    name: "Experience Gained", path: "patch.battle_info.experienceGained.value",  type: "number",},
+        { data_name: "battle_summary_battle_number", name: "Battle Number",     path: "patch.battles.trainerBattles.value",        type: "number",},
     ],
     player: [
         { data_name: "battle_summary_player_turns",  name: "Turns",  path: "patch.battle_info.turns.playerTurns.value",   type: "number",},
         { data_name: "battle_summary_player_hits",   name: "Hits",   path: "patch.battle_info.hits.ownMovesHit.value",    type: "number",},
-        { data_name: "battle_summary_player_misses", name: "Misses", path: "patch.battle_info.hits.ownMovesMissed.value", type: "number",},
+        // { data_name: "battle_summary_player_misses", name: "Misses", path: "patch.battle_info.hits.ownMovesMissed.value", type: "number",},
         { data_name: "battle_summary_player_crits",  name: "Crits",  path: "patch.battle_info.hits.criticalsDealt.value", type: "number",},
         // { data_name: "battle_summary_player_ohkos",  name: "OHKOs",  path: "patch.battle_info.hits.oHKOsDealt.value",     type: "number",},
     ],
     enemy: [
         { data_name: "battle_summary_enemy_turns",  name: "Turns",  path: "patch.battle_info.turns.enemyTurns.value",      type: "number",},
         { data_name: "battle_summary_enemy_hits",   name: "Hits",   path: "patch.battle_info.hits.enemyMovesHit.value",    type: "number",},
-        { data_name: "battle_summary_enemy_misses", name: "Misses", path: "patch.battle_info.hits.enemyMovesMissed.value", type: "number",},
+        // { data_name: "battle_summary_enemy_misses", name: "Misses", path: "patch.battle_info.hits.enemyMovesMissed.value", type: "number",},
         { data_name: "battle_summary_enemy_crits",  name: "Crits",  path: "patch.battle_info.hits.criticalsTaken.value",   type: "number",},
         // { data_name: "battle_summary_enemy_ohkos",  name: "OHKOs",  path: "patch.battle_info.hits.oHKOsTaken.value",       type: "number",},
     ],
