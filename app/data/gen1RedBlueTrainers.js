@@ -15196,7 +15196,7 @@ const g1RedBlueTrainers = {
                 "spc": 54,
                 "xp": 1897,
                 "moves": [
-                    "Vice Grip",
+                    "ViceGrip",
                     "Guillotine",
                     "Stomp",
                     "Crabhammer"
@@ -15253,7 +15253,7 @@ const g1RedBlueTrainers = {
                 "spc": 57,
                 "xp": 1986,
                 "moves": [
-                    "Vice Grip",
+                    "ViceGrip",
                     "Guillotine",
                     "Stomp",
                     "Crabhammer"
@@ -15448,7 +15448,7 @@ const g1RedBlueTrainers = {
                 "spc": 56,
                 "xp": 1941,
                 "moves": [
-                    "Vice Grip",
+                    "ViceGrip",
                     "Guillotine",
                     "Stomp",
                     "Crabhammer"

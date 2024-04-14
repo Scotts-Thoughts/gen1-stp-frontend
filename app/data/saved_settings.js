@@ -95,7 +95,10 @@ const auto_save_settings = [
     "automatic_evs",
     "ui_stats_styling_modifier",
     "automatic_stats",
-    "display_badge_boosts", 
+    "display_badge_boosts",
+    "show_repel_counter", 
     // "previous_splits",
     // "current_splits",
+    "collect_summary_files",
+    "collect_split_data",
 ]

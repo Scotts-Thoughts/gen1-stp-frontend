@@ -15385,7 +15385,7 @@ const g1YellowTrainers = {
                 "spc": 54,
                 "xp": 1897,
                 "moves": [
-                    "Vice Grip",
+                    "ViceGrip",
                     "Guillotine",
                     "Stomp",
                     "Crabhammer"
@@ -15442,7 +15442,7 @@ const g1YellowTrainers = {
                 "spc": 57,
                 "xp": 1986,
                 "moves": [
-                    "Vice Grip",
+                    "ViceGrip",
                     "Guillotine",
                     "Stomp",
                     "Crabhammer"
@@ -15637,7 +15637,7 @@ const g1YellowTrainers = {
                 "spc": 56,
                 "xp": 1941,
                 "moves": [
-                    "Vice Grip",
+                    "ViceGrip",
                     "Guillotine",
                     "Stomp",
                     "Crabhammer"

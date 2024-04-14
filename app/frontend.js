@@ -708,6 +708,7 @@ const app = Vue.createApp({
             test_run:                   false,
             collect_split_data:         true,
             collect_summary_files:      true,
+            show_repel_counter:         true,
 
             help_menus: "Settings",
 
@@ -1080,6 +1081,12 @@ const app = Vue.createApp({
             },
             deep: true,
         },
+        // previous_splits(newValue) {
+        //     MyStorage['previous_splits'] = newValue
+        // },
+        // current_splits() {
+        //     MyStorage['previous_splits'] = newValue
+        // },
         // timer_startTimeOffset(newValue) { MyStorage['timer_startTimeOffset'] = newValue},
         // timer_startTime(newValue)       { MyStorage['timer_startTime']       = newValue},
         // timer_pause(newValue)           { MyStorage['timer_pause']           = newValue},
@@ -1657,6 +1664,10 @@ const app = Vue.createApp({
             this.time_split_start      = MyStorage['time_split_start']      ?? "00:00:00:00"
             this.battle_start          = MyStorage['battle_start']          ?? 0
             this.timer_settings        = MyStorage['timer_settings']        ?? "Real-Time"
+        },
+        load_split_settings() {
+            this.current_splits  = MyStorage['current_splits']  ?? []
+            this.previous_splits = MyStorage['previous_splits'] ?? []
         },
         batp() { //player battle
             return this.mapper?.properties?.battle?.yourPokemon
@@ -2970,6 +2981,10 @@ const app = Vue.createApp({
             if (state == 'To Battle' || state == 'Battle' || state == 'From Battle') { 
                 const species = enemy_mon.species.value
                 const move_data = this.g1MoveData[move]
+                //This logs the setup of this function if the next line is going fail due to move data being undefined
+                if (move_data == undefined) { 
+                    console.log("enemy_effective_power", state, enemy_state, move_name, species, move_data)
+                }
                 const move_type = move_data.Type
                 const move_base_power = this.enemy_move_power(move) ?? move_data.Power
                 const move_category = move_data.Category
@@ -3056,6 +3071,7 @@ const app = Vue.createApp({
             this.state = this.mapper.properties.meta.state.value
         }
         this.load_timer_settings()
+        this.load_split_settings()
         this.updateTime()
 
         if (this.playerResets.toString().length == 1 && document.getElementById("reset_counter")) {

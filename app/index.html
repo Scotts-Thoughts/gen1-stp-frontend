@@ -393,7 +393,7 @@
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-if="state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0">
+                        <div v-if="show_repel_counter == true && state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0">
                             <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/accuracy/default.png)"></div>
                             <div class="popUpsStyle popUpLabelStyle repelLabel" style="font-size: 16px;">Repel Steps:</div>
                             <div class="popUpsStyle repelSteps">{{ mapper.properties.overworld.repelCount.value }}</div>
@@ -639,7 +639,7 @@
                 <table>
                     <tr><td>Disable right panel hotkeys:</td><td><input class="checkBoxStyle" type="checkbox" v-model="disallow_right_panel_switching"/></td></tr>
                     <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_post_battle_splits"/></td></tr>
-                    <tr><td>Collect battle summary data:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_split_data"/></td></tr>
+                    <tr><td>Collect battle summary & split data:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_split_data"/></td></tr>
                     <tr><td>Collect battle summary files:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_summary_files"/></td></tr>
                 </table>
             </div>
@@ -747,7 +747,8 @@
 
 <!-- Imports -->
     <script src="https://unpkg.com/@microsoft/signalr@7.0.14/dist/browser/signalr.min.js"></script> 
-    <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script>
+    <!-- <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script> -->
+    <script src="packages/vue.global.js"></script>
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
     <script src="data/g1MoveData.js"></script>
     <script src="data/g1PokemonData.js"></script>

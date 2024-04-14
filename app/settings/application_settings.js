@@ -86,4 +86,6 @@ const application_settings = [
     [ "stats_display",                "Automatic"],
     [ "test_run",                     false],
     [ "right_panel",                  "Battle Graphic"],
+    [ "collect_summary_files",        true],
+    [ "collect_split_data",           true],
 ];
