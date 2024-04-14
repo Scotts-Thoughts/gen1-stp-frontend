@@ -92,10 +92,10 @@ function createStoredObject(path, file_name, { saveTimeout, onSave } = {}) {
     // multiple changes are made in a short period of time.
     let timeoutId = null;
     const watcher = (root, props) => {
-        console.error("trigger", props)
+        // console.error("trigger", props)
         if (timeoutId == null) {
             timeoutId = setTimeout(() => {
-                console.error("timeout", props)
+                // console.error("timeout", props)
                 saveToFile(root);
                 timeoutId = null;
             }, saveTimeout);
