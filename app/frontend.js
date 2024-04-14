@@ -15,7 +15,7 @@ function createWatchedObject(watcher) {
         },
         deleteProperty(target, property) {
             if (property in target) {
-                delete target[property];
+                delete target[property];    
                 watcher(root, {target, property, value: undefined});  
             }
         },
@@ -91,9 +91,11 @@ function createStoredObject(path, file_name, { saveTimeout, onSave } = {}) {
     // this is done to avoid saving the file too often when
     // multiple changes are made in a short period of time.
     let timeoutId = null;
-    const watcher = (root) => {
+    const watcher = (root, props) => {
+        console.error("trigger", props)
         if (timeoutId == null) {
             timeoutId = setTimeout(() => {
+                console.error("timeout", props)
                 saveToFile(root);
                 timeoutId = null;
             }, saveTimeout);
@@ -1066,6 +1068,18 @@ const app = Vue.createApp({
         }
     },
     watch: {
+        current_splits: {
+            handler: function (newVal, oldVal) {
+                MyStorage['current_splits'] = newVal
+            },
+            deep: true,
+        },
+        previous_splits: {
+            handler: function (newVal, oldVal) {
+                MyStorage['previous_splits'] = newVal
+            },
+            deep: true,
+        },
         // timer_startTimeOffset(newValue) { MyStorage['timer_startTimeOffset'] = newValue},
         // timer_startTime(newValue)       { MyStorage['timer_startTime']       = newValue},
         // timer_pause(newValue)           { MyStorage['timer_pause']           = newValue},

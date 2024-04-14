@@ -1,6 +1,6 @@
 {
     "global_variables": {
-        "starter": "Magneton",
+        "starter": "Pidgey",
         "game": "Yellow"
     },
     "games": {
@@ -1221,7 +1221,7 @@
                     "backgroundScale": "125",
                     "backgroundUrl": "",
                     "use_custom_background": false,
-                    "attempt_number": 0,
+                    "attempt_number": 3,
                     "finished_run_count": 0,
                     "pb_time": "None",
                     "backgroundXOffset": 100,
@@ -1231,7 +1231,7 @@
                     "backgroundContrast": "121",
                     "backgroundSaturation": "132",
                     "backgroundHue": "0",
-                    "playerId": 0,
+                    "playerId": 61892,
                     "playerName": "NINTEN",
                     "resetCatcher": "NINTEN",
                     "playerResets": 0,
@@ -1243,33 +1243,846 @@
                     "blackouts_as_resets": false,
                     "blackout": false,
                     "faults": 0,
-                    "most_recent_move": "",
-                    "split_logStr": "Autosplitter - Battle Started: ROCKET started at 48:28.13 (Gametime: 3:08)",
-                    "simple_data_str": "NINTEN,Pidgey,Rocket,48:27,1,1,45,3:08,38.734,SWIFT,AGILITY,DOUBLE-EDGE,FLY\n",
-                    "full_data_str": "4-10,14:03:12,NINTEN,Pidgey,Rocket,30,Silph Co - 6F,4,48:27.58,48:27,0h48m27s,1,1,2,45,3:08,38.734,SWIFT,AGILITY,DOUBLE-EDGE,FLY,25,7060,633,94,42,545,470,293,16,15596,Jolteon, ,Normal,Flying,85704,Pidgey1,Pidgey,,00:47:48.85,00:48:27.58,03:08:42.51,45,1,0,48,27,58,SWIFT,AGILITY,DOUBLE-EDGE,FLY,16,30,12,12,0,0,0,0,56,116,77,67,64,64,83,11737,29180,12847,16590,16590,18023,15,15,15,15,0,0,0,0,0,0,0,86,75,63,63,82,681329,247029,371063,61093,2144,25,1,0,7060,6343,717,0,633,136,94,42,11,0,17573,11457,1178,1170,421,89,173,0,0,0,0,0,43,0,20,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,3,1,0,0,0,0,0,0,12,0,0,0,2,241,85569,0,0,0,0,38,43,14,0,0,10,1,1,2,Jolteon\n",
-                    "deprecated_data_str": "Pidgey1,Pidgey,,00:47:48.85,00:48:27.58,03:08:42.51,45,1,0,48,27,58,SWIFT,AGILITY,DOUBLE-EDGE,FLY,77,67,64,64,83,0,0,0,0,0,0,0,86,75,63,63,82,681329,247029,371063,61093,2144,25,1,0,7060,6343,717,0,633,136,94,42,11,0,17573,11457,1178,1170,421,89,173,0,0,0,0,0,43,0,20,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,3,1,0,0,0,0,0,0,0,0,2,241,85569,0,0,0,0,38,43,14,0,0,10,1,1,2,Jolteon\n",
+                    "most_recent_move": "AGILITY",
+                    "split_logStr": "Autosplitter - Battle Started: JR TRAINER M started at 34:41.35 (Gametime: 2:07)",
+                    "simple_data_str": "NINTEN,Pidgey,Jr Trainer M,38:37,0,0,37,2:08,377875.093,QUICK ATTACK,WING ATTACK,SAND-ATTACK,AGILITY\n",
+                    "full_data_str": "4-13,18:29:42,NINTEN,Pidgey,Jr Trainer M,8,Route 9,4,38:37.98,38:37,0h38m37s,0,0,0,37,2:08,377875.093,QUICK ATTACK,WING ATTACK,SAND-ATTACK,AGILITY,4,3769,323,83,30,439,423,222,19,27554,Jolteon, ,Normal,Flying,46925,Pidgey3,Pidgey,,00:00:00.00,00:38:37.98,02:08:29.16,37,0,0,38,37,98,QUICK ATTACK,WING ATTACK,SAND-ATTACK,AGILITY,25,20,15,30,0,0,0,0,66,97,58,54,50,50,66,11445,10229,9856,8755,8755,11014,15,15,15,15,0,-1,0,0,0,0,0,73,39,50,50,66,464535,135297,304472,22759,2007,4,0,0,3769,3614,155,0,323,113,83,30,1,0,10909,7575,824,824,413,58,150,0,0,0,0,0,46,0,7,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,9,0,0,0,0,203,46790,0,0,0,0,18,31,0,0,0,6,0,3,0,Jolteon\n",
+                    "deprecated_data_str": "Pidgey3,Pidgey,,00:00:00.00,00:38:37.98,02:08:29.16,37,0,0,38,37,98,QUICK ATTACK,WING ATTACK,SAND-ATTACK,AGILITY,58,54,50,50,66,0,-1,0,0,0,0,0,73,39,50,50,66,464535,135297,304472,22759,2007,4,0,0,3769,3614,155,0,323,113,83,30,1,0,10909,7575,824,824,413,58,150,0,0,0,0,0,46,0,7,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,0,0,0,203,46790,0,0,0,0,18,31,0,0,0,6,0,3,0,Jolteon\n",
                     "simple_data": [
                         "NINTEN",
                         "Pidgey",
-                        "Rocket",
-                        "48:27",
-                        "1",
-                        "1",
-                        "45",
-                        "3:08",
-                        38.734,
-                        "SWIFT",
-                        "AGILITY",
-                        "DOUBLE-EDGE",
-                        "FLY"
+                        "Jr Trainer M",
+                        "38:37",
+                        "0",
+                        "0",
+                        "37",
+                        "2:08",
+                        377875.093,
+                        "QUICK ATTACK",
+                        "WING ATTACK",
+                        "SAND-ATTACK",
+                        "AGILITY"
                     ],
                     "ui_saturation": "0.8",
                     "ui_type_colors": "Current",
                     "ui_type_color_modifier": "current_",
                     "previous_label": "Pidgey 1",
                     "compared_splits": [],
-                    "current_splits": [],
-                    "current_label": "Spearow 1",
+                    "current_splits": [
+                        {
+                            "trainer": "Rival1-Lab",
+                            "time": "44"
+                        },
+                        {
+                            "trainer": "Rival1-Lab",
+                            "time": "54"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "59"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:02"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:07"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:08"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:14"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:23"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:28"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:29"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:34"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:35"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:39"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:40"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:45"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:48"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "1:51"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "2:13"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "2:18"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "2:38"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "2:53"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "3:01"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "3:18"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "3:20"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "3:23"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "3:24"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "3:29"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "3:31"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "3:42"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "3:44"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "3:49"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "3:52"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "3:58"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "4:00"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "4:09"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "4:11"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "4:16"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "4:17"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "4:22"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "4:34"
+                        },
+                        {
+                            "trainer": "Rival1a-Route 22",
+                            "time": "4:46"
+                        },
+                        {
+                            "trainer": "Rival1a-Route 22",
+                            "time": "4:51"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "4:55"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:13"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:17"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:21"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "5:32"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "5:33"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:38"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:39"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:43"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:44"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:49"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:50"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:56"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "5:57"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "6:02"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "6:05"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "6:12"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "6:15"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "6:18"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "6:19"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "6:23"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "6:24"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "6:27"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "6:40"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "6:50"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "6:55"
+                        },
+                        {
+                            "trainer": "Brock",
+                            "time": "7:55"
+                        },
+                        {
+                            "trainer": "Brock",
+                            "time": "8:08"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "8:25"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "8:30"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "8:39"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "8:42"
+                        },
+                        {
+                            "trainer": "Youngster Ben",
+                            "time": "8:55"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "8:58"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "9:12"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "9:14"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "9:23"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "9:25"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "9:38"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "9:42"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "9:54"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "10:07"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "10:16"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "10:19"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "10:35"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "10:48"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "11:04"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "11:10"
+                        },
+                        {
+                            "trainer": "Super Nerd",
+                            "time": "11:20"
+                        },
+                        {
+                            "trainer": "Super Nerd",
+                            "time": "11:29"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "11:38"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "11:41"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "11:56"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "12:03"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "12:14"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "12:21"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "12:31"
+                        },
+                        {
+                            "trainer": "Youngster Ben",
+                            "time": "12:41"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "12:52"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "13:02"
+                        },
+                        {
+                            "trainer": "Fossil Nerd",
+                            "time": "13:19"
+                        },
+                        {
+                            "trainer": "Fossil Nerd",
+                            "time": "13:27"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "13:45"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "14:11"
+                        },
+                        {
+                            "trainer": "Rival2-Nugget Bridge",
+                            "time": "14:42"
+                        },
+                        {
+                            "trainer": "Rival2-Nugget Bridge",
+                            "time": "14:53"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "15:02"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "15:05"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "15:11"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "15:14"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "15:25"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "15:29"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "15:42"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "15:45"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "15:51"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "15:58"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "16:06"
+                        },
+                        {
+                            "trainer": "Rocket",
+                            "time": "16:06"
+                        },
+                        {
+                            "trainer": "Hiker",
+                            "time": "16:06"
+                        },
+                        {
+                            "trainer": "Hiker",
+                            "time": "16:06"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "16:06"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "16:06"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "16:06"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "16:06"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "20:48"
+                        },
+                        {
+                            "trainer": "Jr Trainer F",
+                            "time": "20:56"
+                        },
+                        {
+                            "trainer": "Jr Trainer F",
+                            "time": "21:00"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "21:05"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "21:07"
+                        },
+                        {
+                            "trainer": "Sandy",
+                            "time": "21:20"
+                        },
+                        {
+                            "trainer": "Sandy",
+                            "time": "21:22"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "21:32"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "21:56"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "22:02"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "22:05"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "22:19"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "22:24"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "22:31"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "22:34"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "22:47"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Engineer",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Engineer",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Engineer",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Engineer",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Nobody",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Gambler",
+                            "time": "22:49"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "24:38"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "24:49"
+                        },
+                        {
+                            "trainer": "Gentleman",
+                            "time": "24:59"
+                        },
+                        {
+                            "trainer": "Gentleman",
+                            "time": "25:06"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "25:10"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "25:10"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "25:10"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "25:10"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "25:10"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "25:10"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "25:10"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "25:10"
+                        },
+                        {
+                            "trainer": "Fisher",
+                            "time": "26:32"
+                        },
+                        {
+                            "trainer": "Fisher",
+                            "time": "26:36"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "26:41"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "27:56"
+                        },
+                        {
+                            "trainer": "Gentleman",
+                            "time": "28:05"
+                        },
+                        {
+                            "trainer": "Gentleman",
+                            "time": "28:14"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "28:21"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "28:23"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "28:32"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "28:45"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Sailor",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Fisher",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Fisher",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Gentleman",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Gentleman",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Gentleman",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Gentleman",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Lass",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Rival3-SS Anne",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Rival3-SS Anne",
+                            "time": "28:50"
+                        },
+                        {
+                            "trainer": "Rival3-SS Anne",
+                            "time": "31:40"
+                        },
+                        {
+                            "trainer": "Surge",
+                            "time": "31:49"
+                        },
+                        {
+                            "trainer": "Surge",
+                            "time": "32:00"
+                        },
+                        {
+                            "trainer": "Wrapping Lass",
+                            "time": "32:00"
+                        },
+                        {
+                            "trainer": "Jr Trainer F",
+                            "time": "32:00"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "32:00"
+                        },
+                        {
+                            "trainer": "Youngster",
+                            "time": "33:06"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "33:15"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "33:21"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "33:50"
+                        },
+                        {
+                            "trainer": "Bug Catcher",
+                            "time": "34:40"
+                        },
+                        {
+                            "trainer": "Jr Trainer M",
+                            "time": "38:37"
+                        }
+                    ],
+                    "current_label": "Pidgey 2",
                     "previous_splits": [
                         {
                             "trainer": "Rival1-Lab",
@@ -2057,9 +2870,9 @@
         "key_F22": "",
         "key_F23": "",
         "key_F24": "",
-        "route1": false,
+        "route1": true,
         "viridianForest": true,
-        "route3": false,
+        "route3": true,
         "mtMoon": false,
         "route6": false,
         "rockTunnel": true,
@@ -2074,7 +2887,7 @@
         "goal_level": 13,
         "goal_speed": 24,
         "rockTunnelDarkness": false,
-        "viridian_forest": "Pidgey",
+        "viridian_forest": "Encounters On",
         "ui_stat_arrangement": "Hp, Atk, Def, Spe, Spc, Crit",
         "ui_stat_arrangement_modifier": "hp_spd_",
         "ui_type_colors": "Current",

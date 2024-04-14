@@ -96,6 +96,6 @@ const auto_save_settings = [
     "ui_stats_styling_modifier",
     "automatic_stats",
     "display_badge_boosts", 
-    "previous_splits",
-    "current_splits",
+    // "previous_splits",
+    // "current_splits",
 ]
