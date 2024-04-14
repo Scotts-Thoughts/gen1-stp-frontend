@@ -414,7 +414,7 @@
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-if="key_F17 == `bonks`">
+                        <div v-if="show_bonk_counter == true && key_F17 == `bonks`">
                             <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/screens/default.png)"></div>
                             <div class="genericLabels resetsLabel bonksLabel">bonks</div>
                             <div class="popUpsStyle bonksValue">{{ map?.patch?.steps?.bonks }}</div>
@@ -517,6 +517,7 @@
                         <td><input type="text" class="inputContainer" v-model="current_label" placeholder="Current"/></td>
                     </tr>
                 </table>
+                <div v-if="previous_splits == []">No split file loaded.</div>
                 <br>
                 Bulbapedia Colors:<br>
                 <select v-model="ui_type_colors" class="dropdownMenu">
@@ -641,6 +642,8 @@
                     <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_post_battle_splits"/></td></tr>
                     <tr><td>Collect battle summary & split data:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_split_data"/></td></tr>
                     <tr><td>Collect battle summary files:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_summary_files"/></td></tr>
+                    <tr><td>Show repel counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_repel_counter"/></td></tr>
+                    <tr><td>Show bonk counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_bonk_counter"/></td></tr>
                 </table>
             </div>
             <div class="testingArea4" style="z-index: 50000;">
@@ -716,29 +719,6 @@
             <div v-show="help_menus == `Internal Monitor`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
                 <div>Splits:</div>
             </div>
-            <!-- <div v-show="help_menus == `Splits`" class="testingArea3" style="z-index: 50000; font-size: 14px; overflow-y: auto;">
-                <div style="font-size: 24px;">{{this.starterName}}</div>
-                <div>{{split_logStr}}</div>
-                <div>PB Time: {{this.pb_time}}</div>
-                <table style="text-align: left; line-height: 16px;">
-                    <tr>
-                        <th style="text-decoration: underline; width: 160px; text-align: left;">Split</th>
-                        <th style="text-decoration: underline; width: 40px; text-align: right;">Current</th>
-                        <th style="text-decoration: underline; width: 40px; text-align: right;">PB</th>
-                        <th style="text-decoration: underline; width: 45px; text-align: right;">diff</th>
-                    </tr>
-                    <button class="buttonStyle" @click="save_pb_splits">Save PB Splits</button>
-                    <br>
-                    <button class="buttonStyle" @click="splits_clear">Clear Splits</button>
-                    <tr v-for="split in this.split_data">
-                        <th>{{split[2]}}:</th>
-                        <th style="text-align: right;">{{split[3]}}</th>
-                        <th v-if="pb_split(split[2]) != null" style="text-align: right;">{{pb_split(split[2])[3]}}</th>
-                        <th v-if="pb_split(split[2]) != null" style="text-align: right;" :style="splitTextColor(split[3], pb_split(split[2])[3])">{{timeUntilSplit(convertDurationToSeconds(split[3]), convertDurationToSeconds(pb_split(split[2])[3]))}}</th>
-                    </tr>
-                </table>
-                <br>
-            </div> -->
             <div v-show="help_menus == `Playthrough Info`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
                 <div>Items:</div>
             </div>

@@ -709,6 +709,7 @@ const app = Vue.createApp({
             collect_split_data:         true,
             collect_summary_files:      true,
             show_repel_counter:         true,
+            show_bonk_counter:          true,
 
             help_menus: "Settings",
 
@@ -3642,13 +3643,21 @@ const app = Vue.createApp({
                     } //this is the rocket outside of Cerulean city, collecting this data allows for better comparisons for Pokemon that take different choices in Cerulean Nugget->Misty or Misty->Nugget
                 }
                 
-                if (trainer == "CHAMPION") { //this is the champion fight in Pokemon Crystal (this code is likely unnessecary in gen1)
-                    this.lance_defeated = true //setting this to true prevents the reset counter from incrementing when I reset after entering the hall of fame to resume gameplay ASAP
-                }
+                // if (trainer == "CHAMPION") { //this is the champion fight in Pokemon Crystal (this code is likely unnessecary in gen1)
+                //     this.lance_defeated = true //setting this to true prevents the reset counter from incrementing when I reset after entering the hall of fame to resume gameplay ASAP
+                //     if (this.automatic_post_battle_splits == true) {
+                //         this.right_panel = "Splits"
+                //         this.automatic_splits = true
+                //     }
+                // }
 
                 //stop timer
                 if (trainer == "RIVAL3") { //this is the champion in gen1
                     log_split() //log the final split
+                    if (this.automatic_post_battle_splits == true) {
+                        this.right_panel = "Splits"
+                        this.automatic_splits = true
+                    }
                     if (this.test_run == false) {
                         this.finished_run_count++ //increment finished count if this is not a test run
                     };
