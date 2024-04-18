@@ -1884,7 +1884,7 @@ box-shadow:
 .fadeDelayed-leave-to     { opacity: 0; }
 .fadeDelayed-leave-active { transition: opacity 200ms ease-in-out; }
 
-.splits_table {
+/* .splits_table {
     display: block;
     position: absolute;
     border: 1px solid #00ff0d00;
@@ -1899,9 +1899,29 @@ box-shadow:
     top: 74px;
     opacity: .9;
     border: none;
+} */
+.splits_table {
+    display: table; /* Changed to table to make use of table properties */
+    position: absolute;
+    width: 364px;
+    height: 454px;
+    font-size: 12px;
+    line-height: 20px; /* Line height can affect vertical centering, so might adjust if necessary */
+    font-family: 'Play', sans-serif; /* Ensure the font family is correctly referenced */
+    left: 1538px;
+    top: 75px;
+    opacity: .9;
+    border-spacing: 0; /* Removes spacing between cells */
+    margin: 0; /* Removes margin around the table */
 }
 .splits_table tr:nth-child(odd) {
     background-color: #cfcfcf;
+}
+.splits_table tr:nth-child(even) {
+    background-color: #cfcfcf;
+}
+.splits_table tr:nth-child(odd) {
+    background-color: #ffffff;
 }
 
 .second_splits_table {
@@ -1924,7 +1944,7 @@ box-shadow:
     background-color: #cfcfcf;
 }
 
-.battle_summary_table {
+/* .battle_summary_table {
     display: block;
     position: absolute;
     border: 1px solid #00ff0d00;
@@ -1937,6 +1957,22 @@ box-shadow:
     font-family: play;
     left: 1538px;
     top: 584px;
+    opacity: .9;
+    border: none;
+} */
+.battle_summary_table {
+    display: table; /* Changed to table to make use of table properties */
+    position: absolute;
+    border: 1px solid #00ff0d00;
+    background-color: #ffffff;
+    font-size: 12px;
+    line-height: 20px;
+    line-height: 21px;
+    width: 365px;
+    height: 452px;
+    font-family: play;
+    left: 1538px;
+    top: 585px;
     opacity: .9;
     border: none;
 }

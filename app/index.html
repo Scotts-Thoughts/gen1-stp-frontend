@@ -313,7 +313,7 @@
                             </div>
                         </div> 
                     </div>
-                    <div v-else-if="right_panel == 'Inventory'" key=2>
+                    <!-- <div v-else-if="right_panel == 'Inventory'" key=2>
                         <table class="inventory_demo" cellspacing="0">
                             <tr>
                                 <th>Money:</th>
@@ -338,7 +338,7 @@
                         </table>
                         <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/movepool.svg)"></div>
                         <div class="movepoolLabel">Inventory</div>
-                    </div>
+                    </div> -->
                     <div v-else-if="key_F14 == true" key=3>
                         <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
                             <tr class="movepool_header" :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
@@ -414,7 +414,7 @@
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-if="show_bonk_counter == true && key_F17 == `bonks`">
+                        <div v-if="show_bonk_counter == true && state == 'Overworld'">
                             <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/screens/default.png)"></div>
                             <div class="genericLabels resetsLabel bonksLabel">bonks</div>
                             <div class="popUpsStyle bonksValue">{{ map?.patch?.steps?.bonks }}</div>
