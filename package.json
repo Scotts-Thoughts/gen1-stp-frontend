@@ -22,6 +22,7 @@
     "electron-builder": "^24.4.0"
   },
   "dependencies": {
-    "@electron-toolkit/utils": "^1.0.2"
+    "@electron-toolkit/utils": "^1.0.2",
+    "obs-websocket-js": "^5.0.5"
   }
 }

@@ -448,7 +448,7 @@ box-shadow:
 .dropdownMenu {
     pointer-events: auto; 
     position: relative; 
-    width: 300px; 
+    width: 240px; 
     height: 30px; 
     font-size: 17px; 
     background: #72fd4f; 
@@ -509,7 +509,14 @@ box-shadow:
     text-align: right;
     background: #72fd4f; 
     font-family: Play;
-    width: 130px;
+    width: 110px;
+}
+.small_input_container {
+    font-size: 18px; 
+    text-align: right;
+    background: #72fd4f; 
+    font-family: Play;
+    width: 40px;
 }
 .save_pb_splits {
     position: absolute;

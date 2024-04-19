@@ -611,6 +611,7 @@ const app = Vue.createApp({
             ready:  false,
             mapper: null,
             state:  "Base Stats",
+            obs:    null,
 
             // Static Data
             g1MoveData:              g1MoveData,
@@ -3074,6 +3075,33 @@ const app = Vue.createApp({
         this.load_timer_settings()
         this.load_split_settings()
         this.updateTime()
+
+        async function createOBS() {
+            const OBSWebSocket = require('obs-websocket-js').default;
+            const obs = new OBSWebSocket();
+            await obs.connect('ws://127.0.0.1:4444', 'STPpkmn');
+            return async (method, args) => {
+                return await obs.call(method, args);
+            }
+        }
+        
+        const obsCall = await createOBS();
+        // async function createOBS() {
+        //     const OBSWebSocket = require('obs-websocket-js').default;
+        //     const obs = new OBSWebSocket();
+        //     await obs.connect('ws://127.0.0.1:4444', 'STPpkmn');
+        //     return obs;
+        // }
+        // // Wrap the call in an async function
+        // this.obs = await createOBS();
+        // const obsCall = async (method, args) => {
+        //     return await this.obs.call(method, args);
+        // }
+
+        this.mapper.properties.overworld.map.change(async () => {
+            console.log("Map Change");
+            await obsCall('TriggerHotkeyByName', { hotkeyName: 'OBSBasic.SplitFile' });
+        });
 
         if (this.playerResets.toString().length == 1 && document.getElementById("reset_counter")) {
             document.getElementById("reset_counter").style.fontSize = "75px"

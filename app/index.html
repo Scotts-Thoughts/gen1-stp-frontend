@@ -226,7 +226,7 @@
                             <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(ui/ui_splits.svg)"></div>
                         </div>
                     </div>
-                    <div v-else-if="right_panel == 'Battle Graphic' && (state != 'Base Stats' && state != 'Overworld' && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=1>
+                    <div v-else-if="right_panel == 'Battle Graphic' && (state != 'Base Stats' && (state == 'To Battle' || state == 'Battle') && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <div class="colored-image ds" :style="battlePokemonCrop()" style="--url: url(images/ui/opponent.svg);"></div>
                         <div class="enemyGraphic">
@@ -605,8 +605,8 @@
                     <option>Level</option>
                     <option>Speed</option>
                 </select>
-                <input v-if="viridian_forest == `Level`" v-model="goal_level" placeholder="Target Level">
-                <input v-if="viridian_forest == `Speed`" v-model="goal_speed" placeholder="Target Speed">
+                <input class="small_input_container" v-if="viridian_forest == `Level`" v-model="goal_level" placeholder="Target Level">
+                <input class="small_input_container" v-if="viridian_forest == `Speed`" v-model="goal_speed" placeholder="Target Speed">
                 <br>
                 <br>
                 <button @click="apply_settings('first_playthrough_settings')" class="buttonStyle">First Playthrough Settings</button><br>
