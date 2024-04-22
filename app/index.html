@@ -439,32 +439,54 @@
             </div>
             <!-- UI -->
             <div class="testingArea1" style="z-index: 50000;">
-                <div>Solo Pokemon:</div>
-                <select v-model="starterName" class="dropdownMenu">
-                    <option disabled value="">Select a species</option>
-                    <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
-                </select>
                 <div>Game:</div>
-                <select v-model="game_name" class="dropdownMenu">
+                <select v-model="game_name" class="dropdownMenu dropdown_menu_column3">
                     <option>Yellow</option>
                     <option>Red</option>
                     <option>Blue</option>
-                </select>
+                </select><br>
                 <br>
-                <div>DV Setting:</div>
-                <select v-model="dvSetting" class="dropdownMenu">
+                <div>Test run:<input class="checkBoxStyle" type="checkbox" v-model="test_run"/></div>
+                <br>
+                <div>Timer Setting:</div>
+                <select v-model="timer_settings" class="dropdownMenu dropdown_menu_column3">
                     <option disabled value="">Please select one</option>
-                    <option>Max</option>
-                    <option>Min</option>
-                    <option>NPC</option>
-                    <option>Max with Min Atk</option>
-                    <option>Random</option>
-                </select>
+                    <option>Real-Time</option>
+                    <option>Game-Time</option>
+                    <option>Off - Real-Time Label</option>
+                    <option>Off - Game-Time Label</option>
+                </select><br>
+                <button class="buttonStyle buttonStyle_column3" @click="pauseUnpauseTime">Play/Pause</button><br>
+                <button class="buttonStyle set_button_style" @click="set_timer">Set</button><input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
                 <br>
-                <button class="buttonStyle" @click="newRun">New Run</button>
-                <button class="buttonStyle" @click="pauseUnpauseTime">Pause/Unpause Timer</button>
-                <button class="buttonStyle" @click="set_timer">Set Timer</button><br>
-                Start Time Offset: <input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
+                <br>
+                <button class="buttonStyle buttonStyle_column3" onClick="openFolder('splits')">Open Splits Folder</button><br>
+                <br>
+                <br>
+                <div>Debugging:</div>
+                <table>
+                    <tr><td>State:</td><td>{{state}}</td></tr>
+                </table>
+            </div>
+            <div class="testingArea2" style="z-index: 50000;">
+                <div>Solo Pokemon:</div>
+                <select v-model="starterName" class="dropdownMenu dropdown_menu_column3" style="background-color: rgb(201, 199, 100)">
+                    <option disabled value="">Select a species</option>
+                    <option v-for="key in keys_function(g1PokemonData)" :value="`${key}`">{{key}}</option>
+                </select><br>
+                <button class="buttonStyle new_run_button" @click="newRun">New Run</button>
+                <br>
+                <button class="buttonStyle comparison_button" @click="load_splits()">Split Comparison</button><br>
+                <table>
+                    <tr>
+                        <td>Previous: </td>
+                        <td><input type="text" class="inputContainer" v-model="previous_label" placeholder="Previous"/></td>
+                    </tr>
+                    <tr>
+                        <td>Current: </td>
+                        <td><input type="text" class="inputContainer" v-model="current_label" placeholder="Current"/></td>
+                    </tr>
+                </table>
                 <br>
                 <table>
                     <tr>
@@ -503,51 +525,8 @@
                         <th style="text-align: left;">Faults:</th>
                         <th>{{this.playerResets + this.blackout_counter}}</th>
                     </tr>
-                    <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
                 </table>
                 <br>
-                <button class="buttonStyle" @click="load_splits()">Open Split File</button><br>
-                <table>
-                    <tr>
-                        <td>Previous Splits Label: </td>
-                        <td><input type="text" class="inputContainer" v-model="previous_label" placeholder="Previous"/></td>
-                    </tr>
-                    <tr>
-                        <td>Current Splits Label: </td>
-                        <td><input type="text" class="inputContainer" v-model="current_label" placeholder="Current"/></td>
-                    </tr>
-                </table>
-                <div v-if="previous_splits == []">No split file loaded.</div>
-                <br>
-                Bulbapedia Colors:<br>
-                <select v-model="ui_type_colors" class="dropdownMenu">
-                    <option>Current</option>
-                    <option>Legacy</option>
-                </select>
-                <br>
-                <div>Stat Arrangement:</div>
-                <select v-model="ui_stat_arrangement" class="dropdownMenu">
-                    <option>Hp, Atk, Def, Crit, Spc, Spe</option>
-                    <option>Hp, Atk, Def, Spe, Spc, Crit</option>
-                </select>
-                <br>
-                <br>
-                <div>Debugging:</div>
-                <table>
-                    <tr><td>State:</td><td>{{state}}</td></tr>
-                </table>
-            </div>
-            <div class="testingArea2" style="z-index: 50000;">
-                <div>Secondary Menu:</div>
-                <select v-model="help_menus" class="dropdownMenu">
-                    <option disabled value="">Please select one</option>
-                    <option>Encounters</option>
-                    <option>Advanced Options</option>
-                </select>
-                <br>
-                <button class="buttonStyle" onClick="openFolder('splits')">Open Splits Folder</button>
-            </div>
-            <div v-show="help_menus == `Encounters`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
                 Encounters:<br>
                 <table class="ui_table">
                     <tr>
@@ -597,7 +576,7 @@
                 </table>
                 <br>
                 Viridian Forest:<br>
-                <select v-model="viridian_forest" class="dropdownMenu">
+                <select v-model="viridian_forest" class="dropdownMenu dropdown_menu_column3" style="width: 160px;">
                     <option disabled value="">Please select one</option>
                     <option>Encounters On</option>
                     <option>Encounters Off</option>
@@ -609,27 +588,82 @@
                 <input class="small_input_container" v-if="viridian_forest == `Speed`" v-model="goal_speed" placeholder="Target Speed">
                 <br>
                 <br>
-                <button @click="apply_settings('first_playthrough_settings')" class="buttonStyle">First Playthrough Settings</button><br>
-                <button @click="apply_settings('second_playthrough_settings')" class="buttonStyle">Second Playthrough Settings</button><br>
-                <button @click="apply_settings('all_off')" class="buttonStyle">All Off</button>
+                <button @click="apply_settings('first_playthrough_settings')" class="buttonStyle buttonStyle_column3">First-run</button><br>
+                <button @click="apply_settings('second_playthrough_settings')" class="buttonStyle buttonStyle_column3">Follow-up</button><br>
+                <button @click="apply_settings('all_off')" class="buttonStyle buttonStyle_column3">All Off</button><br>
                 <br>
+                <div>DV Setting:</div>
+                <select v-model="dvSetting" class="dropdownMenu dropdown_menu_column3">
+                    <option disabled value="">Please select one</option>
+                    <option>Max</option>
+                    <option>Min</option>
+                    <option>NPC</option>
+                    <option>Max with Min Atk</option>
+                    <option>Random</option>
+                </select><br>
+            </div>
+            <div class="testingArea4" style="z-index: 50000;">
+                <div>UI Color:</div>
+                <button @click="color_picker" class="buttonStyle buttonStyle_column3">Color Picker</button><br>
+                Saturation: <input type="range" min="0" max="2" step="0.1" v-model="ui_saturation"/><br>
                 <br>
-                Stats:<br>
-                <select v-model="stats_display" class="dropdownMenu">
+                <div>Pokemon:</div>
+                <table>
+                    <tr><td>X-Offset:   </td><td><input type="range" min="-400" max="400" v-model="imageXOffset"/></td></tr>
+                    <tr><td>Y-Offset:   </td><td><input type="range" min="-400" max="400" v-model="imageYOffset"/></td></tr>
+                    <tr><td>Scale:      </td><td><input type="range" min="0.3"  max="2"   step="0.02" v-model="imageScale"/></td></tr>
+                    <tr><td>Saturation: </td><td><input type="range" min="90"   max="150" step="1"    v-model="imageSat"/></td></tr>
+                    <tr><td>Rotation:   </td><td><input type="range" min="0"    max="360" step="1"    v-model="imageRotation"/></td></tr>
+                    <tr><td>Flip:       </td><td><input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/></td></tr>
+                </table>
+                <br>
+                <div>Background:</div>
+                <select v-model="backgroundTexture" class="dropdownMenu dropdown_menu_column3">
+                    <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
+                        {{ key }}
+                    </option>
+                </select>
+                <br>
+                <table>
+                    <tr><td>X-Offset:   </td><td><input type="range" min="-125" max="125" v-model="backgroundXOffset"/></td></tr>
+                    <tr><td>Y-Offset:   </td><td><input type="range" min="-125" max="125" v-model="backgroundYOffset"/></td></tr>
+                    <tr><td>Scale:      </td><td><input type="range" min="100"  max="200" v-model="backgroundScale"/></td></tr>
+                    <tr><td>Brightness: </td><td><input type="range" min="0"    max="200" v-model="backgroundBrightness"/></td></tr>
+                    <tr><td>Contrast:   </td><td><input type="range" min="0"    max="200" v-model="backgroundContrast"/></td></tr>
+                    <tr><td>Saturation: </td><td><input type="range" min="0"    max="200" v-model="backgroundSaturation"/></td></tr>
+                    <tr><td>Blur:       </td><td><input type="range" min="0"    max="10"  v-model="backgroundBlur"/></td></tr>
+                    <tr><td>Hue:        </td><td><input type="range" min="0"    max="358" v-model="backgroundHue"/></td></tr>
+                </table>
+            </div>
+            <div class="testingArea3" style="z-index: 50000;">
+                Bulbapedia Colors:<br>
+                <select v-model="ui_type_colors" class="dropdownMenu dropdown_menu_column3">
+                    <option>Current</option>
+                    <option>Legacy</option>
+                </select><br>
+                <br>
+                <div>Stat Arrangement:</div>
+                <select v-model="ui_stat_arrangement" class="dropdownMenu dropdown_menu_column3">
+                    <option>Speed: top right</option>
+                    <option>Speed: bottom right</option>
+                </select><br>
+                <br>
+                <div>Stats:</div>
+                <select v-model="stats_display" class="dropdownMenu dropdown_menu_column3">
                     <option>Automatic</option>
                     <option>Badge Boosts</option>
                     <option>Base Stats</option>
                     <option>DVs</option>
                     <option>EVs</option>
                     <option>Detailed EVs</option>
-                </select>
+                </select><br>
                 <table>
                     <tr><td>Automatically switch stats:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_stats"/></td>     </tr>
                     <tr><td>Display badge boosts:</td>      <td><input class="checkBoxStyle" type="checkbox" v-model="display_badge_boosts"/></td></tr>
                 </table>
                 <br>
                 Right Panel:<br>
-                <select v-model="right_panel" class="dropdownMenu">
+                <select v-model="right_panel" class="dropdownMenu dropdown_menu_column3">
                     <option>Battle Graphic</option>
                     <option>Inventory</option>
                     <option>Movepool</option>
@@ -639,87 +673,34 @@
                 <table>
                     <tr><td>Disable right panel hotkeys:</td><td><input class="checkBoxStyle" type="checkbox" v-model="disallow_right_panel_switching"/></td></tr>
                     <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_post_battle_splits"/></td></tr>
-                    <tr><td>Collect battle summary & split data:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_split_data"/></td></tr>
-                    <tr><td>Collect battle summary files:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_summary_files"/></td></tr>
+                    <tr><td>Collect split data:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_split_data"/></td></tr>
+                    <!-- <tr><td>Collect battle summary files:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_summary_files"/></td></tr> -->
                     <tr><td>Show repel counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_repel_counter"/></td></tr>
                     <tr><td>Show bonk counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_bonk_counter"/></td></tr>
                 </table>
-            </div>
-            <div class="testingArea4" style="z-index: 50000;">
-                <div>Pokemon:</div>
-                X-Offset:   <input type="range" min="-400" max="400" v-model="imageXOffset"/><br>
-                Y-Offset:   <input type="range" min="-400" max="400" v-model="imageYOffset"/><br>
-                Scale:      <input type="range" min="0.3"  max="2"   step="0.02" v-model="imageScale"/><br>
-                Saturation: <input type="range" min="90"   max="150" step="1"    v-model="imageSat"/><br>
-                Rotation:   <input type="range" min="0"    max="360" step="1"    v-model="imageRotation"/><br>
-                Flip:       <input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/><br>
                 <br>
-                <div>Background:</div>
-                <select v-model="backgroundTexture" class="dropdownMenu">
-                    <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
-                        {{ key }}
-                    </option>
-                </select>
-                <br>
-                X-Offset:   <input type="range" min="-125" max="125" v-model="backgroundXOffset"/><br>
-                Y-Offset:   <input type="range" min="-125" max="125" v-model="backgroundYOffset"/><br>
-                Scale:      <input type="range" min="100"  max="200" v-model="backgroundScale"/><br>
-                Brightness: <input type="range" min="0"    max="200" v-model="backgroundBrightness"/><br>
-                Contrast:   <input type="range" min="0"    max="200" v-model="backgroundContrast"/><br>
-                Saturation: <input type="range" min="0"    max="200" v-model="backgroundSaturation"/><br>
-                Blur:       <input type="range" min="0"    max="10"  v-model="backgroundBlur"/><br>
-                Hue:        <input type="range" min="0"    max="358" v-model="backgroundHue"/><br>
-                <br>
-                <div>UI:</div>
-                <button @click="color_picker" class="buttonStyle">Color Picker</button>
-                Saturation: <input type="range" min="0" max="2" step="0.1" v-model="ui_saturation"/><br>
-            </div>
-            <div v-show="help_menus == `Advanced Options`" class="testingArea3" style="z-index: 50000; font-size: 18px;">
-                <div>Timer Setting:</div>
-                <select v-model="timer_settings" class="dropdownMenu">
-                    <option disabled value="">Please select one</option>
-                    <option>Real-Time</option>
-                    <option>Game-Time</option>
-                    <option>Off - Real-Time Label</option>
-                    <option>Off - Game-Time Label</option>
-                </select><br>
                 <div style="text-decoration: underline;">Graphics Toggles:</div>
-                Trainer Teams: <input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/><br>
-                <div class="note">Displays the enemy trainer's team while battling them. This option must be enabled for the following option "All Trainers" to work.</div>
-                <br>
-                All Trainers: <input class="checkBoxStyle" type="checkbox" v-model="showAllTrainers"/><br>
-                <div class="note">When disabled the overlay will only display the teams of key trainers (Rivals, Gym Leaders, E4, Champion).</div>
-                <br>
-                Show Trainer Illustrations: <input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/><br>
-                <div class="note">When enabled this will display illustrations of the trainer under their team when you fight them.</div>
-                <br>
-                Show Wild Pokemon: <input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/><br>
-                <div class="note">Displays wild Pokemon in the same way as trainer Pokemon when this option is checked.</div>
-                <br>
-                Show screens, accruacy, and evasion: <input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/><br>
-                <div class="note">The overlay will display pop ups when your Pokemon is behind a screen or has had its accuracy or evasion modified.</div>
-                <br>
+                <table>
+                    <tr><td>Trainer Teams:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/></td></tr>
+                    <tr><td>All Trainers:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="showAllTrainers"/></td></tr>
+                    <tr><td>Trainer Graphics: </td><td><input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/></td></tr>
+                    <tr><td>Wild Pokemon:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/></td></tr>
+                    <tr><td>Pop-ups:          </td><td><input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/></td></tr>
+                </table>
                 <br>
                 <div style="text-decoration: underline;">Calculation Toggles:</div>
-                Show Guarenteed Crits in Effective Power: <input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/><br>
-                <div class="note">If the Pokemon is guarenteed a critical hit using a high-crit-rate move the overlay will calculate in the crit multiplier when displaying effective power. High-crit-rate moves are: Crabhammer, Karate Chop, Slash, Razor Leaf.</div>
-                <br>
+                <table>
+                    <tr><td>Guarenteed Crits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/></td></tr>
+                </table>
                 <br>
                 <div style="text-decoration: underline;">Gameplay Toggles:</div>
-                Rock Tunnel Darkness: <input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/><br>
-                <div class="note">When enabled Flash is automatically applied in Rock Tunnel.</div>
-                <br>
-                Trash Cans Solved: <input class="checkBoxStyle" type="checkbox" v-model="trashCans"/><br>
-                Automatically Set Options: <input class="checkBoxStyle" type="checkbox" v-model="options"/><br>
-                Reset Counter: <input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/><br>
-                <br>
-                <button @click="reset_advanced_settings" class="buttonStyle">Reset All Advanced Options</button>
-            </div>
-            <div v-show="help_menus == `Internal Monitor`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
-                <div>Splits:</div>
-            </div>
-            <div v-show="help_menus == `Playthrough Info`" class="testingArea3" style="z-index: 50000; font-size: 14px;">
-                <div>Items:</div>
+                <table>
+                    <tr><td>Rock Tunnel Darkness: </td><td><input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/></td></tr>
+                    <tr><td>Trash Cans Solved:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="trashCans"/></td></tr>
+                    <tr><td>Automatic Options:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="options"/></td></tr>
+                    <tr><td>Reset Counter:        </td><td><input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/></td></tr>
+                </table>
+                <button @click="reset_advanced_settings" class="buttonStyle buttonStyle_column3">Default Options</button>
             </div>
         </div>
     </div>

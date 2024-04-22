@@ -834,7 +834,7 @@ const app = Vue.createApp({
             ui_saturation:          .6,
             ui_type_colors:         "Current",
             ui_type_color_modifier: "current_",
-            ui_stat_arrangement:    "Hp, Atk, Def, Crit, Spc, Spe",
+            ui_stat_arrangement:    "Speed: top right",
             ui_stat_arrangement_modifier: "hp_spe_",
 
 
@@ -1102,10 +1102,10 @@ const app = Vue.createApp({
         // battle_start(newValue)          { MyStorage['battle_start']          = newValue},
         // timer_settings(newValue)        { MyStorage['timer_settings']        = newValue},
         ui_stat_arrangement(newValue) {
-            if (newValue == 'Hp, Atk, Def, Crit, Spc, Spe') {
+            if (newValue == 'Speed: bottom right') {
                 this.ui_stat_arrangement_modifier = "hp_spe_"
             }
-            if (newValue == 'Hp, Atk, Def, Spe, Spc, Crit') {
+            if (newValue == 'Speed: top right') {
                 this.ui_stat_arrangement_modifier = "hp_spd_"
             }
         },
@@ -1333,13 +1333,17 @@ const app = Vue.createApp({
         compare_splits() {
             if (this.collect_split_data == true) {
                 const result = []
+                let lastPushedTrainer = null; // Keep track of the last pushed trainer
                 for (const x of this.previous_splits) {
                     if (this.split_trainers.includes(x.trainer)) {
                         const default_string = "-"
                         const cur_split = this.current_splits.find(y => y.trainer === x.trainer)
                         const prev = this.convertDurationToSeconds(x.time)
                         if (cur_split == undefined) { 
-                            result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: default_string, difference: default_string}) 
+                            if (x.trainer !== lastPushedTrainer) { // Check if the current trainer is the same as the last pushed one and if it should be skipped
+                                result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: default_string, difference: default_string}) 
+                                lastPushedTrainer = x.trainer; // Update the last pushed trainer
+                            }
                             continue
                         }
                         const cur = this.convertDurationToSeconds(cur_split.time)
@@ -3076,16 +3080,16 @@ const app = Vue.createApp({
         this.load_split_settings()
         this.updateTime()
 
-        async function createOBS() {
-            const OBSWebSocket = require('obs-websocket-js').default;
-            const obs = new OBSWebSocket();
-            await obs.connect('ws://127.0.0.1:4444', 'STPpkmn');
-            return async (method, args) => {
-                return await obs.call(method, args);
-            }
-        }
+        // async function createOBS() {
+        //     const OBSWebSocket = require('obs-websocket-js').default;
+        //     const obs = new OBSWebSocket();
+        //     await obs.connect('ws://127.0.0.1:4444', 'STPpkmn');
+        //     return async (method, args) => {
+        //         return await obs.call(method, args);
+        //     }
+        // }
         
-        const obsCall = await createOBS();
+        // const obsCall = await createOBS();
         // async function createOBS() {
         //     const OBSWebSocket = require('obs-websocket-js').default;
         //     const obs = new OBSWebSocket();
@@ -3098,10 +3102,10 @@ const app = Vue.createApp({
         //     return await this.obs.call(method, args);
         // }
 
-        this.mapper.properties.overworld.map.change(async () => {
-            console.log("Map Change");
-            await obsCall('TriggerHotkeyByName', { hotkeyName: 'OBSBasic.SplitFile' });
-        });
+        // this.mapper.properties.overworld.map.change(async () => {
+        //     console.log("Map Change");
+        //     await obsCall('TriggerHotkeyByName', { hotkeyName: 'OBSBasic.SplitFile' });
+        // });
 
         if (this.playerResets.toString().length == 1 && document.getElementById("reset_counter")) {
             document.getElementById("reset_counter").style.fontSize = "75px"

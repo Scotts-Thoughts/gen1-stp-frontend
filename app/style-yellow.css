@@ -551,11 +551,11 @@ box-shadow:
     padding: 8px;
     position: absolute;
     font-family: play;
-    font-size: 17px;
+    font-size: 15px;
     line-height: 21px;
     top: 45px;
     left: 410px;
-    width: 330px;
+    width: 250px;
     height: 988px;
 }
 .testingArea2 {
@@ -566,39 +566,24 @@ box-shadow:
     filter: drop-shadow(0px 4px 4px #000000c5);
     position: absolute;
     font-family: play;
-    font-size: 17px;
+    font-size: 15px;
     line-height: 21px;
     top: 45px;
-    left: 750px;
-    width: 360px;
+    left: 670px;
+    width: 250px;
     height: 988px;
 }
-/* .testingArea2 {
-    display: block;
-    border: 4px solid #000000;
-    padding: 8px;
-    background-color: #c9ffbb;
-    filter: drop-shadow(0px 4px 4px #000000c5);
-    position: absolute;
-    font-family: play;
-    font-size: 22px;
-    line-height: 24px;
-    top: 55px;
-    left: 975px;
-    width: 520px;
-    height: 972px;
-} */
 .testingArea3 {
     display: block;
     border: 4px solid #00000000;
     padding: 8px;
     position: absolute;
     font-family: play;
-    font-size: 22px;
+    font-size: 15px;
     line-height: 24px;
-    top: 125px;
-    left: 755px;
-    width: 720px;
+    top: 45px;
+    left: 1225px;
+    width: 250px;
     height: 902px;
 }
 .testingArea4 {
@@ -609,11 +594,11 @@ box-shadow:
     filter: drop-shadow(0px 4px 4px #000000c5);
     position: absolute;
     font-family: play;
-    font-size: 17px;
+    font-size: 15px;
     line-height: 21px;
     top: 45px;
-    left: 1120px;
-    width: 390px;
+    left: 930px;
+    width: 580px;
     height: 988px;
 }
 
@@ -2241,3 +2226,33 @@ box-shadow:
 .fadeMod-leave-from   { opacity: 1; }
 .fadeMod-leave-to     { opacity: 0; }
 .fadeMod-leave-active { transition: opacity 400ms ease-out; }
+.new_run_button {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 24px;
+    width: 210px; 
+    height: 45px;
+}
+.comparison_button {
+    margin-bottom: 8px;
+    font-size: 20px;
+    width: 210px; 
+    height: 33px;
+}
+.buttonStyle_column3 {
+    width: 210px; 
+}
+.dropdown_menu_column3 {
+    width: 210px; 
+}
+.set_button_style {
+    pointer-events: auto; 
+    position: relative; 
+    width: 46px; 
+    height: 26px; 
+    font-size: 18px; 
+    background: #72fd4f; 
+    font-family: Play;
+    border-radius: 10px;
+    /* filter: drop-shadow(0px 0px 1px #000000c5); */
+}
