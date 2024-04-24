@@ -379,7 +379,7 @@
                     </div>
                 </transition>
                 <transition name="fadeDelayed">
-                    <div v-if="state != 'Base Stats' && state != 'Overworld' && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Battle Graphic'" style="position: absolute;" key=1>
+                    <div v-if="(state != 'Base Stats' && state != 'Overworld' && state != 'From Battle') && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Battle Graphic'" style="position: absolute;" key=1>
                         <img class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
                 </transition>
