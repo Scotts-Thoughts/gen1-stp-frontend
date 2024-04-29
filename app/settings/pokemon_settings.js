@@ -49,4 +49,8 @@ const pokemon_settings = [
     // [ "compared_splits",        [], ],
     [ "previous_label",         "Previous", ],
     [ "current_label",          "Current", ],
+    [ "refilming_mode",         false, ],
+    [ "refilmed_attempt",       0, ],
+    [ "refilmed_finish",        0, ],
+    
 ];

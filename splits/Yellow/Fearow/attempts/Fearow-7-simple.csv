@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Fearow,Rival1-Lab,42,0,0,6,0:02,7.699,PECK,GROWL,LEER,
+NINTEN,Fearow,Rival1a-Route 22,4:08,0,0,11,0:15,10.503,PECK,GROWL,LEER,
+NINTEN,Fearow,Brock,5:36,0,0,13,0:21,40.595,PECK,GROWL,LEER,

@@ -644,6 +644,23 @@ box-shadow:
     font-size: 25px;
 }
 
+.pokemon_art_fearow {
+    display: block;
+    image-rendering: optimizeQuality;
+    border: 4px solid #ff000000;
+    padding: 8px;
+    position: absolute;
+    font-family: play;
+    font-size: 24px;
+    line-height: 26px;
+    top: 360px;
+    left: -10px;
+    width: 420px;
+    height: 420px;
+    background-size: contain; /* Add this line */
+    background-position: center; /* Add this line */
+    background-repeat: no-repeat; /* Add this line */
+}
 .pokemon_art {
     display: block;
     image-rendering: optimizeQuality;

@@ -18,7 +18,7 @@
                             'transform': `scale(${backgroundScale}%) translate(${backgroundXOffset}px, ${-backgroundYOffset}px)`
                         }"/>
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
-                    <img class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
+                    <img v-if="show_frame" class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
                     <img v-show="game_name == 'Yellow'" class="pokemon_art" ref="pokemon_art"
                         :style="{
@@ -446,7 +446,14 @@
                     <option>Blue</option>
                 </select><br>
                 <br>
-                <div>Test run:<input class="checkBoxStyle" type="checkbox" v-model="test_run"/></div>
+                <table>
+                    <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
+                    <tr><td>Refilming mode:</td><td><input class="checkBoxStyle" type="checkbox" v-model="refilming_mode"/></td></tr>
+                </table>
+                <table v-if="refilming_mode">
+                    <tr><td>Attempt:</td><td><input class="inputContainer" type="text" v-model="refilmed_attempt"/></td></tr>
+                    <tr><td>Finish:</td><td><input class="inputContainer" type="text" v-model="refilmed_finish"/></td></tr>
+                </table>
                 <br>
                 <div>Timer Setting:</div>
                 <select v-model="timer_settings" class="dropdownMenu dropdown_menu_column3">
@@ -686,6 +693,7 @@
                     <tr><td>Trainer Graphics: </td><td><input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/></td></tr>
                     <tr><td>Wild Pokemon:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/></td></tr>
                     <tr><td>Pop-ups:          </td><td><input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/></td></tr>
+                    <tr><td>Frame:            </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_frame"/></td></tr>
                 </table>
                 <br>
                 <div style="text-decoration: underline;">Calculation Toggles:</div>

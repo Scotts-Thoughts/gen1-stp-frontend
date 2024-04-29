@@ -1,6 +1,4 @@
 player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
-NINTEN,Sandslash,Rival1-Lab,16:27,0,0,6,0:02,8.784,SCRATCH,SAND-ATTACK,,
-NINTEN,Sandslash,Rival1-Lab,42,0,0,6,0:02,8.89,SCRATCH,SAND-ATTACK,,
 NINTEN,Sandslash,Rival1-Lab,43,0,0,6,0:02,9.275,SCRATCH,SAND-ATTACK,,
 NINTEN,Sandslash,Brock,10:06,2,2,13,0:28,78.068,SCRATCH,SAND-ATTACK,,
 NINTEN,Sandslash,Rival2-Nugget Bridge,14:28,2,2,19,0:45,14.977,SLASH,SAND-ATTACK,SCRATCH,
