@@ -1052,6 +1052,7 @@ const app = Vue.createApp({
         // Load Starter and Game
         this.starterName = Storage['global_variables'].starter;
         this.game_name   = Storage['global_variables'].game;
+
         // // Application Settings
         for (let key in Storage.application_settings) {
             if (debug_mode) { 
@@ -1064,13 +1065,17 @@ const app = Vue.createApp({
         }
         // Pokemon Style Settings
         for (let key in Storage.games[this.game_name][this.starterName].style) {
+            let game = this.game_name
+            let starter = this.starterName
+            // let game = "Yellow"
+            // let starter = "Pikachu"
             if (debug_mode) { 
                 console.log(`Pokemon Style Key: ${key}`) 
-                console.log(Storage.games[this.game_name][this.starterName].style[key])
+                console.log(Storage.games[game][starter].style[key])
             }
-            let style_settings = Object.entries(Storage.games[this.game_name][this.starterName].style); // Assign the Pokemon's style settings to an array
+            let style_settings = Object.entries(Storage.games[game][starter].style); // Assign the Pokemon's style settings to an array
             for (let i = 0; i < style_settings.length; i++) { // Iterate through the array
-                this[key] = Storage.games[this.game_name][this.starterName].style[key]; // Assign the values for each setting to the data() properties
+                this[key] = Storage.games[game][starter].style[key]; // Assign the values for each setting to the data() properties
             }
         }
         if (debug_mode) { 

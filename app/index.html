@@ -7,8 +7,15 @@
 </head>
 <body>
     <div id="app">
-        <div v-if="ready == false">Loading...</div>
-        <div v-else-if="game_name == 'Red' || game_name == 'Blue' || game_name == 'Yellow'">
+        <div v-if="ready == false">
+            <div>Game:</div>
+            <select v-model="game_name" class="dropdownMenu dropdown_menu_column3">
+                <option>Yellow</option>
+                <option>Red</option>
+                <option>Blue</option>
+            </select><br>
+        </div>
+        <div v-else-if="game_name == 'Red' || game_name == 'Blue' || game_name == 'Yellow' || game_name == 'Yellow Legacy'">
             <div class="mainContainer">
                 <!-- Graphics -->
                 <div>
@@ -442,6 +449,7 @@
                 <div>Game:</div>
                 <select v-model="game_name" class="dropdownMenu dropdown_menu_column3">
                     <option>Yellow</option>
+                    <option>Yellow Legacy</option>
                     <option>Red</option>
                     <option>Blue</option>
                 </select><br>
