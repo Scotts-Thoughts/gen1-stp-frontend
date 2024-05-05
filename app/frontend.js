@@ -636,6 +636,8 @@ const app = Vue.createApp({
             split_trainers         : split_trainers,
             time_settings          : time_settings,
             battle_summary         : battle_summary,
+            g1_yellow_legacy_data  : g1_yellow_legacy_data,
+            g1LegacyData           : g1LegacyData,
 
             pokedex_red_blue   : pokedex_red_blue,
             pokedex_yellow     : pokedex_yellow,
@@ -1418,6 +1420,12 @@ const app = Vue.createApp({
             const trainer = this.mapper.properties.battle.trainer.class.value
             const id = this.mapper.properties.battle.trainer.number.value
             const identifier = `${trainer} ${id}`
+            if (this.game_name == 'Yellow Legacy') {
+                let object = {
+                    "pokemon": this.mapper.properties.battle.trainer.team
+                }
+                return object
+            }
             if (this.game_name == 'Yellow') {
                 if (this.state == 'To Battle' || this.state == 'Battle' || this.state == 'From Battle') {
                     return this.g1YellowTrainers[identifier]
@@ -1533,6 +1541,7 @@ const app = Vue.createApp({
         },
         pokemon_version_specific_data() {
             if (this.mapper.properties.meta.gameName.value == "Yellow") { return this.g1PokemonData }
+            if (this.mapper.properties.meta.gameName.value == "Yellow Legacy") { return this.g1LegacyData }
             if (this.mapper.properties.meta.gameName.value == "Red and Blue") { return this.g1PokemonDataRB }
         },
         gametimeHMS() {
@@ -1791,11 +1800,11 @@ const app = Vue.createApp({
             }
             if (state == `Base Stats`) {
                 switch (stat_name) {
-                    case "Hp":      return this.pokedex_yellow[this.starterName].base_stats.hp
-                    case "Attack":  return this.pokedex_yellow[this.starterName].base_stats.attack
-                    case "Defense": return this.pokedex_yellow[this.starterName].base_stats.defense
-                    case "Special": return this.pokedex_yellow[this.starterName].base_stats.special_attack
-                    case "Speed":   return this.pokedex_yellow[this.starterName].base_stats.speed
+                    case "Hp":      return this.g1_yellow_legacy_data[this.starterName].base_stats.hp
+                    case "Attack":  return this.g1_yellow_legacy_data[this.starterName].base_stats.attack
+                    case "Defense": return this.g1_yellow_legacy_data[this.starterName].base_stats.defense
+                    case "Special": return this.g1_yellow_legacy_data[this.starterName].base_stats.special_attack
+                    case "Speed":   return this.g1_yellow_legacy_data[this.starterName].base_stats.speed
                 }
             }
         },
@@ -1870,19 +1879,42 @@ const app = Vue.createApp({
                 return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
             }
         },
+        // enemyType(slotNumber, typeNumber) {
+        //     const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
+        //     if (this.g1_yellow_legacy_data[pkmn_species][`type_${typeNumber}`] == undefined) { return }
+        //     if (pkmn_species == null) { 
+        //         return "Normal"
+        //     }
+        //     if (this.mapper.properties.meta.gameName.value == "Yellow Legacy") {
+        //         return this.g1_yellow_legacy_data[pkmn_species][`type_${typeNumber}`]
+        //     }
+        //     else {
+        //         return this.g1PokemonData[pkmn_species][`type_${typeNumber}`]
+        //     }
+        // },
         enemyType1(slotNumber) {
             const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
             if (pkmn_species == null) { 
                 return "Normal"
             }
-            return this.g1PokemonData[pkmn_species].type1
+            if (this.mapper.properties.meta.gameName.value == "Yellow Legacy") {
+                return this.g1_yellow_legacy_data[pkmn_species].type_1
+            }
+            else {
+                return this.g1PokemonData[pkmn_species].type1
+            }
         },
         enemyType2(slotNumber) {
             const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
             if (pkmn_species == null) { 
                 return "Normal"
             }
-            return this.g1PokemonData[pkmn_species].type2
+            if (this.mapper.properties.meta.gameName.value == "Yellow Legacy") {
+                return this.g1_yellow_legacy_data[pkmn_species].type_2
+            }
+            else {
+                return this.g1PokemonData[pkmn_species].type2
+            }
         },
         toggleDataType() {
             // Cycle through the values
@@ -2356,7 +2388,8 @@ const app = Vue.createApp({
         },
         enemy_crit_rate(pkmnData) {
             const species = pkmnData?.species.value
-            const base_speed = this.g1PokemonData[species]?.base_spd
+            const base_speed = this.mapper.properties.meta.gameName.value == 'Yellow Legacy' ? this.g1_yellow_legacy_data[species]?.base_stats.speed : this.g1PokemonData[species]?.base_spd
+            console.log(base_speed)
             if (base_speed) {
                 return Math.round(Math.round((Math.floor(base_speed/2)/256) * 10000) / 100)
             }
@@ -2541,7 +2574,12 @@ const app = Vue.createApp({
         pokemon(y) {
             if (y != null)
                 y = parseInt(y)
-            return this.g1PokemonData[this.starterName]
+            if (this.mapper.properties.meta.gameName.value == 'Yellow Legacy') {
+                return this.g1_yellow_legacy_data[this.starterName]
+            }
+            else {
+                return this.g1PokemonData[this.starterName]
+            }
         },
         stageModifiers(y) {
             if (y === null) {
@@ -2642,6 +2680,9 @@ const app = Vue.createApp({
                 return trainerName.toLowerCase() + "'s team";
               }
             } 
+            if (gameName == "Yellow Legacy") {
+                return trainerName.toLowerCase() + "'s team";
+            }
             else if (gameName == "Red and Blue") {
               if (trainerName == "RIVAL1" && (trainerNumber == 1 || trainerNumber == 2 || trainerNumber == 3)) {
                 return "rival1's team";
@@ -3003,11 +3044,14 @@ const app = Vue.createApp({
             if (state == 'To Battle' || state == 'Battle' || state == 'From Battle') { 
                 const species = enemy_mon.species.value
                 const move_data = this.g1MoveData[move]
+                // console.log(move_data)
                 //This logs the setup of this function if the next line is going fail due to move data being undefined
-                if (move_data == undefined) { 
-                    console.log("enemy_effective_power", state, enemy_state, move_name, species, move_data)
-                }
+                // if (move_data == undefined) { 
+                //     console.log("enemy_effective_power", state, enemy_state, move_name, species, move_data)
+                // }
+                if (move_data == undefined) { return "—" }
                 const move_type = move_data.Type
+                if (move_type == "Bird") { return "—" }
                 const move_base_power = this.enemy_move_power(move) ?? move_data.Power
                 const move_category = move_data.Category
                 const user_type_1 = this.g1PokemonData[species].type1
@@ -3040,6 +3084,7 @@ const app = Vue.createApp({
                 if (move_name == null) { return "" } //stop the function if there is no move in that slot
 
                 var move_type            = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Type
+                if (move_type == "Bird") { return "—" }
                 var move_info            = this.typeData.find(x => x.moveType === move_type)
                 var move_power           = this.movePower(move_name)
                 var move_category        = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Category
@@ -3146,13 +3191,13 @@ const app = Vue.createApp({
             }
             else if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
                 this.blackout = false;
-                this.playerResets++;
+                // this.playerResets++;
             } 
         })
         this.mapper.properties.player.playerId.change((newProp) => {
-            if (newProp.value > 0 && this.game_over == false) {
+            if (newProp.value > 0 && this.game_over == false) { //TODO: In Legacy Yellow the player ID isn't consistently set to one value when the game cartridge is reset
                 if (newProp.value != this.playerId) {
-                    this.playerResets = 0;
+                    // this.playerResets = 0;
                     this.blackout_counter = 0;
                     this.finished_logs = false;
                     if (this.test_run == false && this.refilming_mode == false) {

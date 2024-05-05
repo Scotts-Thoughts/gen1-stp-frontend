@@ -55,6 +55,7 @@
     --steel:    #b8b8d0;
     --dark:     #705848;
     --fairy:    #ee99ac; 
+    --bird:     #3d609a; 
    
     /* Bulbapedia (present) */
     --current_normal:   #9fa19f;
@@ -75,6 +76,7 @@
     --current_steel:    #60a1b8;
     --current_dark:     #624d4e;
     --current_fairy:    #ef70ef;
+    --current_bird:     #3d609a; 
         
     --legacy_normal:   #a8a878;
     --legacy_fighting: #c03028;
@@ -94,7 +96,7 @@
     --legacy_steel:    #b8b8d0;
     --legacy_dark:     #705848;
     --legacy_fairy:    #ee99ac; 
-   
+    --legacy_bird:     #3d609a; 
 
     /* Stat Colours */
     --hp:     #ff5959;
@@ -674,6 +676,8 @@ box-shadow:
     left: -10px;
     width: 420px;
     height: 420px;
+    /* style so that the image doesn't distort due to width and height of container */
+    object-fit: cover;
 }
 .pokemon_art2 {
     display: block;

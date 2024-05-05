@@ -202,7 +202,7 @@ const typeData = [
         Psychic:  2,
         Flying:   0.5,
         Bug:      1,
-        Poison:   2,
+        Poison:   1,
         Ice:      1,
         Ghost:    0.5,
         Dragon:   1,

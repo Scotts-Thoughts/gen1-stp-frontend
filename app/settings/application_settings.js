@@ -78,6 +78,9 @@ const application_settings = [
 
     [ "disallow_right_panel_switching", true],
     [ "automatic_post_battle_splits",   true],
+    [ "show_repel_counter",   true],
+    [ "show_bonk_counter",   true],
+    [ "show_frame",   true],
 
     [ "ui_type_colors",               "Current"],
     [ "ui_type_color_modifier",       "current_"],
