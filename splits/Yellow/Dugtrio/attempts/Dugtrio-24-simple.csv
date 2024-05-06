@@ -1,0 +1,9 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Dugtrio,Rival1-Lab,42,0,0,6,0:02,7.658,DIG,GROWL,SCRATCH,
+NINTEN,Dugtrio,Brock,2:52,0,0,9,0:10,13.077,DIG,GROWL,SCRATCH,
+NINTEN,Dugtrio,Rival2-Nugget Bridge,7:19,0,0,18,0:28,19.299,DIG,GROWL,SCRATCH,
+NINTEN,Dugtrio,Misty,10:41,0,0,22,0:41,7.926,DIG,GROWL,SCRATCH,
+NINTEN,Dugtrio,Cerulean Rocket,11:07,0,0,23,0:43,8.282,DIG,GROWL,SCRATCH,
+NINTEN,Dugtrio,Rival3-SS Anne,13:18,0,0,25,0:51,11.879,BODY SLAM,DIG,SCRATCH,SAND-ATTACK
+NINTEN,Dugtrio,Surge,14:04,0,0,26,0:54,6.576,BODY SLAM,DIG,SCRATCH,SAND-ATTACK
+NINTEN,Dugtrio,Rival4-Pkmn Tower,19:37,0,0,30,1:16,19.224,BODY SLAM,DIG,SCRATCH,SAND-ATTACK

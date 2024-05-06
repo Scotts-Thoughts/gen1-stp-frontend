@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Dugtrio,Rival1-Lab,42,0,0,6,0:02,7.985,DIG,GROWL,SCRATCH,
+NINTEN,Dugtrio,Brock,2:55,0,0,9,0:11,15.811,DIG,GROWL,SCRATCH,
+NINTEN,Dugtrio,Rival2-Nugget Bridge,7:26,0,0,18,0:28,18.577,DIG,GROWL,SCRATCH,
