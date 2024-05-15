@@ -249,8 +249,8 @@
                         <div class="enemyGraphic">
                             <div v-for="x in pkmnSlots">
                                 <div v-if="mapper.properties.battle.trainer.totalPokemon > x" :class="`ePkmnStyle ePkmn${x + 1}`">
-                                    <img v-if="mapper.properties.meta.gameName == 'Yellow'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/${mapper.properties.battle.trainer.team[x]?.species?.value}.png`"/>
-                                    <img v-else-if="mapper.properties.meta.gameName == 'Yellow Legacy'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/${mapper.properties.battle.trainer.team[x]?.species.value}.png`"/>
+                                    <img v-if="mapper.properties.meta.gameName == 'Yellow'"             class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/${mapper.properties.battle.trainer.team[x]?.species?.value}.png`"/>
+                                    <img v-else-if="mapper.properties.meta.gameName == 'Yellow Legacy'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/${mapper.properties.battle.trainer.team[x]?.species?.value}.png`"/>
                                     <img v-else-if="mapper.properties.meta.gameName == 'Red and Blue'"  class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/Red_and_Blue/${mapper.properties.battle.trainer.team[x]?.species}.png`"/>
                                     <div class="ePkmnSpecies opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).species">{{mapper.properties.battle.trainer.team[x]?.species}}</div>
                                     <img class="ePkmnTypeIcons ePkmnType_1 ds opacityTransition" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" :src="`images/elements/type-icons/${enemyType1(x).toLowerCase()}.png`"/>
@@ -320,7 +320,7 @@
                                 <div class="ePkmnMoveStyle ePkmnMove2 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move2.value)}}</div>
                                 <div class="ePkmnMoveStyle ePkmnMove3 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move3.value)}}</div>
                                 <div class="ePkmnMoveStyle ePkmnMove4 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move4.value)}}</div>
-                                <div class="ePkmnStatsStyle ePkmnHp opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon.hp}}</div>
+                                <div class="ePkmnStatsStyle ePkmnHp  opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon.hp}}</div>
                                 <div class="ePkmnStatsStyle ePkmnAtk opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.attack.value}}</div>
                                 <div class="ePkmnStatsStyle ePkmnDef opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.defense.value}}</div>
                                 <div class="ePkmnStatsStyle ePkmnSpd opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.speed.value}}</div>
@@ -397,11 +397,11 @@
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                 </transition>
-                <transition name="fadeDelayed">
+                <!-- <transition name="fadeDelayed">
                     <div v-if="(state != 'Base Stats' && state != 'Overworld' && state != 'From Battle') && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Battle Graphic'" style="position: absolute;" key=1>
                         <img v-show="showSpecialTrainerGraphics == true" class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
-                </transition>
+                </transition> -->
                 <!-- Pop Ups -->
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">

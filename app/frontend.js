@@ -2389,7 +2389,7 @@ const app = Vue.createApp({
         enemy_crit_rate(pkmnData) {
             const species = pkmnData?.species.value
             const base_speed = this.mapper.properties.meta.gameName.value == 'Yellow Legacy' ? this.g1_yellow_legacy_data[species]?.base_stats.speed : this.g1PokemonData[species]?.base_spd
-            console.log(base_speed)
+            // console.log(base_speed)
             if (base_speed) {
                 return Math.round(Math.round((Math.floor(base_speed/2)/256) * 10000) / 100)
             }
@@ -3692,7 +3692,7 @@ const app = Vue.createApp({
                 
                 //write deprecated split data (this is written for only pre-defined trainers)
                 //a list of these trainers can be found within `autosplitter.js` and inside the parent `Yellow` or `Red and Blue`
-                if (this.autosplitter[this.mapper.properties.meta.gameName.value][unique]) {
+                if (this.autosplitter[this.mapper.properties.meta.gameName.value][unique] && this.mapper.properties.meta.gameName != "Yellow Legacy") {
                     logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                 }
                 
@@ -3737,7 +3737,7 @@ const app = Vue.createApp({
                     case "ROCKET_5":   { 
                         simpleSplit() 
                         break;
-                    } //this is the rocket outside of Cerulean city, collecting this data allows for better comparisons for Pokemon that take different choices in Cerulean Nugget->Misty or Misty->Nugget
+                    }
                 }
                 
                 // if (trainer == "CHAMPION") { //this is the champion fight in Pokemon Crystal (this code is likely unnessecary in gen1)
@@ -4139,10 +4139,10 @@ const app = Vue.createApp({
 
             //calculates the Pokemon's starting stats with the desired DVs
             hitpoints = Math.floor((((this.pokemon(this.starterName).base_hp + dv[0]) * 2 * 5) / 100) + 10 + 5)
-            attack = Math.floor((((this.pokemon(this.starterName).base_atk + dv[1]) * 2 * 5) / 100) + 5) 
-            defense = Math.floor((((this.pokemon(this.starterName).base_def + dv[2]) * 2 * 5) / 100) + 5)
-            special = Math.floor((((this.pokemon(this.starterName).base_spc + dv[4]) * 2 * 5) / 100) + 5)
-            speed = Math.floor((((this.pokemon(this.starterName).base_spd + dv[3]) * 2 * 5) / 100) + 5)
+            attack    = Math.floor((((this.pokemon(this.starterName).base_atk + dv[1]) * 2 * 5) / 100) + 5)
+            defense   = Math.floor((((this.pokemon(this.starterName).base_def + dv[2]) * 2 * 5) / 100) + 5)
+            special   = Math.floor((((this.pokemon(this.starterName).base_spc + dv[4]) * 2 * 5) / 100) + 5)
+            speed     = Math.floor((((this.pokemon(this.starterName).base_spd + dv[3]) * 2 * 5) / 100) + 5)
             //only recalculate stats when DVs change if the player is in Oak's Lab, at level 5, with exactly 1 Pokemon
             if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1) {
                 await Promise.all([
@@ -4234,7 +4234,7 @@ const app = Vue.createApp({
             }
             if (this.expBarAnimation == true) {
                 const currSpecies = this.s1dynamicReset.species.value;
-                const growthRate = this.g1PokemonData[currSpecies].growth_rate
+                const growthRate  = this.g1PokemonData[currSpecies].growth_rate
                 const oldExpStats = this.calcExpStats(growthRate, this.oldExpValue);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
                 const animationMaxDuration = 600
@@ -4276,53 +4276,6 @@ const app = Vue.createApp({
             }
         })
 
-        // keyhook.registerShortCut('F14', async () => {
-        //     const now = Date.now();
-        //     if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
-        //         this.key_F14 = !this.key_F14;
-        //         this.lastExecuted = Date.now();
-        //     }
-        // });
-        // keyhook.registerShortCut('F13', async () => {
-        //     const now = Date.now();
-        //     if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
-        //         // Cycle through the values
-        //         this.key_F13 = this.cycleValues_rightDisplay[this.cycleIndex_rightDisplay];
-        //         this.cycleIndex_rightDisplay = (this.cycleIndex_rightDisplay + 1) % this.cycleValues_rightDisplay.length;
-        //         this.set_setting_prop("this.cycleIndex_rightDisplay", this.cycleIndex_rightDisplay)
-        //         this.lastExecuted = Date.now();
-        //     }
-        // });
-        // keyhook.registerShortCut('F15', async () => {
-        //     const now = Date.now();
-        //     if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
-        //         // Cycle through the values
-        //         this.key_F15 = this.cycleValues_stats[this.cycleIndex_stats];
-        //         this.cycleIndex_stats = (this.cycleIndex_stats + 1) % this.cycleValues_stats.length;
-        //         this.set_setting_prop("this.cycleIndex_stats", this.cycleIndex_stats)
-        //         this.lastExecuted = Date.now();
-        //     }
-        // });
-        // keyhook.registerShortCut('F16', async () => {
-        //     const now = Date.now();
-        //     if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
-        //         // Cycle through the values
-        //         this.key_F16 = this.cycleValues_failures[this.cycleIndex_failures];
-        //         this.cycleIndex_failures = (this.cycleIndex_failures + 1) % this.cycleValues_failures.length;
-        //         this.set_setting_prop("this.cycleIndex_failures", this.cycleIndex_failures)
-        //         this.lastExecuted = Date.now();
-        //     }
-        // });
-        // keyhook.registerShortCut('F17', async () => {
-        //     const now = Date.now();
-        //     if (now - this.lastExecuted >= 150) { // 500 milliseconds = half a second
-        //         // Cycle through the values
-        //         this.key_F17 = this.cycleValues_screens[this.cycleIndex_screens];
-        //         this.cycleIndex_screens = (this.cycleIndex_screens + 1) % this.cycleValues_screens.length;
-        //         this.set_setting_prop("this.cycleIndex_screens", this.cycleIndex_screens)
-        //         this.lastExecuted = Date.now();
-        //     }
-        // });
         //keybinds
         keyhook.registerShortCut('F13', async () => { // Show IVs
             console.log("Key: F13 pressed: EVs displayed.")

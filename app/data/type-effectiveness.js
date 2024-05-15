@@ -17,6 +17,7 @@ const typeData = [
         Ghost:    0,
         Dragon:   1,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Fighting",    
@@ -36,6 +37,7 @@ const typeData = [
         Ghost:    0,
         Dragon:   1,
         Dark:     2,
+        Bird:     1,
     },
     {    
         moveType: "Grass",    
@@ -55,6 +57,7 @@ const typeData = [
         Ghost:    1,
         Dragon:   0.5,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Water",    
@@ -74,6 +77,7 @@ const typeData = [
         Ghost:    1,
         Dragon:   0.5,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Fire",    
@@ -93,6 +97,7 @@ const typeData = [
         Ghost:    1,
         Dragon:   0.5,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Electric",    
@@ -112,6 +117,7 @@ const typeData = [
         Ghost:    1,
         Dragon:   0.5,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Ground",    
@@ -131,6 +137,7 @@ const typeData = [
         Ghost:    1,
         Dragon:   1,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Rock",    
@@ -150,6 +157,7 @@ const typeData = [
         Ghost:    1,
         Dragon:   1,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Psychic",    
@@ -169,6 +177,7 @@ const typeData = [
         Ghost:    1,
         Dragon:   1,
         Dark:     0,
+        Bird:     1,
     },
     {    
         moveType: "Flying",    
@@ -188,6 +197,7 @@ const typeData = [
         Ghost:    1,
         Dragon:   1,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Bug",    
@@ -207,6 +217,7 @@ const typeData = [
         Ghost:    0.5,
         Dragon:   1,
         Dark:     2,
+        Bird:     1,
     },
     {    
         moveType: "Poison",    
@@ -226,6 +237,7 @@ const typeData = [
         Ghost:    0.5,
         Dragon:   1,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Ghost",    
@@ -245,6 +257,7 @@ const typeData = [
         Ghost:    2,
         Dragon:   1,
         Dark:     0.5,
+        Bird:     1,
     },
     {    
         moveType: "Ice",    
@@ -264,6 +277,7 @@ const typeData = [
         Ghost:    1,
         Dragon:   2,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Dragon",    
@@ -283,6 +297,7 @@ const typeData = [
         Ghost:    1,
         Dragon:   2,
         Dark:     1,
+        Bird:     1,
     },
     {    
         moveType: "Dark",    
@@ -302,5 +317,26 @@ const typeData = [
         Ghost:    2,
         Dragon:   1,
         Dark:     0.5,
+        Bird:     1,
+    },
+    {    
+        moveType: "Bird",    
+        Normal:   1,
+        Fighting: 1,
+        Grass:    1,
+        Fire:     1,
+        Water:    1,
+        Electric: 1,
+        Rock:     1,
+        Ground:   1,
+        Psychic:  1,
+        Flying:   1,
+        Bug:      1,
+        Poison:   1,
+        Ice:      1,
+        Ghost:    1,
+        Dragon:   1,
+        Dark:     1,
+        Bird:     1,
     },
 ]
