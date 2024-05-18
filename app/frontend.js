@@ -3625,13 +3625,14 @@ const app = Vue.createApp({
                         // usage
                         if (property !== null) {
                             let data = this.get_nested_property(this.mapper.properties, property.path)
-                            if (trainer == "RIVAL3") {
-                                this.battle_summary_header = "Run Summary"
-                                this[property.data_name] = data
-                            }
-                            else {
-                                this[property.data_name] = data - this[`temp_${property.data_name}`]
-                            }
+                            // if (trainer == "RIVAL3") {
+                            //     this.battle_summary_header = "Run Summary"
+                            //     this[property.data_name] = data
+                            // }
+                            // else {
+                            //     this[property.data_name] = data - this[`temp_${property.data_name}`]
+                            // }
+                            this[property.data_name] = data - this[`temp_${property.data_name}`]
                         } else {
                             console.error(`Property ${property.data_name} not found in battle_summary`);
                             continue
