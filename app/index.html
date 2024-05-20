@@ -40,7 +40,7 @@
                             drop-shadow(${imageFlip ? '-3px' : '3px'} 3px 3px #000)
                             `
                         }" 
-                        :src="`images/pokemon/${s1dynamicReset.species.value}.png`" />
+                        :src="`images/pokemon/${s1dynamicReset.species.value ?? this.starterName}.png`" />
                     <img v-show="game_name == 'Red' || game_name == 'Blue'" class="pokemon_art2" ref="pokemon_art"
                         :style="{
                             'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`,

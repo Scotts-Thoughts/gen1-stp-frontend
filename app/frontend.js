@@ -2109,10 +2109,10 @@ const app = Vue.createApp({
         pkmn_type(typeNumber) {
             data = this.g1PokemonData[this.starterName]
             if (this.state == `Battle`) {
-                return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value?.toLowerCase()
+                return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value ? this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value?.toLowerCase() : this.g1PokemonData[this.starterName]['type' + typeNumber.toString()]
             }
             if (this.state == `Overworld` || this.state == `To Battle` || this.state == `From Battle`) {
-                return this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value?.toLowerCase()
+                return this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value ? this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value?.toLowerCase() : this.g1PokemonData[this.starterName]['type' + typeNumber.toString()]
             }
             if (this.state != `Battle`) {
                 return data["type" + typeNumber.toString()].toLowerCase()
@@ -4175,7 +4175,7 @@ const app = Vue.createApp({
 
         //EXP BAR
         var species = this.s1dynamicReset.species.value;
-        var growthRate = this.g1PokemonData[species].growth_rate
+        var growthRate = species ? this.g1PokemonData[species].growth_rate : this.g1PokemonData[this.starterName].growth_rate
         var expStats = this.calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value);
         this.$refs.expBar.style.width = (expStats.percent * 100) + "%";
         this.prevSpecies = species
