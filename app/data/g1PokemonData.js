@@ -1,6 +1,6 @@
 const g1PokemonData = {
 "Toxicroak": {
-    species: "Toxicroak",
+    name: "Toxicroak",
     rom_id: 190,
     national_dex_number: null,
     base_hp: 83,
@@ -9,8 +9,8 @@ const g1PokemonData = {
     base_spd: 85,
     base_spc: 65,
     ev_yield: null,
-    type_1: "Poison",
-    type_2: "Fighting",
+    type1: "Poison",
+    type2: "Fighting",
     catch_rate: 75,
     base_experience: 181,
     common_item: null,
@@ -22,10 +22,12 @@ const g1PokemonData = {
     egg_group_1: null,
     egg_group_2: null,
     abilities: [],
+    initial_moveset: [
+        "Lick",
+        "Sand-Attack",
+        "Poison Sting"
+        ],
     levelup_moveset: [
-        [1, "Lick"],
-        [1, "Sand-Attack"],
-        [1, "Poison Sting"],
         [24, "Low Kick"],
         [29, "Swift"],
         [31, "Counter"],

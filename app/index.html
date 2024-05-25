@@ -41,7 +41,7 @@
                             `
                         }" 
                         :src="`images/pokemon/${s1dynamicReset.species.value ?? this.starterName}.png`" />
-                    <img v-show="game_name == 'Red' || game_name == 'Blue'" class="pokemon_art2" ref="pokemon_art"
+                    <img v-if="game_name == 'Red' || game_name == 'Blue'" class="pokemon_art2" ref="pokemon_art"
                         :style="{
                             'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`,
                             'filter': `saturate(${imageSat}%)
@@ -140,6 +140,7 @@
                                 <th class="movepool_header movepool_tableC">PP</th>
                             </tr>
                             <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial">
+                            <!-- <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial"> -->
                                 <td class="movepool_way">1</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type.toLowerCase()})`}">{{x.Type}}</td>
@@ -148,6 +149,7 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                             <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).level">
+                            <!-- <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).level"> -->
                                 <td class="movepool_way">{{x.Level}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type.toLowerCase()})`}">{{x.Type}}</td>
@@ -156,6 +158,7 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                             <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).tmhm">
+                            <!-- <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).tmhm"> -->
                                 <td class="movepool_way">{{x.tmhm}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
@@ -482,6 +485,7 @@
                 <table>
                     <tr><td>State:</td><td>{{state}}</td></tr>
                 </table>
+                <div>{{getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value)}}</div>
             </div>
             <div class="testingArea2" style="z-index: 50000;">
                 <div>Solo Pokemon:</div>
