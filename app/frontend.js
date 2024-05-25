@@ -2438,8 +2438,6 @@ const app = Vue.createApp({
         },
         getMovepool(gen1PkmnData, moveData, tmhmMapping, species) {
             const pkmn = this.dataSearch(gen1PkmnData, species)
-            console.log(species, gen1PkmnData, moveData, tmhmMapping, pkmn)
-            console.log(pkmn)
             if (pkmn.initial_moveset == undefined) {  }
             let obj = {
                 initial: pkmn.initial_moveset?.map(x => {
