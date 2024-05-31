@@ -1,4 +1,316 @@
 const pokedex_yellow = {
+    "Pumpkaboo": {
+        "species": "Pumpkaboo",
+        "rom_id": 152,
+        "national_dex_number": 710,
+        "base_stats": {
+            "hp": 44,
+            "attack": 66,
+            "defense": 70,
+            "speed": 56,
+            "special_attack": 55,
+            "special_defense": 55
+        },
+        "ev_yield": {
+            "hp": 44,
+            "attack": 66,
+            "defense": 70,
+            "speed": 56,
+            "special_attack": 55,
+            "special_defense": 55
+        },
+        "type_1": "Ghost",
+        "type_2": "Grass",
+        "catch_rate": 120,
+        "base_experience": 67,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Fast",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Lick"
+            ],
+            [
+                1,
+                "Confuse Ray"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                6,
+                "TrickOrTreat"
+            ],
+            [
+                11,
+                "Leech Seed"
+            ],
+            [
+                16,
+                "Razor Leaf"
+            ],
+            [
+                23,
+                "TrickOrTreat"
+            ],
+            [
+                26,
+                "Barrage"
+            ],
+            [
+                30,
+                "Lick"
+            ],
+            [
+                36,
+                "Night Shade"
+            ],
+            [
+                40,
+                "TrickOrTreat"
+            ],
+            [
+                48,
+                "Solarbeam"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Swords Dance",
+            "Toxic",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Mega Drain",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Selfdestruct",
+            "Fire Blast",
+            "Skull Bash",
+            "Dream Eater",
+            "Rest",
+            "Explosion",
+            "Rock Slide",
+            "Substitute",
+            "Cut",
+            "Solarbeam",
+            "Psychic M"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Chandelure": {
+        "species": "Chandelure",
+        "rom_id": 152,
+        "national_dex_number": 609,
+        "base_stats": {
+            "hp": 60,
+            "attack": 55,
+            "defense": 90,
+            "speed": 80,
+            "special_attack": 145,
+            "special_defense": 145
+        },
+        "ev_yield": {
+            "hp": 60,
+            "attack": 55,
+            "defense": 90,
+            "speed": 80,
+            "special_attack": 145,
+            "special_defense": 145
+        },
+        "type_1": "Ghost",
+        "type_2": "Fire",
+        "catch_rate": 45,
+        "base_experience": 234,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Ember"
+            ],
+            [
+                1,
+                "Fire Spin"
+            ],
+            [
+                1,
+                "Confuse Ray"
+            ],
+            [
+                1,
+                "Night Shade"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Toxic",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Teleport",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Metronome",
+            "Fire Blast",
+            "Dream Eater",
+            "Rest",
+            "Psywave",
+            "Substitute",
+            "Flash",
+            "Solarbeam",
+            "Psychic M"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Annihilape": {
+        "species": "Annihilape",
+        "rom_id": 152,
+        "national_dex_number": 979,
+        "base_stats": {
+            "hp": 110,
+            "attack": 115,
+            "defense": 80,
+            "speed": 90,
+            "special_attack": 50,
+            "special_defense": 50
+        },
+        "ev_yield": {
+            "hp": 110,
+            "attack": 115,
+            "defense": 80,
+            "speed": 90,
+            "special_attack": 50,
+            "special_defense": 50
+        },
+        "type_1": "Fighting",
+        "type_2": "Ghost",
+        "catch_rate": 45,
+        "base_experience": 255,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Fast",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Counter"
+            ],
+            [
+                1,
+                "Scratch"
+            ],
+            [
+                1,
+                "Leer"
+            ],
+            [
+                1,
+                "Focus Energy"
+            ],
+            [
+                9,
+                "Low Kick"
+            ],
+            [
+                15,
+                "Karate Chop"
+            ],
+            [
+                21,
+                "Fury Swipes"
+            ],
+            [
+                27,
+                "Focus Energy"
+            ],
+            [
+                28,
+                "Rage"
+            ],
+            [
+                35,
+                "Rage Fist"
+            ],
+            [
+                37,
+                "Seismic Toss"
+            ],
+            [
+                45,
+                "Screech"
+            ],
+            [
+                46,
+                "Thrash"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Mega Punch",
+            "Mega Kick",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Pay Day",
+            "Submission",
+            "Counter",
+            "Seismic Toss",
+            "Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Earthquake",
+            "Fissure",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Metronome",
+            "Swift",
+            "Skull Bash",
+            "Rest",
+            "Rock Slide",
+            "Substitute",
+            "Strength"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
     "Roselia": {
         "species": "Roselia",
         "rom_id": 190,
