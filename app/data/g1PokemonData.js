@@ -1,4 +1,44 @@
 const g1PokemonData = {
+"Shedinja": {
+    name: "Shedinja",
+    base_hp: 1,
+    base_atk: 90,
+    base_def: 45,
+    base_spd: 40,
+    base_spc: 30,
+    type1: "Bug",
+    type2: "Ghost",
+    catch_rate: 255,
+    base_xp: 54,
+    initial_moveset: [
+        "Scratch",
+        "Harden"
+    ],
+    growth_rate: "Erratic",
+    tm_hm_learnset: [
+        "Toxic",
+        "Double-Edge",
+        "Hyper Beam",
+        "Mega Drain",
+        "Dig",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Dream Eater",
+        "Rest",
+        "Substitute",
+        "Cut",
+        "Flash"
+    ],
+    levelup_moveset: [
+        [ 5, "Leech Life"],
+        [ 14, "Fury Swipes"],
+        [ 19, "Mind Reader"],
+        [ 31, "Confuse Ray"],
+        [ 38, "Shadow Ball"]
+    ]
+},
 "Houndoom": {
     name: "Houndoom",
     rom_id: 152,
@@ -10275,62 +10315,6 @@ const g1PokemonData = {
 //         ]
 //         ]
 //     },
-"Shedinja" :
-    {
-        name: "Shedinja",
-        base_hp: 1,
-        base_atk: 90,
-        base_def: 45,
-        base_spd: 40,
-        base_spc: 30,
-        type1: "Bug",
-        type2: "Ghost",
-        catch_rate: 255,
-        base_xp: 54,
-        initial_moveset: [
-        "Scratch",
-        "Harden"
-        ],
-        growth_rate: "Erratic",
-        tm_hm_learnset: [
-        "Toxic",
-        "Double-Edge",
-        "Hyper Beam",
-        "Mega Drain",
-        "Dig",
-        "Mimic",
-        "Double Team",
-        "Reflect",
-        "Bide",
-        "Dream Eater",
-        "Rest",
-        "Substitute",
-        "Cut",
-        "Flash"
-        ],
-        levelup_moveset: [
-        [
-            5,
-            "Leech Life"
-        ],
-        [
-            14,
-            "Fury Swipes"
-        ],
-        [
-            19,
-            "Mind Reader"
-        ],
-        [
-            31,
-            "Confuse Ray"
-        ],
-        [
-            38,
-            "Shadow Ball"
-        ]
-        ]
-    },
 // "Rotom" :
 //     {
 //         name: "Rotom",
