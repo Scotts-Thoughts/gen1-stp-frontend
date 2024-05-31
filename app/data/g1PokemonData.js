@@ -1,4 +1,146 @@
 const g1PokemonData = {
+"Houndoom": {
+    name: "Houndoom",
+    rom_id: 152,
+    national_dex_number: null,
+    base_hp: 75,
+    base_atk: 90,
+    base_def: 50,
+    base_spd: 95,
+    base_spc: 110,
+    ev_yield: null,
+    type1: "Dark",
+    type2: "Fire",
+    catch_rate: 45,
+    base_experience: 204,
+    common_item: null,
+    rare_item: null,
+    gender_ratio: null,
+    egg_cycles: null,
+    base_friendship: null,
+    growth_rate: "Slow",
+    egg_group_1: null,
+    egg_group_2: null,
+    abilities: [
+
+    ],
+    initial_moveset: [
+        "Ember",
+        "Leer",
+        "No Move",
+        "No Move"
+    ],
+    levelup_moveset: [
+        [7, 'Roar'], 
+        [13, 'Smog'], 
+        [20, 'Bite'], 
+        [30, 'Swift'], 
+        [41, 'Flamethrower'], 
+        [52, 'Fire Spin']
+    ],
+    tm_hm_learnset: [
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "Hyper Beam",
+        "Counter",
+        "Rage",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Fire Blast",
+        "Swift",
+        "Skull Bash",
+        "Rest",
+        "Substitute",
+        "Strength",
+        "Solarbeam"
+    ],
+    tutor_learnset: [
+
+    ],
+    egg_moves: [
+
+    ],
+    weight: null,
+},
+"Sableye": {
+    name: "Sableye",
+    rom_id: 152,
+    national_dex_number: null,
+    base_hp: 50,
+    base_atk: 75,
+    base_def: 75,
+    base_spd: 50,
+    base_spc: 65,
+    ev_yield: null,
+    type1: "Dark",
+    type2: "Ghost",
+    catch_rate: 45,
+    base_experience: 98,
+    common_item: null,
+    rare_item: null,
+    gender_ratio: null,
+    egg_cycles: null,
+    base_friendship: null,
+    growth_rate: "Medium Slow",
+    egg_group_1: null,
+    egg_group_2: null,
+    abilities: [
+
+    ],
+    initial_moveset: [
+        "Leer",
+        "Scratch",
+        "No Move",
+        "No Move"
+    ],
+    levelup_moveset: [
+        [13, 'Night Shade'], 
+        [17, 'Lick'], 
+        [21, 'Fury Swipes'], 
+        [29, 'Swift'], 
+        [37, 'Confuse Ray']],
+    tm_hm_learnset: [
+        "Mega Punch",
+        "Mega Kick",
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "Water Gun",
+        "Hyper Beam",
+        "Submission",
+        "Counter",
+        "Seismic Toss",
+        "Rage",
+        "Dig",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Metronome",
+        "Swift",
+        "Skull Bash",
+        "Dream Eater",
+        "Rest",
+        "Thunder Wave",
+        "Psywave",
+        "Rock Slide",
+        "Substitute",
+        "Cut",
+        "Flash",
+        "Bubblebeam",
+        "Psychic M"
+    ],
+    tutor_learnset: [
+
+    ],
+    egg_moves: [
+
+    ],
+    weight: null,
+},
 "Pumpkaboo": {
     name: "Pumpkaboo",
     rom_id: 152,
@@ -10133,62 +10275,62 @@ const g1PokemonData = {
 //         ]
 //         ]
 //     },
-// "Shedinja" :
-//     {
-//         name: "Shedinja",
-//         base_hp: 1,
-//         base_atk: 90,
-//         base_def: 45,
-//         base_spd: 40,
-//         base_spc: 30,
-//         type1: "Bug",
-//         type2: "Ghost",
-//         catch_rate: 255,
-//         base_xp: 54,
-//         initial_moveset: [
-//         "Scratch",
-//         "Harden"
-//         ],
-//         growth_rate: "Erratic",
-//         tm_hm_learnset: [
-//         "Toxic",
-//         "Double-Edge",
-//         "Hyper Beam",
-//         "Mega Drain",
-//         "Dig",
-//         "Mimic",
-//         "Double Team",
-//         "Reflect",
-//         "Bide",
-//         "Dream Eater",
-//         "Rest",
-//         "Substitute",
-//         "Cut",
-//         "Flash"
-//         ],
-//         levelup_moveset: [
-//         [
-//             5,
-//             "Leech Life"
-//         ],
-//         [
-//             14,
-//             "Fury Swipes"
-//         ],
-//         [
-//             19,
-//             "Mind Reader"
-//         ],
-//         [
-//             31,
-//             "Confuse Ray"
-//         ],
-//         [
-//             38,
-//             "Shadow Ball"
-//         ]
-//         ]
-//     },
+"Shedinja" :
+    {
+        name: "Shedinja",
+        base_hp: 1,
+        base_atk: 90,
+        base_def: 45,
+        base_spd: 40,
+        base_spc: 30,
+        type1: "Bug",
+        type2: "Ghost",
+        catch_rate: 255,
+        base_xp: 54,
+        initial_moveset: [
+        "Scratch",
+        "Harden"
+        ],
+        growth_rate: "Erratic",
+        tm_hm_learnset: [
+        "Toxic",
+        "Double-Edge",
+        "Hyper Beam",
+        "Mega Drain",
+        "Dig",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Dream Eater",
+        "Rest",
+        "Substitute",
+        "Cut",
+        "Flash"
+        ],
+        levelup_moveset: [
+        [
+            5,
+            "Leech Life"
+        ],
+        [
+            14,
+            "Fury Swipes"
+        ],
+        [
+            19,
+            "Mind Reader"
+        ],
+        [
+            31,
+            "Confuse Ray"
+        ],
+        [
+            38,
+            "Shadow Ball"
+        ]
+        ]
+    },
 // "Rotom" :
 //     {
 //         name: "Rotom",

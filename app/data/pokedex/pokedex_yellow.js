@@ -1,4 +1,294 @@
 const pokedex_yellow = {
+    "Shedinja": {
+        "species": "Shedinja",
+        "rom_id": 152,
+        "national_dex_number": 292,
+        "base_stats": {
+            "hp": 1,
+            "attack": 90,
+            "defense": 45,
+            "speed": 40,
+            "special_attack": 30,
+            "special_defense": 30
+        },
+        "ev_yield": {
+            "hp": 1,
+            "attack": 90,
+            "defense": 45,
+            "speed": 40,
+            "special_attack": 30,
+            "special_defense": 30
+        },
+        "type_1": "Bug",
+        "type_2": "Ghost",
+        "catch_rate": 255,
+        "base_experience": 54,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Erratic",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Scratch"
+            ],
+            [
+                1,
+                "Harden"
+            ],
+            [
+                5,
+                "Leech Life"
+            ],
+            [
+                14,
+                "Fury Swipes"
+            ],
+            [
+                19,
+                "Mind Reader"
+            ],
+            [
+                31,
+                "Confuse Ray"
+            ],
+            [
+                38,
+                "Shadow Ball"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Toxic",
+            "Double-Edge",
+            "Hyper Beam",
+            "Mega Drain",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Dream Eater",
+            "Rest",
+            "Substitute",
+            "Cut",
+            "Flash"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Houndoom": {
+        "species": "Houndoom",
+        "rom_id": 152,
+        "national_dex_number": 229,
+        "base_stats": {
+            "hp": 75,
+            "attack": 90,
+            "defense": 50,
+            "speed": 95,
+            "special_attack": 110,
+            "special_defense": 110
+        },
+        "ev_yield": {
+            "hp": 75,
+            "attack": 90,
+            "defense": 50,
+            "speed": 95,
+            "special_attack": 110,
+            "special_defense": 110
+        },
+        "type_1": "Dark",
+        "type_2": "Fire",
+        "catch_rate": 45,
+        "base_experience": 204,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Ember"
+            ],
+            [
+                1,
+                "Leer"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                7,
+                "Roar"
+            ],
+            [
+                13,
+                "Smog"
+            ],
+            [
+                20,
+                "Bite"
+            ],
+            [
+                30,
+                "Swift"
+            ],
+            [
+                41,
+                "Flamethrower"
+            ],
+            [
+                52,
+                "Fire Spin"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Counter",
+            "Rage",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Fire Blast",
+            "Swift",
+            "Skull Bash",
+            "Rest",
+            "Substitute",
+            "Strength",
+            "Solarbeam"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Sableye": {
+        "species": "Sableye",
+        "rom_id": 152,
+        "national_dex_number": 302,
+        "base_stats": {
+            "hp": 50,
+            "attack": 75,
+            "defense": 75,
+            "speed": 50,
+            "special_attack": 65,
+            "special_defense": 65
+        },
+        "ev_yield": {
+            "hp": 50,
+            "attack": 75,
+            "defense": 75,
+            "speed": 50,
+            "special_attack": 65,
+            "special_defense": 65
+        },
+        "type_1": "Dark",
+        "type_2": "Ghost",
+        "catch_rate": 45,
+        "base_experience": 98,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Leer"
+            ],
+            [
+                1,
+                "Scratch"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                13,
+                "Night Shade"
+            ],
+            [
+                17,
+                "Lick"
+            ],
+            [
+                21,
+                "Fury Swipes"
+            ],
+            [
+                29,
+                "Swift"
+            ],
+            [
+                37,
+                "Confuse Ray"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Mega Punch",
+            "Mega Kick",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Water Gun",
+            "Hyper Beam",
+            "Submission",
+            "Counter",
+            "Seismic Toss",
+            "Rage",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Metronome",
+            "Swift",
+            "Skull Bash",
+            "Dream Eater",
+            "Rest",
+            "Thunder Wave",
+            "Psywave",
+            "Rock Slide",
+            "Substitute",
+            "Cut",
+            "Flash",
+            "Bubblebeam",
+            "Psychic M"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
     "Pumpkaboo": {
         "species": "Pumpkaboo",
         "rom_id": 152,
