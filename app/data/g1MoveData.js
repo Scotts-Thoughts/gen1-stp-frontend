@@ -1,4 +1,14 @@
 const g1MoveData = {
+"Rage Fist" :
+  {
+    Move: "Rage Fist",
+    Type: "Ghost",
+    Power: 50,
+    Accuracy: 100,
+    PP: 10,
+    Category: "Physical",
+    Description: "An HP-draining attack. It adds half the HP it drained from the target to the attacker's HP."
+  },
 "Leech Life" :
   {
     Move: "Leech Life",
