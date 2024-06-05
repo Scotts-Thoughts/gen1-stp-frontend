@@ -139,8 +139,7 @@
                                 <th class="movepool_header movepool_tableC">Acc.</th>
                                 <th class="movepool_header movepool_tableC">PP</th>
                             </tr>
-                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial">
-                            <!-- <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial"> -->
+                            <tr v-for="(x, index) in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial" :class="{ 'first-row': index === 0 }">
                                 <td class="movepool_way">1</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type.toLowerCase()})`}">{{x.Type}}</td>
@@ -359,7 +358,7 @@
                                 <th class="movepool_header movepool_tableC">Acc.</th>
                                 <th class="movepool_header movepool_tableC">PP</th>
                             </tr>
-                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial">
+                            <tr v-for="(x, index) in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial" :class="{ 'first-row': index === 0 }">
                                 <td class="movepool_way">1</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type.toLowerCase()})`}">{{x.Type}}</td>

@@ -66,9 +66,7 @@ const g1PokemonData = {
     ],
     initial_moveset: [
         "Ember",
-        "Leer",
-        "No Move",
-        "No Move"
+        "Leer"
     ],
     levelup_moveset: [
         [7, 'Roar'], 
@@ -86,6 +84,7 @@ const g1PokemonData = {
         "Hyper Beam",
         "Counter",
         "Rage",
+        "SolarBeam",
         "Mimic",
         "Double Team",
         "Bide",
@@ -95,7 +94,6 @@ const g1PokemonData = {
         "Rest",
         "Substitute",
         "Strength",
-        "Solarbeam"
     ],
     tutor_learnset: [
 
@@ -132,9 +130,7 @@ const g1PokemonData = {
     ],
     initial_moveset: [
         "Leer",
-        "Scratch",
-        "No Move",
-        "No Move"
+        "Scratch"
     ],
     levelup_moveset: [
         [13, 'Night Shade'], 
@@ -150,12 +146,14 @@ const g1PokemonData = {
         "Take Down",
         "Double-Edge",
         "Water Gun",
+        "BubbleBeam",
         "Hyper Beam",
         "Submission",
         "Counter",
         "Seismic Toss",
         "Rage",
         "Dig",
+        "Psychic",
         "Mimic",
         "Double Team",
         "Bide",
@@ -170,8 +168,6 @@ const g1PokemonData = {
         "Substitute",
         "Cut",
         "Flash",
-        "Bubblebeam",
-        "Psychic M"
     ],
     tutor_learnset: [
 
@@ -208,9 +204,7 @@ const g1PokemonData = {
     ],
     initial_moveset: [
         "Lick",
-        "Confuse Ray",
-        "No Move",
-        "No Move"
+        "Confuse Ray"
     ],
     levelup_moveset: [
         [6, 'TrickOrTreat'],
@@ -230,6 +224,8 @@ const g1PokemonData = {
         "Double-Edge",
         "Hyper Beam",
         "Mega Drain",
+        "SolarBeam",
+        "Psychic",
         "Mimic",
         "Double Team",
         "Reflect",
@@ -243,8 +239,6 @@ const g1PokemonData = {
         "Rock Slide",
         "Substitute",
         "Cut",
-        "Solarbeam",
-        "Psychic M"
     ],
     tutor_learnset: [
 
@@ -293,6 +287,8 @@ const g1PokemonData = {
         "Take Down",
         "Double-Edge",
         "Hyper Beam",
+        "SolarBeam",
+        "Psychic",
         "Teleport",
         "Mimic",
         "Double Team",
@@ -305,8 +301,6 @@ const g1PokemonData = {
         "Psywave",
         "Substitute",
         "Flash",
-        "Solarbeam",
-        "Psychic M"
     ],
     tutor_learnset: [
 

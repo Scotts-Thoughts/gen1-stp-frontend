@@ -1,4 +1,14 @@
 const g1MoveData = {
+"TrickOrTreat" :
+  {
+    Move: "TrickOrTreat",
+    Type: "Ghost",
+    Power: "-",
+    Accuracy: 100,
+    PP: 20,
+    Category: "Physical",
+    Description: "An HP-draining attack. It adds half the HP it drained from the target to the attacker's HP."
+  },
 "Rage Fist" :
   {
     Move: "Rage Fist",

@@ -1058,16 +1058,12 @@ box-shadow:
     line-height: 16px;
     font-size: 15px;
     top: 832.5px;
-    left: 61px;
-    width: 319px;
+    left: 19px;
+    width: 360px;
     text-align: center;
     border: 1px solid rgba(255, 0, 0, 0);
     z-index: 500;
 }
-
-
-
-
 
 .genericLabels {
     position: absolute;
@@ -2081,9 +2077,7 @@ box-shadow:
     opacity: .9;
     border: none;
 }
-/* .movepoolDemo tr {
-    transform: scaleY(.9);
-} */
+
 .movepoolDemo th:nth-child(1) {
     width: 50px;
 }
@@ -2272,4 +2266,7 @@ box-shadow:
     font-family: Play;
     border-radius: 10px;
     /* filter: drop-shadow(0px 0px 1px #000000c5); */
+}
+.first-row td {
+    padding-top: 1px;
 }
