@@ -691,6 +691,8 @@ const app = Vue.createApp({
             starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             game_name:   "Yellow",
 
+            search_term : "",
+            pokemon_list: [],
             gamehook_disable_settings : false,
             gamehook_encounter_writes : false,
             dvSetting                 : "Max",   //Max, Min, NPC, Max with Min Atk, or Random
@@ -714,7 +716,7 @@ const app = Vue.createApp({
             collect_summary_files     : true,
             show_repel_counter        : true,
             show_bonk_counter         : true,
-            show_frame                : true,
+            show_frame                : false,
 
             refilming_mode  : false,
             refilmed_attempt: 0,
@@ -1343,6 +1345,13 @@ const app = Vue.createApp({
     },
 
     computed: {
+        filtered_pokemon_list() {
+            if (this.search_term === '') {
+                return this.pokemon_list;
+            } else {
+                return this.pokemon_list.filter(pokemon => pokemon.toLowerCase().includes(this.search_term.toLowerCase()));
+            }
+        },
         compare_splits() {
             if (this.collect_split_data == true) {
                 const result = []
@@ -3095,6 +3104,7 @@ const app = Vue.createApp({
         this.load_timer_settings()
         this.load_split_settings()
         this.updateTime()
+        this.pokemon_list = this.keys_function(g1PokemonData)
 
         // async function createOBS() {
         //     const OBSWebSocket = require('obs-websocket-js').default;
