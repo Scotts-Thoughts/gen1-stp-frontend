@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Annihilape,Champion,1:59,0,0,65,3:20,59.968,EARTHQUAKE,REST,MIMIC,THUNDERBOLT
+NINTEN,Annihilape,Champion,1:59,0,0,65,3:21,84.697,EARTHQUAKE,REST,MIMIC,THUNDERBOLT

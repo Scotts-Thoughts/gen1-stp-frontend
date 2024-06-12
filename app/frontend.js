@@ -2947,6 +2947,7 @@ const app = Vue.createApp({
         // MOVE MANAGEMENT
         movePower(y) { //y = move1.value
             if (y) {
+                const state = this.mapper.properties.meta.state.value
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
                 var move = this.g1MoveData[this.move_name(y)]
                 if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP")) {
@@ -2962,6 +2963,15 @@ const app = Vue.createApp({
                     else {
                         return power
                     }
+                }
+                else if (y.toUpperCase() == "RAGE FIST") {
+                    if (state != 'Battle') {
+                        return 50
+                    }
+                    let rage_fist_counter = this.mapper.properties.patch.backport.prop_1.value
+                    let rage_fist_power = 50 + (50 * rage_fist_counter)
+                    if (rage_fist_power > 350) { return 350 }
+                    else { return rage_fist_power }
                 }
                 else if (move) { return move.Power }
             }

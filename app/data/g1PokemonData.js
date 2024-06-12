@@ -274,8 +274,8 @@ const g1PokemonData = {
 
     ],
     initial_moveset: [
-        "Ember",
-        "Fire Spin",
+        "Smog",
+        "Flamethrower",
         "Confuse Ray",
         "Night Shade"
     ],

@@ -440,11 +440,11 @@ const pokedex_yellow = {
         "level_up_learnset": [
             [
                 1,
-                "Ember"
+                "Smog"
             ],
             [
                 1,
-                "Fire Spin"
+                "Flamethrower"
             ],
             [
                 1,
