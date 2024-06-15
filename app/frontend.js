@@ -1298,12 +1298,12 @@ const app = Vue.createApp({
                 }
             }
         },
-        playerId(newValue) {
-            this.game_over = false;
-            this.playerResets = 0;
-            this.finished_logs == false;
-            this.blackout_counter = 0;
-        },    
+        // playerId(newValue) {
+        //     this.game_over = false;
+        //     this.playerResets = 0;
+        //     this.finished_logs == false;
+        //     this.blackout_counter = 0;
+        // },    
         overlay_color(newColor) {
             document.documentElement.style.setProperty('--overlay-color', newColor);
         }, 
@@ -3189,14 +3189,18 @@ const app = Vue.createApp({
             if (this.lance_defeated == true) {
                 this.lance_defeated = false
             }
-            else if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
+            else if (newProp.value == 65535 && oldProp.value > 0 && this.game_over == false) {
                 this.blackout = false;
-                // this.playerResets++;
+                this.playerResets++;
+            } 
+            else if (newProp.value == 0 && oldProp.value > 0 && oldProp.value != 65535 && this.game_over == false) {
+                this.blackout = false;
+                this.playerResets++;
             } 
         })
         this.mapper.properties.player.playerId.change((newProp) => {
             if (newProp.value > 0 && this.game_over == false) { //TODO: In Legacy Yellow the player ID isn't consistently set to one value when the game cartridge is reset
-                if (newProp.value != this.playerId) {
+                if (newProp.value != this.playerId && newProp.value != 65535) {
                     // this.playerResets = 0;
                     this.blackout_counter = 0;
                     this.finished_logs = false;

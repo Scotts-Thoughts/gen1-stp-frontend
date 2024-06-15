@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Pikachu,Rival1-Lab,2:27:30,4,0,93,2304:16,47.577,REST,THUNDERBOLT,FLY,REFLECT
+NINTEN,Pikachu,Rival1a-Route 22,2:36:00,9,0,93,2304:31,52.555,REST,THUNDERBOLT,SURF,LIGHT SCREEN
