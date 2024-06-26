@@ -655,17 +655,17 @@ const app = Vue.createApp({
             oldExpValue:     0,
             badge_boost_object: {
                 1: [
-                    {abrv: "Atk", name: "Attack",  deprecated_path: "properties.player.badges.badge1.value", deprecated_path: 0, boost: 1.125, },
-                    {abrv: "Def", name: "Defense", deprecated_path: "properties.player.badges.badge3.value", deprecated_path: 2, boost: 1.125, },
-                    {abrv: "Spe", name: "Speed",   deprecated_path: "properties.player.badges.badge5.value", deprecated_path: 4, boost: 1.125, },
-                    {abrv: "Spc", name: "Special", deprecated_path: "properties.player.badges.badge7.value", deprecated_path: 6, boost: 1.125, },
+                    {abrv: "Atk", name: "Attack",  deprecated_path: "properties.player.badges.badge1.value", deprecated_path: 0, boost: 1.25, },
+                    {abrv: "Def", name: "Defense", deprecated_path: "properties.player.badges.badge3.value", deprecated_path: 2, boost: 1.25, },
+                    {abrv: "Spe", name: "Speed",   deprecated_path: "properties.player.badges.badge5.value", deprecated_path: 4, boost: 1.25, },
+                    {abrv: "Spc", name: "Special", deprecated_path: "properties.player.badges.badge7.value", deprecated_path: 6, boost: 1.25, },
                 ],
                 2: [
-                    {abrv: "Atk", name: "Attack",          deprecated_path: "badge1", current_path: 0, boost: 1.125, },
-                    {abrv: "Def", name: "Defense",         deprecated_path: "badge6", current_path: 2, boost: 1.125, },
-                    {abrv: "Spe", name: "Speed",           deprecated_path: "badge3", current_path: 5, boost: 1.125, },
-                    {abrv: "SpA", name: "Special Attack",  deprecated_path: "badge7", current_path: 6, boost: 1.125, },
-                    {abrv: "SpD", name: "Special Defense", deprecated_path: "badge7", current_path: 6, boost: 1.125, },
+                    {abrv: "Atk", name: "Attack",          deprecated_path: "badge1", current_path: 0, boost: 1.25, },
+                    {abrv: "Def", name: "Defense",         deprecated_path: "badge6", current_path: 2, boost: 1.25, },
+                    {abrv: "Spe", name: "Speed",           deprecated_path: "badge3", current_path: 5, boost: 1.25, },
+                    {abrv: "SpA", name: "Special Attack",  deprecated_path: "badge7", current_path: 6, boost: 1.25, },
+                    {abrv: "SpD", name: "Special Defense", deprecated_path: "badge7", current_path: 6, boost: 1.25, },
                 ],
                 3: [
                     {abrv: "Atk", name: "Attack",          deprecated_path: "badge1", deprecated_path: 0, boost: 1.1, },
@@ -1810,7 +1810,7 @@ const app = Vue.createApp({
         },
         badge_boost(badge, stat) {
             if (this.display_badge_boosts == false) { return stat }
-            return badge ? Math.floor(stat * 1.125) : stat;
+            return badge ? Math.floor(stat * 1.25) : stat;
         },
         get_ev(stat_exp) {
             //add more data to this function for details (stat gain in gen1, and gen3 for comparisons)
@@ -3119,7 +3119,7 @@ const app = Vue.createApp({
         },
 
         badgeBoost(badge, stat) {
-            return badge ? Math.floor(stat * 1.125) : stat;
+            return badge ? Math.floor(stat * 1.25) : stat;
         },
     },
 
