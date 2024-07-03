@@ -2725,6 +2725,8 @@ const app = Vue.createApp({
                         return "images/trainers/ODDISH_LASS.png";
                     case "JR TRAINER F_10":
                         return "images/trainers/JR TRAINER F_10.png";
+                    case "ROCKET_5":
+                        return "images/trainers/dig_rocket.png";
                     case "ROCKET_38":
                         return "images/trainers/ROCKET_38.png";
                     case "HIKER_9":
@@ -2803,6 +2805,8 @@ const app = Vue.createApp({
                         return "images/trainers/Red_and_Blue/ODDISH_LASS.png";
                     case "JR TRAINER F_10":
                         return "images/trainers/Red_and_Blue/JR TRAINER F_10.png";
+                    case "ROCKET_5":
+                        return "images/trainers/dig_rocket.png";
                     case "ROCKET_38":
                         return "images/trainers/Red_and_Blue/ROCKET_38.png";
                     case "HIKER_9":
