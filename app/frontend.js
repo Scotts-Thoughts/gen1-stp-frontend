@@ -4215,7 +4215,7 @@ const app = Vue.createApp({
             }
             if (this.expBarAnimation == true) {
                 const currSpecies = this.s1dynamicReset.species.value;
-                const growthRate = this.g1PokemonData[currSpecies].growth_rate
+                const growthRate = this.g1PokemonData[currSpecies]?.growth_rate ?? this.g1PokemonData[this.starterName].growth_rate // TODO - this may cause issues
                 const oldExpStats = this.calcExpStats(growthRate, this.oldExpValue);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
                 const animationMaxDuration = 600

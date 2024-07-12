@@ -459,7 +459,7 @@ const g1PokemonData = {
     weight: null
 },
 "Jirachi": {
-    species: "Jirachi",
+    name: "Jirachi",
     rom_id: 190,
     national_dex_number: null,
     base_hp: 100,
