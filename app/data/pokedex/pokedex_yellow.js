@@ -11025,15 +11025,16 @@ const pokedex_yellow = {
         "abilities": [],
         "level_up_learnset": [
             [1, "Confusion"],
-            [10, "Rest"],
-            [15, "Swift"],
-            [20, "Whirlwind"],
-            [25, "Psychic"],
-            [30, "Haze"],
-            [35, "Rest"],
-            [40, "Double-Edge"],
-            [45, "Psywave"],
-            [50, "Defense Curl"]
+            [5, "Rest"],
+            [10, "Swift"],
+            [15, "Whirlwind"],
+            [20, "Psychic"],
+            [25, "Haze"],
+            [30, "Rest"],
+            [35, "Double-Edge"],
+            [40, "Psywave"],
+            [45, "Defense Curl"],
+            [50, "Doom Desire"]
         ],
         "tm_hm_learnset": [
             "Toxic",

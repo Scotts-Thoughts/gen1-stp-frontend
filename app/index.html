@@ -22,7 +22,7 @@
                     <img class="canvas" ref="background_texture" :src="textures[backgroundTexture]" 
                         :style="{ 
                             'filter': `blur(${backgroundBlur}px) hue-rotate(${backgroundHue}deg) brightness(${backgroundBrightness}%) contrast(${backgroundContrast}%) saturate(${backgroundSaturation}%)` ,
-                            'transform': `scale(${backgroundScale}%) translate(${backgroundXOffset}px, ${-backgroundYOffset}px)`
+                            'transform': `scale(${backgroundScale}%) ${backgroundFlip ? 'rotateY(180deg)' : ''} translate(${backgroundXOffset}px, ${-backgroundYOffset}px)`
                         }"/>
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
                     <img v-if="show_frame" class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
@@ -148,7 +148,6 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                             <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).level">
-                            <!-- <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).level"> -->
                                 <td class="movepool_way">{{x.Level}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type.toLowerCase()})`}">{{x.Type}}</td>
@@ -157,7 +156,6 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                             <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).tmhm">
-                            <!-- <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, s1dynamicReset.species.value).tmhm"> -->
                                 <td class="movepool_way">{{x.tmhm}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
                                 <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
@@ -652,6 +650,7 @@
                     <tr><td>Saturation: </td><td><input type="range" min="0"    max="200" v-model="backgroundSaturation"/></td></tr>
                     <tr><td>Blur:       </td><td><input type="range" min="0"    max="10"  v-model="backgroundBlur"/></td></tr>
                     <tr><td>Hue:        </td><td><input type="range" min="0"    max="358" v-model="backgroundHue"/></td></tr>
+                    <tr><td>Flip:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="backgroundFlip"/></td></tr>
                 </table>
             </div>
             <div class="testingArea3" style="z-index: 50000;">

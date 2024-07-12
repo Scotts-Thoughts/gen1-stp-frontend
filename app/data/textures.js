@@ -24,4 +24,5 @@ const textures = {
     'Dark Clouds': 'images\\textures\\Dark Clouds.jpg',
     'Roses': 'images\\textures\\Roses.jpg',
     'Ghost Fighting': 'images\\textures\\Ghost Fighting.png',
+    'Psychic (crisp)': 'images\\textures\\Psychic (crisp).jpg',
 }

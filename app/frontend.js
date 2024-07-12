@@ -829,6 +829,7 @@ const app = Vue.createApp({
             // Background texture settings
             backgroundBlur:        0,
             backgroundScale:       100,
+            backgroundFlip:        false,
             backgroundUrl:         "",
             use_custom_background: false,
             backgroundXOffset:     0,
@@ -1541,7 +1542,7 @@ const app = Vue.createApp({
             }
         },
         pokemon_version_specific_data() {
-            if (this.mapper.properties.meta.gameName.value == "Yellow") { return this.g1PokemonData }
+            if (this.mapper.properties.meta.gameName.value == "Yellow")       { return this.g1PokemonData }
             if (this.mapper.properties.meta.gameName.value == "Red and Blue") { return this.g1PokemonDataRB }
         },
         gametimeHMS() {
@@ -2460,7 +2461,7 @@ const app = Vue.createApp({
                 }),     
                 tmhm: pkmn.tm_hm_learnset?.map(x => {
                     return {
-                        ...{tmhm: tmhmMapping.find(y => y.Move == x)?.tmhmIndex??"TM01"},
+                        ...{tmhm: tmhmMapping.find(y => y.Move == x)?.tmhmIndex??"ERRO"},
                         ...this.dataSearch(moveData, x)
                     }
                 }),     

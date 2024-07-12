@@ -8,6 +8,7 @@ const pokemon_settings = [
     [ "imageRotation",          0,         ],
     [ "backgroundBlur",         0,         ],
     [ "backgroundScale",        100,       ],
+    [ "backgroundFlip",         false,     ],
     [ "backgroundUrl",          '',        ],
     [ "use_custom_background",  false,     ],
     [ "attempt_number",         0,         ],

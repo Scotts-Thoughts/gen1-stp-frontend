@@ -19,6 +19,16 @@ const g1MoveData = {
     Category: "Physical",
     Description: "An HP-draining attack. It adds half the HP it drained from the target to the attacker's HP."
   },
+"Doom Desire" :
+  {
+    Move: "Doom Desire",
+    Type: "Steel",
+    Power: 120,
+    Accuracy: 85,
+    PP: 5,
+    Category: "Physical",
+    Description: ""
+  },
 "Leech Life" :
   {
     Move: "Leech Life",
