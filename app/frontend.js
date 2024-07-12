@@ -1680,6 +1680,14 @@ const app = Vue.createApp({
     },
 
     methods: {
+        // movepool_power(move, power) {
+        //     if (move == 'Doom Desire') {
+        //         return 120
+        //     }
+        //     else {
+        //         return power
+        //     }
+        // },
         get_nested_property(obj, path) {
             return path.split('.').reduce((o, p) => (o || {})[p], obj);
         },
@@ -3060,8 +3068,9 @@ const app = Vue.createApp({
             if (this.typeCalcs == true) {
                 const move_data_array = Object.values(this.g1MoveData);
                 var move_name          = pkmnData[moveNumber].value
-                
+
                 if (move_name == null) { return "" } //stop the function if there is no move in that slot
+                if (move_name == 'Doom Desire') { return 120 }
 
                 var move_type            = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Type
                 var move_info            = this.typeData.find(x => x.moveType === move_type)
