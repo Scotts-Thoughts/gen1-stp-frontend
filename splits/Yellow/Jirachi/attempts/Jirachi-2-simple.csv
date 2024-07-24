@@ -1,0 +1,7 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Jirachi,Rival1-Lab,39,0,0,5,0:02,5.433,CONFUSION,REST,,
+NINTEN,Jirachi,Brock,2:36,0,0,8,0:09,14.072,CONFUSION,REST,,
+NINTEN,Jirachi,Rival2-Nugget Bridge,5:46,0,0,15,0:22,21.897,CONFUSION,REST,SWIFT,WHIRLWIND
+NINTEN,Jirachi,Cerulean Rocket,9:06,0,0,20,0:35,20.553,CONFUSION,REST,SWIFT,PSYCHIC
+NINTEN,Jirachi,Misty,9:28,0,0,20,0:36,13.756,PSYCHIC,REST,SWIFT,CONFUSION
+NINTEN,Jirachi,Rival3-SS Anne,11:59,0,0,23,0:46,13.934,PSYCHIC,BUBBLEBEAM,BODY SLAM,SWIFT
