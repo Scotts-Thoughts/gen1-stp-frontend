@@ -1897,10 +1897,26 @@ const app = Vue.createApp({
         },
         enemyType2(slotNumber) {
             const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
+            const type_1 = this.enemyType1(slotNumber)
             if (pkmn_species == null) { 
                 return "Normal"
             }
-            return this.g1PokemonData[pkmn_species].type2
+            const type_2 = this.g1PokemonData[pkmn_species].type2
+            if (type_1 == type_2 && this.starterName == 'Pumpkaboo' && this.mapper.properties.patch.backport.prop_2.value == 8 && this.mapper.properties.battle.enemyPokemon.partyPos.value == slotNumber) {
+                return 'Ghost'
+            }
+            return type_2
+        },
+        enemyType3(slotNumber) {
+            const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
+            const type1 = this.g1PokemonData[pkmn_species].type1
+            const type2 = this.g1PokemonData[pkmn_species].type2
+            if (type2 != null && type1 != type2 && this.starterName == 'Pumpkaboo' && this.mapper.properties.patch.backport.prop_2.value == 8 && this.mapper.properties.battle.enemyPokemon.partyPos.value == slotNumber) {
+                return 'Ghost'
+            }
+            else {
+                return "Normal"
+            }
         },
         toggleDataType() {
             // Cycle through the values
@@ -2402,7 +2418,8 @@ const app = Vue.createApp({
                 "smellingsalt": "SmellingSalt",
                 "selfdestruct": "Selfdestruct",
                 "smokescreen":  "SmokeScreen",
-                "sonicboom":    "SonicBoom"
+                "sonicboom":    "SonicBoom",
+                "trickortreat": "TrickOrTreat"
             };
             const formattedMove = moveMappings[move_string];
             return formattedMove || this.capitalization_format(move_string);
@@ -3053,17 +3070,18 @@ const app = Vue.createApp({
                 var modifier_effectiveness_1 = this.typeData.find(x => x.moveType == move_type)[target_type_1]
                 var modifier_effectiveness_2 = target_type_2 && move_type && (target_type_1 != target_type_2) ? this.typeData.find(x => x.moveType == move_type)[target_type_2]
                     : 1
+                var modifier_effectiveness_3 = 1
                 var modifier_stab = move_type == user_type_1 ? 1.5 
                     : move_type == user_type_2 ? 1.5 
+                    : move_type == "Ghost" && this.mapper.properties.patch.backport.prop_2.value == 8 && slot == this.mapper.properties.battle.enemyPokemon.partyPos.value ? 1.5
                     : 1
     
                 //Calculate effective power
                 if (this.typeCalcs == true) { //Handles type effectiveness calculations in battle
-                    return Math.floor(move_base_power * modifier_stab * modifier_effectiveness_1 * modifier_effectiveness_2 * player_reflect * player_light_screen)
+                    return Math.floor(move_base_power * modifier_stab * modifier_effectiveness_1 * modifier_effectiveness_2 * modifier_effectiveness_3 * player_reflect * player_light_screen)
                 }
             }
         },
-
         type_effectiveness(pkmnData, moveNumber, enemyData) { //pkmnData = team[0] etc
             if (this.typeCalcs == true) {
                 const move_data_array = Object.values(this.g1MoveData);
@@ -3083,9 +3101,15 @@ const app = Vue.createApp({
                 var multiplier_stab      = 1
                 var multiplier_type1     = move_info[defender_type1]
                 var multiplier_type2     = 1
+                var multiplier_type3     = 1
                 var screen_reflect       = 1
                 var screen_lightscreen   = 1
                 
+                //Pumpkaboo TrickOrTreat
+                if (this.starterName == 'Pumpkaboo' && move_type == 'Ghost' && this.mapper.properties.patch.backport.prop_2.value == 8) {
+                    multiplier_type3 = 2
+                }
+
                 //update variables
                 if (move_type == attacker_type1 || move_type == attacker_type2)                { multiplier_stab = 1.5 }
                 if (defender_type1 != defender_type2)                                          { multiplier_type2 = this.typeData.find(x => x.moveType === move_type)[defender_type2] }
@@ -3101,7 +3125,7 @@ const app = Vue.createApp({
                 if (this.state != `Battle`) { return Math.floor(move_power * multiplier_stab) } //returns the move's base power if not in battle
 
                 //calculate the move's effective power
-                return Math.floor(move_power * multiplier_stab * multiplier_type1 * multiplier_type2 * screen_reflect * screen_lightscreen)
+                return Math.floor(move_power * multiplier_stab * multiplier_type1 * multiplier_type2 * multiplier_type3 * screen_reflect * screen_lightscreen)
             }
             else { return this.movePower(pkmnData[moveNumber].value) }
         },
