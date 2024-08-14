@@ -1,4 +1,192 @@
 const pokedex_yellow = {
+    "Ho-oh": {
+        "species": "Ho-oh",
+        "rom_id": 152,
+        "national_dex_number": 250,
+        "base_stats": {
+            "hp": 106,
+            "attack": 130,
+            "defense": 90,
+            "speed": 90,
+            "special_attack": 154,
+            "special_defense": 154
+        },
+        "ev_yield": {
+            "hp": 106,
+            "attack": 130,
+            "defense": 90,
+            "speed": 90,
+            "special_attack": 154,
+            "special_defense": 154
+        },
+        "type_1": "Fire",
+        "type_2": "Flying",
+        "catch_rate": 255,
+        "base_experience": 255,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                44,
+                "Recover"
+            ],
+            [
+                55,
+                "Fire Blast"
+            ],
+            [
+                66,
+                "Swift"
+            ],
+            [
+                77,
+                "Whirlwind"
+            ],
+            [
+                88,
+                "Rock Throw"
+            ],
+            [
+                99,
+                "Psychic"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Razor Wind",
+            "Whirlwind",
+            "Toxic",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Rage",
+            "Mega Drain",
+            "SolarBeam",
+            "Thunderbolt",
+            "Thunder",
+            "Earthquake",
+            "Psychic",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Swift",
+            "Dream Eater",
+            "Sky Attack",
+            "Rest",
+            "Thunder Wave",
+            "Substitute",
+            "Fly",
+            "Strength",
+            "Flash"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Lugia": {
+        "species": "Lugia",
+        "rom_id": 152,
+        "national_dex_number": 249,
+        "base_stats": {
+            "hp": 106,
+            "attack": 90,
+            "defense": 130,
+            "speed": 110,
+            "special_attack": 154,
+            "special_defense": 154
+        },
+        "ev_yield": {
+            "hp": 106,
+            "attack": 90,
+            "defense": 130,
+            "speed": 110,
+            "special_attack": 154,
+            "special_defense": 154
+        },
+        "type_1": "Psychic",
+        "type_2": "Flying",
+        "catch_rate": 255,
+        "base_experience": 255,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                44,
+                "Recover"
+            ],
+            [
+                55,
+                "Hydro Pump"
+            ],
+            [
+                66,
+                "Swift"
+            ],
+            [
+                77,
+                "Whirlwind"
+            ],
+            [
+                88,
+                "Rock Throw"
+            ],
+            [
+                99,
+                "Psychic"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Razor Wind",
+            "Whirlwind",
+            "Toxic",
+            "Take Down",
+            "Double Edge",
+            "BubbleBeam",
+            "Water Gun",
+            "Ice Beam",
+            "Blizzard",
+            "Thunderbolt",
+            "Thunder",
+            "Thunder Wave",
+            "Dream Eater",
+            "Body Slam",
+            "Hyper Beam",
+            "Rage",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Earthquake",
+            "Mega Drain",
+            "Psychic",
+            "Bide",
+            "Swift",
+            "Sky Attack",
+            "Rest",
+            "Substitute",
+            "Fly",
+            "Surf",
+            "Strength"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
     "Shedinja": {
         "species": "Shedinja",
         "rom_id": 152,

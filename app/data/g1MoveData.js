@@ -1,4 +1,24 @@
 const g1MoveData = {
+"Sacred Fire" :
+  {
+    Move: "Sacred Fire",
+    Type: "Fire",
+    Power: 100,
+    Accuracy: 95,
+    PP: 5,
+    Category: "Special",
+    Description: "An HP-draining attack. It adds half the HP it drained from the target to the attacker's HP."
+  },
+"Aeroblast" :
+  {
+    Move: "Aeroblast",
+    Type: "Flying",
+    Power: 100,
+    Accuracy: 95,
+    PP: 5,
+    Category: "Physical",
+    Description: "An HP-draining attack. It adds half the HP it drained from the target to the attacker's HP."
+  },
 "TrickOrTreat" :
   {
     Move: "TrickOrTreat",

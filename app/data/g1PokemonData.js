@@ -1,4 +1,150 @@
 const g1PokemonData = {
+"Ho-oh": {
+    name: "Ho-oh",
+    base_hp: 106,
+    base_atk: 130,
+    base_def: 90,
+    base_spd: 90,
+    base_spc: 154,
+    type1: "Fire",
+    type2: "Flying",
+    catch_rate: 255,
+    base_xp: 255,
+    initial_moveset: [
+        "Sacred Fire",
+        "Gust"
+    ],
+    growth_rate: "Slow",
+    tm_hm_learnset: [
+        "Razor Wind",
+        "Whirlwind",
+        "Toxic",
+        "Take Down",
+        "Double-Edge",
+        "Hyper Beam",
+        "Rage",
+        "Mega Drain",
+        "SolarBeam",
+        "Thunderbolt",
+        "Thunder",
+        "Earthquake",
+        "Psychic",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Swift",
+        "Dream Eater",
+        "Sky Attack",
+        "Rest",
+        "Thunder Wave",
+        "Substitute",
+        "Fly",
+        "Strength",
+        "Flash"
+    ],
+    levelup_moveset: [
+        [
+            44,
+            "Recover"
+        ],
+        [
+            55,
+            "Fire Blast"
+        ],
+        [
+            66,
+            "Swift"
+        ],
+        [
+            77,
+            "Whirlwind"
+        ],
+        [
+            88,
+            "Rock Throw"
+        ],
+        [
+            99,
+            "Psychic"
+        ]
+    ]
+},
+"Lugia": {
+    name: "Lugia",
+    base_hp: 106,
+    base_atk: 90,
+    base_def: 130,
+    base_spd: 110,
+    base_spc: 154,
+    type1: "Psychic",
+    type2: "Flying",
+    catch_rate: 255,
+    base_xp: 255,
+    initial_moveset: [
+        "Aeroblast",
+        "Gust"
+    ],
+    growth_rate: "Slow",
+    tm_hm_learnset: [
+        "Razor Wind",
+        "Whirlwind",
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "BubbleBeam",
+        "Water Gun",
+        "Ice Beam",
+        "Blizzard",
+        "Hyper Beam",
+        "Rage",
+        "Mega Drain",
+        "Thunderbolt",
+        "Thunder",
+        "Earthquake",
+        "Psychic",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Swift",
+        "Dream Eater",
+        "Sky Attack",
+        "Rest",
+        "Thunder Wave",
+        "Substitute",
+        "Fly",
+        "Surf",
+        "Strength"
+    ],
+    levelup_moveset: [
+        [
+            44,
+            "Recover"
+        ],
+        [
+            55,
+            "Hydro Pump"
+        ],
+        [
+            66,
+            "Swift"
+        ],
+        [
+            77,
+            "Whirlwind"
+        ],
+        [
+            88,
+            "Rock Throw"
+        ],
+        [
+            99,
+            "Psychic"
+        ]
+    ]
+},
 "Shedinja": {
     name: "Shedinja",
     base_hp: 1,
