@@ -611,10 +611,11 @@ const app = Vue.createApp({
     //DATA & DEFINITIONS
     data() {
         return {
-            ready : false,
-            mapper: null,
-            state : "Base Stats",
-            obs   : null,
+            ready  : false,
+            mapper : null,
+            state  : "Base Stats",
+            obs    : null,
+            release: true, //If set to false then development features will be displayed
 
             // Static Data
             g1MoveData             : g1MoveData,
@@ -850,7 +851,7 @@ const app = Vue.createApp({
 
 
             stats_display: "Automatic",
-            right_panel:   "Battle Graphic",
+            right_panel:   "Automatic",
             disallow_right_panel_switching: true,
             automatic_post_battle_splits: true,
             automatic_splits: false,
@@ -3822,7 +3823,7 @@ const app = Vue.createApp({
             }
             if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") {
                 this.automatic_splits = false
-                this.right_panel = 'Battle Graphic'
+                this.right_panel = 'Automatic'
             }
         });
 
@@ -4366,15 +4367,15 @@ const app = Vue.createApp({
         keyhook.registerShortCut('F17', async () => { // Inventory
             console.log("Key: F17 pressed. Automatic battle graphics will be displayed.")
             if (this.disallow_right_panel_switching == true) { 
-                this.right_panel = "Battle Graphic"
+                this.right_panel = "Automatic"
                 return 
             }
-            this.right_panel = "Battle Graphic";
+            this.right_panel = "Automatic";
         });
         keyhook.registerShortCut('F18', async () => { // Trainer Graphic during Battle
             console.log("Key: F18 pressed. Splits displayed.")
             if (this.disallow_right_panel_switching == true) { 
-                this.right_panel = "Battle Graphic"
+                this.right_panel = "Automatic"
                 return 
             }
             this.right_panel = "Movepool";
@@ -4382,7 +4383,7 @@ const app = Vue.createApp({
         keyhook.registerShortCut('F19', async () => { // Trainer Graphic during Battle
             console.log("Key: F19 pressed. Movepool displayed.")
             if (this.disallow_right_panel_switching == true) { 
-                this.right_panel = "Battle Graphic"
+                this.right_panel = "Automatic"
                 return 
             }
             this.right_panel = "Splits";

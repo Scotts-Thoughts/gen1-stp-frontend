@@ -11,6 +11,7 @@
             <div>Game:</div>
             <select v-model="game_name" class="dropdownMenu dropdown_menu_column3">
                 <option>Yellow</option>
+                <option v-if="release == false">Yellow Legacy</option>
                 <option>Red</option>
                 <option>Blue</option>
             </select><br>
@@ -233,7 +234,7 @@
                             <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(ui/ui_splits.svg)"></div>
                         </div>
                     </div>
-                    <div v-else-if="right_panel == 'Battle Graphic' && (state != 'Base Stats' && (state == 'To Battle' || state == 'Battle') && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=1>
+                    <div v-else-if="right_panel == 'Automatic' && (state != 'Base Stats' && (state == 'To Battle' || state == 'Battle') && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=1>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <div class="colored-image ds" :style="battlePokemonCrop()" style="--url: url(images/ui/opponent.svg);"></div>
                         <div class="enemyGraphic">
@@ -297,7 +298,7 @@
                             </div>
                         </div> 
                     </div>
-                    <div v-else-if="right_panel == 'Battle Graphic' && (mapper.properties.battle.type.value == `Wild` && show_wild_battles == true)" style="position: absolute;">
+                    <div v-else-if="right_panel == 'Automatic' && (mapper.properties.battle.type.value == `Wild` && show_wild_battles == true)" style="position: absolute;">
                         <div class="trainerLabel">{{"Wild " + wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
                         <div class="colored-image ds" :style="battlePokemonCrop()" style="--url: url(images/ui/opponent.svg);"></div>
                         <div class="enemyGraphic">
@@ -387,7 +388,7 @@
                     </div>
                 </transition>
                 <transition name="fadeDelayed">
-                    <div v-if="(state != 'Base Stats' && state != 'Overworld' && state != 'From Battle') && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Battle Graphic'" style="position: absolute;" key=1>
+                    <div v-if="(state != 'Base Stats' && state != 'Overworld' && state != 'From Battle') && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Automatic'" style="position: absolute;" key=1>
                         <img class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
                 </transition>
@@ -450,20 +451,22 @@
                 <div>Game:</div>
                 <select v-model="game_name" class="dropdownMenu dropdown_menu_column3">
                     <option>Yellow</option>
-                    <option>Yellow Legacy</option>
+                    <option v-if="release == false">Yellow Legacy</option>
                     <option>Red</option>
                     <option>Blue</option>
                 </select><br>
                 <br>
-                <table>
-                    <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
-                    <tr><td>Refilming mode:</td><td><input class="checkBoxStyle" type="checkbox" v-model="refilming_mode"/></td></tr>
-                </table>
-                <table v-if="refilming_mode">
-                    <tr><td>Attempt:</td><td><input class="inputContainer" type="text" v-model="refilmed_attempt"/></td></tr>
-                    <tr><td>Finish:</td><td><input class="inputContainer" type="text" v-model="refilmed_finish"/></td></tr>
-                </table>
-                <br>
+                <div v-if="release == false">
+                    <table>
+                        <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
+                        <tr><td>Refilming mode:</td><td><input class="checkBoxStyle" type="checkbox" v-model="refilming_mode"/></td></tr>
+                    </table>
+                    <table v-if="refilming_mode">
+                        <tr><td>Attempt:</td><td><input class="inputContainer" type="text" v-model="refilmed_attempt"/></td></tr>
+                        <tr><td>Finish:</td><td><input class="inputContainer" type="text" v-model="refilmed_finish"/></td></tr>
+                    </table>
+                    <br>
+                </div>
                 <div>Timer Setting:</div>
                 <select v-model="timer_settings" class="dropdownMenu dropdown_menu_column3">
                     <option disabled value="">Please select one</option>
@@ -475,14 +478,15 @@
                 <button class="buttonStyle buttonStyle_column3" @click="pauseUnpauseTime">Play/Pause</button><br>
                 <button class="buttonStyle set_button_style" @click="set_timer">Set</button><input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
                 <br>
-                <br>
                 <button class="buttonStyle buttonStyle_column3" onClick="openFolder('splits')">Open Splits Folder</button><br>
                 <br>
                 <br>
-                <div>Debugging:</div>
-                <table>
-                    <tr><td>State:</td><td>{{state}}</td></tr>
-                </table>
+                <div v-if="release == false">
+                    <div>Debugging:</div>
+                    <table>
+                        <tr><td>State:</td><td>{{state}}</td></tr>
+                    </table>
+                </div>
             </div>
             <div class="testingArea2" style="z-index: 50000;">
                 <div>Solo Pokemon:</div>
@@ -592,7 +596,6 @@
                         <th><input class="checkBoxStyle" type="checkbox" v-model="route24"/></th>
                     </tr>
                 </table>
-                <br>
                 Viridian Forest:<br>
                 <select v-model="viridian_forest" class="dropdownMenu dropdown_menu_column3" style="width: 160px;">
                     <option disabled value="">Please select one</option>
@@ -635,7 +638,7 @@
                     <tr><td>Flip:       </td><td><input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/></td></tr>
                 </table>
                 <br>
-                <div>Background:</div>
+                <div>Background Texture:</div>
                 <select v-model="backgroundTexture" class="dropdownMenu dropdown_menu_column3">
                     <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
                         {{ key }}
@@ -684,7 +687,7 @@
                 Right Panel:<br>
                 <select v-model="right_panel" class="dropdownMenu dropdown_menu_column3">
                     <option>Battle Graphic</option>
-                    <option>Inventory</option>
+                    <option v-if="release == false">Inventory</option>
                     <option>Movepool</option>
                     <option>Splits</option>
                 </select>
@@ -698,29 +701,31 @@
                     <tr><td>Show bonk counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_bonk_counter"/></td></tr>
                 </table>
                 <br>
-                <div style="text-decoration: underline;">Graphics Toggles:</div>
-                <table>
-                    <tr><td>Trainer Teams:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/></td></tr>
-                    <tr><td>All Trainers:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="showAllTrainers"/></td></tr>
-                    <tr><td>Trainer Graphics: </td><td><input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/></td></tr>
-                    <tr><td>Wild Pokemon:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/></td></tr>
-                    <tr><td>Pop-ups:          </td><td><input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/></td></tr>
-                    <tr><td>Frame:            </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_frame"/></td></tr>
-                </table>
-                <br>
-                <div style="text-decoration: underline;">Calculation Toggles:</div>
-                <table>
-                    <tr><td>Guarenteed Crits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/></td></tr>
-                </table>
-                <br>
-                <div style="text-decoration: underline;">Gameplay Toggles:</div>
-                <table>
-                    <tr><td>Rock Tunnel Darkness: </td><td><input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/></td></tr>
-                    <tr><td>Trash Cans Solved:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="trashCans"/></td></tr>
-                    <tr><td>Automatic Options:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="options"/></td></tr>
-                    <tr><td>Reset Counter:        </td><td><input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/></td></tr>
-                </table>
-                <button @click="reset_advanced_settings" class="buttonStyle buttonStyle_column3">Default Options</button>
+                <div v-if="release == false">
+                    <div style="text-decoration: underline;">Graphics Toggles:</div>
+                    <table>
+                        <tr><td>Trainer Teams:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/></td></tr>
+                        <tr><td>All Trainers:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="showAllTrainers"/></td></tr>
+                        <tr><td>Trainer Graphics: </td><td><input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/></td></tr>
+                        <tr><td>Wild Pokemon:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/></td></tr>
+                        <tr><td>Pop-ups:          </td><td><input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/></td></tr>
+                        <tr><td>Frame:            </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_frame"/></td></tr>
+                    </table>
+                    <br>
+                    <div style="text-decoration: underline;">Calculation Toggles:</div>
+                    <table>
+                        <tr><td>Guarenteed Crits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/></td></tr>
+                    </table>
+                    <br>
+                    <div style="text-decoration: underline;">Gameplay Toggles:</div>
+                    <table>
+                        <tr><td>Rock Tunnel Darkness: </td><td><input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/></td></tr>
+                        <tr><td>Trash Cans Solved:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="trashCans"/></td></tr>
+                        <tr><td>Automatic Options:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="options"/></td></tr>
+                        <tr><td>Reset Counter:        </td><td><input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/></td></tr>
+                    </table>
+                    <button @click="reset_advanced_settings" class="buttonStyle buttonStyle_column3">Default Options</button>
+                </div>
             </div>
         </div>
     </div>
