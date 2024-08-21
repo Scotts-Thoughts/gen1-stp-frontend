@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Arcanine,Rival1-Lab,40,0,0,5,0:02,5.628,ROAR,EMBER,LEER,TAKE DOWN
+NINTEN,Arcanine,Rival1-Lab,43,0,0,5,0:02,8.287,EMBER,ROAR,LEER,TAKE DOWN
+NINTEN,Arcanine,Brock,3:47,0,0,11,0:14,21.095,EMBER,ROAR,LEER,TAKE DOWN

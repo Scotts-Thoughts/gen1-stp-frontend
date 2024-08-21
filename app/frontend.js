@@ -615,7 +615,7 @@ const app = Vue.createApp({
             mapper : null,
             state  : "Base Stats",
             obs    : null,
-            release: true, //If set to false then development features will be displayed
+            release: false, //If set to false then development features will be displayed
 
             // Static Data
             g1MoveData             : g1MoveData,
