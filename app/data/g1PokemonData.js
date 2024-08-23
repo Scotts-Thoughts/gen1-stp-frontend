@@ -1,4 +1,72 @@
 const g1PokemonData = {
+"Sandile": {
+    name: "Sandile",
+    rom_id: 152,
+    national_dex_number: null,
+    base_hp: 50,
+    base_atk: 72,
+    base_def: 35,
+    base_spd: 65,
+    base_spc: 35,
+    ev_yield: null,
+    type1: "Ground",
+    type2: "Dark",
+    catch_rate: 180,
+    base_experience: 58,
+    common_item: null,
+    rare_item: null,
+    gender_ratio: null,
+    egg_cycles: null,
+    base_friendship: null,
+    growth_rate: "Medium Slow",
+    egg_group_1: null,
+    egg_group_2: null,
+    abilities: [
+
+    ],
+    initial_moveset: [
+        "Leer",
+        "Rage"
+    ],
+    levelup_moveset: [
+        [10, 'Bite'], 
+        [16, 'Sand-Attack'], 
+        [22, 'Dig'], 
+        [28, 'String Shot'], 
+        [34, 'Earthquake'], 
+        [37, 'Thrash']
+    ],
+    tm_hm_learnset: [
+        "Swords Dance",
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "Pay Day",
+        "Counter",
+        "Rage",
+        "Earthquake",
+        "Fissure",
+        "Dig",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Metronome",
+        "Skull Bash",
+        "Rest",
+        "Rock Slide",
+        "Substitute",
+        "Cut"
+    ],
+    tutor_learnset: [
+
+    ],
+    egg_moves: [
+
+    ],
+    weight: null,
+},
 "Ho-oh": {
     name: "Ho-oh",
     base_hp: 106,
