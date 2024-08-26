@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Seadra,Rival1-Lab,42,0,0,6,0:02,8.037,BUBBLE,SMOKESCREEN,,
+NINTEN,Seadra,Brock,3:03,0,1,10,0:11,10.598,BUBBLE,SMOKESCREEN,,
