@@ -2920,7 +2920,7 @@ const app = Vue.createApp({
               2: "402px",
               3: "562px",
               4: "722px",
-              5: "888px",
+              5: "886px",
               6: "1080px"
             };
             return `height: ${heights[totalPokemon]}; filter: saturate(${this.ui_saturation}) drop-shadow(0px 0px 1px #000000)`;
