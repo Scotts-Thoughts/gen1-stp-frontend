@@ -1403,6 +1403,8 @@ const app = Vue.createApp({
                     return `Level ${this.mapper.properties.player.team[0].level.value}`
                 }
                 case "Badge Boosts": return `Badge Boosts`
+                case "Averages":     return `Gen1 Average Stats`
+                case "Medians":      return `Gen1 Median Stats`
             }
         },
         automatic_stats_type() {
@@ -1681,6 +1683,35 @@ const app = Vue.createApp({
     },
 
     methods: {
+        average_median_stats(stat_label) {
+            let sum = 0;
+            let count = 0;
+            let values = [];
+            
+            for (let pokemon of Object.values(this.pokedex_yellow)) {
+                console.log(stat_label)
+                let stat = pokemon[`base_stats`][stat_label];
+                sum += stat;
+                count++;
+                values.push(stat);
+            }
+            
+            let average = sum / count;
+            
+            values.sort((a, b) => a - b);
+            let median;
+            let midIndex = Math.floor(values.length / 2);
+            
+            if (values.length % 2 === 0) {
+                median = (values[midIndex - 1] + values[midIndex]) / 2;
+            } else {
+                median = values[midIndex];
+            }
+            return {
+                average: Math.round(average),
+                median : Math.round(median),
+            };
+        },
         // movepool_power(move, power) {
         //     if (move == 'Doom Desire') {
         //         return 120

@@ -1764,4 +1764,40 @@ const g1MoveData = {
   Category: "Physical",
   Description: "A generation 2 move that was ported back by WaielAl. It's Delibird's signature move."
   },
+"Moth-Bolt" :  {
+  Move: "Moth-Bolt",
+  Type: "Electric",
+  Power: 200,
+  Accuracy: 100,
+  PP: 40,
+  Category: "Special",
+  Description: "A generation 2 move that was ported back by WaielAl. It's Delibird's signature move."
+  },
+"Moth-Beam" :  {
+  Move: "Moth-Beam",
+  Type: "Ice",
+  Power: 200,
+  Accuracy: 100,
+  PP: 40,
+  Category: "Special",
+  Description: "A generation 2 move that was ported back by WaielAl. It's Delibird's signature move."
+  },
+"Moth-Flame" :  {
+  Move: "Moth-Flame",
+  Type: "Fire",
+  Power: 200,
+  Accuracy: 100,
+  PP: 40,
+  Category: "Special",
+  Description: "A generation 2 move that was ported back by WaielAl. It's Delibird's signature move."
+  },
+"Moth-Mind" :  {
+  Move: "Moth-Mind",
+  Type: "Psychic",
+  Power: 200,
+  Accuracy: 100,
+  PP: 40,
+  Category: "Special",
+  Description: "A generation 2 move that was ported back by WaielAl. It's Delibird's signature move."
+  },
 }
