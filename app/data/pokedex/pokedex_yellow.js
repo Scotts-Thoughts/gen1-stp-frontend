@@ -1,4 +1,604 @@
 const pokedex_yellow = {
+    "Stantler": {
+        "species": "Stantler",
+        "rom_id": 152,
+        "national_dex_number": 234,
+        "base_stats": {
+            "hp": 73,
+            "attack": 95,
+            "defense": 62,
+            "speed": 85,
+            "special_attack": 85,
+            "special_defense": 85
+        },
+        "ev_yield": {
+            "hp": 73,
+            "attack": 95,
+            "defense": 62,
+            "speed": 85,
+            "special_attack": 85,
+            "special_defense": 85
+        },
+        "type_1": "Normal",
+        "type_2": "Normal",
+        "catch_rate": 45,
+        "base_experience": 165,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Tackle"
+            ],
+            [
+                8,
+                "Leer"
+            ],
+            [
+                15,
+                "Hypnosis"
+            ],
+            [
+                23,
+                "Stomp"
+            ],
+            [
+                31,
+                "Sand-Attack"
+            ],
+            [
+                40,
+                "Take Down"
+            ],
+            [
+                49,
+                "Confuse Ray"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Rage",
+            "SolarBeam",
+            "Thunderbolt",
+            "Thunder",
+            "Earthquake",
+            "Fissure",
+            "Psychic",
+            "Teleport",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Swift",
+            "Dream Eater",
+            "Rest",
+            "Thunder Wave",
+            "Psywave",
+            "Substitute",
+            "Flash"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Slugma": {
+        "species": "Slugma",
+        "rom_id": 152,
+        "national_dex_number": 218,
+        "base_stats": {
+            "hp": 40,
+            "attack": 40,
+            "defense": 40,
+            "speed": 20,
+            "special_attack": 70,
+            "special_defense": 70
+        },
+        "ev_yield": {
+            "hp": 40,
+            "attack": 40,
+            "defense": 40,
+            "speed": 20,
+            "special_attack": 70,
+            "special_defense": 70
+        },
+        "type_1": "Fire",
+        "type_2": "Fire",
+        "catch_rate": 190,
+        "base_experience": 78,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Fast",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Smog"
+            ],
+            [
+                8,
+                "Ember"
+            ],
+            [
+                15,
+                "Rock Throw"
+            ],
+            [
+                22,
+                "Harden"
+            ],
+            [
+                29,
+                "Amnesia"
+            ],
+            [
+                36,
+                "Flamethrower"
+            ],
+            [
+                43,
+                "Rock Slide"
+            ],
+            [
+                50,
+                "Body Slam"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Rage",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Fire Blast",
+            "Rest",
+            "Rock Slide",
+            "Substitute"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Girafarig":{
+        "species": "Girafarig",
+        "rom_id": 152,
+        "national_dex_number": 203,
+        "base_stats": {
+            "hp": 70,
+            "attack": 80,
+            "defense": 65,
+            "speed": 85,
+            "special_attack": 90,
+            "special_defense": 90
+        },
+        "ev_yield": {
+            "hp": 70,
+            "attack": 80,
+            "defense": 65,
+            "speed": 85,
+            "special_attack": 90,
+            "special_defense": 90
+        },
+        "type_1": "Normal",
+        "type_2": "Psychic Type",
+        "catch_rate": 60,
+        "base_experience": 149,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Fast",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Tackle"
+            ],
+            [
+                1,
+                "Growl"
+            ],
+            [
+                1,
+                "Confusion"
+            ],
+            [
+                1,
+                "Stomp"
+            ],
+            [
+                13,
+                "Confusion"
+            ],
+            [
+                20,
+                "Stomp"
+            ],
+            [
+                30,
+                "Agility"
+            ],
+            [
+                41,
+                "Psybeam"
+            ],
+            [
+                54,
+                "Bite"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Earthquake",
+            "Fissure",
+            "Psychic",
+            "Teleport",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Swift",
+            "Rest",
+            "Thunder Wave",
+            "Psywave",
+            "Substitute",
+            "Strength",
+            "Flash"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Wooper": {
+        "species": "Wooper",
+        "rom_id": 152,
+        "national_dex_number": 194,
+        "base_stats": {
+            "hp": 55,
+            "attack": 45,
+            "defense": 45,
+            "speed": 15,
+            "special_attack": 25,
+            "special_defense": 25
+        },
+        "ev_yield": {
+            "hp": 55,
+            "attack": 45,
+            "defense": 45,
+            "speed": 15,
+            "special_attack": 25,
+            "special_defense": 25
+        },
+        "type_1": "Water",
+        "type_2": "Ground",
+        "catch_rate": 255,
+        "base_experience": 52,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Fast",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Water Gun"
+            ],
+            [
+                1,
+                "Tail Whip"
+            ],
+            [
+                11,
+                "Slam"
+            ],
+            [
+                21,
+                "Amnesia"
+            ],
+            [
+                31,
+                "Earthquake"
+            ],
+            [
+                41,
+                "Mist"
+            ],
+            [
+                51,
+                "Mist"
+            ],
+            [
+                51,
+                "Haze"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "BubbleBeam",
+            "Water Gun",
+            "Ice Beam",
+            "Blizzard",
+            "Rage",
+            "Earthquake",
+            "Fissure",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Metronome",
+            "Skull Bash",
+            "Rest",
+            "Substitute",
+            "Surf",
+            "Flash"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "PartnerEevee": {
+        "species": "PartnerEevee",
+        "rom_id": 152,
+        "national_dex_number": 113,
+        "base_stats": {
+            "hp": 65,
+            "attack": 75,
+            "defense": 70,
+            "speed": 75,
+            "special_attack": 85,
+            "special_defense": 85
+        },
+        "ev_yield": {
+            "hp": 65,
+            "attack": 75,
+            "defense": 70,
+            "speed": 75,
+            "special_attack": 85,
+            "special_defense": 85
+        },
+        "type_1": "Normal",
+        "type_2": "Normal",
+        "catch_rate": 45,
+        "base_experience": 92,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Fast",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Tackle"
+            ],
+            [
+                1,
+                "Growl"
+            ],
+            [
+                1,
+                "Tail Whip"
+            ],
+            [
+                6,
+                "Quick Attack"
+            ],
+            [
+                10,
+                "Double Kick"
+            ],
+            [
+                14,
+                "Sand-Attack"
+            ],
+            [
+                17,
+                "Bite"
+            ],
+            [
+                21,
+                "Swift"
+            ],
+            [
+                24,
+                "Take Down"
+            ],
+            [
+                28,
+                "Double-Edge"
+            ],
+            [
+                31,
+                "Roar"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Pay Day",
+            "Rage",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Swift",
+            "Skull Bash",
+            "Rest",
+            "Substitute",
+            "Cut",
+            "Fly",
+            "Surf",
+            "Strength",
+            "Flash"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "PartnerPikachu": {
+        "species": "PartnerPikachu",
+        "rom_id": 152,
+        "national_dex_number": 25,
+        "base_stats": {
+            "hp": 45,
+            "attack": 80,
+            "defense": 50,
+            "speed": 120,
+            "special_attack": 75,
+            "special_defense": 75
+        },
+        "ev_yield": {
+            "hp": 45,
+            "attack": 80,
+            "defense": 50,
+            "speed": 120,
+            "special_attack": 75,
+            "special_defense": 75
+        },
+        "type_1": "Electric",
+        "type_2": "Electric",
+        "catch_rate": 190,
+        "base_experience": 82,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Fast",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Thundershock"
+            ],
+            [
+                1,
+                "Growl"
+            ],
+            [
+                1,
+                "Tail Whip"
+            ],
+            [
+                6,
+                "Quick Attack"
+            ],
+            [
+                9,
+                "Double Kick"
+            ],
+            [
+                12,
+                "Double Team"
+            ],
+            [
+                15,
+                "Thunder Wave"
+            ],
+            [
+                18,
+                "Light Screen"
+            ],
+            [
+                21,
+                "Thunderbolt"
+            ],
+            [
+                24,
+                "Slam"
+            ],
+            [
+                27,
+                "Agility"
+            ],
+            [
+                30,
+                "Thunder"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Mega Punch",
+            "Mega Kick",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Pay Day",
+            "Submission",
+            "Seismic Toss",
+            "Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Swift",
+            "Skull Bash",
+            "Rest",
+            "Thunder Wave",
+            "Substitute",
+            "Cut",
+            "Fly",
+            "Surf",
+            "Strength",
+            "Flash"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
     "Testmoth": {
         "species": "Testmoth",
         "rom_id": 152,

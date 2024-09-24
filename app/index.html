@@ -15,6 +15,12 @@
                 <option>Red</option>
                 <option>Blue</option>
             </select><br>
+            <div>Solo Pokemon:</div>
+            <select v-model="starterName" class="dropdownMenu dropdown_menu_column3" style="background-color: rgb(201, 199, 100)">
+                <option disabled value="">Select a species</option>
+                <option v-for="key in filtered_pokemon_list" :value="`${key}`">{{key}}</option>
+                <option>Pikachu</option>
+            </select><br>
         </div>
         <div v-else-if="game_name == 'Red' || game_name == 'Blue' || game_name == 'Yellow' || game_name == 'Yellow Legacy'">
             <div class="mainContainer">
