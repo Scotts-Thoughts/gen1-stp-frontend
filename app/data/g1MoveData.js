@@ -1800,4 +1800,13 @@ const g1MoveData = {
   Category: "Special",
   Description: "A generation 2 move that was ported back by WaielAl. It's Delibird's signature move."
   },
+"Lumina Crash" :  {
+  Move: "Lumina Crash",
+  Type: "Psychic",
+  Power: 80,
+  Accuracy: 100,
+  PP: 10,
+  Category: "Special",
+  Description: "Deals damage and lowers Special by 2 stages."
+  },
 }

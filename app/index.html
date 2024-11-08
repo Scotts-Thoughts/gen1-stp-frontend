@@ -32,7 +32,7 @@
                             'transform': `scale(${backgroundScale}%) ${backgroundFlip ? 'rotateY(180deg)' : ''} translate(${backgroundXOffset}px, ${-backgroundYOffset}px)`
                         }"/>
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
-                    <img v-if="show_frame" class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" />
+                    <!-- <img v-if="show_frame" class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" /> -->
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
                     <img v-show="game_name == 'Yellow'" class="pokemon_art" ref="pokemon_art"
                         :style="{
@@ -719,7 +719,7 @@
                         <tr><td>Trainer Graphics: </td><td><input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/></td></tr>
                         <tr><td>Wild Pokemon:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/></td></tr>
                         <tr><td>Pop-ups:          </td><td><input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/></td></tr>
-                        <tr><td>Frame:            </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_frame"/></td></tr>
+                        <!-- <tr><td>Frame:            </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_frame"/></td></tr> -->
                     </table>
                     <br>
                     <div style="text-decoration: underline;">Calculation Toggles:</div>

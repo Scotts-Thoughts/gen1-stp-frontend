@@ -1,4 +1,114 @@
 const pokedex_yellow = {
+    "Espathra": {
+        "species": "Espathra",
+        "rom_id": 152,
+        "national_dex_number": 956,
+        "base_stats": {
+            "hp": 95,
+            "attack": 60,
+            "defense": 60,
+            "speed": 105,
+            "special_attack": 101,
+            "special_defense": 101
+        },
+        "ev_yield": {
+            "hp": 95,
+            "attack": 60,
+            "defense": 60,
+            "speed": 105,
+            "special_attack": 101,
+            "special_defense": 101
+        },
+        "type_1": "Psychic",
+        "type_2": "Psychic",
+        "catch_rate": 60,
+        "base_experience": 168,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Drill Peck"
+            ],
+            [
+                1,
+                "Peck"
+            ],
+            [
+                1,
+                "Growl"
+            ],
+            [
+                1,
+                "Confusion"
+            ],
+            [
+                15,
+                "Quick Attack"
+            ],
+            [
+                19,
+                "Psybeam"
+            ],
+            [
+                24,
+                "Drill Peck"
+            ],
+            [
+                29,
+                "Agility"
+            ],
+            [
+                35,
+                "Lumina Crash"
+            ],
+            [
+                43,
+                "SonicBoom"
+            ],
+            [
+                49,
+                "Psychic"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Razor Wind",
+            "Whirlwind",
+            "Mega Kick",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Rage",
+            "Psychic",
+            "Teleport",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Metronome",
+            "Swift",
+            "Skull Bash",
+            "Sky Attack",
+            "Rest",
+            "Thunder Wave",
+            "Psywave",
+            "Substitute",
+            "Flash"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
     "Stantler": {
         "species": "Stantler",
         "rom_id": 152,
