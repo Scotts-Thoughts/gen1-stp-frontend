@@ -637,6 +637,7 @@ const app = Vue.createApp({
             split_trainers         : split_trainers,
             time_settings          : time_settings,
             battle_summary         : battle_summary,
+            backport_data          : backport_data,
 
             pokedex_red_blue   : pokedex_red_blue,
             pokedex_yellow     : pokedex_yellow,
@@ -1601,9 +1602,13 @@ const app = Vue.createApp({
             }
         },
         s1dynamicReset() {
+            var species = ""
+            if (this.mapper.properties.player.team[0].species.value == "Backport") {
+                species = this.starterName
+            }
             if (this.state == `Battle`) {
                 const battle_data = this.mapper?.properties?.battle?.yourPokemon
-                var species = battle_data.species.value
+                species = battle_data.species.value
                 if (species == null || species == undefined) {
                     species = this.starterName
                 }
@@ -1621,7 +1626,7 @@ const app = Vue.createApp({
             }
             else {
                 const party_data = this.mapper?.properties?.player?.team[0]
-                var species = party_data.species.value
+                species = party_data.species.value
                 if (species == null || species == undefined) {
                     species = this.starterName
                 }
@@ -2429,6 +2434,7 @@ const app = Vue.createApp({
         },
         move_name(move_string) {
             if (!move_string) { return "" }
+            if (move_string.includes("BACKPORT")) { return this.backport_data[this.starterName].move_string }
             move_string = move_string.toLowerCase()
             const moveMappings = {
                 "vicegrip":     "ViceGrip",
