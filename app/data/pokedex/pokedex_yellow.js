@@ -451,10 +451,6 @@ const pokedex_yellow = {
             ],
             [
                 51,
-                "Mist"
-            ],
-            [
-                51,
                 "Haze"
             ]
         ],

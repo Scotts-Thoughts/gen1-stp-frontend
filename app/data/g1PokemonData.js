@@ -272,7 +272,7 @@ const g1PokemonData = {
         "Water Gun",
         "Tail Whip"
     ],
-    levelup_moveset: [[11, "Slam"], [21, "Amnesia"], [31, "Earthquake"], [41, "Mist"], [51, "Mist"], [51, "Haze"]],
+    levelup_moveset: [[11, "Slam"], [21, "Amnesia"], [31, "Earthquake"], [41, "Mist"], [51, "Haze"]],
     tm_hm_learnset: [
         "Toxic",
         "Body Slam",
