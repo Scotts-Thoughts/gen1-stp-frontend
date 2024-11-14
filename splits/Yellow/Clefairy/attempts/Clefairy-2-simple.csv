@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Clefairy,Rival1-Lab,43,0,0,6,0:02,9.534,POUND,GROWL,,
+NINTEN,Clefairy,Champion,1:02:05,15,0,67,3:20,86.205,REST,THUNDERBOLT,ICE BEAM,DEFENSE CURL

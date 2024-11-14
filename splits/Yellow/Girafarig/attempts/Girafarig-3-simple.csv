@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Girafarig,Rival1-Lab,40,0,0,6,0:02,6.577,CONFUSION,GROWL,TACKLE,STOMP
+NINTEN,Girafarig,Champion,39:11,2,0,64,2:32,62.237,PSYCHIC,BODY SLAM,THUNDERBOLT,REST

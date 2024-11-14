@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Lugia,Rival1-Lab,39,0,0,5,0:02,4.183,AEROBLAST,GUST,,
+NINTEN,Lugia,Champion,37:08,2,1,55,2:24,50.925,EARTHQUAKE,THUNDERBOLT,AEROBLAST,ICE BEAM
