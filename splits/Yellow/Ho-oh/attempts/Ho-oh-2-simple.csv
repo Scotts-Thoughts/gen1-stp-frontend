@@ -1,0 +1,7 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Ho-oh,Rival1-Lab,38,0,0,5,0:01,3.832,SACRED FIRE,GUST,,
+NINTEN,Ho-oh,Brock,2:42,0,0,8,0:10,14.53,SACRED FIRE,GUST,,
+NINTEN,Ho-oh,Rival2-Nugget Bridge,5:52,0,0,15,0:22,12.21,SACRED FIRE,GUST,,
+NINTEN,Ho-oh,Misty,11:23,5,0,20,0:38,15.36,SACRED FIRE,GUST,THUNDER WAVE,
+NINTEN,Ho-oh,Cerulean Rocket,11:48,5,0,20,0:39,6.362,SACRED FIRE,GUST,THUNDER WAVE,
+NINTEN,Ho-oh,Champion,41:06,6,1,58,2:34,48.703,SACRED FIRE,EARTHQUAKE,MIMIC,THUNDERBOLT
