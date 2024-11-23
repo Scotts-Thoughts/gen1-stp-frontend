@@ -1,2 +1,3 @@
 player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
 NINTEN,Ivysaur,Rival1-Lab,43,0,0,6,0:02,9.634,TACKLE,GROWL,LEECH SEED,
+NINTEN,Ivysaur,Champion,45:25,2,0,59,2:54,72.597,BODY SLAM,SWORDS DANCE,SLEEP POWDER,MIMIC

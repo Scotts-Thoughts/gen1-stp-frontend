@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Ivysaur,Rival1-Lab,46,0,0,6,0:02,12.024,TACKLE,GROWL,LEECH SEED,
+NINTEN,Ivysaur,Brock,3:59,0,0,11,0:15,67.196,TACKLE,GROWL,LEECH SEED,
+NINTEN,Ivysaur,Misty,8:51,0,0,21,0:34,14.692,TACKLE,GROWL,LEECH SEED,VINE WHIP
+NINTEN,Ivysaur,Rival2-Nugget Bridge,9:43,0,0,23,0:37,23.085,TACKLE,GROWL,LEECH SEED,VINE WHIP

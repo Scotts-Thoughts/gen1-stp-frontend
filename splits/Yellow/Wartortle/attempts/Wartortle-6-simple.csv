@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Wartortle,Rival1-Lab,44,0,0,6,0:02,10.873,TACKLE,TAIL WHIP,BUBBLE,
+NINTEN,Wartortle,Brock,3:13,0,1,12,0:12,8.484,BUBBLE,TAIL WHIP,TACKLE,

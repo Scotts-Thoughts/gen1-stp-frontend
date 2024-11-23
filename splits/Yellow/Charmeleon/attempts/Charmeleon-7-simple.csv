@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Charmeleon,Rival1-Lab,42,0,0,6,0:02,8.887,EMBER,GROWL,SCRATCH,
+NINTEN,Charmeleon,Brock,3:22,0,0,13,0:12,20.557,EMBER,GROWL,SCRATCH,
+NINTEN,Charmeleon,Rival2-Nugget Bridge,6:38,0,0,19,0:25,18.993,EMBER,MEGA PUNCH,SCRATCH,LEER
