@@ -719,6 +719,7 @@ const app = Vue.createApp({
             show_repel_counter        : true,
             show_bonk_counter         : true,
             show_frame                : false,
+            no_attempt                : false,
 
             refilming_mode  : false,
             refilmed_attempt: 0,
@@ -3256,6 +3257,9 @@ const app = Vue.createApp({
         this.mapper.properties.player.playerId.change((newProp) => {
             if (newProp.value > 0 && this.game_over == false) {
                 if (newProp.value != this.playerId) {
+                    if (this.no_attempt == true) {
+                        return
+                    }
                     this.playerResets = 0;
                     this.blackout_counter = 0;
                     this.finished_logs = false;

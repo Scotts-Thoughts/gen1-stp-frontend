@@ -1,3 +1,4 @@
 player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
 NINTEN,Snorlax,Rival1-Lab,39,0,0,5,0:02,5.285,HEADBUTT,AMNESIA,REST,
 NINTEN,Snorlax,Brock,4:46,0,3,10,0:18,54.365,HEADBUTT,AMNESIA,REST,
+NINTEN,Snorlax,Champion,40:56,4,0,55,2:34,61.235,THUNDERBOLT,AMNESIA,EARTHQUAKE,ICE BEAM
