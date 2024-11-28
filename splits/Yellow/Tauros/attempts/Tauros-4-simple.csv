@@ -1,3 +1,4 @@
 player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
 NINTEN,Tauros,Rival1-Lab,41,0,0,5,0:02,7.119,TACKLE,,,
 NINTEN,Tauros,Brock,8:28,0,0,13,0:32,32.915,TACKLE,,,
+NINTEN,Tauros,Champion,45:40,3,0,56,2:56,66.185,BODY SLAM,THUNDERBOLT,EARTHQUAKE,BLIZZARD
