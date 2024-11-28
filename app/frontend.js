@@ -719,7 +719,7 @@ const app = Vue.createApp({
             show_repel_counter        : true,
             show_bonk_counter         : true,
             show_frame                : false,
-            no_attempt                : false,
+            no_attempt                : true,
 
             refilming_mode  : false,
             refilmed_attempt: 0,
@@ -3441,7 +3441,7 @@ const app = Vue.createApp({
         
         // this function assigns split data to arrays so that it can be written to CSV on disc
         const autosplitter_process = () => {
-            if (this.autosplitter_toggle == true) {
+            if (this.autosplitter_toggle == true && this.no_attempt == false) {
                 d = new Date()
                 battle_end = Date.now()
                 //values
