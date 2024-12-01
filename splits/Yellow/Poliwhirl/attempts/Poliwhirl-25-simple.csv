@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Poliwhirl,Rival1-Lab,43,0,0,6,0:02,10.077,WATER GUN,HYPNOSIS,BUBBLE,
+NINTEN,Poliwhirl,Brock,3:02,0,0,12,0:11,8.355,WATER GUN,HYPNOSIS,BUBBLE,
+NINTEN,Poliwhirl,Misty,7:08,0,0,20,0:27,16.649,MEGA PUNCH,HYPNOSIS,BUBBLE,WATER GUN
+NINTEN,Poliwhirl,Rival2-Nugget Bridge,8:00,0,0,21,0:31,25.371,BUBBLEBEAM,HYPNOSIS,WATER GUN,MEGA PUNCH
