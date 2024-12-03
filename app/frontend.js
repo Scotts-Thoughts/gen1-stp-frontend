@@ -564,7 +564,7 @@ function logCopy(gameName, file_name, starterName, finished_run_count, refilming
     var dirPathAttempts = refilming_mode ? `./splits/${gameName}/${starterName}/refilmed/attempts/` : `./splits/${gameName}/${starterName}/attempts/`
     var dirPathFinishes = refilming_mode ? `./splits/${gameName}/${starterName}/refilmed/finishes/` : `./splits/${gameName}/${starterName}/finishes/`
     let attempt_number = refilming_mode ? refilmed_attempt : file_name;
-    let finish_number = refilming_mode ? refilmed_attempt : file_name;
+    let finish_number = refilming_mode ? refilmed_attempt : finished_run_count;
     fs.mkdir(dirPathFinishes, { recursive: true }, (err) => {
         fs.copyFile(
             path.join(dirPathAttempts, `${starterName}-${attempt_number}-simple.csv`), 
