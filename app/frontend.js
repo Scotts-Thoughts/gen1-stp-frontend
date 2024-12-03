@@ -719,7 +719,7 @@ const app = Vue.createApp({
             show_repel_counter        : true,
             show_bonk_counter         : true,
             show_frame                : false,
-            no_attempt                : true,
+            no_attempt                : false,
 
             refilming_mode  : false,
             refilmed_attempt: 0,
