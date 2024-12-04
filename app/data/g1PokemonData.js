@@ -1,4 +1,65 @@
 const g1PokemonData = {
+"Iron Bundle": {
+    name: "Iron Bundle",
+    rom_id: 152,
+    national_dex_number: null,
+    base_hp: 56,
+    base_atk: 80,
+    base_def: 114,
+    base_spd: 136,
+    base_spc: 124,
+    ev_yield: null,
+    type1: "Ice",
+    type2: "Water",
+    catch_rate: 50,
+    base_xp: 220,
+    common_item: null,
+    rare_item: null,
+    gender_ratio: null,
+    egg_cycles: null,
+    base_friendship: null,
+    growth_rate: "Slow",
+    egg_group_1: null,
+    egg_group_2: null,
+    abilities: [
+    ],
+    initial_moveset: [
+        "Present"
+    ],
+    levelup_moveset: [[7, 'Bubble'], [14, 'Water Gun'], [21, 'Take Down'], [28, 'Drill Peck'], [35, 'Ice Beam'], [42, 'Agility'], [49, 'Hydro Pump'], [56, 'Blizzard']],
+    tm_hm_learnset: [
+        "Mega Punch",
+        "Mega Kick",
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "BubbleBeam",
+        "Water Gun",
+        "Ice Beam",
+        "Blizzard",
+        "Hyper Beam",
+        "Counter",
+        "Seismic Toss",
+        "Rage",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Swift",
+        "Skull Bash",
+        "Rest",
+        "Substitute",
+        "Fly",
+        "Surf"
+    ],
+    tutor_learnset: [
+
+    ],
+    egg_moves: [
+
+    ],
+    weight: null,
+},
 "Espathra": {
     name: "Espathra",
     rom_id: 152,
