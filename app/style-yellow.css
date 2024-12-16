@@ -1079,6 +1079,11 @@ box-shadow:
     top: 331px;
     left: 32px;
 }
+.blackoutLabel {
+    font-size: 13px;
+    top: 333px;
+    left: 32px;
+}
 .bonksLabel {
     position: absolute;
     border: 1px solid #00000000;

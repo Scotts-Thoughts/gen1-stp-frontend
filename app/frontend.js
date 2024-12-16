@@ -2205,12 +2205,18 @@ const app = Vue.createApp({
             if (this.key_F16 == "resets") {
                 this.playerResets++
             }
+            if (this.key_F16 == "faults") {
+                this.playerResets++
+            }
         },
         resets_decrement() {
             if (this.key_F16 == "blackouts") {
                 this.blackout_counter--
             }
             if (this.key_F16 == "resets") {
+                this.playerResets--
+            }
+            if (this.key_F16 == "faults") {
                 this.playerResets--
             }
         },

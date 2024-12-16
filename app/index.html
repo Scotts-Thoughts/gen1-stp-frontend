@@ -74,8 +74,16 @@
                     <div class="exp_growthRate">{{ growthRate }}</div>
                     <transition name="fade"><div v-show="timer_settings == `Off - Real-Time Label` || timer_settings == `Real-Time`" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
                     <transition name="fade"><div v-show="timer_settings == `Off - Game-Time Label` || timer_settings == `Game-Time`" class="genericLabels timerLabel">gametime</div></transition>
-                    <div v-show="key_F16 == `resets`" class="genericLabels resetsLabel">resets</div>
-                    <div v-show="key_F16 == `blackouts`" class="genericLabels resetsLabel">blackouts</div>
+                    <div v-if="blackout_counter === 0">
+                        <div v-show="key_F16 == `resets`" class="genericLabels resetsLabel">resets</div>
+                        <div v-show="key_F16 == `blackouts`" class="genericLabels resetsLabel">blackouts</div>
+                    </div>
+                    <div v-else-if="blackout_counter > 0 && playerResetsDisplay === 0">
+                        <div class="genericLabels blackoutLabel">blackouts</div>
+                    </div>
+                    <div v-else-if="blackout_counter != 0">
+                        <div class="genericLabels resetsLabel">faults</div>
+                    </div>
                 </div>
                 <!-- Type Icons -->
                 <div class="typeContainer">
@@ -450,8 +458,16 @@
                 </div></transition>
                 <!-- Resets -->
                 <transition name="fade"><div v-show="resetCounter == true" class="resets">
-                    <div v-show="key_F16 == `resets`" id="reset_counter">{{playerResetsDisplay}}</div>
-                    <div v-show="key_F16 == `blackouts`" id="reset_counter">{{blackout_counter}}</div>
+                    <div v-if="blackout_counter === 0">
+                        <div v-show="key_F16 == `resets`"    id="reset_counter">{{playerResetsDisplay}}</div>
+                        <div v-show="key_F16 == `blackouts`" id="reset_counter">{{blackout_counter}}</div>
+                    </div>
+                    <div v-else-if="blackout_counter > 0 && playerResetsDisplay === 0">
+                        <div id="reset_counter">{{blackout_counter}}</div>
+                    </div>
+                    <div v-else-if="blackout_counter != 0">
+                        <div id="reset_counter">{{playerResetsDisplay + blackout_counter}}</div>
+                    </div>
                 </div></transition>
             </div>
             <!-- UI -->
