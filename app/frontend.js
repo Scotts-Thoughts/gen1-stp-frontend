@@ -2785,11 +2785,11 @@ const app = Vue.createApp({
                     case "RIVAL2_1":
                         return "images/trainers/RIVAL2.png";
                     case "ROCKET_42":
-                        return "images/trainers/JESSIE_JAMES.png";
+                        return "images/trainers/JESSIE_JAMES_1.png";
                     case "ROCKET_44":
-                        return "images/trainers/JESSIE_JAMES.png";
+                        return "images/trainers/JESSIE_JAMES_2.png";
                     case "ROCKET_45":
-                        return "images/trainers/JESSIE_JAMES.png";
+                        return "images/trainers/JESSIE_JAMES_2.png";
                     case "JR TRAINER F_5":
                         return "images/trainers/JR TRAINER F_5.png";
                     case "YOUNGSTER_1":
