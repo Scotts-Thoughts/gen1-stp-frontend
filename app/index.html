@@ -27,12 +27,11 @@
                 <!-- Graphics -->
                 <div>
                     <img class="canvas" ref="background_texture" :src="textures[backgroundTexture]" 
-                        :style="{ 
-                            'filter': `blur(${backgroundBlur}px) hue-rotate(${backgroundHue}deg) brightness(${backgroundBrightness}%) contrast(${backgroundContrast}%) saturate(${backgroundSaturation}%)` ,
-                            'transform': `scale(${backgroundScale}%) ${backgroundFlip ? 'rotateY(180deg)' : ''} translate(${backgroundXOffset}px, ${-backgroundYOffset}px)`
-                        }"/>
+                    :style="{ 
+                        'filter': `blur(${backgroundBlur}px) hue-rotate(${backgroundHue}deg) brightness(${backgroundBrightness}%) contrast(${backgroundContrast}%) saturate(${backgroundSaturation}%)` ,
+                        'transform': `scale(${backgroundScale}%) ${backgroundFlip ? 'rotateY(180deg)' : ''} translate(${backgroundXOffset}px, ${-backgroundYOffset}px)`
+                    }"/>
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
-                    <!-- <img v-if="show_frame" class="canvas" :src="`images/elements/overlay/gen1&2/frame.png`" /> -->
                     <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
                     <img v-show="game_name == 'Yellow'" class="pokemon_art" ref="pokemon_art"
                         :style="{
@@ -574,79 +573,18 @@
                     </tr>
                 </table>
                 <br>
-                Encounters:<br>
-                <table class="ui_table">
-                    <tr>
-                        <th>Route 1:</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="route1"/></th>
-                    </tr>
-                    <tr>
-                        <th>Route 3:</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="route3"/></th>
-                    </tr>
-                    <tr>
-                        <th>Mt. Moon:</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="mtMoon"/></th>
-                    </tr>
-                    <tr>
-                        <th>Route 6:</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="route6"/></th>
-                    </tr>
-                    <tr>
-                        <th>Rock Tunnel:</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="rockTunnel"/></th>
-                    </tr>
-                    <tr>
-                        <th>Pkmn Tower:</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="pokemonTower"/></th>
-                    </tr>
-                    <tr>
-                        <th>Safari Zone:</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="safariZone"/></th>
-                    </tr>
-                    <tr>
-                        <th>Pkmn Mansion:</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="mansion"/></th>
-                    </tr>
-                    <tr>
-                        <th>Route 22:</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="route22"/></th>
-                    </tr>
-                    <tr>
-                        <th>Victory Road:</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="victoryRoad"/></th>
-                    </tr>
-                    <tr>
-                        <th>Route 24</th>
-                        <th><input class="checkBoxStyle" type="checkbox" v-model="route24"/></th>
-                    </tr>
+                <div>Encounter Settings:</div>
+                <table>
+                    <tr><td>Early Encounters:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_wEarlyEncounters"/></td></tr>
                 </table>
-                Viridian Forest:<br>
-                <select v-model="viridian_forest" class="dropdownMenu dropdown_menu_column3" style="width: 160px;">
-                    <option disabled value="">Please select one</option>
-                    <option>Encounters On</option>
-                    <option>Encounters Off</option>
-                    <option>Pidgey</option>
-                    <option>Level</option>
-                    <option>Speed</option>
-                </select>
-                <input class="small_input_container" v-if="viridian_forest == `Level`" v-model="goal_level" placeholder="Target Level">
-                <input class="small_input_container" v-if="viridian_forest == `Speed`" v-model="goal_speed" placeholder="Target Speed">
+                <table class="ui_table">
+                    <tr v-if="release == false"><td>Route 1</td>        <td>- Test:</td><td><input      class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE1_TEST"/></td></tr>
+                    <tr><td>Viridian Forest</td><td>- Pidgey:</td><td><input    class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY"/></td></tr>
+                    <tr><td>Route 3</td>        <td>- Spearow:</td><td><input   class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW"/></td></tr>
+                    <tr><td>Mt. Moon</td>       <td>- Sandshrew:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW"/></td></tr>
+                    <tr><td>Route 16</td>       <td>- Doduo:</td><td><input     class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE16_DODUO"/></td></tr>
+                </table>
                 <br>
-                <br>
-                <button @click="apply_settings('first_playthrough_settings')" class="buttonStyle buttonStyle_column3">First-run</button><br>
-                <button @click="apply_settings('second_playthrough_settings')" class="buttonStyle buttonStyle_column3">Follow-up</button><br>
-                <button @click="apply_settings('all_off')" class="buttonStyle buttonStyle_column3">All Off</button><br>
-                <br>
-                <div>DV Setting:</div>
-                <select v-model="dvSetting" class="dropdownMenu dropdown_menu_column3">
-                    <option disabled value="">Please select one</option>
-                    <option>Max</option>
-                    <option>Min</option>
-                    <option>NPC</option>
-                    <option>Max with Min Atk</option>
-                    <option>Random</option>
-                </select><br>
             </div>
             <div class="testingArea4" style="z-index: 50000;">
                 <div>UI Color:</div>
@@ -683,18 +621,6 @@
                 </table>
             </div>
             <div class="testingArea3" style="z-index: 50000;">
-                Bulbapedia Colors:<br>
-                <select v-model="ui_type_colors" class="dropdownMenu dropdown_menu_column3">
-                    <option>Current</option>
-                    <option>Legacy</option>
-                </select><br>
-                <br>
-                <div>Stat Arrangement:</div>
-                <select v-model="ui_stat_arrangement" class="dropdownMenu dropdown_menu_column3">
-                    <option>Speed: top right</option>
-                    <option>Speed: bottom right</option>
-                </select><br>
-                <br>
                 <div>Stats:</div>
                 <select v-model="stats_display" class="dropdownMenu dropdown_menu_column3">
                     <option>Automatic</option>
@@ -706,10 +632,6 @@
                     <option>Averages</option>
                     <option>Medians</option>
                 </select><br>
-                <table>
-                    <tr><td>Automatically switch stats:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_stats"/></td>     </tr>
-                    <tr><td>Display badge boosts:</td>      <td><input class="checkBoxStyle" type="checkbox" v-model="display_badge_boosts"/></td></tr>
-                </table>
                 <br>
                 Right Panel:<br>
                 <select v-model="right_panel" class="dropdownMenu dropdown_menu_column3">
@@ -722,8 +644,6 @@
                 <table>
                     <tr><td>Disable right panel hotkeys:</td><td><input class="checkBoxStyle" type="checkbox" v-model="disallow_right_panel_switching"/></td></tr>
                     <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_post_battle_splits"/></td></tr>
-                    <tr><td>Collect split data:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_split_data"/></td></tr>
-                    <!-- <tr><td>Collect battle summary files:</td><td><input class="checkBoxStyle" type="checkbox" v-model="collect_summary_files"/></td></tr> -->
                     <tr><td>Show repel counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_repel_counter"/></td></tr>
                     <tr><td>Show bonk counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_bonk_counter"/></td></tr>
                 </table>
@@ -736,22 +656,7 @@
                         <tr><td>Trainer Graphics: </td><td><input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/></td></tr>
                         <tr><td>Wild Pokemon:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/></td></tr>
                         <tr><td>Pop-ups:          </td><td><input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/></td></tr>
-                        <!-- <tr><td>Frame:            </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_frame"/></td></tr> -->
                     </table>
-                    <br>
-                    <div style="text-decoration: underline;">Calculation Toggles:</div>
-                    <table>
-                        <tr><td>Guarenteed Crits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="showCritMultiplierInEP"/></td></tr>
-                    </table>
-                    <br>
-                    <div style="text-decoration: underline;">Gameplay Toggles:</div>
-                    <table>
-                        <tr><td>Rock Tunnel Darkness: </td><td><input class="checkBoxStyle" type="checkbox" v-model="rockTunnelDarkness"/></td></tr>
-                        <tr><td>Trash Cans Solved:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="trashCans"/></td></tr>
-                        <tr><td>Automatic Options:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="options"/></td></tr>
-                        <tr><td>Reset Counter:        </td><td><input class="checkBoxStyle" type="checkbox" v-model="resetCounter"/></td></tr>
-                    </table>
-                    <button @click="reset_advanced_settings" class="buttonStyle buttonStyle_column3">Default Options</button>
                 </div>
             </div>
         </div>
@@ -759,7 +664,6 @@
 
 <!-- Imports -->
     <script src="https://unpkg.com/@microsoft/signalr@7.0.14/dist/browser/signalr.min.js"></script> 
-    <!-- <script src="https://unpkg.com/vue@latest/dist/vue.global.js"></script> -->
     <script src="packages/vue.global.js"></script>
     <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
     <script src="data/g1MoveData.js"></script>
