@@ -719,12 +719,19 @@ const app = Vue.createApp({
             show_frame                : false,
             no_attempt                : false,
 
-            toggle_wEarlyEncounters                      : false,
+            toggle_wEarlyEncounters: false,
+              // Yellow toggles
             toggle_EVENT_ENCOUNTER_ROUTE1_TEST           : false,
             toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY: false,
             toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW        : false,
             toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW      : false,
             toggle_EVENT_ENCOUNTER_ROUTE16_DODUO         : false,
+              // Red and Blue toggles
+            toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW : false,
+            toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE : false,
+            toggle_EVENT_ENCOUNTER_MTMOON_PARAS   : false,
+            toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER: false,
+            toggle_EVENT_ENCOUNTER_ROUTE16_DODUO  : false,
 
             refilming_mode  : false,
             refilmed_attempt: 0,
@@ -1118,6 +1125,26 @@ const app = Vue.createApp({
         toggle_EVENT_ENCOUNTER_ROUTE16_DODUO(newValue) {
             if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
             if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
+        },
+        toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW(newValue) {
+            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(true, false)}
+            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(false, false)}
+        },
+        toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE(newValue) {
+            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(true, false)}
+            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(false, false)}
+        },
+        toggle_EVENT_ENCOUNTER_MTMOON_PARAS(newValue) {
+            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(true, false)}
+            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(false, false)}
+        },
+        toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER(newValue) {
+            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.ENCOUNTER_ROUTE6_CUT_USER.set(true, false)}
+            if (newValue == false) { this.mapper.properties.patch.encounter_flags.ENCOUNTER_ROUTE6_CUT_USER.set(false, false)}
+        },
+        toggle_EVENT_ENCOUNTER_ROUTE16_DODUO(newValue) {
+            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.ENCOUNTER_ROUTE16_DODUO.set(true, false)}
+            if (newValue == false) { this.mapper.properties.patch.encounter_flags.ENCOUNTER_ROUTE16_DODUO.set(false, false)}
         },
         current_splits: {
             handler: function (newVal, oldVal) {
@@ -3108,11 +3135,18 @@ const app = Vue.createApp({
         else {
             this.toggle_wEarlyEncounters = false
         }
-        this.toggle_EVENT_ENCOUNTER_ROUTE1_TEST            = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.value
-        this.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.value
-        this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW         = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.value
-        this.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW       = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.value
-        this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO          = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.value
+        // Yellow toggle init
+        this.toggle_EVENT_ENCOUNTER_ROUTE1_TEST            = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW         = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW       = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO          = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO?.value ?? false
+        // Red/Blue toggle init
+        this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW  = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE  = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_MTMOON_PARAS    = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO   = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO?.value ?? false
 
         this.pokemon_list = this.keys_function(g1PokemonData)
 
@@ -3686,11 +3720,20 @@ const app = Vue.createApp({
             if (newValue.value == "On") { this.toggle_wEarlyEncounters = true }
             else { this.toggle_wEarlyEncounters = false }
         })
-        this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.change((newValue)            => { this.toggle_EVENT_ENCOUNTER_ROUTE1_TEST            = newValue.value })
-        this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.change((newValue) => { this.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY = newValue.value })
-        this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.change((newValue)         => { this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW         = newValue.value })
-        this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.change((newValue)       => { this.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW       = newValue.value })
-        this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.change((newValue)          => { this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO          = newValue.value })
+        if (this.game_name == 'Yellow') {
+            this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.change((newValue)            => { this.toggle_EVENT_ENCOUNTER_ROUTE1_TEST            = newValue.value })
+            this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.change((newValue) => { this.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY = newValue.value })
+            this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.change((newValue)         => { this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW         = newValue.value })
+            this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.change((newValue)       => { this.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW       = newValue.value })
+            this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.change((newValue)          => { this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO          = newValue.value })
+        }
+        else if (this.game_name == 'Red' || this.game_name == 'Blue') {
+            this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.change((newValue)  => { this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW  = newValue.value })
+            this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.change((newValue)  => { this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE  = newValue.value })
+            this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.change((newValue)    => { this.toggle_EVENT_ENCOUNTER_MTMOON_PARAS    = newValue.value })
+            this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.change((newValue) => { this.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER = newValue.value })
+            this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.change((newValue)   => { this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO   = newValue.value })
+        }
 
         //EXP BAR
         var species = this.s1dynamicReset.species.value;

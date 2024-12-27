@@ -577,12 +577,19 @@
                 <table>
                     <tr><td>Early Encounters:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_wEarlyEncounters"/></td></tr>
                 </table>
-                <table class="ui_table">
+                <table v-if="game_name == 'Yellow'" class="ui_table">
                     <tr v-if="release == false"><td>Route 1</td>        <td>- Test:</td><td><input      class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE1_TEST"/></td></tr>
                     <tr><td>Viridian Forest</td><td>- Pidgey:</td><td><input    class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY"/></td></tr>
                     <tr><td>Route 3</td>        <td>- Spearow:</td><td><input   class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW"/></td></tr>
                     <tr><td>Mt. Moon</td>       <td>- Sandshrew:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW"/></td></tr>
                     <tr><td>Route 16</td>       <td>- Doduo:</td><td><input     class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE16_DODUO"/></td></tr>
+                </table>
+                <table v-if="game_name == 'Red' || game_name == 'Blue'" class="ui_table">
+                    <tr><td>Route 3</td> <td>- Spearow:</td> <td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW"/></td></tr>
+                    <tr><td>Mt. Moon</td><td>- Geodude:</td> <td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE"/></td></tr>
+                    <tr><td>Mt. Moon</td><td>- Paras:</td>   <td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_MTMOON_PARAS"/></td></tr>
+                    <tr><td>Route 6</td> <td>- Cut User:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER"/></td></tr>
+                    <tr><td>Route 16</td><td>- Doduo:</td>   <td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE16_DODUO"/></td></tr>
                 </table>
                 <br>
             </div>
