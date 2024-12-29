@@ -3138,10 +3138,10 @@ const app = Vue.createApp({
         this.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW       = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW?.value ?? false
         this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO          = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO?.value ?? false
         // Red/Blue toggle init
-        this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW  = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST?.value ?? false
-        this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE  = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY?.value ?? false
-        this.toggle_EVENT_ENCOUNTER_MTMOON_PARAS    = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW?.value ?? false
-        this.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW  = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE  = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_MTMOON_PARAS    = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS?.value ?? false
+        this.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER?.value ?? false
         this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO   = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO?.value ?? false
 
         this.pokemon_list = this.keys_function(g1PokemonData)
