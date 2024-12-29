@@ -1126,10 +1126,6 @@ const app = Vue.createApp({
             if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
             if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
         },
-        toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(false, false)}
-        },
         toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE(newValue) {
             if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(true, false)}
             if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(false, false)}
@@ -1139,12 +1135,12 @@ const app = Vue.createApp({
             if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(false, false)}
         },
         toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.ENCOUNTER_ROUTE6_CUT_USER.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.ENCOUNTER_ROUTE6_CUT_USER.set(false, false)}
+            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(true, false)}
+            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(false, false)}
         },
         toggle_EVENT_ENCOUNTER_ROUTE16_DODUO(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.ENCOUNTER_ROUTE16_DODUO.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.ENCOUNTER_ROUTE16_DODUO.set(false, false)}
+            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
+            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
         },
         current_splits: {
             handler: function (newVal, oldVal) {
