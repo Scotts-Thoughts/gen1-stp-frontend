@@ -1049,7 +1049,7 @@ const app = Vue.createApp({
             this.$watch(
                 () => this[prop_name],
                 (new_value) => {
-                    if (!Storage.games[this.game_name][this.starterName].style) {
+                    if (!Storage.games[this.game_name][this.starterName]?.style) {
                         Storage.games[this.game_name][this.starterName].style = {};
                     }
                     Storage.games[this.game_name][this.starterName].style = {
@@ -1174,7 +1174,7 @@ const app = Vue.createApp({
             if (this.ready == false) await this.sleep(250)
                 
             // Set the new value for hChosenStarter so that the ROM responds to the change
-            this.mapper.properties.patch.hChosenStarter.set(newValue, false)
+            // this.mapper.properties.patch.hChosenStarter.set(newValue, false)
 
             //update the saved starter in the overlay's local storage
             Storage['global_variables'].starter = newValue
@@ -3124,7 +3124,7 @@ const app = Vue.createApp({
         this.updateTime()
 
         // Load settings
-        this.starterName = this.mapper.properties.patch.hChosenStarter.value
+        // this.starterName = this.mapper.properties.patch.hChosenStarter.value
         if (this.mapper.properties.patch.wEarlyEncounters.value == "On") {
             this.toggle_wEarlyEncounters = true
         }
@@ -3711,7 +3711,7 @@ const app = Vue.createApp({
         });
 
         //Property pairing
-        this.mapper.properties.patch.hChosenStarter.change((newValue) => { this.starterName = newValue.value})
+        // this.mapper.properties.patch.hChosenStarter.change((newValue) => { this.starterName = newValue.value})
         this.mapper.properties.patch.wEarlyEncounters.change((newValue) => { 
             if (newValue.value == "On") { this.toggle_wEarlyEncounters = true }
             else { this.toggle_wEarlyEncounters = false }

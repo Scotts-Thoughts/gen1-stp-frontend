@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Venusaur,Rival2-Nugget Bridge,45,0,0,6,0:02,16.845,TACKLE,GROWL,LEECH SEED,VINE WHIP
+NINTEN,Venusaur,Brock,2:17,0,0,11,0:08,12.178,TACKLE,GROWL,LEECH SEED,VINE WHIP

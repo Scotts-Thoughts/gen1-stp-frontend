@@ -403,7 +403,7 @@
                     </div>
                 </transition>
                 <transition name="fadeDelayed">
-                    <div v-if="(state != 'Base Stats' && state != 'Overworld' && state != 'From Battle') && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Automatic'" style="position: absolute;" key=1>
+                    <div v-if="(specialTrainerGraphics() != null && state != 'Base Stats' && state != 'Overworld' && state != 'From Battle') && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Automatic'" style="position: absolute;" key=1>
                         <img class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
                 </transition>
@@ -509,6 +509,7 @@
                     <div>Debugging:</div>
                     <table>
                         <tr><td>State:</td><td>{{state}}</td></tr>
+                        <tr><td>Mapper State:</td><td>{{mapper.properties.meta.state.value}}</td></tr>
                     </table>
                 </div>
             </div>
