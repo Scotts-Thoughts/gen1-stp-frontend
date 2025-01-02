@@ -17,18 +17,18 @@
       <feComposite in2="blur" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="Stat_Spe_New_Sat" data-name="Stat Spe New Sat" x1="1654" y1="841" x2="1726" y2="841" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#7f27a6"/>
-      <stop offset=".04" stop-color="#8829b1"/>
-      <stop offset=".17" stop-color="#a131d3"/>
-      <stop offset=".29" stop-color="#b437eb"/>
-      <stop offset=".41" stop-color="#bf3af9"/>
-      <stop offset=".5" stop-color="#c33cff"/>
-      <stop offset=".59" stop-color="#be3af9"/>
-      <stop offset=".71" stop-color="#b337ea"/>
-      <stop offset=".84" stop-color="#9f31d0"/>
-      <stop offset=".97" stop-color="#8428ad"/>
-      <stop offset="1" stop-color="#7f27a6"/>
+    <linearGradient id="New_Spe_Dark" data-name="New Spe Dark" x1="1654" y1="841" x2="1726" y2="841" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8c53a6"/>
+      <stop offset=".04" stop-color="#9659b1"/>
+      <stop offset=".17" stop-color="#b269d3"/>
+      <stop offset=".29" stop-color="#c776eb"/>
+      <stop offset=".41" stop-color="#d37df9"/>
+      <stop offset=".5" stop-color="#d880ff"/>
+      <stop offset=".59" stop-color="#d37df9"/>
+      <stop offset=".71" stop-color="#c675ea"/>
+      <stop offset=".84" stop-color="#b068d0"/>
+      <stop offset=".97" stop-color="#9256ad"/>
+      <stop offset="1" stop-color="#8c53a6"/>
     </linearGradient>
     <filter id="drop-shadow-2" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
@@ -113,15 +113,17 @@
       <feComposite in="SourceGraphic"/>
     </filter>
   </defs>
-  <g id="Enemy">
-    <g id="G1_Stats_copy_2" data-name="G1 Stats copy 2">
-      <g id="Layer_61_copy_2" data-name="Layer 61 copy 2">
-        <rect id="crit" x="1654" y="855" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_CritRate_New); filter: url(#drop-shadow-1); stroke-width: 0px;"/>
-        <rect id="spe" x="1654" y="831" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_Spe_New_Sat); filter: url(#drop-shadow-2); stroke-width: 0px;"/>
-        <rect id="spc" x="1654" y="807" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_SpA_New_Sat); filter: url(#drop-shadow-3); stroke-width: 0px;"/>
-        <rect id="def" x="1654" y="783" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_Def_New_Sat); filter: url(#drop-shadow-4); stroke-width: 0px;"/>
-        <rect id="atk" x="1654" y="759" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_Atk_New_Sat); filter: url(#drop-shadow-5); stroke-width: 0px;"/>
-        <rect id="hp" x="1654" y="735" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_HP_New_Sat); filter: url(#drop-shadow-6); stroke-width: 0px;"/>
+  <g id="Nuzlocke">
+    <g id="Enemy">
+      <g id="G1_Stats_copy_2" data-name="G1 Stats copy 2">
+        <g id="Layer_61_copy_2" data-name="Layer 61 copy 2">
+          <rect id="crit" x="1654" y="855" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_CritRate_New); filter: url(#drop-shadow-1); stroke-width: 0px;"/>
+          <rect id="spe" x="1654" y="831" width="72" height="20" rx="6" ry="6" style="fill: url(#New_Spe_Dark); filter: url(#drop-shadow-2); stroke-width: 0px;"/>
+          <rect id="spc" x="1654" y="807" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_SpA_New_Sat); filter: url(#drop-shadow-3); stroke-width: 0px;"/>
+          <rect id="def" x="1654" y="783" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_Def_New_Sat); filter: url(#drop-shadow-4); stroke-width: 0px;"/>
+          <rect id="atk" x="1654" y="759" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_Atk_New_Sat); filter: url(#drop-shadow-5); stroke-width: 0px;"/>
+          <rect id="hp" x="1654" y="735" width="72" height="20" rx="6" ry="6" style="fill: url(#Stat_HP_New_Sat); filter: url(#drop-shadow-6); stroke-width: 0px;"/>
+        </g>
       </g>
     </g>
   </g>
