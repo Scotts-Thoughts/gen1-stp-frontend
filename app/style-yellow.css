@@ -814,13 +814,13 @@ box-shadow:
     position: absolute;
     /* border: 1px solid rgb(47, 0, 255); */
     width: 110px;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 31px;
     text-align: left;
     left: 232px;
 }
 .ePkmnEffectivePower {
-    left: 254px;
+    left: 257px;
     text-align: right;
 }
 .opacityTransition { transition: opacity 500ms ease-in-out;}
