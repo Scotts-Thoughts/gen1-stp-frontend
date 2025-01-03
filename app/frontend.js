@@ -646,6 +646,7 @@ const app = Vue.createApp({
 
             // Objects
             pkmnMoves:       ["move1","move2","move3","move4"],
+            progressBadges:  ["badge1","badge2","badge3","badge4", "badge5","badge6","badge7","badge8"],
             pkmnSlots:       [0, 1, 2, 3, 4, 5],
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
@@ -1595,16 +1596,16 @@ const app = Vue.createApp({
         // SCREENS
         screen() {
             if (this.batt.yourPokemon.effects.reflect.value == true && this.batt.yourPokemon.effects.lightScreen.value == true) {
-                return ["Both","font-size: 20px","Screens",]
+                return ["Both","font-size: 20px","screens",]
             }
             if (this.batt.yourPokemon.effects.lightScreen.value == true) {
-                return ["Light Screen","font-size: 16px","Screen",]
+                return ["Light Screen","font-size: 16px","screen",]
             }
             if (this.batt.yourPokemon.effects.reflect.value == true) {
-                return ["Reflect","font-size: 20px","Screen",]
+                return ["Reflect","font-size: 20px","screen",]
             }
             else {
-                return [" ","font-size: 20px","Screen",]
+                return [" ","font-size: 20px","screen",]
             }
         },
         growthRate() {

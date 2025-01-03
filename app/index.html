@@ -32,7 +32,7 @@
                         'transform': `scale(${backgroundScale}%) ${backgroundFlip ? 'rotateY(180deg)' : ''} translate(${backgroundXOffset}px, ${-backgroundYOffset}px)`
                     }"/>
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
-                    <img class="canvas" :src="`images/elements/floor/pokeball.png`" />
+                    <img class="canvas" style="top: -130px;" :src="`images/elements/floor/pokeball.png`" />
                     <img v-show="game_name == 'Yellow'" class="pokemon_art" ref="pokemon_art"
                         :style="{
                             'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px) rotate(${imageRotation}deg)`,
@@ -63,17 +63,20 @@
                         :src="`images/pokemon/Red_and_Blue/${s1dynamicReset.species.value}.png`" />
 
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer.svg)"></div>
-                    <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/moveset.svg)"></div>
-                    <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/resets.svg)"></div>
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/stats.svg)"></div>
+                    <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/moveset.svg)"></div>
+                    <!-- <img class="canvas" src="images/ui/moveset.svg"> -->
                     <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div></div>
                     <img class="svg" :src="`images/ui/${ui_type_color_modifier}${ui_stat_arrangement_modifier}stats_backgrounds.svg`"/>
                     <img class="svg" style="opacity: .8; filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.svg"/>
+                    <img class="canvas" src="images/elements/badges.png"/>
 
                     <div class="exp_growthRate">{{ growthRate }}</div>
                     <transition name="fade"><div v-show="timer_settings == `Off - Real-Time Label` || timer_settings == `Real-Time`" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
                     <transition name="fade"><div v-show="timer_settings == `Off - Game-Time Label` || timer_settings == `Game-Time`" class="genericLabels timerLabel">gametime</div></transition>
-                    <div v-if="blackout_counter === 0">
+                    <div class="genericLabels resetsLabel">resets</div>
+                    <div class="genericLabels blackoutLabel">blackouts</div>
+                    <!-- <div v-if="blackout_counter === 0">
                         <div v-show="key_F16 == `resets`" class="genericLabels resetsLabel">resets</div>
                         <div v-show="key_F16 == `blackouts`" class="genericLabels resetsLabel">blackouts</div>
                     </div>
@@ -82,7 +85,11 @@
                     </div>
                     <div v-else-if="blackout_counter != 0">
                         <div class="genericLabels resetsLabel">faults</div>
-                    </div>
+                    </div> -->
+                </div>
+                <!-- Badges -->
+                <div v-for="badge in progressBadges">
+                    <transition name="fade"><img v-show="mapper.properties.player.badges[badge].value == true" :src="`images/badges/progress bar/${badge}.png`" class="canvas" /></transition>
                 </div>
                 <!-- Type Icons -->
                 <div class="typeContainer">
@@ -257,7 +264,7 @@
                                 <div v-if="mapper.properties.battle.trainer.totalPokemon > x" :class="`ePkmnStyle ePkmn${x + 1}`">
                                     <img v-if="mapper.properties.meta.gameName == 'Yellow'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/${mapper.properties.battle.trainer.team[x]?.species}.png`"/>
                                     <img v-else-if="mapper.properties.meta.gameName == 'Red and Blue'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/Red_and_Blue/${mapper.properties.battle.trainer.team[x]?.species}.png`"/>
-                                    <div class="ePkmnSpecies opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).species">{{mapper.properties.battle.trainer.team[x]?.species}}</div>
+                                    <div class="ePkmnSpecies opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).species">{{mapper.properties.battle.trainer.team[x]?.species}} Lv:{{mapper.properties.battle.trainer.team[x]?.level}}</div>
                                     <img class="ePkmnTypeIcons ePkmnType_1 ds opacityTransition" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" :src="`images/elements/type-icons/${enemyType1(x).toLowerCase()}.png`"/>
                                     <img v-if="enemyType1(x) != enemyType2(x)" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_2 ds opacityTransition" :src="`images/elements/type-icons/${enemyType2(x).toLowerCase()}.png`"/>
                                     <img v-if="enemyType3(x) == 'Ghost'" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_3 ds opacityTransition" :src="`images/elements/type-icons/ghost.png`"/>
@@ -411,35 +418,35 @@
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.bytes != 0x07 && batt.yourPokemon.modStageAccuracy.bytes != 0x00 && batt.yourPokemon.modStageAccuracy.bytes != 0xFF && (state == `Battle` || state == `From Battle`)">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/accuracy/default.png)"></div>
-                            <div class="popUpsStyle popUpLabelStyle accuracyLabel">Accuracy:</div>
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/accuracy.svg)"></div>
+                            <div class="accuracyLabel">accuracy</div>
                             <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="show_repel_counter == true && state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/accuracy/default.png)"></div>
-                            <div class="popUpsStyle popUpLabelStyle repelLabel" style="font-size: 16px;">Repel Steps:</div>
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/accuracy.svg)"></div>
+                            <div class="popUpsStyle popUpLabelStyle repelLabel" style="font-size: 16px;">repel steps</div>
                             <div class="popUpsStyle repelSteps">{{ mapper.properties.overworld.repelCount.value }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.bytes != 0x07 && batt.yourPokemon.modStageEvasion.bytes != 0x00 && batt.yourPokemon.modStageEvasion.bytes != 0xFF && (state == `Battle` || state == `From Battle`)">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/evasion/default.png)"></div>
-                            <div class="popUpsStyle popUpLabelStyle evasionLabel">Evasion:</div>
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/evasion.svg)"></div>
+                            <div class="evasionLabel2">evasion</div>
                             <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.effects.reflect.bytes != 0xFF && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (state == `Battle` || state == `From Battle`)">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/screens/default.png)"></div>
-                            <div class="popUpsStyle popUpLabelStyle screensLabel">{{screen[2]}}</div>
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/screens.svg)"></div>
+                            <div class="screensLabel">{{screen[2]}}</div>
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>
                     </transition>
                     <transition name="fade">
                         <div v-if="show_bonk_counter == true && state == 'Overworld'">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/pop_ups/screens/default.png)"></div>
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/screens.svg)"></div>
                             <div class="genericLabels resetsLabel bonksLabel">bonks</div>
                             <div class="popUpsStyle bonksValue">{{ map?.patch?.steps?.bonks }}</div>
                         </div>
@@ -456,21 +463,15 @@
                     <div class="gametimeFrames">{{timer_formatted_time[1]}}</div>
                 </div></transition>
                 <!-- Resets -->
-                <transition name="fade"><div v-show="resetCounter == true" class="resets">
-                    <div v-if="blackout_counter === 0">
-                        <div v-show="key_F16 == `resets`"    id="reset_counter">{{playerResetsDisplay}}</div>
-                        <div v-show="key_F16 == `blackouts`" id="reset_counter">{{blackout_counter}}</div>
-                    </div>
-                    <div v-else-if="blackout_counter > 0 && playerResetsDisplay === 0">
-                        <div id="reset_counter">{{blackout_counter}}</div>
-                    </div>
-                    <div v-else-if="blackout_counter != 0">
-                        <div id="reset_counter">{{playerResetsDisplay + blackout_counter}}</div>
-                    </div>
-                </div></transition>
+                <transition name="fade">
+                    <div class="faults_style resets"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
+                </transition>
+                <transition name="fade">
+                    <div class="faults_style blackouts" id="reset_counter">{{blackout_counter}}</div>
+                </transition>
             </div>
             <!-- UI -->
-            <div class="testingArea1" style="z-index: 50000;">
+            <div class="testingArea1" style="z-index: 155000;">
                 <div>Game:</div>
                 <select v-model="game_name" class="dropdownMenu dropdown_menu_column3">
                     <option>Yellow</option>

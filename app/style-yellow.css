@@ -681,7 +681,7 @@ box-shadow:
     font-family: play;
     font-size: 24px;
     line-height: 26px;
-    top: 360px;
+    top: 240px;
     left: -10px;
     width: 420px;
     height: 420px;
@@ -695,7 +695,7 @@ box-shadow:
     font-family: play;
     font-size: 24px;
     line-height: 26px;
-    top: 340px;
+    top: 200px;
     left: -10px;
     width: auto;
     height: auto;
@@ -748,13 +748,13 @@ box-shadow:
 .ePkmnSpecies {
     position: absolute;
     /* border: 1px solid rgb(0, 255, 149); */
-    font-size: 16px;
+    font-size: 14px;
     font-family: play;
-    width: 112px;
+    width: 118px;
     opacity: .7;
     text-align: center;
     top: 7px;
-    left: 9px;
+    left: 4px;
 }
 .ePkmnSprite {
     position: absolute;
@@ -1004,10 +1004,13 @@ box-shadow:
 }
 .movesetContainer {
     border: 3px solid #00e90000;
-    grid-row-start: 19;
-    grid-row-end: 9;
+    left: -392px;
+    top: 672px;
+    width: 380px;
+    /* grid-row-start: 40;
+    grid-row-end: 40;
     grid-column-start: 2;
-    grid-column-end: 3;
+    grid-column-end: 3; */
     position: relative;
 }
 .statsContainer {
@@ -1020,7 +1023,7 @@ box-shadow:
 }
 .typeContainer {
     border: 3px solid #b41ac200;
-    grid-row-start: 42;
+    grid-row-start: 34;
     grid-row-end: 44;
     grid-column-start: 2;
     grid-column-end: 3;
@@ -1046,7 +1049,7 @@ box-shadow:
     font-family: play;
     position: absolute;
     text-align: center;
-    top: -3px;
+    top: -152px;
     width: 378px;
     z-index: 1;
     /* filter: drop-shadow(1px 1px 0px rgb(70, 70, 70)); */
@@ -1060,7 +1063,7 @@ box-shadow:
     font-family: play;
     line-height: 16px;
     font-size: 15px;
-    top: 38px;
+    top: -114px;
     left: 6px;
     z-index: 1000;
 }
@@ -1069,7 +1072,7 @@ box-shadow:
     font-family: play;
     line-height: 16px;
     font-size: 15px;
-    top: 832.5px;
+    top: 681px;
     left: 19px;
     width: 360px;
     text-align: center;
@@ -1086,14 +1089,20 @@ box-shadow:
     left: 32px;
 }
 .resetsLabel {
-    font-size: 16px;
-    top: 331px;
-    left: 32px;
+    border: 1px solid #ff000000;
+    font-size: 14px;
+    top: 173px;
+    left: 52px;
+    width: 144px;
+    text-align: center;
 }
 .blackoutLabel {
-    font-size: 13px;
-    top: 333px;
-    left: 32px;
+    border: 1px solid #ff000000;
+    font-size: 14px;
+    top: 173px;
+    left: 204px;
+    width: 144px;
+    text-align: center;
 }
 .bonksLabel {
     position: absolute;
@@ -1139,7 +1148,7 @@ box-shadow:
     width: 400px;
     height: 50px;
     left: 0px;
-    top: 770px;
+    top: 618px;
 }
 
 
@@ -1473,20 +1482,7 @@ box-shadow:
     font-family: oseb;
     font-weight: 700;
 }
-.resets {
-    display: block;
-    max-width: 250;
-    position: fixed;
-    max-height: 250;
-    font-size: 78px;
-    z-index: 5;
-    top: 379px;
-    left: 31px;
-    line-height: 60px;
-    text-align: center;
-    font-family: oseb;
-    font-weight: 700;
-}
+
 
 
 .encounterInfo {
@@ -1514,19 +1510,28 @@ box-shadow:
     text-align: right;
     position: relative;
 }
-.resets {
+.faults_style {
+    max-width: 250;
+    max-height: 250;
+    z-index: 5;
     font-size: 75px;
     border: #ff000000 solid 3px;
     display:block;
     position: absolute;
-    top: 352px;
-    left: 10px;
-    width: 110px;
+    width: 148px;
     height: 78px;
-    text-align: center;
     line-height: 60px;
     font-family: oseb;
     font-weight: 700;
+    text-align: center;
+}
+.resets {
+    top: 190px;
+    left: 50px;
+}
+.blackouts {
+    top: 190px;
+    left: 202px;
 }
 .gametime {
     font-size: 65px;
@@ -1547,7 +1552,7 @@ box-shadow:
     position: relative;
     text-align: right;
     left: -60px;
-    top: 1px;
+    top: -1px;
     line-height: 60px;
     font-family: oseb;
     font-weight: 700;
@@ -1555,7 +1560,7 @@ box-shadow:
 }
 .gametimeFrames {
     font-size: 35px;
-    top: -46px;
+    top: -48px;
     left: -10px;
     position: relative;
     text-align: right;
@@ -1733,9 +1738,9 @@ box-shadow:
 /* LABELS */
 .movesetLabel {
     position: absolute;
-    font-size: 16px;
-    font-family: titan;
-    top: 3px;
+    font-size: 14px;
+    font-family: osb;
+    top: 4px;
     opacity: .72;
 }
 .labelMoves { left: 21px; }
@@ -1750,49 +1755,47 @@ box-shadow:
 /* TABLE CONTENTS (MOVE DATA) */
 .movesetStyling {
     position: absolute;
-    font-size: 30px;
+    font-size: 22px;
     font-family: osb;
     font-weight: 700;
-    line-height: 34px;
+    line-height: 12px !important; /* Force line-height */
+    padding: 0; /* Ensure no padding affects the height */
+    margin: 0; /* Ensure no margin affects the height */
 }
 /* Row positions */
-.move1 { top: 25px; }
-.move2 { top: 60px; }
-.move3 { top: 96px; }
-.move4 { top: 132px; }
+.move1 { top: 30px; }
+.move2 { top: 63.5px; }
+.move3 { top: 97px; }
+.move4 { top: 131px; }
 /* Column positions & style */
-.move1icon { top: -23px; }
-.move2icon { top: 12px; }
-.move3icon { top: 47px; }
-.move4icon { top: 82px; }
+.move1icon { top: -28.5px; }
+.move2icon { top: 5.5px; }
+.move3icon { top: 39.5px; }
+.move4icon { top: 73.4px; }
 
 .iconStyling {
     display: block;
-    transform: scale(.24);
+    transform: scale(.20);
     filter: drop-shadow(0px 0px 5px #000000);
     left: -38px;
 }
 .moveStyling {
-    font-size: 22px;
     left: 46px;
     text-align: left;
 }
 .powerStyling {
-    font-size: 22px;
     display: block;
     left: 150px;
     text-align: right;
     width: 100px;
 }
 .accuracyStyling {
-    font-size: 22px;
     display: block;
     left: 224px;
     text-align: right;
     width: 100px;
 }
 .ppStyling {
-    font-size: 22px;
     display: block;
     left: 312px;
     width: 52px;
@@ -1814,16 +1817,40 @@ box-shadow:
     text-decoration: underline;
 }
 .accuracyLabel {
-    font-size: 20px;
-    left: 125px;
-    width: 126px;
-    top: 326px;
+    border: 1px solid #ff000000;
+    position: absolute;
+    text-align: center;
+    font-size: 13px;
+    left: 10px;
+    width: 122px;
+    top: 270px;
+    opacity: .72;
+}
+.evasionLabel2 {
+    border: 1px solid #ff000000;
+    position: absolute;
+    text-align: center;
+    font-size: 13px;
+    left: 139px;
+    width: 122px;
+    top: 270px;
+    opacity: .72;
+}
+.screensLabel {
+    border: 1px solid #ff000000;
+    position: absolute;
+    text-align: center;
+    font-size: 13px;
+    left: 239px;
+    width: 122px;
+    top: 270px;
+    opacity: .72;
 }
 .accuracyMod {
     font-size: 40px;
-    left: 122px;
-    width: 126px;
-    top: 342px;
+    left: 10px;
+    width: 122px;
+    top: 282px;
 }
 .repelLabel {
     font-size: 16px;
@@ -1845,15 +1872,15 @@ box-shadow:
 }
 .evasionMod {
     font-size: 40px;
-    left: 257px;
-    width: 126px;
-    top: 342px;
+    left: 139px;
+    width: 122px;
+    top: 282px;
 }
-.screensLabel {
-    font-size: 15px;
+.screensValue {
+    font-size: 20px;
     left: 13px;
     width: 103px;
-    top: 438px;
+    top: 460px;
 }
 .bonksLabel {
     font-size: 14px;
@@ -1861,12 +1888,6 @@ box-shadow:
     width: 103px;
     top: 438px;
     text-decoration: underline;
-}
-.screensValue {
-    font-size: 20px;
-    left: 13px;
-    width: 103px;
-    top: 460px;
 }
 .bonksValue {
     font-size: 34px;
