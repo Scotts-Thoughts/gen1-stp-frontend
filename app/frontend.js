@@ -1621,6 +1621,26 @@ const app = Vue.createApp({
     },
 
     methods: {
+        speed_comparison(enemy_slot, enemy_speed) {
+            const player_speed = this.mapper.properties.battle.yourPokemon.speed.value
+            let enemy_hp = this.mapper.properties.battle.trainer.team[enemy_slot].hp.value
+            let object = {
+                comparison: "Outspeeds",
+                color: "background-color: red",
+            }
+            if (player_speed > enemy_speed) {
+                object.comparison = "Outsped"
+                object.color      = "background-color: green"
+            }
+            else if (player_speed == enemy_speed) {
+                object.comparison = "Speed-tie"
+                object.color      = "background-color: yellow"
+            }
+            if (enemy_hp == 0) {
+                object.color      = "background-color: green; opacity: 0.3; filter: grayscale(100%)"
+            }
+            return object
+        },
         average_median_stats(stat_label) {
             let sum = 0;
             let count = 0;
@@ -1845,6 +1865,8 @@ const app = Vue.createApp({
                 mod: mod_string,
                 style: style_string,
             }
+            // return { mod: -1, style: 'opacity: .7;' }
+            console.log(object)
             return object
         },
         enemyPkmnFaintTypes(pkmnData) {

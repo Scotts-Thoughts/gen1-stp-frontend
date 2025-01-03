@@ -300,8 +300,8 @@
                                     <div class="ePkmnStatsStyle ePkmnHp   opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{mapper.properties.battle.trainer.team[x]?.maxHp}}</div>
                                     <div class="ePkmnStatsStyle ePkmnAtk  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"attack",mapper.properties.battle.trainer.team[x]?.attack,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnDef  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"defense",mapper.properties.battle.trainer.team[x]?.defense,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnSpc  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",mapper.properties.battle.trainer.team[x]?.special,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnSpe  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",mapper.properties.battle.trainer.team[x]?.speed,"enemyPokemon")}}</div>
+                                    <div class="ePkmnStatsStyle ePkmnSpc  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",mapper.properties.battle.trainer.team[x]?.speed,"enemyPokemon")}}</div>
+                                    <div class="ePkmnStatsStyle ePkmnSpe  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",mapper.properties.battle.trainer.team[x]?.special,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnCrit opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{enemy_crit_rate(mapper.properties.battle.trainer.team[x])}}%</div>
                                    
                                     <!-- Modifiers -->
@@ -311,10 +311,13 @@
                                         ['modEnemyStageSpecial', 'Spc',],
                                         ['modEnemyStageSpeed',   'Spd',],
                                         ]">
-                                        <div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon[mod[0]].value != `0`" 
+                                        <div v-show="(enemyState == `Pokemon` || enemyState == `Pokemon Sent Out` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon[mod[0]].value != `0`" 
                                         :class="`ePkmnModsStyle ePkmnMod${mod[1]}`">
                                             {{stat_mod(batt.enemyPokemon[mod[0]].value, x).mod}}
                                         </div>
+                                    </div>
+                                    <div>
+                                        <div class="speed_comparison" :style="speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).color">{{speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -405,7 +408,8 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg); filter: drop-shadow(0px 0px 1px #000);"></div>
+                        <!-- <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg); filter: drop-shadow(0px 0px 1px #000);"></div> -->
+                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg)"></div>
                         <div class="movepoolLabel">Movepool</div>
                     </div>
                 </transition>
@@ -426,7 +430,7 @@
                     <transition name="fade">
                         <div v-if="show_repel_counter == true && state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0">
                             <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/accuracy.svg)"></div>
-                            <div class="popUpsStyle popUpLabelStyle repelLabel" style="font-size: 16px;">repel steps</div>
+                            <div class="repelLabel">repel steps</div>
                             <div class="popUpsStyle repelSteps">{{ mapper.properties.overworld.repelCount.value }}</div>
                         </div>
                     </transition>
@@ -447,7 +451,7 @@
                     <transition name="fade">
                         <div v-if="show_bonk_counter == true && state == 'Overworld'">
                             <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/screens.svg)"></div>
-                            <div class="genericLabels resetsLabel bonksLabel">bonks</div>
+                            <div class="screensLabel">bonks</div>
                             <div class="popUpsStyle bonksValue">{{ map?.patch?.steps?.bonks }}</div>
                         </div>
                     </transition>
@@ -511,6 +515,7 @@
                     <table>
                         <tr><td>State:</td><td>{{state}}</td></tr>
                         <tr><td>Mapper State:</td><td>{{mapper.properties.meta.state.value}}</td></tr>
+                        <tr><td>Enemy State:</td><td>{{enemyState}}</td></tr>
                     </table>
                 </div>
             </div>

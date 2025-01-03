@@ -747,10 +747,10 @@ box-shadow:
 
 .ePkmnSpecies {
     position: absolute;
-    /* border: 1px solid rgb(0, 255, 149); */
-    font-size: 14px;
+    border: 1px solid rgba(0, 255, 149, 0);
+    font-size: 16px;
     font-family: play;
-    width: 118px;
+    width: 169px;
     opacity: .7;
     text-align: center;
     top: 7px;
@@ -758,12 +758,13 @@ box-shadow:
 }
 .ePkmnSprite {
     position: absolute;
-    /* border: 1px solid rgb(255, 0, 0); */
-    max-width: 107px;
-    max-height: 107px;
-    left: 9px;
-    top: 33px;
+    border: 1px solid rgba(255, 0, 0, 0);
+    width: 168px;
+    height: 143px;
+    left: 4px;
+    top: 10px;
     transition: opacity 500ms ease-in-out, filter 500ms ease-in-out;
+    object-fit: contain; /* Ensure the image scales to fit within the container without altering its aspect ratio */
 }
 .enemyStatsArea {
     display: block;
@@ -819,15 +820,15 @@ box-shadow:
     text-align: left;
     left: 232px;
 }
+.opacityTransition { transition: opacity 500ms ease-in-out;}
+.ePkmnMove1 { top: 2px;  left: 200px }
+.ePkmnMove2 { top: 23px; left: 200px }
+.ePkmnMove3 { top: 44px; left: 200px }
+.ePkmnMove4 { top: 65px; left: 200px }
 .ePkmnEffectivePower {
     left: 257px;
     text-align: right;
 }
-.opacityTransition { transition: opacity 500ms ease-in-out;}
-.ePkmnMove1 { top: 11px; }
-.ePkmnMove2 { top: 46.5px; }
-.ePkmnMove3 { top: 82.5px; }
-.ePkmnMove4 { top: 117.5px; }
 .ePkmnRanges {
     /* left: 148px;
     width: 222px;
@@ -841,10 +842,10 @@ box-shadow:
 
 .ePkmnModsStyle {
     position: absolute;
-    /* border: 1px solid rgb(255, 0, 0); */
+    border: 1px solid rgba(255, 0, 0, 0);
     width: 25px;
     text-align: center;
-    left: 126px;
+    left: 0px;
     font-size: 15px;
 }
 .ePkmnStatsStyle {
@@ -864,50 +865,61 @@ box-shadow:
     font-size: 12px;
     opacity: .7;
 }
-.ePkmnHp   { top: 11px; }
-.ePkmnAtk  { top: 35px; }
-.ePkmnDef  { top: 59px; }
-.ePkmnSpc  { top: 83px; }
-.ePkmnSpe  { top: 107px;}
-.ePkmnCrit { 
+.ePkmnHp   { top: 92px;  left: 218px; }
+.ePkmnAtk  { top: 113px; left: 218px; }
+.ePkmnDef  { top: 133px; left: 218px; }
+.ePkmnSpc  { top: 92px;  left: 318px; }
+.ePkmnSpe  { top: 113px; left: 318px; }
+.ePkmnCrit { top: 133px; left: 318px; }
+
+.ePkmnLabelHp   { top: 95px;  left: 182px;}
+.ePkmnLabelAtk  { top: 116px; left: 182px;}
+.ePkmnLabelDef  { top: 136px; left: 182px;}
+.ePkmnLabelSpe  { top: 95px;  left: 282px;}
+.ePkmnLabelSpc  { top: 116px; left: 282px;}
+.ePkmnLabelCrit { top: 136px; left: 282px;}
+
+.ePkmnModAtk  { top: 113px; left: 178px; }
+.ePkmnModDef  { top: 133px; left: 178px; }
+.ePkmnModSpc  { top: 113px; left: 279px; }
+.ePkmnModSpd  { top: 92px; left: 279px; }
+
+.speed_comparison {
+    position: absolute;
+    font-size: 14px;
+    width: 90px;
+    text-align: center;
+    left: 82px;
     top: 133px;
-    font-size: 13px;
+    height: 19px;
+    border-radius: 6px;
+    opacity: .8;
+    filter: drop-shadow(1px 1px 1px #00000096);
+    background-color: #dfdfdfad;
 }
-
-.ePkmnLabelHp   { top: 13px; }
-.ePkmnLabelAtk  { top: 37px; }
-.ePkmnLabelDef  { top: 61px; }
-.ePkmnLabelSpc  { top: 85px; }
-.ePkmnLabelSpe  { top: 109px;}
-.ePkmnLabelCrit { top: 133.3px;}
-
-.ePkmnModAtk  { top: 36px; }
-.ePkmnModDef  { top: 60px; }
-.ePkmnModSpc  { top: 84px; }
-.ePkmnModSpd  { top: 108px;}
 
 .eMoveIconStyle {
     position: absolute;
-    width: 25px;
-    height: 25px;
+    width: 16px;
+    height: 16px;
     margin-bottom: 2px;
     left: 204px;
 }
-.moveIcon1 { top: 14px; }
-.moveIcon2 { top: 50px; }
-.moveIcon3 { top: 86px; }
-.moveIcon4 { top: 122px; }
+.moveIcon1 { top: 10px; left: 180px; }
+.moveIcon2 { top: 31px; left: 180px; }
+.moveIcon3 { top: 52px; left: 180px; }
+.moveIcon4 { top: 73px; left: 180px; }
 
 .ePkmnTypeIcons {
     position: absolute;
     border: 1px solid rgba(255, 0, 0, 0);
-    width: 22px;
-    height: 22px;
+    width: 25px;
+    height: 25px;
     top: 130px;
 }
 .ePkmnType_1 { left: 6px; }
-.ePkmnType_2 { left: 30px; }
-.ePkmnType_3 { left: 54px; }
+.ePkmnType_2 { left: 32px; }
+.ePkmnType_3 { left: 56px; }
 
 .enemyMods {
     position: absolute;
@@ -1743,8 +1755,8 @@ box-shadow:
     top: 4px;
     opacity: .72;
 }
-.labelMoves { left: 21px; }
-.labelPwr   { left: 212px; }
+.labelMoves { left: 17px; }
+.labelPwr   { left: 221px; }
 .labelAcc   { left: 292px; }
 .labelPP    { left: 342px; }
 /* .labelMoves { left: 21px; }
@@ -1767,6 +1779,7 @@ box-shadow:
 .move2 { top: 63.5px; }
 .move3 { top: 97px; }
 .move4 { top: 131px; }
+
 /* Column positions & style */
 .move1icon { top: -28.5px; }
 .move2icon { top: 5.5px; }
@@ -1777,7 +1790,7 @@ box-shadow:
     display: block;
     transform: scale(.20);
     filter: drop-shadow(0px 0px 5px #000000);
-    left: -38px;
+    left: -35px;
 }
 .moveStyling {
     left: 46px;
@@ -1791,13 +1804,13 @@ box-shadow:
 }
 .accuracyStyling {
     display: block;
-    left: 224px;
+    left: 220px;
     text-align: right;
     width: 100px;
 }
 .ppStyling {
     display: block;
-    left: 312px;
+    left: 308px;
     width: 52px;
     font-weight: 700;
     z-index: 5;
@@ -1841,7 +1854,7 @@ box-shadow:
     position: absolute;
     text-align: center;
     font-size: 13px;
-    left: 239px;
+    left: 267px;
     width: 122px;
     top: 270px;
     opacity: .72;
@@ -1853,16 +1866,20 @@ box-shadow:
     top: 282px;
 }
 .repelLabel {
-    font-size: 16px;
-    left: 127px;
-    width: 126px;
-    top: 326px;
+    border: 1px solid #ff000000;
+    position: absolute;
+    text-align: center;
+    font-size: 13px;
+    left: 10px;
+    width: 122px;
+    top: 270px;
+    opacity: .72;
 }
 .repelSteps {
     font-size: 40px;
-    left: 127px;
-    width: 126px;
-    top: 342px;
+    left: 10px;
+    width: 122px;
+    top: 282px;
 }
 .evasionLabel {
     font-size: 20px;
@@ -1877,10 +1894,11 @@ box-shadow:
     top: 282px;
 }
 .screensValue {
+    border: 1px solid #ff000000;
     font-size: 20px;
-    left: 13px;
-    width: 103px;
-    top: 460px;
+    left: 267px;
+    width: 122px;
+    top: 291px;
 }
 .bonksLabel {
     font-size: 14px;
@@ -1890,11 +1908,11 @@ box-shadow:
     text-decoration: underline;
 }
 .bonksValue {
-    font-size: 34px;
-    left: 13px;
-    width: 103px;
-    top: 448px;
-    font-family: oseb;
+    border: 1px solid #ff000000;
+    font-size: 40px;
+    left: 267px;
+    width: 122px;
+    top: 281px;
 }
 .rightBar {
     display: block;
