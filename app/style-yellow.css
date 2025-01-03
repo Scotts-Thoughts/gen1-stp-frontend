@@ -760,10 +760,10 @@ box-shadow:
 .ePkmnSprite {
     position: absolute;
     border: 1px solid rgba(255, 0, 0, 0);
-    width: 168px;
-    height: 143px;
-    left: 4px;
-    top: 10px;
+    width: 150px;
+    height: 125px;
+    left: 13px;
+    top: 18px;
     transition: opacity 500ms ease-in-out, filter 500ms ease-in-out;
     object-fit: contain; /* Ensure the image scales to fit within the container without altering its aspect ratio */
 }
@@ -1018,7 +1018,7 @@ box-shadow:
 .movesetContainer {
     border: 3px solid #00e90000;
     left: -392px;
-    top: 672px;
+    top: 690px;
     width: 380px;
     /* grid-row-start: 40;
     grid-row-end: 40;

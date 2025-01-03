@@ -1631,14 +1631,14 @@ const app = Vue.createApp({
             }
             if (player_speed > enemy_speed) {
                 object.comparison = "Outsped"
-                object.color      = "background-color: rgba(28, 255, 58, 0.5)"
+                object.color      = "background-color: rgba(28, 255, 58, 0.4)"
             }
             else if (player_speed == enemy_speed) {
                 object.comparison = "Speed-tie"
-                object.color      = "background-color: rgba(255, 255, 0, 0.6)"
+                object.color      = "background-color: rgba(255, 255, 0, 0.5)"
             }
             if (enemy_hp == 0) {
-                object.color      = "background-color: rgba(28, 255, 58, 0.6); opacity: 0.0; filter: grayscale(100%)"
+                object.color      = "background-color: rgba(28, 255, 58, 0.5); opacity: 0.0; filter: grayscale(100%)"
             }
             return object
         },

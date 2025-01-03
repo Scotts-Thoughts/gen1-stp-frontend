@@ -88,9 +88,11 @@
                     </div> -->
                 </div>
                 <!-- Badges -->
-                <div v-for="badge in progressBadges">
-                    <transition name="fade"><img v-show="mapper.properties.player.badges[badge].value == true" :src="`images/badges/progress bar/${badge}.png`" class="canvas" /></transition>
-                </div>
+                 <div v-show="mapper.properties.meta.state.value != 'No Pokemon'">
+                     <div v-for="badge in progressBadges">
+                         <transition name="fade"><img v-show="mapper.properties.player.badges[badge].value == true" :src="`images/badges/progress bar/${badge}.png`" class="canvas" /></transition>
+                     </div>
+                 </div>
                 <!-- Type Icons -->
                 <div class="typeContainer">
                     <div class="type">
@@ -100,7 +102,7 @@
                 </div>
                 <img v-show="mapper[badge_boost_object.deprecated_path] === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" />
                 <!-- Badges -->
-                <div v-if="display_badge_boosts == true" class="badgesBar">          
+                <div v-if="display_badge_boosts == true && mapper.properties.meta.state.value != 'No Pokemon'" class="badgesBar">          
                     <img v-show="map.player.badges.badge1.value === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" />
                     <img v-show="map.player.badges.badge3.value === true" class="badgeBoostStyle badgeBoostDef" :src="badgeGraphic(map.player.badges.badge3)" />                    
                     <img v-show="map.player.badges.badge5.value === true" class="badgeBoostStyle badgeBoostSpd" :src="badgeGraphic(map.player.badges.badge5)" />                    

@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Charizard,Rival1-Lab,55,0,0,6,0:03,11.529,SCRATCH,GROWL,EMBER,LEER
+NINTEN,Charizard,Brock,11:38,0,0,12,0:45,18.939,SCRATCH,GROWL,EMBER,LEER
+NINTEN,Charizard,Champion,42:02,16,0,62,2:29,56.301,BODY SLAM,REST,EARTHQUAKE,SWORDS DANCE
