@@ -112,4 +112,5 @@ const auto_save_settings = [
     "toggle_EVENT_ENCOUNTER_MTMOON_PARAS",   
     "toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER",
     "toggle_EVENT_ENCOUNTER_ROUTE16_DODUO",  
+    "speed_comparison_toggle",
 ]

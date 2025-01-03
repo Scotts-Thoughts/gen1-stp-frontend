@@ -719,6 +719,7 @@ const app = Vue.createApp({
             show_bonk_counter         : false,
             show_frame                : false,
             no_attempt                : false,
+            speed_comparison_toggle   : true,
 
             toggle_wEarlyEncounters: false,
 
@@ -1626,18 +1627,18 @@ const app = Vue.createApp({
             let enemy_hp = this.mapper.properties.battle.trainer.team[enemy_slot].hp.value
             let object = {
                 comparison: "Outspeeds",
-                color: "background-color: red",
+                color: "background-color: rgba(255, 63, 63, 0.6)",
             }
             if (player_speed > enemy_speed) {
                 object.comparison = "Outsped"
-                object.color      = "background-color: green"
+                object.color      = "background-color: rgba(28, 255, 58, 0.5)"
             }
             else if (player_speed == enemy_speed) {
                 object.comparison = "Speed-tie"
-                object.color      = "background-color: yellow"
+                object.color      = "background-color: rgba(255, 255, 0, 0.6)"
             }
             if (enemy_hp == 0) {
-                object.color      = "background-color: green; opacity: 0.3; filter: grayscale(100%)"
+                object.color      = "background-color: rgba(28, 255, 58, 0.6); opacity: 0.0; filter: grayscale(100%)"
             }
             return object
         },

@@ -317,7 +317,9 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="speed_comparison" :style="speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).color">{{speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison}}</div>
+                                        <transition name="fade">
+                                            <div v-show="speed_comparison_toggle == true" class="speed_comparison" :style="speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).color">{{speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison}}</div>
+                                        </transition>
                                     </div>
                                 </div>
                             </div>
@@ -670,6 +672,7 @@
                         <tr><td>Trainer Graphics: </td><td><input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/></td></tr>
                         <tr><td>Wild Pokemon:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/></td></tr>
                         <tr><td>Pop-ups:          </td><td><input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/></td></tr>
+                        <tr><td>Speed Comparisons:</td><td><input class="checkBoxStyle" type="checkbox" v-model="speed_comparison_toggle"/></td></tr>
                     </table>
                 </div>
             </div>
