@@ -375,15 +375,10 @@ html, body {
     mix-blend-mode: color; /* color blend mode, I'm not sure if 'color' is the right one - might need to be changed */
 }
 
-.blue-svg {
-    filter: invert(29%) sepia(96%) saturate(748%) hue-rotate(180deg) brightness(95%) contrast(101%) drop-shadow(0px 1px 2px #000000);
-}
-.yellow-svg {
-    filter: invert(29%) sepia(100%) saturate(300%) hue-rotate(10deg) brightness(110%) contrast(101%) drop-shadow(0px 1px 2px #000000);
-}
-.red-svg {
-    filter: invert(29%) sepia(96%) saturate(1448%) hue-rotate(310deg) brightness(95%) contrast(101%) drop-shadow(0px 1px 2px #000000);
-}
+.grey-svg {   filter: invert(29%) sepia(96%)  saturate(0%)    hue-rotate(180deg) brightness(95%)  contrast(101%) drop-shadow(0px 1px 2px #000000); opacity: .2;}
+.blue-svg {   filter: invert(29%) sepia(96%)  saturate(748%)  hue-rotate(180deg) brightness(95%)  contrast(101%) drop-shadow(0px 1px 2px #000000); }
+.yellow-svg { filter: invert(29%) sepia(100%) saturate(300%)  hue-rotate(10deg)  brightness(110%) contrast(101%) drop-shadow(0px 1px 2px #000000); }
+.red-svg {    filter: invert(29%) sepia(96%)  saturate(1448%) hue-rotate(310deg) brightness(95%)  contrast(101%) drop-shadow(0px 1px 2px #000000); }
 
 html {
     height: 100%;

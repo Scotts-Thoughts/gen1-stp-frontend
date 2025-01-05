@@ -273,7 +273,7 @@
                                     <img v-if="enemyType3(x) == 'Ghost'" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_3 ds opacityTransition" :src="`images/elements/type-icons/ghost.png`"/>
                                     
                                     <!-- Moves -->
-                                    <img :class="svgColorClass(speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison)" class="canvas" :src="`images/ui/speed_comp/${x}.svg`"/>
+                                    <img class="canvas" :class="svgColorClass(speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison, batt.trainer.team[x])" :src="`images/ui/speed_comp/${x}.svg`"/>
                                     <img class="enemyStatsArea opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint_stats_background" :src="`images/stats/${ui_type_color_modifier}/${x}.svg`"/>
 
                                     <div v-for="move_index in moves = [0, 1, 2, 3]">
@@ -322,7 +322,7 @@
                                     </div>
                                     <div>
                                         <transition name="fade">
-                                            <div v-show="speed_comparison_toggle == true" class="speed_comparison">{{speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison}}</div>
+                                            <div v-show="speed_comparison_toggle == true" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text" class="speed_comparison">{{speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison}}</div>
                                             <!-- <div v-show="speed_comparison_toggle == true" class="speed_comparison" :style="speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).color">{{speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison}}</div> -->
                                         </transition>
                                     </div>

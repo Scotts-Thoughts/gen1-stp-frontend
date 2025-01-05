@@ -1623,12 +1623,28 @@ const app = Vue.createApp({
 
     methods: {
         speed_comparison(enemy_slot, enemy_speed) {
-            const player_speed = this.mapper.properties.battle.yourPokemon.speed.value
+            const state          = this.mapper.properties.meta.state.value
+            const player_speed   = this.mapper.properties.battle.yourPokemon.speed.value
+            const trainer        = this.mapper.properties.battle.trainer.class.value
+            const trainer_number = this.mapper.properties.battle.trainer.number.value
+            let data = this.mapper.properties.meta.gameName.value == 'Yellow' ? this.g1YellowTrainers : this.g1RedBlueTrainers
             let enemy_hp = this.mapper.properties.battle.trainer.team[enemy_slot].hp.value
+            if (state == 'To Battle') {
+                console.log(trainer, trainer_number, data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd)
+                enemy_speed = data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd
+            }
             let object = {
                 comparison: "Outspeeds",
                 color: "background-color: rgba(255, 63, 63, 0.6)",
             }
+            // if (state == `To Battle`) {
+            //     object.comparison = "Calculating..."
+            //     object.color      = "background-color: rgba(28, 255, 58, 0)"
+            // }
+            // else if (player_speed > enemy_speed) {
+            //     object.comparison = "Outsped"
+            //     object.color      = "background-color: rgba(28, 255, 58, 0.4)"
+            // }
             if (player_speed > enemy_speed) {
                 object.comparison = "Outsped"
                 object.color      = "background-color: rgba(28, 255, 58, 0.4)"
@@ -1642,7 +1658,11 @@ const app = Vue.createApp({
             }
             return object
         },
-        svgColorClass(speed_comparison) {
+        svgColorClass(speed_comparison, enemy_data) {
+            const isFainted = enemy_data.hp.value
+            if (isFainted == 0) {
+                return 'grey-svg';
+            }
             if (speed_comparison === 'Outsped') {
                 return 'blue-svg';
             } 
@@ -1650,6 +1670,22 @@ const app = Vue.createApp({
                 return 'yellow-svg';
             }
             return 'red-svg';
+        },
+        getEnemyPkmnStyles(pkmnData) {
+            const isFainted = pkmnData.hp.value == 0;
+            return {
+              faint: isFainted
+                ? "filter: drop-shadow(2px 2px 2px #000) saturate(1.3) grayscale(100%); opacity: .5;"
+                : "filter: drop-shadow(2px 2px 2px #000) saturate(1.3) grayscale(0%);",
+              faint_stats_background: isFainted
+                ? "filter: grayscale(100%); opacity: .3;"
+                : "filter: grayscale(0%);",
+              faintStats: isFainted
+                ? "filter: grayscale(100%); opacity: .4;"
+                : "filter: grayscale(0%);",
+              text: isFainted ? "opacity: .3" : "",
+              species: isFainted ? "opacity: .3" : "opacity: .7"
+            };
         },
         average_median_stats(stat_label) {
             let sum = 0;
