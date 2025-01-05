@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="Individual_Areas" data-name="Individual Areas" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1080">
   <defs>
-    <linearGradient id="New_Spe_Dark" data-name="New Spe Dark" x1="1806" y1="504.68" x2="1904" y2="504.68" gradientUnits="userSpaceOnUse">
+    <linearGradient id="New_Spe_Dark" data-name="New Spe Dark" x1="1709.2" y1="465" x2="1761" y2="465" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#8c53a6"/>
       <stop offset=".04" stop-color="#9659b1"/>
       <stop offset=".17" stop-color="#b269d3"/>
@@ -21,7 +21,7 @@
       <feComposite in2="blur" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="Stat_SpA_New_Sat" data-name="Stat SpA New Sat" x1="1806" y1="524.9" x2="1904" y2="524.9" gradientUnits="userSpaceOnUse">
+    <linearGradient id="Stat_SpA_New_Sat" data-name="Stat SpA New Sat" x1="1709.2" y1="500.96" x2="1761" y2="500.96" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#2f8589"/>
       <stop offset=".13" stop-color="#39a1a6"/>
       <stop offset=".27" stop-color="#41b8be"/>
@@ -39,7 +39,7 @@
       <feComposite in2="blur-2" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="Stat_CritRate_New" data-name="Stat CritRate New" x1="1806.35" y1="545.29" x2="1904" y2="545.29" gradientUnits="userSpaceOnUse">
+    <linearGradient id="Stat_CritRate_New" data-name="Stat CritRate New" x1="1709.2" y1="537.05" x2="1761" y2="537.05" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#808285"/>
       <stop offset=".08" stop-color="#909295"/>
       <stop offset=".24" stop-color="#a8aaac"/>
@@ -55,7 +55,7 @@
       <feComposite in2="blur-3" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="Stat_HP_New_Sat" data-name="Stat HP New Sat" x1="1706" y1="504.9" x2="1804" y2="504.9" gradientUnits="userSpaceOnUse">
+    <linearGradient id="Stat_HP_New_Sat" data-name="Stat HP New Sat" x1="1655" y1="465" x2="1706.8" y2="465" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#ef2028"/>
       <stop offset="0" stop-color="#1e993d"/>
       <stop offset=".5" stop-color="#2eeb5d"/>
@@ -72,7 +72,7 @@
       <feComposite in2="blur-4" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="Stat_Atk_New_Sat" data-name="Stat Atk New Sat" x1="1706" y1="525.42" x2="1804" y2="525.42" gradientUnits="userSpaceOnUse">
+    <linearGradient id="Stat_Atk_New_Sat" data-name="Stat Atk New Sat" x1="1655" y1="501" x2="1706.8" y2="501" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#9b8b2d"/>
       <stop offset=".04" stop-color="#a69638"/>
       <stop offset=".17" stop-color="#c8b85a"/>
@@ -92,7 +92,7 @@
       <feComposite in2="blur-5" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="Stat_Def_New_Sat" data-name="Stat Def New Sat" x1="1706" y1="545.68" x2="1804" y2="545.68" gradientUnits="userSpaceOnUse">
+    <linearGradient id="Stat_Def_New_Sat" data-name="Stat Def New Sat" x1="1655" y1="537" x2="1706.8" y2="537" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#a55821"/>
       <stop offset=".04" stop-color="#af5d23"/>
       <stop offset=".17" stop-color="#d16f29"/>
@@ -118,12 +118,12 @@
       <g id="G2_Stats_copy_9" data-name="G2 Stats copy 9">
         <g id="Layer_71_copy_10" data-name="Layer 71 copy 10">
           <g id="Slot3">
-            <rect id="spe" x="1806" y="495.37" width="98" height="18.63" rx="6" ry="6" style="fill: url(#New_Spe_Dark); filter: url(#drop-shadow-1); stroke-width: 0px;"/>
-            <rect id="spcAtk" x="1806" y="515.59" width="98" height="18.63" rx="6" ry="6" style="fill: url(#Stat_SpA_New_Sat); filter: url(#drop-shadow-2); stroke-width: 0px;"/>
-            <rect id="spcDef" x="1806.35" y="535.98" width="97.65" height="18.63" rx="6" ry="6" style="fill: url(#Stat_CritRate_New); filter: url(#drop-shadow-3); stroke-width: 0px;"/>
-            <rect id="hp" x="1706" y="495.59" width="98" height="18.63" rx="6" ry="6" style="fill: url(#Stat_HP_New_Sat); filter: url(#drop-shadow-4); stroke-width: 0px;"/>
-            <rect id="atk" x="1706" y="515.98" width="98" height="18.88" rx="6" ry="6" style="fill: url(#Stat_Atk_New_Sat); filter: url(#drop-shadow-5); stroke-width: 0px;"/>
-            <rect id="def" x="1706" y="536.37" width="98" height="18.63" rx="6" ry="6" style="fill: url(#Stat_Def_New_Sat); filter: url(#drop-shadow-6); stroke-width: 0px;"/>
+            <rect id="spe" x="1709.2" y="448" width="51.8" height="34" rx="6" ry="6" style="fill: url(#New_Spe_Dark); filter: url(#drop-shadow-1); stroke-width: 0px;"/>
+            <rect id="spcAtk" x="1709.2" y="483.92" width="51.8" height="34.08" rx="6" ry="6" style="fill: url(#Stat_SpA_New_Sat); filter: url(#drop-shadow-2); stroke-width: 0px;"/>
+            <rect id="spcDef" x="1709.2" y="520.09" width="51.8" height="33.91" rx="6" ry="6" style="fill: url(#Stat_CritRate_New); filter: url(#drop-shadow-3); stroke-width: 0px;"/>
+            <rect id="hp" x="1655" y="448" width="51.8" height="34" rx="6" ry="6" style="fill: url(#Stat_HP_New_Sat); filter: url(#drop-shadow-4); stroke-width: 0px;"/>
+            <rect id="atk" x="1655" y="484" width="51.8" height="34" rx="6" ry="6" style="fill: url(#Stat_Atk_New_Sat); filter: url(#drop-shadow-5); stroke-width: 0px;"/>
+            <rect id="def" x="1655" y="520" width="51.8" height="34" rx="6" ry="6" style="fill: url(#Stat_Def_New_Sat); filter: url(#drop-shadow-6); stroke-width: 0px;"/>
           </g>
         </g>
       </g>

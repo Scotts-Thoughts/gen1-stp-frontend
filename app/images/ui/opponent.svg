@@ -19,39 +19,39 @@
       <feComposite in2="blur" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-2" y1="805" y2="805" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-2" x1="1763" y1="912" x2="1904" y2="912" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-2" filterUnits="userSpaceOnUse">
-      <feOffset dx="0" dy="-1"/>
+      <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-2" stdDeviation="2"/>
-      <feFlood flood-color="#000" flood-opacity=".8"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
       <feComposite in2="blur-2" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-3" y1="644" y2="644" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="1763" y1="948" x2="1904" y2="948" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-3" filterUnits="userSpaceOnUse">
-      <feOffset dx="0" dy="-1"/>
+      <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-3" stdDeviation="2"/>
-      <feFlood flood-color="#000" flood-opacity=".8"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
       <feComposite in2="blur-3" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-4" y1="483" y2="483" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="1763" y1="984" x2="1904" y2="984" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-4" filterUnits="userSpaceOnUse">
-      <feOffset dx="0" dy="-1"/>
+      <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-4" stdDeviation="2"/>
-      <feFlood flood-color="#000" flood-opacity=".8"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
       <feComposite in2="blur-4" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-5" y1="322" y2="322" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-5" x1="1763" y1="1020" x2="1904" y2="1020" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-5" filterUnits="userSpaceOnUse">
-      <feOffset dx="0" dy="-1"/>
+      <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-5" stdDeviation="2"/>
-      <feFlood flood-color="#000" flood-opacity=".8"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
       <feComposite in2="blur-5" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-6" y1="161" y2="161" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-6" y1="805" y2="805" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-6" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="-1"/>
       <feGaussianBlur result="blur-6" stdDeviation="2"/>
@@ -59,7 +59,7 @@
       <feComposite in2="blur-6" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-7" x1="1706" y1="98.57" x2="1904" y2="98.57" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-7" x1="1763" y1="751" x2="1904" y2="751" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-7" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-7" stdDeviation="2"/>
@@ -67,7 +67,7 @@
       <feComposite in2="blur-7" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-8" x1="1706" y1="119.71" x2="1904" y2="119.71" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-8" x1="1763" y1="787" x2="1904" y2="787" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-8" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-8" stdDeviation="2"/>
@@ -75,7 +75,7 @@
       <feComposite in2="blur-8" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-9" x1="1706" y1="140.86" x2="1904" y2="140.86" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-9" x1="1763" y1="823" x2="1904" y2="823" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-9" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-9" stdDeviation="2"/>
@@ -83,7 +83,7 @@
       <feComposite in2="blur-9" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-10" x1="1706" y1="162.01" x2="1904" y2="162.01" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-10" x1="1763" y1="859" x2="1904" y2="859" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-10" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-10" stdDeviation="2"/>
@@ -91,7 +91,7 @@
       <feComposite in2="blur-10" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-11" x1="1706" y1="259.57" x2="1904" y2="259.57" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-11" x1="1655" y1="742" x2="1761" y2="742" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-11" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-11" stdDeviation="2"/>
@@ -99,7 +99,7 @@
       <feComposite in2="blur-11" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-12" x1="1706" y1="280.71" x2="1904" y2="280.71" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-12" x1="1655" y1="903" x2="1761" y2="903" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-12" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-12" stdDeviation="2"/>
@@ -107,15 +107,15 @@
       <feComposite in2="blur-12" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-13" x1="1706" y1="301.86" x2="1904" y2="301.86" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-13" y1="644" y2="644" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-13" filterUnits="userSpaceOnUse">
-      <feOffset dx="0" dy="1"/>
+      <feOffset dx="0" dy="-1"/>
       <feGaussianBlur result="blur-13" stdDeviation="2"/>
-      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feFlood flood-color="#000" flood-opacity=".8"/>
       <feComposite in2="blur-13" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-14" x1="1706" y1="323.01" x2="1904" y2="323.01" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-14" x1="1763" y1="590" x2="1904" y2="590" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-14" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-14" stdDeviation="2"/>
@@ -123,7 +123,7 @@
       <feComposite in2="blur-14" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-15" x1="1706" y1="420.57" x2="1904" y2="420.57" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-15" x1="1763" y1="626" x2="1904" y2="626" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-15" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-15" stdDeviation="2"/>
@@ -131,7 +131,7 @@
       <feComposite in2="blur-15" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-16" x1="1706" y1="441.71" x2="1904" y2="441.71" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-16" x1="1763" y1="662" x2="1904" y2="662" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-16" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-16" stdDeviation="2"/>
@@ -139,7 +139,7 @@
       <feComposite in2="blur-16" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-17" x1="1706" y1="462.86" x2="1904" y2="462.86" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-17" x1="1763" y1="698" x2="1904" y2="698" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-17" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-17" stdDeviation="2"/>
@@ -147,7 +147,7 @@
       <feComposite in2="blur-17" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-18" x1="1706" y1="484.01" x2="1904" y2="484.01" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-18" x1="1655" y1="581" x2="1761" y2="581" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-18" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-18" stdDeviation="2"/>
@@ -155,15 +155,15 @@
       <feComposite in2="blur-18" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-19" x1="1706" y1="581.57" x2="1904" y2="581.57" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-19" y1="483" y2="483" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-19" filterUnits="userSpaceOnUse">
-      <feOffset dx="0" dy="1"/>
+      <feOffset dx="0" dy="-1"/>
       <feGaussianBlur result="blur-19" stdDeviation="2"/>
-      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feFlood flood-color="#000" flood-opacity=".8"/>
       <feComposite in2="blur-19" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-20" x1="1706" y1="602.71" x2="1904" y2="602.71" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-20" x1="1763" y1="429" x2="1904" y2="429" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-20" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-20" stdDeviation="2"/>
@@ -171,7 +171,7 @@
       <feComposite in2="blur-20" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-21" x1="1706" y1="623.86" x2="1904" y2="623.86" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-21" x1="1763" y1="465" x2="1904" y2="465" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-21" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-21" stdDeviation="2"/>
@@ -179,7 +179,7 @@
       <feComposite in2="blur-21" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-22" x1="1706" y1="645.01" x2="1904" y2="645.01" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-22" x1="1763" y1="501" x2="1904" y2="501" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-22" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-22" stdDeviation="2"/>
@@ -187,7 +187,7 @@
       <feComposite in2="blur-22" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-23" x1="1706" y1="742.57" x2="1904" y2="742.57" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-23" x1="1763" y1="537" x2="1904" y2="537" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-23" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-23" stdDeviation="2"/>
@@ -195,7 +195,7 @@
       <feComposite in2="blur-23" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-24" x1="1706" y1="763.71" x2="1904" y2="763.71" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-24" x1="1655" y1="420" x2="1761" y2="420" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-24" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-24" stdDeviation="2"/>
@@ -203,15 +203,15 @@
       <feComposite in2="blur-24" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-25" x1="1706" y1="784.86" x2="1904" y2="784.86" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-25" y1="322" y2="322" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-25" filterUnits="userSpaceOnUse">
-      <feOffset dx="0" dy="1"/>
+      <feOffset dx="0" dy="-1"/>
       <feGaussianBlur result="blur-25" stdDeviation="2"/>
-      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feFlood flood-color="#000" flood-opacity=".8"/>
       <feComposite in2="blur-25" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-26" x1="1706" y1="806.01" x2="1904" y2="806.01" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-26" x1="1763" y1="268" x2="1904" y2="268" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-26" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-26" stdDeviation="2"/>
@@ -219,7 +219,7 @@
       <feComposite in2="blur-26" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-27" x1="1706" y1="903.57" x2="1904" y2="903.57" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-27" x1="1763" y1="304" x2="1904" y2="304" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-27" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-27" stdDeviation="2"/>
@@ -227,7 +227,7 @@
       <feComposite in2="blur-27" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-28" x1="1706" y1="924.71" x2="1904" y2="924.71" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-28" x1="1763" y1="340" x2="1904" y2="340" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-28" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-28" stdDeviation="2"/>
@@ -235,7 +235,7 @@
       <feComposite in2="blur-28" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-29" x1="1706" y1="945.86" x2="1904" y2="945.86" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-29" x1="1763" y1="376" x2="1904" y2="376" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-29" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-29" stdDeviation="2"/>
@@ -243,7 +243,7 @@
       <feComposite in2="blur-29" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-30" x1="1706" y1="967.01" x2="1904" y2="967.01" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-30" x1="1655" y1="259" x2="1761" y2="259" xlink:href="#linear-gradient"/>
     <filter id="drop-shadow-30" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
       <feGaussianBlur result="blur-30" stdDeviation="2"/>
@@ -251,7 +251,55 @@
       <feComposite in2="blur-30" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient-31" y1="57" y2="57" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-31" y1="161" y2="161" xlink:href="#linear-gradient"/>
+    <filter id="drop-shadow-31" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="-1"/>
+      <feGaussianBlur result="blur-31" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".8"/>
+      <feComposite in2="blur-31" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-32" x1="1763" y1="107" x2="1904" y2="107" xlink:href="#linear-gradient"/>
+    <filter id="drop-shadow-32" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur-32" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur-32" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-33" x1="1763" y1="143" x2="1904" y2="143" xlink:href="#linear-gradient"/>
+    <filter id="drop-shadow-33" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur-33" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur-33" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-34" x1="1763" y1="179" x2="1904" y2="179" xlink:href="#linear-gradient"/>
+    <filter id="drop-shadow-34" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur-34" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur-34" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-35" x1="1763" y1="215" x2="1904" y2="215" xlink:href="#linear-gradient"/>
+    <filter id="drop-shadow-35" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur-35" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur-35" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-36" x1="1655" y1="98" x2="1761" y2="98" xlink:href="#linear-gradient"/>
+    <filter id="drop-shadow-36" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="1"/>
+      <feGaussianBlur result="blur-36" stdDeviation="2"/>
+      <feFlood flood-color="#000" flood-opacity=".9"/>
+      <feComposite in2="blur-36" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-37" y1="57" y2="57" xlink:href="#linear-gradient"/>
   </defs>
   <g id="Solo_Challenge" data-name="Solo Challenge">
     <g id="Enemy_copy_2" data-name="Enemy copy 2">
@@ -263,78 +311,84 @@
           <path d="m1902,888c4.42,0,8,3.58,8,8v140c0,4.42-3.58,8-8,8h-364c-4.42,0-8-3.58-8-8v-140c0-4.42,3.58-8,8-8h364m0-1h-364c-4.96,0-9,4.04-9,9v140c0,4.96,4.04,9,9,9h364c4.96,0,9-4.04,9-9v-140c0-4.96-4.04-9-9-9h0Z" style="stroke-width: 0px;"/>
         </g>
         <path id="style" d="m1547.67,1028.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-1); opacity: .25; stroke-width: 0px;"/>
+        <rect id="move1" x="1763" y="895" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-2); filter: url(#drop-shadow-2); stroke-width: 0px;"/>
+        <rect id="move1-2" data-name="move1" x="1763" y="931" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-3); filter: url(#drop-shadow-3); stroke-width: 0px;"/>
+        <rect id="move1-3" data-name="move1" x="1763" y="967" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-4); filter: url(#drop-shadow-4); stroke-width: 0px;"/>
+        <rect id="move1-4" data-name="move1" x="1763" y="1003" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-5); filter: url(#drop-shadow-5); stroke-width: 0px;"/>
       </g>
       <g id="slot4_copy_4" data-name="slot4 copy 4">
         <g>
-          <rect x="1532" y="729" width="376" height="152" rx="6" ry="6" style="fill: url(#linear-gradient-2); stroke-width: 0px;"/>
+          <rect x="1532" y="729" width="376" height="152" rx="6" ry="6" style="fill: url(#linear-gradient-6); stroke-width: 0px;"/>
           <path d="m1902,731c2.21,0,4,1.79,4,4v140c0,2.21-1.79,4-4,4h-364c-2.21,0-4-1.79-4-4v-140c0-2.21,1.79-4,4-4h364m0-4h-364c-4.42,0-8,3.58-8,8v140c0,4.42,3.58,8,8,8h364c4.42,0,8-3.58,8-8v-140c0-4.42-3.58-8-8-8h0Z" style="fill: gray; stroke-width: 0px;"/>
           <path d="m1902,729c3.31,0,6,2.69,6,6v140c0,3.31-2.69,6-6,6h-364c-3.31,0-6-2.69-6-6v-140c0-3.31,2.69-6,6-6h364m0-2h-364c-4.42,0-8,3.58-8,8v140c0,4.42,3.58,8,8,8h364c4.42,0,8-3.58,8-8v-140c0-4.42-3.58-8-8-8h0Z" style="fill: #4d4d4d; stroke-width: 0px;"/>
           <path d="m1902,727c4.42,0,8,3.58,8,8v140c0,4.42-3.58,8-8,8h-364c-4.42,0-8-3.58-8-8v-140c0-4.42,3.58-8,8-8h364m0-1h-364c-4.96,0-9,4.04-9,9v140c0,4.96,4.04,9,9,9h364c4.96,0,9-4.04,9-9v-140c0-4.96-4.04-9-9-9h0Z" style="stroke-width: 0px;"/>
         </g>
-        <path id="style-2" data-name="style" d="m1547.67,867.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-2); opacity: .25; stroke-width: 0px;"/>
+        <path id="style-2" data-name="style" d="m1547.67,867.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-6); opacity: .25; stroke-width: 0px;"/>
+        <rect id="move1-5" data-name="move1" x="1763" y="734" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-7); filter: url(#drop-shadow-7); stroke-width: 0px;"/>
+        <rect id="move1-6" data-name="move1" x="1763" y="770" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-8); filter: url(#drop-shadow-8); stroke-width: 0px;"/>
+        <rect id="move1-7" data-name="move1" x="1763" y="806" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-9); filter: url(#drop-shadow-9); stroke-width: 0px;"/>
+        <rect id="move1-8" data-name="move1" x="1763" y="842" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-10); filter: url(#drop-shadow-10); stroke-width: 0px;"/>
+        <rect id="move1-9" data-name="move1" x="1655" y="734" width="106" height="16" rx="6" ry="6" style="fill: url(#linear-gradient-11); filter: url(#drop-shadow-11); stroke-width: 0px;"/>
+        <rect id="move1-10" data-name="move1" x="1655" y="895" width="106" height="16" rx="6" ry="6" style="fill: url(#linear-gradient-12); filter: url(#drop-shadow-12); stroke-width: 0px;"/>
       </g>
       <g id="slot3_copy_4" data-name="slot3 copy 4">
         <g>
-          <rect x="1532" y="568" width="376" height="152" rx="6" ry="6" style="fill: url(#linear-gradient-3); stroke-width: 0px;"/>
+          <rect x="1532" y="568" width="376" height="152" rx="6" ry="6" style="fill: url(#linear-gradient-13); stroke-width: 0px;"/>
           <path d="m1902,570c2.21,0,4,1.79,4,4v140c0,2.21-1.79,4-4,4h-364c-2.21,0-4-1.79-4-4v-140c0-2.21,1.79-4,4-4h364m0-4h-364c-4.42,0-8,3.58-8,8v140c0,4.42,3.58,8,8,8h364c4.42,0,8-3.58,8-8v-140c0-4.42-3.58-8-8-8h0Z" style="fill: gray; stroke-width: 0px;"/>
           <path d="m1902,568c3.31,0,6,2.69,6,6v140c0,3.31-2.69,6-6,6h-364c-3.31,0-6-2.69-6-6v-140c0-3.31,2.69-6,6-6h364m0-2h-364c-4.42,0-8,3.58-8,8v140c0,4.42,3.58,8,8,8h364c4.42,0,8-3.58,8-8v-140c0-4.42-3.58-8-8-8h0Z" style="fill: #4d4d4d; stroke-width: 0px;"/>
           <path d="m1902,566c4.42,0,8,3.58,8,8v140c0,4.42-3.58,8-8,8h-364c-4.42,0-8-3.58-8-8v-140c0-4.42,3.58-8,8-8h364m0-1h-364c-4.96,0-9,4.04-9,9v140c0,4.96,4.04,9,9,9h364c4.96,0,9-4.04,9-9v-140c0-4.96-4.04-9-9-9h0Z" style="stroke-width: 0px;"/>
         </g>
-        <path id="style-3" data-name="style" d="m1547.67,706.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-3); opacity: .25; stroke-width: 0px;"/>
+        <path id="style-3" data-name="style" d="m1547.67,706.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-13); opacity: .25; stroke-width: 0px;"/>
+        <rect id="move1-11" data-name="move1" x="1763" y="573" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-14); filter: url(#drop-shadow-14); stroke-width: 0px;"/>
+        <rect id="move1-12" data-name="move1" x="1763" y="609" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-15); filter: url(#drop-shadow-15); stroke-width: 0px;"/>
+        <rect id="move1-13" data-name="move1" x="1763" y="645" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-16); filter: url(#drop-shadow-16); stroke-width: 0px;"/>
+        <rect id="move1-14" data-name="move1" x="1763" y="681" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-17); filter: url(#drop-shadow-17); stroke-width: 0px;"/>
+        <rect id="move1-15" data-name="move1" x="1655" y="573" width="106" height="16" rx="6" ry="6" style="fill: url(#linear-gradient-18); filter: url(#drop-shadow-18); stroke-width: 0px;"/>
       </g>
       <g id="slot2_copy_4" data-name="slot2 copy 4">
         <g>
-          <rect x="1532" y="407" width="376" height="152" rx="6" ry="6" style="fill: url(#linear-gradient-4); stroke-width: 0px;"/>
+          <rect x="1532" y="407" width="376" height="152" rx="6" ry="6" style="fill: url(#linear-gradient-19); stroke-width: 0px;"/>
           <path d="m1902,409c2.21,0,4,1.79,4,4v140c0,2.21-1.79,4-4,4h-364c-2.21,0-4-1.79-4-4v-140c0-2.21,1.79-4,4-4h364m0-4h-364c-4.42,0-8,3.58-8,8v140c0,4.42,3.58,8,8,8h364c4.42,0,8-3.58,8-8v-140c0-4.42-3.58-8-8-8h0Z" style="fill: gray; stroke-width: 0px;"/>
           <path d="m1902,407c3.31,0,6,2.69,6,6v140c0,3.31-2.69,6-6,6h-364c-3.31,0-6-2.69-6-6v-140c0-3.31,2.69-6,6-6h364m0-2h-364c-4.42,0-8,3.58-8,8v140c0,4.42,3.58,8,8,8h364c4.42,0,8-3.58,8-8v-140c0-4.42-3.58-8-8-8h0Z" style="fill: #4d4d4d; stroke-width: 0px;"/>
           <path d="m1902,405c4.42,0,8,3.58,8,8v140c0,4.42-3.58,8-8,8h-364c-4.42,0-8-3.58-8-8v-140c0-4.42,3.58-8,8-8h364m0-1h-364c-4.96,0-9,4.04-9,9v140c0,4.96,4.04,9,9,9h364c4.96,0,9-4.04,9-9v-140c0-4.96-4.04-9-9-9h0Z" style="stroke-width: 0px;"/>
         </g>
-        <path id="style-4" data-name="style" d="m1547.67,545.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-4); opacity: .25; stroke-width: 0px;"/>
+        <path id="style-4" data-name="style" d="m1547.67,545.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-19); opacity: .25; stroke-width: 0px;"/>
+        <rect id="move1-16" data-name="move1" x="1763" y="412" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-20); filter: url(#drop-shadow-20); stroke-width: 0px;"/>
+        <rect id="move1-17" data-name="move1" x="1763" y="448" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-21); filter: url(#drop-shadow-21); stroke-width: 0px;"/>
+        <rect id="move1-18" data-name="move1" x="1763" y="484" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-22); filter: url(#drop-shadow-22); stroke-width: 0px;"/>
+        <rect id="move1-19" data-name="move1" x="1763" y="520" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-23); filter: url(#drop-shadow-23); stroke-width: 0px;"/>
+        <rect id="move1-20" data-name="move1" x="1655" y="412" width="106" height="16" rx="6" ry="6" style="fill: url(#linear-gradient-24); filter: url(#drop-shadow-24); stroke-width: 0px;"/>
       </g>
       <g id="slot1_copy_4" data-name="slot1 copy 4">
         <g>
-          <rect x="1532" y="246" width="376" height="152" rx="6" ry="6" style="fill: url(#linear-gradient-5); stroke-width: 0px;"/>
+          <rect x="1532" y="246" width="376" height="152" rx="6" ry="6" style="fill: url(#linear-gradient-25); stroke-width: 0px;"/>
           <path d="m1902,248c2.21,0,4,1.79,4,4v140c0,2.21-1.79,4-4,4h-364c-2.21,0-4-1.79-4-4v-140c0-2.21,1.79-4,4-4h364m0-4h-364c-4.42,0-8,3.58-8,8v140c0,4.42,3.58,8,8,8h364c4.42,0,8-3.58,8-8v-140c0-4.42-3.58-8-8-8h0Z" style="fill: gray; stroke-width: 0px;"/>
           <path d="m1902,246c3.31,0,6,2.69,6,6v140c0,3.31-2.69,6-6,6h-364c-3.31,0-6-2.69-6-6v-140c0-3.31,2.69-6,6-6h364m0-2h-364c-4.42,0-8,3.58-8,8v140c0,4.42,3.58,8,8,8h364c4.42,0,8-3.58,8-8v-140c0-4.42-3.58-8-8-8h0Z" style="fill: #4d4d4d; stroke-width: 0px;"/>
           <path d="m1902,244c4.42,0,8,3.58,8,8v140c0,4.42-3.58,8-8,8h-364c-4.42,0-8-3.58-8-8v-140c0-4.42,3.58-8,8-8h364m0-1h-364c-4.96,0-9,4.04-9,9v140c0,4.96,4.04,9,9,9h364c4.96,0,9-4.04,9-9v-140c0-4.96-4.04-9-9-9h0Z" style="stroke-width: 0px;"/>
         </g>
-        <path id="style-5" data-name="style" d="m1547.67,384.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-5); opacity: .25; stroke-width: 0px;"/>
+        <path id="style-5" data-name="style" d="m1547.67,384.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-25); opacity: .25; stroke-width: 0px;"/>
+        <rect id="move1-21" data-name="move1" x="1763" y="251" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-26); filter: url(#drop-shadow-26); stroke-width: 0px;"/>
+        <rect id="move1-22" data-name="move1" x="1763" y="287" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-27); filter: url(#drop-shadow-27); stroke-width: 0px;"/>
+        <rect id="move1-23" data-name="move1" x="1763" y="323" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-28); filter: url(#drop-shadow-28); stroke-width: 0px;"/>
+        <rect id="move1-24" data-name="move1" x="1763" y="359" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-29); filter: url(#drop-shadow-29); stroke-width: 0px;"/>
+        <rect id="move1-25" data-name="move1" x="1655" y="251" width="106" height="16" rx="6" ry="6" style="fill: url(#linear-gradient-30); filter: url(#drop-shadow-30); stroke-width: 0px;"/>
       </g>
       <g id="slot0_copy_5" data-name="slot0 copy 5">
         <g>
-          <rect x="1532" y="85" width="376" height="152" rx="6" ry="6" style="fill: url(#linear-gradient-6); stroke-width: 0px;"/>
+          <rect x="1532" y="85" width="376" height="152" rx="6" ry="6" style="fill: url(#linear-gradient-31); stroke-width: 0px;"/>
           <path d="m1902,87c2.21,0,4,1.79,4,4v140c0,2.21-1.79,4-4,4h-364c-2.21,0-4-1.79-4-4V91c0-2.21,1.79-4,4-4h364m0-4h-364c-4.42,0-8,3.58-8,8v140c0,4.42,3.58,8,8,8h364c4.42,0,8-3.58,8-8V91c0-4.42-3.58-8-8-8h0Z" style="fill: gray; stroke-width: 0px;"/>
           <path d="m1902,85c3.31,0,6,2.69,6,6v140c0,3.31-2.69,6-6,6h-364c-3.31,0-6-2.69-6-6V91c0-3.31,2.69-6,6-6h364m0-2h-364c-4.42,0-8,3.58-8,8v140c0,4.42,3.58,8,8,8h364c4.42,0,8-3.58,8-8V91c0-4.42-3.58-8-8-8h0Z" style="fill: #4d4d4d; stroke-width: 0px;"/>
           <path d="m1902,83c4.42,0,8,3.58,8,8v140c0,4.42-3.58,8-8,8h-364c-4.42,0-8-3.58-8-8V91c0-4.42,3.58-8,8-8h364m0-1h-364c-4.96,0-9,4.04-9,9v140c0,4.96,4.04,9,9,9h364c4.96,0,9-4.04,9-9V91c0-4.96-4.04-9-9-9h0Z" style="stroke-width: 0px;"/>
         </g>
-        <path id="style-6" data-name="style" d="m1547.67,223.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-6); opacity: .25; stroke-width: 0px;"/>
-        <rect id="move1" x="1706" y="89" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-7); filter: url(#drop-shadow-7); stroke-width: 0px;"/>
-        <rect id="move1-2" data-name="move1" x="1706" y="110.15" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-8); filter: url(#drop-shadow-8); stroke-width: 0px;"/>
-        <rect id="move1-3" data-name="move1" x="1706" y="131.29" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-9); filter: url(#drop-shadow-9); stroke-width: 0px;"/>
-        <rect id="move1-4" data-name="move1" x="1706" y="152.44" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-10); filter: url(#drop-shadow-10); stroke-width: 0px;"/>
-        <rect id="move1-5" data-name="move1" x="1706" y="250" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-11); filter: url(#drop-shadow-11); stroke-width: 0px;"/>
-        <rect id="move1-6" data-name="move1" x="1706" y="271.15" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-12); filter: url(#drop-shadow-12); stroke-width: 0px;"/>
-        <rect id="move1-7" data-name="move1" x="1706" y="292.29" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-13); filter: url(#drop-shadow-13); stroke-width: 0px;"/>
-        <rect id="move1-8" data-name="move1" x="1706" y="313.44" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-14); filter: url(#drop-shadow-14); stroke-width: 0px;"/>
-        <rect id="move1-9" data-name="move1" x="1706" y="411" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-15); filter: url(#drop-shadow-15); stroke-width: 0px;"/>
-        <rect id="move1-10" data-name="move1" x="1706" y="432.15" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-16); filter: url(#drop-shadow-16); stroke-width: 0px;"/>
-        <rect id="move1-11" data-name="move1" x="1706" y="453.29" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-17); filter: url(#drop-shadow-17); stroke-width: 0px;"/>
-        <rect id="move1-12" data-name="move1" x="1706" y="474.44" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-18); filter: url(#drop-shadow-18); stroke-width: 0px;"/>
-        <rect id="move1-13" data-name="move1" x="1706" y="572" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-19); filter: url(#drop-shadow-19); stroke-width: 0px;"/>
-        <rect id="move1-14" data-name="move1" x="1706" y="593.15" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-20); filter: url(#drop-shadow-20); stroke-width: 0px;"/>
-        <rect id="move1-15" data-name="move1" x="1706" y="614.29" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-21); filter: url(#drop-shadow-21); stroke-width: 0px;"/>
-        <rect id="move1-16" data-name="move1" x="1706" y="635.44" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-22); filter: url(#drop-shadow-22); stroke-width: 0px;"/>
-        <rect id="move1-17" data-name="move1" x="1706" y="733" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-23); filter: url(#drop-shadow-23); stroke-width: 0px;"/>
-        <rect id="move1-18" data-name="move1" x="1706" y="754.15" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-24); filter: url(#drop-shadow-24); stroke-width: 0px;"/>
-        <rect id="move1-19" data-name="move1" x="1706" y="775.29" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-25); filter: url(#drop-shadow-25); stroke-width: 0px;"/>
-        <rect id="move1-20" data-name="move1" x="1706" y="796.44" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-26); filter: url(#drop-shadow-26); stroke-width: 0px;"/>
-        <rect id="move1-21" data-name="move1" x="1706" y="894" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-27); filter: url(#drop-shadow-27); stroke-width: 0px;"/>
-        <rect id="move1-22" data-name="move1" x="1706" y="915.15" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-28); filter: url(#drop-shadow-28); stroke-width: 0px;"/>
-        <rect id="move1-23" data-name="move1" x="1706" y="936.29" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-29); filter: url(#drop-shadow-29); stroke-width: 0px;"/>
-        <rect id="move1-24" data-name="move1" x="1706" y="957.44" width="198" height="19.13" rx="6" ry="6" style="fill: url(#linear-gradient-30); filter: url(#drop-shadow-30); stroke-width: 0px;"/>
+        <path id="style-6" data-name="style" d="m1547.67,223.67l-13.67-14.67v18.99c0,5.01,0,7.01,7.79,7.01h356.41c7.79,0,7.79-2,7.79-7.01v-4.32h-358.33Z" style="fill: #808285; filter: url(#drop-shadow-31); opacity: .25; stroke-width: 0px;"/>
+        <rect id="move1-26" data-name="move1" x="1763" y="90" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-32); filter: url(#drop-shadow-32); stroke-width: 0px;"/>
+        <rect id="move1-27" data-name="move1" x="1763" y="126" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-33); filter: url(#drop-shadow-33); stroke-width: 0px;"/>
+        <rect id="move1-28" data-name="move1" x="1763" y="162" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-34); filter: url(#drop-shadow-34); stroke-width: 0px;"/>
+        <rect id="move1-29" data-name="move1" x="1763" y="198" width="141" height="34" rx="6" ry="6" style="fill: url(#linear-gradient-35); filter: url(#drop-shadow-35); stroke-width: 0px;"/>
+        <rect id="move1-30" data-name="move1" x="1655" y="90" width="106" height="16" rx="6" ry="6" style="fill: url(#linear-gradient-36); filter: url(#drop-shadow-36); stroke-width: 0px;"/>
       </g>
       <g id="header">
-        <path d="m1538.79,76c-3.75,0-6.79-2.69-6.79-6v-11.81c0-1.53.65-2.98,1.83-4.1l13.82-14.24c1.05-.99,3.72-1.84,5.9-1.84h347.65c3.75,0,6.79,2.69,6.79,6v25.99c0,3.31-3.05,6-6.79,6h-362.41Z" style="fill: url(#linear-gradient-31); stroke-width: 0px;"/>
+        <path d="m1538.79,76c-3.75,0-6.79-2.69-6.79-6v-11.81c0-1.53.65-2.98,1.83-4.1l13.82-14.24c1.05-.99,3.72-1.84,5.9-1.84h347.65c3.75,0,6.79,2.69,6.79,6v25.99c0,3.31-3.05,6-6.79,6h-362.41Z" style="fill: url(#linear-gradient-37); stroke-width: 0px;"/>
         <path d="m1901.21,40c2.64,0,4.79,1.8,4.79,4v25.99c0,2.21-2.15,4-4.79,4h-362.41c-2.64,0-4.79-1.8-4.79-4v-11.81c0-.97.43-1.91,1.21-2.64l.06-.06.06-.06,13.68-14.1c.71-.62,2.81-1.32,4.54-1.32h347.65m0-4h-347.65c-2.39,0-5.68.89-7.33,2.45l-13.76,14.18c-1.58,1.49-2.46,3.48-2.46,5.55v11.81c0,4.42,3.94,8,8.79,8h362.41c4.86,0,8.79-3.58,8.79-8v-25.99c0-4.42-3.94-8-8.79-8h0Z" style="fill: gray; stroke-width: 0px;"/>
         <path d="m1901.21,38c3.75,0,6.79,2.69,6.79,6v25.99c0,3.31-3.05,6-6.79,6h-362.41c-3.75,0-6.79-2.69-6.79-6v-11.81c0-1.53.65-2.98,1.83-4.1l.03-.03.03-.03,13.73-14.15c1.13-1.04,3.78-1.88,5.93-1.88h347.65m0-2h-347.65c-2.39,0-5.68.89-7.33,2.45l-13.76,14.18c-1.58,1.49-2.46,3.48-2.46,5.55v11.81c0,4.42,3.94,8,8.79,8h362.41c4.86,0,8.79-3.58,8.79-8v-25.99c0-4.42-3.94-8-8.79-8h0Z" style="fill: #4d4d4d; stroke-width: 0px;"/>
         <path d="m1901.21,36c4.86,0,8.79,3.58,8.79,8v25.99c0,4.42-3.94,8-8.79,8h-362.41c-4.86,0-8.79-3.58-8.79-8v-11.81c0-2.07.88-4.06,2.46-5.55l13.76-14.18c1.66-1.57,4.94-2.45,7.33-2.45h347.65m0-1h-347.65c-2.55,0-6.13.94-8.02,2.72l-13.79,14.21c-1.76,1.66-2.74,3.89-2.74,6.25v11.81c0,4.96,4.39,9,9.79,9h362.41c5.4,0,9.79-4.04,9.79-9v-25.99c0-4.96-4.39-9-9.79-9h0Z" style="stroke-width: 0px;"/>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Individual_Areas" data-name="Individual Areas" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1655" y1="617" x2="1761" y2="617" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#999"/>
+      <stop offset=".04" stop-color="#a0a0a0"/>
+      <stop offset=".21" stop-color="#b8b8b8"/>
+      <stop offset=".37" stop-color="#c6c6c6"/>
+      <stop offset=".5" stop-color="#ccc"/>
+      <stop offset=".63" stop-color="#c6c6c6"/>
+      <stop offset=".79" stop-color="#b7b7b7"/>
+      <stop offset=".97" stop-color="#9d9d9d"/>
+      <stop offset="1" stop-color="#999"/>
+    </linearGradient>
+  </defs>
+  <g id="Solo_Challenge" data-name="Solo Challenge">
+    <g id="Enemy_copy_2" data-name="Enemy copy 2">
+      <path d="m1660.85,591h94.29c3.23,0,5.85,2.62,5.85,5.85v40.29c0,3.23-2.62,5.85-5.85,5.85h-40.09c-3.23,0-5.85-2.62-5.85-5.85v-24.29c0-3.23-2.62-5.85-5.85-5.85h-42.5c-3.23,0-5.85-2.62-5.85-5.85v-4.29c0-3.23,2.62-5.85,5.85-5.85Z" style="fill: url(#linear-gradient); stroke-width: 0px;"/>
+    </g>
+  </g>
+</svg>

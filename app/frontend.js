@@ -1642,6 +1642,15 @@ const app = Vue.createApp({
             }
             return object
         },
+        svgColorClass(speed_comparison) {
+            if (speed_comparison === 'Outsped') {
+                return 'blue-svg';
+            } 
+            else if (speed_comparison === 'Speed-tie') {
+                return 'yellow-svg';
+            }
+            return 'red-svg';
+        },
         average_median_stats(stat_label) {
             let sum = 0;
             let count = 0;

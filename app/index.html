@@ -266,12 +266,14 @@
                                 <div v-if="mapper.properties.battle.trainer.totalPokemon > x" :class="`ePkmnStyle ePkmn${x + 1}`">
                                     <img v-if="mapper.properties.meta.gameName == 'Yellow'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/${mapper.properties.battle.trainer.team[x]?.species}.png`"/>
                                     <img v-else-if="mapper.properties.meta.gameName == 'Red and Blue'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/Red_and_Blue/${mapper.properties.battle.trainer.team[x]?.species}.png`"/>
-                                    <div class="ePkmnSpecies opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).species">{{mapper.properties.battle.trainer.team[x]?.species}} Lv:{{mapper.properties.battle.trainer.team[x]?.level}}</div>
+                                    <div class="ePkmnSpecies opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).species">{{mapper.properties.battle.trainer.team[x]?.species}}</div>
+                                    <div class="ePkmnLevel opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).species">Lv:{{mapper.properties.battle.trainer.team[x]?.level}}</div>
                                     <img class="ePkmnTypeIcons ePkmnType_1 ds opacityTransition" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" :src="`images/elements/type-icons/${enemyType1(x).toLowerCase()}.png`"/>
                                     <img v-if="enemyType1(x) != enemyType2(x)" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_2 ds opacityTransition" :src="`images/elements/type-icons/${enemyType2(x).toLowerCase()}.png`"/>
                                     <img v-if="enemyType3(x) == 'Ghost'" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_3 ds opacityTransition" :src="`images/elements/type-icons/ghost.png`"/>
                                     
                                     <!-- Moves -->
+                                    <img :class="svgColorClass(speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison)" class="canvas" :src="`images/ui/speed_comp/${x}.svg`"/>
                                     <img class="enemyStatsArea opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint_stats_background" :src="`images/stats/${ui_type_color_modifier}/${x}.svg`"/>
 
                                     <div v-for="move_index in moves = [0, 1, 2, 3]">
@@ -284,11 +286,11 @@
                                             :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">
                                             {{move_name(mapper.properties.battle.trainer.team[x][`move${move_index + 1}`]?.value)}}
                                         </div>
-                                        <div v-if="enemy_trainer.pokemon[x]?.moves[move_index] != null" 
+                                        <!-- <div v-if="enemy_trainer.pokemon[x]?.moves[move_index] != null" 
                                             :class="`ePkmnMoveStyle ePkmnEffectivePower ePkmnMove${move_index + 1} opacityTransition`" 
                                             :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">
                                             {{enemy_effective_power(enemy_trainer.pokemon[x]?.moves[move_index], mapper.properties.battle.trainer.team[x], x)}}
-                                        </div>
+                                        </div> -->
                                     </div>
 
                                     <!-- Stats -->
@@ -320,7 +322,8 @@
                                     </div>
                                     <div>
                                         <transition name="fade">
-                                            <div v-show="speed_comparison_toggle == true" class="speed_comparison" :style="speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).color">{{speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison}}</div>
+                                            <div v-show="speed_comparison_toggle == true" class="speed_comparison">{{speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison}}</div>
+                                            <!-- <div v-show="speed_comparison_toggle == true" class="speed_comparison" :style="speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).color">{{speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison}}</div> -->
                                         </transition>
                                     </div>
                                 </div>
