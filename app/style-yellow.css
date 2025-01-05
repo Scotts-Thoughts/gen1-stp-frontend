@@ -864,10 +864,11 @@ box-shadow:
 .ePkmnModsStyle {
     position: absolute;
     border: 1px solid rgba(255, 0, 0, 0);
-    width: 25px;
+    width: 54px;
     text-align: center;
     left: 0px;
     font-size: 15px;
+    opacity: .7;
 }
 .ePkmnStatsStyle {
     position: absolute;
@@ -901,10 +902,10 @@ box-shadow:
 .ePkmnLabelSpc  { top: 81px;  left: 179px;}
 .ePkmnLabelCrit { top: 117px; left: 179px;}
 
-.ePkmnModAtk { top: 113px; left: 178px; }
-.ePkmnModDef { top: 133px; left: 178px; }
-.ePkmnModSpc { top: 113px; left: 279px; }
-.ePkmnModSpd { top: 92px;  left: 279px; }
+.ePkmnModAtk { top: 79px;  left: 124px; }
+.ePkmnModDef { top: 115px; left: 124px; }
+.ePkmnModSpc { top: 79px;  left: 178px; }
+.ePkmnModSpd { top: 43px;  left: 178px; }
 
 .speed_comparison {
     border: 1px solid rgba(255, 0, 0, 0);
@@ -1136,6 +1137,22 @@ box-shadow:
     font-size: 14px;
     top: 173px;
     left: 204px;
+    width: 144px;
+    text-align: center;
+}
+.resetsLabel_1 {
+    border: 1px solid #ff000000;
+    font-size: 14px;
+    top: 173px;
+    left: 129px;
+    width: 144px;
+    text-align: center;
+}
+.blackoutLabel_1 {
+    border: 1px solid #ff000000;
+    font-size: 14px;
+    top: 173px;
+    left: 129px;
     width: 144px;
     text-align: center;
 }
@@ -1564,9 +1581,17 @@ box-shadow:
     top: 190px;
     left: 50px;
 }
+.resets_1 {
+    top: 190px;
+    left: 127px;
+}
 .blackouts {
     top: 190px;
     left: 202px;
+}
+.blackouts_1 {
+    top: 190px;
+    left: 127px;
 }
 .gametime {
     font-size: 65px;

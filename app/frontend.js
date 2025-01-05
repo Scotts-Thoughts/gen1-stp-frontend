@@ -1282,6 +1282,19 @@ const app = Vue.createApp({
     },
 
     computed: {
+        blackouts_resets() {
+            const resets = this.playerResets
+            const blackouts = this.blackout_counter
+            if (blackouts == 0) {
+                return "Resets"
+            }
+            else if (blackouts > 0 && resets == 0) {
+                return "Blackouts"
+            }
+            else {
+                return "Both"
+            }
+        },
         filtered_pokemon_list() {
             if (this.search_term === '') {
                 return this.pokemon_list;

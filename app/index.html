@@ -62,7 +62,8 @@
                         }" 
                         :src="`images/pokemon/Red_and_Blue/${s1dynamicReset.species.value}.png`" />
 
-                    <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer.svg)"></div>
+                    <div v-show="blackouts_resets != 'Both'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_2.svg)"></div>
+                    <div v-show="blackouts_resets == 'Both'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer.svg)"></div>
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/stats.svg)"></div>
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/moveset.svg)"></div>
                     <!-- <img class="canvas" src="images/ui/moveset.svg"> -->
@@ -74,8 +75,16 @@
                     <div class="exp_growthRate">{{ growthRate }}</div>
                     <transition name="fade"><div v-show="timer_settings == `Off - Real-Time Label` || timer_settings == `Real-Time`" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
                     <transition name="fade"><div v-show="timer_settings == `Off - Game-Time Label` || timer_settings == `Game-Time`" class="genericLabels timerLabel">gametime</div></transition>
-                    <div class="genericLabels resetsLabel">resets</div>
-                    <div class="genericLabels blackoutLabel">blackouts</div>
+                    <div v-show="blackouts_resets == 'Resets'">
+                        <div class="genericLabels resetsLabel_1">resets</div>
+                    </div>
+                    <div v-show="blackouts_resets == 'Blackouts'">
+                        <div class="genericLabels blackoutLabel_1">blackouts</div>
+                    </div>
+                    <div v-show="blackouts_resets == 'Both'">
+                        <div class="genericLabels resetsLabel">resets</div>
+                        <div class="genericLabels blackoutLabel">blackouts</div>
+                    </div>
                     <!-- <div v-if="blackout_counter === 0">
                         <div v-show="key_F16 == `resets`" class="genericLabels resetsLabel">resets</div>
                         <div v-show="key_F16 == `blackouts`" class="genericLabels resetsLabel">blackouts</div>
@@ -474,12 +483,24 @@
                     <div class="gametimeFrames">{{timer_formatted_time[1]}}</div>
                 </div></transition>
                 <!-- Resets -->
-                <transition name="fade">
-                    <div class="faults_style resets"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
-                </transition>
-                <transition name="fade">
-                    <div class="faults_style blackouts" id="reset_counter">{{blackout_counter}}</div>
-                </transition>
+                <div v-show="blackouts_resets == 'Resets'">
+                    <transition name="fade">
+                        <div class="faults_style resets_1"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
+                    </transition>
+                </div>
+                <div v-show="blackouts_resets == 'Blackouts'">
+                    <transition name="fade">
+                        <div class="faults_style blackouts_1" id="reset_counter">{{blackout_counter}}</div>
+                    </transition>
+                </div>
+                <div v-show="blackouts_resets == 'Both'">
+                    <transition name="fade">
+                        <div class="faults_style resets"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
+                    </transition>
+                    <transition name="fade">
+                        <div class="faults_style blackouts" id="reset_counter">{{blackout_counter}}</div>
+                    </transition>
+                </div>
             </div>
             <!-- UI -->
             <div class="testingArea1" style="z-index: 155000;">
@@ -672,12 +693,7 @@
                 <div v-if="release == false">
                     <div style="text-decoration: underline;">Graphics Toggles:</div>
                     <table>
-                        <tr><td>Trainer Teams:    </td><td><input class="checkBoxStyle" type="checkbox" v-model="battleGraphic"/></td></tr>
-                        <tr><td>All Trainers:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="showAllTrainers"/></td></tr>
-                        <tr><td>Trainer Graphics: </td><td><input class="checkBoxStyle" type="checkbox" v-model="showSpecialTrainerGraphics"/></td></tr>
                         <tr><td>Wild Pokemon:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/></td></tr>
-                        <tr><td>Pop-ups:          </td><td><input class="checkBoxStyle" type="checkbox" v-model="battlePopUps"/></td></tr>
-                        <tr><td>Speed Comparisons:</td><td><input class="checkBoxStyle" type="checkbox" v-model="speed_comparison_toggle"/></td></tr>
                     </table>
                 </div>
             </div>
