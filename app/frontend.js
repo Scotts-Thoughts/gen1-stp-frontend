@@ -1113,44 +1113,44 @@ const app = Vue.createApp({
     },
     watch: {
         toggle_wEarlyEncounters(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.wEarlyEncounters.set("On", false)}
-            if (newValue == false) { this.mapper.properties.patch.wEarlyEncounters.set("Off", false)}
+            if (newValue == true)  { this.mapper?.properties.patch.wEarlyEncounters.set("On", false)}
+            if (newValue == false) { this.mapper?.properties.patch.wEarlyEncounters.set("Off", false)}
         },
         toggle_EVENT_ENCOUNTER_ROUTE1_TEST(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.set(false, false)}
+            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.set(true, false)}
+            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.set(false, false)}
         },
         toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.set(false, false)}
+            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.set(true, false)}
+            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.set(false, false)}
         },
         toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(false, false)}
+            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(true, false)}
+            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(false, false)}
         },
         toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.set(false, false)}
+            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.set(true, false)}
+            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.set(false, false)}
         },
         toggle_EVENT_ENCOUNTER_ROUTE16_DODUO(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
+            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
+            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
         },
         toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(false, false)}
+            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(true, false)}
+            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(false, false)}
         },
         toggle_EVENT_ENCOUNTER_MTMOON_PARAS(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(false, false)}
+            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(true, false)}
+            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(false, false)}
         },
         toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(false, false)}
+            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(true, false)}
+            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(false, false)}
         },
         toggle_EVENT_ENCOUNTER_ROUTE16_DODUO(newValue) {
-            if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
-            if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
+            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
+            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
         },
         current_splits: {
             handler: function (newVal, oldVal) {
@@ -1285,7 +1285,11 @@ const app = Vue.createApp({
         blackouts_resets() {
             const resets = this.playerResets
             const blackouts = this.blackout_counter
-            if (blackouts == 0) {
+            const allow_none = true // Toggle that allows for the UI to display no border if there are no faults
+            if (allow_none == true && blackouts == 0 && resets == 0) {
+                return "None"
+            }
+            else if (blackouts == 0 && resets > 0) {
                 return "Resets"
             }
             else if (blackouts > 0 && resets == 0) {
@@ -1305,9 +1309,10 @@ const app = Vue.createApp({
         compare_splits() {
             if (this.collect_split_data == true) {
                 const result = []
+                const game = this.mapper.properties.meta.gameName.value
                 const addedTrainers = new Set(); // Keep track of the trainers that have been added to the result
                 for (const x of this.previous_splits) {
-                    if (this.split_trainers.includes(x.trainer)) {
+                    if (this.split_trainers[game].includes(x.trainer)) {
                         const default_string = "-"
                         const cur_split = this.current_splits.find(y => y.trainer === x.trainer)
                         const prev = this.convertDurationToSeconds(x.time)
@@ -2033,23 +2038,53 @@ const app = Vue.createApp({
         //*autosplitter methods
         //format trainer names so they can be written to csv
         format_trainer_name(trainer_class, trainer_number) {
-            //rivals
-            if (trainer_class == "RIVAL1" && trainer_number == 1)  { return "Rival1-Lab" }
-            if (trainer_class == "RIVAL1" && trainer_number == 2)  { return "Rival1a-Route 22" }
-            if (trainer_class == "RIVAL1" && trainer_number == 3)  { return "Rival2-Nugget Bridge" }
-            if (trainer_class == "RIVAL2" && trainer_number == 1)  { return "Rival3-SS Anne" }
-            if (trainer_class == "RIVAL2" && trainer_number == 2)  { return "Rival4-Pkmn Tower" }
-            if (trainer_class == "RIVAL2" && trainer_number == 3)  { return "Rival4-Pkmn Tower" }
-            if (trainer_class == "RIVAL2" && trainer_number == 4)  { return "Rival4-Pkmn Tower" }
-            if (trainer_class == "RIVAL2" && trainer_number == 5)  { return "Rival5-Silph" }
-            if (trainer_class == "RIVAL2" && trainer_number == 6)  { return "Rival5-Silph" }
-            if (trainer_class == "RIVAL2" && trainer_number == 7)  { return "Rival5-Silph" }
-            if (trainer_class == "RIVAL2" && trainer_number == 8)  { return "Rival6-Route 22" }
-            if (trainer_class == "RIVAL2" && trainer_number == 9)  { return "Rival6-Route 22" }
-            if (trainer_class == "RIVAL2" && trainer_number == 10) { return "Rival6-Route 22" }
-            if (trainer_class == "RIVAL3" && trainer_number == 1) { return "Champion" }
-            if (trainer_class == "RIVAL3" && trainer_number == 2) { return "Champion" }
-            if (trainer_class == "RIVAL3" && trainer_number == 3) { return "Champion" }
+            const game = this.mapper.properties.meta.gameName.value
+            if (game == 'Red and Blue') {
+                //rivals
+                if (trainer_class == "RIVAL1" && trainer_number == 1)  { return "Rival1-Lab" }
+                if (trainer_class == "RIVAL1" && trainer_number == 2)  { return "Rival1-Lab" }
+                if (trainer_class == "RIVAL1" && trainer_number == 3)  { return "Rival1-Lab" }
+                if (trainer_class == "RIVAL1" && trainer_number == 4)  { return "Rival1a-Route 22" }
+                if (trainer_class == "RIVAL1" && trainer_number == 5)  { return "Rival1a-Route 22" }
+                if (trainer_class == "RIVAL1" && trainer_number == 6)  { return "Rival1a-Route 22" }
+                if (trainer_class == "RIVAL1" && trainer_number == 7)  { return "Rival2-Nugget Bridge" }
+                if (trainer_class == "RIVAL1" && trainer_number == 8)  { return "Rival2-Nugget Bridge" }
+                if (trainer_class == "RIVAL1" && trainer_number == 9)  { return "Rival2-Nugget Bridge" }
+                if (trainer_class == "RIVAL2" && trainer_number == 1)  { return "Rival3-SS Anne" }
+                if (trainer_class == "RIVAL2" && trainer_number == 2)  { return "Rival3-SS Anne"  }
+                if (trainer_class == "RIVAL2" && trainer_number == 3)  { return "Rival3-SS Anne"  }
+                if (trainer_class == "RIVAL2" && trainer_number == 4)  { return "Rival4-Pkmn Tower" }
+                if (trainer_class == "RIVAL2" && trainer_number == 5)  { return "Rival4-Pkmn Tower" }
+                if (trainer_class == "RIVAL2" && trainer_number == 6)  { return "Rival4-Pkmn Tower" }
+                if (trainer_class == "RIVAL2" && trainer_number == 7)  { return "Rival5-Silph" }
+                if (trainer_class == "RIVAL2" && trainer_number == 8)  { return "Rival5-Silph" }
+                if (trainer_class == "RIVAL2" && trainer_number == 9)  { return "Rival5-Silph" }
+                if (trainer_class == "RIVAL2" && trainer_number == 10) { return "Rival6-Route 22" }
+                if (trainer_class == "RIVAL2" && trainer_number == 11) { return "Rival6-Route 22" }
+                if (trainer_class == "RIVAL2" && trainer_number == 12) { return "Rival6-Route 22" }
+                if (trainer_class == "RIVAL3" && trainer_number == 1)  { return "Champion" }
+                if (trainer_class == "RIVAL3" && trainer_number == 2)  { return "Champion" }
+                if (trainer_class == "RIVAL3" && trainer_number == 3)  { return "Champion" }
+            }
+            if (game == 'Yellow') {
+                //rivals
+                if (trainer_class == "RIVAL1" && trainer_number == 1)  { return "Rival1-Lab" }
+                if (trainer_class == "RIVAL1" && trainer_number == 2)  { return "Rival1a-Route 22" }
+                if (trainer_class == "RIVAL1" && trainer_number == 3)  { return "Rival2-Nugget Bridge" }
+                if (trainer_class == "RIVAL2" && trainer_number == 1)  { return "Rival3-SS Anne" }
+                if (trainer_class == "RIVAL2" && trainer_number == 2)  { return "Rival4-Pkmn Tower" }
+                if (trainer_class == "RIVAL2" && trainer_number == 3)  { return "Rival4-Pkmn Tower" }
+                if (trainer_class == "RIVAL2" && trainer_number == 4)  { return "Rival4-Pkmn Tower" }
+                if (trainer_class == "RIVAL2" && trainer_number == 5)  { return "Rival5-Silph" }
+                if (trainer_class == "RIVAL2" && trainer_number == 6)  { return "Rival5-Silph" }
+                if (trainer_class == "RIVAL2" && trainer_number == 7)  { return "Rival5-Silph" }
+                if (trainer_class == "RIVAL2" && trainer_number == 8)  { return "Rival6-Route 22" }
+                if (trainer_class == "RIVAL2" && trainer_number == 9)  { return "Rival6-Route 22" }
+                if (trainer_class == "RIVAL2" && trainer_number == 10) { return "Rival6-Route 22" }
+                if (trainer_class == "RIVAL3" && trainer_number == 1) { return "Champion" }
+                if (trainer_class == "RIVAL3" && trainer_number == 2) { return "Champion" }
+                if (trainer_class == "RIVAL3" && trainer_number == 3) { return "Champion" }
+            }
             //gym leaders
             if (trainer_class == "BROCK")    { return "Brock" }
             if (trainer_class == "MISTY")    { return "Misty" }

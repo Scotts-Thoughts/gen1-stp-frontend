@@ -32,7 +32,7 @@
                         'transform': `scale(${backgroundScale}%) ${backgroundFlip ? 'rotateY(180deg)' : ''} translate(${backgroundXOffset}px, ${-backgroundYOffset}px)`
                     }"/>
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
-                    <img class="canvas" style="top: -130px;" :src="`images/elements/floor/pokeball.png`" />
+                    <img class="canvas" style="top: -160px;" :src="`images/elements/floor/pokeball.png`" />
                     <img v-show="game_name == 'Yellow'" class="pokemon_art" ref="pokemon_art"
                         :style="{
                             'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px) rotate(${imageRotation}deg)`,
@@ -62,7 +62,9 @@
                         }" 
                         :src="`images/pokemon/Red_and_Blue/${s1dynamicReset.species.value}.png`" />
 
-                    <div v-show="blackouts_resets != 'Both'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_2.svg)"></div>
+                    <div v-show="blackouts_resets == 'None'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_3.svg)"></div>
+                    <div v-show="blackouts_resets == 'Blackouts'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_2.svg)"></div>
+                    <div v-show="blackouts_resets == 'Resets'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_2.svg)"></div>
                     <div v-show="blackouts_resets == 'Both'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer.svg)"></div>
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/stats.svg)"></div>
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/moveset.svg)"></div>
@@ -444,13 +446,6 @@
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-if="show_repel_counter == true && state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/accuracy.svg)"></div>
-                            <div class="repelLabel">repel steps</div>
-                            <div class="popUpsStyle repelSteps">{{ mapper.properties.overworld.repelCount.value }}</div>
-                        </div>
-                    </transition>
-                    <transition name="fade">
                         <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.bytes != 0x07 && batt.yourPokemon.modStageEvasion.bytes != 0x00 && batt.yourPokemon.modStageEvasion.bytes != 0xFF && (state == `Battle` || state == `From Battle`)">
                             <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/evasion.svg)"></div>
                             <div class="evasionLabel2">evasion</div>
@@ -465,10 +460,31 @@
                         </div>
                     </transition>
                     <transition name="fade">
-                        <div v-if="show_bonk_counter == true && state == 'Overworld'">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/screens.svg)"></div>
-                            <div class="screensLabel">bonks</div>
+                        <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets != 'Both'">
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks.svg)"></div>
+                            <div class="bonksLabel">bonks</div>
                             <div class="popUpsStyle bonksValue">{{ map?.patch?.steps?.bonks }}</div>
+                        </div>
+                    </transition>
+                    <transition name="fade">
+                        <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets == 'Both'">
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks_2.svg)"></div>
+                            <div class="bonksLabel_1">bonks</div>
+                            <div class="popUpsStyle bonksValue_1">{{ map?.patch?.steps?.bonks }}</div>
+                        </div>
+                    </transition>
+                    <transition name="fade">
+                        <div v-if="show_repel_counter == true && state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0 && blackouts_resets != 'Both'">
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/repel.svg)"></div>
+                            <div class="repelLabel">repel steps</div>
+                            <div class="popUpsStyle repelSteps">{{ mapper.properties.overworld.repelCount.value }}</div>
+                        </div>
+                    </transition>
+                    <transition name="fade">
+                        <div v-if="show_repel_counter == true && state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0 && blackouts_resets == 'Both'">
+                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/repel_2.svg)"></div>
+                            <div class="repelLabel_1">repel steps</div>
+                            <div class="popUpsStyle repelSteps_1">{{ mapper.properties.overworld.repelCount.value }}</div>
                         </div>
                     </transition>
                 </div>

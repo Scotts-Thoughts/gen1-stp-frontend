@@ -21,7 +21,7 @@
       <feComposite in2="blur" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="Stat_HP_New_Sat" data-name="Stat HP New Sat" x1="19" y1="881.5" x2="196" y2="881.5" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient" x1="19" y1="881.5" x2="196" y2="881.5" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#ef2028"/>
       <stop offset="0" stop-color="#1e993d"/>
       <stop offset=".5" stop-color="#2eeb5d"/>
@@ -38,7 +38,7 @@
       <feComposite in2="blur-2" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="Stat_Atk_New_Sat" data-name="Stat Atk New Sat" x1="19" y1="943.5" x2="196" y2="943.5" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient-2" x1="19" y1="943.5" x2="196" y2="943.5" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#9b8b2d"/>
       <stop offset=".04" stop-color="#a69638"/>
       <stop offset=".17" stop-color="#c8b85a"/>
@@ -76,7 +76,7 @@
       <feComposite in2="blur-4" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="Stat_Def_New_Sat" data-name="Stat Def New Sat" x1="19" y1="1005.5" x2="196" y2="1005.5" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient-3" x1="19" y1="1005.5" x2="196" y2="1005.5" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#a55821"/>
       <stop offset=".04" stop-color="#af5d23"/>
       <stop offset=".17" stop-color="#d16f29"/>
@@ -96,14 +96,18 @@
       <feComposite in2="blur-5" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="Stat_CritRate_New_copy" data-name="Stat CritRate New copy" x1="202" y1="1005.5" x2="379" y2="1005.5" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#808285"/>
-      <stop offset=".08" stop-color="#909295"/>
-      <stop offset=".24" stop-color="#a8aaac"/>
-      <stop offset=".38" stop-color="#b6b8bb"/>
-      <stop offset=".5" stop-color="#bcbec0"/>
-      <stop offset=".7" stop-color="#a6a8ab"/>
-      <stop offset="1" stop-color="#808285"/>
+    <linearGradient id="New_SpD_Dark" data-name="New SpD Dark" x1="202" y1="1005.5" x2="379" y2="1005.5" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5667a6"/>
+      <stop offset=".04" stop-color="#5c6eb1"/>
+      <stop offset=".17" stop-color="#6d83d3"/>
+      <stop offset=".29" stop-color="#7a92eb"/>
+      <stop offset=".41" stop-color="#829bf9"/>
+      <stop offset=".5" stop-color="#859fff"/>
+      <stop offset=".59" stop-color="#829bf9"/>
+      <stop offset=".71" stop-color="#7a91ea"/>
+      <stop offset=".84" stop-color="#6c81d0"/>
+      <stop offset=".97" stop-color="#596bad"/>
+      <stop offset="1" stop-color="#5667a6"/>
     </linearGradient>
     <filter id="drop-shadow-6" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
@@ -112,7 +116,7 @@
       <feComposite in2="blur-6" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="eCrit" x1="62" y1="689.5" x2="379" y2="689.5" gradientUnits="userSpaceOnUse">
+    <linearGradient id="eCrit" x1="62" y1="659.5" x2="379" y2="659.5" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#999"/>
       <stop offset=".04" stop-color="#a0a0a0"/>
       <stop offset=".21" stop-color="#b8b8b8"/>
@@ -130,7 +134,7 @@
       <feComposite in2="blur-7" operator="in"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <linearGradient id="linear-gradient" x1="19" y1="689.5" x2="59" y2="689.5" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient-4" x1="19" y1="659.5" x2="59" y2="659.5" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#999"/>
       <stop offset="1" stop-color="#999"/>
     </linearGradient>
@@ -144,18 +148,18 @@
   </defs>
   <g id="Solo_Challenge" data-name="Solo Challenge">
     <g id="Stats">
-      <g id="Gen1">
-        <g id="Stats_Gen2_high_saturation_copy_7" data-name="Stats Gen2 (high saturation) copy 7">
+      <g id="Gen1_new" data-name="Gen1 new">
+        <g id="Stats_Gen2_high_saturation_copy_10" data-name="Stats Gen2 (high saturation) copy 10">
           <rect id="spcAtk" x="202" y="852" width="177" height="59" rx="6" ry="6" style="fill: url(#New_Spe_Dark); filter: url(#drop-shadow-1); stroke-width: 0px;"/>
-          <rect id="hp" x="19" y="852" width="177" height="59" rx="6" ry="6" style="fill: url(#Stat_HP_New_Sat); filter: url(#drop-shadow-2); stroke-width: 0px;"/>
-          <rect id="atk" x="19" y="914" width="177" height="59" rx="6" ry="6" style="fill: url(#Stat_Atk_New_Sat); filter: url(#drop-shadow-3); stroke-width: 0px;"/>
+          <rect id="hp" x="19" y="852" width="177" height="59" rx="6" ry="6" style="fill: url(#linear-gradient); filter: url(#drop-shadow-2); stroke-width: 0px;"/>
+          <rect id="atk" x="19" y="914" width="177" height="59" rx="6" ry="6" style="fill: url(#linear-gradient-2); filter: url(#drop-shadow-3); stroke-width: 0px;"/>
           <rect id="spcDef" x="202" y="914" width="177" height="59" rx="6" ry="6" style="fill: url(#Stat_SpA_New_Sat); filter: url(#drop-shadow-4); stroke-width: 0px;"/>
-          <rect id="def" x="19" y="976" width="177" height="59" rx="6" ry="6" style="fill: url(#Stat_Def_New_Sat); filter: url(#drop-shadow-5); stroke-width: 0px;"/>
-          <rect id="spe" x="202" y="976" width="177" height="59" rx="6" ry="6" style="fill: url(#Stat_CritRate_New_copy); filter: url(#drop-shadow-6); stroke-width: 0px;"/>
+          <rect id="def" x="19" y="976" width="177" height="59" rx="6" ry="6" style="fill: url(#linear-gradient-3); filter: url(#drop-shadow-5); stroke-width: 0px;"/>
+          <rect id="spe" x="202" y="976" width="177" height="59" rx="6" ry="6" style="fill: url(#New_SpD_Dark); filter: url(#drop-shadow-6); stroke-width: 0px;"/>
         </g>
-        <g id="EXP_Bar_copy_5" data-name="EXP Bar copy 5">
-          <rect id="Label" x="62" y="682" width="317" height="15" rx="4.31" ry="4.31" style="fill: url(#eCrit); filter: url(#drop-shadow-7); stroke-width: 0px;"/>
-          <rect id="Label-2" data-name="Label" x="19" y="682" width="40" height="15" rx="4.31" ry="4.31" style="fill: url(#linear-gradient); filter: url(#drop-shadow-8); stroke-width: 0px;"/>
+        <g id="EXP_Bar_copy_7" data-name="EXP Bar copy 7">
+          <rect id="Label" x="62" y="652" width="317" height="15" rx="4.31" ry="4.31" style="fill: url(#eCrit); filter: url(#drop-shadow-7); stroke-width: 0px;"/>
+          <rect id="Label-2" data-name="Label" x="19" y="652" width="40" height="15" rx="4.31" ry="4.31" style="fill: url(#linear-gradient-4); filter: url(#drop-shadow-8); stroke-width: 0px;"/>
         </g>
       </g>
     </g>
