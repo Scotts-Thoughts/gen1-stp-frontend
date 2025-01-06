@@ -1799,13 +1799,13 @@ box-shadow:
     position: absolute;
     font-size: 14px;
     font-family: osb;
-    top: 4px;
+    top: 668px;
     opacity: .72;
 }
-.labelMoves { left: 17px; }
-.labelPwr   { left: 221px; }
-.labelAcc   { left: 292px; }
-.labelPP    { left: 342px; }
+.labelMoves { left: 27px; }
+.labelPwr   { left: 232px; }
+.labelAcc   { left: 306px; }
+.labelPP    { left: 353px; }
 /* .labelMoves { left: 21px; }
 .labelPwr   { left: 264px; }
 .labelAcc   { left: 276px; }

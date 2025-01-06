@@ -148,11 +148,15 @@
                     </div>
                 </div>  
                 <!-- Moveset -->
+                <div class="movesetLabel labelMoves">moves</div>
+                <div class="movesetLabel labelPwr"  >pwr.</div>
+                <div class="movesetLabel labelAcc"  >acc.</div>
+                <div class="movesetLabel labelPP"   >pp</div>
                 <div class="movesetContainer">
-                    <div class="movesetLabel labelMoves">moves</div>
+                    <!-- <div class="movesetLabel labelMoves">moves</div>
                     <div class="movesetLabel labelPwr"  >pwr.</div>
                     <div class="movesetLabel labelAcc"  >acc.</div>
-                    <div class="movesetLabel labelPP"   >pp</div>
+                    <div class="movesetLabel labelPP"   >pp</div> -->
                     <div v-for="move in pkmnMoves">
                         <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0][move].value != null">
                             <img :class="`movesetStyling iconStyling ${move}icon`" :src="moveTypeIcon(s1dynamic[move].value)" />
