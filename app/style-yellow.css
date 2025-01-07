@@ -835,7 +835,7 @@ box-shadow:
 .ePkmnMoveStyle {
     position: absolute;
     border: 1px solid rgba(47, 0, 255, 0);
-    width: 103px;
+    width: 105px;
     font-size: 15px;
     line-height: 31px;
     text-align: left;
