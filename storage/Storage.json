@@ -1,6 +1,6 @@
 {
     "global_variables": {
-        "starter": "Blastoise",
+        "starter": "Pidgey",
         "game": "Red"
     },
     "application_settings": {
@@ -91,7 +91,8 @@
         "toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE": false,
         "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW": true,
         "toggle_EVENT_ENCOUNTER_MTMOON_PARAS": true,
-        "toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER": true
+        "toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER": false,
+        "toggle_wEarlyEncounters": true
     },
     "games": {
         "Red": {
@@ -773,7 +774,7 @@
                     "backgroundFlip": false,
                     "backgroundUrl": "",
                     "use_custom_background": false,
-                    "attempt_number": 2,
+                    "attempt_number": 4,
                     "finished_run_count": 1,
                     "pb_time": "None",
                     "backgroundXOffset": 100,
@@ -783,20 +784,20 @@
                     "backgroundContrast": "105",
                     "backgroundSaturation": 100,
                     "backgroundHue": 0,
-                    "playerId": 10466,
+                    "playerId": 63064,
                     "playerName": "NINTEN",
                     "resetCatcher": "NINTEN",
-                    "playerResets": 0,
-                    "blackout_counter": 0,
+                    "playerResets": 1,
+                    "blackout_counter": 1,
                     "resetCounter": true,
-                    "game_over": true,
+                    "game_over": false,
                     "lance_defeated": false,
-                    "finished_logs": true,
+                    "finished_logs": false,
                     "blackouts_as_resets": false,
                     "blackout": false,
                     "faults": 0,
                     "most_recent_move": "",
-                    "split_logStr": "Autosplitter - Battle Started: RIVAL3 started at 21:11:44.20 (Gametime: 2:24)",
+                    "split_logStr": "Autosplitter - Battle Started: RIVAL1 started at 27.00 (Gametime: 0:01)",
                     "simple_data_str": "NINTEN,Pidgey,Champion,21:11:59,0,0,58,2:24,38.145,SURF,ICE BEAM,EARTHQUAKE,WITHDRAW\n",
                     "full_data_str": "1-06,19:47:12,NINTEN,Pidgey,Champion,2,Hall of Fame,6,21:11:59.76,21:11:59,21h11m59s,0,0,0,58,2:24,38.145,SURF,ICE BEAM,EARTHQUAKE,WITHDRAW,9,6525,623,63,6,337,290,166,16,66242,No Team Selected, ,Water,Water,191725,Pidgey2,Pidgey,Champion,21:11:44.20,21:11:59.76,02:24:37.17,58,0,21,11,59,76,SURF,ICE BEAM,EARTHQUAKE,WITHDRAW,13,6,9,29,0,0,0,0,164,191,137,153,138,138,132,10027,16611,10787,16011,16011,18808,15,15,15,15,0,5,0,0,0,0,0,154,601,155,155,148,2101,227165,234017,59283,2101,9,1,0,6525,4881,1505,0,623,69,63,6,3,0,31562,14585,784,784,251,55,90,0,0,0,0,0,38,0,12,0,1,0,0,0,0,0,0,1,2,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,177,152188,0,0,0,0,30,41,3,6,2,13,0,2,0,No Team Selected\n",
                     "deprecated_data_str": "Pidgey2,Pidgey,Champion,21:11:44.20,21:11:59.76,02:24:37.17,58,0,21,11,59,76,SURF,ICE BEAM,EARTHQUAKE,WITHDRAW,137,153,138,138,132,0,5,0,0,0,0,0,154,601,155,155,148,2101,227165,234017,59283,2101,9,1,0,6525,4881,1505,0,623,69,63,6,3,0,31562,14585,784,784,251,55,90,0,0,0,0,0,38,0,12,0,1,0,0,0,0,0,0,1,2,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,177,152188,0,0,0,0,30,41,3,6,2,13,0,2,0,No Team Selected\n",

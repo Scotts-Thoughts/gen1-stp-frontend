@@ -309,7 +309,7 @@
                                     </div>
 
                                     <!-- Stats -->
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelHp   opacityTransition" :style="stat_mod(0, x).style"                                           >Hp</div>
+                                    <div class="ePkmnStatLabelStyle ePkmnLabelHp   opacityTransition" :style="stat_mod(0, x).style"                                           >HP</div>
                                     <div class="ePkmnStatLabelStyle ePkmnLabelAtk  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageAttack.value, x).style" >Atk.</div>
                                     <div class="ePkmnStatLabelStyle ePkmnLabelDef  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageDefense.value, x).style">Def.</div>
                                     <div class="ePkmnStatLabelStyle ePkmnLabelSpc  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpecial.value, x).style">Spc.</div>
@@ -576,6 +576,7 @@
                 <div>Search Pokemon:</div>
                 <input type="text" v-model="search_term" placeholder="Search for a species">
                 <button class="buttonStyle new_run_button" @click="newRun">New Run</button>
+                <button class="buttonStyle new_run_button" @click="set_encounters">Set Encounters</button>
                 <br>
                 <button class="buttonStyle comparison_button" @click="load_splits()">Split Comparison</button><br>
                 <table>
@@ -723,7 +724,8 @@
 <!-- Imports -->
     <script src="https://unpkg.com/@microsoft/signalr@7.0.14/dist/browser/signalr.min.js"></script> 
     <script src="packages/vue.global.js"></script>
-    <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script>
+    <!-- <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script> -->
+    <script src="packages/gameHookMapperClient.js"></script>
     <script src="data/g1MoveData.js"></script>
     <script src="data/g1PokemonData.js"></script>
     <script src="data/g1PokemonDataRB.js"></script>
