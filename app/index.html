@@ -62,7 +62,8 @@
                         }" 
                         :src="`images/pokemon/Red_and_Blue/${s1dynamicReset.species.value}.png`" />
 
-                    <div v-show="blackouts_resets == 'None'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_3.svg)"></div>
+                    <!-- <div v-show="blackouts_resets == 'None'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_3.svg)"></div> -->
+                    <div v-show="blackouts_resets == 'None'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_2.svg)"></div>
                     <div v-show="blackouts_resets == 'Blackouts'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_2.svg)"></div>
                     <div v-show="blackouts_resets == 'Resets'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_2.svg)"></div>
                     <div v-show="blackouts_resets == 'Both'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer.svg)"></div>
@@ -77,6 +78,9 @@
                     <div class="exp_growthRate">{{ growthRate }}</div>
                     <transition name="fade"><div v-show="timer_settings == `Off - Real-Time Label` || timer_settings == `Real-Time`" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
                     <transition name="fade"><div v-show="timer_settings == `Off - Game-Time Label` || timer_settings == `Game-Time`" class="genericLabels timerLabel">gametime</div></transition>
+                    <div v-show="blackouts_resets == 'None'">
+                        <div class="genericLabels resetsLabel_1">faults</div>
+                    </div>
                     <div v-show="blackouts_resets == 'Resets'">
                         <div class="genericLabels resetsLabel_1">resets</div>
                     </div>
@@ -503,6 +507,11 @@
                     <div class="gametimeFrames">{{timer_formatted_time[1]}}</div>
                 </div></transition>
                 <!-- Resets -->
+                <div v-show="blackouts_resets == 'None'">
+                    <transition name="fade">
+                        <div class="faults_style resets_1"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
+                    </transition>
+                </div>
                 <div v-show="blackouts_resets == 'Resets'">
                     <transition name="fade">
                         <div class="faults_style resets_1"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
@@ -670,6 +679,7 @@
                         {{ key }}
                     </option>
                 </select>
+                <!-- <img src="images/screenshots/pidgey_pallete.png" /> -->
                 <br>
                 <table>
                     <tr><td>X-Offset:   </td><td><input type="range" min="-125" max="125" v-model="backgroundXOffset"/></td></tr>

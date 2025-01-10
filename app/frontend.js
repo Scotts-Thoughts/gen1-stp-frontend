@@ -1656,6 +1656,7 @@ const app = Vue.createApp({
                 ])
             }
             else if (game == 'Red and Blue') {
+                // this.mapper.properties.patch.wEarlyEncounters.set(early_encounters_value, false)
                 this.mapper.setBits([ // Set bits can only be called on properties that share the same address
                     {path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW',  value: this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW,  freeze: false},
                     {path: 'patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE',  value: this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE,  freeze: false},
@@ -2985,6 +2986,8 @@ const app = Vue.createApp({
                         return "images/trainers/agatha.png";
                     case "LANCE_1":
                         return "images/trainers/lance.png";
+                    case "ROCKET_1":
+                        return "images/trainers/Red_and_Blue/mtmoon_rocket_boss.png";
                     default:
                         return null;
                 }
@@ -3863,8 +3866,8 @@ const app = Vue.createApp({
         });
 
         //HM Encounters
-        this.mapper.properties.player.team[0].dvAttack.change(() => {
-            if (this.mapper.properties.overworld.map.value == "Pallet Town - Oak's Lab" && this.mapper.properties.player.team[0].level.value == 5 && this.mapper.properties.player.teamCount.value == 1) {
+        this.mapper.properties.overworld.map.change((newValue, oldValue) => {
+            if (newValue.value == "Pallet Town" && oldValue.value == "Pallet Town - Oak's Lab" && this.mapper.properties.events.got_pokedex.value == false) {
                 this.set_encounters()
             }
         })
