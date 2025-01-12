@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Mankey,Rival1-Lab,38,0,0,5,0:02,11.371,SCRATCH,LEER,,
+NINTEN,Mankey,Brock,10:12,0,13,15,0:39,31.521,KARATE CHOP,LEER,SCRATCH,
