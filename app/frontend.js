@@ -1312,7 +1312,7 @@ const app = Vue.createApp({
                 const game = this.mapper.properties.meta.gameName.value
                 const addedTrainers = new Set(); // Keep track of the trainers that have been added to the result
                 for (const x of this.previous_splits) {
-                    if (this.split_trainers[game].includes(x.trainer)) {
+                    if (this.split_trainers[game]?.includes(x.trainer)) {
                         const default_string = "-"
                         const cur_split = this.current_splits.find(y => y.trainer === x.trainer)
                         const prev = this.convertDurationToSeconds(x.time)
@@ -2906,6 +2906,8 @@ const app = Vue.createApp({
                         return "images/trainers/agatha.png";
                     case "LANCE_1":
                         return "images/trainers/lance.png";
+                    case "HIKER_2":
+                        return "images/trainers/elixir_hiker.png";
                     default:
                         return null;
                 }
@@ -2988,6 +2990,8 @@ const app = Vue.createApp({
                         return "images/trainers/lance.png";
                     case "ROCKET_1":
                         return "images/trainers/Red_and_Blue/mtmoon_rocket_boss.png";
+                    case "HIKER_2":
+                        return "images/trainers/Red_and_Blue/elixir_hiker.png";
                     default:
                         return null;
                 }
