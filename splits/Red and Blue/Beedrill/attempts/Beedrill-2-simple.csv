@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Beedrill,Rival1-Lab,35,0,0,5,0:01,8.464,FURY ATTACK,,,
+NINTEN,Beedrill,Rival1-Lab,37,0,0,5,0:01,10.041,FURY ATTACK,,,
+NINTEN,Beedrill,Champion,1:02:36,11,7,64,3:50,59.424,TWINEEDLE,MEGA DRAIN,DOUBLE-EDGE,SWORDS DANCE
