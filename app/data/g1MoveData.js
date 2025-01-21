@@ -1809,4 +1809,22 @@ const g1MoveData = {
   Category: "Special",
   Description: "Deals damage and lowers Special by 2 stages."
   },
+"Electro Drift" :  {
+  Move: "Electro Drift",
+  Type: "Electric",
+  Power: 100,
+  Accuracy: 100,
+  PP: 5,
+  Category: "Special",
+  Description: "Deals damage and lowers Special by 2 stages."
+  },
+"Collision Course" :  {
+  Move: "Collision Course",
+  Type: "Fighting",
+  Power: 100,
+  Accuracy: 100,
+  PP: 5,
+  Category: "Physical",
+  Description: "Deals damage and lowers Special by 2 stages."
+  },
 }

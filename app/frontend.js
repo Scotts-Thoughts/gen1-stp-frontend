@@ -1450,7 +1450,7 @@ const app = Vue.createApp({
             const trainer_class = this.mapper.properties.battle.trainer.class
             const trainer_number = this.mapper.properties.battle.trainer.number
             const trainer_identifier = `${trainer_class} ${trainer_number}`
-            console.log(trainer_identifier)
+            // console.log(trainer_identifier)
             if (this.mapper.properties.meta.gameName == "Yellow") { 
                 return g1YellowTrainers[trainer_identifier] 
             }
@@ -1479,7 +1479,7 @@ const app = Vue.createApp({
             var trainer = this.mapper?.properties?.battle?.trainer?.class?.value + "_" + this.mapper?.properties?.battle?.trainer?.number?.value
             var splitName = this.autosplitter[this.mapper?.properties?.meta?.gameName?.value][trainer]
             if (!splitName) { return }
-            console.log(splitName)
+            // console.log(splitName)
             var personalBestSplitTime = this.convertDurationToSeconds(this.pb_splits.find(subArray => subArray[2] == (splitName))[3] ?? "0")
             var currentTime = this.convertDurationToSeconds(this.timer_formatted_time[0]) + (this.time_ms / 100)
             return personalBestSplitTime - currentTime
@@ -1668,13 +1668,14 @@ const app = Vue.createApp({
                 ])
             }
         },
-        speed_comparison(enemy_slot, enemy_speed) {
+        speed_comparison(enemy_slot, enemy_speed_incoming) {
             const state          = this.mapper.properties.meta.state.value
             const player_speed   = this.mapper.properties.battle.yourPokemon.speed.value
             const trainer        = this.mapper.properties.battle.trainer.class.value
             const trainer_number = this.mapper.properties.battle.trainer.number.value
             let data = this.mapper.properties.meta.gameName.value == 'Yellow' ? this.g1YellowTrainers : this.g1RedBlueTrainers
             let enemy_hp = this.mapper.properties.battle.trainer.team[enemy_slot].hp.value
+            let enemy_speed = enemy_speed_incoming
             if (state == 'To Battle') {
                 console.log(trainer, trainer_number, data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd)
                 enemy_speed = data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd
@@ -1739,7 +1740,7 @@ const app = Vue.createApp({
             let values = [];
             
             for (let pokemon of Object.values(this.pokedex_yellow)) {
-                console.log(stat_label)
+                // console.log(stat_label)
                 let stat = pokemon[`base_stats`][stat_label];
                 sum += stat;
                 count++;
@@ -1958,7 +1959,7 @@ const app = Vue.createApp({
                 style: style_string,
             }
             // return { mod: -1, style: 'opacity: .7;' }
-            console.log(object)
+            // console.log(object)
             return object
         },
         enemyPkmnFaintTypes(pkmnData) {

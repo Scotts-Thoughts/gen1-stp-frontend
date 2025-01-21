@@ -1,4 +1,201 @@
 const pokedex_yellow = {
+    "Koraidon": {
+        "species": "Koraidon",
+        "rom_id": 152,
+        "national_dex_number": 956,
+        "base_stats": {
+            "hp": 100,
+            "attack": 135,
+            "defense": 115,
+            "speed": 135,
+            "special_attack": 85,
+            "special_defense": 85
+        },
+        "ev_yield": {
+            "hp": 100,
+            "attack": 135,
+            "defense": 115,
+            "speed": 135,
+            "special_attack": 85,
+            "special_defense": 85
+        },
+        "type_1": "Fighting",
+        "type_2": "Dragon",
+        "catch_rate": 3,
+        "base_experience": 255,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Dragon Rage"
+            ],
+            [
+                1,
+                "Low Kick"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                42,
+                "Agility"
+            ],
+            [
+                49,
+                "Flamethrower"
+            ],
+            [
+                56,
+                "Collision Course"
+            ],
+            [
+                63,
+                "Screech"
+            ],
+            [
+                70,
+                "Counter"
+            ],
+            [
+                77,
+                "Hyper Beam"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Mega Punch",
+            "Swords Dance",
+            "Mega Kick",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Submission",
+            "Counter",
+            "Seismic Toss",
+            "Rage",
+            "Dragon Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Solarbeam",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Fire Blast",
+            "Swift",
+            "Skull Bash",
+            "Rest",
+            "Psywave",
+            "Rock Slide",
+            "Tri Attack",
+            "Substitute",
+            "Cut",
+            "Fly",
+            "Surf",
+            "Strength",
+            "Flash"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Miraidon": {
+        "species": "Miraidon",
+        "rom_id": 152,
+        "national_dex_number": 956,
+        "base_stats": {
+            "hp": 100,
+            "attack": 85,
+            "defense": 100,
+            "speed": 135,
+            "special_attack": 135,
+            "special_defense": 135
+        },
+        "ev_yield": {
+            "hp": 100,
+            "attack": 85,
+            "defense": 100,
+            "speed": 135,
+            "special_attack": 135,
+            "special_defense": 135
+        },
+        "type_1": "Electric",
+        "type_2": "Dragon",
+        "catch_rate": 3,
+        "base_experience": 255,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [1, "Thundershock"],
+            [1, "Dragon Rage"]
+            [42, "Agility"],
+            [49, "Rock Slide"],
+            [56, "Electro Drift"],
+            [63, "Thunder"],
+            [70, "Fire Blast"],
+            [77, "Hyper Beam"]
+        ],
+        "tm_hm_learnset": [
+            "Swords Dance",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Rage",
+            "Solarbeam",
+            "Dragon Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Psychic",
+            "Teleport",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Metronome",
+            "Fire Blast",
+            "Swift",
+            "Rest",
+            "Thunder Wave",
+            "Psywave",
+            "Rock Slide",
+            "Tri Attack",
+            "Substitute",
+            "Cut",
+            "Fly",
+            "Surf",
+            "Strength",
+            "Flash"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
     "Iron Bundle": {
         "species": "Iron Bundle",
         "rom_id": 152,
