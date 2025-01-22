@@ -1,5 +1,5 @@
 const split_trainers = {
-    "Red and Blue": [
+    "Yellow": [
         "Rival1-Lab",           
         // "Rival1a-Route 22",     
         "Brock",                
