@@ -1670,15 +1670,16 @@ const app = Vue.createApp({
         },
         speed_comparison(enemy_slot, enemy_speed_incoming) {
             const state          = this.mapper.properties.meta.state.value
-            const player_speed   = this.mapper.properties.battle.yourPokemon.speed.value
             const trainer        = this.mapper.properties.battle.trainer.class.value
             const trainer_number = this.mapper.properties.battle.trainer.number.value
             let data = this.mapper.properties.meta.gameName.value == 'Yellow' ? this.g1YellowTrainers : this.g1RedBlueTrainers
             let enemy_hp = this.mapper.properties.battle.trainer.team[enemy_slot].hp.value
+            let player_speed   = this.mapper.properties.battle.yourPokemon.speed.value
             let enemy_speed = enemy_speed_incoming
             if (state == 'To Battle') {
                 console.log(trainer, trainer_number, data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd)
                 enemy_speed = data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd
+                player_speed = this.mapper.properties.player.team[0].speed.value
             }
             let object = {
                 comparison: "Outspeeds",
