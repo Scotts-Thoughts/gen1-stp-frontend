@@ -1,0 +1,6 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Gastly,Rival1-Lab,36,0,0,6,0:01,8.574,NIGHT SHADE,CONFUSE RAY,LICK,
+NINTEN,Gastly,Brock,2:10,0,0,11,0:08,17.384,NIGHT SHADE,CONFUSE RAY,LICK,
+NINTEN,Gastly,Rival2-Nugget Bridge,6:29,0,0,18,0:25,36.326,NIGHT SHADE,CONFUSE RAY,LICK,
+NINTEN,Gastly,Misty,10:53,2,0,24,0:40,10.929,NIGHT SHADE,CONFUSE RAY,LICK,
+NINTEN,Gastly,Cerulean Rocket,11:35,2,0,24,0:43,25.384,NIGHT SHADE,CONFUSE RAY,LICK,

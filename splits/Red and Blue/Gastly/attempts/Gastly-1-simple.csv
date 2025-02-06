@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Gastly,Rival1-Lab,56,0,0,6,0:03,12.526,NIGHT SHADE,CONFUSE RAY,LICK,
+NINTEN,Gastly,Rival1-Lab,35,0,0,6,0:01,8.527,NIGHT SHADE,CONFUSE RAY,LICK,
+NINTEN,Gastly,Brock,2:47,1,0,11,0:08,20.092,NIGHT SHADE,CONFUSE RAY,LICK,
+NINTEN,Gastly,Champion,45:19,8,0,60,2:47,91.427,THUNDERBOLT,NIGHT SHADE,HYPNOSIS,PSYCHIC
