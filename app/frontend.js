@@ -722,6 +722,7 @@ const app = Vue.createApp({
             speed_comparison_toggle   : true,
 
             toggle_wEarlyEncounters: false,
+            toggle_wEarlyEncountersNoMoon: false,
 
             // What behavior should these toggle have?
             // - Set them to the desired value before the run
@@ -3347,6 +3348,9 @@ const app = Vue.createApp({
                     };
                     this.most_recent_move = "";
                     this.startTime();
+                    if (this.toggle_wEarlyEncounters == false && this.toggle_wEarlyEncountersNoMoon == true) {
+                        this.toggle_wEarlyEncounters == true
+                    }
                     this.playerId = newProp.value;
                 }
             }
@@ -3875,6 +3879,9 @@ const app = Vue.createApp({
         this.mapper.properties.overworld.map.change((newValue, oldValue) => {
             if (newValue.value == "Pallet Town" && oldValue.value == "Pallet Town - Oak's Lab" && this.mapper.properties.events.got_pokedex.value == false) {
                 this.set_encounters()
+            }
+            else if (this.toggle_wEarlyEncountersNoMoon && (newValue.value == "Mt Moon - 1" || newValue.value == "Mt Moon - 2" || newValue.value == "Mt Moon - 3")) {
+                this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
             }
         })
 

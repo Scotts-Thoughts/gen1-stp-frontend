@@ -641,6 +641,7 @@
                 <div>Encounter Settings:</div>
                 <table>
                     <tr><td>Early Encounters:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_wEarlyEncounters"/></td></tr>
+                    <tr><td>No Moon:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_wEarlyEncountersNoMoon"/></td></tr>
                 </table>
                 <table v-if="game_name == 'Yellow'" class="ui_table">
                     <tr v-if="release == false"><td>Route 1</td>        <td>- Test:</td><td><input      class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE1_TEST"/></td></tr>

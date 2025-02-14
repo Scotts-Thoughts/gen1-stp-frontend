@@ -102,6 +102,7 @@ const auto_save_settings = [
     "collect_summary_files",
     "collect_split_data",
     "toggle_wEarlyEncounters",
+    "toggle_wEarlyEncountersNoMoon",
     "toggle_EVENT_ENCOUNTER_ROUTE1_TEST",           
     "toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY",
     "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW",        
