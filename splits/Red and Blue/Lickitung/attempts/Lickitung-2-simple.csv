@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Lickitung,Rival1-Lab,35,0,0,5,0:01,8.554,WRAP,SUPERSONIC,,
+NINTEN,Lickitung,Champion,43:02,4,0,60,2:44,55.595,BODY SLAM,SWORDS DANCE,DEFENSE CURL,BLIZZARD

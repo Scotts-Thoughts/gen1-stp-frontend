@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Lickitung,Rival1-Lab,34,0,0,5,0:01,7.582,WRAP,SUPERSONIC,,
+NINTEN,Lickitung,Brock,3:34,0,0,10,0:13,66.915,STOMP,SUPERSONIC,WRAP,
