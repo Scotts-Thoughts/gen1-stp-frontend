@@ -720,6 +720,7 @@ const app = Vue.createApp({
             show_frame                : false,
             no_attempt                : false,
             speed_comparison_toggle   : true,
+            enable_blackouts          : false,
 
             toggle_wEarlyEncounters: false,
             toggle_wEarlyEncountersNoMoon: false,
@@ -734,15 +735,15 @@ const app = Vue.createApp({
             // Yellow toggles
             toggle_EVENT_ENCOUNTER_ROUTE1_TEST           : false,
             toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY: false,
-            toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW        : false,
             toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW      : false,
-            toggle_EVENT_ENCOUNTER_ROUTE16_DODUO         : false,
             // Red and Blue toggles
-            toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW : false,
             toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE : false,
             toggle_EVENT_ENCOUNTER_MTMOON_PARAS   : false,
             toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER: false,
+            // Red/Blue/Yellow toggles
+            toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW : false,
             toggle_EVENT_ENCOUNTER_ROUTE16_DODUO  : false,
+
 
             refilming_mode  : false,
             refilmed_attempt: 0,
@@ -1148,10 +1149,6 @@ const app = Vue.createApp({
         toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER(newValue) {
             if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(true, false)}
             if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(false, false)}
-        },
-        toggle_EVENT_ENCOUNTER_ROUTE16_DODUO(newValue) {
-            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
-            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
         },
         current_splits: {
             handler: function (newVal, oldVal) {
@@ -3687,8 +3684,9 @@ const app = Vue.createApp({
                             continue
                         }
                     }
+                    this.battle_duration_ms = (Date.now() - this.battle_start) / 1000
                     this.battle_duration = this.convertMSToDuration(Date.now() - this.battle_start)
-                    this.exp_per_second = Math.round(this.battle_summary_exp_gained / this.battle_duration)
+                    this.exp_per_second = Math.round(this.battle_summary_exp_gained / this.battle_duration_ms)
                     this.battle_summary_battle_number = this.mapper.properties.patch?.battles?.trainerBattles?.value
                 }
 
@@ -3752,7 +3750,7 @@ const app = Vue.createApp({
                         this.right_panel = "Splits"
                         this.automatic_splits = true
                     }
-                    if (this.test_run == false && this.refilming_mode == false) {
+                    if (this.test_run == false && this.refilming_mode == false && this.no_attempt == false) {
                         this.finished_run_count++ //increment finished count if this is not a test run
                     };
                     this.stopTime() //stop the timer
@@ -3801,8 +3799,8 @@ const app = Vue.createApp({
         //new blackout tracking for loop processed gamestate
         this.mapper.properties.meta.state.change((newProp, oldProp) => {
             if (newProp.value == "Overworld" && oldProp.value == "Battle" && this.blackout == true) {
-                this.blackout_counter++;
                 this.blackout = false;
+                if (this.enable_blackouts) { this.blackout_counter++; }
             }
             if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") {
                 this.automatic_splits = false

@@ -108,10 +108,9 @@ const auto_save_settings = [
     "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW",        
     "toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW",      
     "toggle_EVENT_ENCOUNTER_ROUTE16_DODUO",         
-    "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW", 
     "toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE", 
     "toggle_EVENT_ENCOUNTER_MTMOON_PARAS",   
     "toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER",
-    "toggle_EVENT_ENCOUNTER_ROUTE16_DODUO",  
     "speed_comparison_toggle",
+    "enable_blackouts",
 ]

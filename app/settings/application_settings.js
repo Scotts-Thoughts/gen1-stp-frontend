@@ -94,10 +94,9 @@ const application_settings = [
     [ "toggle_EVENT_ENCOUNTER_ROUTE1_TEST",            false ],
     [ "toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY", false ],
     [ "toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW",       false ],
-    [ "toggle_EVENT_ENCOUNTER_ROUTE16_DODUO",          false ],
-    [ "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW",         false ],
     [ "toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE",         false ],
     [ "toggle_EVENT_ENCOUNTER_MTMOON_PARAS",           false ],
     [ "toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER",        false ],
     [ "toggle_EVENT_ENCOUNTER_ROUTE16_DODUO",          false ],
+    [ "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW",         false ],
 ];
