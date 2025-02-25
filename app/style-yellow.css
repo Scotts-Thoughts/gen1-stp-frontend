@@ -1040,14 +1040,14 @@ box-shadow:
 }
 .movesetContainer {
     border: 3px solid #00e90000;
-    left: -392px;
-    top: 643px;
+    left: 8px;
+    top: 661px;
     width: 380px;
     /* grid-row-start: 40;
     grid-row-end: 40;
     grid-column-start: 2;
     grid-column-end: 3; */
-    position: relative;
+    position: absolute;
 }
 .statsContainer {
     border: 3px solid #0000ff00;
@@ -1058,11 +1058,12 @@ box-shadow:
     position: relative;
 }
 .typeContainer {
-    border: 3px solid #b41ac200;
-    top: 550px;
-    grid-column-start: 2;
-    grid-column-end: 3;
-    position: relative;
+    border: 1px solid #b41ac200;
+    top: 568px;
+    left: 0px;
+    width: 400px;
+    height: 50px;
+    position: absolute;
 }
 .movepoolContainer {
     border: 3px solid #0000ff00;
@@ -1305,6 +1306,7 @@ box-shadow:
 .type {
     position: absolute;
     display: flex; 
+    transform: scale(.09);
     justify-content: center; 
     align-items: center;
     align-content: center;
@@ -1312,9 +1314,8 @@ box-shadow:
     filter: drop-shadow(8px 8px 15px #000000);
     width: 400px;
     height: 200px;
-    top: -92px;
-    left: -12px;
-    transform: scale(.09)
+    top: -88px;
+    /* left: -12px; */
 }
 
 .expMeterStyle {

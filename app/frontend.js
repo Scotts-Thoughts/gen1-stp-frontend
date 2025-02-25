@@ -3240,7 +3240,9 @@ const app = Vue.createApp({
                 }
 
                 //update variables
-                if (move_type == attacker_type1 || move_type == attacker_type2)                { multiplier_stab = 1.5 }
+                if (move_type == attacker_type1 || move_type == attacker_type2) { multiplier_stab = 1.5 }
+                console.log(move_name)
+                if (this.starterName == 'Dhelmise' && move_name == 'ANCHOR SHOT') { multiplier_stab = 1.5 }
                 if (defender_type1 != defender_type2)                                          { multiplier_type2 = this.typeData.find(x => x.moveType === move_type)[defender_type2] }
                 if (move_type == "Normal" || move_type == "Fighting" || move_type == "Flying" || move_type == "Bug" || move_type == "Poison" || move_type == "Ghost" || move_type == "Ground" || move_type == "Rock" || move_type == "Steel") {
                     move_category = "Physical" }

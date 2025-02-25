@@ -1,4 +1,64 @@
 const g1PokemonData = {
+"Dhelmise": {
+    name: "Dhelmise",
+    rom_id: 152,
+    national_dex_number: null,
+    base_hp: 70,
+    base_atk: 131,
+    base_def: 100,
+    base_spd: 40,
+    base_spc: 90,
+    ev_yield: null,
+    type1: "Ghost",
+    type2: "Grass",
+    catch_rate: 25,
+    base_xp: 181,
+    common_item: null,
+    rare_item: null,
+    gender_ratio: null,
+    egg_cycles: null,
+    base_friendship: null,
+    growth_rate: "Medium Fast",
+    egg_group_1: null,
+    egg_group_2: null,
+    abilities: [
+
+    ],
+    initial_moveset: [
+        "Mega Drain",
+        "Growth",
+        "Lick",
+        "Wrap"
+    ],
+    levelup_moveset: [[23, 'Mega Drain'], [27, 'Water Gun'], [32, 'Anchor Shot'], [36, 'Slam'], [45, 'SolarBeam'], [54, 'Razor Leaf']],
+    tm_hm_learnset: [
+        "Swords Dance",
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "BubbleBeam",
+        "Water Gun",
+        "Hyper Beam",
+        "Mega Drain",
+        "SolarBeam",
+        "Earthquake",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Rest",
+        "Rock Slide",
+        "Substitute"
+    ],
+    tutor_learnset: [
+
+    ],
+    egg_moves: [
+
+    ],
+    weight: null,
+},
 "Koraidon": {
     name: "Koraidon",
     rom_id: 152,

@@ -1,4 +1,14 @@
 const g1MoveData = {
+"Anchor Shot" :
+  {
+    Move: "Anchor Shot",
+    Type: "Steel",
+    Power: 80,
+    Accuracy: 100,
+    PP: 20,
+    Category: "Physical",
+    Description: "Deals damage."
+  },
 "Sacred Fire" :
   {
     Move: "Sacred Fire",
