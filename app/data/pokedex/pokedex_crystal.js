@@ -11225,8 +11225,8 @@ const pokedex_crystal = {
         "egg_moves": [],
         "weight": null
     },
-    "Nidoran_F": {
-        "species": "Nidoran_F",
+    "NidoranF": {
+        "species": "NidoranF",
         "rom_id": 29,
         "national_dex_number": 29,
         "base_stats": {
@@ -11307,8 +11307,8 @@ const pokedex_crystal = {
         ],
         "weight": null
     },
-    "Nidoran_M": {
-        "species": "Nidoran_M",
+    "NidoranM": {
+        "species": "NidoranM",
         "rom_id": 32,
         "national_dex_number": 32,
         "base_stats": {
