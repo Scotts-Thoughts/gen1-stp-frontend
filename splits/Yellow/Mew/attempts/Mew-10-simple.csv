@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Mew,Rival1-Lab,42,0,0,6,0:02,8.94,POUND,,,
+NINTEN,Mew,Brock,4:23,0,0,13,0:16,58.344,POUND,TRANSFORM,,
+NINTEN,Mew,Champion,33:58,0,0,57,2:15,60.313,BLIZZARD,THUNDERBOLT,EARTHQUAKE,SWORDS DANCE

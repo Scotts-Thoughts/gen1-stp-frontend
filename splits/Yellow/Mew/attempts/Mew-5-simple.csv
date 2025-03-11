@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Mew,Rival1-Lab,42,0,0,6,0:02,9.097,POUND,,,
+NINTEN,Mew,Champion,35:28,1,0,57,2:20,62.495,ROCK SLIDE,DIG,BODY SLAM,SWORDS DANCE

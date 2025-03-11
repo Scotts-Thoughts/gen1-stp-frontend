@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Gyarados,Rival1-Lab,32,0,0,5,0:01,4.406,DRAGON RAGE,BITE,LEER,HYDRO PUMP
+NINTEN,Gyarados,Brock,1:55,0,0,8,0:07,8.397,DRAGON RAGE,BITE,LEER,HYDRO PUMP
+NINTEN,Gyarados,Champion,39:52,6,1,55,2:25,60.016,SURF,THUNDERBOLT,HYPER BEAM,BLIZZARD
