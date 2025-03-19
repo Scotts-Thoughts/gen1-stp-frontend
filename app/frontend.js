@@ -717,6 +717,7 @@ const app = Vue.createApp({
             collect_summary_files     : true,
             show_repel_counter        : false,
             show_bonk_counter         : false,
+            toggle_compare_splits     : false,
             show_frame                : false,
             no_attempt                : false,
             speed_comparison_toggle   : true,
@@ -3724,20 +3725,20 @@ const app = Vue.createApp({
                     case "AGATHA":  
                     case "LANCE": { 
                         simpleSplit() 
-                        if (this.automatic_post_battle_splits == true) {
-                            this.right_panel = "Splits"
-                            this.automatic_splits = true
-                        }
+                        // if (this.automatic_post_battle_splits == true) {
+                        //     this.right_panel = "Splits"
+                        //     this.automatic_splits = true
+                        // }
                     }
                 }
                 switch (unique) {
                     //this is the Giovanni fight in the 8th gym
                     case "GIOVANNI_3": 
                         simpleSplit() 
-                        if (this.automatic_post_battle_splits == true) {
-                            this.right_panel = "Splits"
-                            this.automatic_splits = true
-                        }
+                        // if (this.automatic_post_battle_splits == true) {
+                        //     this.right_panel = "Splits"
+                        //     this.automatic_splits = true
+                        // }
                         break;
                     case "ROCKET_5":   { 
                         simpleSplit() 
@@ -3748,10 +3749,10 @@ const app = Vue.createApp({
                 //stop timer
                 if (trainer == "RIVAL3") { //this is the champion in gen1
                     log_split() //log the final split
-                    if (this.automatic_post_battle_splits == true) {
-                        this.right_panel = "Splits"
-                        this.automatic_splits = true
-                    }
+                    // if (this.automatic_post_battle_splits == true) {
+                    //     this.right_panel = "Splits"
+                    //     this.automatic_splits = true
+                    // }
                     if (this.test_run == false && this.refilming_mode == false && this.no_attempt == false) {
                         this.finished_run_count++ //increment finished count if this is not a test run
                     };
@@ -3806,7 +3807,7 @@ const app = Vue.createApp({
             }
             if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") {
                 this.automatic_splits = false
-                this.right_panel = 'Automatic'
+                // this.right_panel = 'Automatic'
             }
         });
 
