@@ -1,10 +1,10 @@
 const split_trainers = {
     "Yellow": [
-        "Rival1-Lab",           
+        // "Rival1-Lab",           
         // "Rival1a-Route 22",     
         "Brock",                
-        "Rival2-Nugget Bridge", 
-        "Rival3-SS Anne",       
+        // "Rival2-Nugget Bridge", 
+        // "Rival3-SS Anne",       
         "Misty",                
         "Erika",                
         "Surge",                
@@ -14,7 +14,7 @@ const split_trainers = {
         "Sabrina",              
         "Blaine",               
         "Giovanni",             
-        "Rival6-Route 22",      
+        // "Rival6-Route 22",      
         "Lorelei",              
         "Bruno",                
         "Agatha",               

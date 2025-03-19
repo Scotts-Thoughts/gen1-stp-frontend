@@ -103,11 +103,11 @@
                     </div> -->
                 </div>
                 <!-- Badges -->
-                 <div v-show="mapper.properties.meta.state.value != 'No Pokemon'">
-                     <div v-for="badge in progressBadges">
-                         <transition name="fade"><img v-show="mapper.properties.player.badges[badge].value == true" :src="`images/badges/progress bar/${badge}.png`" class="canvas" /></transition>
-                     </div>
-                 </div>
+                <div v-show="mapper.properties.meta.state.value != 'No Pokemon'">
+                    <div v-for="badge in progressBadges">
+                        <transition name="fade"><img v-show="mapper.properties.player.badges[badge].value == true" :src="`images/badges/progress bar/${badge}.png`" class="canvas" /></transition>
+                    </div>
+                </div>
                 <!-- Type Icons -->
                 <div class="typeContainer">
                     <div class="type">
@@ -245,7 +245,7 @@
                                 </tr>
                             </table> 
                             -->
-                            <div class="battle_summary_label">{{battle_summary_header}}</div>
+                            <!-- <div class="battle_summary_label">{{battle_summary_header}}</div>
                             <table class="battle_summary_table" cellspacing="0">
                                 <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
                                     <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Metric</td>
@@ -273,7 +273,7 @@
                                     <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
                                     <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
                                 </tr>
-                            </table>
+                            </table> -->
                             <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(ui/ui_splits.svg)"></div>
                         </div>
                     </div>
@@ -326,7 +326,7 @@
                                     <div class="ePkmnStatsStyle ePkmnSpc  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",mapper.properties.battle.trainer.team[x]?.speed,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnSpe  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",mapper.properties.battle.trainer.team[x]?.special,"enemyPokemon")}}</div>
                                     <div class="ePkmnStatsStyle ePkmnCrit opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{enemy_crit_rate(mapper.properties.battle.trainer.team[x])}}%</div>
-                                   
+                                
                                     <!-- Modifiers -->
                                     <div v-for="mod in modifiers = [
                                         ['modEnemyStageAttack',  'Atk',],

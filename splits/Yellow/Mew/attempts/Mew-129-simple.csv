@@ -1,0 +1,6 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Mew,Rival1-Lab,42,0,0,6,0:02,9.112,POUND,,,
+NINTEN,Mew,Brock,4:06,0,0,13,0:15,51.108,POUND,TRANSFORM,,
+NINTEN,Mew,Misty,7:11,0,0,20,0:27,14.198,MEGA PUNCH,TRANSFORM,POUND,
+NINTEN,Mew,Rival2-Nugget Bridge,7:44,0,0,21,0:30,14.241,BUBBLEBEAM,TRANSFORM,POUND,MEGA PUNCH
+NINTEN,Mew,Cerulean Rocket,10:21,0,0,25,0:40,11.049,BUBBLEBEAM,TRANSFORM,POUND,MEGA PUNCH
