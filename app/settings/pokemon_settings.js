@@ -54,6 +54,7 @@ const pokemon_settings = [
     [ "refilmed_attempt",       0, ],
     [ "refilmed_finish",        0, ],
     [ "show_bonk_counter", true, ],
+    [ "toggle_compare_splits", 'First', ],
     [ "show_repel_counter", true, ],
     [ "show_frame", true, ],
     

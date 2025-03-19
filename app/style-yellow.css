@@ -2047,35 +2047,61 @@ box-shadow:
 .fadeDelayed-leave-to     { opacity: 0; }
 .fadeDelayed-leave-active { transition: opacity 200ms ease-in-out; }
 
-/* .splits_table {
-    display: block;
+.splits_table_old {
+    display: table; /* Ensure table layout */
     position: absolute;
-    border: 1px solid #00ff0d00;
-    background-color: #ffffff;
-    font-size: 12px;
-    line-height: 20px;
-    line-height: 21px;
     width: 365px;
-    height: 456px;
+    height: 456px; /* Fixed height */
+    font-size: 12px;
     font-family: play;
     left: 1538px;
     top: 74px;
     opacity: .9;
-    border: none;
-} */
+    border-spacing: 0; /* Remove spacing between cells */
+    margin: 0;
+}
+.splits_table_old tr {
+    height: calc(100% / auto); /* Dynamically adjust row height */
+}
+
+.splits_table_old td {
+    vertical-align: middle; /* Center content vertically */
+    text-align: center; /* Center content horizontally */
+}
+.splits_table_old tr:nth-child(odd) {
+    background-color: #cfcfcf;
+}
+.splits_table_old tr:nth-child(even) {
+    background-color: #cfcfcf;
+}
+.splits_table_old tr:nth-child(odd) {
+    background-color: #ffffff;
+}
 .splits_table {
     display: table; /* Changed to table to make use of table properties */
     position: absolute;
     width: 364px;
-    height: 454px;
+    height: 670px;
     font-size: 12px;
-    line-height: 20px; /* Line height can affect vertical centering, so might adjust if necessary */
     font-family: 'Play', sans-serif; /* Ensure the font family is correctly referenced */
     left: 1538px;
     top: 75px;
     opacity: .9;
     border-spacing: 0; /* Removes spacing between cells */
     margin: 0; /* Removes margin around the table */
+}
+.scaled_icon {
+    padding: 3px; /* Remove any padding from the table cell */
+    margin: 0; /* Remove any margin */
+    text-align: center; /* Center the content horizontally */
+}
+
+.scaled_icon img {
+    display: block; /* Remove inline spacing around the image */
+    width: 100%; /* Ensure the image fills the width of the cell */
+    height: 100%; /* Ensure the image fills the height of the cell */
+    object-fit: cover; /* Ensure the image covers the entire cell without distortion */
+    filter: saturate(1.3)
 }
 .splits_table tr:nth-child(odd) {
     background-color: #cfcfcf;

@@ -214,67 +214,90 @@
                     <div v-else-if="right_panel == 'Splits'" key=5>
                         <div key=3>
                             <div class="split_label">Splits</div>
-                            <table class="splits_table" cellspacing="0">
-                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
-                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">Split</td>
-                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
-                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
-                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;">Diff</td>
-                                </tr>
-                                <tr v-for="split in compare_splits">
-                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">{{trainer_name_lookup[split.trainer]?.trainer}}</td>
-                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.previous_time}}</td>
-                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.current_time}}</td>
-                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;" :style="split_diff_color(split.difference)">{{split.difference}}</td>
-                                </tr>
-                            </table>
-                            <!-- 
-                            <div class="battle_summary_label">Second Splits Comparison</div>
-                            <table class="second_splits_table" cellspacing="0">
-                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
-                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">Split</td>
-                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
-                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
-                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;">Diff</td>
-                                </tr>
-                                <tr v-for="split in compare_splits">
-                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">{{trainer_name_lookup[split.trainer]?.trainer}}</td>
-                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.previous_time}}</td>
-                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.current_time}}</td>
-                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;" :style="split_diff_color(split.difference)">{{split.difference}}</td>
-                                </tr>
-                            </table> 
-                            -->
-                            <!-- <div class="battle_summary_label">{{battle_summary_header}}</div>
-                            <table class="battle_summary_table" cellspacing="0">
-                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
-                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Metric</td>
-                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">Value</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Battle Duration<br>(real-time)</td>
-                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this.battle_duration != 0 ? this.battle_duration : "-"}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Experience Per Second</td>
-                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this.exp_per_second != 0 ? this.exp_per_second : "-"}}</td>
-                                </tr>
-                                <tr v-for="stat in battle_summary.global">
-                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
-                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
-                                </tr>
-                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '1px solid #000'}"><td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Player:</td><td></td></tr>
-                                <tr v-for="stat in battle_summary.player">
-                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
-                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
-                                </tr>
-                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '1px solid #000'}"><td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Enemy:</td><td></td></tr>
-                                <tr v-for="stat in battle_summary.enemy">
-                                    <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
-                                    <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
-                                </tr>
-                            </table> -->
-                            <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(ui/ui_splits.svg)"></div>
+                            <div v-if="toggle_compare_splits === 'Followup'">
+                                <table style="height: 960px;" class="splits_table" cellspacing="0">
+                                    <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                        <td style="font-size: 18px; padding-left: 3px">Split</td>
+                                        <td style="font-size: 18px; width: 80px;  text-align: left; padding-left: 3px;"></td>
+                                        <td style="font-size: 18px; width: 110px; text-align: right;">{{previous_label}}</td>
+                                        <td style="font-size: 18px; width: 110px; text-align: right;">{{current_label}}</td>
+                                        <td style="font-size: 18px; width: 68px;  text-align: right; padding-right: 3px;">Diff</td>
+                                    </tr>
+                                    <tr v-for="split in compare_splits">
+                                        <td class="scaled_icon" style="font-size: 18px; width: 40px;  text-align: left;"><img :src="`images/split_images/${trainer_name_lookup.basic[split.trainer]?.trainer}.png`"></td>
+                                        <td style="font-size: 18px; width: 80px;  text-align: left; padding-left: 3px;">{{trainer_name_lookup.basic[split.trainer]?.trainer}}</td>
+                                        <td style="font-size: 18px; width: 110px; text-align: right;">{{split.previous_time}}</td>
+                                        <td style="font-size: 18px; width: 110px; text-align: right;">{{split.current_time}}</td>
+                                        <td style="font-size: 18px; width: 68px;  text-align: right; padding-right: 3px;" :style="split_diff_color(split.difference)">{{split.difference}}</td>
+                                    </tr>
+                                </table>
+                                <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg)"></div>
+                            </div>
+                            <div v-else-if="toggle_compare_splits === 'First'">
+                                <table  class="splits_table" style="height: 960px;" cellspacing="0">
+                                    <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                        <td style="font-size: 18px; padding-left: 3px">Split</td>
+                                        <td style="font-size: 18px; width: 180px;  text-align: left; padding-left: 3px;"></td>
+                                        <td style="font-size: 18px; width: 10px;  text-align: left; padding-left: 3px;"></td>
+                                        <td style="font-size: 18px; width: 10px;  text-align: left; padding-left: 3px;"></td>
+                                        <td style="font-size: 18px; width: 110px; text-align: right; padding-right: 3px;">Time</td>
+                                    </tr>
+                                    <tr v-for="split in compare_splits">
+                                        <td class="scaled_icon" style="font-size: 20px; width: 40px;  text-align: left;"><img :src="`images/split_images/${trainer_name_lookup.basic[split.trainer]?.trainer}.png`"></td>
+                                        <td style="font-size: 20px; width: 180px; text-align: left; padding-left: 3px;">{{trainer_name_lookup.detailed[split.trainer]?.trainer}}</td>
+                                        <td style="font-size: 20px; width: 10px;  text-align: left; padding-left: 3px;"></td>
+                                        <td style="font-size: 20px; width: 10px;  text-align: left; padding-left: 3px;"></td>
+                                        <td style="font-size: 20px; width: 110px; text-align: right; padding-right: 3px;">{{split.current_time}}</td>
+                                    </tr>
+                                </table>
+                                <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg)"></div>
+                            </div>
+                            <div v-else-if="toggle_compare_splits === 'Followup + Summary'">
+                                <div class="battle_summary_label">{{battle_summary_header}}</div>
+                                <table class="splits_table_old" cellspacing="0">
+                                    <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                        <td style="font-size: 16px; padding-left: 3px">Split</td>
+                                        <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
+                                        <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
+                                        <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;">Diff</td>
+                                    </tr>
+                                    <tr v-for="split in compare_splits">
+                                        <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">{{trainer_name_lookup.basic[split.trainer]?.trainer}}</td>
+                                        <td style="font-size: 16px; width: 110px; text-align: right;">{{split.previous_time}}</td>
+                                        <td style="font-size: 16px; width: 110px; text-align: right;">{{split.current_time}}</td>
+                                        <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;" :style="split_diff_color(split.difference)">{{split.difference}}</td>
+                                    </tr>
+                                </table>
+                                <table class="battle_summary_table" cellspacing="0">
+                                    <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                        <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Metric</td>
+                                        <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">Value</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Battle Duration<br>(real-time)</td>
+                                        <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this.battle_duration != 0 ? this.battle_duration : "-"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Experience Per Second</td>
+                                        <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this.exp_per_second != 0 ? this.exp_per_second : "-"}}</td>
+                                    </tr>
+                                    <tr v-for="stat in battle_summary.global">
+                                        <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
+                                        <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
+                                    </tr>
+                                    <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '1px solid #000'}"><td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Player:</td><td></td></tr>
+                                    <tr v-for="stat in battle_summary.player">
+                                        <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
+                                        <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
+                                    </tr>
+                                    <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '1px solid #000'}"><td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Enemy:</td><td></td></tr>
+                                    <tr v-for="stat in battle_summary.enemy">
+                                        <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
+                                        <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
+                                    </tr>
+                                </table>
+                                <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(ui/ui_splits.svg)"></div>
+                            </div>
                         </div>
                     </div>
                     <div v-else-if="right_panel == 'Automatic' && (state != 'Base Stats' && (state == 'To Battle' || state == 'Battle') && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=1>
@@ -373,32 +396,6 @@
                             </div>
                         </div> 
                     </div>
-                    <!-- <div v-else-if="right_panel == 'Inventory'" key=2>
-                        <table class="inventory_demo" cellspacing="0">
-                            <tr>
-                                <th>Money:</th>
-                                <th>${{mapper.properties.player.money.value}}</th>
-                                <th>Coins:</th>
-                                <th>{{mapper.properties.player.gameCornerCoins.value}}</th>
-                            </tr>
-                            <tr>
-                                <th class="inventory_header movepool_way">Slot</th>
-                                <th class="inventory_header movepool_way">Item</th>
-                                <th class="inventory_header movepool_move">Qty</th>
-                                <th class="inventory_header movepool_type">Sale $</th>
-                                <th class="inventory_header movepool_type">Total $</th>
-                            </tr>
-                            <tr v-for="item in items = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]">
-                                <th v-if="mapper.properties.player.items[item].item.value != null" class="movepool_header movepool_way">{{item + 1}}</th>
-                                <th v-if="mapper.properties.player.items[item].item.value != null" class="movepool_header movepool_way">{{capitalization_format(mapper.properties.player.items[item].item.value)}}</th>
-                                <th v-if="mapper.properties.player.items[item].item.value != null" class="movepool_header movepool_move">{{mapper.properties.player.items[item].quantity.value}}</th>
-                                <th v-if="mapper.properties.player.items[item].item.value != null" class="movepool_header movepool_type">${{mapper.properties.player.items[item].quantity.value * 100}}</th>
-                                <th v-if="mapper.properties.player.items[item].item.value != null" class="movepool_header movepool_type">${{mapper.properties.player.items[item].quantity.value * 100 * mapper.properties.player.items[item].quantity.value}}</th>
-                            </tr>
-                        </table>
-                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/movepool.svg)"></div>
-                        <div class="movepoolLabel">Inventory</div>
-                    </div> -->
                     <div v-else-if="key_F14 == true" key=3>
                         <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
                             <tr class="movepool_header" :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
@@ -715,6 +712,14 @@
                     <option>Splits</option>
                 </select>
                 <br>
+                Compare splits::<br>
+                <select v-model="toggle_compare_splits" class="dropdownMenu dropdown_menu_column3">
+                    <option>First</option>
+                    <option>Followup</option>
+                    <option>Followup + Summary</option>
+                </select>
+                <br>
+
                 <table>
                     <tr><td>Blackouts?:</td><td><input class="checkBoxStyle" type="checkbox" v-model="enable_blackouts"/></td></tr>
                     <tr><td>Disable right panel hotkeys:</td><td><input class="checkBoxStyle" type="checkbox" v-model="disallow_right_panel_switching"/></td></tr>
