@@ -256,7 +256,7 @@
                                 <div class="battle_summary_label">{{battle_summary_header}}</div>
                                 <table class="splits_table_old" cellspacing="0">
                                     <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
-                                        <td style="font-size: 16px; padding-left: 3px">Split</td>
+                                        <td style="font-size: 16px; text-align: left; padding-left: 3px">Split</td>
                                         <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
                                         <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
                                         <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 3px;">Diff</td>
@@ -538,18 +538,6 @@
                     <option>Blue</option>
                 </select><br>
                 <br>
-                <div v-if="release == false">
-                    <table>
-                        <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
-                        <tr><td>Refilming mode:</td><td><input class="checkBoxStyle" type="checkbox" v-model="refilming_mode"/></td></tr>
-                        <tr><td>No attempt/split:</td><td><input class="checkBoxStyle" type="checkbox" v-model="no_attempt"/></td></tr>
-                    </table>
-                    <table v-if="refilming_mode">
-                        <tr><td>Attempt:</td><td><input class="inputContainer" type="text" v-model="refilmed_attempt"/></td></tr>
-                        <tr><td>Finish:</td><td><input class="inputContainer" type="text" v-model="refilmed_finish"/></td></tr>
-                    </table>
-                    <br>
-                </div>
                 <div>Timer Setting:</div>
                 <select v-model="timer_settings" class="dropdownMenu dropdown_menu_column3">
                     <option disabled value="">Please select one</option>
@@ -564,6 +552,37 @@
                 <button class="buttonStyle buttonStyle_column3" onClick="openFolder('splits')">Open Splits Folder</button><br>
                 <br>
                 <br>
+                <div v-if="release == false">
+                    <table>
+                        <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
+                        <tr><td>Refilming mode:</td><td><input class="checkBoxStyle" type="checkbox" v-model="refilming_mode"/></td></tr>
+                        <tr><td>No attempt/split:</td><td><input class="checkBoxStyle" type="checkbox" v-model="no_attempt"/></td></tr>
+                    </table>
+                    <table v-if="refilming_mode">
+                        <tr><td>Attempt:</td><td><input class="inputContainer" type="text" v-model="refilmed_attempt"/></td></tr>
+                        <tr><td>Finish:</td><td><input class="inputContainer" type="text" v-model="refilmed_finish"/></td></tr>
+                    </table>
+                    <br>
+                </div>
+                <div v-if="test_run == true">
+                    <div>Moveset Updating:</div>
+                    <input type="text" v-model="move1_replacement" placeholder="Input move 1">
+                    <input type="text" v-model="move2_replacement" placeholder="Input move 2">
+                    <input type="text" v-model="move3_replacement" placeholder="Input move 3">
+                    <input type="text" v-model="move4_replacement" placeholder="Input move 4">
+                    <button class="buttonStyle buttonStyle_column3" @click="update_moveset">Update Party Moves</button>
+                    <button class="buttonStyle buttonStyle_column3" @click="update_battle_moveset">Update Battle Moves</button>
+                    <br>
+                    <br>
+                    <div>Item Updating:</div>
+                    <input type="text" v-model="item1_replacement" placeholder="Input item 1">
+                    <input type="text" v-model="item2_replacement" placeholder="Input item 2">
+                    <input type="text" v-model="item3_replacement" placeholder="Input item 3">
+                    <input type="text" v-model="item4_replacement" placeholder="Input item 4">
+                    <button class="buttonStyle buttonStyle_column3" @click="update_items">Update</button>
+                    <br>
+                    <br>
+                </div>
                 <div v-if="release == false">
                     <div>Debugging:</div>
                     <table>
@@ -719,7 +738,6 @@
                     <option>Followup + Summary</option>
                 </select>
                 <br>
-
                 <table>
                     <tr><td>Blackouts?:</td><td><input class="checkBoxStyle" type="checkbox" v-model="enable_blackouts"/></td></tr>
                     <tr><td>Disable right panel hotkeys:</td><td><input class="checkBoxStyle" type="checkbox" v-model="disallow_right_panel_switching"/></td></tr>
@@ -762,6 +780,7 @@
     <script src="data/pokedex/pokedex_gold_silver.js"></script>
     <script src="data/pokedex/pokedex_crystal.js"></script>
     <script src="data/backports.js"></script>
+    <script src="data/cross_generation_moves.js"></script>
     
     <script src="settings/application_settings.js"></script>
     <script src="settings/pokemon_settings.js"></script>
