@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Onix,Rival1-Lab,40,0,0,5,0:02,12.273,TACKLE,SCREECH,,
+NINTEN,Onix,Brock,7:01,0,0,12,0:27,81.774,TACKLE,SCREECH,,
+NINTEN,Onix,Rival2-Nugget Bridge,11:58,0,0,17,0:47,45.556,TACKLE,SCREECH,BIND,

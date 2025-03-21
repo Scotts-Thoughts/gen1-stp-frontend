@@ -1,0 +1,8 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Onix,Rival1-Lab,38,0,0,5,0:02,11.285,TACKLE,SCREECH,,
+NINTEN,Onix,Brock,6:51,0,0,12,0:26,73.814,TACKLE,SCREECH,,
+NINTEN,Onix,Rival2-Nugget Bridge,12:43,2,0,17,0:45,40.612,TACKLE,SCREECH,BIND,
+NINTEN,Onix,Cerulean Rocket,18:21,4,0,21,1:05,18.819,TACKLE,SCREECH,BIND,ROCK THROW
+NINTEN,Onix,Rival3-SS Anne,23:14,5,0,27,1:23,19.787,DIG,BODY SLAM,BIND,ROCK THROW
+NINTEN,Onix,Misty,25:09,6,0,28,1:29,14.185,DIG,BODY SLAM,BIND,ROCK THROW
+NINTEN,Onix,Surge,26:00,6,0,29,1:33,11.192,DIG,BODY SLAM,BIND,ROCK THROW
