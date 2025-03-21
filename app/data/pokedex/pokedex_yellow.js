@@ -1,4 +1,106 @@
 const pokedex_yellow = {
+    "Steelix": {
+        "species": "Steelix",
+        "rom_id": 152,
+        "national_dex_number": 208,
+        "base_stats": {
+            "hp": 75,
+            "attack": 85,
+            "defense": 200,
+            "speed": 30,
+            "special_attack": 55,
+            "special_defense": 55
+        },
+        "ev_yield": {
+            "hp": 75,
+            "attack": 85,
+            "defense": 200,
+            "speed": 30,
+            "special_attack": 55,
+            "special_defense": 55
+        },
+        "type_1": "Steel",
+        "type_2": "Ground",
+        "catch_rate": 25,
+        "base_experience": 196,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Fast",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Tackle"
+            ],
+            [
+                1,
+                "Screech"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                15,
+                "Bind"
+            ],
+            [
+                19,
+                "Rock Throw"
+            ],
+            [
+                25,
+                "Rage"
+            ],
+            [
+                33,
+                "Slam"
+            ],
+            [
+                43,
+                "Harden"
+            ],
+            [
+                49,
+                "Bite"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Rage",
+            "Dragon Rage",
+            "Earthquake",
+            "Fissure",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Selfdestruct",
+            "Skull Bash",
+            "Rest",
+            "Explosion",
+            "Rock Slide",
+            "Substitute",
+            "Cut",
+            "Strength"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
     "Dhelmise": {
         "species": "Dhelmise",
         "rom_id": 152,

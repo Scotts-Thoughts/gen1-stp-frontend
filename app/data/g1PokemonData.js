@@ -1,4 +1,64 @@
 const g1PokemonData = {
+"Steelix": {
+    name: "Steelix",
+    rom_id: 152,
+    national_dex_number: null,
+    base_hp: 75,
+    base_atk: 85,
+    base_def: 200,
+    base_spd: 30,
+    base_spc: 55,
+    ev_yield: null,
+    type1: "Steel",
+    type2: "Ground",
+    catch_rate: 25,
+    base_xp: 196,
+    common_item: null,
+    rare_item: null,
+    gender_ratio: null,
+    egg_cycles: null,
+    base_friendship: null,
+    growth_rate: "Medium Fast",
+    egg_group_1: null,
+    egg_group_2: null,
+    abilities: [
+
+    ],
+    initial_moveset: [
+        "Tackle",
+        "Screech"
+    ],
+    levelup_moveset: [[15, 'Bind'], [19, 'Rock Throw'], [25, 'Rage'], [33, 'Slam'], [43, 'Harden'], [49, 'Bite']],
+    tm_hm_learnset: [
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "Rage",
+        "Dragon Rage",
+        "Earthquake",
+        "Fissure",
+        "Dig",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Selfdestruct",
+        "Skull Bash",
+        "Rest",
+        "Explosion",
+        "Rock Slide",
+        "Substitute",
+        "Cut",
+        "Strength"
+    ],
+    tutor_learnset: [
+
+    ],
+    egg_moves: [
+
+    ],
+    weight: null,
+},
 "Dhelmise": {
     name: "Dhelmise",
     rom_id: 152,
