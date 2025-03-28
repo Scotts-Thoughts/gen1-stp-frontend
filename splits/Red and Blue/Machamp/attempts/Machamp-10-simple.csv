@@ -1,0 +1,6 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Machamp,Rival1-Lab,34,0,0,6,0:01,6.499,KARATE CHOP,LOW KICK,LEER,
+NINTEN,Machamp,Brock,2:09,0,0,11,0:08,17.256,KARATE CHOP,LOW KICK,LEER,
+NINTEN,Machamp,Rival2-Nugget Bridge,5:03,0,0,18,0:19,16.37,KARATE CHOP,LOW KICK,LEER,
+NINTEN,Machamp,Misty,7:50,0,0,24,0:30,10.961,KARATE CHOP,LOW KICK,LEER,
+NINTEN,Machamp,Cerulean Rocket,8:09,0,0,24,0:31,6.444,KARATE CHOP,LOW KICK,LEER,

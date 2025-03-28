@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Machamp,Rival1-Lab,33,0,0,6,0:01,6.493,KARATE CHOP,LOW KICK,LEER,
+NINTEN,Machamp,Champion,41:36,6,0,62,2:35,84.771,EARTHQUAKE,REST,ROCK SLIDE,BODY SLAM
