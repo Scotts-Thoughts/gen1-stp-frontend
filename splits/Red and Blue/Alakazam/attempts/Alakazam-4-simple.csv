@@ -1,0 +1,6 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Alakazam,Rival1-Lab,33,0,0,6,0:01,6.287,CONFUSION,TELEPORT,DISABLE,
+NINTEN,Alakazam,Brock,1:53,0,0,11,0:06,11.472,CONFUSION,TELEPORT,DISABLE,
+NINTEN,Alakazam,Rival2-Nugget Bridge,4:43,0,0,18,0:18,17.68,CONFUSION,TELEPORT,DISABLE,
+NINTEN,Alakazam,Misty,7:24,0,0,24,0:28,12.801,CONFUSION,TELEPORT,DISABLE,
+NINTEN,Alakazam,Cerulean Rocket,7:51,0,0,24,0:30,15.306,CONFUSION,TELEPORT,DISABLE,

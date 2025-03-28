@@ -1,3 +1,6 @@
 player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
 NINTEN,Alakazam,Rival1-Lab,1:20,0,0,6,0:01,8.184,CONFUSION,TELEPORT,DISABLE,
 NINTEN,Alakazam,Rival1-Lab,10:26,0,0,6,0:03,15.938,CONFUSION,TELEPORT,DISABLE,
+NINTEN,Alakazam,Rival1-Lab,33,0,0,6,0:01,6.685,CONFUSION,TELEPORT,DISABLE,
+NINTEN,Alakazam,Brock,1:55,0,0,11,0:07,10.869,CONFUSION,TELEPORT,DISABLE,
+NINTEN,Alakazam,Champion,33:02,2,0,58,2:08,84.474,PSYCHIC,RECOVER,BODY SLAM,REFLECT

@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Alakazam,Rival1-Lab,33,0,0,6,0:01,6.316,CONFUSION,TELEPORT,DISABLE,
+NINTEN,Alakazam,Brock,1:51,0,0,11,0:06,10.117,CONFUSION,TELEPORT,DISABLE,
