@@ -1,4 +1,210 @@
 const pokedex_yellow = {
+    "Brute Bonnet": {
+        "species": "Brute Bonnet",
+        "rom_id": 152,
+        "national_dex_number": 986,
+        "base_stats": {
+            "hp": 111,
+            "attack": 127,
+            "defense": 99,
+            "speed": 55,
+            "special_attack": 99,
+            "special_defense": 99
+        },
+        "ev_yield": {
+            "hp": 111,
+            "attack": 127,
+            "defense": 99,
+            "speed": 55,
+            "special_attack": 99,
+            "special_defense": 99
+        },
+        "type_1": "Grass",
+        "type_2": "Dark",
+        "catch_rate": 50,
+        "base_experience": 255,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Absorb"
+            ],
+            [
+                1,
+                "Growth"
+            ],
+            [
+                1,
+                "Lick"
+            ],
+            [
+                1,
+                "Stun Spore"
+            ],
+            [
+                21,
+                "Mega Drain"
+            ],
+            [
+                28,
+                "Sludge"
+            ],
+            [
+                35,
+                "Leech Seed"
+            ],
+            [
+                42,
+                "Thrash"
+            ],
+            [
+                49,
+                "Spore"
+            ],
+            [
+                56,
+                "SolarBeam"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Submission",
+            "Rage",
+            "Mega Drain",
+            "Earthquake",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Rest",
+            "Substitute",
+            "SolarBeam"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Iron Hands": {
+        "species": "Iron Hands",
+        "rom_id": 152,
+        "national_dex_number": 992,
+        "base_stats": {
+            "hp": 154,
+            "attack": 140,
+            "defense": 108,
+            "speed": 50,
+            "special_attack": 68,
+            "special_defense": 68
+        },
+        "ev_yield": {
+            "hp": 154,
+            "attack": 140,
+            "defense": 108,
+            "speed": 50,
+            "special_attack": 68,
+            "special_defense": 68
+        },
+        "type_1": "Fighting",
+        "type_2": "Electric",
+        "catch_rate": 50,
+        "base_experience": 255,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Sand Attack"
+            ],
+            [
+                1,
+                "Tackle"
+            ],
+            [
+                1,
+                "Focus Energy"
+            ],
+            [
+                1,
+                "Low Kick"
+            ],
+            [
+                21,
+                "Thunderpunch"
+            ],
+            [
+                28,
+                "Slam"
+            ],
+            [
+                35,
+                "Double Kick"
+            ],
+            [
+                42,
+                "Seismic Toss"
+            ],
+            [
+                49,
+                "Growth"
+            ],
+            [
+                56,
+                "Hyper Beam"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Mega Punch",
+            "Swords Dance",
+            "Whirlwind",
+            "Mega Kick",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Hyper Beam",
+            "Submission",
+            "Counter",
+            "Seismic Toss",
+            "Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Earthquake",
+            "Fissure",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Skull Bash",
+            "Rest",
+            "Thunder Wave",
+            "Rock Slide",
+            "Substitute",
+            "Strength"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution family": []
+    },
     "Steelix": {
         "species": "Steelix",
         "rom_id": 152,
