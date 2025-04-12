@@ -270,7 +270,7 @@ const g1PokemonData = {
         "Counter",
         "Seismic Toss",
         "Rage",
-        "Solarbeam",
+        "SolarBeam",
         "Dragon Rage",
         "Thunderbolt",
         "Thunder",
@@ -339,7 +339,7 @@ const g1PokemonData = {
         "Double-Edge",
         "Hyper Beam",
         "Rage",
-        "Solarbeam",
+        "SolarBeam",
         "Dragon Rage",
         "Thunderbolt",
         "Thunder",
@@ -937,8 +937,8 @@ const g1PokemonData = {
         "Strength",
         "Flash",
         "Bubblebeam",
-        "Solarbeam",
-        "Psychic M"
+        "SolarBeam",
+        "Psychic"
     ],
     tutor_learnset: [],
     egg_moves: [],
@@ -1354,7 +1354,7 @@ const g1PokemonData = {
         [30, 'Lick'],
         [36, 'Night Shade'],
         [40, 'TrickOrTreat'],
-        [48, 'Solarbeam']
+        [48, 'SolarBeam']
     ],
     tm_hm_learnset: [
         "Swords Dance",

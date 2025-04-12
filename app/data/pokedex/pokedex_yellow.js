@@ -468,7 +468,7 @@ const pokedex_yellow = {
             "Dragon Rage",
             "Thunderbolt",
             "Thunder",
-            "Solarbeam",
+            "SolarBeam",
             "Dig",
             "Mimic",
             "Double Team",
@@ -544,7 +544,7 @@ const pokedex_yellow = {
             "Double-Edge",
             "Hyper Beam",
             "Rage",
-            "Solarbeam",
+            "SolarBeam",
             "Dragon Rage",
             "Thunderbolt",
             "Thunder",
@@ -1486,8 +1486,8 @@ const pokedex_yellow = {
             "Strength",
             "Flash",
             "Bubblebeam",
-            "Solarbeam",
-            "Psychic M"
+            "SolarBeam",
+            "Psychic"
         ],
         "tutor_learnset": [],
         "egg_moves": [],
@@ -1929,7 +1929,7 @@ const pokedex_yellow = {
             "Rest",
             "Substitute",
             "Strength",
-            "Solarbeam"
+            "SolarBeam"
         ],
         "tutor_learnset": [],
         "egg_moves": [],
@@ -2036,7 +2036,7 @@ const pokedex_yellow = {
             "Cut",
             "Flash",
             "Bubblebeam",
-            "Psychic M"
+            "Psychic"
         ],
         "tutor_learnset": [],
         "egg_moves": [],
@@ -2127,7 +2127,7 @@ const pokedex_yellow = {
             ],
             [
                 48,
-                "Solarbeam"
+                "SolarBeam"
             ]
         ],
         "tm_hm_learnset": [
@@ -2150,8 +2150,8 @@ const pokedex_yellow = {
             "Rock Slide",
             "Substitute",
             "Cut",
-            "Solarbeam",
-            "Psychic M"
+            "SolarBeam",
+            "Psychic"
         ],
         "tutor_learnset": [],
         "egg_moves": [],
@@ -2226,8 +2226,8 @@ const pokedex_yellow = {
             "Psywave",
             "Substitute",
             "Flash",
-            "Solarbeam",
-            "Psychic M"
+            "SolarBeam",
+            "Psychic"
         ],
         "tutor_learnset": [],
         "egg_moves": [],
@@ -12802,7 +12802,7 @@ const pokedex_yellow = {
             "Thunder Wave",
             "Reflect",
             "Psywave",
-            "Psychic M",
+            "Psychic",
             "Hyper Beam",
             "Mimic",
             "Double Team",
