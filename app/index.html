@@ -548,7 +548,8 @@
                 <button class="buttonStyle buttonStyle_column3" @click="pauseUnpauseTime">Play/Pause</button><br>
                 <button class="buttonStyle set_button_style" @click="set_timer">Set</button><input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
                 <br>
-                <button class="buttonStyle buttonStyle_column3" onClick="openFolder('splits')">Open Splits Folder</button><br>
+                <!-- <button class="buttonStyle buttonStyle_column3" onClick="openFolder('splits')">Open Splits Folder</button><br> -->
+                <button class="buttonStyle buttonStyle_column3" @click="openFolder(`splits`, game, starter)">Open Splits Folder</button>
                 <br>
                 <br>
                 <div v-if="release == false">

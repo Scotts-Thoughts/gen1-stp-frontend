@@ -131,9 +131,9 @@ async function loadCsvFile() {
 }
 
 // Open the folder ./splits/ in the file explorer with node.js
-function openFolder(folderName) {
-    require('child_process').exec(`start .\\${folderName}\\`);
-}
+// function openFolder(folderName) {
+//     require('child_process').exec(`start .\\${folderName}\\`);
+// }
 
 function downloadFile(content, downloadFileName) {
     const blob = new Blob([content], {type: "application/octet-stream"});
@@ -1648,6 +1648,19 @@ const app = Vue.createApp({
     },
 
     methods: {
+        openFolder(folderName, game_name = "Yellow", path = "") {
+            const fs = require('fs');
+            const fullPath = path ? `.\\${folderName}\\${game_name}\\${path}` : `.\\${folderName}\\${game_name}\\${path}`;
+        
+            // Check if the folder exists
+            if (!fs.existsSync(fullPath)) {
+                // Create the folder (recursive ensures all parent directories are created)
+                fs.mkdirSync(fullPath, { recursive: true });
+            }
+        
+            // Open the folder
+            require('child_process').exec(`start ${fullPath}`);
+        },
         async update_items() {
             var item1 = this.item1_replacement.toUpperCase()
             var item2 = this.item2_replacement.toUpperCase()
