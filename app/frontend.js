@@ -3744,7 +3744,7 @@ const app = Vue.createApp({
                 this.full_data_str = full_data_str // assign within Data so it can be recalled on future loops
                 this.deprecated_data_str = deprecated_data_str // assign within Data so it can be recalled on future loops
                 this.simple_data = simple_data // assign within Data so it can be recalled on future loops
-                if (this.collect_split_data == true) {
+                if (this.collect_split_data == true && (this.mapper.properties.meta.state.value == "Battle" || this.mapper.properties.meta.state.value == "From Battle")) {
                     this.current_splits.push({
                         trainer: trainer_name, 
                         time:    real_time_hmmss,
