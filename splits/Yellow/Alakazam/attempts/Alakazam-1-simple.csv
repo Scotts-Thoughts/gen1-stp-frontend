@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Alakazam,Rival1a-Route 22,10:12,0,4,14,0:39,11.365,TELEPORT,KINESIS,,
+NINTEN,Alakazam,Brock,12:38,0,4,17,0:49,7.67,CONFUSION,KINESIS,TELEPORT,
+NINTEN,Alakazam,Champion,45:36,4,4,60,2:52,84.066,PSYCHIC,BODY SLAM,RECOVER,MIMIC

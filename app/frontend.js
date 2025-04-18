@@ -1648,9 +1648,9 @@ const app = Vue.createApp({
     },
 
     methods: {
-        openFolder(folderName, game_name = "Yellow", path = "") {
+        openFolder(folderName, game_name = "Yellow", path = "", path2) {
             const fs = require('fs');
-            const fullPath = path ? `.\\${folderName}\\${game_name}\\${path}` : `.\\${folderName}\\${game_name}\\${path}`;
+            const fullPath = path ? `.\\${folderName}\\${game_name}\\${path}\\${path2}` : `.\\${folderName}\\${game_name}\\${path}\\${path2}`;
         
             // Check if the folder exists
             if (!fs.existsSync(fullPath)) {
@@ -3981,7 +3981,20 @@ const app = Vue.createApp({
             else if (this.toggle_wEarlyEncountersNoMoon && (newValue.value == "Mt Moon - 1" || newValue.value == "Mt Moon - 2" || newValue.value == "Mt Moon - 3")) {
                 this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
             }
+            // Alakazam Yellow exception
+            else if (this.game_name == "Yellow" && this.starterName == "Alakazam" && newValue.value == "Mt Moon - 1" || newValue.value == "Mt Moon - 2" || newValue.value == "Mt Moon - 3") {
+                this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
+            }
+            else if (newValue.value == "Viridian Forest" && this.game_name == "Yellow" && this.starterName == "Alakazam" && this.mapper.properties.trainers.viridianForest.bugcatcher2.value == false) {
+                this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
+            }
         })
+        // Alakazam Yellow exception
+        this.mapper.properties.trainers.viridianForest.bugcatcher2.change((newValue, oldValue) => {
+            if (this.game_name == "Yellow" && this.starterName == "Alakazam" && newValue.value == true) {
+                this.mapper.properties.patch.wEarlyEncounters.set("On", false)
+            }
+        });
 
         //EXP BAR
         var species = this.s1dynamicReset.species.value;
