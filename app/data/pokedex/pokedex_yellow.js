@@ -1,4 +1,119 @@
 const pokedex_yellow = {
+    "Scream Tail": {
+        "species": "Scream Tail",
+        "rom_id": 152,
+        "national_dex_number": 985,
+        "base_stats": {
+            "hp": 115,
+            "attack": 65,
+            "defense": 99,
+            "speed": 111,
+            "special_attack": 115,
+            "special_defense": 115
+        },
+        "ev_yield": {
+            "hp": 115,
+            "attack": 65,
+            "defense": 99,
+            "speed": 111,
+            "special_attack": 115,
+            "special_defense": 115
+        },
+        "type_1": "Fairy",
+        "type_2": "Psychic Type",
+        "catch_rate": 50,
+        "base_experience": 255,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Slow",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Pound"
+            ],
+            [
+                1,
+                "Sing"
+            ],
+            [
+                1,
+                "Disable"
+            ],
+            [
+                1,
+                "No Move"
+            ],
+            [
+                14,
+                "Meditate"
+            ],
+            [
+                21,
+                "Bite"
+            ],
+            [
+                28,
+                "Body Slam"
+            ],
+            [
+                35,
+                "Rest"
+            ],
+            [
+                42,
+                "New Move 1"
+            ],
+            [
+                49,
+                "Psychic M"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Mega Punch",
+            "Mega Kick",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "Water Gun",
+            "Ice Beam",
+            "Blizzard",
+            "Hyper Beam",
+            "Submission",
+            "Counter",
+            "Seismic Toss",
+            "Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Dig",
+            "Teleport",
+            "Mimic",
+            "Double Team",
+            "Reflect",
+            "Bide",
+            "Fire Blast",
+            "Skull Bash",
+            "Rest",
+            "Thunder Wave",
+            "Psywave",
+            "Tri Attack",
+            "Substitute",
+            "Strength",
+            "Flash",
+            "Bubblebeam",
+            "Psychic M"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
     "Brute Bonnet": {
         "species": "Brute Bonnet",
         "rom_id": 152,

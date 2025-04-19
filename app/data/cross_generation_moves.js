@@ -3299,7 +3299,27 @@ const cross_generation_moves = {
             "AffectedByMirrorMove": false,
             "AffectedByKingsRock": false,
             "Description": ""
-        }
+        },
+        "Play Rough": {
+            "rom_id": 165,
+            "Move": "Play Rough",
+            "Type": "Fairy",
+            "Category": "Special",
+            "PP": 10,
+            "Power": 90,
+            "Accuracy": 100,
+            "Priority": 0,
+            "Effect": "NO_ADDITIONAL_EFFECT",
+            "EffectChance": -1,
+            "Target": "",
+            "MakesContact": false,
+            "AffectedByProtect": false,
+            "AffectedByMagicCoat": false,
+            "AffectedBySnatch": false,
+            "AffectedByMirrorMove": false,
+            "AffectedByKingsRock": false,
+            "Description": ""
+        },
     },
     "g2": {
         "Pound": {

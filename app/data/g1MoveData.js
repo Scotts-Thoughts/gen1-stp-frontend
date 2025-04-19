@@ -1837,4 +1837,13 @@ const g1MoveData = {
   Category: "Physical",
   Description: "Deals damage and lowers Special by 2 stages."
   },
+"Play Rough" :  {
+  Move: "Play Rough",
+  Type: "Fairy",
+  Power: 90,
+  Accuracy: 100,
+  PP: 10,
+  Category: "Special",
+  Description: "Deals damage and lowers Special by 2 stages."
+  },
 }
