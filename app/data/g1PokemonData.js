@@ -68,8 +68,8 @@ const g1PokemonData = {
     egg_group_1: null,
     egg_group_2: null,
     abilities: [],
-    initial_moveset: ["Sand Attack","Tackle","Focus Energy","Low Kick"],
-    levelup_moveset: [[21, 'Thunderpunch'], [28, 'Slam'], [35, 'Double Kick'], [42, 'Seismic Toss'], [49, 'Growth'], [56, 'Hyper Beam']],
+    initial_moveset: ["Sand-Attack","Tackle","Focus Energy","Low Kick"],
+    levelup_moveset: [[21, 'ThunderPunch'], [28, 'Slam'], [35, 'Double Kick'], [42, 'Seismic Toss'], [49, 'Growth'], [56, 'Hyper Beam']],
     tm_hm_learnset: [
         "Mega Punch",
         "Swords Dance",
