@@ -247,7 +247,7 @@ const pokedex_yellow = {
         "level_up_learnset": [
             [
                 1,
-                "Sand Attack"
+                "Sand-Attack"
             ],
             [
                 1,

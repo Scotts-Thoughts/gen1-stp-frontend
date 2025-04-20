@@ -1563,13 +1563,13 @@ const app = Vue.createApp({
         },
         s1dynamicReset() {
             var species = ""
-            if (this.mapper.properties.player.team[0].species.value == "Backport") {
-                species = this.starterName
-            }
             if (this.state == `Battle`) {
                 const battle_data = this.mapper?.properties?.battle?.yourPokemon
                 species = battle_data.species.value
                 if (species == null || species == undefined) {
+                    species = this.starterName
+                }
+                if (this.mapper.properties.player.team[0].species.value == "Backport") {
                     species = this.starterName
                 }
                 return {
@@ -1579,6 +1579,9 @@ const app = Vue.createApp({
             }
             else if (this.state == `Base Stats` || this.mapper?.properties?.player?.team[0].species.value == null) {
                 const pokedex_data = this.g1PokemonData?.[this.starterName]
+                if (this.mapper.properties.player.team[0].species.value == "Backport") {
+                    species = this.starterName
+                }
                 return {
                     species: { value: pokedex_data.name },
                     ...pokedex_data
@@ -1590,6 +1593,9 @@ const app = Vue.createApp({
                 if (species == null || species == undefined) {
                     species = this.starterName
                 }
+                if (this.mapper.properties.player.team[0].species.value == "Backport") {
+                    species = this.starterName
+                }
                 return {
                     ...party_data,
                     species: { value: species }
@@ -1598,10 +1604,14 @@ const app = Vue.createApp({
         },
         starting_type_fix() {
             if (this.map.overworld.map.value == "Pallet Town - Oak's Lab" || this.state == "Base Stats") {
-                return [this.g1PokemonData[this.starterName].type1.toLowerCase(), this.g1PokemonData[this.starterName].type2.toLowerCase()]
+                const fixed_type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
+                const fixed_type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
+                return [fixed_type1, fixed_type2]
             }
             else {
-                return [this.s1dynamicReset.type1.toString().toLowerCase(), this.s1dynamicReset.type2.toString().toLowerCase()]
+                const type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
+                const type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
+                return [type1, type2]
             }
         },
 
@@ -1636,7 +1646,7 @@ const app = Vue.createApp({
             }
         },
         growthRate() {
-            var species = this.s1dynamicReset.species.value
+            var species = this.s1dynamicReset.species.value == 'Backport' ? this.starterName : this.s1dynamicReset.species.value
             // debugger
             return this.g1PokemonData[species ?? this.starterName].growth_rate
         },
@@ -1648,6 +1658,36 @@ const app = Vue.createApp({
     },
 
     methods: {
+        get_backport_move_name(move_name, starter, byte_value) {
+            if (move_name == 'STRUGGLE' || move_name == null) {
+                switch (starter) {
+                    case "Scream Tail": {
+                        switch (byte_value) {
+                            case (165): return 'Play Rough'
+                            case (166): return 'Struggle'
+                        }
+                    }
+                    case "Testmoth": {
+                        switch (byte_value) {
+                            case (165): return 'Moth-Beam'
+                            case (166): return 'Moth-Bolt'
+                            case (167): return 'Moth-Flame'
+                            case (168): return 'Moth-Blast'
+                            case (169): return 'Struggle'
+                        }
+                    }
+                    default: return move_name
+                }
+            }
+            else return move_name
+        },
+        get_backport_move(slot) {
+            const move = this.s1dynamic[slot].value
+            const byte = this.s1dynamic[slot].bytes[0]
+            const starter = this.starterName
+            const return_value = this.get_backport_move_name(move, starter, byte)
+            return return_value
+        },
         openFolder(folderName, game_name = "Yellow", path = "", path2) {
             const fs = require('fs');
             const fullPath = path ? `.\\${folderName}\\${game_name}\\${path}\\${path2}` : `.\\${folderName}\\${game_name}\\${path}\\${path2}`;
@@ -1773,7 +1813,7 @@ const app = Vue.createApp({
             let player_speed   = this.mapper.properties.battle.yourPokemon.speed.value
             let enemy_speed = enemy_speed_incoming
             if (state == 'To Battle') {
-                console.log(trainer, trainer_number, data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd)
+                // console.log(trainer, trainer_number, data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd)
                 enemy_speed = data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd
                 player_speed = this.mapper.properties.player.team[0].speed.value
             }
@@ -3312,7 +3352,8 @@ const app = Vue.createApp({
         type_effectiveness(pkmnData, moveNumber, enemyData) { //pkmnData = team[0] etc
             if (this.typeCalcs == true) {
                 const move_data_array = Object.values(this.g1MoveData);
-                var move_name          = pkmnData[moveNumber].value
+                var move_name          =  this.get_backport_move_name(pkmnData[moveNumber].value, this.starterName, pkmnData[moveNumber].bytes)
+                // console.log(move_name)
 
                 if (move_name == null) { return "" } //stop the function if there is no move in that slot
                 if (move_name == 'Doom Desire') { return 120 }
@@ -3339,7 +3380,7 @@ const app = Vue.createApp({
 
                 //update variables
                 if (move_type == attacker_type1 || move_type == attacker_type2) { multiplier_stab = 1.5 }
-                console.log(move_name)
+                // console.log(move_name)
                 if (this.starterName == 'Dhelmise' && move_name == 'ANCHOR SHOT') { multiplier_stab = 1.5 }
                 if (defender_type1 != defender_type2)                                          { multiplier_type2 = this.typeData.find(x => x.moveType === move_type)[defender_type2] }
                 if (move_type == "Normal" || move_type == "Fighting" || move_type == "Flying" || move_type == "Bug" || move_type == "Poison" || move_type == "Ghost" || move_type == "Ground" || move_type == "Rock" || move_type == "Steel") {
@@ -3997,7 +4038,7 @@ const app = Vue.createApp({
         });
 
         //EXP BAR
-        var species = this.s1dynamicReset.species.value;
+        var species = this.s1dynamicReset.species.value == 'Backport' ? this.starterName : this.s1dynamicReset.species.value;
         var growthRate = species ? this.g1PokemonData[species].growth_rate : this.g1PokemonData[this.starterName].growth_rate
         var expStats = this.calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value);
         this.$refs.expBar.style.width = (expStats.percent * 100) + "%";

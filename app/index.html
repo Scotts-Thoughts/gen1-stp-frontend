@@ -46,7 +46,7 @@
                             drop-shadow(${imageFlip ? '-3px' : '3px'} 3px 3px #000)
                             `
                         }" 
-                        :src="`images/pokemon/${s1dynamicReset.species.value ?? this.starterName}.png`" />
+                        :src="`images/pokemon/${s1dynamicReset.species.value == 'Backport' ? this.starterName : s1dynamicReset.species.value}.png`" />
                     <img v-if="game_name == 'Red' || game_name == 'Blue'" class="pokemon_art2" ref="pokemon_art"
                         :style="{
                             'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`,
@@ -91,16 +91,6 @@
                         <div class="genericLabels resetsLabel">resets</div>
                         <div class="genericLabels blackoutLabel">blackouts</div>
                     </div>
-                    <!-- <div v-if="blackout_counter === 0">
-                        <div v-show="key_F16 == `resets`" class="genericLabels resetsLabel">resets</div>
-                        <div v-show="key_F16 == `blackouts`" class="genericLabels resetsLabel">blackouts</div>
-                    </div>
-                    <div v-else-if="blackout_counter > 0 && playerResetsDisplay === 0">
-                        <div class="genericLabels blackoutLabel">blackouts</div>
-                    </div>
-                    <div v-else-if="blackout_counter != 0">
-                        <div class="genericLabels resetsLabel">faults</div>
-                    </div> -->
                 </div>
                 <!-- Badges -->
                 <div v-show="mapper.properties.meta.state.value != 'No Pokemon'">
@@ -157,16 +147,12 @@
                 <div class="movesetLabel labelAcc"  >acc.</div>
                 <div class="movesetLabel labelPP"   >pp</div>
                 <div class="movesetContainer">
-                    <!-- <div class="movesetLabel labelMoves">moves</div>
-                    <div class="movesetLabel labelPwr"  >pwr.</div>
-                    <div class="movesetLabel labelAcc"  >acc.</div>
-                    <div class="movesetLabel labelPP"   >pp</div> -->
                     <div v-for="move in pkmnMoves">
                         <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0][move].value != null">
-                            <img :class="`movesetStyling iconStyling ${move}icon`" :src="moveTypeIcon(s1dynamic[move].value)" />
-                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling moveStyling ${move}`">{{ move_name(capitalization_format(s1dynamic[move].value)) }}</div>
+                            <img :class="`movesetStyling iconStyling ${move}icon`" :src="moveTypeIcon(get_backport_move(move))" />
+                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling moveStyling ${move}`">{{ move_name(capitalization_format(get_backport_move(move))) }}</div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling powerStyling ${move}`" :key="type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon)">{{ type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon) }}</div>
-                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling accuracyStyling ${move}`">{{ moveAccuracyEvasionDynamic(s1dynamic[move].value) }}<span style="font-size: 20px;">%</span></div>
+                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling accuracyStyling ${move}`">{{ moveAccuracyEvasionDynamic(get_backport_move(move)) }}<span style="font-size: 20px;">%</span></div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling ppStyling ${move}`">{{ mapper.properties.player.team[0][move + "pp"] }}</div>
                         </div>
                     </div>
@@ -759,7 +745,6 @@
 <!-- Imports -->
     <script src="https://unpkg.com/@microsoft/signalr@7.0.14/dist/browser/signalr.min.js"></script> 
     <script src="packages/vue.global.js"></script>
-    <!-- <script src="http://localhost:8085/dist/gameHookMapperClient.js"></script> -->
     <script src="packages/gameHookMapperClient.js"></script>
     <script src="data/g1MoveData.js"></script>
     <script src="data/g1PokemonData.js"></script>

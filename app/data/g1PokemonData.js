@@ -29,7 +29,7 @@ const g1PokemonData = {
         "Sing",
         "Disable"
     ],
-    levelup_moveset: [[14, 'Meditate'], [21, 'Bite'], [28, 'Body Slam'], [35, 'Rest'], [42, 'Play Rough'], [49, 'Psychic M']],
+    levelup_moveset: [[14, 'Meditate'], [21, 'Bite'], [28, 'Body Slam'], [35, 'Rest'], [42, 'Play Rough'], [49, 'Psychic']],
     tm_hm_learnset: [
         "Mega Punch",
         "Mega Kick",
