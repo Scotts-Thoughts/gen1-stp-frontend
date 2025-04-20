@@ -726,6 +726,7 @@ const app = Vue.createApp({
             collect_summary_files     : true,
             show_repel_counter        : false,
             show_bonk_counter         : false,
+            dropdown_bonks_items      : 'Bonks',
             toggle_compare_splits     : 'First',
             show_frame                : false,
             no_attempt                : false,

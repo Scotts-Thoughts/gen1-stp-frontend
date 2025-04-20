@@ -448,20 +448,40 @@
                             <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
                         </div>
                     </transition>
-                    <transition name="fade">
-                        <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets != 'Both'">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks.svg)"></div>
-                            <div class="bonksLabel">bonks</div>
-                            <div class="popUpsStyle bonksValue">{{ map?.patch?.steps?.bonks }}</div>
-                        </div>
-                    </transition>
-                    <transition name="fade">
-                        <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets == 'Both'">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks_2.svg)"></div>
-                            <div class="bonksLabel_1">bonks</div>
-                            <div class="popUpsStyle bonksValue_1">{{ map?.patch?.steps?.bonks }}</div>
-                        </div>
-                    </transition>
+
+                    <div v-if="dropdown_bonks_items == 'Bonks'">
+                        <transition name="fade">
+                            <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets != 'Both'">
+                                <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks.svg)"></div>
+                                <div class="bonksLabel">bonks</div>
+                                <div class="popUpsStyle bonksValue">{{ map?.patch?.steps?.bonks }}</div>
+                            </div>
+                        </transition>
+                        <transition name="fade">
+                            <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets == 'Both'">
+                                <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks_2.svg)"></div>
+                                <div class="bonksLabel_1">bonks</div>
+                                <div class="popUpsStyle bonksValue_1">{{ map?.patch?.steps?.bonks }}</div>
+                            </div>
+                        </transition>
+                    </div>
+                    <div v-else-if="dropdown_bonks_items == 'Item Count'">
+                        <transition name="fade">
+                            <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets != 'Both'">
+                                <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks.svg)"></div>
+                                <div class="bonksLabel">item count</div>
+                                <div class="popUpsStyle bonksValue">{{ map?.player.itemCount.value }}</div>
+                            </div>
+                        </transition>
+                        <transition name="fade">
+                            <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets == 'Both'">
+                                <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks_2.svg)"></div>
+                                <div class="bonksLabel_1">item count</div>
+                                <div class="popUpsStyle bonksValue_1">{{ map?.player.itemCount.value }}</div>
+                            </div>
+                        </transition>
+                    </div>
+
                     <transition name="fade">
                         <div v-if="show_repel_counter == true && state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0 && blackouts_resets != 'Both'">
                             <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/repel.svg)"></div>
@@ -729,8 +749,15 @@
                     <tr><td>Disable right panel hotkeys:</td><td><input class="checkBoxStyle" type="checkbox" v-model="disallow_right_panel_switching"/></td></tr>
                     <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_post_battle_splits"/></td></tr>
                     <tr><td>Show repel counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_repel_counter"/></td></tr>
-                    <tr><td>Show bonk counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_bonk_counter"/></td></tr>
+                    <tr><td>Show bonk/item counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_bonk_counter"/></td></tr>
                 </table>
+                <div v-if="show_bonk_counter == true">
+                    <select v-model="dropdown_bonks_items" class="dropdownMenu dropdown_menu_column3">
+                        <option>Bonks</option>
+                        <option>Item Count</option>
+                    </select>
+                    <br>
+                </div>
                 <br>
                 <div v-if="release == false">
                     <div style="text-decoration: underline;">Graphics Toggles:</div>
