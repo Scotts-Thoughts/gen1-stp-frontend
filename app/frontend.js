@@ -4027,12 +4027,12 @@ const app = Vue.createApp({
             else if (this.game_name == "Yellow" && this.starterName == "Alakazam" && newValue.value == "Mt Moon - 1" || newValue.value == "Mt Moon - 2" || newValue.value == "Mt Moon - 3") {
                 this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
             }
-            else if (newValue.value == "Viridian Forest" && this.game_name == "Yellow" && this.starterName == "Alakazam" && this.mapper.properties.trainers.viridianForest.bugcatcher2.value == false) {
+            else if (newValue.value == "Viridian Forest" && this.game_name == "Yellow" && this.starterName == "Alakazam" && this.mapper.properties?.trainers?.viridianForest?.bugcatcher2?.value == false) {
                 this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
             }
         })
         // Alakazam Yellow exception
-        this.mapper.properties.trainers.viridianForest.bugcatcher2.change((newValue, oldValue) => {
+        this.mapper.properties?.trainers?.viridianForest?.bugcatcher2.change((newValue, oldValue) => {
             if (this.game_name == "Yellow" && this.starterName == "Alakazam" && newValue.value == true) {
                 this.mapper.properties.patch.wEarlyEncounters.set("On", false)
             }
