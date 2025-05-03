@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Nidorina,Rival1-Lab,46,0,0,6,0:02,11.581,SCRATCH,TACKLE,GROWL,
+NINTEN,Nidorina,Champion,56:40,17,0,66,3:13,62.705,BLIZZARD,THUNDERBOLT,BODY SLAM,REST
