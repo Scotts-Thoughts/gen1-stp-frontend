@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Dragonair,Rival1-Lab,43,0,0,5,0:02,9.165,WRAP,LEER,THUNDER WAVE,
+NINTEN,Dragonair,Rival1-Lab,42,0,0,5,0:02,9.04,WRAP,LEER,THUNDER WAVE,
+NINTEN,Dragonair,Rival1-Lab,43,0,0,5,0:02,10.418,WRAP,LEER,THUNDER WAVE,
+NINTEN,Dragonair,Brock,6:02,0,0,11,0:23,46.84,WRAP,LEER,THUNDER WAVE,
