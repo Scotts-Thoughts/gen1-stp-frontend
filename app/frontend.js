@@ -467,14 +467,14 @@ function logData(gameName, str, file_name, starterName, log_type, testStatus, re
     const dirPath = refilming_mode ? `./splits/${gameName}/${starterName}/refilmed/attempts/` : `./splits/${gameName}/${starterName}/attempts/`;
     const testStatusText = testStatus ? "test_run_" : "";
     let attempt_number = refilming_mode ? refilmed_attempt : file_name;
-    let filePath = path.join(dirPath, `${testStatusText}${starterName}-${attempt_number}-simple.csv`);
+    let filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}-simple.csv`);
     let header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,failures,level,game_time,battle_duration,move1,move2,move3,move4\n";
     if (log_type == "Simple") {
         header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time," +
         "battle_duration,move1,move2,move3,move4\n";
     }
     else if (log_type == "Full") {
-        filePath = path.join(dirPath, `${testStatusText}${starterName}-${attempt_number}-full.csv`);
+        filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}-full.csv`);
         header = "date_string,time_string,player_name,pokemon,trainer_name,trainer_id,location,total_pokemon," +
             "real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,failures,level,game_time,battle_duration," + 
             "move1,move2,move3,move4,move1pp,move2pp,move3pp,move4pp,move1ppUp,move2ppUp,move3ppUp,move4ppUp," +
@@ -507,7 +507,7 @@ function logData(gameName, str, file_name, starterName, log_type, testStatus, re
             "Blackouts,Attempt Number,Failures, Rival's Team\n";
     }
     else if (log_type == "Deprecated") {
-        filePath = path.join(dirPath, `${testStatusText}${starterName}-${attempt_number}-deprecated.csv`);
+        filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}.csv`);
         header = "ROM,Species,Trainer,Start Time,Real Time,Game Time,Level,Resets," +
             "RTHours,RTMinutes,RTSeconds,RTMilliseconds,Move 1,Move 2,Move 3,Move 4," +
             "Attack,Defense,Sp. Attack,Sp. Defense,Speed," +
@@ -534,7 +534,7 @@ function logData(gameName, str, file_name, starterName, log_type, testStatus, re
             "Blackouts,Attempt Number,Failures, Rival's Team\n"
     }
     else if (log_type == "Battle Summary") {
-        filePath = path.join(dirPath, `${testStatusText}${starterName}-${attempt_number}-battleSummary.csv`);
+        filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}-battleSummary.csv`);
         header = "Unknown"
     }
     fs.mkdir(dirPath, { recursive: true }, (err) => {
@@ -3588,7 +3588,9 @@ const app = Vue.createApp({
                 let type2 = this.mapper.properties.player.team[0].type2.value
                 let experience = this.mapper.properties.player.team[0].expPoints.value
                 //deprecated properties (these are used by all of my legacy software)
-                let runIdentifier = this.starterName.toString() + this.attempt_number.toString()
+
+                let incremented_finished_run_count = this.finished_run_count + 1
+                let runIdentifier = this.starterName.toString() + " " + incremented_finished_run_count.toString()
                 let trainerName = this.deprecated_autosplitter[this.mapper.properties.meta.gameName.value][`${this.mapper.properties.battle.trainer.class}_${this.mapper.properties.battle.trainer.number}`]
                 let RTHours = this.time_h
                 let RTMinutes = this.time_m
@@ -3805,7 +3807,7 @@ const app = Vue.createApp({
                 let trainer = this.mapper.properties.battle.trainer.class.value
                 let id = this.mapper.properties.battle.trainer.number.value
                 let unique = `${trainer}_${id}`
-                let gameName = this.mapper.properties.meta.gameName.value
+                let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red' ? "R" : "B"
 
                 if (this.collect_split_data == true) {
                     // Use for...of loop to iterate over the array
