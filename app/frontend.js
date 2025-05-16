@@ -560,29 +560,29 @@ function logData(gameName, str, file_name, starterName, log_type, testStatus, re
     });
 }
 
-function logCopy(gameName, file_name, starterName, finished_run_count, refilming_mode, refilmed_attempt, refilmed_finish) {
-    var dirPathAttempts = refilming_mode ? `./splits/${gameName}/${starterName}/refilmed/attempts/` : `./splits/${gameName}/${starterName}/attempts/`
-    var dirPathFinishes = refilming_mode ? `./splits/${gameName}/${starterName}/refilmed/finishes/` : `./splits/${gameName}/${starterName}/finishes/`
+function logCopy(gameName, gameName_Path, file_name, starterName, finished_run_count, refilming_mode, refilmed_attempt, refilmed_finish) {
+    var dirPathAttempts = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/attempts/` : `./splits/${gameName_Path}/${starterName}/attempts/`
+    var dirPathFinishes = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/finishes/` : `./splits/${gameName_Path}/${starterName}/finishes/`
     let attempt_number = refilming_mode ? refilmed_attempt : file_name;
     let finish_number = refilming_mode ? refilmed_attempt : finished_run_count;
     fs.mkdir(dirPathFinishes, { recursive: true }, (err) => {
         fs.copyFile(
-            path.join(dirPathAttempts, `${starterName}-${attempt_number}-simple.csv`), 
-            path.join(dirPathFinishes, `${starterName}-${finish_number}-simple.csv`), (err) => {
+            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-simple.csv`), 
+            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}-simple.csv`), (err) => {
             if (err) {
                 console.error(err);
             }
         });
         fs.copyFile(
-            path.join(dirPathAttempts, `${starterName}-${attempt_number}-full.csv`), 
-            path.join(dirPathFinishes, `${starterName}-${finish_number}-full.csv`), (err) => {
+            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-full.csv`), 
+            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}-full.csv`), (err) => {
             if (err) {
                 console.error(err);
             }
         });
         fs.copyFile(
-            path.join(dirPathAttempts, `${starterName}-${attempt_number}-deprecated.csv`), 
-            path.join(dirPathFinishes, `${starterName}-${finish_number}-deprecated.csv`), (err) => {
+            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}.csv`), 
+            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}.csv`), (err) => {
             if (err) {
                 console.error(err);
             }
@@ -3808,6 +3808,7 @@ const app = Vue.createApp({
                 let id = this.mapper.properties.battle.trainer.number.value
                 let unique = `${trainer}_${id}`
                 let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red' ? "R" : "B"
+                let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data   
 
                 if (this.collect_split_data == true) {
                     // Use for...of loop to iterate over the array
@@ -3926,7 +3927,7 @@ const app = Vue.createApp({
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
             let gameName = this.mapper.properties.meta.gameName.value
             if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
-                logCopy(gameName, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //copy the current `attempt_number` split data to the finished folder
+                logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //copy the current `attempt_number` split data to the finished folder
                 console.log("Run complete - moving attempt files to finished folder.")
                 this.finished_logs = true
             }
@@ -3945,6 +3946,9 @@ const app = Vue.createApp({
             if (newProp.value == "Overworld" && oldProp.value == "Battle" && this.blackout == true) {
                 this.blackout = false;
                 if (this.enable_blackouts) { this.blackout_counter++; }
+            }
+            else if (newProp.value == "Overworld") {
+                this.blackout = false;
             }
             if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") {
                 this.automatic_splits = false
