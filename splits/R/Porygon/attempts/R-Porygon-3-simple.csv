@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Porygon,Rival1-Lab,36,0,0,5,0:01,9.55,TACKLE,SHARPEN,CONVERSION,
+NINTEN,Porygon,Brock,6:59,0,7,14,0:27,54.758,TACKLE,SHARPEN,CONVERSION,

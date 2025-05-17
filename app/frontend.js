@@ -463,8 +463,8 @@ for (let folder of folders = ['splits', 'splits/Yellow', 'splits/Red and Blue'])
     }
 }
 
-function logData(gameName, str, file_name, starterName, log_type, testStatus, refilming_mode, refilmed_attempt, refilmed_finish) {
-    const dirPath = refilming_mode ? `./splits/${gameName}/${starterName}/refilmed/attempts/` : `./splits/${gameName}/${starterName}/attempts/`;
+function logData(gameName, gameName_Path, str, file_name, starterName, log_type, testStatus, refilming_mode, refilmed_attempt, refilmed_finish) {
+    const dirPath = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/attempts/` : `./splits/${gameName_Path}/${starterName}/attempts/`;
     const testStatusText = testStatus ? "test_run_" : "";
     let attempt_number = refilming_mode ? refilmed_attempt : file_name;
     let filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}-simple.csv`);
@@ -3836,19 +3836,19 @@ const app = Vue.createApp({
                 }
 
                 //write full split data (this is written for every single battle)
-                logData(gameName, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                logData(gameName, gameName_Path, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                 
                 //write deprecated split data (this is written for only pre-defined trainers)
                 //a list of these trainers can be found within `autosplitter.js` and inside the parent `Yellow` or `Red and Blue`
                 if (this.autosplitter[this.mapper.properties.meta.gameName.value][unique]) {
-                    logData(gameName, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    logData(gameName, gameName_Path, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                 }
                 
                 //write simple split data
                 //a list of these can be found within `autosplitter.js` and inside the parent `Simple`
                 const simpleSplit = () => {
                     log_split()
-                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    logData(gameName, gameName_Path, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                 }
                 //log simple data for only these trainers
@@ -3899,7 +3899,7 @@ const app = Vue.createApp({
                         this.finished_run_count++ //increment finished count if this is not a test run
                     };
                     this.stopTime() //stop the timer
-                    logData(gameName, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
+                    logData(gameName, gameName_Path, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }
             }   
@@ -3913,9 +3913,9 @@ const app = Vue.createApp({
                     autosplitter_process()
                     console.log("Run Ended - Backing up split data now...")
                     let gameName = this.mapper.properties.meta.gameName.value
-                    logData(gameName, this.simple_data_str, this.finished_run_count, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    logData(gameName, this.deprecated_data_str, this.finished_run_count, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    logData(gameName, this.full_data_str, this.finished_run_count, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    logData(gameName, gameName_Path, this.simple_data_str, this.finished_run_count, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    logData(gameName, gameName_Path, this.deprecated_data_str, this.finished_run_count, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    logData(gameName, gameName_Path, this.full_data_str, this.finished_run_count, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                     console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
                     this.game_over = true; //stop incrementing resets
@@ -3926,6 +3926,7 @@ const app = Vue.createApp({
         //when the triangular cursor appears on the screen, log the gametime
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
             let gameName = this.mapper.properties.meta.gameName.value
+            let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data   
             if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
                 logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //copy the current `attempt_number` split data to the finished folder
                 console.log("Run complete - moving attempt files to finished folder.")
