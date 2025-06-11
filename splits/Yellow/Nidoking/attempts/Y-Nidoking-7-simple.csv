@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Nidoking,Rival1-Lab,40,0,0,6,0:02,6.705,THRASH,HORN ATTACK,POISON STING,TACKLE
+NINTEN,Nidoking,Brock,3:13,0,0,13,0:12,12.218,THRASH,HORN ATTACK,POISON STING,DOUBLE KICK
+NINTEN,Nidoking,Rival2-Nugget Bridge,6:13,0,0,20,0:24,22.737,THRASH,HORN ATTACK,POISON STING,DOUBLE KICK
