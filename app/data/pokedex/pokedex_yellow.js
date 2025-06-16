@@ -1,4 +1,97 @@
 const pokedex_yellow = {
+    "Walking Wake": {
+    "species": "Walking Wake",
+    "rom_id": 152,
+    "national_dex_number": 985,
+    "base_stats": {
+        "hp": 99,
+        "attack": 83,
+        "defense": 91,
+        "speed": 109,
+        "special_attack": 125,
+        "special_defense": 125
+    },
+    "ev_yield": {
+        "hp": 99,
+        "attack": 83,
+        "defense": 91,
+        "speed": 109,
+        "special_attack": 125,
+        "special_defense": 125
+    },
+    "type_1": "Water",
+    "type_2": "Dragon",
+    "catch_rate": 5,
+    "base_experience": 255,
+    "common_item": null,
+    "rare_item": null,
+    "gender_ratio": null,
+    "egg_cycles": null,
+    "base_friendship": null,
+    "growth_rate": "Slow",
+    "egg_group_1": null,
+    "egg_group_2": null,
+    "abilities": [],
+    "level_up_learnset": [
+        [
+            1,
+            "Roar"
+        ],
+        [
+            1,
+            "Leer"
+        ],
+        [
+            1,
+            "Water Gun"
+        ],
+        [
+            1,
+            "Bite"
+        ],
+        [
+            42,
+            "Dragon Rage"
+        ],
+        [
+            56,
+            "Flamethrower"
+        ],
+        [
+            63,
+            "Hydro Pump"
+        ]
+    ],
+    "tm_hm_learnset": [
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "BubbleBeam",
+        "Water Gun",
+        "Ice Beam",
+        "Blizzard",
+        "Hyper Beam",
+        "Rage",
+        "Dragon Rage",
+        "Dig",
+        "Psychic",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Fire Blast",
+        "Swift",
+        "Sky Attack",
+        "Rest",
+        "Substitute",
+        "Cut",
+        "Surf"
+    ],
+    "tutor_learnset": [],
+    "egg_moves": [],
+    "weight": null,
+    "evolution_family": []
+    },
     "Scream Tail": {
         "species": "Scream Tail",
         "rom_id": 152,
