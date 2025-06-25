@@ -2428,6 +2428,13 @@ box-shadow:
     width: 210px; 
     height: 45px;
 }
+.set_starter_button {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    width: 210px; 
+    height: 21px;
+}
 .comparison_button {
     margin-bottom: 8px;
     font-size: 20px;

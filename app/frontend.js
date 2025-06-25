@@ -1660,6 +1660,14 @@ const app = Vue.createApp({
     },
 
     methods: {
+        async set_rom_starter() {
+            let starter = this.starterName
+            // console.log(starter)
+            // This system requires a check in the case that the Pokemon is not one of the original 151, in that case it needs to get the value to "Backport" instead
+            await Promise.all([
+                await this.mapper.properties.patch.hChosenStarter.set(starter, false), 
+            ])
+        },
         get_backport_move_name(move_name, starter, byte_value) {
             if (move_name == 'STRUGGLE' || move_name == null) {
                 switch (starter) {
