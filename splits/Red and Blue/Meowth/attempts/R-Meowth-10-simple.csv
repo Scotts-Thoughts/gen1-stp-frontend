@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Meowth,Rival1-Lab,33,0,0,5,0:01,6.435,SCRATCH,GROWL,,
+NINTEN,Meowth,Brock,8:59,0,11,15,0:35,48.723,SCRATCH,GROWL,BITE,
