@@ -132,11 +132,11 @@
                 <transition name="fade">
                     <div v-if="right_panel == 'Movepool'" key=0>
                         <Movepool
-                            :starter="starterName"
+                            :starter-name="starterName"
                             :pokemon_version_specific_data="pokemon_version_specific_data"
-                            :g1MoveData="g1MoveData"
-                            :tmhmMapping="tmhmMapping"
-                            :s1dynamicReset="s1dynamicReset"
+                            :move-data="g1MoveData"
+                            :tmhm-mapping="tmhmMapping"
+                            :dynamic-reset="s1dynamicReset"
                             :ui_saturation="ui_saturation"
                             :starting_type_fix="starting_type_fix"
                         ></Movepool>
