@@ -37,6 +37,7 @@ const MyStorage = new Proxy({}, {
             localStorage.removeItem(prop);
         else
             localStorage.setItem(prop, JSON.stringify(value));
+        return true
     },
     get: (_, prop) => {
         if (prop === "clear")
@@ -46,7 +47,7 @@ const MyStorage = new Proxy({}, {
         if (prop === "keys")
             return () => Object.keys(localStorage);
         if (prop === "has")
-            return (key) => localStorage.getItem(key) == null;
+            return (key) => localStorage.getItem(key) === null;
         return JSON.parse(localStorage.getItem(prop));
     }
 });
@@ -457,6 +458,8 @@ const keyhook = new KeyHook();
 const fs = require("fs");
 const path = require("path");
 const { finished } = require('stream');
+const Timer = require("./logic/Timer.js");
+
 for (let folder of folders = ['splits', 'splits/Yellow', 'splits/Red and Blue']) {
     if (!fs.existsSync(folder)) {
         fs.mkdirSync(folder);
@@ -609,6 +612,9 @@ function transition(fn, ms) {
 }
 
 const app = Vue.createApp({
+    components: {
+        "Timer": require("./components/Timer.js"),
+    },
     //DATA & DEFINITIONS
     data() {
         return {
@@ -808,16 +814,17 @@ const app = Vue.createApp({
 
             // Timer variables
             timer_startTimeOffset: MyStorage["timer_startTimeOffset"] ?? "00:00:00.00",
-            timer_startTime:       MyStorage["timer_startTime"]       ?? 0,
-            timer_pause:           MyStorage["timer_pause"]           ?? true,
-            timer_formatted_time:  MyStorage["timer_formatted_time"]  ?? ["0", ".00"],
-            timer_pause_time:      MyStorage["timer_pause_time"]      ?? 0,
-            time_h:  0,
-            time_m:  0,
-            time_s:  0,
-            time_ms: 0,
+            // timer_startTime:       MyStorage["timer_startTime"]       ?? 0,
+            // timer_pause:           MyStorage["timer_pause"]           ?? true,
+            // timer_formatted_time:  MyStorage["timer_formatted_time"]  ?? ["0", ".00"],
+            // timer_pause_time:      MyStorage["timer_pause_time"]      ?? 0,
+            // time_h:  0,
+            // time_m:  0,
+            // time_s:  0,
+            // time_ms: 0,
             time_split_start: "00:00:00:00",
             battle_start:     0,
+            timer:            new Timer(MyStorage),
             battle_duration:  0,
             exp_per_second:   0,
             timer_settings:   MyStorage["timer_settings"] ?? "Real-Time",
@@ -1921,20 +1928,20 @@ const app = Vue.createApp({
         get_nested_property(obj, path) {
             return path.split('.').reduce((o, p) => (o || {})[p], obj);
         },
-        load_timer_settings() {
-            this.timer_startTimeOffset = MyStorage['timer_startTimeOffset'] ?? "00:00:00.00"
-            this.timer_startTime       = MyStorage['timer_startTime']       ?? 0
-            this.timer_pause           = MyStorage['timer_pause']           ?? true
-            this.timer_formatted_time  = MyStorage['timer_formatted_time']  ?? ["0", ".00"]
-            this.timer_pause_time      = MyStorage['timer_pause_time']      ?? 0
-            this.time_h                = MyStorage['time_h']                ?? 0
-            this.time_m                = MyStorage['time_m']                ?? 0
-            this.time_s                = MyStorage['time_s']                ?? 0
-            this.time_ms               = MyStorage['time_ms']               ?? 0
-            this.time_split_start      = MyStorage['time_split_start']      ?? "00:00:00:00"
-            this.battle_start          = MyStorage['battle_start']          ?? 0
-            this.timer_settings        = MyStorage['timer_settings']        ?? "Real-Time"
-        },
+        // load_timer_settings() {
+        //     this.timer_startTimeOffset = MyStorage['timer_startTimeOffset'] ?? "00:00:00.00"
+        //     this.timer_startTime       = MyStorage['timer_startTime']       ?? 0
+        //     this.timer_pause           = MyStorage['timer_pause']           ?? true
+        //     this.timer_formatted_time  = MyStorage['timer_formatted_time']  ?? ["0", ".00"]
+        //     this.timer_pause_time      = MyStorage['timer_pause_time']      ?? 0
+        //     this.time_h                = MyStorage['time_h']                ?? 0
+        //     this.time_m                = MyStorage['time_m']                ?? 0
+        //     this.time_s                = MyStorage['time_s']                ?? 0
+        //     this.time_ms               = MyStorage['time_ms']               ?? 0
+        //     this.time_split_start      = MyStorage['time_split_start']      ?? "00:00:00:00"
+        //     this.battle_start          = MyStorage['battle_start']          ?? 0
+        //     this.timer_settings        = MyStorage['timer_settings']        ?? "Real-Time"
+        // },
         load_split_settings() {
             this.current_splits  = MyStorage['current_splits']  ?? []
             this.previous_splits = MyStorage['previous_splits'] ?? []
@@ -2295,87 +2302,87 @@ const app = Vue.createApp({
             else return this.capitalization_format(trainer_class)
         },
 
-        //*timer methods
-        //start the timer
-        startTime() {
-            if (this.timer_pause == false) {
-                return
-            }
-            const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
-            const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
-            const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
+        // //*timer methods
+        // //start the timer
+        // startTime() {
+        //     if (this.timer_pause == false) {
+        //         return
+        //     }
+        //     const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
+        //     const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
+        //     const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
 
-            this.timer_startTime = Date.now() - timeOffset
-            this.timer_pause = false
-            this.updateTime()
-        },
-        //stop the timer
-        stopTime() {
-            this.timer_pause_time = Date.now()
-            this.timer_pause = true
-        },
-        set_timer() {
-            const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
-            const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
-            const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
+        //     this.timer_startTime = Date.now() - timeOffset
+        //     this.timer_pause = false
+        //     this.updateTime()
+        // },
+        // //stop the timer
+        // stopTime() {
+        //     this.timer_pause_time = Date.now()
+        //     this.timer_pause = true
+        // },
+        // set_timer() {
+        //     const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
+        //     const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
+        //     const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
 
-            this.timer_pause = true
-            this.timer_startTime = Date.now() - timeOffset
-            this.timer_pause_time = Date.now()
-            this.timer_formatted_time = [ "0", ".00" ]
-            this.finished_logs = false
+        //     this.timer_pause = true
+        //     this.timer_startTime = Date.now() - timeOffset
+        //     this.timer_pause_time = Date.now()
+        //     this.timer_formatted_time = [ "0", ".00" ]
+        //     this.finished_logs = false
 
-            this.updateTime()
-        },
-        padTime(time) {
-            return time.toString().padStart(2, "0")
-        },
-        //animate the timer
-        updateTime() {
-            var time = Date.now() - this.timer_startTime
-            if (this.timer_pause == true) {
-                time = this.timer_pause_time - this.timer_startTime
-            }
-            var f = (x) => x.toString().padStart(2, "0")
-            var c = (Math.floor(time / 10) % 100)
-            var s = (Math.floor(time / 1000) % 60)
-            var m = (Math.floor(time / 60000) % 60)
-            var h = (Math.floor(time / 3600000))
-            this.time_h = h
-            this.time_m = m
-            this.time_s = s
-            this.time_ms = c
-            if (h != 0) {
-                this.timer_formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
-            }
-            else if (m != 0) {
-                this.timer_formatted_time = [ m + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
-            }
-            else {
-                this.timer_formatted_time = [ s, "." + f(c), h + "h" + m + "m" + s + "s", ]
-            }
-            if (this.timer_pause == false) {
-                requestAnimationFrame(this.updateTime)
-            }
-        },
-        //pause the timer
-        pauseUnpauseTime() {
-            if (this.timer_pause == true) {
-                this.timer_pause = false
-                this.timer_startTime += Date.now() - this.timer_pause_time
-                this.updateTime()
-                retro.resume()
-            }
-            else {
-                this.timer_pause = true
-                this.timer_pause_time = Date.now()
-                retro.pause()
-            }
-        },
+        //     this.updateTime()
+        // },
+        // padTime(time) {
+        //     return time.toString().padStart(2, "0")
+        // },
+        // //animate the timer
+        // updateTime() {
+        //     var time = Date.now() - this.timer_startTime
+        //     if (this.timer_pause == true) {
+        //         time = this.timer_pause_time - this.timer_startTime
+        //     }
+        //     var f = (x) => x.toString().padStart(2, "0")
+        //     var c = (Math.floor(time / 10) % 100)
+        //     var s = (Math.floor(time / 1000) % 60)
+        //     var m = (Math.floor(time / 60000) % 60)
+        //     var h = (Math.floor(time / 3600000))
+        //     this.time_h = h
+        //     this.time_m = m
+        //     this.time_s = s
+        //     this.time_ms = c
+        //     if (h != 0) {
+        //         this.timer_formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
+        //     }
+        //     else if (m != 0) {
+        //         this.timer_formatted_time = [ m + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
+        //     }
+        //     else {
+        //         this.timer_formatted_time = [ s, "." + f(c), h + "h" + m + "m" + s + "s", ]
+        //     }
+        //     if (this.timer_pause == false) {
+        //         requestAnimationFrame(this.updateTime)
+        //     }
+        // },
+        // //pause the timer
+        // pauseUnpauseTime() {
+        //     if (this.timer_pause == true) {
+        //         this.timer_pause = false
+        //         this.timer_startTime += Date.now() - this.timer_pause_time
+        //         this.updateTime()
+        //         retro.resume()
+        //     }
+        //     else {
+        //         this.timer_pause = true
+        //         this.timer_pause_time = Date.now()
+        //         retro.pause()
+        //     }
+        // },
         async newRun() {
-            const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
-            const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
-            const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
+            // const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
+            // const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
+            // const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
             
             // this.current_splits = await this.load_temp_splits()
             this.compared_splits = []
@@ -2383,10 +2390,12 @@ const app = Vue.createApp({
 
             this.battle_summary_header = "Battle Summary"
             this.most_recent_move = ""
-            this.timer_pause = true
-            this.timer_startTime = Date.now() - timeOffset
-            this.timer_pause_time = Date.now()
-            this.timer_formatted_time = [ "0", ".00" ]
+            // this.timer_pause = true
+            // this.timer_startTime = Date.now() - timeOffset
+            // this.timer_pause_time = Date.now()
+            // this.timer_formatted_time = [ "0", ".00" ]
+            this.timer.setTimer(this.timer_startTimeOffset)
+
             this.playerResets = 0
             this.finished_logs = false
             this.blackout_counter = 0
@@ -3429,9 +3438,10 @@ const app = Vue.createApp({
         else {
             this.state = this.mapper.properties.meta.state.value
         }
-        this.load_timer_settings()
+        // this.load_timer_settings()
         this.load_split_settings()
-        this.updateTime()
+        // this.updateTime()
+        this.timer.update();
 
         // // Load settings
         // // this.starterName = this.mapper.properties.patch.hChosenStarter.value
@@ -3495,7 +3505,8 @@ const app = Vue.createApp({
                         this.attempt_number++
                     };
                     this.most_recent_move = "";
-                    this.startTime();
+                    // this.startTime();
+                    this.timer.startTime(this.timer_startTimeOffset);
                     if (this.toggle_wEarlyEncounters == false && this.toggle_wEarlyEncountersNoMoon == true) {
                         this.toggle_wEarlyEncounters == true
                     }
@@ -3538,7 +3549,11 @@ const app = Vue.createApp({
         });
 
         //this function can be reused to log data to the console
-        const log_split = (x) => console.log(`Autosplitter - Battle Ended: Split: ${this.mapper.properties.battle.trainer.class.value} at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`)
+        const log_split = (x) => {
+            const time = this.timer.formatted_time;
+            const opponent = this.mapper.properties.battle.trainer.class.value;
+            console.log(`Autosplitter - Battle Ended: Split: ${opponent} at ${time[0]}${time[1]} (Gametime: ${this.gametimeSplit})`)
+        }
         
         // this function assigns split data to arrays so that it can be written to CSV on disc
         const autosplitter_process = () => {
@@ -3560,9 +3575,10 @@ const app = Vue.createApp({
                 let trainer_id = this.mapper.properties.battle.trainer.number.value
                 let location = this.mapper.properties.overworld.map.value
                 let total_pokemon = this.mapper.properties.battle.trainer.totalPokemon
-                let real_time_total = this.timer_formatted_time[0].toString() + this.timer_formatted_time[1].toString()
-                let real_time_hmmss = this.timer_formatted_time[0].toString()
-                let real_time_file_label = this.timer_formatted_time[2].toString()
+                const formattedTime = this.timer.formatted_time;
+                let real_time_total = formattedTime[0] + formattedTime[1]
+                let real_time_hmmss = formattedTime[0]
+                let real_time_file_label = formattedTime[2]
                 let resets = this.playerResets.toString()
                 let blackouts = this.blackout_counter.toString()
                 let failures = this.playerResets + this.blackout_counter
@@ -3601,12 +3617,13 @@ const app = Vue.createApp({
                 let incremented_finished_run_count = this.finished_run_count + 1
                 let runIdentifier = this.starterName.toString() + " " + incremented_finished_run_count.toString()
                 let trainerName = this.deprecated_autosplitter[this.mapper.properties.meta.gameName.value][`${this.mapper.properties.battle.trainer.class}_${this.mapper.properties.battle.trainer.number}`]
-                let RTHours = this.time_h
-                let RTMinutes = this.time_m
-                let RTSeconds = this.time_s
-                let RTMilliseconds = this.time_ms
+                const time = this.timer.getTime();
+                let RTHours = time.hours;
+                let RTMinutes = time.minutes;
+                let RTSeconds = time.seconds;
+                let RTMilliseconds = time.ms;
                 let startTime = this.time_split_start
-                let realTime = this.padTime(this.time_h) + ":" + this.padTime(this.time_m) + ":" + this.padTime(this.time_s) + "." + this.padTime(this.time_ms)
+                let realTime = this.padTime(time.hours) + ":" + this.padTime(time.minutes) + ":" + this.padTime(time.seconds) + "." + this.padTime(time.ms)
                 let gameTime = this.padTime(gameTimeH) + ":" + this.padTime(gameTimeM) + ":" + this.padTime(gameTimeS) + "." + this.padTime(gameTimeF)
                 let hp = this.mapper.properties.player.team[0].hp.value
                 let maxHp = this.mapper.properties.player.team[0].maxHp.value
@@ -3907,7 +3924,8 @@ const app = Vue.createApp({
                     if (this.test_run == false && this.refilming_mode == false && this.no_attempt == false) {
                         this.finished_run_count++ //increment finished count if this is not a test run
                     };
-                    this.stopTime() //stop the timer
+                    // this.stopTime() //stop the timer
+                    this.timer.stopTime();
                     logData(gameName, gameName_Path, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }
@@ -4173,7 +4191,8 @@ const app = Vue.createApp({
             this.newRun()
         });
         keyhook.registerShortCut('F24', async () => {
-            this.pauseUnpauseTime()
+            // this.pauseUnpauseTime()
+            this.timer.pauseUnpauseTime();
         });
     },
 }).mount('#app')

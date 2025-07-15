@@ -497,16 +497,17 @@
                         </div>
                     </transition>
                 </div>
+                <Timer ></Timer>
                 <!-- Game Time -->
-                <transition name="fade"><div v-show="timer_settings == `Game-Time`" class="gametime">
+                <!-- <transition name="fade"><div v-show="timer_settings == `Game-Time`" class="gametime">
                     <div class="gametimeClock">{{gametimeHMS}}</div>
                     <div class="gametimeFrames">.{{gametime_frames}}</div>
-                </div></transition>
+                </div></transition> -->
                 <!-- Real Time-->
-                <transition name="fade"><div v-show="timer_settings == `Real-Time`" class="gametime">
+                <!-- <transition name="fade"><div v-show="timer_settings == `Real-Time`" class="gametime">
                     <div class="gametimeClock">{{timer_formatted_time[0]}}</div>
                     <div class="gametimeFrames">{{timer_formatted_time[1]}}</div>
-                </div></transition>
+                </div></transition> -->
                 <!-- Resets -->
                 <div v-show="blackouts_resets == 'None'">
                     <transition name="fade">
@@ -550,8 +551,10 @@
                     <option>Off - Real-Time Label</option>
                     <option>Off - Game-Time Label</option>
                 </select><br>
-                <button class="buttonStyle buttonStyle_column3" @click="pauseUnpauseTime">Play/Pause</button><br>
-                <button class="buttonStyle set_button_style" @click="set_timer">Set</button><input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
+                <!-- <button class="buttonStyle buttonStyle_column3" @click="pauseUnpauseTime">Play/Pause</button><br> -->
+                <!-- <button class="buttonStyle set_button_style" @click="set_timer">Set</button> -->
+                <button class="buttonStyle buttonStyle_column3" @click="this.timer.pauseUnpauseTime()">Play/Pause</button>
+                <button class="buttonStyle set_button_style" @click="this.timer.setTimer(this.timer_startTimeOffset)">Set Timer</button><br><input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
                 <br>
                 <!-- <button class="buttonStyle buttonStyle_column3" onClick="openFolder('splits')">Open Splits Folder</button><br> -->
                 <button class="buttonStyle buttonStyle_column3" @click="openFolder(`splits`, game, starterName, ``)">Open Splits Folder</button>

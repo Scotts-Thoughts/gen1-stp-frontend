@@ -2450,7 +2450,7 @@ box-shadow:
 .set_button_style {
     pointer-events: auto; 
     position: relative; 
-    width: 46px; 
+    width: 96px; 
     height: 26px; 
     font-size: 18px; 
     background: #72fd4f; 
