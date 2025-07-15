@@ -12,7 +12,6 @@ const application_settings = [
     [ "expBarAnimation",            true,  ],
     [ "showSpecialTrainerGraphics", true,  ], //shows drawn art for defined trainers
     [ "battlePopUps",               true,  ], //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
-    [ "typeCalcs",                  true,  ], //calculates effective power based on the pokemon in battle
     [ "showCritMultiplierInEP",     true,  ], //shows high crit ratio moves with adjusted power if the move always scores a crit
     [ "show_wild_battles",          false, ], //shows wild battles in the battle screen
     [ "automaticallySavePBSplits",  true,  ], //saves splits if the player beats their PB (this overwrites currently saved PB splits)

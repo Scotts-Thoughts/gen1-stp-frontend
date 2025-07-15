@@ -12,7 +12,6 @@ const auto_save_settings = [
     "expBarAnimation",
     "showSpecialTrainerGraphics",
     "battlePopUps",
-    "typeCalcs",
     "showCritMultiplierInEP",
     "show_wild_battles",
     "automaticallySavePBSplits",

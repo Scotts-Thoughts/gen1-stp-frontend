@@ -613,7 +613,23 @@ function transition(fn, ms) {
 
 const app = Vue.createApp({
     components: {
+        "No_mapper": require("./components/No_mapper.js"),
+        "Graphics": require("./components/Graphics.js"),
+
+        //Left Panel
         "Timer": require("./components/Timer.js"),
+        "Badges": require("./components/Badges.js"),
+        "Resets": require("./components/Resets.js"),
+        "Typeicons": require("./components/Typeicons.js"),
+        "Moveset": require("./components/Moveset.js"),
+        "Stats": require("./components/Stats.js"),
+        "Badgeboosts": require("./components/Badgeboosts.js"),
+
+        //Middle Panel
+        "Interface": require("./components/Interface.js"),
+
+        //Right Panel
+        "Movepool": require("./components/Movepool.js"),
     },
     //DATA & DEFINITIONS
     data() {
@@ -653,8 +669,6 @@ const app = Vue.createApp({
             pokedex_crystal    : pokedex_crystal,
 
             // Objects
-            pkmnMoves:       ["move1","move2","move3","move4"],
-            progressBadges:  ["badge1","badge2","badge3","badge4", "badge5","badge6","badge7","badge8"],
             pkmnSlots:       [0, 1, 2, 3, 4, 5],
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
@@ -684,13 +698,7 @@ const app = Vue.createApp({
                     {abrv: "SpD", name: "Special Defense", deprecated_path: "badge7", deprecated_path: 6, boost: 1.1, },
                 ],
             },
-            stat_object: [
-                {abrv: "HP",  name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             mod_path: "Hp",      mod_abrv: "hp",  hp_spe_label_row: 1, hp_spd_label_row: 1, label_column: 1, hp_spe_value_row: 1, hp_spd_value_row: 1, value_column: 2,}, 
-                {abrv: "Atk", name: "Attack",  label: "Atk.", path: "attack",  base_stat_path: "attack",         mod_path: "Attack",  mod_abrv: "atk", hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 1, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 2,}, 
-                {abrv: "Def", name: "Defense", label: "Def.", path: "defense", base_stat_path: "defense",        mod_path: "Defense", mod_abrv: "def", hp_spe_label_row: 3, hp_spd_label_row: 3, label_column: 1, hp_spe_value_row: 3, hp_spd_value_row: 3, value_column: 2,}, 
-                {abrv: "Spc", name: "Special", label: "Spc.", path: "special", base_stat_path: "special_attack", mod_path: "Special", mod_abrv: "spc", hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 3, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 4,}, 
-                {abrv: "Spe", name: "Speed",   label: "Spe.", path: "speed",   base_stat_path: "speed",          mod_path: "Speed",   mod_abrv: "spe", hp_spe_label_row: 3, hp_spd_label_row: 1, label_column: 3, hp_spe_value_row: 3, hp_spd_value_row: 1, value_column: 4,}, 
-            ],
+
 
             // Settings:
                 // These automatically store into the `Storage` object
@@ -722,7 +730,7 @@ const app = Vue.createApp({
             expBarAnimation           : true,
             showSpecialTrainerGraphics: true,    //shows drawn art for defined trainers
             battlePopUps              : true,    //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
-            typeCalcs                 : true,    //calculates effective power based on the pokemon in battle
+            typeCalcs                 : true,    //displays type effectiveness for enemy pokemon
             showCritMultiplierInEP    : true,    //shows high crit ratio moves with adjusted power if the move always scores a crit
             show_wild_battles         : false,   //shows wild battles in the battle screen
             automaticallySavePBSplits : true,    //saves splits if the player beats their PB (this overwrites currently saved PB splits)
@@ -1357,26 +1365,6 @@ const app = Vue.createApp({
                 return result
             }
         },
-        stats_header() {
-            const toggle    = this.automatic_stats
-            const stat_type = this.stats_display
-            const state     = this.state
-            switch (stat_type) {
-                case "Base Stats":   return `Base Stats`
-                case "DVs":          return `${this.starterName}'s DVs`
-                case "EVs":          return `Stat Experience`
-                case "Detailed EVs": return `Detailed Stat Experience`
-                case "Automatic":    {
-                    if (state == 'Base Stats') {
-                        return `Base Stats`
-                    }
-                    return `Level ${this.mapper.properties.player.team[0].level.value}`
-                }
-                case "Badge Boosts": return `Badge Boosts`
-                case "Averages":     return `Gen1 Average Stats`
-                case "Medians":      return `Gen1 Median Stats`
-            }
-        },
         automatic_stats_type() {
             const toggle    = this.automatic_stats
             const stat_type = this.stats_display
@@ -1509,11 +1497,7 @@ const app = Vue.createApp({
                 return this.playerResets
             }
         },
-        mew_movepool_style() {
-            if (this.starterName == "Mew") {
-                return "font-size: 15px; line-height: 15.5px;"
-            }
-        },
+
         pokemon_version_specific_data() {
             if (this.mapper.properties.meta.gameName.value == "Yellow")       { return this.g1PokemonData }
             if (this.mapper.properties.meta.gameName.value == "Red and Blue") { return this.g1PokemonDataRB }
@@ -1654,11 +1638,6 @@ const app = Vue.createApp({
                 return [" ","font-size: 20px","screen",]
             }
         },
-        growthRate() {
-            var species = this.s1dynamicReset.species.value == 'Backport' ? this.starterName : this.s1dynamicReset.species.value
-            // debugger
-            return this.g1PokemonData[species ?? this.starterName].growth_rate
-        },
         getStarterType() {
             var type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
             var type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
@@ -1674,36 +1653,6 @@ const app = Vue.createApp({
             await Promise.all([
                 await this.mapper.properties.patch.hChosenStarter.set(starter, false), 
             ])
-        },
-        get_backport_move_name(move_name, starter, byte_value) {
-            if (move_name == 'STRUGGLE' || move_name == null) {
-                switch (starter) {
-                    case "Scream Tail": {
-                        switch (byte_value) {
-                            case (165): return 'Play Rough'
-                            case (166): return 'Struggle'
-                        }
-                    }
-                    case "Testmoth": {
-                        switch (byte_value) {
-                            case (165): return 'Moth-Beam'
-                            case (166): return 'Moth-Bolt'
-                            case (167): return 'Moth-Flame'
-                            case (168): return 'Moth-Blast'
-                            case (169): return 'Struggle'
-                        }
-                    }
-                    default: return move_name
-                }
-            }
-            else return move_name
-        },
-        get_backport_move(slot) {
-            const move = this.s1dynamic[slot].value
-            const byte = this.s1dynamic[slot].bytes[0]
-            const starter = this.starterName
-            const return_value = this.get_backport_move_name(move, starter, byte)
-            return return_value
         },
         openFolder(folderName, game_name = "Yellow", path = "", path2) {
             const fs = require('fs');
@@ -1888,60 +1837,10 @@ const app = Vue.createApp({
               species: isFainted ? "opacity: .3" : "opacity: .7"
             };
         },
-        average_median_stats(stat_label) {
-            let sum = 0;
-            let count = 0;
-            let values = [];
-            
-            for (let pokemon of Object.values(this.pokedex_yellow)) {
-                // console.log(stat_label)
-                let stat = pokemon[`base_stats`][stat_label];
-                sum += stat;
-                count++;
-                values.push(stat);
-            }
-            
-            let average = sum / count;
-            
-            values.sort((a, b) => a - b);
-            let median;
-            let midIndex = Math.floor(values.length / 2);
-            
-            if (values.length % 2 === 0) {
-                median = (values[midIndex - 1] + values[midIndex]) / 2;
-            } else {
-                median = values[midIndex];
-            }
-            return {
-                average: Math.round(average),
-                median : Math.round(median),
-            };
-        },
-        // movepool_power(move, power) {
-        //     if (move == 'Doom Desire') {
-        //         return 120
-        //     }
-        //     else {
-        //         return power
-        //     }
-        // },
+
         get_nested_property(obj, path) {
             return path.split('.').reduce((o, p) => (o || {})[p], obj);
         },
-        // load_timer_settings() {
-        //     this.timer_startTimeOffset = MyStorage['timer_startTimeOffset'] ?? "00:00:00.00"
-        //     this.timer_startTime       = MyStorage['timer_startTime']       ?? 0
-        //     this.timer_pause           = MyStorage['timer_pause']           ?? true
-        //     this.timer_formatted_time  = MyStorage['timer_formatted_time']  ?? ["0", ".00"]
-        //     this.timer_pause_time      = MyStorage['timer_pause_time']      ?? 0
-        //     this.time_h                = MyStorage['time_h']                ?? 0
-        //     this.time_m                = MyStorage['time_m']                ?? 0
-        //     this.time_s                = MyStorage['time_s']                ?? 0
-        //     this.time_ms               = MyStorage['time_ms']               ?? 0
-        //     this.time_split_start      = MyStorage['time_split_start']      ?? "00:00:00:00"
-        //     this.battle_start          = MyStorage['battle_start']          ?? 0
-        //     this.timer_settings        = MyStorage['timer_settings']        ?? "Real-Time"
-        // },
         load_split_settings() {
             this.current_splits  = MyStorage['current_splits']  ?? []
             this.previous_splits = MyStorage['previous_splits'] ?? []
@@ -1975,111 +1874,9 @@ const app = Vue.createApp({
             }
             this.previous_splits = results;
         },
-        get_bb_stat(stat_name) {
-            const state = this.state
-            let boosting_badge = false
-            let badge_boost_modifier = 0.125
-            //assign stats and badges
-            if (state != `Base Stats`) {
-                switch (stat_name) {
-                    case "Hp":              return 'N/A';
-                    case "Attack":          { 
-                        boosting_badge = this.mapper.properties.player.badges.badge1.value
-                        switch (boosting_badge) {
-                            case true:  return Math.floor(this.mapper.properties.player.team[0].attack.value * badge_boost_modifier)
-                            case false: return 0
-                        }
-                    }
-                    case "Defense":         { 
-                        boosting_badge = this.mapper.properties.player.badges.badge6.value
-                        switch (boosting_badge) {
-                            case true:  return Math.floor(this.mapper.properties.player.team[0].defense.value * badge_boost_modifier)
-                            case false: return 0
-                        }
-                    }
-                    case "Speed":           { 
-                        boosting_badge = this.mapper.properties.player.badges.badge3.value
-                        switch (boosting_badge) {
-                            case true:  return Math.floor(this.mapper.properties.player.team[0].speed.value * badge_boost_modifier)
-                            case false: return 0
-                        }
-                    }
-                    case "Special":  { 
-                        boosting_badge = this.mapper.properties.player.badges.badge7.value
-                        switch (boosting_badge) {
-                            case true:  return Math.floor(this.mapper.properties.player.team[0].special.value * badge_boost_modifier)
-                            case false: return 0
-                        }
-                    }
-                }
-            }
-            if (state == `Base Stats`) {
-                switch (stat_name) {
-                    case "Hp":              return 0
-                    case "Attack":          return 0
-                    case "Defense":         return 0
-                    case "Special Attack":  return 0
-                    case "Special Defense": return 0
-                    case "Speed":           return 0
-                }
-            }
-        },
-        get_stat(stat_name) {
-            const state = this.state
-            if (state == `Overworld` || state == `To Battle`) {
-                switch (stat_name) {
-                    case "Hp":      return this.mapper.properties.player.team[0].maxHp.value
-                    case "Attack":  return this.badge_boost(this.mapper.properties.player.badges.badge1.value, this.mapper.properties.player.team[0].attack.value)
-                    case "Defense": return this.badge_boost(this.mapper.properties.player.badges.badge3.value, this.mapper.properties.player.team[0].defense.value)
-                    case "Special": return this.badge_boost(this.mapper.properties.player.badges.badge7.value, this.mapper.properties.player.team[0].special.value)
-                    case "Speed":   return this.badge_boost(this.mapper.properties.player.badges.badge5.value, this.mapper.properties.player.team[0].speed.value)
-                }
-            }
-            if (state == `Battle` || state == `From Battle`) {
-                switch (stat_name) {
-                    case "Hp":      return this.mapper.properties.battle.yourPokemon.maxHp.value
-                    case "Attack":  return this.mapper.properties.battle.yourPokemon.attack.value
-                    case "Defense": return this.mapper.properties.battle.yourPokemon.defense.value
-                    case "Special": return this.mapper.properties.battle.yourPokemon.special.value
-                    case "Speed":   return this.mapper.properties.battle.yourPokemon.speed.value
-                }
-            }
-            if (state == `Base Stats`) {
-                switch (stat_name) {
-                    case "Hp":      return this.pokedex_yellow[this.starterName].base_stats.hp
-                    case "Attack":  return this.pokedex_yellow[this.starterName].base_stats.attack
-                    case "Defense": return this.pokedex_yellow[this.starterName].base_stats.defense
-                    case "Special": return this.pokedex_yellow[this.starterName].base_stats.special_attack
-                    case "Speed":   return this.pokedex_yellow[this.starterName].base_stats.speed
-                }
-            }
-        },
-        badge_boost(badge, stat) {
-            if (this.display_badge_boosts == false) { return stat }
-            return badge ? Math.floor(stat * 1.125) : stat;
-        },
         get_ev(stat_exp) {
             //add more data to this function for details (stat gain in gen1, and gen3 for comparisons)
             return Math.floor(Math.sqrt(stat_exp) / 4)
-        },
-        get_dv(stat_name) {
-            const state = this.state
-            let dv_atk = this.mapper.properties.player.team[0].dvAttack.value
-            let dv_def = this.mapper.properties.player.team[0].dvDefense.value
-            let dv_spc = this.mapper.properties.player.team[0].dvSpecial.value
-            let dv_spe = this.mapper.properties.player.team[0].dvSpeed.value
-            switch (stat_name) {
-                case "Hp":
-                    return this.hp_dv(dv_atk, dv_def, dv_spe, dv_spc)
-                case "Attack":
-                    return dv_atk
-                case "Defense":
-                    return dv_def
-                case "Special":
-                    return dv_spc
-                case "Speed":
-                    return dv_spe
-            }
         },
         hp_dv(atk, def, spd, spc) {
             return (((atk % 2) * 8) + ((def % 2) * 4) + ((spd % 2) * 2) + ((spc % 2) * 1))
@@ -2656,15 +2453,6 @@ const app = Vue.createApp({
         select_starter(pokemon_species) {
             this.starterName = pokemon_species
         },
-        g1CritRate(pkmnData) {
-            var baseSpeed = pkmnData?.base_spd
-            if (baseSpeed) {
-                return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
-            }
-            else {
-                return this.g1PokemonData[this.starterName].crit_rate
-            }
-        },
         enemy_crit_rate(pkmnData) {
             const species = pkmnData?.species.value
             const base_speed = this.g1PokemonData[species]?.base_spd
@@ -2742,36 +2530,6 @@ const app = Vue.createApp({
             }
         },
         
-        //Movepool Graphic
-        dataSearch(dataObject, pointerValue) {
-            if (!pointerValue) return ""
-            if (!dataObject) return ""
-            const key = Object.keys(dataObject).find(x => x.toLowerCase() == pointerValue.toLowerCase())
-            return dataObject[key] || "ERROR"
-        },
-        getMovepool(gen1PkmnData, moveData, tmhmMapping, species) {
-            const pkmn = this.dataSearch(gen1PkmnData, species)
-            if (pkmn.initial_moveset == undefined) {  }
-            let obj = {
-                initial: pkmn.initial_moveset?.map(x => {
-                    return this.dataSearch(moveData, x)
-                }),
-                level: pkmn.levelup_moveset?.map(x => {
-                    return {
-                        ...{Level: x[0]},
-                        ...this.dataSearch(moveData, x[1]) //searching for index 1
-                    }
-                }),     
-                tmhm: pkmn.tm_hm_learnset?.map(x => {
-                    return {
-                        ...{tmhm: tmhmMapping.find(y => y.Move == x)?.tmhmIndex??"ERRO"},
-                        ...this.dataSearch(moveData, x)
-                    }
-                }),     
-            }
-            return obj
-        },
-        
         getEnemyPkmnStyles(pkmnData) {
             const isFainted = pkmnData.hp.value == 0;
             return {
@@ -2839,54 +2597,13 @@ const app = Vue.createApp({
                 }
             }
         },
-        
-        //BADGE GRAPHIC RECALL
-        badgeGraphic(x) {
-            if (x.value == true) {
-                var badge = x.path.toString().substring(14)
-                return `images/badges/${badge}.png`
-            }
-            else if (x.value == false) {   
-                return null
-            }
-        },
 
         pokemon(y) {
             if (y != null)
                 y = parseInt(y)
             return this.g1PokemonData[this.starterName]
         },
-        stageModifiers(y) {
-            if (y === null) {
-                return " "
-            }
-            else
-                if (y > 0) {
-                    return "+" + y.toString()
-                }
-                else
-                    if (y < 0) {
-                        return y.toString()
-                    }
-                    else
-                        return " "
-        },
-        statLabelOpacity() {
-            let default_opacity = .63
-            let faded_opacity = .1
-            let mod_atk = this.mapper.properties.battle.yourPokemon.modStageAttack.value != '0'  && this.state == 'Battle' ? faded_opacity : default_opacity
-            let mod_def = this.mapper.properties.battle.yourPokemon.modStageDefense.value != '0' && this.state == 'Battle' ? faded_opacity : default_opacity
-            let mod_spc = this.mapper.properties.battle.yourPokemon.modStageSpecial.value != '0' && this.state == 'Battle' ? faded_opacity : default_opacity
-            let mod_spe = this.mapper.properties.battle.yourPokemon.modStageSpeed.value != '0'   && this.state == 'Battle' ? faded_opacity : default_opacity
-            let object = {
-                "Hp":      default_opacity,
-                "Attack":  mod_atk,
-                "Defense": mod_def,
-                "Speed":   mod_spe,
-                "Special": mod_spc,
-            }
-            return object
-        },
+
 
         // STAGE MULTIPLIERS
         //edge case management (prevent flickering of the stat values due to overlay stage multipliers being applied on Pokemon that are not yet in battle)
@@ -2906,17 +2623,6 @@ const app = Vue.createApp({
             else {
                 return stat
             }
-        },
-
-        //MOVE ICON DISPLAY
-        moveTypeIcon(y) { //y = move1.value
-            if (y != null && y != undefined) {
-                var moveName = this.move_name(y)
-                var move = this.g1MoveData[moveName]
-                var moveType = move.Type.toLowerCase()
-                return `images/elements/type-icons/${moveType}.png`
-            }
-            return null
         },
 
         fixTrainerName(trainerName, trainerNumber) {
@@ -3257,67 +2963,7 @@ const app = Vue.createApp({
                 percent: (exp - currLvlExp) / (nextLvlExp - currLvlExp),
             };
         },
-        decimalToPercentage(decimal) {
-            return Math.round(decimal * 100);
-        },
         // MOVE MANAGEMENT
-        movePower(y) { //y = move1.value
-            if (y) {
-                const state = this.mapper.properties.meta.state.value
-                // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
-                var move = this.g1MoveData[this.move_name(y)]
-                if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP" || y.toUpperCase() == "AEROBLAST")) {
-                    level = this.mapper.properties.player.team[0].level.value
-                    critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
-                    power = move.Power
-                    pokemon = this.g1PokemonData[this.starterName]
-                    baseSpeed = pokemon.base_spd
-                    //test to see if the Pokemon always crits
-                    if (baseSpeed > 64) { //if the Pokemon has 63 or less base speed it will crit less often
-                        return power * critModifier
-                    }
-                    else {
-                        return power
-                    }
-                }
-                else if (y.toUpperCase() == "RAGE FIST") {
-                    if (state != 'Battle') {
-                        return 50
-                    }
-                    let rage_fist_counter = this.mapper.properties.patch.backport.prop_1.value
-                    let rage_fist_power = 50 + (50 * rage_fist_counter)
-                    if (rage_fist_power > 350) { return 350 }
-                    else { return rage_fist_power }
-                }
-                else if (move) { return move.Power }
-            }
-            return null
-        },
-
-        moveAccuracyEvasionDynamic(move) {
-            if (move) {
-                var move_name = this.move_name(move)
-                var moveObject = this.g1MoveData[move_name]
-                var moveAccuracy = moveObject.Accuracy
-                var accuracyStageMods = this.stageModifiersData.find(x => x.modType === "accuracy")
-                var currentAccuracyModStage = this.batt.yourPokemon.modStageAccuracy.value
-                var evasionStageMods = this.stageModifiersData.find(x => x.modType === "evasion")
-                var currentEvasionModStage = this.batt.enemyPokemon.modEnemyStageEvasion.value
-                if (this.state == `Battle` || this.state == `From Battle`) {
-                    if (moveAccuracy == `-`) {
-                        return `-`
-                    }
-                    else {
-                        return Math.floor(moveAccuracy * accuracyStageMods[currentAccuracyModStage] * evasionStageMods[currentEvasionModStage])
-                    }
-                }
-                else {
-                    return moveAccuracy
-                }
-            }
-            else return ""
-        },
-
         sleep(ms) {
             return new Promise((res) => setTimeout(res, ms))
         },
@@ -3368,56 +3014,7 @@ const app = Vue.createApp({
                 }
             }
         },
-        type_effectiveness(pkmnData, moveNumber, enemyData) { //pkmnData = team[0] etc
-            if (this.typeCalcs == true) {
-                const move_data_array = Object.values(this.g1MoveData);
-                var move_name          =  this.get_backport_move_name(pkmnData[moveNumber].value, this.starterName, pkmnData[moveNumber].bytes)
-                // console.log(move_name)
 
-                if (move_name == null) { return "" } //stop the function if there is no move in that slot
-                if (move_name == 'Doom Desire') { return 120 }
-
-                var move_type            = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Type
-                var move_info            = this.typeData.find(x => x.moveType === move_type)
-                var move_power           = this.movePower(move_name)
-                var move_category        = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Category
-                var attacker_type1       = pkmnData.type1.value
-                var attacker_type2       = pkmnData.type2.value
-                var defender_type1       = enemyData.type1.value
-                var defender_type2       = enemyData.type2.value
-                var multiplier_stab      = 1
-                var multiplier_type1     = move_info[defender_type1]
-                var multiplier_type2     = 1
-                var multiplier_type3     = 1
-                var screen_reflect       = 1
-                var screen_lightscreen   = 1
-                
-                //Pumpkaboo TrickOrTreat
-                if (this.starterName == 'Pumpkaboo' && move_type == 'Ghost' && this.mapper.properties.patch.backport.prop_2.value == 8) {
-                    multiplier_type3 = 2
-                }
-
-                //update variables
-                if (move_type == attacker_type1 || move_type == attacker_type2) { multiplier_stab = 1.5 }
-                // console.log(move_name)
-                if (this.starterName == 'Dhelmise' && move_name == 'ANCHOR SHOT') { multiplier_stab = 1.5 }
-                if (defender_type1 != defender_type2)                                          { multiplier_type2 = this.typeData.find(x => x.moveType === move_type)[defender_type2] }
-                if (move_type == "Normal" || move_type == "Fighting" || move_type == "Flying" || move_type == "Bug" || move_type == "Poison" || move_type == "Ghost" || move_type == "Ground" || move_type == "Rock" || move_type == "Steel") {
-                    move_category = "Physical" }
-                if (move_type == "Fire" || move_type == "Water" || move_type == "Grass" || move_type == "Electric" || move_type == "Psychic" || move_type == "Ice" || move_type == "Dragon" || move_type == "Dark") {
-                    move_category = "Special" }
-                if (enemyData.effects.reflect.value == true && move_category == "Physical")    { screen_reflect = 0.5 }
-                if (enemyData.effects.lightScreen.value == true && move_category == "Special") { screen_lightscreen = 0.5 }
-
-                //return if further updates aren't required
-                if (move_power == "-")                { return move_power } //returns "-" if the move has no power
-                if (this.state != `Battle`) { return Math.floor(move_power * multiplier_stab) } //returns the move's base power if not in battle
-
-                //calculate the move's effective power
-                return Math.floor(move_power * multiplier_stab * multiplier_type1 * multiplier_type2 * multiplier_type3 * screen_reflect * screen_lightscreen)
-            }
-            else { return this.movePower(pkmnData[moveNumber].value) }
-        },
 
         badgeBoost(badge, stat) {
             return badge ? Math.floor(stat * 1.125) : stat;

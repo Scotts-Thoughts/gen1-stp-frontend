@@ -1,6 +1,6 @@
 {
   "name": "stp-generation1-overlay",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "description": "Scott's Thoughts Overlay.",
   "main": "./main.js",
   "build": {
@@ -18,8 +18,8 @@
     "build": "electron-builder --win --config"
   },
   "devDependencies": {
-    "electron": "^25.1.1",
-    "electron-builder": "^24.4.0"
+    "electron": "^35.0.0",
+    "electron-builder": "^25.0.0"
   },
   "dependencies": {
     "@electron-toolkit/utils": "^1.0.2",

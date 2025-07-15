@@ -1108,8 +1108,8 @@ box-shadow:
     font-family: play;
     line-height: 16px;
     font-size: 15px;
-    top: 651px;
-    left: 19px;
+    top: -144px;
+    left: 8.5px;
     width: 360px;
     text-align: center;
     border: 1px solid rgba(255, 0, 0, 0);
@@ -1124,6 +1124,7 @@ box-shadow:
     top: 41px;
     left: 32px;
 }
+
 .resetsLabel {
     border: 1px solid #ff000000;
     font-size: 14px;
