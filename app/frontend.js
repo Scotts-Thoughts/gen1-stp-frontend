@@ -47,21 +47,6 @@ async function loadCsvFile() {
     return text;
 }
 
-function downloadFile(content, downloadFileName) {
-    const blob = new Blob([content], {type: "application/octet-stream"});
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = downloadFileName;
-    document.body.appendChild(a);
-    a.style.display = 'none';
-    a.click();
-    a.remove();
-    setTimeout(function() {
-        return window.URL.revokeObjectURL(url);
-    }, 1000);
-}
-
 const fs = require("fs");
 const path = require("path");
 const { finished } = require('stream');
@@ -71,134 +56,6 @@ for (let folder of folders = ['splits', 'splits/Yellow', 'splits/Red and Blue'])
     if (!fs.existsSync(folder)) {
         fs.mkdirSync(folder);
     }
-}
-
-function logData(gameName, gameName_Path, str, file_name, starterName, log_type, testStatus, refilming_mode, refilmed_attempt, refilmed_finish) {
-    const dirPath = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/attempts/` : `./splits/${gameName_Path}/${starterName}/attempts/`;
-    const testStatusText = testStatus ? "test_run_" : "";
-    let attempt_number = refilming_mode ? refilmed_attempt : file_name;
-    let filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}-simple.csv`);
-    let header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,failures,level,game_time,battle_duration,move1,move2,move3,move4\n";
-    if (log_type == "Simple") {
-        header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time," +
-        "battle_duration,move1,move2,move3,move4\n";
-    }
-    else if (log_type == "Full") {
-        filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}-full.csv`);
-        header = "date_string,time_string,player_name,pokemon,trainer_name,trainer_id,location,total_pokemon," +
-            "real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,failures,level,game_time,battle_duration," + 
-            "move1,move2,move3,move4,move1pp,move2pp,move3pp,move4pp,move1ppUp,move2ppUp,move3ppUp,move4ppUp," +
-            "saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns," +
-            "itemsInBag,money,rivalTeam," +
-            "statusCondition,type1,type2,experience," +
-            "ROM,Species,Trainer,Start Time,Real Time,Game Time,Level,Resets," +
-            "RTHours,RTMinutes,RTSeconds,RTMilliseconds,Move 1,Move 2,Move 3,Move 4," +
-            "Hp,Max HP,Attack,Defense,Sp. Attack,Sp. Defense,Speed,Attack DV,Defense DV,Speed DV,Special DV," +
-            "StatExp HP,StatExp Attack,StatExp Def,StatExp Sp. Attack,StatExp Sp. Defense,StatExp Speed," +
-            "Attack Stage,Defense Stage,Sp. Attack Stage,Sp. Defense Stage,Speed Stage,Accuracy Stage,Evasion Stage," +
-            "Battle Attack,Battle Defense,Battle Sp. Attack,Battle Sp. Defense,Battle Speed," +
-            "Frame Count,Overworld Frame Count,Battle Frame Count,Menu Frame Count,Intro Frame Count," +
-            "Save Count,Reload Count,Clock Reset Count,Steps Count,Steps Count Walk,Steps Count Bike,Steps Count Surf,Bonks," + 
-            "Battles,Trainer Battles,Wild Battles,Battles Fled,Failed Runs," +
-            "Total Damage Dealt,Actual Damage Dealt,Total Damage Taken,Actual Damage Taken," +
-            "Own Moves Hit,Own Moves Missed,Enemy Moves Hit,Enemy Moves Missed," +
-            "Own Moves Super Effective,Own Moves Not Very Effective,Enemy Moves Super Effective,Enemy Moves Not Very Effective," +
-            "Criticals Dealt,OHKOs Dealt,Criticals Taken,OHKOs Taken," +
-            "Was Confused,Enemy Became Confused,Was Paralyzed,Enemy Was Paralyzed,Was Burned,Enemy Was Burned," +
-            "Was Frozen,Enemy Was Frozen,Was Poisoned,Enemy Was Poisoned,Was Badly Poisoned,Enemy Was Badly Poisoned," +
-            "Fell Asleep,Enemy Fell Asleep,Player Turns Confused,Player Turns Confused Hit Self,Player Turns Paralyzed," +
-            "Player Turns Paralyzed Fully,Enemy Turns Confused,Enemy Turns Confused Hit Self,Enemy Turns Paralyzed," +
-            "Enemy Turns Paralyzed Fully, Player Turns Asleep, Enemy Turns Asleep,Player HP Healed,Enemy HP Healed," +
-            "Player Pokemon Fainted,Enemy Pokemon Fainted," +
-            "Experience Gained,Switchouts," +
-            "Money Made,Money Spent,Money Lost," +
-            "Items Picked Up,Items Bought,Items Sold," +
-            "Balls Thrown,Pokemon Caught In Balls,Moves Learnt," +
-            "Blackouts,Attempt Number,Failures, Rival's Team\n";
-    }
-    else if (log_type == "Deprecated") {
-        filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}.csv`);
-        header = "ROM,Species,Trainer,Start Time,Real Time,Game Time,Level,Resets," +
-            "RTHours,RTMinutes,RTSeconds,RTMilliseconds,Move 1,Move 2,Move 3,Move 4," +
-            "Attack,Defense,Sp. Attack,Sp. Defense,Speed," +
-            "Attack Stage,Defense Stage,Sp. Attack Stage,Sp. Defense Stage,Speed Stage,Accuracy Stage,Evasion Stage," +
-            "Battle Attack,Battle Defense,Battle Sp. Attack,Battle Sp. Defense,Battle Speed," +
-            "Frame Count,Overworld Frame Count,Battle Frame Count,Menu Frame Count,Intro Frame Count," +
-            "Save Count,Reload Count,Clock Reset Count,Steps Count,Steps Count Walk,Steps Count Bike,Steps Count Surf,Bonks," + 
-            "Battles,Trainer Battles,Wild Battles,Battles Fled,Failed Runs," +
-            "Total Damage Dealt,Actual Damage Dealt,Total Damage Taken,Actual Damage Taken," +
-            "Own Moves Hit,Own Moves Missed,Enemy Moves Hit,Enemy Moves Missed," +
-            "Own Moves Super Effective,Own Moves Not Very Effective,Enemy Moves Super Effective,Enemy Moves Not Very Effective," +
-            "Criticals Dealt,OHKOs Dealt,Criticals Taken,OHKOs Taken," +
-            "Was Confused,Enemy Became Confused,Was Paralyzed,Enemy Was Paralyzed,Was Burned,Enemy Was Burned," +
-            "Was Frozen,Enemy Was Frozen,Was Poisoned,Enemy Was Poisoned,Was Badly Poisoned,Enemy Was Badly Poisoned," +
-            "Fell Asleep,Enemy Fell Asleep,Player Turns Confused,Player Turns Confused Hit Self,Player Turns Paralyzed," +
-            "Player Turns Paralyzed Fully,Enemy Turns Confused,Enemy Turns Confused Hit Self,Enemy Turns Paralyzed," +
-            "Enemy Turns Paralyzed Fully,Player HP Healed,Enemy HP Healed," +
-            "Player Pokemon Fainted,Enemy Pokemon Fainted," +
-            "Experience Gained,Switchouts," +
-            "Money Made,Money Spent,Money Lost," +
-            "Items Picked Up,Items Bought,Items Sold," +
-            "Balls Thrown,Pokemon Caught In Balls,Moves Learnt," +
-            //new properties
-            "Blackouts,Attempt Number,Failures, Rival's Team\n"
-    }
-    else if (log_type == "Battle Summary") {
-        filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}-battleSummary.csv`);
-        header = "Unknown"
-    }
-    fs.mkdir(dirPath, { recursive: true }, (err) => {
-        if (!fs.existsSync(filePath)) {
-            fs.writeFile(filePath, header, (err) => {
-                if (err) {
-                    console.error(err);
-                } else {
-                    fs.appendFile(filePath, str, (err) => {
-                        if (err) {
-                            console.error(err);
-                        }
-                    });
-                }
-            });
-        } else {
-            fs.appendFile(filePath, str, (err) => {
-                if (err) {
-                    console.error(err);
-                }
-            });   
-        }
-    });
-}
-
-function logCopy(gameName, gameName_Path, file_name, starterName, finished_run_count, refilming_mode, refilmed_attempt, refilmed_finish) {
-    var dirPathAttempts = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/attempts/` : `./splits/${gameName_Path}/${starterName}/attempts/`
-    var dirPathFinishes = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/finishes/` : `./splits/${gameName_Path}/${starterName}/finishes/`
-    let attempt_number = refilming_mode ? refilmed_attempt : file_name;
-    let finish_number = refilming_mode ? refilmed_attempt : finished_run_count;
-    console.log("LogCopy Variables", gameName, gameName_Path, file_name, starterName, finished_run_count, dirPathAttempts, dirPathFinishes, attempt_number, finish_number)
-    fs.mkdir(dirPathFinishes, { recursive: true }, (err) => {
-        fs.copyFile(
-            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-simple.csv`), 
-            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}-simple.csv`), (err) => {
-            if (err) {
-                console.error(err);
-            }
-        });
-        fs.copyFile(
-            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-full.csv`), 
-            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}-full.csv`), (err) => {
-            if (err) {
-                console.error(err);
-            }
-        });
-        fs.copyFile(
-            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}.csv`), 
-            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}.csv`), (err) => {
-            if (err) {
-                console.error(err);
-            }
-        });
-    });
 }
 
 function hash(s) {
@@ -1254,9 +1111,6 @@ const app = Vue.createApp({
             //add more data to this function for details (stat gain in gen1, and gen3 for comparisons)
             return Math.floor(Math.sqrt(stat_exp) / 4)
         },
-        hp_dv(atk, def, spd, spc) {
-            return (((atk % 2) * 8) + ((def % 2) * 4) + ((spd % 2) * 2) + ((spc % 2) * 1))
-        },
         enemy_pkmn_faint_types(pkmnData) {
             if (this.state == `To Battle`) {
                 return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
@@ -1281,6 +1135,7 @@ const app = Vue.createApp({
         },
 
         padTime(time) {
+            if (!time) { return "00" }
             return time.toString().padStart(2, "0")
         },
         async newRun() {
@@ -1676,7 +1531,6 @@ const app = Vue.createApp({
                 }
             }
         },
-
         //text_functions.js
         move_name,
         capitalization_format,
@@ -1684,6 +1538,8 @@ const app = Vue.createApp({
         log_split,
         autosplitter_process,
         format_trainer_name,
+        logData,
+        logCopy,
     },
 
 //--------- PROGRAM MOUNTED ---------------------------------------------------------------------------------------------------------------//
@@ -1788,7 +1644,7 @@ const app = Vue.createApp({
                 let id = this.mapper.properties.battle.trainer.number.value
                 let unique = `${trainer}_${id}`
                 let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red' ? "R" : "B"
-                let gameName_Path = gameName == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data   
+                let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data   
 
                 if (this.collect_split_data == true) {
                     // Use for...of loop to iterate over the array
@@ -1816,19 +1672,19 @@ const app = Vue.createApp({
                 }
 
                 //write full split data (this is written for every single battle)
-                logData(gameName, gameName_Path, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                this.logData(gameName, gameName_Path, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                 
                 //write deprecated split data (this is written for only pre-defined trainers)
                 //a list of these trainers can be found within `autosplitter.js` and inside the parent `Yellow` or `Red and Blue`
                 if (this.autosplitter[this.mapper.properties.meta.gameName.value][unique]) {
-                    logData(gameName, gameName_Path, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                 }
                 
                 //write simple split data
                 //a list of these can be found within `autosplitter.js` and inside the parent `Simple`
                 const simpleSplit = () => {
-                    log_split()
-                    logData(gameName, gameName_Path, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.log_split()
+                    this.logData(gameName, gameName_Path, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                 }
                 //log simple data for only these trainers
@@ -1870,7 +1726,7 @@ const app = Vue.createApp({
 
                 //stop timer
                 if (trainer == "RIVAL3") { //this is the champion in gen1
-                    log_split() //log the final split
+                    this.log_split() //log the final split
                     if (this.automatic_post_battle_splits == true) {
                         this.right_panel = "Splits"
                         this.automatic_splits = true
@@ -1880,7 +1736,7 @@ const app = Vue.createApp({
                     };
                     // this.stopTime() //stop the timer
                     this.timer.stopTime();
-                    logData(gameName, gameName_Path, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
+                    this.logData(gameName, gameName_Path, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }
             }   
@@ -1890,15 +1746,15 @@ const app = Vue.createApp({
         //I am watching tile1 for a specifc tile that appears when the gametime displays on screen
         this.mapper.properties.screen.tiles.column1.tile1.change((newProp) => {
             let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red' ? "R" : "B"
-            let gameName_Path = gameName == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data     
+            let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data     
             if (newProp.value == 122) {
                 if (this.mapper.properties.events.beatChampion.value == true && this.mapper.properties.overworld.map.value == "Hall of Fame") {
                     autosplitter_process()
                     console.log("Run Ended - Backing up split data now...")
                     let gameName = this.mapper.properties.meta.gameName.value
-                    logData(gameName, gameName_Path, this.simple_data_str, this.finished_run_count, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    logData(gameName, gameName_Path, this.deprecated_data_str, this.finished_run_count, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    logData(gameName, gameName_Path, this.full_data_str, this.finished_run_count, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.simple_data_str, this.finished_run_count, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.deprecated_data_str, this.finished_run_count, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.full_data_str, this.finished_run_count, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                     console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer.formatted_time[0]}${this.time.formatted_time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
                     this.game_over = true; //stop incrementing resets
@@ -1911,7 +1767,7 @@ const app = Vue.createApp({
             let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red' ? "R" : "B"
             let gameName_Path = gameName == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data    
             if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
-                logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //copy the current `attempt_number` split data to the finished folder
+                this.logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //copy the current `attempt_number` split data to the finished folder
                 console.log("Run complete - moving attempt files to finished folder.")
                 this.finished_logs = true
             }

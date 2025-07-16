@@ -1,5 +1,6 @@
 
 function padTime(time) {
+    if (!time) { return "00" }
     return time.toString().padStart(2, "0")
 }
 

@@ -1,4 +1,4 @@
-function log_split(x) {
+function log_split(timer) {
     const time = this.timer.formatted_time;
     const opponent = this.mapper.properties.battle.trainer.class.value;
     console.log(`Autosplitter - Battle Ended: Split: ${opponent} at ${time[0]}${time[1]} (Gametime: ${this.gametimeSplit})`)
@@ -349,4 +349,130 @@ function format_trainer_name(trainer_class, trainer_number) {
     if (trainer_class == "ROCKET"       && this.mapper.properties.battle.trainer.number == 38)  { return "Hypno Rocket" }
     if (trainer_class == "CHANNELER"    && this.mapper.properties.battle.trainer.number == 10)  { return "Agatha Jr" }
     else return this.capitalization_format(trainer_class)
+}
+function logData(gameName, gameName_Path, str, file_name, starterName, log_type, testStatus, refilming_mode, refilmed_attempt, refilmed_finish) {
+    const dirPath = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/attempts/` : `./splits/${gameName_Path}/${starterName}/attempts/`;
+    const testStatusText = testStatus ? "test_run_" : "";
+    let attempt_number = refilming_mode ? refilmed_attempt : file_name;
+    let filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}-simple.csv`);
+    let header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,failures,level,game_time,battle_duration,move1,move2,move3,move4\n";
+    if (log_type == "Simple") {
+        header = "player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time," +
+        "battle_duration,move1,move2,move3,move4\n";
+    }
+    else if (log_type == "Full") {
+        filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}-full.csv`);
+        header = "date_string,time_string,player_name,pokemon,trainer_name,trainer_id,location,total_pokemon," +
+            "real_time_total,real_time_hmmss,real_time_file_label,resets,blackouts,failures,level,game_time,battle_duration," + 
+            "move1,move2,move3,move4,move1pp,move2pp,move3pp,move4pp,move1ppUp,move2ppUp,move3ppUp,move4ppUp," +
+            "saves,steps,bonks,trainerBattles,wildBattles,battleTurns,playerTurns,enemyTurns," +
+            "itemsInBag,money,rivalTeam," +
+            "statusCondition,type1,type2,experience," +
+            "ROM,Species,Trainer,Start Time,Real Time,Game Time,Level,Resets," +
+            "RTHours,RTMinutes,RTSeconds,RTMilliseconds,Move 1,Move 2,Move 3,Move 4," +
+            "Hp,Max HP,Attack,Defense,Sp. Attack,Sp. Defense,Speed,Attack DV,Defense DV,Speed DV,Special DV," +
+            "StatExp HP,StatExp Attack,StatExp Def,StatExp Sp. Attack,StatExp Sp. Defense,StatExp Speed," +
+            "Attack Stage,Defense Stage,Sp. Attack Stage,Sp. Defense Stage,Speed Stage,Accuracy Stage,Evasion Stage," +
+            "Battle Attack,Battle Defense,Battle Sp. Attack,Battle Sp. Defense,Battle Speed," +
+            "Frame Count,Overworld Frame Count,Battle Frame Count,Menu Frame Count,Intro Frame Count," +
+            "Save Count,Reload Count,Clock Reset Count,Steps Count,Steps Count Walk,Steps Count Bike,Steps Count Surf,Bonks," + 
+            "Battles,Trainer Battles,Wild Battles,Battles Fled,Failed Runs," +
+            "Total Damage Dealt,Actual Damage Dealt,Total Damage Taken,Actual Damage Taken," +
+            "Own Moves Hit,Own Moves Missed,Enemy Moves Hit,Enemy Moves Missed," +
+            "Own Moves Super Effective,Own Moves Not Very Effective,Enemy Moves Super Effective,Enemy Moves Not Very Effective," +
+            "Criticals Dealt,OHKOs Dealt,Criticals Taken,OHKOs Taken," +
+            "Was Confused,Enemy Became Confused,Was Paralyzed,Enemy Was Paralyzed,Was Burned,Enemy Was Burned," +
+            "Was Frozen,Enemy Was Frozen,Was Poisoned,Enemy Was Poisoned,Was Badly Poisoned,Enemy Was Badly Poisoned," +
+            "Fell Asleep,Enemy Fell Asleep,Player Turns Confused,Player Turns Confused Hit Self,Player Turns Paralyzed," +
+            "Player Turns Paralyzed Fully,Enemy Turns Confused,Enemy Turns Confused Hit Self,Enemy Turns Paralyzed," +
+            "Enemy Turns Paralyzed Fully, Player Turns Asleep, Enemy Turns Asleep,Player HP Healed,Enemy HP Healed," +
+            "Player Pokemon Fainted,Enemy Pokemon Fainted," +
+            "Experience Gained,Switchouts," +
+            "Money Made,Money Spent,Money Lost," +
+            "Items Picked Up,Items Bought,Items Sold," +
+            "Balls Thrown,Pokemon Caught In Balls,Moves Learnt," +
+            "Blackouts,Attempt Number,Failures, Rival's Team\n";
+    }
+    else if (log_type == "Deprecated") {
+        filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}.csv`);
+        header = "ROM,Species,Trainer,Start Time,Real Time,Game Time,Level,Resets," +
+            "RTHours,RTMinutes,RTSeconds,RTMilliseconds,Move 1,Move 2,Move 3,Move 4," +
+            "Attack,Defense,Sp. Attack,Sp. Defense,Speed," +
+            "Attack Stage,Defense Stage,Sp. Attack Stage,Sp. Defense Stage,Speed Stage,Accuracy Stage,Evasion Stage," +
+            "Battle Attack,Battle Defense,Battle Sp. Attack,Battle Sp. Defense,Battle Speed," +
+            "Frame Count,Overworld Frame Count,Battle Frame Count,Menu Frame Count,Intro Frame Count," +
+            "Save Count,Reload Count,Clock Reset Count,Steps Count,Steps Count Walk,Steps Count Bike,Steps Count Surf,Bonks," + 
+            "Battles,Trainer Battles,Wild Battles,Battles Fled,Failed Runs," +
+            "Total Damage Dealt,Actual Damage Dealt,Total Damage Taken,Actual Damage Taken," +
+            "Own Moves Hit,Own Moves Missed,Enemy Moves Hit,Enemy Moves Missed," +
+            "Own Moves Super Effective,Own Moves Not Very Effective,Enemy Moves Super Effective,Enemy Moves Not Very Effective," +
+            "Criticals Dealt,OHKOs Dealt,Criticals Taken,OHKOs Taken," +
+            "Was Confused,Enemy Became Confused,Was Paralyzed,Enemy Was Paralyzed,Was Burned,Enemy Was Burned," +
+            "Was Frozen,Enemy Was Frozen,Was Poisoned,Enemy Was Poisoned,Was Badly Poisoned,Enemy Was Badly Poisoned," +
+            "Fell Asleep,Enemy Fell Asleep,Player Turns Confused,Player Turns Confused Hit Self,Player Turns Paralyzed," +
+            "Player Turns Paralyzed Fully,Enemy Turns Confused,Enemy Turns Confused Hit Self,Enemy Turns Paralyzed," +
+            "Enemy Turns Paralyzed Fully,Player HP Healed,Enemy HP Healed," +
+            "Player Pokemon Fainted,Enemy Pokemon Fainted," +
+            "Experience Gained,Switchouts," +
+            "Money Made,Money Spent,Money Lost," +
+            "Items Picked Up,Items Bought,Items Sold," +
+            "Balls Thrown,Pokemon Caught In Balls,Moves Learnt," +
+            //new properties
+            "Blackouts,Attempt Number,Failures, Rival's Team\n"
+    }
+    else if (log_type == "Battle Summary") {
+        filePath = path.join(dirPath, `${gameName}-${testStatusText}${starterName}-${attempt_number}-battleSummary.csv`);
+        header = "Unknown"
+    }
+    fs.mkdir(dirPath, { recursive: true }, (err) => {
+        if (!fs.existsSync(filePath)) {
+            fs.writeFile(filePath, header, (err) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    fs.appendFile(filePath, str, (err) => {
+                        if (err) {
+                            console.error(err);
+                        }
+                    });
+                }
+            });
+        } else {
+            fs.appendFile(filePath, str, (err) => {
+                if (err) {
+                    console.error(err);
+                }
+            });   
+        }
+    });
+}
+function logCopy(gameName, gameName_Path, file_name, starterName, finished_run_count, refilming_mode, refilmed_attempt, refilmed_finish) {
+    var dirPathAttempts = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/attempts/` : `./splits/${gameName_Path}/${starterName}/attempts/`
+    var dirPathFinishes = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/finishes/` : `./splits/${gameName_Path}/${starterName}/finishes/`
+    let attempt_number = refilming_mode ? refilmed_attempt : file_name;
+    let finish_number = refilming_mode ? refilmed_attempt : finished_run_count;
+    console.log("LogCopy Variables", gameName, gameName_Path, file_name, starterName, finished_run_count, dirPathAttempts, dirPathFinishes, attempt_number, finish_number)
+    fs.mkdir(dirPathFinishes, { recursive: true }, (err) => {
+        fs.copyFile(
+            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-simple.csv`), 
+            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}-simple.csv`), (err) => {
+            if (err) {
+                console.error(err);
+            }
+        });
+        fs.copyFile(
+            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-full.csv`), 
+            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}-full.csv`), (err) => {
+            if (err) {
+                console.error(err);
+            }
+        });
+        fs.copyFile(
+            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}.csv`), 
+            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}.csv`), (err) => {
+            if (err) {
+                console.error(err);
+            }
+        });
+    });
 }

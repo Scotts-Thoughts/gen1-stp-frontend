@@ -121,6 +121,9 @@ module.exports = {
                 median : Math.round(median),
             };
         },
+        hp_dv(atk, def, spd, spc) {
+            return (((atk % 2) * 8) + ((def % 2) * 4) + ((spd % 2) * 2) + ((spc % 2) * 1))
+        },
         get_dv(stat_name) {
             const state = this.state
             let dv_atk = this.mapper.properties.player.team[0].dvAttack.value

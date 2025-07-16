@@ -254,36 +254,36 @@ module.exports = {
         //F13
         keyhook.registerShortCut('F13', async () => { // Show IVs
             console.log("Key: F13 pressed: EVs displayed.")
-            this.stats_display = "DVs";
+            this.$parent.stats_display = "DVs";
         });
         //F14
         keyhook.registerShortCut('F14', async () => { // Show EVs
             console.log("Key: F14 pressed: IVs displayed.")
-            if (this.stats_display == "EVs") {
-                this.stats_display = "Detailed EVs";
+            if (this.$parent.stats_display == "EVs") {
+                this.$parent.stats_display = "Detailed EVs";
                 return
             }
-            this.stats_display = "EVs";
+            this.$parent.stats_display = "EVs";
         });
         //F15
         keyhook.registerShortCut('F15', async () => { // Show Base Stats
             console.log("Key: F15 pressed. Base Stats displayed.")
-            this.stats_display = "Base Stats";
+            this.$parent.stats_display = "Base Stats";
         });
         //F16
         keyhook.registerShortCut('F16', async () => { // Automatic
             console.log("Key: F16 pressed. Stats are displaying automatically now.")
-            if (this.stats_display == "Automatic") {
-                this.stats_display = "Badge Boosts";
+            if (this.$parent.stats_display == "Automatic") {
+                this.$parent.stats_display = "Badge Boosts";
                 return
             }
-            this.stats_display = "Automatic";
+            this.$parent.stats_display = "Automatic";
         });
         //F17
         keyhook.registerShortCut('F17', async () => { // Inventory
             console.log("Key: F17 pressed. Automatic battle graphics will be displayed.")
-            if (this.disallow_right_panel_switching == true) { 
-                this.right_panel = "Automatic"
+            if (this.$parent.disallow_right_panel_switching == true) { 
+                this.$parent.right_panel = "Automatic"
                 return 
             }
             this.right_panel = "Automatic";
@@ -291,31 +291,31 @@ module.exports = {
         //F18
         keyhook.registerShortCut('F18', async () => { // Trainer Graphic during Battle
             console.log("Key: F18 pressed. Splits displayed.")
-            if (this.disallow_right_panel_switching == true) { 
-                this.right_panel = "Automatic"
+            if (this.$parent.disallow_right_panel_switching == true) { 
+                this.$parent.right_panel = "Automatic"
                 return 
             }
-            this.right_panel = "Movepool";
+            this.$parent.right_panel = "Movepool";
         });
         //F19
         keyhook.registerShortCut('F19', async () => { // Trainer Graphic during Battle
             console.log("Key: F19 pressed. Movepool displayed.")
-            if (this.disallow_right_panel_switching == true) { 
-                this.right_panel = "Automatic"
+            if (this.$parent.disallow_right_panel_switching == true) { 
+                this.$parent.right_panel = "Automatic"
                 return 
             }
-            this.right_panel = "Splits";
+            this.$parent.right_panel = "Splits";
         });
         //F20 used 
         //F21 used
         //F22 unused
         //F23
         keyhook.registerShortCut('F23', async () => {
-            this.newRun()
+            this.$parent.newRun()
         });
         //F24
         keyhook.registerShortCut('F24', async () => {
-            this.timer.pauseUnpauseTime();
+            this.$parent.timer.pauseUnpauseTime();
         });
     }
 }
