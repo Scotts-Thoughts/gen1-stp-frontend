@@ -351,7 +351,7 @@ html, body {
 }
 
 .colored-image {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 1920px;
@@ -1286,8 +1286,8 @@ box-shadow:
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 1920px;
+    height: 1080px;
     object-fit: cover;
 }
 .svg {
@@ -1570,7 +1570,7 @@ box-shadow:
     font-size: 75px;
     border: #ff000000 solid 3px;
     display:block;
-    position: absolute;
+    position: fixed;
     width: 148px;
     height: 78px;
     line-height: 60px;
@@ -1598,7 +1598,7 @@ box-shadow:
     font-size: 65px;
     border: #ff000000 solid 3px;
     display:block;
-    position: absolute;
+    position: fixed;
     top: 60px;
     left: 10px;
     width: 380px;
@@ -2461,4 +2461,9 @@ box-shadow:
 }
 .first-row td {
     padding-top: 1px;
+}
+
+
+.saturation {
+    filter: saturate(var(--style_ui_saturation));
 }
