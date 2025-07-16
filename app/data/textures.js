@@ -26,4 +26,6 @@ const textures = {
     'Ghost Fighting': 'images\\textures\\Ghost Fighting.png',
     'Psychic (crisp)': 'images\\textures\\Psychic (crisp).jpg',
     'Digital': 'images\\textures\\digital.jpg',
-}
+};
+
+module.exports = textures;

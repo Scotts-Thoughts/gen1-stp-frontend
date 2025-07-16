@@ -1,3 +1,4 @@
+const textures = require("../data/textures");
 const PubSub = require("../logic/PubSub");
 const UIStyles = require("../logic/UIStyles");
 
@@ -42,7 +43,7 @@ const template = /*html*/`
     <br>
     <div>Background Texture:</div>
     <select :value="style.backgroundTexture" class="dropdownMenu dropdown_menu_column3" @change="update('backgroundTexture', $event)">
-        <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
+        <option v-for="key in dropdownDownMenuKeys" :key="key" :value="key">
             {{ key }}
         </option>
     </select>
@@ -91,7 +92,6 @@ const template = /*html*/`
 
 module.exports = {
     template,
-    props: [ "textures" ],
     methods: {
         update(a, b) {
             UIStyles.update(a, b.target.value);
@@ -112,9 +112,7 @@ module.exports = {
     },
     computed: {
         dropdownDownMenuKeys() {
-            return {
-                textures: Object.keys(this.textures)
-            }
+            return Object.keys(textures);
         },
     },
     setup(){

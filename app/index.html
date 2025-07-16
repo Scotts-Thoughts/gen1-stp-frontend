@@ -7,7 +7,7 @@
 </head>
 <body>
     <div id="app">
-        <keyhook></keyhook>
+        <!-- <keyhook></keyhook> -->
         <div v-if="ready == false">
             <no_mapper></no_mapper>
         </div>
@@ -48,12 +48,9 @@
                     :mapper="mapper"
                     :state="state"
                     :move_name="move_name"
-                    :move_data="g1MoveData"
                     :pokedex_data="g1PokemonData"
                     :dynamic_mon="s1dynamic"
                     :capitalization_format="capitalization_format"
-                    :type_data="typeData"
-                    :stage_mod_data="stageModifiersData"
                     :display_badge_boosts="display_badge_boosts"
                 ></moveset>
                 <stats
@@ -66,13 +63,13 @@
                     :display_badge_boosts="display_badge_boosts"
                     :dynamic_mon="s1dynamicReset"
                 ></stats>   
-                <exp_bar
+                <!-- <exp_bar
                     :mapper="mapper"
                     :dynamic-reset="s1dynamicReset"
                     :starter-name="starterName"
                     :g1-pokemon-data="g1PokemonData"
                     :sleep="sleep"
-                ></exp_bar>
+                ></exp_bar> -->
                 <badge_boosts :mapper="mapper" ></badge_boosts>
                 <badges :mapper="mapper"></badges>
                 <timer></timer>
@@ -83,8 +80,6 @@
                         <movepool
                             :starter-name="starterName"
                             :pokemon_version_specific_data="pokemon_version_specific_data"
-                            :move-data="g1MoveData"
-                            :tmhm-mapping="tmhmMapping"
                             :dynamic-reset="s1dynamicReset"
                             :starting_type_fix="starting_type_fix"
                         ></movepool>
@@ -126,9 +121,7 @@
                             :get_enemy_pkmn_styles="get_enemy_pkmn_styles"
                             :enemy_pkmn_faint_types="enemy_pkmn_faint_types"
                             :g1-pokemon-data="g1PokemonData"
-                            :g1-yellow-trainers="g1YellowTrainers"
                             :starter-name="starterName"
-                            :g1-move-data="g1MoveData"
                             :enemy-state="enemyState"
                             :state="state"
                             :right_panel="right_panel"
@@ -140,8 +133,6 @@
                             :state="state"
                             :starter-name="starterName"
                             :g1-pokemon-data="g1PokemonData"
-                            :g1-move-data="g1MoveData"
-                            :g1-yellow-trainers="g1YellowTrainers"
                             :enemy-state="enemyState"
                             :battle_pokemon_crop="battle_pokemon_crop"
                             :batt="batt"
@@ -155,8 +146,6 @@
                         <movepool
                             :starter-name="starterName"
                             :pokemon_version_specific_data="pokemon_version_specific_data"
-                            :move-data="g1MoveData"
-                            :tmhm-mapping="tmhmMapping"
                             :dynamic-reset="s1dynamicReset"
                             :starting_type_fix="starting_type_fix"
                         ></movepool>
@@ -167,7 +156,7 @@
             <!-- Game-Area Panel -->
             <div class="testingArea1" style="z-index: 50000;"><interface_1></interface_1></div>
             <div class="testingArea2" style="z-index: 50000;"><interface_2></interface_2></div>
-            <div class="testingArea4" style="z-index: 50000;"><interface_3 :textures="this.textures" ></interface_3></div>
+            <div class="testingArea4" style="z-index: 50000;"><interface_3></interface_3></div>
             <div class="testingArea3" style="z-index: 50000;"><interface_4></interface_4></div>
         </div>
     </div>
@@ -176,19 +165,14 @@
     <script src="https://unpkg.com/@microsoft/signalr@7.0.14/dist/browser/signalr.min.js"></script> 
     <script src="packages/vue.global.js"></script>
     <script src="packages/gameHookMapperClient.js"></script>
-    <script src="data/g1MoveData.js"></script>
     <script src="data/g1PokemonData.js"></script>
     <script src="data/g1PokemonDataRB.js"></script>
     <script src="data/gen1YellowTrainers.js"></script>
     <script src="data/gen1RedBlueTrainers.js"></script>
-    <script src="data/type-effectiveness.js"></script>
-    <script src="data/stage-modifiers.js"></script>
-    <script src="data/tmhmmapping.js"></script>
     <script src="data/settings.js"></script>
     <script src="data/saved_settings.js"></script>
     <script src="data/deprecated_autosplitter.js"></script>
     <script src="data/autosplitter.js"></script>
-    <script src="data/textures.js"></script>
     <script src="data/battle_summary_properties.js"></script>
     <script src="data/pokedex/pokedex_red_blue.js"></script>
     <script src="data/pokedex/pokedex_yellow.js"></script>

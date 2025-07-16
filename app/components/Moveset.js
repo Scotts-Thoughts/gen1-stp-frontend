@@ -1,3 +1,7 @@
+const moveData = require("../data/g1MoveData");
+const stageModifiersData = require("../data/stage-modifiers");
+const typeEffectiveness = require("../data/type-effectiveness");
+
 const template = /*html*/`
     <div>
         <div class="movesetLabel labelMoves">moves</div>
@@ -38,8 +42,6 @@ module.exports = {
         "pokedex_data",
         "dynamic_mon",
         "capitalization_format",
-        "type_data",
-        "stage_mod_data",
         "display_badge_boosts",
     ],
     data() {
@@ -48,9 +50,6 @@ module.exports = {
             showCritMultiplierInEP: true, // Shows crit multiplier in the effective power if the Pokemon will always score a critical hit with the given move
 
             starterName: this.starter,
-            g1MoveData: this.move_data,
-            typeData: this.type_data,
-            stageModifiersData: this.stage_mod_data,
             pkmnMoves: ["move1","move2","move3","move4"],
         }
     },
@@ -58,7 +57,7 @@ module.exports = {
         moveTypeIcon(move_name_string) {
             if (move_name_string != null && move_name_string != undefined) {
                 var moveName = this.move_name(move_name_string)
-                var move = this.g1MoveData[moveName]
+                var move = moveData.gen1[moveName];
                 var moveType = move.Type.toLowerCase()
                 return `images/elements/type-icons/${moveType}.png`
             }
@@ -97,7 +96,7 @@ module.exports = {
 
         type_effectiveness(pkmnData, moveNumber, enemyData) { //pkmnData = team[0] etc
             if (this.typeCalcs == true) {
-                const move_data_array = Object.values(this.g1MoveData);
+                const move_data_array = Object.values(moveData.gen1);
                 var move_name          =  this.get_backport_move_name(pkmnData[moveNumber].value, this.starterName, pkmnData[moveNumber].bytes)
                 // console.log(move_name)
 
@@ -105,7 +104,7 @@ module.exports = {
                 if (move_name == 'Doom Desire') { return 120 }
 
                 var move_type            = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Type
-                var move_info            = this.typeData.find(x => x.moveType === move_type)
+                var move_info            = typeEffectiveness.find(x => x.moveType === move_type)
                 var move_power           = this.movePower(move_name)
                 var move_category        = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Category
                 var attacker_type1       = pkmnData.type1.value
@@ -128,7 +127,7 @@ module.exports = {
                 if (move_type == attacker_type1 || move_type == attacker_type2) { multiplier_stab = 1.5 }
                 // console.log(move_name)
                 if (this.starterName == 'Dhelmise' && move_name == 'ANCHOR SHOT') { multiplier_stab = 1.5 }
-                if (defender_type1 != defender_type2)                                          { multiplier_type2 = this.typeData.find(x => x.moveType === move_type)[defender_type2] }
+                if (defender_type1 != defender_type2)                                          { multiplier_type2 = typeEffectiveness.find(x => x.moveType === move_type)[defender_type2] }
                 if (move_type == "Normal" || move_type == "Fighting" || move_type == "Flying" || move_type == "Bug" || move_type == "Poison" || move_type == "Ghost" || move_type == "Ground" || move_type == "Rock" || move_type == "Steel") {
                     move_category = "Physical" }
                 if (move_type == "Fire" || move_type == "Water" || move_type == "Grass" || move_type == "Electric" || move_type == "Psychic" || move_type == "Ice" || move_type == "Dragon" || move_type == "Dark") {
@@ -149,7 +148,7 @@ module.exports = {
             if (y) {
                 const state = this.mapper.properties.meta.state.value
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
-                var move = this.g1MoveData[this.move_name(y)]
+                var move = moveData.gen1[this.move_name(y)]
                 if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP" || y.toUpperCase() == "AEROBLAST")) {
                     level = this.mapper.properties.player.team[0].level.value
                     critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
@@ -180,11 +179,11 @@ module.exports = {
         moveAccuracyEvasionDynamic(move) {
             if (move) {
                 var move_name = this.move_name(move)
-                var moveObject = this.g1MoveData[move_name]
+                var moveObject = moveData.gen1[move_name]
                 var moveAccuracy = moveObject.Accuracy
-                var accuracyStageMods = this.stageModifiersData.find(x => x.modType === "accuracy")
+                var accuracyStageMods = stageModifiersData.find(x => x.modType === "accuracy")
                 var currentAccuracyModStage = this.mapper?.properties?.battle?.yourPokemon.modStageAccuracy.value
-                var evasionStageMods = this.stageModifiersData.find(x => x.modType === "evasion")
+                var evasionStageMods = stageModifiersData.find(x => x.modType === "evasion")
                 var currentEvasionModStage = this.mapper?.properties?.battle?.enemyPokemon.modEnemyStageEvasion.value
                 if (this.state == `Battle` || this.state == `From Battle`) {
                     if (moveAccuracy == `-`) {

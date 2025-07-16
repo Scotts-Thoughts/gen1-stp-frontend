@@ -18936,4 +18936,6 @@ const g1RedBlueTrainers = {
         "money": 6138,
         "route_one_offset": "0x3A522"
     }
-}
+};
+
+module.exports = g1RedBlueTrainers;

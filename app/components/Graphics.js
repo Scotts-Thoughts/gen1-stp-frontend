@@ -1,9 +1,10 @@
 const PubSub = require("../logic/PubSub");
+const textures = require("../data/textures");
 const UIStyles = require("../logic/UIStyles")
 
 const template = /*html*/`
     <div>
-        <img class="canvas" ref="background_texture" :src="textures[style.backgroundTexture]" 
+        <img class="canvas" ref="background_texture" :src="currentBackground" 
             :style="{ 
                 'filter': \`blur(\${style.backgroundBlur}px) hue-rotate(\${style.backgroundHue}deg) brightness(\${style.backgroundBrightness}%) contrast(\${style.backgroundContrast}%) saturate(\${style.backgroundSaturation}%)\` ,
                 'transform': \`scale(\${style.backgroundScale}%) \${style.backgroundFlip ? 'rotateY(180deg)' : ''} translate(\${style.backgroundXOffset}px, \${-style.backgroundYOffset}px)\`
@@ -60,7 +61,6 @@ module.exports = {
         "g1PokemonData",
         "ui_type_color_modifier",
         "ui_stat_arrangement_modifier",
-        "textures",
         "game_name",
         "starterName",
         "dynamicReset",
@@ -76,6 +76,12 @@ module.exports = {
             style,
             onStyles
         };
+    },
+    computed: {
+        currentBackground() {
+            // can't directly reference the textures object in the template.
+            return textures[this.style.backgroundTexture];
+        }
     },
     onUnmounted() {
         // Not strictly necessary for this component, but unsubscribe from the time_update event:

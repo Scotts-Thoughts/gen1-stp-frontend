@@ -55,3 +55,7 @@ const tmhmMapping = [
     { tmhmIndex: "HM04", Move: "Strength" },
     { tmhmIndex: "HM05", Move: "Flash", } ,
 ]
+
+module.exports = {
+    gen1: tmhmMapping,
+};

@@ -1,4 +1,4 @@
-const typeData = [
+module.exports = [
     {    
         moveType: "Normal",    
         Normal:   1,

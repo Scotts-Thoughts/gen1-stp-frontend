@@ -1,3 +1,6 @@
+const moveData = require("../data/g1MoveData");
+const typeEffectiveness = require("../data/type-effectiveness");
+
 //determine if the player is in a `Mart` or `Department` store.
 //this is currently used to display the number of remaining vitamins that can be used on each stat
 //in the future it can be used to display the player's inventory (a feature that is not yet implemented)
@@ -36,7 +39,7 @@ function g1martSelector(map) {
     }
 }
 function enemy_move_power(move_name) {
-    var move_power = this.g1MoveData[this.move_name(move_name)].Power ?? 0
+    var move_power = moveData.gen1[this.move_name(move_name)].Power ?? 0
     if (move_power == 0) { return "—" }
     if (move_power == 1) { return "—" }
     if (move_power == "—") { return "—" }
@@ -50,7 +53,7 @@ function enemy_effective_power(move_name, enemy_mon, slot) {
     const move = this.move_name(move_name)
     if (state == 'To Battle' || state == 'Battle' || state == 'From Battle') { 
         const species = enemy_mon.species.value
-        const move_data = this.g1MoveData[move]
+        const move_data = moveData.gen1[move]
         //This logs the setup of this function if the next line is going fail due to move data being undefined
         if (move_data == undefined) { 
             console.log("enemy_effective_power", state, enemy_state, move_name, species, move_data)
@@ -66,8 +69,8 @@ function enemy_effective_power(move_name, enemy_mon, slot) {
         var player_reflect = this.mapper.properties.battle.yourPokemon.effects.reflect.value == true && move_category == 'Physical' ? 0.5 : 1
         var player_light_screen = this.mapper.properties.battle.yourPokemon.effects.lightScreen.value == true && move_category == 'Special' ? 0.5 : 1 
         var move_effective_power = move_base_power
-        var modifier_effectiveness_1 = this.typeData.find(x => x.moveType == move_type)[target_type_1]
-        var modifier_effectiveness_2 = target_type_2 && move_type && (target_type_1 != target_type_2) ? this.typeData.find(x => x.moveType == move_type)[target_type_2]
+        var modifier_effectiveness_1 = typeEffectiveness.find(x => x.moveType == move_type)[target_type_1]
+        var modifier_effectiveness_2 = target_type_2 && move_type && (target_type_1 != target_type_2) ? typeEffectiveness.find(x => x.moveType == move_type)[target_type_2]
             : 1
         var modifier_effectiveness_3 = 1
         var modifier_stab = move_type == user_type_1 ? 1.5 

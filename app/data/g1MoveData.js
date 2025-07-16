@@ -1846,4 +1846,8 @@ const g1MoveData = {
   Category: "Special",
   Description: "Deals damage and lowers Special by 2 stages."
   },
+};
+
+module.exports = {
+  gen1: g1MoveData
 }

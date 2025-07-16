@@ -18952,4 +18952,6 @@ const g1YellowTrainers = {
         "money": 6138,
         "route_one_offset": "0x3A5A6"
     }
-}
+};
+
+module.exports = g1YellowTrainers;

@@ -47,4 +47,6 @@ const stageModifiersData = [
     "5": (28/100),
     "6": (25/100),
   },
-]
+];
+
+module.exports = stageModifiersData;

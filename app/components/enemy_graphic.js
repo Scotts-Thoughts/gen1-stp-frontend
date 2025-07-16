@@ -1,3 +1,5 @@
+const g1MoveData = require("../data/g1MoveData");
+const trainers = require("../data/trainers");
 const template = /*html*/`
 <div>
     <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
@@ -82,9 +84,7 @@ module.exports = {
         "get_enemy_pkmn_styles",
         "enemy_pkmn_faint_types",
         "g1PokemonData",
-        "g1YellowTrainers",
         "starterName",
-        "g1MoveData",
         "enemyState",
         "state",
         "right_panel",
@@ -92,6 +92,9 @@ module.exports = {
     data() {
         return {
             pkmnSlots: [0, 1, 2, 3, 4, 5],
+            // we have to put this in the data for use in the template, but we also don't want vue to track this object.
+            // Accoridng to search engine results, Object.freeze() is the solution.
+            g1MoveData: Object.freeze(g1MoveData.gen1), 
         }
     },
     computed: {
@@ -104,7 +107,8 @@ module.exports = {
             const state          = this.mapper.properties.meta.state.value
             const trainer        = this.mapper.properties.battle.trainer.class.value
             const trainer_number = this.mapper.properties.battle.trainer.number.value
-            let data = this.mapper.properties.meta.gameName.value == 'Yellow' ? this.g1YellowTrainers : this.g1RedBlueTrainers
+            const gameName       = this.mapper.properties.meta.gameName.value;
+            let data = trainers[gameName];
             let enemy_hp = this.mapper.properties.battle.trainer.team[enemy_slot].hp.value
             let player_speed   = this.mapper.properties.battle.yourPokemon.speed.value
             let enemy_speed = enemy_speed_incoming

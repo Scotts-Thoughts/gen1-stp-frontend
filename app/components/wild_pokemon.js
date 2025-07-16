@@ -1,3 +1,5 @@
+const moveData = require("../data/g1MoveData")
+
 const template = /*html*/ `
 <div v-if="state == 'Battle' || state == 'From Battle'">
     <div class="trainerLabel">{{"Wild " + wild_pkmn_name(wild_mon.species.value)}}</div>
@@ -80,8 +82,6 @@ module.exports = {
         "state",
         "starterName",
         "g1PokemonData",
-        "g1MoveData",
-        "g1YellowTrainers",
         "enemyState",
         "battle_pokemon_crop",
         "move_name",
@@ -92,6 +92,9 @@ module.exports = {
     data() {
         return {
             enemyModColour:  ["0", "background: #d84444;"],
+            // we have to put this in the data for use in the template, but we also don't want vue to track this object.
+            // Accoridng to search engine results, Object.freeze() is the solution.
+            g1MoveData: Object.freeze(moveData.gen1), 
         }
     },
     methods: {

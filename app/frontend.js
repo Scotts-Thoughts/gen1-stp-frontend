@@ -122,19 +122,12 @@ const app = Vue.createApp({
             release: false, //If set to false then development features will be displayed
 
             // Static Data
-            g1MoveData             : g1MoveData,
             g1PokemonData          : g1PokemonData,
             g1PokemonDataRB        : g1PokemonDataRB,
-            g1YellowTrainers       : g1YellowTrainers,
-            g1RedBlueTrainers      : g1RedBlueTrainers,
-            typeData               : typeData,
-            stageModifiersData     : stageModifiersData,
-            tmhmMapping            : tmhmMapping,
             settings               : settings,
             auto_save_settings     : auto_save_settings,
             deprecated_autosplitter: deprecated_autosplitter,
             autosplitter           : autosplitter,
-            textures               : textures,
             application_settings   : application_settings,
             pokemon_settings       : pokemon_settings,
             trainer_name_lookup    : trainer_name_lookup,
@@ -654,7 +647,6 @@ const app = Vue.createApp({
                 game_name: this.game_name,
                 starterName: this.starterName,
                 dynamicReset: this.s1dynamicReset,
-                textures: this.textures,
                 timer_settings: this.timer_settings
             }
         },
