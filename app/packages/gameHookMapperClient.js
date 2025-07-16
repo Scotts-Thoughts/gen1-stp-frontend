@@ -334,11 +334,13 @@ class GameHookMapperClient {
                 requestAnimationFrame(debouce)
         }
 
-        this._signalrClient.on('MapperLoaded', async () => { await this.loadMapper(); this.onMapperLoaded() })
-        this._signalrClient.on('GameHookError', (err) => { this.onGameHookError(err) })
-        this._signalrClient.on('DriverError', (err) => { this.onDriverError(err) })
-        this._signalrClient.on('SendDriverRecovered', () => { this.onDriverRecovered() })
-        this._signalrClient.on('UiBuilderScreenSaved', (id) => { this.onUiBuilderScreenSaved(id) })
+        this._signalrClient.on('MapperLoaded', async () => { await this.loadMapper(); this.onMapperLoaded() });
+        this._signalrClient.on('GameHookError', (err) => { this.onGameHookError(err) });
+        this._signalrClient.on('DriverError', (err) => { this.onDriverError(err) });
+        this._signalrClient.on('SendDriverRecovered', () => { this.onDriverRecovered() });
+        this._signalrClient.on('UiBuilderScreenSaved', (id) => { this.onUiBuilderScreenSaved(id) });
+        this._signalrClient.on('Error', () => { });
+        this._signalrClient.on('Hello', () => { });
 
 
         const result = await this._establishConnection()
