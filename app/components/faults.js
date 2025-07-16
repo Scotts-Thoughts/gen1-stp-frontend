@@ -1,4 +1,5 @@
 const template = /*html*/`
+<div>
     <div v-show="mode == 'None'"      class="colored-image ds saturation" :style="'drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/timer_2.svg)"></div>
     <div v-show="mode == 'Blackouts'" class="colored-image ds saturation" :style="'drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/timer_2.svg)"></div>
     <div v-show="mode == 'Resets'"    class="colored-image ds saturation" :style="'drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/timer_2.svg)"></div>

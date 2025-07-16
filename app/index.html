@@ -19,6 +19,9 @@
         <div v-else-if="game_name == 'Red' || game_name == 'Blue' || game_name == 'Yellow' || game_name == 'Yellow Legacy'">
             <div class="mainContainer">
                 <graphics v-bind="graphicsProps"></graphics>
+
+                <!-- Background Processes -->
+                <enemy_state :mapper="mapper"></enemy_state>
                 
                 <!-- Left Panel -->
                 <faults 
@@ -201,6 +204,7 @@
                             :g1-move-data="g1MoveData"
                             :enemy-state="enemyState"
                             :state="state"
+                            :right_panel="right_panel"
                         ></enemy_graphic>
                     </div>
                     <div v-else-if="right_panel == 'Automatic' && (state == 'Battle' || state == 'From Battle') && (mapper.properties.battle.type.value == `Wild` && show_wild_battles == true)" style="position: absolute;">
@@ -229,11 +233,6 @@
                             :dynamic-reset="s1dynamicReset"
                             :starting_type_fix="starting_type_fix"
                         ></movepool>
-                    </div>
-                </transition>
-                <transition name="fadeDelayed">
-                    <div v-if="(specialTrainerGraphics() != null && state != 'Base Stats' && state != 'Overworld' && state != 'From Battle') && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Automatic'" style="position: absolute;" key=1>
-                        <img class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
                 </transition>
             </div>
@@ -480,5 +479,6 @@
     <script src="autosplitter/battle_summary.js"></script>
     <script src="autosplitter/autosplitter_functions.js"></script>
     <script src="methods/text_functions.js"></script>
+    <script src="methods/splits_functions.js"></script>
     <script type="text/javascript" src="frontend.js"></script>
 </body>

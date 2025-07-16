@@ -80,6 +80,9 @@ const app = Vue.createApp({
         "no_mapper": require("./components/No_mapper.js"),
         "graphics": require("./components/Graphics.js"),
 
+        //Background Processes
+        "enemy_state": require("./components/enemy_state.js"),
+
         //Left Panel
         "timer": require("./components/Timer.js"),
         "badges": require("./components/Badges.js"),
@@ -110,7 +113,6 @@ const app = Vue.createApp({
         //Background Logic
         "keyhook": require("./components/keyhook.js"),
     },
-    //DATA & DEFINITIONS
     data() {
         return {
             ready  : false,
@@ -148,43 +150,16 @@ const app = Vue.createApp({
             pokedex_crystal    : pokedex_crystal,
 
             // Objects
-            // pkmnSlots:       [0, 1, 2, 3, 4, 5],
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
-            // prevSpecies:     undefined,
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
-            // oldExpValue:     0,
-            badge_boost_object: {
-                1: [
-                    {abrv: "Atk", name: "Attack",  deprecated_path: "properties.player.badges.badge1.value", deprecated_path: 0, boost: 1.125, },
-                    {abrv: "Def", name: "Defense", deprecated_path: "properties.player.badges.badge3.value", deprecated_path: 2, boost: 1.125, },
-                    {abrv: "Spe", name: "Speed",   deprecated_path: "properties.player.badges.badge5.value", deprecated_path: 4, boost: 1.125, },
-                    {abrv: "Spc", name: "Special", deprecated_path: "properties.player.badges.badge7.value", deprecated_path: 6, boost: 1.125, },
-                ],
-                2: [
-                    {abrv: "Atk", name: "Attack",          deprecated_path: "badge1", current_path: 0, boost: 1.125, },
-                    {abrv: "Def", name: "Defense",         deprecated_path: "badge6", current_path: 2, boost: 1.125, },
-                    {abrv: "Spe", name: "Speed",           deprecated_path: "badge3", current_path: 5, boost: 1.125, },
-                    {abrv: "SpA", name: "Special Attack",  deprecated_path: "badge7", current_path: 6, boost: 1.125, },
-                    {abrv: "SpD", name: "Special Defense", deprecated_path: "badge7", current_path: 6, boost: 1.125, },
-                ],
-                3: [
-                    {abrv: "Atk", name: "Attack",          deprecated_path: "badge1", deprecated_path: 0, boost: 1.1, },
-                    {abrv: "Def", name: "Defense",         deprecated_path: "badge5", deprecated_path: 4, boost: 1.1, },
-                    {abrv: "Spe", name: "Speed",           deprecated_path: "badge3", deprecated_path: 2, boost: 1.1, },
-                    {abrv: "SpA", name: "Special Attack",  deprecated_path: "badge7", deprecated_path: 6, boost: 1.1, },
-                    {abrv: "SpD", name: "Special Defense", deprecated_path: "badge7", deprecated_path: 6, boost: 1.1, },
-                ],
-            },
-
 
             // Settings:
                 // These automatically store into the `Storage` object
                 // To add a new setting place it here as well as within the the files: `application_settings.js` or `pokemon_settings.js`
                 // application_settings store within `Storage.application_settings`
                 // pokemon_settings store within `Storage.games.game.style`
-
             // Application Settings
             starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
             game_name:   "Yellow",
@@ -236,6 +211,7 @@ const app = Vue.createApp({
             //
             // - Whenever the property changes, check to see if the value is the same as the toggle, if it isn't, set it to the value of the toggle
             // - Do nothing else
+
             // Yellow toggles
             toggle_EVENT_ENCOUNTER_ROUTE1_TEST           : false,
             toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY: false,
@@ -300,14 +276,6 @@ const app = Vue.createApp({
 
             // Timer variables
             timer_startTimeOffset: MyStorage["timer_startTimeOffset"] ?? "00:00:00.00",
-            // timer_startTime:       MyStorage["timer_startTime"]       ?? 0,
-            // timer_pause:           MyStorage["timer_pause"]           ?? true,
-            // timer_formatted_time:  MyStorage["timer_formatted_time"]  ?? ["0", ".00"],
-            // timer_pause_time:      MyStorage["timer_pause_time"]      ?? 0,
-            // time_h:  0,
-            // time_m:  0,
-            // time_s:  0,
-            // time_ms: 0,
             time_split_start: "00:00:00:00",
             battle_start:     0,
             timer:            new Timer(MyStorage),
@@ -320,7 +288,6 @@ const app = Vue.createApp({
             pb_splits:              [],
 
             // Pokemon Settings
-            // Playthrough Metrics
             playerId:              0,
             playerName:            "NINTEN",
             resetCatcher:          "NINTEN",
@@ -349,7 +316,6 @@ const app = Vue.createApp({
             previous_label:  "Previous",
             current_label:   "Current",
 
-
             // Background texture settings
             playerNameChoice:      "NINTEN",
 
@@ -358,7 +324,6 @@ const app = Vue.createApp({
             ui_type_color_modifier: "current_",
             ui_stat_arrangement:    "Speed: top right",
             ui_stat_arrangement_modifier: "hp_spe_",
-
 
             stats_display: "Automatic",
             right_panel:   "Automatic",
@@ -371,6 +336,7 @@ const app = Vue.createApp({
             ui_stats_styling_modifier: "2024",
 
             // Battle Summary
+            battle_summary_header: "Battle Summary",
             battle_summary_frames:        0,
             battle_summary_battle_number: 0,
             battle_summary_exp_gained:    0,
@@ -413,11 +379,8 @@ const app = Vue.createApp({
             battle_summary_enemy_psn:     0,
             battle_summary_enemy_bpn:     0,
             battle_summary_enemy_slp:     0,
-
-            battle_summary_header: "Battle Summary",
         }
     },
-
     created() {
         // Timer settings
         for (let i = 0; i < this.time_settings.length; i++) {
@@ -657,16 +620,6 @@ const app = Vue.createApp({
             this.blackout_counter = 0;
         },
         playerResets(newProp) {
-            if (newProp.toString().length == 1) {
-                document.getElementById("reset_counter").style.fontSize = "75px"
-            }
-            if (newProp.toString().length == 3) {
-                document.getElementById("reset_counter").style.fontSize = "54px"
-            }
-            if (newProp.toString().length == 4) {
-                document.getElementById("reset_counter").style.fontSize = "40px"
-            }
-            
             if (this.playerResets < 0) {
                 this.playerResets = 0;
             }
@@ -692,7 +645,6 @@ const app = Vue.createApp({
             this.overlay_color = `lch(75% 100 ${hash(this.playerNameChoice) % 360})`
         }
     },
-
     computed: {
         graphicsProps() {
             return {
@@ -904,27 +856,27 @@ const app = Vue.createApp({
             return { "type1": type1, "type2": type2 }
         },
     },
-
     methods: {
         async set_rom_starter() {
-            let starter = this.starterName
-            // console.log(starter)
-            // This system requires a check in the case that the Pokemon is not one of the original 151, in that case it needs to get the value to "Backport" instead
+            let starter        = this.starterName
+            let pokedex_data   = this.pokedex_yellow[starter]
+            let pokedex_number = pokedex_data.national_dex_number
+            let backport_index = [0xBF]
+            if (pokedex_number > 151) {
+                await this.mapper.properties.patch.hChosenStarter.setBytes([backport_index], false)
+            }
             await Promise.all([
-                await this.mapper.properties.patch.hChosenStarter.set(starter, false), 
+                this.mapper.properties.patch.hChosenStarter.set(starter, false), 
             ])
         },
         openFolder(folderName, game_name = "Yellow", path = "", path2) {
             const fs = require('fs');
             const fullPath = path ? `.\\${folderName}\\${game_name}\\${path}\\${path2}` : `.\\${folderName}\\${game_name}\\${path}\\${path2}`;
         
-            // Check if the folder exists
             if (!fs.existsSync(fullPath)) {
-                // Create the folder (recursive ensures all parent directories are created)
                 fs.mkdirSync(fullPath, { recursive: true });
             }
         
-            // Open the folder
             require('child_process').exec(`start ${fullPath}`);
         },
         async update_items() {
@@ -1072,18 +1024,6 @@ const app = Vue.createApp({
                 return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
             }
         },
-        toggleDataType() {
-            // Cycle through the values
-            this.key_F16 = this.cycleValues_failures[this.cycleIndex_failures];
-            this.cycleIndex_failures = (this.cycleIndex_failures + 1) % this.cycleValues_failures.length;
-            this.set_setting_prop("this.cycleIndex_failures", this.cycleIndex_failures)
-        },
-        removeSpecialChars(str) {
-            // This will replace any character that is not a lowercase letter or number with an empty string
-            // and convert the string to lowercase
-            return str.replace(/[^a-z0-9]/gi, '').toLowerCase();
-        },
-
         padTime(time) {
             if (!time) { return "00" }
             return time.toString().padStart(2, "0")
@@ -1102,15 +1042,6 @@ const app = Vue.createApp({
             this.playerId = 0
             this.playerName = "NINTEN"
         },
-
-        //*text methods
-        //only allow letters to be typed in the name input
-        isLetter(e) {
-            let char = String.fromCharCode(e.keyCode); // Get the character
-            if(/^[A-Za-z]+$/.test(char)) return true; // Match with regex 
-            else e.preventDefault(); // If not match, don't add to input text
-        },
-
         pkmn_type(typeNumber) {
             data = this.g1PokemonData[this.starterName]
             if (this.state == `Battle`) {
@@ -1162,28 +1093,12 @@ const app = Vue.createApp({
             }
             this[property]--;
         },
-        reset_advanced_settings() {
-            this.battleGraphic =              true
-            this.showAllTrainers =            true
-            this.showSpecialTrainerGraphics = true
-            this.show_wild_battles =          false
-            this.battlePopUps =               true
-            this.showCritMultiplierInEP =     true
-            this.rockTunnelDarkness =         false
-        },
         apply_settings(setting_group) { //pass in the name of the group of settings that are to have values assigned
             keys = this.settings[setting_group]
 
             Object.keys(keys).forEach(key => {
                 this[key] = keys[key];
             });
-        },
-        save_pb_splits() {
-            this.pb_splits = this.split_data
-            const championSplit = this.split_data.find(subArray => subArray.includes("Champion"));
-            if (championSplit) {
-                this.pb_time = championSplit[3]
-            }
         },
         pb_split(splitName) {
             if (this.pb_splits) {
@@ -1251,8 +1166,6 @@ const app = Vue.createApp({
         select_starter(pokemon_species) {
             this.starterName = pokemon_species
         },
-
-        //ENEMY MOD STYLING
         get_enemy_pkmn_styles(pkmnData) {
             const isFainted = pkmnData?.hp.value == 0;
             return {
@@ -1269,10 +1182,8 @@ const app = Vue.createApp({
               species: isFainted ? "opacity: .3" : "opacity: .7"
             };
         },
-
         //Determine the number of vitamins that can still be used on the Pokemon
-        //stat exp ranges from 0 - 65535
-        statExp(statExp) {
+        statExp(statExp) { //stat exp ranges from 0 - 65535
             const vitaminsUsed = statExp / 2560;
             const usableVitamins = Math.ceil(10 - vitaminsUsed);
             return usableVitamins < 0 ? 0 : usableVitamins;
@@ -1283,8 +1194,6 @@ const app = Vue.createApp({
             else
                 return trainerClass
         },
-        //TYPE ICONS FOR THE STARTER SELECTION
-        //lookup type data from the static data objects
         pkmnType(typeNumber, type1, type2) {
             if (type1 && this.state != `Base Stats`) {
                 if (type1 == type2) {
@@ -1306,109 +1215,6 @@ const app = Vue.createApp({
                 }
             }
         },
-
-        pokemon(y) {
-            if (y != null)
-                y = parseInt(y)
-            return this.g1PokemonData[this.starterName]
-        },
-
-        //! TODO Why do trainer graphics not appear in Red & Blue?
-        //! Requires testing
-        //pick the trainer graphic based on the trainer class and number
-        specialTrainerGraphics() {
-            if (this.showSpecialTrainerGraphics) {
-              const trainerClass = this.mapper.properties.battle.trainer.class
-              const trainerNumber = this.mapper.properties.battle.trainer.number
-              if (this.mapper.properties.meta.gameName.value == "Yellow") {
-                switch (`${trainerClass}_${trainerNumber}`) {
-                    case "LT.SURGE_1":      return "images/trainers/ltsurge.png";
-                    case "SABRINA_1":       return "images/trainers/sabrina.png";
-                    case "BLAINE_1":        return "images/trainers/blaine.png";
-                    case "RIVAL1_1":        return "images/trainers/RIVAL1.png";
-                    case "RIVAL1_2":        return "images/trainers/RIVAL1.png";
-                    case "RIVAL1_3":        return "images/trainers/RIVAL2.png";
-                    case "RIVAL1_4":        return "images/trainers/RIVAL2.png";
-                    case "RIVAL1_5":        return "images/trainers/RIVAL2.png";
-                    case "RIVAL1_6":        return "images/trainers/RIVAL2.png";
-                    case "RIVAL1_7":        return "images/trainers/RIVAL2.png";
-                    case "RIVAL2_1":        return "images/trainers/RIVAL2.png";
-                    case "ROCKET_42":       return "images/trainers/JESSIE_JAMES_1.png";
-                    case "ROCKET_44":       return "images/trainers/JESSIE_JAMES_2.png";
-                    case "ROCKET_45":       return "images/trainers/JESSIE_JAMES_2.png";
-                    case "JR TRAINER F_5":  return "images/trainers/JR TRAINER F_5.png";
-                    case "YOUNGSTER_1":     return "images/trainers/BEN.png";
-                    case "POKEMANIAC_7":    return "images/trainers/POKEMANIAC_7.png";
-                    case "SUPER NERD_2":    return "images/trainers/FOSSIL_NERD.png";
-                    case "LASS_10":         return "images/trainers/ODDISH_LASS.png";
-                    case "FISHER_7":        return "images/trainers/SIKE.png";
-                    case "JR TRAINER F_10": return "images/trainers/JR TRAINER F_10.png";
-                    case "ROCKET_5":        return "images/trainers/dig_rocket.png";
-                    case "ROCKET_38":       return "images/trainers/ROCKET_38.png";
-                    case "HIKER_9":         return "images/trainers/HIKER_9.png";
-                    case "LASS_3":          return "images/trainers/LASS_3.png";
-                    case "JR TRAINER F_1":  return "images/trainers/GOLDEEN.png";
-                    case "ROCKET_25":       return "images/trainers/HYPNO_SANDWICH.png";
-                    case "JR TRAINER F_3":  return "images/trainers/JR TRAINER F_3.png";
-                    case "CHANNELER_10":    return "images/trainers/AGATHAJR.png";
-                    case "BROCK_1":         return "images/trainers/brock.png";
-                    case "MISTY_1":         return "images/trainers/misty.png";
-                    case "ERIKA_1":         return "images/trainers/erika.png";
-                    case "KOGA_1":          return "images/trainers/koga.png";
-                    case "LORELEI_1":       return "images/trainers/lorelei.png";
-                    case "BRUNO_1":         return "images/trainers/bruno.png";
-                    case "AGATHA_1":        return "images/trainers/agatha.png";
-                    case "LANCE_1":         return "images/trainers/lance.png";
-                    case "HIKER_2":         return "images/trainers/elixir_hiker.png";
-                    default:                return null;
-                }
-              }
-              if (this.mapper.properties.meta.gameName == "Red and Blue") {
-                switch (`${trainerClass}_${trainerNumber}`) {
-                    case "LT.SURGE_1":      return "images/trainers/Red_and_Blue/ltsurge.png";
-                    case "SABRINA_1":       return "images/trainers/Red_and_Blue/sabrina.png";
-                    case "BLAINE_1":        return "images/trainers/Red_and_Blue/blaine.png";
-                    case "RIVAL1_1":        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_2":        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_3":        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_4":        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_5":        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_6":        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_7":        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "RIVAL1_8":        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "RIVAL1_9":        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "RIVAL2_1":        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "RIVAL2_2":        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "RIVAL2_3":        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "JR TRAINER F_5":  return "images/trainers/Red_and_Blue/JR TRAINER F_5.png";
-                    case "YOUNGSTER_1":     return "images/trainers/Red_and_Blue/BEN.png";
-                    case "POKEMANIAC_7":    return "images/trainers/Red_and_Blue/POKEMANIAC_7.png";
-                    case "SUPER NERD_2":    return "images/trainers/Red_and_Blue/FOSSIL_NERD.png";
-                    case "LASS_10":         return "images/trainers/Red_and_Blue/ODDISH_LASS.png";
-                    case "JR TRAINER F_10": return "images/trainers/Red_and_Blue/JR TRAINER F_10.png";
-                    case "ROCKET_5":        return "images/trainers/dig_rocket.png";
-                    case "ROCKET_38":       return "images/trainers/Red_and_Blue/ROCKET_38.png";
-                    case "HIKER_9":         return "images/trainers/Red_and_Blue/HIKER_9.png";
-                    case "LASS_3":          return "images/trainers/Red_and_Blue/LASS_3.png";
-                    case "JR TRAINER F_1":  return "images/trainers/Red_and_Blue/GOLDEEN.png";
-                    case "ROCKET_25":       return "images/trainers/Red_and_Blue/HYPNO_SANDWICH.png";
-                    case "JR TRAINER F_3":  return "images/trainers/Red_and_Blue/JR TRAINER F_3.png";
-                    case "CHANNELER_10":    return "images/trainers/Red_and_Blue/AGATHAJR.png";
-                    case "BROCK_1":         return "images/trainers/Red_and_Blue/brock.png";
-                    case "MISTY_1":         return "images/trainers/Red_and_Blue/misty.png";
-                    case "ERIKA_1":         return "images/trainers/Red_and_Blue/erika.png";
-                    case "KOGA_1":          return "images/trainers/Red_and_Blue/koga.png";
-                    case "LORELEI_1":       return "images/trainers/lorelei.png";
-                    case "BRUNO_1":         return "images/trainers/bruno.png";
-                    case "AGATHA_1":        return "images/trainers/agatha.png";
-                    case "LANCE_1":         return "images/trainers/lance.png";
-                    case "ROCKET_1":        return "images/trainers/Red_and_Blue/mtmoon_rocket_boss.png";
-                    case "HIKER_2":         return "images/trainers/Red_and_Blue/elixir_hiker.png";
-                    default:                return null;
-                }
-              }
-            }
-        },
         //Sets the crop on the UI image for the enemy team so that unused party slots are not present
         battle_pokemon_crop() {
             const totalPokemon = this.mapper.properties.battle.trainer.totalPokemon;
@@ -1426,53 +1232,6 @@ const app = Vue.createApp({
         sleep(ms) {
             return new Promise((res) => setTimeout(res, ms))
         },
-
-        enemy_move_power(move_name) {
-            var move_power = this.g1MoveData[this.move_name(move_name)].Power ?? 0
-            if (move_power == 0) { return "—" }
-            if (move_power == 1) { return "—" }
-            if (move_power == "—") { return "—" }
-            if (move_power == "-") { return "—" }
-            if (move_power == "") { return "—" }
-            else return move_power
-        },
-        enemy_effective_power(move_name, enemy_mon, slot) {
-            const state = this.state
-            const enemy_state = this.enemyState
-            const move = this.move_name(move_name)
-            if (state == 'To Battle' || state == 'Battle' || state == 'From Battle') { 
-                const species = enemy_mon.species.value
-                const move_data = this.g1MoveData[move]
-                //This logs the setup of this function if the next line is going fail due to move data being undefined
-                if (move_data == undefined) { 
-                    console.log("enemy_effective_power", state, enemy_state, move_name, species, move_data)
-                }
-                const move_type = move_data.Type
-                const move_base_power = this.enemy_move_power(move) ?? move_data.Power
-                const move_category = move_data.Category
-                const user_type_1 = this.g1PokemonData[species].type1
-                const user_type_2 = this.g1PokemonData[species].type2
-                const target_type_1 = this.mapper.properties.battle.yourPokemon.type1.value
-                const target_type_2 = this.mapper.properties.battle.yourPokemon.type2.value
-                if (move_base_power == "—" || move_base_power == "-") { return "—" }
-                var player_reflect = this.mapper.properties.battle.yourPokemon.effects.reflect.value == true && move_category == 'Physical' ? 0.5 : 1
-                var player_light_screen = this.mapper.properties.battle.yourPokemon.effects.lightScreen.value == true && move_category == 'Special' ? 0.5 : 1 
-                var move_effective_power = move_base_power
-                var modifier_effectiveness_1 = this.typeData.find(x => x.moveType == move_type)[target_type_1]
-                var modifier_effectiveness_2 = target_type_2 && move_type && (target_type_1 != target_type_2) ? this.typeData.find(x => x.moveType == move_type)[target_type_2]
-                    : 1
-                var modifier_effectiveness_3 = 1
-                var modifier_stab = move_type == user_type_1 ? 1.5 
-                    : move_type == user_type_2 ? 1.5 
-                    : move_type == "Ghost" && this.mapper.properties.patch.backport.prop_2.value == 8 && slot == this.mapper.properties.battle.enemyPokemon.partyPos.value ? 1.5
-                    : 1
-    
-                //Calculate effective power
-                if (this.typeCalcs == true) { //Handles type effectiveness calculations in battle
-                    return Math.floor(move_base_power * modifier_stab * modifier_effectiveness_1 * modifier_effectiveness_2 * modifier_effectiveness_3 * player_reflect * player_light_screen)
-                }
-            }
-        },
         //text_functions.js
         move_name,
         capitalization_format,
@@ -1483,8 +1242,6 @@ const app = Vue.createApp({
         logData,
         logCopy,
     },
-
-//--------- PROGRAM MOUNTED ---------------------------------------------------------------------------------------------------------------//
     mounted: async function () {
         const that = this
         this.mapper = new GameHookMapperClient()
@@ -1500,8 +1257,7 @@ const app = Vue.createApp({
         }
         this.load_split_settings()
         this.timer.update();
-
-        this.pokemon_list = this.keys_function(g1PokemonData)
+        this.pokemon_list = this.keys_function(this.g1PokemonData)
 
         //image transition
         await transition(t => {
@@ -1576,11 +1332,11 @@ const app = Vue.createApp({
         });
 
         //write to file at the end of a key battle
-        // the `lowHealthAlarm` property is used to play the Red-bar sound effect
-        // it is turned off as soon as "Player defeated Trainer" starts to render in the textbox
+        //the `lowHealthAlarm` property is used to play the Red-bar sound effect
+        //it is turned off as soon as "Player defeated Trainer" starts to render in the textbox
         this.mapper.properties.battle.lowHealthAlarm.change((prop) => {
             //Collect battle starting metrics
-            autosplitter_process()
+            this.autosplitter_process()
             if (prop.value == "Disabled" && this.mapper.properties.battle.type.value == "Trainer") {
                 let trainer = this.mapper.properties.battle.trainer.class.value
                 let id = this.mapper.properties.battle.trainer.number.value
@@ -1691,7 +1447,7 @@ const app = Vue.createApp({
             let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data     
             if (newProp.value == 122) {
                 if (this.mapper.properties.events.beatChampion.value == true && this.mapper.properties.overworld.map.value == "Hall of Fame") {
-                    autosplitter_process()
+                    this.autosplitter_process()
                     console.log("Run Ended - Backing up split data now...")
                     let gameName = this.mapper.properties.meta.gameName.value
                     this.logData(gameName, gameName_Path, this.simple_data_str, this.finished_run_count, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
@@ -1744,62 +1500,6 @@ const app = Vue.createApp({
             }
             else {
                 this.state = newProp.value
-            }
-        });
-
-        //Functions to track the battle's state
-        if (this.mapper.properties.player.team[0].level.value == 0) 
-            this.enemyState = "Not In Battle";
-        else if (this.mapper.properties.battle.type.value == "None")
-            this.enemyState = "Not In Battle";
-        else if (this.mapper.properties.battle.turnInfo.battleStart.value == 0)
-            this.enemyState = "Battle Starting";
-        else if (this.mapper.properties.battle.lowHealthAlarm.value ==  "Disabled")
-            this.enemyState = "Battle Finished";
-        else if  (this.mapper.properties.battle.enemyPokemon.hp.value == 0)
-            this.enemyState = "Fainted";
-        else if  (this.mapper.properties.battle.enemyPokemon.hp.value > 0 && this.mapper.properties.screen.menu.currentItem.value == 0)
-            this.enemyState = "Pokemon Sent Out";
-        else if  (this.mapper.properties.battle.enemyPokemon.hp.value > 0 && this.mapper.properties.screen.menu.currentItem.value > 0)
-            this.enemyState = "Pokemon";
-        this.mapper.properties.battle.type.change((prop) => {
-            if (prop.value == "Wild" || prop.value == "Trainer") {
-                this.enemyState = "Battle Starting";
-            }
-        });
-        this.mapper.properties.screen.menu.currentItem.change(async (newProp, oldProp) => {
-            if ((this.enemyState == "Fainted" || this.enemyState == "Battle Starting") && newProp == 0) {
-                this.enemyState = "Pokemon Sent Out"
-            }
-            if ((this.enemyState == "Pokemon Sent Out") && newProp > 0) {
-                this.enemyState = "Pokemon"
-            }
-        });
-        this.mapper.properties.battle.turnInfo.battleStart.change((prop) => {
-            if (prop.value != 0 && this.state == "To Battle") {
-                this.enemyState = "Pokemon";
-            }
-        });
-        this.mapper.properties.battle.enemyPokemon.hp.change(async (newProp, oldProp) => {
-            if (newProp == 0 && this.enemyState == "Pokemon") {
-                this.enemyState = "Fainting"
-            }
-        });
-        this.mapper.properties.screen.tiles.column1.tile7.change((prop) => {
-            if (prop == 127 && 
-                this.mapper.properties.screen.tiles.column1.tile6 == 127 && 
-                this.mapper.properties.screen.tiles.column1.tile5 == 127 && 
-                this.mapper.properties.screen.tiles.column1.tile4 == 127 && 
-                this.mapper.properties.screen.tiles.column1.tile3 == 127 && 
-                this.mapper.properties.screen.tiles.column1.tile2 == 127 && 
-                this.mapper.properties.screen.tiles.column1.tile1 == 127 &&
-                this.enemyState == "Fainting") {
-                    this.enemyState = "Fainted"
-                }
-        });
-        this.mapper.properties.battle.turnInfo.trainerDefeated.change(async (prop) => {
-            if (prop == 1) {
-                this.enemyState = "Battle Finished"
             }
         });
 
