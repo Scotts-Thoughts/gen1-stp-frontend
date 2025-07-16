@@ -36,7 +36,7 @@ const template = /*html*/`
                 </tr>
             </tbody>
         </table>
-        <div class="colored-image ds" :style="'filter: saturate('+ui_saturation+')'" style="--url: url(images/ui/movepool.svg); filter: drop-shadow(0px 0px 1px #000);"></div>
+        <div class="colored-image ds saturation" style="--url: url(images/ui/movepool.svg); filter: drop-shadow(0px 0px 1px #000);"></div>
         <div class="movepoolLabel">Movepool</div>
     </div>
 `
@@ -49,7 +49,6 @@ module.exports = {
         "moveData",
         "dynamicReset",
         "tmhmMapping",
-        "ui_saturation",
         "starting_type_fix",
     ],
     data() {

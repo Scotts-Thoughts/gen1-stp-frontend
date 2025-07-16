@@ -1,7 +1,7 @@
 const template = /*html*/`
 <div>
     <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
-    <div class="colored-image ds" :style="battle_pokemon_crop()" style="--url: url(images/ui/opponent.svg);"></div>
+    <div class="colored-image ds saturation" :style="battle_pokemon_crop()" style="--url: url(images/ui/opponent.svg);"></div>
     <div class="enemyGraphic">
         <div v-for="x in pkmnSlots">
             <div v-if="mapper.properties.battle.trainer.totalPokemon > x" :class="'ePkmnStyle ePkmn' + (x + 1)">
