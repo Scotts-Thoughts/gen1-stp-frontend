@@ -12,8 +12,8 @@ const template = /*html*/`
                     <div v-show="mapper.properties.player.team[0][move].value != null" :class="'movesetStyling moveStyling ' + move">
                         {{ move_name(capitalization_format(get_backport_move(move))) }}
                     </div>
-                    <div v-show="mapper.properties.player.team[0][move].value != null" :class="'movesetStyling powerStyling ' + move" :key="type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon)">
-                        {{ type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon) }}
+                    <div v-show="mapper.properties.player.team[0][move].value != null" :class="'movesetStyling powerStyling ' + move" :key="type_effectiveness(dynamic_mon,move,mapper.properties.battle.enemyPokemon)">
+                        {{ type_effectiveness(dynamic_mon,move,mapper.properties.battle.enemyPokemon) }}
                     </div>
                     <div v-show="mapper.properties.player.team[0][move].value != null" :class="'movesetStyling accuracyStyling ' + move">
                         {{ moveAccuracyEvasionDynamic(get_backport_move(move))}}<span style="font-size: 20px;">%</span>
@@ -35,8 +35,8 @@ module.exports = {
         "state",
         "move_name",
         "move_data",
-        "g1PokemonData",
-        "s1dynamic",
+        "pokedex_data",
+        "dynamic_mon",
         "capitalization_format",
         "type_data",
         "stage_mod_data",
@@ -88,8 +88,8 @@ module.exports = {
             else return move_name
         },
         get_backport_move(slot) {
-            const move = this.s1dynamic[slot].value
-            const byte = this.s1dynamic[slot].bytes[0]
+            const move = this.dynamic_mon[slot].value
+            const byte = this.dynamic_mon[slot].bytes[0]
             const starter = this.starterName
             const return_value = this.get_backport_move_name(move, starter, byte)
             return return_value

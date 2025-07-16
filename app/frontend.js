@@ -619,7 +619,7 @@ const app = Vue.createApp({
         //Left Panel
         "timer": require("./components/timer.js"),
         "badges": require("./components/badges.js"),
-        "resets": require("./components/resets.js"),
+        "faults": require("./components/faults.js"),
         "repel_counter": require("./components/repel_counter.js"),
         "bonk_counter": require("./components/bonk_counter.js"),
         "pop_ups": require("./components/pop_ups.js"),
@@ -641,6 +641,7 @@ const app = Vue.createApp({
         "splits_followup": require("./components/splits_followup.js"),
         "splits_summary": require("./components/splits_summary.js"),
         "enemy_graphic": require("./components/enemy_graphic.js"),
+        "wild_pokemon": require("./components/wild_pokemon.js"),
     },
     //DATA & DEFINITIONS
     data() {
@@ -683,10 +684,10 @@ const app = Vue.createApp({
             // pkmnSlots:       [0, 1, 2, 3, 4, 5],
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
-            prevSpecies:     undefined,
+            // prevSpecies:     undefined,
             enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
-            oldExpValue:     0,
+            // oldExpValue:     0,
             badge_boost_object: {
                 1: [
                     {abrv: "Atk", name: "Attack",  deprecated_path: "properties.player.badges.badge1.value", deprecated_path: 0, boost: 1.125, },
@@ -738,7 +739,6 @@ const app = Vue.createApp({
             inventory                 : true,    //uses inventory when in the department store & marts
             battleGraphic             : true,    //uses battle graphic with enemy moveset & stats
             showAllTrainers           : true,    //when false only shows gym leaders and rivals, when true shows all enemy trainers
-            expBarAnimation           : true,
             showSpecialTrainerGraphics: true,    //shows drawn art for defined trainers
             battlePopUps              : true,    //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             typeCalcs                 : true,    //displays type effectiveness for enemy pokemon
@@ -1890,7 +1890,7 @@ const app = Vue.createApp({
             if (this.state == `To Battle`) {
                 return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
             }
-            else if (pkmnData.hp == 0 || this.state == `From Battle`) {
+            else if (pkmnData?.hp == 0 || this.state == `From Battle`) {
                 return "filter: grayscale(100%) drop-shadow(0px 0px 1px #000000c5); opacity: .5; "
             }
             else {
@@ -2074,9 +2074,9 @@ const app = Vue.createApp({
 
         //     this.updateTime()
         // },
-        // padTime(time) {
-        //     return time.toString().padStart(2, "0")
-        // },
+        padTime(time) {
+            return time.toString().padStart(2, "0")
+        },
         // //animate the timer
         // updateTime() {
         //     var time = Date.now() - this.timer_startTime
@@ -2427,47 +2427,9 @@ const app = Vue.createApp({
             return formattedMove || this.capitalization_format(move_string);
         },
 
-        wild_pkmn_name(species_string) {
-            if (species_string == null || species_string == undefined) { return "" }
-            species_string = species_string.toLowerCase()
-            const speciesMappings = {
-              "nidoranm":     "Nidoran M",
-              "nidoranf":     "Nidoran F",
-              "mr. mime":     "Mr. Mime",
-              "farfetch'd":   "Farfetch'd",
-            };
-            const formattedMove = speciesMappings[species_string];
-            // console.log(formattedMove, species_string)
-            return formattedMove || this.capitalization_format(species_string);
-        },
-
         //ENEMY MOD STYLING
-        enemyMods(modValue) {
-            if (this.state != "Battle") { return this.enemyModColour }
-            var neutral = ["0", "background: #a1a1a1;"]
-            var raised = [modValue, "background: #d84444;"]
-            var lowered = [modValue, "background: #21c500"]
-            if (modValue < 0) { 
-                this.enemyModColour = raised 
-                return raised
-            }
-            if (modValue > 0) { 
-                this.enemyModColour = lowered 
-                return lowered
-            }
-            return this.enemyModColour 
-        },
-        enemyDynamic(activePkmn, currentSlot) {
-            if (activePkmn == currentSlot && this.state == "Battle") {
-                return this.mapper?.properties?.battle?.enemyPokemon
-            }
-            else { 
-                return this.mapper?.properties?.battle?.trainer?.team[activePkmn]
-            }
-        },
-        
         get_enemy_pkmn_styles(pkmnData) {
-            const isFainted = pkmnData.hp.value == 0;
+            const isFainted = pkmnData?.hp.value == 0;
             return {
               faint: isFainted
                 ? "filter: drop-shadow(2px 2px 2px #000) saturate(1.3) grayscale(100%); opacity: .5;"
@@ -2782,34 +2744,6 @@ const app = Vue.createApp({
             if (m < 10) m = "0" + m.toString();
             return `${h}:${m}:${s}`;
         },
-
-        //EXPERIENCE FUNCTIONS
-        calcExpStats(growthRate, exp) {
-            const expTable = {
-                "Erratic":     [0,15,52,122,237,406,637,942,1326,1800,2369,3041,3822,4719,5737,6881,8155,9564,11111,12800,14632,16610,18737,21012,23437,26012,28737,31610,34632,37800,41111,44564,48155,51881,55737,59719,63822,68041,72369,76800,81326,85942,90637,95406,100237,105122,110052,115015,120001,125000,131324,137795,144410,151165,158056,165079,172229,179503,186894,194400,202013,209728,217540,225443,233431,241496,249633,257834,267406,276458,286328,296358,305767,316074,326531,336255,346965,357812,367807,378880,390077,400293,411686,423190,433572,445239,457001,467489,479378,491346,501878,513934,526049,536557,548720,560922,571333,583539,591882,600000],
-                "Fast":        [0,6,21,51,100,172,274,409,583,800,1064,1382,1757,2195,2700,3276,3930,4665,5487,6400,7408,8518,9733,11059,12500,14060,15746,17561,19511,21600,23832,26214,28749,31443,34300,37324,40522,43897,47455,51200,55136,59270,63605,68147,72900,77868,83058,88473,94119,100000,106120,112486,119101,125971,133100,140492,148154,156089,164303,172800,181584,190662,200037,209715,219700,229996,240610,251545,262807,274400,286328,298598,311213,324179,337500,351180,365226,379641,394431,409600,425152,441094,457429,474163,491300,508844,526802,545177,563975,583200,602856,622950,643485,664467,685900,707788,730138,752953,776239,800000],
-                "Medium Fast": [0,8,27,64,125,216,343,512,729,1000,1331,1728,2197,2744,3375,4096,4913,5832,6859,8000,9261,10648,12167,13824,15625,17576,19683,21952,24389,27000,29791,32768,35937,39304,42875,46656,50653,54872,59319,64000,68921,74088,79507,85184,91125,97336,103823,110592,117649,125000,132651,140608,148877,157464,166375,175616,185193,195112,205379,216000,226981,238328,250047,262144,274625,287496,300763,314432,328509,343000,357911,373248,389017,405224,421875,438976,456533,474552,493039,512000,531441,551368,571787,592704,614125,636056,658503,681472,704969,729000,753571,778688,804357,830584,857375,884736,912673,941192,970299,1000000],
-                "Medium Slow": [0,9,57,96,135,179,236,314,419,560,742,973,1261,1612,2035,2535,3120,3798,4575,5460,6458,7577,8825,10208,11735,13411,15244,17242,19411,21760,24294,27021,29949,33084,36435,40007,43808,47846,52127,56660,61450,66505,71833,77440,83335,89523,96012,102810,109923,117360,125126,133229,141677,150476,159635,169159,179056,189334,199999,211060,222522,234393,246681,259392,272535,286115,300140,314618,329555,344960,360838,377197,394045,411388,429235,447591,466464,485862,505791,526260,547274,568841,590969,613664,636935,660787,685228,710266,735907,762160,789030,816525,844653,873420,902835,932903,963632,995030,1027103,1059860],
-                "Slow":        [0,10,33,80,156,270,428,640,911,1250,1663,2160,2746,3430,4218,5120,6141,7290,8573,10000,11576,13310,15208,17280,19531,21970,24603,27440,30486,33750,37238,40960,44921,49130,53593,58320,63316,68590,74148,80000,86151,92610,99383,106480,113906,121670,129778,138240,147061,156250,165813,175760,186096,196830,207968,219520,231491,243890,256723,270000,283726,297910,312558,327680,343281,359370,375953,393040,410636,428750,447388,466560,486271,506530,527343,548720,570666,593190,616298,640000,664301,689210,714733,740880,767656,795070,823128,851840,881211,911250,941963,973360,1005446,1038230,1071718,1105920,1140841,1176490,1212873,1250000],
-                "Fluctuating": [0,4,13,32,65,112,178,276,393,540,745,967,1230,1591,1957,2457,3046,3732,4526,5440,6482,7666,9003,10506,12187,14060,16140,18439,20974,23760,26811,30146,33780,37731,42017,46656,50653,55969,60505,66560,71677,78533,84277,91998,98415,107069,114205,123863,131766,142500,151222,163105,172697,185807,196322,210739,222231,238036,250562,267840,281456,300293,315059,335544,351520,373744,390991,415050,433631,459620,479600,507617,529063,559209,582187,614566,639146,673863,700115,737280,765275,804997,834809,877201,908905,954084,987754,1035837,1071552,1122660,1160499,1214753,1254796,1312322,1354652,1415577,1460276,1524731,1571884,1640000]
-            };
-
-            // makes searching a bit easiser
-            expTable["Erratic"][100]     = expTable["Erratic"][99] + 1;
-            expTable["Fast"][100]        = expTable["Fast"][99] + 1;
-            expTable["Medium Fast"][100] = expTable["Medium Fast"][99] + 1;
-            expTable["Medium Slow"][100] = expTable["Medium Slow"][99] + 1;
-            expTable["Slow"][100]        = expTable["Slow"][99] + 1;
-            expTable["Fluctuating"][100] = expTable["Fluctuating"][99] + 1;
-        
-            const index = expTable[growthRate].findIndex(x => x > exp);
-            const currLvlExp = expTable[growthRate][index - 1];
-            const nextLvlExp = expTable[growthRate][index];
-            return {
-                level: index,
-                percent: (exp - currLvlExp) / (nextLvlExp - currLvlExp),
-            };
-        },
         // MOVE MANAGEMENT
         sleep(ms) {
             return new Promise((res) => setTimeout(res, ms))
@@ -2882,31 +2816,8 @@ const app = Vue.createApp({
         else {
             this.state = this.mapper.properties.meta.state.value
         }
-        // this.load_timer_settings()
         this.load_split_settings()
-        // this.updateTime()
         this.timer.update();
-
-        // // Load settings
-        // // this.starterName = this.mapper.properties.patch.hChosenStarter.value
-        // if (this.mapper.properties.patch.wEarlyEncounters.value == "On") {
-        //     this.toggle_wEarlyEncounters = true
-        // }
-        // else {
-        //     this.toggle_wEarlyEncounters = false
-        // }
-        // // Yellow toggle init
-        // this.toggle_EVENT_ENCOUNTER_ROUTE1_TEST            = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST?.value            ?? false
-        // this.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY?.value ?? false
-        // this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW         = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW?.value         ?? false
-        // this.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW       = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW?.value       ?? false
-        // this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO          = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO?.value          ?? false
-        // // Red/Blue toggle init
-        // this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW  = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW?.value  ?? false
-        // this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE  = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE?.value  ?? false
-        // this.toggle_EVENT_ENCOUNTER_MTMOON_PARAS    = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS?.value    ?? false
-        // this.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER?.value ?? false
-        // this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO   = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO?.value   ?? false
 
         this.pokemon_list = this.keys_function(g1PokemonData)
 
@@ -3517,65 +3428,6 @@ const app = Vue.createApp({
                 this.mapper.properties.patch.wEarlyEncounters.set("On", false)
             }
         });
-
-        //EXP BAR
-        var species = this.s1dynamicReset.species.value == 'Backport' ? this.starterName : this.s1dynamicReset.species.value;
-        var growthRate = species ? this.g1PokemonData[species].growth_rate : this.g1PokemonData[this.starterName].growth_rate
-        var expStats = this.calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value);
-        document.getElementById("exp-bar").style.width = (expStats.percent * 100) + "%";
-        this.prevSpecies = species
-        this.oldExpValue = this.mapper.properties.player.team[0].expPoints.value
-        this.mapper.properties.player.team[0].expPoints.change(async (newProp, oldProp) => {
-            if (this.mapper.properties.player.team[0].level.value == 100) {
-                document.getElementById("exp-bar").style.width = "0%";
-                return
-            }
-            if (newProp.value < this.oldExpValue) {
-                document.getElementById("exp-bar").style.transition = null;
-            }
-            if (this.expBarAnimation == true) {
-                const currSpecies = this.s1dynamicReset.species.value;
-                const growthRate = this.g1PokemonData[currSpecies]?.growth_rate ?? this.g1PokemonData[this.starterName].growth_rate // TODO - this may cause issues
-                const oldExpStats = this.calcExpStats(growthRate, this.oldExpValue);
-                const newExpStats = this.calcExpStats(growthRate, newProp.value);
-                const animationMaxDuration = 600
-                if (this.oldExpValue == newProp.value) { 
-                    return 
-                }
-                if (this.state == `Overworld` || this.state == "Base Stats") {
-                    document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
-                }
-                else if (this.prevSpecies != currSpecies) {
-                    this.prevSpecies = currSpecies; 
-                    document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
-                } 
-                else {
-                    if (oldExpStats.level == newExpStats.level) {
-                        var diffExp = newExpStats.percent - oldExpStats.percent
-                        var animationDuration = Math.ceil(diffExp * animationMaxDuration)
-                        document.getElementById("exp-bar").style.transition = `width ${animationDuration}ms ease-in-out`;
-                        document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
-                        await this.sleep(animationDuration + 50);
-                    } else {
-                        var diffExp1 = 1 - oldExpStats.percent
-                        var animationDuration1 = Math.ceil(diffExp1 * animationMaxDuration)
-                        var diffExp2 = newExpStats.percent
-                        var animationDuration2 = Math.ceil(diffExp2 * animationMaxDuration)
-                        document.getElementById("exp-bar").style.transition = `width ${animationDuration1}ms ease-in`;
-                        document.getElementById("exp-bar").style.width = "100%";
-                        await this.sleep(animationDuration1 + 50);
-                        document.getElementById("exp-bar").style.transition = null;
-                        document.getElementById("exp-bar").style.width = "0%";
-                        await this.sleep(50);
-                        document.getElementById("exp-bar").style.transition = `width ${animationDuration2}ms ease-out`;
-                        document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
-                        await this.sleep(animationDuration2 + 50);
-                    }
-                }
-                document.getElementById("exp-bar").style.transition = null;
-                this.oldExpValue = newProp.value
-            }
-        })
 
         //keybinds
         keyhook.registerShortCut('F13', async () => { // Show IVs

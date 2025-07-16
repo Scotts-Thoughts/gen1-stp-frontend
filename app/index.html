@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scott's Thoughts - Generation 1 Overlay - v2.0.0</title>
+    <title>Scott's Thoughts - Generation 1 Overlay - v1.4.0</title>
     <link rel="stylesheet" href="style-yellow.css">
 </head>
 <body>
@@ -18,17 +18,58 @@
         <div v-else-if="game_name == 'Red' || game_name == 'Blue' || game_name == 'Yellow' || game_name == 'Yellow Legacy'">
             <div class="mainContainer">
                 <graphics v-bind="graphicsProps"></graphics>
+                
+                <!-- Left Panel -->
+                <faults 
+                    :mode="blackouts_resets" 
+                    :resets="playerResetsDisplay" 
+                    :blackouts="blackout_counter"
+                    :saturation="ui_saturation"
+                ></faults>
+
+                <div v-if="battlePopUps == true" style="position: absolute;">
+                    <pop_ups
+                        :mapper="mapper"
+                        :state="state"
+                        :ui_saturation="ui_saturation"
+                        :battle_fade="battle_fade"
+                    ></pop_ups>
+                    
+                    <bonk_counter
+                        :mapper="mapper"
+                        :state="state"
+                        :show_bonk_counter="show_bonk_counter"
+                        :blackouts_resets="blackouts_resets"
+                        :ui_saturation="ui_saturation"
+                        :dropdown_bonks_items="dropdown_bonks_items"
+                    ></bonk_counter>
+                    
+                    <repel_counter
+                        :mapper="mapper"
+                        :state="state"
+                        :ui_saturation="ui_saturation"
+                        :show_repel_counter="show_repel_counter"
+                        :blackouts_resets="blackouts_resets"
+                    ></repel_counter>
+                </div>
 
                 <type_icons 
                     :pkmn_type="pkmn_type"
                 ></type_icons>
 
-                <!-- Why was this here? -->
-                <!-- <img v-show="mapper[badge_boost_object.deprecated_path] === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" /> -->
-                <badge_boosts 
-                    :mapper="mapper" 
+                <moveset
+                    :starter="starterName"
+                    :mapper="mapper"
+                    :state="state"
+                    :move_name="move_name"
+                    :move_data="g1MoveData"
+                    :pokedex_data="g1PokemonData"
+                    :dynamic_mon="s1dynamic"
+                    :capitalization_format="capitalization_format"
+                    :type_data="typeData"
+                    :stage_mod_data="stageModifiersData"
                     :display_badge_boosts="display_badge_boosts"
-                ></badge_boosts>
+                ></moveset>
 
                 <stats
                     :mapper="mapper"
@@ -41,21 +82,26 @@
                     :dynamic_mon="s1dynamicReset"
                 ></stats>   
 
-                <moveset
-                    :starter="starterName"
+                <exp_bar
                     :mapper="mapper"
-                    :state="state"
-                    :move_name="move_name"
-                    :move_data="g1MoveData"
-                    :g1PokemonData="g1PokemonData"
-                    :s1dynamic="s1dynamic"
-                    :capitalization_format="capitalization_format"
-                    :type_data="typeData"
-                    :stage_mod_data="stageModifiersData"
-                    :display_badge_boosts="display_badge_boosts"
-                ></moveset>
+                    :dynamic-reset="s1dynamicReset"
+                    :starter-name="starterName"
+                    :g1-pokemon-data="g1PokemonData"
+                    :sleep="sleep"
+                ></exp_bar>
 
-                <!-- Enemy Graphics -->
+                <badge_boosts 
+                    :mapper="mapper" 
+                    :display_badge_boosts="display_badge_boosts"
+                ></badge_boosts>
+
+                <badges 
+                    :mapper="mapper">
+                </badges>
+
+                <timer></timer>
+
+                <!-- Right Panel -->
                 <transition name="fade">
                     <div v-if="right_panel == 'Movepool'" key=0>
                         <movepool
@@ -169,29 +215,22 @@
                             :state="state"
                         ></enemy_graphic>
                     </div>
-                    <div v-else-if="right_panel == 'Automatic' && (mapper.properties.battle.type.value == `Wild` && show_wild_battles == true)" style="position: absolute;">
-                        <div class="trainerLabel">{{"Wild " + wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
-                        <div class="colored-image ds" :style="battle_pokemon_crop()" style="--url: url(images/ui/opponent.svg);"></div>
-                        <div class="enemyGraphic">
-                            <div class="ePkmnStyle ePkmn1">
-                                <img class="ePkmnSprite" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).faint" :src="`images/pokemon/${mapper.properties.battle.enemyPokemon.species.value}.png`"/>
-                                <div class="ePkmnSpecies opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).species">{{wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
-                                <img class="enemyStatsArea" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).faintStats" :src="`images/enemy_area/stats/0.png`"/>
-                                <div class="ePkmnMoveStyle ePkmnMove1 opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move1.value)}}</div>
-                                <div class="ePkmnMoveStyle ePkmnMove2 opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move2.value)}}</div>
-                                <div class="ePkmnMoveStyle ePkmnMove3 opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move3.value)}}</div>
-                                <div class="ePkmnMoveStyle ePkmnMove4 opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move4.value)}}</div>
-                                <div class="ePkmnStatsStyle ePkmnHp opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon.hp}}</div>
-                                <div class="ePkmnStatsStyle ePkmnAtk opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.attack.value}}</div>
-                                <div class="ePkmnStatsStyle ePkmnDef opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.defense.value}}</div>
-                                <div class="ePkmnStatsStyle ePkmnSpd opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.speed.value}}</div>
-                                <div class="ePkmnStatsStyle ePkmnSpc opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.special.value}}</div>
-                                <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageAttack.value != `0`" class="enemyMods attackMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageAttack.value)[1]}`">{{batt.enemyPokemon.modEnemyStageAttack.value}}</div></transition>
-                                <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageDefense.value != `0`" class="enemyMods defenseMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageDefense.value)[1]}`">{{batt.enemyPokemon.modEnemyStageDefense.value}}</div></transition>
-                                <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageSpecial.value != `0`" class="enemyMods specialMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpecial.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpecial.value}}</div></transition>
-                                <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageSpeed.value != `0`" class="enemyMods speedMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpeed.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpeed.value}}</div></transition>
-                            </div>
-                        </div> 
+                    <div v-else-if="right_panel == 'Automatic' && (state == 'Battle' || state == 'From Battle') && (mapper.properties.battle.type.value == `Wild` && show_wild_battles == true)" style="position: absolute;">
+                        <wild_pokemon
+                            :mapper="mapper"
+                            :state="state"
+                            :starter-name="starterName"
+                            :g1-pokemon-data="g1PokemonData"
+                            :g1-move-data="g1MoveData"
+                            :g1-yellow-trainers="g1YellowTrainers"
+                            :enemy-state="enemyState"
+                            :battle_pokemon_crop="battle_pokemon_crop"
+                            :batt="batt"
+                            :move_name="move_name"
+                            :get_enemy_pkmn_styles="get_enemy_pkmn_styles"
+                            :enemy_pkmn_faint_types="enemy_pkmn_faint_types"
+                            :speed_comparison_toggle="speed_comparison_toggle"
+                        ></wild_pokemon>
                     </div>
                     <div v-else-if="key_F14 == true" key=3>
                         <movepool
@@ -211,49 +250,9 @@
                         <img class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
                 </transition>
-
-                <div v-if="battlePopUps == true" style="position: absolute;">
-                    <pop_ups
-                        :mapper="mapper"
-                        :state="state"
-                        :ui_saturation="ui_saturation"
-                        :battle_fade="battle_fade"
-                    ></pop_ups>
-                    <bonk_counter
-                        :mapper="mapper"
-                        :state="state"
-                        :show_bonk_counter="show_bonk_counter"
-                        :blackouts_resets="blackouts_resets"
-                        :ui_saturation="ui_saturation"
-                        :dropdown_bonks_items="dropdown_bonks_items"
-                    ></bonk_counter>
-                    <repel_counter
-                        :mapper="mapper"
-                        :state="state"
-                        :ui_saturation="ui_saturation"
-                        :show_repel_counter="show_repel_counter"
-                        :blackouts_resets="blackouts_resets"
-                    ></repel_counter>
-                </div>
-
-                <resets 
-                    :mode="blackouts_resets" 
-                    :resets="playerResetsDisplay" 
-                    :blackouts="blackout_counter"
-                    :saturation="ui_saturation"
-                ></resets>
-
-                <timer></timer>
-
-                <badges 
-                    :mapper="mapper">
-                </badges>
-
-                <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div></div>
-                <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" id="exp-bar"></div></div></div>
             </div>
 
-            <!-- UI -->
+            <!-- Game-Area Panel -->
             <div class="testingArea1" style="z-index: 155000;">
                 <div>Game:</div>
                 <select v-model="game_name" class="dropdownMenu dropdown_menu_column3">
@@ -495,7 +494,7 @@
         </div>
     </div>
 
-<!-- Imports -->
+    <!-- Imports -->
     <script src="https://unpkg.com/@microsoft/signalr@7.0.14/dist/browser/signalr.min.js"></script> 
     <script src="packages/vue.global.js"></script>
     <script src="packages/gameHookMapperClient.js"></script>

@@ -1,4 +1,5 @@
 const template = /*html*/`
+<div>
     <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
     <div class="colored-image ds" :style="battle_pokemon_crop()" style="--url: url(images/ui/opponent.svg);"></div>
     <div class="enemyGraphic">
@@ -63,6 +64,7 @@ const template = /*html*/`
             </div>
         </div>
     </div> 
+</div>
 `
 
 module.exports = {
