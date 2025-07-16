@@ -1,4 +1,4 @@
-const template = `
+const template = /*html*/`
     <div>
         <div class="movesetLabel labelMoves">moves</div>
         <div class="movesetLabel labelPwr"  >pwr.</div>

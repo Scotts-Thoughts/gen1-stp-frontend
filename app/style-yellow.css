@@ -37,24 +37,24 @@
 
     /* Movepool Type Colours */
     /* Bulbapedia pre-2024 */
-    --normal:   #a8a878;
-    --fighting: #c03028;
-    --grass:    #78c850;
-    --fire:     #f08030;
-    --water:    #6890f0;
-    --electric: #f3d230;
-    --ground:   #e0c068;
-    --rock:     #b8a038;
-    --psychic:  #f85888;
-    --poison:   #a040a0;
-    --flying:   #a890f0;
-    --bug:      #a8b820;
-    --ice:      #98d8d8;
-    --ghost:    #705898;
-    --dragon:   #7038f8;
-    --steel:    #b8b8d0;
-    --dark:     #705848;
-    --fairy:    #ee99ac; 
+    --normal:   #9fa19f;
+    --fighting: #ff8000;
+    --grass:    #3fa129;
+    --fire:     #e62829;
+    --water:    #2980ef;
+    --electric: #fac000;
+    --ground:   #915121;
+    --rock:     #afa981;
+    --psychic:  #ef4179;
+    --poison:   #9141cb;
+    --flying:   #81b9ef;
+    --bug:      #91a119;
+    --ice:      #3dcef3;
+    --ghost:    #704170;
+    --dragon:   #5060e1;
+    --steel:    #60a1b8;
+    --dark:     #624d4e;
+    --fairy:    #ef70ef; 
    
     /* Bulbapedia (present) */
     --current_normal:   #9fa19f;

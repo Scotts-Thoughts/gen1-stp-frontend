@@ -630,6 +630,9 @@ const app = Vue.createApp({
 
         //Right Panel
         "Movepool": require("./components/Movepool.js"),
+        "Splits_first": require("./components/Splits_first.js"),
+        "Splits_followup": require("./components/Splits_followup.js"),
+        "Splits_summary": require("./components/Splits_summary.js"),
     },
     //DATA & DEFINITIONS
     data() {

@@ -1,4 +1,4 @@
-const template = `
+const template = /*html*/`
     <div>
         <img class="canvas" ref="background_texture" :src="textures[backgroundTexture]" 
         :style=" 
@@ -20,7 +20,7 @@ const template = `
                 drop-shadow(' + (imageFlip ? '-3px' : '3px') + ' 3px 3px #000)
                 '
             }" 
-            :src="'images/pokemon/' + s1dynamicReset.species.value == 'Backport' ? this.starterName : s1dynamicReset.species.value + '.png'" />
+            :src="'images/pokemon/' + dynamicReset.species.value == 'Backport' ? this.starterName : dynamicReset.species.value + '.png'" />
         <img v-if="game_name == 'Red' || game_name == 'Blue'" class="pokemon_art2" ref="pokemon_art"
             :style="{
                 'transform': 'scale(' + imageScale + ') ' + (imageFlip ? 'rotateY(180deg)' : '') + ' translate(' + imageXOffset + 'px, ' + -imageYOffset + 'px)',
@@ -34,12 +34,12 @@ const template = `
                 drop-shadow(' + (imageFlip ? '-3px' : '3px') + '3px 3px #000)
                 '
             }" 
-            :src="'images/pokemon/Red_and_Blue/' + s1dynamicReset.species.value + '.png'" />
+            :src="'images/pokemon/Red_and_Blue/' + dynamicReset.species.value + '.png'" />
 
         <div class="colored-image ds" :style="'filter: saturate(' + ui_saturation + ') drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/stats.svg)"></div>
         <div class="colored-image ds" :style="'filter: saturate(' + ui_saturation + ') drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/moveset.svg)"></div>
         <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div></div>
-        <img class="svg" :src="'images/ui/' + ui_type_color_modifier + ' + ui_stat_arrangement_modifier + 'stats_backgrounds.svg'"/>
+        <img class="svg" :src="'images/ui/' + ui_type_color_modifier + ui_stat_arrangement_modifier + 'stats_backgrounds.svg'"/>
         <img class="svg" style="opacity: .8; filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.svg"/>
 
         <div class="genericLabels timerLabel" style="z-index: 200000">time played at 4x game speed</div>
@@ -70,6 +70,6 @@ module.exports = {
         "ui_stat_arrangement_modifier",
         "game_name",
         "starterName",
-        "s1dynamicReset",
+        "dynamicReset",
     ]
 }
