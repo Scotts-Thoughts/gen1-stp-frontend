@@ -49,8 +49,8 @@ async function loadCsvFile() {
 
 const fs = require("fs");
 const path = require("path");
-const { finished } = require('stream');
 const Timer = require("./logic/Timer.js");
+const UIStyles = require("./logic/UIStyles.js");
 
 for (let folder of folders = ['splits', 'splits/Yellow', 'splits/Red and Blue']) {
     if (!fs.existsSync(folder)) {
@@ -77,19 +77,19 @@ function transition(fn, ms) {
 
 const app = Vue.createApp({
     components: {
-        "no_mapper": require("./components/no_mapper.js"),
-        "graphics": require("./components/graphics.js"),
+        "no_mapper": require("./components/No_mapper.js"),
+        "graphics": require("./components/Graphics.js"),
 
         //Left Panel
-        "timer": require("./components/timer.js"),
-        "badges": require("./components/badges.js"),
+        "timer": require("./components/Timer.js"),
+        "badges": require("./components/Badges.js"),
         "faults": require("./components/faults.js"),
         "repel_counter": require("./components/repel_counter.js"),
         "bonk_counter": require("./components/bonk_counter.js"),
         "pop_ups": require("./components/pop_ups.js"),
         "type_icons": require("./components/type_icons.js"),
-        "moveset": require("./components/moveset.js"),
-        "stats": require("./components/stats.js"),
+        "moveset": require("./components/Moveset.js"),
+        "stats": require("./components/Stats.js"),
         "exp_bar": require("./components/exp_bar.js"),
         "badge_boosts": require("./components/badge_boosts.js"),
 
@@ -100,10 +100,10 @@ const app = Vue.createApp({
         "interface_4": require("./components/interface_4.js"),
 
         //Right Panel
-        "movepool": require("./components/movepool.js"),
-        "splits_first": require("./components/splits_first.js"),
-        "splits_followup": require("./components/splits_followup.js"),
-        "splits_summary": require("./components/splits_summary.js"),
+        "movepool": require("./components/Movepool.js"),
+        "splits_first": require("./components/Splits_first.js"),
+        "splits_followup": require("./components/Splits_followup.js"),
+        "splits_summary": require("./components/Splits_summary.js"),
         "enemy_graphic": require("./components/enemy_graphic.js"),
         "wild_pokemon": require("./components/wild_pokemon.js"),
 
@@ -349,32 +349,11 @@ const app = Vue.createApp({
             previous_label:  "Previous",
             current_label:   "Current",
 
-            // Pokemon settings for local storage
-            overlay_color:         "#000000",
-            imageXOffset:          0,
-            imageYOffset:          0,
-            imageScale:            1,
-            imageFlip:             false,
-            imageSat:              100,
-            imageRotation:         0,
 
             // Background texture settings
-            backgroundBlur:        0,
-            backgroundScale:       100,
-            backgroundFlip:        false,
-            backgroundUrl:         "",
-            use_custom_background: false,
-            backgroundXOffset:     0,
-            backgroundYOffset:     0,
-            backgroundTexture:     'Bug 1',
-            backgroundBrightness:  100,
-            backgroundContrast:    100,
-            backgroundSaturation:  100,
-            backgroundHue:         0,
             playerNameChoice:      "NINTEN",
 
             // UI
-            ui_saturation:          .6,
             ui_type_colors:         "Current",
             ui_type_color_modifier: "current_",
             ui_stat_arrangement:    "Speed: top right",
@@ -655,15 +634,8 @@ const app = Vue.createApp({
                     splits:   {},
                     data:     {},
                 };
-                this.pokemon_settings.forEach(setting => {
-                    Storage['games'][this.game_name][newValue].style[setting[0]] = setting[1];
-                });
             }
-
-            for (let key in Storage.games[this.game_name][newValue].style) {
-                // console.log(`Starter: ${newValue} Key: ${key}, Value: ${Storage.games[this.game_name][newValue].style[key]}`)
-                this[key] = Storage.games[this.game_name][newValue].style[key]; // Assign the values for each setting to the data() properties
-            }
+            UIStyles.setStarterName(newValue);
         },
         async game_name(newValue, oldValue) {
             //update the saved starter in the overlay's local storage
@@ -675,26 +647,26 @@ const app = Vue.createApp({
                     splits:   {},
                     data:     {},
                 };
-                this.pokemon_settings.forEach(setting => {
-                    Storage['games'][newValue][this.starterName].style[setting[0]] = setting[1];
-                });
             }
-
-            for (let key in Storage.games[newValue][this.starterName].style) {
-                // console.log(`Game: ${newValue} Key: ${key}, Value: ${Storage.games[newValue][this.starterName].style[key]}`)
-                this[key] = Storage.games[newValue][this.starterName].style[key]; // Assign the values for each setting to the data() properties
-            }
+            UIStyles.setGameName(newValue);
         },
         playerId(newValue) {
             this.game_over = false;
             this.playerResets = 0;
             this.finished_logs == false;
             this.blackout_counter = 0;
-        },    
-        overlay_color(newColor) {
-            document.documentElement.style.setProperty('--overlay-color', newColor);
-        }, 
-        playerResets(newProp) {  
+        },
+        playerResets(newProp) {
+            if (newProp.toString().length == 1) {
+                document.getElementById("reset_counter").style.fontSize = "75px"
+            }
+            if (newProp.toString().length == 3) {
+                document.getElementById("reset_counter").style.fontSize = "54px"
+            }
+            if (newProp.toString().length == 4) {
+                document.getElementById("reset_counter").style.fontSize = "40px"
+            }
+            
             if (this.playerResets < 0) {
                 this.playerResets = 0;
             }
@@ -724,30 +696,13 @@ const app = Vue.createApp({
     computed: {
         graphicsProps() {
             return {
-                backgroundTexture: this.backgroundTexture,
-                backgroundBlur: this.backgroundBlur,
-                backgroundHue: this.backgroundHue,
-                backgroundBrightness: this.backgroundBrightness,
-                backgroundContrast: this.backgroundContrast,
-                backgroundSaturation: this.backgroundSaturation,
-                backgroundScale: this.backgroundScale,
-                backgroundFlip: this.backgroundFlip,
-                backgroundXOffset: this.backgroundXOffset,
-                backgroundYOffset: this.backgroundYOffset,
-                imageScale: this.imageScale,
-                imageFlip: this.imageFlip,
-                imageXOffset: this.imageXOffset,
-                imageYOffset: this.imageYOffset,
-                imageRotation: this.imageRotation,
-                imageSat: this.imageSat,
-                ui_saturation: this.ui_saturation,
+                g1PokemonData: this.g1PokemonData,
                 ui_type_color_modifier: this.ui_type_color_modifier,
                 ui_stat_arrangement_modifier: this.ui_stat_arrangement_modifier,
                 game_name: this.game_name,
                 starterName: this.starterName,
                 dynamicReset: this.s1dynamicReset,
                 textures: this.textures,
-                blackouts_resets: this.blackouts_resets,
                 timer_settings: this.timer_settings
             }
         },
@@ -837,11 +792,6 @@ const app = Vue.createApp({
             const value = this.mapper.properties.player.team[0].species.value
             if (bytes > 0 && value === null) {
                 return mapping[bytes]
-            }
-        },
-        dropdownDownMenuKeys() {
-            return {
-                textures: Object.keys(this.textures)
             }
         },
         playerResetsDisplay() {
@@ -1212,14 +1162,6 @@ const app = Vue.createApp({
             }
             this[property]--;
         },
-        async colorPick() {
-            return new EyeDropper().open().then(res => res.sRGBHex)
-        },
-        async color_picker() {
-            var color = await this.colorPick()
-            // this.set_pokemon_prop("overlay_color", color)
-            this.overlay_color = color
-        },
         reset_advanced_settings() {
             this.battleGraphic =              true
             this.showAllTrainers =            true
@@ -1478,7 +1420,7 @@ const app = Vue.createApp({
               5: "886px",
               6: "1080px"
             };
-            return `height: ${heights[totalPokemon]}; filter: saturate(${this.ui_saturation}) drop-shadow(0px 0px 1px #000000)`;
+            return `height: ${heights[totalPokemon]}; drop-shadow(0px 0px 1px #000000)`;
         },
         // MOVE MANAGEMENT
         sleep(ms) {

@@ -18,7 +18,7 @@ const template = /*html*/`
                 </tr>
             </tbody>
         </table>
-        <div class="colored-image ds" :style="'filter: saturate(' + ui_saturation + ')'" style="--url: url(images/ui/movepool.svg)"></div>
+        <div class="colored-image ds saturation" style="--url: url(images/ui/movepool.svg)"></div>
     </div>
 `
 
@@ -29,6 +29,5 @@ module.exports = {
         "starting_type_fix",
         "compare_splits",
         "trainer_name_lookup",
-        "ui_saturation",
     ],
 }

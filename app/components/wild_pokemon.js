@@ -1,7 +1,7 @@
 const template = /*html*/ `
 <div v-if="state == 'Battle' || state == 'From Battle'">
     <div class="trainerLabel">{{"Wild " + wild_pkmn_name(wild_mon.species.value)}}</div>
-    <div class="colored-image ds" :style="battle_pokemon_crop()" style="--url: url(images/ui/opponent.svg);"></div>
+    <div class="colored-image ds saturation" :style="battle_pokemon_crop()" style="--url: url(images/ui/opponent.svg);"></div>
     <div class="enemyGraphic">
         <div class="ePkmnStyle ePkmn1">
             <!-- Art -->

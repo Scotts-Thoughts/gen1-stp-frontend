@@ -25,14 +25,12 @@
                     :mode="blackouts_resets" 
                     :resets="playerResetsDisplay" 
                     :blackouts="blackout_counter"
-                    :saturation="ui_saturation"
                 ></faults>
 
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <pop_ups
                         :mapper="mapper"
                         :state="state"
-                        :ui_saturation="ui_saturation"
                         :battle_fade="battle_fade"
                     ></pop_ups>
                     
@@ -41,14 +39,12 @@
                         :state="state"
                         :show_bonk_counter="show_bonk_counter"
                         :blackouts_resets="blackouts_resets"
-                        :ui_saturation="ui_saturation"
                         :dropdown_bonks_items="dropdown_bonks_items"
                     ></bonk_counter>
                     
                     <repel_counter
                         :mapper="mapper"
                         :state="state"
-                        :ui_saturation="ui_saturation"
                         :show_repel_counter="show_repel_counter"
                         :blackouts_resets="blackouts_resets"
                     ></repel_counter>
@@ -107,7 +103,6 @@
                             :move-data="g1MoveData"
                             :tmhm-mapping="tmhmMapping"
                             :dynamic-reset="s1dynamicReset"
-                            :ui_saturation="ui_saturation"
                             :starting_type_fix="starting_type_fix"
                         ></movepool>
                     </div>
@@ -120,7 +115,6 @@
                                     :starting_type_fix="starting_type_fix"
                                     :compare_splits="compare_splits"
                                     :trainer_name_lookup="trainer_name_lookup"
-                                    :ui_saturation="ui_saturation"
                                     :previous_label="previous_label"
                                     :current_label="current_label"
                                 ></splits_followup>
@@ -131,7 +125,6 @@
                                     :starting_type_fix="starting_type_fix"
                                     :compare_splits="compare_splits"
                                     :trainer_name_lookup="trainer_name_lookup"
-                                    :ui_saturation="ui_saturation"
                                 ></splits_first>
                             </div>
                             <div v-else-if="toggle_compare_splits === 'Followup + Summary'">
@@ -140,7 +133,6 @@
                                     :starting_type_fix="starting_type_fix"
                                     :compare_splits="compare_splits"
                                     :trainer_name_lookup="trainer_name_lookup"
-                                    :ui_saturation="ui_saturation"
                                     :battle_summary_header="battle_summary_header"
                                     :previous_label="previous_label"
                                     :current_label="current_label"
@@ -235,7 +227,6 @@
                             :move-data="g1MoveData"
                             :tmhm-mapping="tmhmMapping"
                             :dynamic-reset="s1dynamicReset"
-                            :ui_saturation="ui_saturation"
                             :starting_type_fix="starting_type_fix"
                         ></movepool>
                     </div>
@@ -402,39 +393,7 @@
                 <br>
             </div>
             <div class="testingArea4" style="z-index: 50000;">
-                <div>UI Color:</div>
-                <button @click="color_picker" class="buttonStyle buttonStyle_column3">Color Picker</button><br>
-                Saturation: <input type="range" min="0" max="2" step="0.1" v-model="ui_saturation"/><br>
-                <br>
-                <div>Pokemon:</div>
-                <table>
-                    <tr><td>X-Offset:   </td><td><input type="range" min="-400" max="400" v-model="imageXOffset"/></td></tr>
-                    <tr><td>Y-Offset:   </td><td><input type="range" min="-400" max="400" v-model="imageYOffset"/></td></tr>
-                    <tr><td>Scale:      </td><td><input type="range" min="0.3"  max="2"   step="0.02" v-model="imageScale"/></td></tr>
-                    <tr><td>Saturation: </td><td><input type="range" min="90"   max="150" step="1"    v-model="imageSat"/></td></tr>
-                    <tr><td>Rotation:   </td><td><input type="range" min="0"    max="360" step="1"    v-model="imageRotation"/></td></tr>
-                    <tr><td>Flip:       </td><td><input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/></td></tr>
-                </table>
-                <br>
-                <div>Background Texture:</div>
-                <select v-model="backgroundTexture" class="dropdownMenu dropdown_menu_column3">
-                    <option v-for="key in dropdownDownMenuKeys.textures" :key="key" :value="key">
-                        {{ key }}
-                    </option>
-                </select>
-                <!-- <img src="images/screenshots/pidgey_pallete.png" /> -->
-                <br>
-                <table>
-                    <tr><td>X-Offset:   </td><td><input type="range" min="-125" max="125" v-model="backgroundXOffset"/></td></tr>
-                    <tr><td>Y-Offset:   </td><td><input type="range" min="-125" max="125" v-model="backgroundYOffset"/></td></tr>
-                    <tr><td>Scale:      </td><td><input type="range" min="100"  max="200" v-model="backgroundScale"/></td></tr>
-                    <tr><td>Brightness: </td><td><input type="range" min="0"    max="200" v-model="backgroundBrightness"/></td></tr>
-                    <tr><td>Contrast:   </td><td><input type="range" min="0"    max="200" v-model="backgroundContrast"/></td></tr>
-                    <tr><td>Saturation: </td><td><input type="range" min="0"    max="200" v-model="backgroundSaturation"/></td></tr>
-                    <tr><td>Blur:       </td><td><input type="range" min="0"    max="10"  v-model="backgroundBlur"/></td></tr>
-                    <tr><td>Hue:        </td><td><input type="range" min="0"    max="358" v-model="backgroundHue"/></td></tr>
-                    <tr><td>Flip:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="backgroundFlip"/></td></tr>
-                </table>
+                <interface_3 :textures="this.textures" ></interface_3>
             </div>
             <div class="testingArea3" style="z-index: 50000;">
                 <div>Stats:</div>

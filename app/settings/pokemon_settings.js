@@ -10,7 +10,6 @@ const pokemon_settings = [
     [ "backgroundScale",        100,       ],
     [ "backgroundFlip",         false,     ],
     [ "backgroundUrl",          '',        ],
-    [ "use_custom_background",  false,     ],
     [ "attempt_number",         0,         ],
     [ "finished_run_count",     0,         ],
     [ "pb_time",                '',        ],
