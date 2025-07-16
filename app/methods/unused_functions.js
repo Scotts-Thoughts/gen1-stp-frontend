@@ -1,4 +1,5 @@
 const moveData = require("../data/g1MoveData");
+const pokemonData = require("../data/pokemonData");
 const typeEffectiveness = require("../data/type-effectiveness");
 
 //determine if the player is in a `Mart` or `Department` store.
@@ -61,8 +62,8 @@ function enemy_effective_power(move_name, enemy_mon, slot) {
         const move_type = move_data.Type
         const move_base_power = this.enemy_move_power(move) ?? move_data.Power
         const move_category = move_data.Category
-        const user_type_1 = this.g1PokemonData[species].type1
-        const user_type_2 = this.g1PokemonData[species].type2
+        const user_type_1 = pokemonData.gen1[species].type1
+        const user_type_2 = pokemonData.gen1[species].type2
         const target_type_1 = this.mapper.properties.battle.yourPokemon.type1.value
         const target_type_2 = this.mapper.properties.battle.yourPokemon.type2.value
         if (move_base_power == "—" || move_base_power == "-") { return "—" }

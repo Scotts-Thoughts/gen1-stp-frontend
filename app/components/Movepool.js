@@ -1,5 +1,6 @@
 const tmhmMapping = require("../data/tmhmmapping");
 const moveData = require("../data/g1MoveData");
+const g1PokemonDataRB = require("../data/g1PokemonDataRB");
 
 const template = /*html*/`
     <div class="movepool-container">
@@ -48,7 +49,6 @@ module.exports = {
     template,
     props: [
         "starterName",
-        "pokemon_version_specific_data",
         "dynamicReset",
         "starting_type_fix",
     ],
@@ -65,6 +65,10 @@ module.exports = {
         },
     },
     methods: {
+        pokemon_version_specific_data() {
+            if (this.mapper.properties.meta.gameName.value == "Yellow")       { return pokemonData.gen1 }
+            if (this.mapper.properties.meta.gameName.value == "Red and Blue") { return g1PokemonDataRB }
+        },
         dataSearch(dataObject, pointerValue) {
             if (!pointerValue) return ""
             if (!dataObject) return ""

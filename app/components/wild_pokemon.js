@@ -1,9 +1,10 @@
 const moveData = require("../data/g1MoveData")
+const pokemonData = require("../data/pokemonData")
 
 const template = /*html*/ `
 <div v-if="state == 'Battle' || state == 'From Battle'">
     <div class="trainerLabel">{{"Wild " + wild_pkmn_name(wild_mon.species.value)}}</div>
-    <div class="colored-image ds saturation" :style="battle_pokemon_crop()" style="--url: url(images/ui/opponent.svg);"></div>
+    <div class="colored-image ds saturation" :style="{height: '242px'}" style="--url: url(images/ui/opponent.svg);"></div>
     <div class="enemyGraphic">
         <div class="ePkmnStyle ePkmn1">
             <!-- Art -->
@@ -81,9 +82,7 @@ module.exports = {
         "mapper",
         "state",
         "starterName",
-        "g1PokemonData",
         "enemyState",
-        "battle_pokemon_crop",
         "move_name",
         "get_enemy_pkmn_styles",
         "enemy_pkmn_faint_types",
@@ -171,7 +170,7 @@ module.exports = {
             if (pkmn_species == null) { 
                 return "Normal"
             }
-            return this.g1PokemonData[pkmn_species].type1
+            return pokemonData.gen1[pkmn_species].type1
         },
         enemyType2(slotNumber) {
             const pkmn_species = this.mapper.properties.battle.enemyPokemon.species.value
@@ -179,7 +178,7 @@ module.exports = {
             if (pkmn_species == null) { 
                 return "Normal"
             }
-            const type_2 = this.g1PokemonData[pkmn_species].type2
+            const type_2 = pokemonData.gen1[pkmn_species].type2
             if (type_1 == type_2 && this.starterName == 'Pumpkaboo' && this.mapper.properties.patch.backport.prop_2.value == 8 && this.mapper.properties.battle.enemyPokemon.partyPos.value == slotNumber) {
                 return 'Ghost'
             }
@@ -187,8 +186,8 @@ module.exports = {
         },
         enemyType3(slotNumber) {
             const pkmn_species = this.mapper.properties.battle.enemyPokemon?.species.value
-            const type1 = this.g1PokemonData[pkmn_species]?.type1 || "Normal"
-            const type2 = this.g1PokemonData[pkmn_species]?.type2 || "Normal"
+            const type1 = pokemonData.gen1[pkmn_species]?.type1 || "Normal"
+            const type2 = pokemonData.gen1[pkmn_species]?.type2 || "Normal"
             if (type2 != null && type1 != type2 && this.starterName == 'Pumpkaboo' && this.mapper.properties.patch.backport.prop_2.value == 8 && this.mapper.properties.battle.enemyPokemon.partyPos.value == slotNumber) {
                 return 'Ghost'
             }
@@ -223,7 +222,7 @@ module.exports = {
         },
         enemy_crit_rate(pkmnData) {
             const species = pkmnData?.species.value
-            const base_speed = this.g1PokemonData[species]?.base_spd
+            const base_speed = pokemonData.gen1[species]?.base_spd
             if (base_speed) {
                 return Math.round(Math.round((Math.floor(base_speed/2)/256) * 10000) / 100)
             }

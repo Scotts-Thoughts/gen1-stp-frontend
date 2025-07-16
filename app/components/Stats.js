@@ -1,6 +1,8 @@
+const pokemonData = require("../data/pokemonData")
+
 const template = /*html*/`
     <div class="statsContainer"> 
-        <div :class="ui_stat_arrangement_modifier + 'critrate'">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
+        <div :class="ui_stat_arrangement_modifier + 'critrate'">Crit rate: {{ critRate }}%</div>
         <div>
             <div class="statsheader">{{stats_header}}</div>
             <div class="expLabelGen1">Exp:</div>
@@ -39,17 +41,14 @@ module.exports = {
     props: [
         "mapper",
         "state",
-        "starter",
+        "starterName",
         "stats_display",
-        "pokedex_old",
         "pokedex_yellow",
         "display_badge_boosts",
         "dynamic_mon",
     ],
     data() {
         return {
-            starterName: this.starter,
-            g1PokemonData: this.pokedex_old,
             s1dynamicReset: this.dynamic_mon,
             stat_object: [
                 {abrv: "HP",  name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             mod_path: "Hp",      mod_abrv: "hp",  statExpPath: "statExpHp",      vitamin: "HP Up",   hp_spe_label_row: 1, hp_spd_label_row: 1, label_column: 1, hp_spe_value_row: 1, hp_spd_value_row: 1, value_column: 2,}, 
@@ -62,6 +61,9 @@ module.exports = {
         }
     },
     computed: {
+        critRate() {
+            return this.g1CritRate(pokemonData.gen1[this.starterName])
+        },
         stats_header() {
             const stat_type = this.stats_display
             const state     = this.state
@@ -85,7 +87,7 @@ module.exports = {
         growthRate() {
             var species = this.s1dynamicReset.species.value == 'Backport' ? this.starterName : this.s1dynamicReset.species.value
             // debugger
-            return this.g1PokemonData[species ?? this.starterName].growth_rate
+            return pokemonData.gen1[species ?? this.starterName].growth_rate
         },
     },
     methods: {
@@ -100,7 +102,7 @@ module.exports = {
                 return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
             }
             else {
-                return this.g1PokemonData[this.starterName].crit_rate
+                return pokemonData.gen1[this.starterName].crit_rate
             }
         },
         average_median_stats(stat_label) {
