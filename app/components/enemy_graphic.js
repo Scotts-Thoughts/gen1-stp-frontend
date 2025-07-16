@@ -71,7 +71,6 @@ module.exports = {
     template,
     props: [
         "mapper",
-        "batt",
         "ui_type_color_modifier",
         "capitalization_format",
         "move_name",
@@ -90,6 +89,11 @@ module.exports = {
         return {
             pkmnSlots: [0, 1, 2, 3, 4, 5],
         }
+    },
+    computed: {
+        batt() {
+            return this.mapper.properties.battle
+        },
     },
     methods: {
         speed_comparison(enemy_slot, enemy_speed_incoming) {
@@ -294,5 +298,5 @@ module.exports = {
                 return Math.round(Math.round((Math.floor(base_speed/2)/256) * 10000) / 100)
             }
         },
-    }
+    },
 }

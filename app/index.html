@@ -53,9 +53,7 @@
                     ></repel_counter>
                 </div>
 
-                <type_icons 
-                    :pkmn_type="pkmn_type"
-                ></type_icons>
+                <type_icons :pkmn_type="pkmn_type"></type_icons>
 
                 <moveset
                     :starter="starterName"
@@ -95,9 +93,7 @@
                     :display_badge_boosts="display_badge_boosts"
                 ></badge_boosts>
 
-                <badges 
-                    :mapper="mapper">
-                </badges>
+                <badges :mapper="mapper"></badges>
 
                 <timer></timer>
 
@@ -199,7 +195,6 @@
                     <div v-else-if="right_panel == 'Automatic' && (state != 'Base Stats' && (state == 'To Battle' || state == 'Battle') && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=1>
                         <enemy_graphic
                             :mapper="mapper"
-                            :batt="batt"
                             :ui_type_color_modifier="ui_type_color_modifier"
                             :capitalization_format="capitalization_format"
                             :move_name="move_name"
@@ -244,7 +239,6 @@
                         ></movepool>
                     </div>
                 </transition>
-
                 <transition name="fadeDelayed">
                     <div v-if="(specialTrainerGraphics() != null && state != 'Base Stats' && state != 'Overworld' && state != 'From Battle') && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Automatic'" style="position: absolute;" key=1>
                         <img class="canvas" :src="specialTrainerGraphics()"/>
@@ -518,11 +512,9 @@
     <script src="data/pokedex/pokedex_crystal.js"></script>
     <script src="data/backports.js"></script>
     <script src="data/cross_generation_moves.js"></script>
-    
     <script src="settings/application_settings.js"></script>
     <script src="settings/pokemon_settings.js"></script>
     <script src="settings/time_settings.js"></script>
-
     <script src="autosplitter/trainer_name_lookup.js"></script>
     <script src="autosplitter/split_trainers.js"></script>
     <script src="autosplitter/battle_summary.js"></script>
