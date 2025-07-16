@@ -1,4 +1,4 @@
-const template = `
+const template = /*html*/`
     <div class="statsContainer"> 
         <div :class="ui_stat_arrangement_modifier + 'critrate'">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
         <div>

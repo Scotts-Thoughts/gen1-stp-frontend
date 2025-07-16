@@ -13,7 +13,7 @@ function createWindow() {
     webPreferences: {
       sandbox: false,
       contextIsolation: false,
-      nodeIntegration: true
+      nodeIntegration: true,
     },
   })
   const contentBounds = mainWindow.getContentBounds()

@@ -1,4 +1,4 @@
-const template = `
+const template = /*html*/`
     <div>
         <div>Game:</div>
             <select v-model="game_name" class="dropdownMenu dropdown_menu_column3">

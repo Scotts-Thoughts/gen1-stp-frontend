@@ -1,4 +1,4 @@
-const template = `
+const template = /*html*/`
     <div class="typeContainer">
         <div class="type">
             <img :src="'images/elements/types/' + pkmn_type(1) + '.png'" />

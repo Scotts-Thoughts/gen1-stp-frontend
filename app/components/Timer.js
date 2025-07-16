@@ -1,7 +1,7 @@
 const PubSub = require("../logic/PubSub");
 
 // How the component will render:
-const template = `
+const template = /*html*/`
     <div class="gametime">
         <!-- <div class="genericLabels timerLabel">time played at 4x game speed</div> -->
         <div class="gametimeClock">{{time}}</div>

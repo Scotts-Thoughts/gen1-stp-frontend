@@ -613,26 +613,34 @@ function transition(fn, ms) {
 
 const app = Vue.createApp({
     components: {
-        "No_mapper": require("./components/No_mapper.js"),
-        "Graphics": require("./components/Graphics.js"),
+        "no_mapper": require("./components/no_mapper.js"),
+        "graphics": require("./components/graphics.js"),
 
         //Left Panel
-        "Timer": require("./components/Timer.js"),
-        "Badges": require("./components/Badges.js"),
-        "Resets": require("./components/Resets.js"),
-        "Typeicons": require("./components/Typeicons.js"),
-        "Moveset": require("./components/Moveset.js"),
-        "Stats": require("./components/Stats.js"),
-        "Badgeboosts": require("./components/Badgeboosts.js"),
+        "timer": require("./components/timer.js"),
+        "badges": require("./components/badges.js"),
+        "resets": require("./components/resets.js"),
+        "repel_counter": require("./components/repel_counter.js"),
+        "bonk_counter": require("./components/bonk_counter.js"),
+        "pop_ups": require("./components/pop_ups.js"),
+        "type_icons": require("./components/type_icons.js"),
+        "moveset": require("./components/moveset.js"),
+        "stats": require("./components/stats.js"),
+        "exp_bar": require("./components/exp_bar.js"),
+        "badge_boosts": require("./components/badge_boosts.js"),
 
         //Middle Panel
-        "Interface": require("./components/Interface.js"),
+        "interface_1": require("./components/interface_1.js"),
+        "interface_2": require("./components/interface_2.js"),
+        "interface_3": require("./components/interface_3.js"),
+        "interface_4": require("./components/interface_4.js"),
 
         //Right Panel
-        "Movepool": require("./components/Movepool.js"),
-        "Splits_first": require("./components/Splits_first.js"),
-        "Splits_followup": require("./components/Splits_followup.js"),
-        "Splits_summary": require("./components/Splits_summary.js"),
+        "movepool": require("./components/movepool.js"),
+        "splits_first": require("./components/splits_first.js"),
+        "splits_followup": require("./components/splits_followup.js"),
+        "splits_summary": require("./components/splits_summary.js"),
+        "enemy_graphic": require("./components/enemy_graphic.js"),
     },
     //DATA & DEFINITIONS
     data() {
@@ -672,7 +680,7 @@ const app = Vue.createApp({
             pokedex_crystal    : pokedex_crystal,
 
             // Objects
-            pkmnSlots:       [0, 1, 2, 3, 4, 5],
+            // pkmnSlots:       [0, 1, 2, 3, 4, 5],
             fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
             accuracyEvasion: ["accuracy", "evasion"],
             prevSpecies:     undefined,
@@ -1300,6 +1308,98 @@ const app = Vue.createApp({
     },
 
     computed: {
+        graphicsProps() {
+            return {
+                backgroundTexture: this.backgroundTexture,
+                backgroundBlur: this.backgroundBlur,
+                backgroundHue: this.backgroundHue,
+                backgroundBrightness: this.backgroundBrightness,
+                backgroundContrast: this.backgroundContrast,
+                backgroundSaturation: this.backgroundSaturation,
+                backgroundScale: this.backgroundScale,
+                backgroundFlip: this.backgroundFlip,
+                backgroundXOffset: this.backgroundXOffset,
+                backgroundYOffset: this.backgroundYOffset,
+                imageScale: this.imageScale,
+                imageFlip: this.imageFlip,
+                imageXOffset: this.imageXOffset,
+                imageYOffset: this.imageYOffset,
+                imageRotation: this.imageRotation,
+                imageSat: this.imageSat,
+                ui_saturation: this.ui_saturation,
+                ui_type_color_modifier: this.ui_type_color_modifier,
+                ui_stat_arrangement_modifier: this.ui_stat_arrangement_modifier,
+                game_name: this.game_name,
+                starterName: this.starterName,
+                dynamicReset: this.s1dynamicReset,
+                textures: this.textures,
+                blackouts_resets: this.blackouts_resets,
+                timer_settings: this.timer_settings
+            }
+        },
+        interface_1_props() {
+            return {
+                game_name: this.game_name,
+                release: this.release,
+                test_run: this.test_run,
+                refilming_mode: this.refilming_mode,
+                no_attempt: this.no_attempt,
+                refilmed_attempt: this.refilmed_attempt,
+                refilmed_finish: this.refilmed_finish,
+                state: this.state,
+                mapper: this.mapper,
+                enemyState: this.enemyState,
+                blackout: this.blackout,
+                timer: this.timer,
+                timer_startTimeOffset: this.timer_startTimeOffset,
+                move1_replacement: this.move1_replacement,
+                move2_replacement: this.move2_replacement,
+                move3_replacement: this.move3_replacement,
+                move4_replacement: this.move4_replacement,
+                item1_replacement: this.item1_replacement,
+                item2_replacement: this.item2_replacement,
+                item3_replacement: this.item3_replacement,
+                item4_replacement: this.item4_replacement,
+                openFolder: this.openFolder,
+                starterName: this.starterName,
+                update_moveset: this.update_moveset,
+                update_battle_moveset: this.update_battle_moveset,
+                update_items: this.update_items,
+            }
+        },
+        interface_2_props() {
+            return {
+                starterName: this.starterName,
+                game_name: this.game_name,
+                release: this.release,
+                filtered_pokemon_list: this.filtered_pokemon_list,
+                search_term: this.search_term,
+                previous_label: this.previous_label,
+                current_label: this.current_label,
+                attempt_number: this.attempt_number,
+                finished_run_count: this.finished_run_count,
+                playerResets: this.playerResets,
+                blackout_counter: this.blackout_counter,
+                toggle_wEarlyEncounters: this.toggle_wEarlyEncounters,
+                toggle_wEarlyEncountersNoMoon: this.toggle_wEarlyEncountersNoMoon,
+                toggle_EVENT_ENCOUNTER_ROUTE1_TEST: this.toggle_EVENT_ENCOUNTER_ROUTE1_TEST,
+                toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY: this.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY,
+                toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW: this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW,
+                toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW: this.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW,
+                toggle_EVENT_ENCOUNTER_ROUTE16_DODUO: this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO,
+                toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW: this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW,
+                toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE: this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE,
+                toggle_EVENT_ENCOUNTER_MTMOON_PARAS: this.toggle_EVENT_ENCOUNTER_MTMOON_PARAS,
+                toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER: this.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER,
+                toggle_EVENT_ENCOUNTER_ROUTE16_DODUO: this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO,
+                newRun: this.newRun,
+                set_encounters: this.set_encounters,
+                load_splits: this.load_splits,
+                increment: this.increment,
+                decrement: this.decrement,
+                set_rom_starter: this.set_rom_starter,
+            }
+        },
         blackouts_resets() {
             const resets = this.playerResets
             const blackouts = this.blackout_counter
@@ -1616,21 +1716,6 @@ const app = Vue.createApp({
               return false;
             }
         },
-        // SCREENS
-        screen() {
-            if (this.batt.yourPokemon.effects.reflect.value == true && this.batt.yourPokemon.effects.lightScreen.value == true) {
-                return ["Both","font-size: 20px","screens",]
-            }
-            if (this.batt.yourPokemon.effects.lightScreen.value == true) {
-                return ["Light Screen","font-size: 16px","screen",]
-            }
-            if (this.batt.yourPokemon.effects.reflect.value == true) {
-                return ["Reflect","font-size: 20px","screen",]
-            }
-            else {
-                return [" ","font-size: 20px","screen",]
-            }
-        },
         getStarterType() {
             var type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
             var type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
@@ -1763,73 +1848,6 @@ const app = Vue.createApp({
                 ])
             }
         },
-        speed_comparison(enemy_slot, enemy_speed_incoming) {
-            const state          = this.mapper.properties.meta.state.value
-            const trainer        = this.mapper.properties.battle.trainer.class.value
-            const trainer_number = this.mapper.properties.battle.trainer.number.value
-            let data = this.mapper.properties.meta.gameName.value == 'Yellow' ? this.g1YellowTrainers : this.g1RedBlueTrainers
-            let enemy_hp = this.mapper.properties.battle.trainer.team[enemy_slot].hp.value
-            let player_speed   = this.mapper.properties.battle.yourPokemon.speed.value
-            let enemy_speed = enemy_speed_incoming
-            if (state == 'To Battle') {
-                // console.log(trainer, trainer_number, data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd)
-                enemy_speed = data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd
-                player_speed = this.mapper.properties.player.team[0].speed.value
-            }
-            let object = {
-                comparison: "Outspeeds",
-                color: "background-color: rgba(255, 63, 63, 0.6)",
-            }
-            // if (state == `To Battle`) {
-            //     object.comparison = "Calculating..."
-            //     object.color      = "background-color: rgba(28, 255, 58, 0)"
-            // }
-            // else if (player_speed > enemy_speed) {
-            //     object.comparison = "Outsped"
-            //     object.color      = "background-color: rgba(28, 255, 58, 0.4)"
-            // }
-            if (player_speed > enemy_speed) {
-                object.comparison = "Outsped"
-                object.color      = "background-color: rgba(28, 255, 58, 0.4)"
-            }
-            else if (player_speed == enemy_speed) {
-                object.comparison = "Speed-tie"
-                object.color      = "background-color: rgba(255, 255, 0, 0.5)"
-            }
-            if (enemy_hp == 0) {
-                object.color      = "background-color: rgba(28, 255, 58, 0.5); opacity: 0.0; filter: grayscale(100%)"
-            }
-            return object
-        },
-        svgColorClass(speed_comparison, enemy_data) {
-            const isFainted = enemy_data.hp.value
-            if (isFainted == 0) {
-                return 'grey-svg';
-            }
-            if (speed_comparison === 'Outsped') {
-                return 'blue-svg';
-            } 
-            else if (speed_comparison === 'Speed-tie') {
-                return 'yellow-svg';
-            }
-            return 'red-svg';
-        },
-        getEnemyPkmnStyles(pkmnData) {
-            const isFainted = pkmnData.hp.value == 0;
-            return {
-              faint: isFainted
-                ? "filter: drop-shadow(2px 2px 2px #000) saturate(1.3) grayscale(100%); opacity: .5;"
-                : "filter: drop-shadow(2px 2px 2px #000) saturate(1.3) grayscale(0%);",
-              faint_stats_background: isFainted
-                ? "filter: grayscale(100%); opacity: .3;"
-                : "filter: grayscale(0%);",
-              faintStats: isFainted
-                ? "filter: grayscale(100%); opacity: .4;"
-                : "filter: grayscale(0%);",
-              text: isFainted ? "opacity: .3" : "",
-              species: isFainted ? "opacity: .3" : "opacity: .7"
-            };
-        },
 
         get_nested_property(obj, path) {
             return path.split('.').reduce((o, p) => (o || {})[p], obj);
@@ -1840,12 +1858,6 @@ const app = Vue.createApp({
         },
         batp() { //player battle
             return this.mapper?.properties?.battle?.yourPokemon
-        },
-        split_diff_color(difference_string) {
-            if (difference_string === "-")          { return "color: black" }
-            if (difference_string === "+0:00")      { return "color: black" }
-            if (difference_string.charAt(0) == "+") { return "color: red" }
-            if (difference_string.charAt(0) == "-") { return "color: green" }
         },
         async load_temp_splits() {
             const text = await loadCsvFile();
@@ -1874,39 +1886,7 @@ const app = Vue.createApp({
         hp_dv(atk, def, spd, spc) {
             return (((atk % 2) * 8) + ((def % 2) * 4) + ((spd % 2) * 2) + ((spc % 2) * 1))
         },
-        stat_mod(modifer, slot) {
-            let mod = modifer
-            let mod_string = ""
-            let style_string = ""
-
-            if (mod == 0) {
-                style_string = 'opacity: .7;'
-            }
-            if (mod > 0) {
-                mod_string = `+${mod}`
-                style_string = 'opacity: .1;'
-            }
-            if (mod < 0) {
-                mod_string = mod
-                style_string = 'opacity: .1;'
-            }
-
-            if (this.mapper.properties.battle.trainer.team[slot].hp.value == 0) {
-                style_string = 'opacity: .3;'
-            }
-            if (slot != this.mapper.properties.battle.enemyPokemon.partyPos.value && this.mapper.properties.battle.trainer.team[slot].hp.value > 0) {
-                style_string = 'opacity: .7;'
-            }
-
-            let object = {
-                mod: mod_string,
-                style: style_string,
-            }
-            // return { mod: -1, style: 'opacity: .7;' }
-            // console.log(object)
-            return object
-        },
-        enemyPkmnFaintTypes(pkmnData) {
+        enemy_pkmn_faint_types(pkmnData) {
             if (this.state == `To Battle`) {
                 return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
             }
@@ -1915,36 +1895,6 @@ const app = Vue.createApp({
             }
             else {
                 return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
-            }
-        },
-        enemyType1(slotNumber) {
-            const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
-            if (pkmn_species == null) { 
-                return "Normal"
-            }
-            return this.g1PokemonData[pkmn_species].type1
-        },
-        enemyType2(slotNumber) {
-            const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
-            const type_1 = this.enemyType1(slotNumber)
-            if (pkmn_species == null) { 
-                return "Normal"
-            }
-            const type_2 = this.g1PokemonData[pkmn_species].type2
-            if (type_1 == type_2 && this.starterName == 'Pumpkaboo' && this.mapper.properties.patch.backport.prop_2.value == 8 && this.mapper.properties.battle.enemyPokemon.partyPos.value == slotNumber) {
-                return 'Ghost'
-            }
-            return type_2
-        },
-        enemyType3(slotNumber) {
-            const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
-            const type1 = this.g1PokemonData[pkmn_species].type1
-            const type2 = this.g1PokemonData[pkmn_species].type2
-            if (type2 != null && type1 != type2 && this.starterName == 'Pumpkaboo' && this.mapper.properties.patch.backport.prop_2.value == 8 && this.mapper.properties.battle.enemyPokemon.partyPos.value == slotNumber) {
-                return 'Ghost'
-            }
-            else {
-                return "Normal"
             }
         },
         toggleDataType() {
@@ -2446,13 +2396,6 @@ const app = Vue.createApp({
         select_starter(pokemon_species) {
             this.starterName = pokemon_species
         },
-        enemy_crit_rate(pkmnData) {
-            const species = pkmnData?.species.value
-            const base_speed = this.g1PokemonData[species]?.base_spd
-            if (base_speed) {
-                return Math.round(Math.round((Math.floor(base_speed/2)/256) * 10000) / 100)
-            }
-        },
         move_name(move_string) {
             if (!move_string) { return "" }
             if (move_string.includes("BACKPORT")) { return this.backport_data[this.starterName].move_string }
@@ -2523,7 +2466,7 @@ const app = Vue.createApp({
             }
         },
         
-        getEnemyPkmnStyles(pkmnData) {
+        get_enemy_pkmn_styles(pkmnData) {
             const isFainted = pkmnData.hp.value == 0;
             return {
               faint: isFainted
@@ -2538,13 +2481,6 @@ const app = Vue.createApp({
               text: isFainted ? "opacity: .3" : "",
               species: isFainted ? "opacity: .3" : "opacity: .7"
             };
-        },
-
-        accEva(mod) {
-            if (mod > 0) {
-                return "+" + mod
-            }
-            else return mod
         },
 
         //REMOVES CAPITALIZATION (TACKLE -> Tackle) OR (Tail whip -> Tail Whip)
@@ -2595,88 +2531,6 @@ const app = Vue.createApp({
             if (y != null)
                 y = parseInt(y)
             return this.g1PokemonData[this.starterName]
-        },
-
-
-        // STAGE MULTIPLIERS
-        //edge case management (prevent flickering of the stat values due to overlay stage multipliers being applied on Pokemon that are not yet in battle)
-        //determine which Pokemon is currently in battle and display only their stage multipliers
-        activeSlot(activePkmn, currentSlot, statLabel, stat, side) {
-            if (this.enemyState == "Fainted" || this.state == "From Battle") {
-                return stat 
-            }
-            else if (this.enemyState == "Pokemon" || this.enemyState == "Pokemon Sent Out" || this.enemyState == "Fainting") {
-                if (activePkmn == currentSlot && this.state == "Battle") {
-                    return this.mapper.properties.battle[side][statLabel].value
-                }
-                else { 
-                    return stat
-                }
-            }
-            else {
-                return stat
-            }
-        },
-
-        fixTrainerName(trainerName, trainerNumber) {
-            const gameName = this.mapper.properties.meta.gameName;
-            const rival1Teams = ["rival1's team", "rival1A's team", "rival2's team"];
-            const rival2Teams = [
-              "rival3's team",
-              "rival4's team",
-              "rival4's team",
-              "rival4's team",
-              "rival5's team",
-              "rival5's team",
-              "rival5's team",
-              "rival6's team",
-              "rival6's team",
-              "rival6's team",
-            ];
-          
-            if (gameName == "Yellow") {
-              if (trainerName == "RIVAL1") {
-                return rival1Teams[trainerNumber - 1];
-              } 
-              else if (trainerName == "RIVAL2") {
-                return rival2Teams[trainerNumber - 1];
-              } 
-              else if (trainerName == "RIVAL3") {
-                return "champion's team";
-              } 
-              else {
-                return trainerName.toLowerCase() + "'s team";
-              }
-            } 
-            else if (gameName == "Red and Blue") {
-              if (trainerName == "RIVAL1" && (trainerNumber == 1 || trainerNumber == 2 || trainerNumber == 3)) {
-                return "rival1's team";
-              } 
-              else if (trainerName == "RIVAL1" && (trainerNumber == 4 || trainerNumber == 5 || trainerNumber == 6)) {
-                return "rival1a's team";
-              }
-              else if (trainerName == "RIVAL1" && (trainerNumber == 7 || trainerNumber == 8 || trainerNumber == 9)) {
-                return "rival2's team";
-              }
-              else if (trainerName == "RIVAL2" && (trainerNumber == 1 || trainerNumber == 2 || trainerNumber == 3)) {
-                return "rival3's team";
-              } 
-              else if (trainerName == "RIVAL2" && (trainerNumber == 4 || trainerNumber == 5 || trainerNumber == 6)) {
-                return "rival4's team";
-              } 
-              else if (trainerName == "RIVAL2" && (trainerNumber == 7 || trainerNumber == 8 || trainerNumber == 9)) {
-                return "rival5's team";
-              } 
-              else if (trainerName == "RIVAL2" && (trainerNumber == 10 || trainerNumber == 11 || trainerNumber == 12)) {
-                return "rival6's team";
-              } 
-              else if (trainerName == "RIVAL3") {
-                return "champion's team";
-              } 
-              else {
-                return trainerName.toLowerCase() + "'s team";
-              }
-            }
         },
 
         //! TODO Why do trainer graphics not appear in Red & Blue?
@@ -2897,7 +2751,7 @@ const app = Vue.createApp({
         },
 
         //Sets the crop on the UI image for the enemy team so that unused party slots are not present
-        battlePokemonCrop() {
+        battle_pokemon_crop() {
             const totalPokemon = this.mapper.properties.battle.trainer.totalPokemon;
             const heights = {
               1: "242px",

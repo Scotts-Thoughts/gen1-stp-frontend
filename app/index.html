@@ -8,55 +8,29 @@
 <body>
     <div id="app">
         <div v-if="ready == false">
-            <No_mapper
+            <no_mapper
                 :game_name="game_name"
                 :starter="starterName"
                 :filtered_pokemon_list="filtered_pokemon_list"
                 :release="release"
-            ></No_mapper>
+            ></no_mapper>
         </div>
         <div v-else-if="game_name == 'Red' || game_name == 'Blue' || game_name == 'Yellow' || game_name == 'Yellow Legacy'">
             <div class="mainContainer">
-                
-                <Graphics
-                    :background-texture="backgroundTexture"
-                    :background-blur="backgroundBlur"
-                    :background-hue="backgroundHue"
-                    :background-brightness="backgroundBrightness"
-                    :background-contrast="backgroundContrast"
-                    :background-saturation="backgroundSaturation"
-                    :background-scale="backgroundScale"
-                    :background-flip="backgroundFlip"
-                    :background-x-offset="backgroundXOffset"
-                    :background-y-offset="backgroundYOffset"
-                    :image-scale="imageScale"
-                    :image-flip="imageFlip"
-                    :image-x-offset="imageXOffset"
-                    :image-y-offset="imageYOffset"
-                    :image-rotation="imageRotation"
-                    :image-sat="imageSat"
-                    :ui_saturation="ui_saturation"
-                    :ui_type_color_modifier="ui_type_color_modifier"
-                    :ui_stat_arrangement_modifier="ui_stat_arrangement_modifier"
-                    :game_name="game_name"
-                    :starter-name="starterName"
-                    :dynamic-reset="s1dynamicReset"
-                    :textures="textures"
-                    :blackouts_resets="blackouts_resets"
-                    :timer_settings="timer_settings"
-                ></Graphics>
-                <Typeicons 
+                <graphics v-bind="graphicsProps"></graphics>
+
+                <type_icons 
                     :pkmn_type="pkmn_type"
-                ></Typeicons>
+                ></type_icons>
 
                 <!-- Why was this here? -->
                 <!-- <img v-show="mapper[badge_boost_object.deprecated_path] === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(map.player.badges.badge1)" /> -->
-                <Badgeboosts 
+                <badge_boosts 
                     :mapper="mapper" 
                     :display_badge_boosts="display_badge_boosts"
-                ></Badgeboosts>
+                ></badge_boosts>
 
-                <Stats
+                <stats
                     :mapper="mapper"
                     :state="state"    
                     :starter="starterName"    
@@ -65,9 +39,9 @@
                     :pokedex_yellow="pokedex_yellow"
                     :display_badge_boosts="display_badge_boosts"
                     :dynamic_mon="s1dynamicReset"
-                ></Stats>   
+                ></stats>   
 
-                <Moveset
+                <moveset
                     :starter="starterName"
                     :mapper="mapper"
                     :state="state"
@@ -79,12 +53,12 @@
                     :type_data="typeData"
                     :stage_mod_data="stageModifiersData"
                     :display_badge_boosts="display_badge_boosts"
-                ></Moveset>
+                ></moveset>
 
                 <!-- Enemy Graphics -->
                 <transition name="fade">
                     <div v-if="right_panel == 'Movepool'" key=0>
-                        <Movepool
+                        <movepool
                             :starter-name="starterName"
                             :pokemon_version_specific_data="pokemon_version_specific_data"
                             :move-data="g1MoveData"
@@ -92,13 +66,13 @@
                             :dynamic-reset="s1dynamicReset"
                             :ui_saturation="ui_saturation"
                             :starting_type_fix="starting_type_fix"
-                        ></Movepool>
+                        ></movepool>
                     </div>
                     <div v-else-if="right_panel == 'Splits'" key=5>
                         <div key=3>
                             <div class="split_label">Splits</div>
                             <div v-if="toggle_compare_splits === 'Followup'">
-                                <Splits_followup
+                                <splits_followup
                                     :ui_type_color_modifier="ui_type_color_modifier"
                                     :starting_type_fix="starting_type_fix"
                                     :compare_splits="compare_splits"
@@ -106,19 +80,19 @@
                                     :ui_saturation="ui_saturation"
                                     :previous_label="previous_label"
                                     :current_label="current_label"
-                                ></Splits_followup>
+                                ></splits_followup>
                             </div>
                             <div v-else-if="toggle_compare_splits === 'First'">
-                                <Splits_first
+                                <splits_first
                                     :ui_type_color_modifier="ui_type_color_modifier"
                                     :starting_type_fix="starting_type_fix"
                                     :compare_splits="compare_splits"
                                     :trainer_name_lookup="trainer_name_lookup"
                                     :ui_saturation="ui_saturation"
-                                ></Splits_first>
+                                ></splits_first>
                             </div>
                             <div v-else-if="toggle_compare_splits === 'Followup + Summary'">
-                                <Splits_summary
+                                <splits_summary
                                     :ui_type_color_modifier="ui_type_color_modifier"
                                     :starting_type_fix="starting_type_fix"
                                     :compare_splits="compare_splits"
@@ -130,98 +104,88 @@
                                     :battle_duration="battle_duration"
                                     :exp_per_second="exp_per_second"
                                     :battle_summary="battle_summary"
-                                ></Splits_summary>
+                                    :battle_summary_frames="battle_summary_frames"
+                                    :battle_summary_battle_number="battle_summary_battle_number"
+                                    :battle_summary_exp_gained="battle_summary_exp_gained"
+                                    :battle_summary_turns="battle_summary_turns"
+                                    :battle_summary_player_turns="battle_summary_player_turns"
+                                    :battle_summary_enemy_turns="battle_summary_enemy_turns"
+                                    :battle_summary_player_hits="battle_summary_player_hits"
+                                    :battle_summary_player_misses="battle_summary_player_misses"
+                                    :battle_summary_player_crits="battle_summary_player_crits"
+                                    :battle_summary_player_ohkos="battle_summary_player_ohkos"
+                                    :battle_summary_enemy_hits="battle_summary_enemy_hits"
+                                    :battle_summary_enemy_misses="battle_summary_enemy_misses"
+                                    :battle_summary_enemy_crits="battle_summary_enemy_crits"
+                                    :battle_summary_enemy_ohkos="battle_summary_enemy_ohkos"
+                                    :battle_summary_player_Sx="battle_summary_player_Sx"
+                                    :battle_summary_player_4x="battle_summary_player_4x"
+                                    :battle_summary_player_2x="battle_summary_player_2x"
+                                    :battle_summary_player_1x="battle_summary_player_1x"
+                                    :battle_summary_player_Hx="battle_summary_player_Hx"
+                                    :battle_summary_player_Qx="battle_summary_player_Qx"
+                                    :battle_summary_player_0x="battle_summary_player_0x"
+                                    :battle_summary_player_con="battle_summary_player_con"
+                                    :battle_summary_player_par="battle_summary_player_par"
+                                    :battle_summary_player_brn="battle_summary_player_brn"
+                                    :battle_summary_player_frz="battle_summary_player_frz"
+                                    :battle_summary_player_psn="battle_summary_player_psn"
+                                    :battle_summary_player_bpn="battle_summary_player_bpn"
+                                    :battle_summary_player_slp="battle_summary_player_slp"
+                                    :battle_summary_enemy_Sx="battle_summary_enemy_Sx"
+                                    :battle_summary_enemy_4x="battle_summary_enemy_4x"
+                                    :battle_summary_enemy_2x="battle_summary_enemy_2x"
+                                    :battle_summary_enemy_1x="battle_summary_enemy_1x"
+                                    :battle_summary_enemy_Hx="battle_summary_enemy_Hx"
+                                    :battle_summary_enemy_Qx="battle_summary_enemy_Qx"
+                                    :battle_summary_enemy_0x="battle_summary_enemy_0x"
+                                    :battle_summary_enemy_con="battle_summary_enemy_con"
+                                    :battle_summary_enemy_par="battle_summary_enemy_par"
+                                    :battle_summary_enemy_brn="battle_summary_enemy_brn"
+                                    :battle_summary_enemy_frz="battle_summary_enemy_frz"
+                                    :battle_summary_enemy_psn="battle_summary_enemy_psn"
+                                    :battle_summary_enemy_bpn="battle_summary_enemy_bpn"
+                                    :battle_summary_enemy_slp="battle_summary_enemy_slp"
+                                ></splits_summary>
                             </div>
                         </div>
                     </div>
                     <div v-else-if="right_panel == 'Automatic' && (state != 'Base Stats' && (state == 'To Battle' || state == 'Battle') && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=1>
-                        <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
-                        <div class="colored-image ds" :style="battlePokemonCrop()" style="--url: url(images/ui/opponent.svg);"></div>
-                        <div class="enemyGraphic">
-                            <div v-for="x in pkmnSlots">
-                                <div v-if="mapper.properties.battle.trainer.totalPokemon > x" :class="`ePkmnStyle ePkmn${x + 1}`">
-                                    <img v-if="mapper.properties.meta.gameName == 'Yellow'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/${mapper.properties.battle.trainer.team[x]?.species}.png`"/>
-                                    <img v-else-if="mapper.properties.meta.gameName == 'Red and Blue'" class="ePkmnSprite" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint" :src="`images/pokemon/Red_and_Blue/${mapper.properties.battle.trainer.team[x]?.species}.png`"/>
-                                    <div class="ePkmnSpecies opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).species">{{mapper.properties.battle.trainer.team[x]?.species}}</div>
-                                    <div class="ePkmnLevel opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).species">Lv:{{mapper.properties.battle.trainer.team[x]?.level}}</div>
-                                    <img class="ePkmnTypeIcons ePkmnType_1 ds opacityTransition" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" :src="`images/elements/type-icons/${enemyType1(x).toLowerCase()}.png`"/>
-                                    <img v-if="enemyType1(x) != enemyType2(x)" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_2 ds opacityTransition" :src="`images/elements/type-icons/${enemyType2(x).toLowerCase()}.png`"/>
-                                    <img v-if="enemyType3(x) == 'Ghost'" :style="enemyPkmnFaintTypes(batt.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_3 ds opacityTransition" :src="`images/elements/type-icons/ghost.png`"/>
-                                    
-                                    <!-- Moves -->
-                                    <img class="canvas" :class="svgColorClass(speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison, batt.trainer.team[x])" :src="`images/ui/speed_comp/${x}.svg`"/>
-                                    <img class="enemyStatsArea opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).faint_stats_background" :src="`images/stats/${ui_type_color_modifier}/${x}.svg`"/>
-
-                                    <div v-for="move_index in moves = [0, 1, 2, 3]">
-                                        <img v-if="mapper.properties.battle.trainer.team[x][`move${move_index + 1}`]?.value != null" 
-                                            :class="`ds eMoveIconStyle moveIcon${move_index + 1} opacityTransition`" 
-                                            :style="enemyPkmnFaintTypes(batt.trainer.team[x])" 
-                                            :src="`images/elements/type-icons/${g1MoveData[move_name(mapper.properties.battle.trainer.team[x][`move${move_index + 1}`]?.value)]?.Type?.toLowerCase()}.png`" 
-                                        />
-                                        <div :class="`ePkmnMoveStyle ePkmnMove${move_index + 1} opacityTransition`" 
-                                            :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">
-                                            {{move_name(mapper.properties.battle.trainer.team[x][`move${move_index + 1}`]?.value)}}
-                                        </div>
-                                        <!-- <div v-if="enemy_trainer.pokemon[x]?.moves[move_index] != null" 
-                                            :class="`ePkmnMoveStyle ePkmnEffectivePower ePkmnMove${move_index + 1} opacityTransition`" 
-                                            :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">
-                                            {{enemy_effective_power(enemy_trainer.pokemon[x]?.moves[move_index], mapper.properties.battle.trainer.team[x], x)}}
-                                        </div> -->
-                                    </div>
-
-                                    <!-- Stats -->
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelHp   opacityTransition" :style="stat_mod(0, x).style"                                           >HP</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelAtk  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageAttack.value, x).style" >Atk.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelDef  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageDefense.value, x).style">Def.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpc  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpecial.value, x).style">Spc.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelSpe  opacityTransition" :style="stat_mod(batt.enemyPokemon.modEnemyStageSpeed.value, x).style"  >Spe.</div>
-                                    <div class="ePkmnStatLabelStyle ePkmnLabelCrit opacityTransition" :style="stat_mod(0, x).style"                                           >Crit.</div>
-
-                                    <div class="ePkmnStatsStyle ePkmnHp   opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{mapper.properties.battle.trainer.team[x]?.maxHp}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnAtk  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"attack",mapper.properties.battle.trainer.team[x]?.attack,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnDef  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"defense",mapper.properties.battle.trainer.team[x]?.defense,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnSpc  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"speed",mapper.properties.battle.trainer.team[x]?.speed,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnSpe  opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{activeSlot(x,batt.enemyPokemon.partyPos.value,"special",mapper.properties.battle.trainer.team[x]?.special,"enemyPokemon")}}</div>
-                                    <div class="ePkmnStatsStyle ePkmnCrit opacityTransition" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text">{{enemy_crit_rate(mapper.properties.battle.trainer.team[x])}}%</div>
-                                
-                                    <!-- Modifiers -->
-                                    <div v-for="mod in modifiers = [
-                                        ['modEnemyStageAttack',  'Atk',],
-                                        ['modEnemyStageDefense', 'Def',],
-                                        ['modEnemyStageSpecial', 'Spc',],
-                                        ['modEnemyStageSpeed',   'Spd',],
-                                        ]">
-                                        <div v-show="(enemyState == `Pokemon` || enemyState == `Pokemon Sent Out` || enemyState == `Fainting`) && batt.enemyPokemon.partyPos.value == x && batt.enemyPokemon[mod[0]].value != `0`" 
-                                        :class="`ePkmnModsStyle ePkmnMod${mod[1]}`">
-                                            {{stat_mod(batt.enemyPokemon[mod[0]].value, x).mod}}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <transition name="fade">
-                                            <div v-show="speed_comparison_toggle == true" :style="getEnemyPkmnStyles(batt.trainer.team[x]).text" class="speed_comparison">{{speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison}}</div>
-                                        </transition>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
+                        <enemy_graphic
+                            :mapper="mapper"
+                            :batt="batt"
+                            :ui_type_color_modifier="ui_type_color_modifier"
+                            :capitalization_format="capitalization_format"
+                            :move_name="move_name"
+                            :speed_comparison_toggle="speed_comparison_toggle"
+                            :battle_pokemon_crop="battle_pokemon_crop"
+                            :get_enemy_pkmn_styles="get_enemy_pkmn_styles"
+                            :enemy_pkmn_faint_types="enemy_pkmn_faint_types"
+                            :g1-pokemon-data="g1PokemonData"
+                            :g1-yellow-trainers="g1YellowTrainers"
+                            :starter-name="starterName"
+                            :g1-move-data="g1MoveData"
+                            :enemy-state="enemyState"
+                            :state="state"
+                        ></enemy_graphic>
                     </div>
                     <div v-else-if="right_panel == 'Automatic' && (mapper.properties.battle.type.value == `Wild` && show_wild_battles == true)" style="position: absolute;">
                         <div class="trainerLabel">{{"Wild " + wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
-                        <div class="colored-image ds" :style="battlePokemonCrop()" style="--url: url(images/ui/opponent.svg);"></div>
+                        <div class="colored-image ds" :style="battle_pokemon_crop()" style="--url: url(images/ui/opponent.svg);"></div>
                         <div class="enemyGraphic">
                             <div class="ePkmnStyle ePkmn1">
-                                <img class="ePkmnSprite" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).faint" :src="`images/pokemon/${mapper.properties.battle.enemyPokemon.species.value}.png`"/>
-                                <div class="ePkmnSpecies opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).species">{{wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
-                                <img class="enemyStatsArea" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).faintStats" :src="`images/enemy_area/stats/0.png`"/>
-                                <div class="ePkmnMoveStyle ePkmnMove1 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move1.value)}}</div>
-                                <div class="ePkmnMoveStyle ePkmnMove2 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move2.value)}}</div>
-                                <div class="ePkmnMoveStyle ePkmnMove3 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move3.value)}}</div>
-                                <div class="ePkmnMoveStyle ePkmnMove4 opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move4.value)}}</div>
-                                <div class="ePkmnStatsStyle ePkmnHp opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon.hp}}</div>
-                                <div class="ePkmnStatsStyle ePkmnAtk opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.attack.value}}</div>
-                                <div class="ePkmnStatsStyle ePkmnDef opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.defense.value}}</div>
-                                <div class="ePkmnStatsStyle ePkmnSpd opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.speed.value}}</div>
-                                <div class="ePkmnStatsStyle ePkmnSpc opacityTransition" :style="getEnemyPkmnStyles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.special.value}}</div>
+                                <img class="ePkmnSprite" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).faint" :src="`images/pokemon/${mapper.properties.battle.enemyPokemon.species.value}.png`"/>
+                                <div class="ePkmnSpecies opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).species">{{wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
+                                <img class="enemyStatsArea" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).faintStats" :src="`images/enemy_area/stats/0.png`"/>
+                                <div class="ePkmnMoveStyle ePkmnMove1 opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move1.value)}}</div>
+                                <div class="ePkmnMoveStyle ePkmnMove2 opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move2.value)}}</div>
+                                <div class="ePkmnMoveStyle ePkmnMove3 opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move3.value)}}</div>
+                                <div class="ePkmnMoveStyle ePkmnMove4 opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{move_name(mapper.properties.battle.enemyPokemon?.move4.value)}}</div>
+                                <div class="ePkmnStatsStyle ePkmnHp opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon.hp}}</div>
+                                <div class="ePkmnStatsStyle ePkmnAtk opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.attack.value}}</div>
+                                <div class="ePkmnStatsStyle ePkmnDef opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.defense.value}}</div>
+                                <div class="ePkmnStatsStyle ePkmnSpd opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.speed.value}}</div>
+                                <div class="ePkmnStatsStyle ePkmnSpc opacityTransition" :style="get_enemy_pkmn_styles(mapper.properties.battle.enemyPokemon).text">{{mapper.properties.battle.enemyPokemon?.special.value}}</div>
                                 <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageAttack.value != `0`" class="enemyMods attackMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageAttack.value)[1]}`">{{batt.enemyPokemon.modEnemyStageAttack.value}}</div></transition>
                                 <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageDefense.value != `0`" class="enemyMods defenseMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageDefense.value)[1]}`">{{batt.enemyPokemon.modEnemyStageDefense.value}}</div></transition>
                                 <transition name="fadeMod"><div v-show="(enemyState == `Pokemon` || enemyState == `Fainting`) && batt.enemyPokemon.modEnemyStageSpecial.value != `0`" class="enemyMods specialMod" :style="`${enemyMods(batt.enemyPokemon.modEnemyStageSpecial.value)[1]}`">{{batt.enemyPokemon.modEnemyStageSpecial.value}}</div></transition>
@@ -230,7 +194,7 @@
                         </div> 
                     </div>
                     <div v-else-if="key_F14 == true" key=3>
-                        <Movepool
+                        <movepool
                             :starter-name="starterName"
                             :pokemon_version_specific_data="pokemon_version_specific_data"
                             :move-data="g1MoveData"
@@ -238,97 +202,57 @@
                             :dynamic-reset="s1dynamicReset"
                             :ui_saturation="ui_saturation"
                             :starting_type_fix="starting_type_fix"
-                        ></Movepool>
+                        ></movepool>
                     </div>
                 </transition>
+
                 <transition name="fadeDelayed">
                     <div v-if="(specialTrainerGraphics() != null && state != 'Base Stats' && state != 'Overworld' && state != 'From Battle') && mapper.properties.battle.type.value == `Trainer` && right_panel == 'Automatic'" style="position: absolute;" key=1>
                         <img class="canvas" :src="specialTrainerGraphics()"/>
                     </div>
                 </transition>
-                <!-- Pop Ups -->
+
                 <div v-if="battlePopUps == true" style="position: absolute;">
-                    <transition name="fade">
-                        <div v-if="battle_fade == true && batt.yourPokemon.modStageAccuracy.bytes != 0x07 && batt.yourPokemon.modStageAccuracy.bytes != 0x00 && batt.yourPokemon.modStageAccuracy.bytes != 0xFF && (state == `Battle` || state == `From Battle`)">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/accuracy.svg)"></div>
-                            <div class="accuracyLabel">accuracy</div>
-                            <div class="popUpsStyle accuracyMod">{{ accEva(batt.yourPokemon.modStageAccuracy.value) }}</div>
-                        </div>
-                    </transition>
-                    <transition name="fade">
-                        <div v-if="battle_fade == true && batt.yourPokemon.modStageEvasion.bytes != 0x07 && batt.yourPokemon.modStageEvasion.bytes != 0x00 && batt.yourPokemon.modStageEvasion.bytes != 0xFF && (state == `Battle` || state == `From Battle`)">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/evasion.svg)"></div>
-                            <div class="evasionLabel2">evasion</div>
-                            <div class="popUpsStyle evasionMod">{{ accEva(batt.yourPokemon.modStageEvasion.value) }}</div>
-                        </div>
-                    </transition>
-                    <transition name="fade">
-                        <div v-if="battle_fade == true && batt.yourPokemon.effects.reflect.bytes != 0xFF && (batt.yourPokemon.effects.reflect.value == true || batt.yourPokemon.effects.lightScreen.value == true) && (state == `Battle` || state == `From Battle`)">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/screens.svg)"></div>
-                            <div class="screensLabel">{{screen[2]}}</div>
-                            <div class="popUpsStyle screensValue" :style="`${screen[1]}`">{{ screen[0] }}</div>
-                        </div>
-                    </transition>
-
-                    <div v-if="dropdown_bonks_items == 'Bonks'">
-                        <transition name="fade">
-                            <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets != 'Both'">
-                                <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks.svg)"></div>
-                                <div class="bonksLabel">bonks</div>
-                                <div class="popUpsStyle bonksValue">{{ map?.patch?.steps?.bonks }}</div>
-                            </div>
-                        </transition>
-                        <transition name="fade">
-                            <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets == 'Both'">
-                                <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks_2.svg)"></div>
-                                <div class="bonksLabel_1">bonks</div>
-                                <div class="popUpsStyle bonksValue_1">{{ map?.patch?.steps?.bonks }}</div>
-                            </div>
-                        </transition>
-                    </div>
-                    <div v-else-if="dropdown_bonks_items == 'Item Count'">
-                        <transition name="fade">
-                            <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets != 'Both'">
-                                <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks.svg)"></div>
-                                <div class="bonksLabel">item count</div>
-                                <div class="popUpsStyle bonksValue">{{ map?.player.itemCount.value }}</div>
-                            </div>
-                        </transition>
-                        <transition name="fade">
-                            <div v-if="show_bonk_counter == true && state == 'Overworld' && blackouts_resets == 'Both'">
-                                <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/bonks_2.svg)"></div>
-                                <div class="bonksLabel_1">item count</div>
-                                <div class="popUpsStyle bonksValue_1">{{ map?.player.itemCount.value }}</div>
-                            </div>
-                        </transition>
-                    </div>
-
-                    <transition name="fade">
-                        <div v-if="show_repel_counter == true && state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0 && blackouts_resets != 'Both'">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/repel.svg)"></div>
-                            <div class="repelLabel">repel steps</div>
-                            <div class="popUpsStyle repelSteps">{{ mapper.properties.overworld.repelCount.value }}</div>
-                        </div>
-                    </transition>
-                    <transition name="fade">
-                        <div v-if="show_repel_counter == true && state == 'Overworld' && mapper.properties.overworld.repelCount.value > 0 && blackouts_resets == 'Both'">
-                            <div class="colored-image" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/repel_2.svg)"></div>
-                            <div class="repelLabel_1">repel steps</div>
-                            <div class="popUpsStyle repelSteps_1">{{ mapper.properties.overworld.repelCount.value }}</div>
-                        </div>
-                    </transition>
+                    <pop_ups
+                        :mapper="mapper"
+                        :state="state"
+                        :ui_saturation="ui_saturation"
+                        :battle_fade="battle_fade"
+                    ></pop_ups>
+                    <bonk_counter
+                        :mapper="mapper"
+                        :state="state"
+                        :show_bonk_counter="show_bonk_counter"
+                        :blackouts_resets="blackouts_resets"
+                        :ui_saturation="ui_saturation"
+                        :dropdown_bonks_items="dropdown_bonks_items"
+                    ></bonk_counter>
+                    <repel_counter
+                        :mapper="mapper"
+                        :state="state"
+                        :ui_saturation="ui_saturation"
+                        :show_repel_counter="show_repel_counter"
+                        :blackouts_resets="blackouts_resets"
+                    ></repel_counter>
                 </div>
-                <Resets 
+
+                <resets 
                     :mode="blackouts_resets" 
                     :resets="playerResetsDisplay" 
                     :blackouts="blackout_counter"
                     :saturation="ui_saturation"
-                ></Resets>
-                <Timer ></Timer>
-                <Badges 
+                ></resets>
+
+                <timer></timer>
+
+                <badges 
                     :mapper="mapper">
-                </Badges>
+                </badges>
+
+                <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div></div>
+                <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" id="exp-bar"></div></div></div>
             </div>
+
             <!-- UI -->
             <div class="testingArea1" style="z-index: 155000;">
                 <div>Game:</div>

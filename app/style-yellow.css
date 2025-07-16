@@ -1250,12 +1250,12 @@ box-shadow:
 .trainerLabel {
     position: absolute;
     font-family: titan;
-    /* border: 1px solid rgb(255, 0, 0); */
-    font-size: 30px;
-    top: 40px;
-    left: 1520px;
+    border: 1px solid rgba(255, 0, 0, 0);
+    font-size: 28px;
+    top: 41px;
+    left: 1530px;
     text-align: center;
-    width: 400px;
+    width: 380px;
     /* text-transform: capitalize; */
     z-index: 10001;
 }

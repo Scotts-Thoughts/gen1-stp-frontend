@@ -1,4 +1,4 @@
-const template = `
+const template = /*html*/`
     <div v-if="display_badge_boosts == true && mapper.properties.meta.state.value != 'No Pokemon'" class="badgesBar">          
         <img v-show="mapper.properties.player.badges.badge1.value === true" class="badgeBoostStyle badgeBoostAtk" :src="badgeGraphic(mapper.properties.player.badges.badge1)" />
         <img v-show="mapper.properties.player.badges.badge3.value === true" class="badgeBoostStyle badgeBoostDef" :src="badgeGraphic(mapper.properties.player.badges.badge3)" />                    

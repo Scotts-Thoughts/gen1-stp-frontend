@@ -33,4 +33,12 @@ module.exports = {
         "previous_label",
         "current_label",
     ],
+    methods: {
+        split_diff_color(difference_string) {
+            if (difference_string === "-")          { return "color: black" }
+            if (difference_string === "+0:00")      { return "color: black" }
+            if (difference_string.charAt(0) == "+") { return "color: red" }
+            if (difference_string.charAt(0) == "-") { return "color: green" }
+        },
+    }
 }

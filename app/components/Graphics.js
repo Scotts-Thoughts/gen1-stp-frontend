@@ -40,11 +40,9 @@ const template = /*html*/`
         />
         <div class="colored-image ds" :style="'filter: saturate(' + ui_saturation + ') drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/stats.svg)"></div>
         <div class="colored-image ds" :style="'filter: saturate(' + ui_saturation + ') drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/moveset.svg)"></div>
-        <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div></div>
         <img class="svg" :src="'images/ui/' + ui_type_color_modifier + ui_stat_arrangement_modifier + 'stats_backgrounds.svg'"/>
         <img class="svg" style="opacity: .8; filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.svg"/>
-
-        <div class="genericLabels timerLabel" style="z-index: 200000">time played at 4x game speed</div>
+        <div class="genericLabels timerLabel" style="z-index: 200000; font-size: 16px;">time played at 4x game speed</div>
     </div>
     <div v-show="blackouts_resets == 'None'" class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/timer_2.svg)"></div>
     <div v-show="blackouts_resets == 'Blackouts'" class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/timer_2.svg)"></div>
@@ -52,17 +50,9 @@ const template = /*html*/`
     <div v-show="blackouts_resets == 'Both'" class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/timer.svg)"></div>
     <div class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/stats.svg)"></div>
     <div class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/moveset.svg)"></div>
-    <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" id="exp-bar"></div></div></div>
     <img class="svg" :src="\`images/ui/\${ui_type_color_modifier}\${ui_stat_arrangement_modifier}stats_backgrounds.svg\`"/>
     <img class="svg" style="opacity: .8; filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.svg"/>
     <img class="canvas" src="images/elements/badges.png"/>
-    <transition name="fade">
-        <div v-show="timer_settings == \`Off - Real-Time Label\` || timer_settings == \`Real-Time\`" 
-            class="genericLabels timerLabel" 
-            style="z-index: 200000;">
-            time played at 4x game speed
-        </div>
-    </transition>
 `
 
 module.exports = {
