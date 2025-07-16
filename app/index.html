@@ -9,27 +9,17 @@
     <div id="app">
         <keyhook></keyhook>
         <div v-if="ready == false">
-            <no_mapper
-                :game_name="game_name"
-                :starter="starterName"
-                :filtered_pokemon_list="filtered_pokemon_list"
-                :release="release"
-            ></no_mapper>
+            <no_mapper></no_mapper>
         </div>
         <div v-else-if="game_name == 'Red' || game_name == 'Blue' || game_name == 'Yellow' || game_name == 'Yellow Legacy'">
             <div class="mainContainer">
                 <graphics v-bind="graphicsProps"></graphics>
-
+                
                 <!-- Background Processes -->
                 <enemy_state :mapper="mapper"></enemy_state>
-                
-                <!-- Left Panel -->
-                <faults 
-                    :mode="blackouts_resets" 
-                    :resets="playerResetsDisplay" 
-                    :blackouts="blackout_counter"
-                ></faults>
 
+                <!-- Left Panel -->
+                <faults></faults>
                 <div v-if="battlePopUps == true" style="position: absolute;">
                     <pop_ups
                         :mapper="mapper"
@@ -52,9 +42,7 @@
                         :blackouts_resets="blackouts_resets"
                     ></repel_counter>
                 </div>
-
                 <type_icons :pkmn_type="pkmn_type"></type_icons>
-
                 <moveset
                     :starter="starterName"
                     :mapper="mapper"
@@ -68,7 +56,6 @@
                     :stage_mod_data="stageModifiersData"
                     :display_badge_boosts="display_badge_boosts"
                 ></moveset>
-
                 <stats
                     :mapper="mapper"
                     :state="state"    
@@ -79,7 +66,6 @@
                     :display_badge_boosts="display_badge_boosts"
                     :dynamic_mon="s1dynamicReset"
                 ></stats>   
-
                 <exp_bar
                     :mapper="mapper"
                     :dynamic-reset="s1dynamicReset"
@@ -87,14 +73,8 @@
                     :g1-pokemon-data="g1PokemonData"
                     :sleep="sleep"
                 ></exp_bar>
-
-                <badge_boosts 
-                    :mapper="mapper" 
-                    :display_badge_boosts="display_badge_boosts"
-                ></badge_boosts>
-
+                <badge_boosts :mapper="mapper" ></badge_boosts>
                 <badges :mapper="mapper"></badges>
-
                 <timer></timer>
 
                 <!-- Right Panel -->
@@ -131,60 +111,7 @@
                                 ></splits_first>
                             </div>
                             <div v-else-if="toggle_compare_splits === 'Followup + Summary'">
-                                <splits_summary
-                                    :ui_type_color_modifier="ui_type_color_modifier"
-                                    :starting_type_fix="starting_type_fix"
-                                    :compare_splits="compare_splits"
-                                    :trainer_name_lookup="trainer_name_lookup"
-                                    :battle_summary_header="battle_summary_header"
-                                    :previous_label="previous_label"
-                                    :current_label="current_label"
-                                    :battle_duration="battle_duration"
-                                    :exp_per_second="exp_per_second"
-                                    :battle_summary="battle_summary"
-                                    :battle_summary_frames="battle_summary_frames"
-                                    :battle_summary_battle_number="battle_summary_battle_number"
-                                    :battle_summary_exp_gained="battle_summary_exp_gained"
-                                    :battle_summary_turns="battle_summary_turns"
-                                    :battle_summary_player_turns="battle_summary_player_turns"
-                                    :battle_summary_enemy_turns="battle_summary_enemy_turns"
-                                    :battle_summary_player_hits="battle_summary_player_hits"
-                                    :battle_summary_player_misses="battle_summary_player_misses"
-                                    :battle_summary_player_crits="battle_summary_player_crits"
-                                    :battle_summary_player_ohkos="battle_summary_player_ohkos"
-                                    :battle_summary_enemy_hits="battle_summary_enemy_hits"
-                                    :battle_summary_enemy_misses="battle_summary_enemy_misses"
-                                    :battle_summary_enemy_crits="battle_summary_enemy_crits"
-                                    :battle_summary_enemy_ohkos="battle_summary_enemy_ohkos"
-                                    :battle_summary_player_Sx="battle_summary_player_Sx"
-                                    :battle_summary_player_4x="battle_summary_player_4x"
-                                    :battle_summary_player_2x="battle_summary_player_2x"
-                                    :battle_summary_player_1x="battle_summary_player_1x"
-                                    :battle_summary_player_Hx="battle_summary_player_Hx"
-                                    :battle_summary_player_Qx="battle_summary_player_Qx"
-                                    :battle_summary_player_0x="battle_summary_player_0x"
-                                    :battle_summary_player_con="battle_summary_player_con"
-                                    :battle_summary_player_par="battle_summary_player_par"
-                                    :battle_summary_player_brn="battle_summary_player_brn"
-                                    :battle_summary_player_frz="battle_summary_player_frz"
-                                    :battle_summary_player_psn="battle_summary_player_psn"
-                                    :battle_summary_player_bpn="battle_summary_player_bpn"
-                                    :battle_summary_player_slp="battle_summary_player_slp"
-                                    :battle_summary_enemy_Sx="battle_summary_enemy_Sx"
-                                    :battle_summary_enemy_4x="battle_summary_enemy_4x"
-                                    :battle_summary_enemy_2x="battle_summary_enemy_2x"
-                                    :battle_summary_enemy_1x="battle_summary_enemy_1x"
-                                    :battle_summary_enemy_Hx="battle_summary_enemy_Hx"
-                                    :battle_summary_enemy_Qx="battle_summary_enemy_Qx"
-                                    :battle_summary_enemy_0x="battle_summary_enemy_0x"
-                                    :battle_summary_enemy_con="battle_summary_enemy_con"
-                                    :battle_summary_enemy_par="battle_summary_enemy_par"
-                                    :battle_summary_enemy_brn="battle_summary_enemy_brn"
-                                    :battle_summary_enemy_frz="battle_summary_enemy_frz"
-                                    :battle_summary_enemy_psn="battle_summary_enemy_psn"
-                                    :battle_summary_enemy_bpn="battle_summary_enemy_bpn"
-                                    :battle_summary_enemy_slp="battle_summary_enemy_slp"
-                                ></splits_summary>
+                                <splits_summary v-bind="splits_summary_props"></splits_summary>
                             </div>
                         </div>
                     </div>
@@ -238,213 +165,10 @@
             </div>
 
             <!-- Game-Area Panel -->
-            <div class="testingArea1" style="z-index: 155000;">
-                <div>Game:</div>
-                <select v-model="game_name" class="dropdownMenu dropdown_menu_column3">
-                    <option>Yellow</option>
-                    <option v-if="release == false">Yellow Legacy</option>
-                    <option>Red</option>
-                    <option>Blue</option>
-                </select><br>
-                <br>
-                <div>Timer Setting:</div>
-                <!-- <select v-model="timer_settings" class="dropdownMenu dropdown_menu_column3">
-                    <option disabled value="">Please select one</option>
-                    <option>Real-Time</option>
-                    <option>Game-Time</option>
-                    <option>Off - Real-Time Label</option>
-                    <option>Off - Game-Time Label</option>
-                </select><br> -->
-                <!-- <button class="buttonStyle buttonStyle_column3" @click="pauseUnpauseTime">Play/Pause</button><br> -->
-                <!-- <button class="buttonStyle set_button_style" @click="set_timer">Set</button> -->
-                <button class="buttonStyle buttonStyle_column3" @click="this.timer.pauseUnpauseTime()">Play/Pause</button>
-                <button class="buttonStyle set_button_style" @click="this.timer.setTimer(this.timer_startTimeOffset)">Set Timer</button><input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
-                <br>
-                <!-- <button class="buttonStyle buttonStyle_column3" onClick="openFolder('splits')">Open Splits Folder</button><br> -->
-                <!-- <button class="buttonStyle buttonStyle_column3" @click="openFolder(`splits`, game, starterName, ``)">Open Splits Folder</button> -->
-                <button class="buttonStyle buttonStyle_column3" @click="openFolder(`splits`, game, starterName, `finishes`)">Open Splits Folder</button>
-                <br>
-                <br>
-                <div v-if="release == false">
-                    <table>
-                        <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
-                        <tr><td>Refilming mode:</td><td><input class="checkBoxStyle" type="checkbox" v-model="refilming_mode"/></td></tr>
-                        <tr><td>No attempt/split:</td><td><input class="checkBoxStyle" type="checkbox" v-model="no_attempt"/></td></tr>
-                    </table>
-                    <table v-if="refilming_mode">
-                        <tr><td>Attempt:</td><td><input class="inputContainer" type="text" v-model="refilmed_attempt"/></td></tr>
-                        <tr><td>Finish:</td><td><input class="inputContainer" type="text" v-model="refilmed_finish"/></td></tr>
-                    </table>
-                    <br>
-                </div>
-                <div v-if="test_run == true">
-                    <div>Moveset Updating:</div>
-                    <input type="text" v-model="move1_replacement" placeholder="Input move 1">
-                    <input type="text" v-model="move2_replacement" placeholder="Input move 2">
-                    <input type="text" v-model="move3_replacement" placeholder="Input move 3">
-                    <input type="text" v-model="move4_replacement" placeholder="Input move 4">
-                    <button class="buttonStyle buttonStyle_column3" @click="update_moveset">Update Party Moves</button>
-                    <button class="buttonStyle buttonStyle_column3" @click="update_battle_moveset">Update Battle Moves</button>
-                    <br>
-                    <br>
-                    <div>Item Updating:</div>
-                    <input type="text" v-model="item1_replacement" placeholder="Input item 1">
-                    <input type="text" v-model="item2_replacement" placeholder="Input item 2">
-                    <input type="text" v-model="item3_replacement" placeholder="Input item 3">
-                    <input type="text" v-model="item4_replacement" placeholder="Input item 4">
-                    <button class="buttonStyle buttonStyle_column3" @click="update_items">Update</button>
-                    <br>
-                    <br>
-                </div>
-                <div v-if="release == false">
-                    <div>Debugging:</div>
-                    <table>
-                        <tr><td>State:</td><td>{{state}}</td></tr>
-                        <tr><td>Mapper State:</td><td>{{mapper.properties.meta.state.value}}</td></tr>
-                        <tr><td>Enemy State:</td><td>{{enemyState}}</td></tr>
-                        <tr><td></td><td></td></tr>
-                        <tr><td>blackout:</td><td>{{blackout}}</td></tr>
-                    </table>
-                </div>
-            </div>
-            <div class="testingArea2" style="z-index: 50000;">
-                <div>Solo Pokemon:</div>
-                <select v-model="starterName" class="dropdownMenu dropdown_menu_column3" style="background-color: rgb(201, 199, 100)">
-                    <option disabled value="">Select a species</option>
-                    <option v-for="key in filtered_pokemon_list" :value="`${key}`">{{key}}</option>
-                </select><br>
-                <div>Search Pokemon:</div>
-                <input type="text" v-model="search_term" placeholder="Search for a species">
-                <button class="buttonStyle set_starter_button" @click="set_rom_starter">Set ROM Starter</button>
-                <button class="buttonStyle new_run_button" @click="newRun">New Run</button>
-                <button class="buttonStyle new_run_button" @click="set_encounters">Set Encounters</button>
-                <br>
-                <button class="buttonStyle comparison_button" @click="load_splits()">Split Comparison</button><br>
-                <table>
-                    <tr>
-                        <td>Previous: </td>
-                        <td><input type="text" class="inputContainer" v-model="previous_label" placeholder="Previous"/></td>
-                    </tr>
-                    <tr>
-                        <td>Current: </td>
-                        <td><input type="text" class="inputContainer" v-model="current_label" placeholder="Current"/></td>
-                    </tr>
-                </table>
-                <br>
-                <table>
-                    <tr>
-                        <th style="text-align: left;">Attempt:</th>
-                        <th>{{this.attempt_number}}</th>
-                        <th>
-                            <button @click="increment('attempt_number')" class="smallButtonStyle increment">+</button>
-                            <button @click="decrement('attempt_number')" class="smallButtonStyle decrement">-</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th style="text-align: left;">Finished Runs:</th>
-                        <th>{{this.finished_run_count}}</th>
-                        <th>
-                            <button @click="increment('finished_run_count')" class="smallButtonStyle increment">+</button>
-                            <button @click="decrement('finished_run_count')" class="smallButtonStyle decrement">-</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th style="text-align: left;">Resets:</th>
-                        <th>{{this.playerResets}}</th>
-                        <th>
-                            <button @click="increment('playerResets')" class="smallButtonStyle increment">+</button>
-                            <button @click="decrement('playerResets')" class="smallButtonStyle decrement">-</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th style="text-align: left;">Blackouts:</th>
-                        <th>{{this.blackout_counter}}</th>
-                        <th>
-                            <button @click="increment('blackout_counter')" class="smallButtonStyle increment">+</button>
-                            <button @click="decrement('blackout_counter')" class="smallButtonStyle decrement">-</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th style="text-align: left;">Faults:</th>
-                        <th>{{this.playerResets + this.blackout_counter}}</th>
-                    </tr>
-                </table>
-                <br>
-                <div>Encounter Settings:</div>
-                <table>
-                    <tr><td>Early Encounters:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_wEarlyEncounters"/></td></tr>
-                    <tr><td>No Moon:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_wEarlyEncountersNoMoon"/></td></tr>
-                </table>
-                <table v-if="game_name == 'Yellow'" class="ui_table">
-                    <tr v-if="release == false"><td>Route 1</td>        <td>- Test:</td><td><input      class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE1_TEST"/></td></tr>
-                    <tr><td>Viridian Forest</td><td>- Pidgey:</td><td><input    class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY"/></td></tr>
-                    <tr><td>Route 3</td>        <td>- Spearow:</td><td><input   class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW"/></td></tr>
-                    <tr><td>Mt. Moon</td>       <td>- Sandshrew:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW"/></td></tr>
-                    <tr><td>Route 16</td>       <td>- Doduo:</td><td><input     class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE16_DODUO"/></td></tr>
-                </table>
-                <table v-if="game_name == 'Red' || game_name == 'Blue'" class="ui_table">
-                    <tr><td>Route 3</td> <td>- Spearow:</td> <td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW"/></td></tr>
-                    <tr><td>Mt. Moon</td><td>- Geodude:</td> <td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE"/></td></tr>
-                    <tr><td>Mt. Moon</td><td>- Paras:</td>   <td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_MTMOON_PARAS"/></td></tr>
-                    <tr><td>Route 6</td> <td>- Cut User:</td><td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER"/></td></tr>
-                    <tr><td>Route 16</td><td>- Doduo:</td>   <td><input class="checkBoxStyle" type="checkbox" v-model="toggle_EVENT_ENCOUNTER_ROUTE16_DODUO"/></td></tr>
-                </table>
-                <br>
-            </div>
-            <div class="testingArea4" style="z-index: 50000;">
-                <interface_3 :textures="this.textures" ></interface_3>
-            </div>
-            <div class="testingArea3" style="z-index: 50000;">
-                <div>Stats:</div>
-                <select v-model="stats_display" class="dropdownMenu dropdown_menu_column3">
-                    <option>Automatic</option>
-                    <option>Badge Boosts</option>
-                    <option>Base Stats</option>
-                    <option>DVs</option>
-                    <option>EVs</option>
-                    <option>Detailed EVs</option>
-                    <option>Averages</option>
-                    <option>Medians</option>
-                    <option>Vitamins</option>
-                </select><br>
-                <br>
-                Right Panel:<br>
-                <select v-model="right_panel" class="dropdownMenu dropdown_menu_column3">
-                    <option>Automatic</option>
-                    <option v-if="release == false">Inventory</option>
-                    <option>Movepool</option>
-                    <option>Splits</option>
-                </select>
-                <br>
-                Compare splits::<br>
-                <select v-model="toggle_compare_splits" class="dropdownMenu dropdown_menu_column3">
-                    <option>First</option>
-                    <option>Followup</option>
-                    <option>Followup + Summary</option>
-                </select>
-                <br>
-                <table>
-                    <tr><td>Blackouts?:</td><td><input class="checkBoxStyle" type="checkbox" v-model="enable_blackouts"/></td></tr>
-                    <tr><td>Disable right panel hotkeys:</td><td><input class="checkBoxStyle" type="checkbox" v-model="disallow_right_panel_switching"/></td></tr>
-                    <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_post_battle_splits"/></td></tr>
-                    <tr><td>Show repel counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_repel_counter"/></td></tr>
-                    <tr><td>Show bonk/item counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_bonk_counter"/></td></tr>
-                </table>
-                <div v-if="show_bonk_counter == true">
-                    <select v-model="dropdown_bonks_items" class="dropdownMenu dropdown_menu_column3">
-                        <option>Bonks</option>
-                        <option>Item Count</option>
-                    </select>
-                    <br>
-                </div>
-                <br>
-                <div v-if="release == false">
-                    <div style="text-decoration: underline;">Graphics Toggles:</div>
-                    <table>
-                        <tr><td>Wild Pokemon:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles"/></td></tr>
-                    </table>
-                </div>
-            </div>
+            <div class="testingArea1" style="z-index: 50000;"><interface_1></interface_1></div>
+            <div class="testingArea2" style="z-index: 50000;"><interface_2></interface_2></div>
+            <div class="testingArea4" style="z-index: 50000;"><interface_3 :textures="this.textures" ></interface_3></div>
+            <div class="testingArea3" style="z-index: 50000;"><interface_4></interface_4></div>
         </div>
     </div>
 

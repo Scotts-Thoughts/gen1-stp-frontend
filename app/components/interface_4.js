@@ -1,6 +1,7 @@
 const template = /*html*/`
+<div>
     <div>Stats:</div>
-    <select v-model="stats_display" @change="$emit('update:stats_display', $event.target.value)" class="dropdownMenu dropdown_menu_column3">
+    <select v-model="$parent.stats_display" class="dropdownMenu dropdown_menu_column3">
         <option>Automatic</option>
         <option>Badge Boosts</option>
         <option>Base Stats</option>
@@ -9,18 +10,19 @@ const template = /*html*/`
         <option>Detailed EVs</option>
         <option>Averages</option>
         <option>Medians</option>
+        <option>Vitamins</option>
     </select><br>
     <br>
     Right Panel:<br>
-    <select v-model="right_panel" @change="$emit('update:right_panel', $event.target.value)" class="dropdownMenu dropdown_menu_column3">
+    <select v-model="$parent.right_panel" class="dropdownMenu dropdown_menu_column3">
         <option>Automatic</option>
-        <option v-if="release == false">Inventory</option>
+        <option v-if="$parent.release == false">Inventory</option>
         <option>Movepool</option>
         <option>Splits</option>
     </select>
     <br>
     Compare splits::<br>
-    <select v-model="toggle_compare_splits" @change="$emit('update:toggle_compare_splits', $event.target.value)" class="dropdownMenu dropdown_menu_column3">
+    <select v-model="$parent.toggle_compare_splits" class="dropdownMenu dropdown_menu_column3">
         <option>First</option>
         <option>Followup</option>
         <option>Followup + Summary</option>
@@ -28,44 +30,32 @@ const template = /*html*/`
     <br>
     <table>
         <tbody>
-            <tr><td>Blackouts?:</td><td><input class="checkBoxStyle" type="checkbox" v-model="enable_blackouts" @change="$emit('update:enable_blackouts', $event.target.checked)"/></td></tr>
-            <tr><td>Disable right panel hotkeys:</td><td><input class="checkBoxStyle" type="checkbox" v-model="disallow_right_panel_switching" @change="$emit('update:disallow_right_panel_switching', $event.target.checked)"/></td></tr>
-            <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="automatic_post_battle_splits" @change="$emit('update:automatic_post_battle_splits', $event.target.checked)"/></td></tr>
-            <tr><td>Show repel counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_repel_counter" @change="$emit('update:show_repel_counter', $event.target.checked)"/></td></tr>
-            <tr><td>Show bonk/item counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_bonk_counter" @change="$emit('update:show_bonk_counter', $event.target.checked)"/></td></tr>
+            <tr><td>Blackouts?:</td><td>                  <input class="checkBoxStyle" type="checkbox" v-model="$parent.enable_blackouts"/></td></tr>
+            <tr><td>Disable right panel hotkeys:</td><td> <input class="checkBoxStyle" type="checkbox" v-model="$parent.disallow_right_panel_switching"/></td></tr>
+            <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="$parent.automatic_post_battle_splits"/></td></tr>
+            <tr><td>Show repel counter:</td><td>          <input class="checkBoxStyle" type="checkbox" v-model="$parent.show_repel_counter"/></td></tr>
+            <tr><td>Show bonk/item counter:</td><td>      <input class="checkBoxStyle" type="checkbox" v-model="$parent.show_bonk_counter"/></td></tr>
         </tbody>
     </table>
-    <div v-if="show_bonk_counter == true">
-        <select v-model="dropdown_bonks_items" class="dropdownMenu dropdown_menu_column3" @change="$emit('update:dropdown_bonks_items', $event.target.value)">
+    <div v-if="$parent.show_bonk_counter == true">
+        <select v-model="$parent.dropdown_bonks_items" class="dropdownMenu dropdown_menu_column3">
             <option>Bonks</option>
             <option>Item Count</option>
         </select>
         <br>
     </div>
     <br>
-    <div v-if="release == false">
+    <div v-if="$parent.release == false">
         <div style="text-decoration: underline;">Graphics Toggles:</div>
         <table>
             <tbody>
-                <tr><td>Wild Pokemon:</td><td><input class="checkBoxStyle" type="checkbox" v-model="show_wild_battles" @change="$emit('update:show_wild_battles', $event.target.checked)"/></td></tr>
+                <tr><td>Wild Pokemon:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="$parent.show_wild_battles"/></td></tr>
             </tbody>
         </table>
     </div>
+</div>
 `
 
 module.exports = {
     template,
-    props: [
-        "stats_display",
-        "release",
-        "right_panel",
-        "toggle_compare_splits",
-        "enable_blackouts",
-        "disallow_right_panel_switching",
-        "automatic_post_battle_splits",
-        "show_repel_counter",
-        "show_bonk_counter",
-        "dropdown_bonks_items",
-        "show_wild_battles",
-    ],
 }
