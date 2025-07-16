@@ -302,22 +302,26 @@ class GameHookMapperClient {
         }
 
         this._signalrClient.on('PropertiesChanged', (propertiesChanged) => {
-            if (that._properties && that._properties.length > 0) {
-                for (const propertyChanged of propertiesChanged) {
-                    let property = that._propertiesMap.get(propertyChanged.path)
-                    if (!property) {
-                        console.warn(`[GameHook Client] Could not find a related property in PropertyUpdated event for: ${propertyChanged.path}`)
-                        return
+            try {       
+                if (that._properties && that._properties.length > 0) {
+                    for (const propertyChanged of propertiesChanged) {
+                        let property = that._propertiesMap.get(propertyChanged.path)
+                        if (!property) {
+                            console.warn(`[GameHook Client] Could not find a related property in PropertyUpdated event for: ${propertyChanged.path}`)
+                            return
+                        }
+                        if (that._debouceMap.has(propertyChanged.path)) {
+                            this._debouceMap.get(propertyChanged.path).timeoutFrames = this._debouceTimeout
+                            this._debouceMap.get(propertyChanged.path).newProperty = propertyChanged
+                        } else {
+                            updateProperty(propertyChanged)
+                        }
                     }
-                    if (that._debouceMap.has(propertyChanged.path)) {
-                        this._debouceMap.get(propertyChanged.path).timeoutFrames = this._debouceTimeout
-                        this._debouceMap.get(propertyChanged.path).newProperty = propertyChanged
-                    } else {
-                        updateProperty(propertyChanged)
-                    }
+                } else {
+                    console.debug('[GameHook Client] Mapper is not loaded, throwing away PropertiesChanged event.')
                 }
-            } else {
-                console.debug('[GameHook Client] Mapper is not loaded, throwing away PropertiesChanged event.')
+            } catch (e) {
+                console.error(e);
             }
         })
 

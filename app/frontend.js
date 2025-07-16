@@ -1579,7 +1579,7 @@ const app = Vue.createApp({
             if (!splitName) { return }
             // console.log(splitName)
             var personalBestSplitTime = this.convertDurationToSeconds(this.pb_splits.find(subArray => subArray[2] == (splitName))[3] ?? "0")
-            var currentTime = this.convertDurationToSeconds(this.timer_formatted_time[0]) + (this.time_ms / 100)
+            var currentTime = this.convertDurationToSeconds(this.timer.formatted_time[0]) + (this.time_ms / 100)
             return personalBestSplitTime - currentTime
         },
         playerResetsDisplay() {
@@ -2878,7 +2878,7 @@ const app = Vue.createApp({
         //*autosplitter
         //log the start of a battle to the console
         this.mapper.properties.battle.type.change((newProp) => {
-            var logStr = `Autosplitter - Battle Started: ${this.mapper.properties.battle.trainer.class.value} started at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`
+            var logStr = `Autosplitter - Battle Started: ${this.mapper.properties.battle.trainer.class.value} started at ${this.timer.formatted_time[0]}${this.timer.formatted_time[1]} (Gametime: ${this.gametimeSplit})`
             var log_start = (x) => console.log(logStr)
 
             if (newProp.value == "Trainer") {
@@ -3301,7 +3301,7 @@ const app = Vue.createApp({
                     logData(gameName, gameName_Path, this.deprecated_data_str, this.finished_run_count, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     logData(gameName, gameName_Path, this.full_data_str, this.finished_run_count, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
-                    console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
+                    console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer.formatted_time[0]}${this.time.formatted_time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
                     this.game_over = true; //stop incrementing resets
                 }
             }
