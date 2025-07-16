@@ -1182,12 +1182,6 @@ const app = Vue.createApp({
               species: isFainted ? "opacity: .3" : "opacity: .7"
             };
         },
-        //Determine the number of vitamins that can still be used on the Pokemon
-        statExp(statExp) { //stat exp ranges from 0 - 65535
-            const vitaminsUsed = statExp / 2560;
-            const usableVitamins = Math.ceil(10 - vitaminsUsed);
-            return usableVitamins < 0 ? 0 : usableVitamins;
-        },
         trainerName(trainerClass) {
             if (trainerClass == "RIVAL1" || trainerClass == "RIVAL2" || trainerClass == "RIVAL3")
                 return "Rival"

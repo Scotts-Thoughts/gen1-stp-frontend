@@ -649,6 +649,9 @@ box-shadow:
 .stat_row_details_1 { top: 39px; }
 .stat_row_details_2 { top: 101px; }
 .stat_row_details_3 { top: 163px; }
+.stat_row_details_1_vitamins { top: 36px; }
+.stat_row_details_2_vitamins { top: 98px; }
+.stat_row_details_3_vitamins { top: 160px; }
 .stat_column_1 { left: 12px; padding-top: 1px; padding-left: 1px; }
 .stat_column_2 { left: 60px; }
 .stat_column_3 { left: 195px; padding-top: 1px; padding-left: 1px; }
@@ -2415,6 +2418,19 @@ box-shadow:
 .ev_stats_gained {
     padding-top: 36px;
     font-size: 18px;
+}
+.devs2 {
+    padding-top: 0px;
+    font-size: 14px;
+}
+.percentage_evs2 {
+    padding-top: 20px;
+    font-size: 18px;
+}
+.ev_stats_gained2 {
+    padding-top: 40px;
+    font-size: 18px;
+    opacity: .7;
 }
 .fadeMod-enter-from   { opacity: 0; }
 .fadeMod-enter-to     { opacity: 1; }

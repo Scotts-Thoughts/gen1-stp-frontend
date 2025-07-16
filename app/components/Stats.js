@@ -9,12 +9,17 @@ const template = /*html*/`
                     <div :class="'mod_style '+ui_stat_arrangement_modifier+'mod_'+stat.mod_abrv" style="font-family: play;">{{ stageModifiers(this.mapper?.properties?.battle?.yourPokemon['modStage'+stat.mod_path]) }}</div>
                 </div>
                 <div :style="{ opacity: statLabelOpacity()[stat.name]}" :class="'stat_label_style stat_row_' + stat[ui_stat_arrangement_modifier + 'label_row'] + ' stat_column_' + stat.label_column">{{stat.label}}</div>
+                
                 <div v-if="stats_display == 'Base Stats'"   :class="'stat_value_style stat_row_' + stat[ui_stat_arrangement_modifier + 'value_row'] + ' stat_column_' + stat.value_column">{{pokedex_yellow[starterName].base_stats[stat.base_stat_path]}}</div>
                 <div v-if="stats_display == 'Averages'"     :class="'stat_value_style stat_row_' + stat[ui_stat_arrangement_modifier + 'value_row'] + ' stat_column_' + stat.value_column">{{average_median_stats(stat.base_stat_path).average}}</div>
                 <div v-if="stats_display == 'Medians'"      :class="'stat_value_style stat_row_' + stat[ui_stat_arrangement_modifier + 'value_row'] + ' stat_column_' + stat.value_column">{{average_median_stats(stat.base_stat_path).median}}</div>
                 <div v-if="stats_display == 'DVs'"          :class="'stat_value_style stat_row_' + stat[ui_stat_arrangement_modifier + 'value_row'] + ' stat_column_' + stat.value_column + ' dv'">{{get_dv(stat.name)}}/15</div>
                 <div v-if="stats_display == 'EVs'"          :class="'stat_value_style stat_row_' + stat[ui_stat_arrangement_modifier + 'value_row'] + ' stat_column_' + stat.value_column + ' stat_exp'">{{mapper.properties.player.team[0]['statExp' + stat.name].value}}</div>
                 <div v-if="stats_display == 'Automatic'"    :class="'stat_value_style stat_row_' + stat[ui_stat_arrangement_modifier + 'value_row'] + ' stat_column_' + stat.value_column">{{get_stat(stat.name)}}</div>
+                
+                <div v-if="stats_display == 'Vitamins'" :class="'stat_value_style stat_row_details_' + stat[ui_stat_arrangement_modifier + 'value_row'] + '_vitamins stat_column_' + stat.value_column + ' devs2'"           ><span style="opacity: .7;">{{stat.vitamin}}</span></div>
+                <div v-if="stats_display == 'Vitamins'" :class="'stat_value_style stat_row_details_' + stat[ui_stat_arrangement_modifier + 'value_row'] + '_vitamins stat_column_' + stat.value_column + ' percentage_evs2'" style="font-size: 21px;"><span style="font-size: 31px;">{{usable_vitamins(mapper.properties.player.team[0][stat.statExpPath].value)}}</span><span style="font-size: 15px;">/10</span></div>
+                <div v-if="stats_display == 'Vitamins'" :class="'stat_value_style stat_row_details_' + stat[ui_stat_arrangement_modifier + 'value_row'] + '_vitamins stat_column_' + stat.value_column + ' ev_stats_gained2'">{{mapper.properties.player.team[0]['statExp' + stat.name].value}}<span style="font-size: 13px;">/65535</span></div>
                 
                 <div v-if="stats_display == 'Detailed EVs'" :class="'stat_value_style stat_row_details_' + stat[ui_stat_arrangement_modifier + 'value_row'] + ' stat_column_' + stat.value_column + ' devs'"           >{{mapper.properties.player.team[0]['statExp' + stat.name].value}}/65535</div>
                 <div v-if="stats_display == 'Detailed EVs'" :class="'stat_value_style stat_row_details_' + stat[ui_stat_arrangement_modifier + 'value_row'] + ' stat_column_' + stat.value_column + ' percentage_evs'" >{{decimalToPercentage(mapper.properties.player.team[0]['statExp' + stat.name].value / 65535) }}%</div>
@@ -47,11 +52,11 @@ module.exports = {
             g1PokemonData: this.pokedex_old,
             s1dynamicReset: this.dynamic_mon,
             stat_object: [
-                {abrv: "HP",  name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             mod_path: "Hp",      mod_abrv: "hp",  hp_spe_label_row: 1, hp_spd_label_row: 1, label_column: 1, hp_spe_value_row: 1, hp_spd_value_row: 1, value_column: 2,}, 
-                {abrv: "Atk", name: "Attack",  label: "Atk.", path: "attack",  base_stat_path: "attack",         mod_path: "Attack",  mod_abrv: "atk", hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 1, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 2,}, 
-                {abrv: "Def", name: "Defense", label: "Def.", path: "defense", base_stat_path: "defense",        mod_path: "Defense", mod_abrv: "def", hp_spe_label_row: 3, hp_spd_label_row: 3, label_column: 1, hp_spe_value_row: 3, hp_spd_value_row: 3, value_column: 2,}, 
-                {abrv: "Spc", name: "Special", label: "Spc.", path: "special", base_stat_path: "special_attack", mod_path: "Special", mod_abrv: "spc", hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 3, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 4,}, 
-                {abrv: "Spe", name: "Speed",   label: "Spe.", path: "speed",   base_stat_path: "speed",          mod_path: "Speed",   mod_abrv: "spe", hp_spe_label_row: 3, hp_spd_label_row: 1, label_column: 3, hp_spe_value_row: 3, hp_spd_value_row: 1, value_column: 4,}, 
+                {abrv: "HP",  name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             mod_path: "Hp",      mod_abrv: "hp",  statExpPath: "statExpHp",      vitamin: "HP Up",   hp_spe_label_row: 1, hp_spd_label_row: 1, label_column: 1, hp_spe_value_row: 1, hp_spd_value_row: 1, value_column: 2,}, 
+                {abrv: "Atk", name: "Attack",  label: "Atk.", path: "attack",  base_stat_path: "attack",         mod_path: "Attack",  mod_abrv: "atk", statExpPath: "statExpAttack",  vitamin: "Protein", hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 1, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 2,}, 
+                {abrv: "Def", name: "Defense", label: "Def.", path: "defense", base_stat_path: "defense",        mod_path: "Defense", mod_abrv: "def", statExpPath: "statExpDefense", vitamin: "Iron",    hp_spe_label_row: 3, hp_spd_label_row: 3, label_column: 1, hp_spe_value_row: 3, hp_spd_value_row: 3, value_column: 2,}, 
+                {abrv: "Spc", name: "Special", label: "Spc.", path: "special", base_stat_path: "special_attack", mod_path: "Special", mod_abrv: "spc", statExpPath: "statExpSpecial", vitamin: "Calicum", hp_spe_label_row: 2, hp_spd_label_row: 2, label_column: 3, hp_spe_value_row: 2, hp_spd_value_row: 2, value_column: 4,}, 
+                {abrv: "Spe", name: "Speed",   label: "Spe.", path: "speed",   base_stat_path: "speed",          mod_path: "Speed",   mod_abrv: "spe", statExpPath: "statExpSpeed",   vitamin: "Carbos",  hp_spe_label_row: 3, hp_spd_label_row: 1, label_column: 3, hp_spe_value_row: 3, hp_spd_value_row: 1, value_column: 4,}, 
             ],
             ui_stat_arrangement_modifier: "hp_spd_", //deprecated, remove
         }
@@ -74,6 +79,7 @@ module.exports = {
                 case "Badge Boosts": return `Badge Boosts`
                 case "Averages":     return `Gen1 Average Stats`
                 case "Medians":      return `Gen1 Median Stats`
+                case "Vitamins":     return `Vitamins`
             }
         },
         growthRate() {
@@ -83,6 +89,11 @@ module.exports = {
         },
     },
     methods: {
+        usable_vitamins(stat_experience) { //stat exp ranges from 0 - 65535
+            const vitaminsUsed = stat_experience / 2560;
+            const usable_vitamins = Math.ceil(10 - vitaminsUsed);
+            return usable_vitamins < 0 ? 0 : usable_vitamins;
+        },
         g1CritRate(pkmnData) {
             var baseSpeed = pkmnData?.base_spd
             if (baseSpeed) {
@@ -260,5 +271,35 @@ module.exports = {
                     else
                         return " "
         },
+    },
+    mounted() {
+        this.mapper.properties.overworld.map.change((new_property, old_property) => {
+            switch (new_property.value) {
+                case "Celadon City - Department Store - 1F":
+                case "Celadon City - Department Store - 2F":
+                case "Celadon City - Department Store - 3F":
+                case "Celadon City - Department Store - 4F":
+                case "Celadon City - Department Store - 5F":
+                case "Celadon City - Department Store - Roof":
+                case "Celadon City - Department Store - Elevator":
+                case "Cinnabar Mansion":
+                case "Safari Zone (Center)":
+                case "Safari Zone (East)":
+                case "Safari Zone (North)":
+                case "Safari Zone (West)":
+                case "Safari Zone - Secret House":
+                    this.$parent.stats_display = "Vitamins"
+                    break
+                case "Route 16": {
+                    if (old_property.value == "Route 16 - House") {
+                        this.$parent.stats_display = "Vitamins"
+                        break
+                    }
+                }
+                default:
+                    this.$parent.stats_display = "Automatic"
+                    break
+            }
+        })
     }
 }
