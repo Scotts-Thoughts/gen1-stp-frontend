@@ -1232,16 +1232,6 @@ const app = Vue.createApp({
                 // console.log(`Starter: ${newValue} Key: ${key}, Value: ${Storage.games[this.game_name][newValue].style[key]}`)
                 this[key] = Storage.games[this.game_name][newValue].style[key]; // Assign the values for each setting to the data() properties
             }
-
-            //transition between background textures
-            this.$refs.old_background_texture.src = `images/textures/${this.g1PokemonData[oldValue].type1}.png`
-            this.$refs.old_background_texture.style.opacity = 1
-            
-            await transition((t) => {
-                this.$refs.old_background_texture.style.opacity = 1 - t
-            }, 500)
-            
-            this.$refs.old_background_texture.src = ""
         },
         async game_name(newValue, oldValue) {
             //update the saved starter in the overlay's local storage
@@ -3678,16 +3668,16 @@ const app = Vue.createApp({
         var species = this.s1dynamicReset.species.value == 'Backport' ? this.starterName : this.s1dynamicReset.species.value;
         var growthRate = species ? this.g1PokemonData[species].growth_rate : this.g1PokemonData[this.starterName].growth_rate
         var expStats = this.calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value);
-        this.$refs.expBar.style.width = (expStats.percent * 100) + "%";
+        document.getElementById("exp-bar").style.width = (expStats.percent * 100) + "%";
         this.prevSpecies = species
         this.oldExpValue = this.mapper.properties.player.team[0].expPoints.value
         this.mapper.properties.player.team[0].expPoints.change(async (newProp, oldProp) => {
             if (this.mapper.properties.player.team[0].level.value == 100) {
-                this.$refs.expBar.style.width = "0%";
+                document.getElementById("exp-bar").style.width = "0%";
                 return
             }
             if (newProp.value < this.oldExpValue) {
-                this.$refs.expBar.style.transition = null;
+                document.getElementById("exp-bar").style.transition = null;
             }
             if (this.expBarAnimation == true) {
                 const currSpecies = this.s1dynamicReset.species.value;
@@ -3699,36 +3689,36 @@ const app = Vue.createApp({
                     return 
                 }
                 if (this.state == `Overworld` || this.state == "Base Stats") {
-                    this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
+                    document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
                 }
                 else if (this.prevSpecies != currSpecies) {
                     this.prevSpecies = currSpecies; 
-                    this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
+                    document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
                 } 
                 else {
                     if (oldExpStats.level == newExpStats.level) {
                         var diffExp = newExpStats.percent - oldExpStats.percent
                         var animationDuration = Math.ceil(diffExp * animationMaxDuration)
-                        this.$refs.expBar.style.transition = `width ${animationDuration}ms ease-in-out`;
-                        this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
+                        document.getElementById("exp-bar").style.transition = `width ${animationDuration}ms ease-in-out`;
+                        document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
                         await this.sleep(animationDuration + 50);
                     } else {
                         var diffExp1 = 1 - oldExpStats.percent
                         var animationDuration1 = Math.ceil(diffExp1 * animationMaxDuration)
                         var diffExp2 = newExpStats.percent
                         var animationDuration2 = Math.ceil(diffExp2 * animationMaxDuration)
-                        this.$refs.expBar.style.transition = `width ${animationDuration1}ms ease-in`;
-                        this.$refs.expBar.style.width = "100%";
+                        document.getElementById("exp-bar").style.transition = `width ${animationDuration1}ms ease-in`;
+                        document.getElementById("exp-bar").style.width = "100%";
                         await this.sleep(animationDuration1 + 50);
-                        this.$refs.expBar.style.transition = null;
-                        this.$refs.expBar.style.width = "0%";
+                        document.getElementById("exp-bar").style.transition = null;
+                        document.getElementById("exp-bar").style.width = "0%";
                         await this.sleep(50);
-                        this.$refs.expBar.style.transition = `width ${animationDuration2}ms ease-out`;
-                        this.$refs.expBar.style.width = (newExpStats.percent * 100) + "%";
+                        document.getElementById("exp-bar").style.transition = `width ${animationDuration2}ms ease-out`;
+                        document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
                         await this.sleep(animationDuration2 + 50);
                     }
                 }
-                this.$refs.expBar.style.transition = null;
+                document.getElementById("exp-bar").style.transition = null;
                 this.oldExpValue = newProp.value
             }
         })

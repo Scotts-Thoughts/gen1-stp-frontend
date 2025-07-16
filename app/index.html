@@ -17,56 +17,8 @@
         </div>
         <div v-else-if="game_name == 'Red' || game_name == 'Blue' || game_name == 'Yellow' || game_name == 'Yellow Legacy'">
             <div class="mainContainer">
-                <div>
-                    <img class="canvas" ref="background_texture" :src="textures[backgroundTexture]" 
-                    :style="{ 
-                        'filter': `blur(${backgroundBlur}px) hue-rotate(${backgroundHue}deg) brightness(${backgroundBrightness}%) contrast(${backgroundContrast}%) saturate(${backgroundSaturation}%)` ,
-                        'transform': `scale(${backgroundScale}%) ${backgroundFlip ? 'rotateY(180deg)' : ''} translate(${backgroundXOffset}px, ${-backgroundYOffset}px)`
-                    }"/>
-                    <img class="canvas" ref="old_background_texture" style="opacity: 0" />
-                    <img class="canvas" style="top: -160px;" :src="`images/elements/floor/pokeball.png`" />
-                    <img v-show="game_name == 'Yellow'" class="pokemon_art" ref="pokemon_art"
-                        :style="{
-                            'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px) rotate(${imageRotation}deg)`,
-                            'filter': `saturate(${imageSat}%)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(${imageFlip ? '-3px' : '3px'} 3px 3px #000)
-                            `
-                        }" 
-                        :src="`images/pokemon/${s1dynamicReset.species.value == 'Backport' ? this.starterName : s1dynamicReset.species.value}.png`" />
-                    <img v-if="game_name == 'Red' || game_name == 'Blue'" class="pokemon_art2" ref="pokemon_art"
-                        :style="{
-                            'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px)`,
-                            'filter': `saturate(${imageSat}%)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(0 0 0.4px #000)
-                            drop-shadow(${imageFlip ? '-3px' : '3px'} 3px 3px #000)
-                            `
-                        }" 
-                        :src="`images/pokemon/Red_and_Blue/${s1dynamicReset.species.value}.png`" />
-                </div>
-                <div v-show="blackouts_resets == 'None'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_2.svg)"></div>
-                <div v-show="blackouts_resets == 'Blackouts'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_2.svg)"></div>
-                <div v-show="blackouts_resets == 'Resets'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer_2.svg)"></div>
-                <div v-show="blackouts_resets == 'Both'" class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/timer.svg)"></div>
-                <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/stats.svg)"></div>
-                <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/moveset.svg)"></div>
-                <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div></div>
-                <img class="svg" :src="`images/ui/${ui_type_color_modifier}${ui_stat_arrangement_modifier}stats_backgrounds.svg`"/>
-                <img class="svg" style="opacity: .8; filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.svg"/>
-                <img class="canvas" src="images/elements/badges.png"/>
-                <transition name="fade"><div v-show="timer_settings == `Off - Real-Time Label` || timer_settings == `Real-Time`" class="genericLabels timerLabel" style="z-index: 200000;">time played at 4x game speed</div></transition>
-
-                <!-- <Graphics
+                
+                <Graphics
                     :background-texture="backgroundTexture"
                     :background-blur="backgroundBlur"
                     :background-hue="backgroundHue"
@@ -89,8 +41,10 @@
                     :game_name="game_name"
                     :starter-name="starterName"
                     :dynamic-reset="s1dynamicReset"
-                ></Graphics> -->
-
+                    :textures="textures"
+                    :blackouts_resets="blackouts_resets"
+                    :timer_settings="timer_settings"
+                ></Graphics>
                 <Typeicons 
                     :pkmn_type="pkmn_type"
                 ></Typeicons>
@@ -279,8 +233,8 @@
                         <Movepool
                             :starter-name="starterName"
                             :pokemon_version_specific_data="pokemon_version_specific_data"
-                            :move_data="g1MoveData"
-                            :tmhm_mapping="tmhmMapping"
+                            :move-data="g1MoveData"
+                            :tmhm-mapping="tmhmMapping"
                             :dynamic-reset="s1dynamicReset"
                             :ui_saturation="ui_saturation"
                             :starting_type_fix="starting_type_fix"

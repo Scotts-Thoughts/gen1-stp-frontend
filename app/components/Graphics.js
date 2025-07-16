@@ -1,41 +1,43 @@
 const template = /*html*/`
     <div>
         <img class="canvas" ref="background_texture" :src="textures[backgroundTexture]" 
-        :style=" 
-            'filter': 'blur(' + backgroundBlur + 'px) hue-rotate(' + backgroundHue + 'deg) brightness(' + backgroundBrightness + '%) contrast(' + backgroundContrast + '%) saturate(' + backgroundSaturation + '%)' ,
-            'transform': 'scale(' + backgroundScale + '%) ' + (backgroundFlip ? 'rotateY(180deg)' : '') + ' translate(' + backgroundXOffset + 'px, ' + -backgroundYOffset + 'px)'
-        "/>
+            :style="{ 
+                'filter': \`blur(\${backgroundBlur}px) hue-rotate(\${backgroundHue}deg) brightness(\${backgroundBrightness}%) contrast(\${backgroundContrast}%) saturate(\${backgroundSaturation}%)\` ,
+                'transform': \`scale(\${backgroundScale}%) \${backgroundFlip ? 'rotateY(180deg)' : ''} translate(\${backgroundXOffset}px, \${-backgroundYOffset}px)\`
+            }"
+        />
         <img class="canvas" ref="old_background_texture" style="opacity: 0" />
-        <img class="canvas" style="top: -160px;" :src="images/elements/floor/pokeball.png" />
+        <img class="canvas" style="top: -160px;" :src="\`images/elements/floor/pokeball.png\`" />
         <img v-show="game_name == 'Yellow'" class="pokemon_art" ref="pokemon_art"
             :style="{
-                'transform': 'scale(' + imageScale + ') ' + (imageFlip ? 'rotateY(180deg)' : '') + ' translate(' + imageXOffset + 'px, ' + -imageYOffset + 'px) rotate(' + imageRotation + 'deg)',
-                'filter': 'saturate(' + imageSat + '%)
+                'transform': \`scale(\${imageScale}) \${imageFlip ? 'rotateY(180deg)' : ''} translate(\${imageXOffset}px, \${-imageYOffset}px) rotate(\${imageRotation}deg)\`,
+                'filter': \`saturate(\${imageSat}%)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
-                drop-shadow(' + (imageFlip ? '-3px' : '3px') + ' 3px 3px #000)
-                '
+                drop-shadow(\${imageFlip ? '-3px' : '3px'} 3px 3px #000)
+                \`
             }" 
-            :src="'images/pokemon/' + dynamicReset.species.value == 'Backport' ? this.starterName : dynamicReset.species.value + '.png'" />
+            :src="\`images/pokemon/\${dynamicReset.species.value == 'Backport' ? this.starterName : dynamicReset.species.value}.png\`" 
+        />
         <img v-if="game_name == 'Red' || game_name == 'Blue'" class="pokemon_art2" ref="pokemon_art"
             :style="{
-                'transform': 'scale(' + imageScale + ') ' + (imageFlip ? 'rotateY(180deg)' : '') + ' translate(' + imageXOffset + 'px, ' + -imageYOffset + 'px)',
-                'filter': 'saturate(' + imageSat + '%)
+                'transform': \`scale(\${imageScale}) \${imageFlip ? 'rotateY(180deg)' : ''} translate(\${imageXOffset}px, \${-imageYOffset}px)\`,
+                'filter': \`saturate(\${imageSat}%)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
-                drop-shadow(' + (imageFlip ? '-3px' : '3px') + '3px 3px #000)
-                '
+                drop-shadow(\${imageFlip ? '-3px' : '3px'} 3px 3px #000)
+                \`
             }" 
-            :src="'images/pokemon/Red_and_Blue/' + dynamicReset.species.value + '.png'" />
-
+            :src="\`images/pokemon/Red_and_Blue/\${dynamicReset.species.value}.png\`" 
+        />
         <div class="colored-image ds" :style="'filter: saturate(' + ui_saturation + ') drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/stats.svg)"></div>
         <div class="colored-image ds" :style="'filter: saturate(' + ui_saturation + ') drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/moveset.svg)"></div>
         <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div></div>
@@ -44,6 +46,23 @@ const template = /*html*/`
 
         <div class="genericLabels timerLabel" style="z-index: 200000">time played at 4x game speed</div>
     </div>
+    <div v-show="blackouts_resets == 'None'" class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/timer_2.svg)"></div>
+    <div v-show="blackouts_resets == 'Blackouts'" class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/timer_2.svg)"></div>
+    <div v-show="blackouts_resets == 'Resets'" class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/timer_2.svg)"></div>
+    <div v-show="blackouts_resets == 'Both'" class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/timer.svg)"></div>
+    <div class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/stats.svg)"></div>
+    <div class="colored-image ds" :style="\`filter: saturate(\${ui_saturation}) drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/moveset.svg)"></div>
+    <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" id="exp-bar"></div></div></div>
+    <img class="svg" :src="\`images/ui/\${ui_type_color_modifier}\${ui_stat_arrangement_modifier}stats_backgrounds.svg\`"/>
+    <img class="svg" style="opacity: .8; filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.svg"/>
+    <img class="canvas" src="images/elements/badges.png"/>
+    <transition name="fade">
+        <div v-show="timer_settings == \`Off - Real-Time Label\` || timer_settings == \`Real-Time\`" 
+            class="genericLabels timerLabel" 
+            style="z-index: 200000;">
+            time played at 4x game speed
+        </div>
+    </transition>
 `
 
 module.exports = {
@@ -68,8 +87,24 @@ module.exports = {
         "ui_saturation",
         "ui_type_color_modifier",
         "ui_stat_arrangement_modifier",
+        "textures",
         "game_name",
         "starterName",
         "dynamicReset",
-    ]
+        "blackouts_resets",
+        "timer_settings",
+    ],
+    watch: {
+        async starterName(newValue, oldValue) {
+               //transition between background textures
+            this.$refs.old_background_texture.src = `images/textures/${this.g1PokemonData[oldValue].type1}.png`
+            this.$refs.old_background_texture.style.opacity = 1
+            
+            await transition((t) => {
+                this.$refs.old_background_texture.style.opacity = 1 - t
+            }, 500)
+            
+            this.$refs.old_background_texture.src = ""
+        },
+    }
 }
