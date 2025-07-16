@@ -269,3 +269,84 @@ function autosplitter_process() {
         }
     }
 }
+function format_trainer_name(trainer_class, trainer_number) {
+    const game = this.mapper.properties.meta.gameName.value
+    if (game == 'Red and Blue') {
+        //rivals
+        if (trainer_class == "RIVAL1" && trainer_number == 1)  { return "Rival1-Lab" }
+        if (trainer_class == "RIVAL1" && trainer_number == 2)  { return "Rival1-Lab" }
+        if (trainer_class == "RIVAL1" && trainer_number == 3)  { return "Rival1-Lab" }
+        if (trainer_class == "RIVAL1" && trainer_number == 4)  { return "Rival1a-Route 22" }
+        if (trainer_class == "RIVAL1" && trainer_number == 5)  { return "Rival1a-Route 22" }
+        if (trainer_class == "RIVAL1" && trainer_number == 6)  { return "Rival1a-Route 22" }
+        if (trainer_class == "RIVAL1" && trainer_number == 7)  { return "Rival2-Nugget Bridge" }
+        if (trainer_class == "RIVAL1" && trainer_number == 8)  { return "Rival2-Nugget Bridge" }
+        if (trainer_class == "RIVAL1" && trainer_number == 9)  { return "Rival2-Nugget Bridge" }
+        if (trainer_class == "RIVAL2" && trainer_number == 1)  { return "Rival3-SS Anne" }
+        if (trainer_class == "RIVAL2" && trainer_number == 2)  { return "Rival3-SS Anne"  }
+        if (trainer_class == "RIVAL2" && trainer_number == 3)  { return "Rival3-SS Anne"  }
+        if (trainer_class == "RIVAL2" && trainer_number == 4)  { return "Rival4-Pkmn Tower" }
+        if (trainer_class == "RIVAL2" && trainer_number == 5)  { return "Rival4-Pkmn Tower" }
+        if (trainer_class == "RIVAL2" && trainer_number == 6)  { return "Rival4-Pkmn Tower" }
+        if (trainer_class == "RIVAL2" && trainer_number == 7)  { return "Rival5-Silph" }
+        if (trainer_class == "RIVAL2" && trainer_number == 8)  { return "Rival5-Silph" }
+        if (trainer_class == "RIVAL2" && trainer_number == 9)  { return "Rival5-Silph" }
+        if (trainer_class == "RIVAL2" && trainer_number == 10) { return "Rival6-Route 22" }
+        if (trainer_class == "RIVAL2" && trainer_number == 11) { return "Rival6-Route 22" }
+        if (trainer_class == "RIVAL2" && trainer_number == 12) { return "Rival6-Route 22" }
+        if (trainer_class == "RIVAL3" && trainer_number == 1)  { return "Champion" }
+        if (trainer_class == "RIVAL3" && trainer_number == 2)  { return "Champion" }
+        if (trainer_class == "RIVAL3" && trainer_number == 3)  { return "Champion" }
+    }
+    if (game == 'Yellow') {
+        //rivals
+        if (trainer_class == "RIVAL1" && trainer_number == 1)  { return "Rival1-Lab" }
+        if (trainer_class == "RIVAL1" && trainer_number == 2)  { return "Rival1a-Route 22" }
+        if (trainer_class == "RIVAL1" && trainer_number == 3)  { return "Rival2-Nugget Bridge" }
+        if (trainer_class == "RIVAL2" && trainer_number == 1)  { return "Rival3-SS Anne" }
+        if (trainer_class == "RIVAL2" && trainer_number == 2)  { return "Rival4-Pkmn Tower" }
+        if (trainer_class == "RIVAL2" && trainer_number == 3)  { return "Rival4-Pkmn Tower" }
+        if (trainer_class == "RIVAL2" && trainer_number == 4)  { return "Rival4-Pkmn Tower" }
+        if (trainer_class == "RIVAL2" && trainer_number == 5)  { return "Rival5-Silph" }
+        if (trainer_class == "RIVAL2" && trainer_number == 6)  { return "Rival5-Silph" }
+        if (trainer_class == "RIVAL2" && trainer_number == 7)  { return "Rival5-Silph" }
+        if (trainer_class == "RIVAL2" && trainer_number == 8)  { return "Rival6-Route 22" }
+        if (trainer_class == "RIVAL2" && trainer_number == 9)  { return "Rival6-Route 22" }
+        if (trainer_class == "RIVAL2" && trainer_number == 10) { return "Rival6-Route 22" }
+        if (trainer_class == "RIVAL3" && trainer_number == 1) { return "Champion" }
+        if (trainer_class == "RIVAL3" && trainer_number == 2) { return "Champion" }
+        if (trainer_class == "RIVAL3" && trainer_number == 3) { return "Champion" }
+    }
+    //gym leaders
+    if (trainer_class == "BROCK")    { return "Brock" }
+    if (trainer_class == "MISTY")    { return "Misty" }
+    if (trainer_class == "LT.SURGE") { return "Surge" }
+    if (trainer_class == "ERIKA")    { return "Erika" }
+    if (trainer_class == "KOGA")     { return "Koga" }
+    if (trainer_class == "SARINA")   { return "Sabrina" }
+    if (trainer_class == "BLAINE")   { return "Blaine" }
+    //giovanni
+    if (trainer_class == "GIOVANNI" && trainer_number == 1) { return "Giovanni-Hideout" }
+    if (trainer_class == "GIOVANNI" && trainer_number == 2) { return "Giovanni-Silph" }
+    if (trainer_class == "GIOVANNI" && trainer_number == 3) { return "Giovanni" }
+    //elite4 members
+    if (trainer_class == "LORELEI") { return "Lorelei" }
+    if (trainer_class == "BRUNO")   { return "Bruno" }
+    if (trainer_class == "AGATHA")  { return "Agatha" }
+    if (trainer_class == "LANCE")   { return "Lance" }
+    //notable npcs
+    if (trainer_class == "ROCKET"       && this.mapper.properties.battle.trainer.number == 5)   { return "Cerulean Rocket" }
+    if (trainer_class == "YOUNGSTER"    && this.mapper.properties.battle.trainer.number == 1)   { return "Youngster Ben" }
+    if (trainer_class == "LASS"         && this.mapper.properties.battle.trainer.number == 10)  { return "Oddish Lass" } 
+    if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 1)   { return "Pecking Lass" } 
+    if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3)   { return "Sandy" } 
+    if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5)   { return "Wrapping Lass" } 
+    if (trainer_class == "SUPER NERD"   && this.mapper.properties.battle.trainer.number == 2)   { return "Fossil Nerd" }
+    if (trainer_class == "POKEMANIAC"   && this.mapper.properties.battle.trainer.number == 7)   { return "Slowbone" }
+    if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10)  { return "Status-Condition-Jr-Trainer" }
+    if (trainer_class == "HIKER"        && this.mapper.properties.battle.trainer.number == 9)   { return "Selfdestructing Hiker" }
+    if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 18)  { return "Finisher" }
+    if (trainer_class == "ROCKET"       && this.mapper.properties.battle.trainer.number == 38)  { return "Hypno Rocket" }
+    if (trainer_class == "CHANNELER"    && this.mapper.properties.battle.trainer.number == 10)  { return "Agatha Jr" }
+    else return this.capitalization_format(trainer_class)
+}

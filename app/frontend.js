@@ -47,11 +47,6 @@ async function loadCsvFile() {
     return text;
 }
 
-// Open the folder ./splits/ in the file explorer with node.js
-// function openFolder(folderName) {
-//     require('child_process').exec(`start .\\${folderName}\\`);
-// }
-
 function downloadFile(content, downloadFileName) {
     const blob = new Blob([content], {type: "application/octet-stream"});
     const url = window.URL.createObjectURL(blob);
@@ -66,63 +61,6 @@ function downloadFile(content, downloadFileName) {
         return window.URL.revokeObjectURL(url);
     }, 1000);
 }
-
-class RetroArchHook {
-    client = undefined
-    connected = false
-    resolve = () => {}
-    
-    constructor() {
-        if (!require) {
-            console.error('RetroArchHook: require is not defined')
-            return
-        }
-
-        this.client = require('dgram').createSocket('udp4');
-
-        this.client.on('message', (msg, info) => {
-            const s = String.fromCharCode(...msg).split(" ")
-            if (s[0] === 'GET_STATUS') {
-                this.resolve(s[1])
-            }
-        });
-        
-        this.client.connect(55355, '127.0.0.1', (err) => {
-            // console.log(err)
-            if (!err) {
-                this.connected = true
-            }
-        });
-    }
-
-    async get_status() {
-        // returns 'CONTENTLESS' | 'PLAYING' | 'PAUSED'
-        return new Promise((resolve, reject) => {
-            this.resolve = resolve
-            this.client.send('GET_STATUS');
-        })
-    }
-    
-    async pause() {
-        const status = await this.get_status()
-        if (status === 'PLAYING') {
-            this.client.send('PAUSE_TOGGLE');
-        }
-    }
-
-    async resume() {
-        const status = await this.get_status()
-        if (status === 'PAUSED') {
-            this.client.send('PAUSE_TOGGLE');
-        }
-    }
-
-    async fastForward() {
-        this.client.send('FAST_FORWARD');
-    }
-}
-
-const retro = new RetroArchHook()
 
 const Keys = {
     "ESCAPE":         0x1B,
@@ -884,49 +822,6 @@ const app = Vue.createApp({
             battle_summary_enemy_bpn:     0,
             battle_summary_enemy_slp:     0,
 
-            temp_battle_summary_frames:        0,
-            temp_battle_summary_battle_number: 0,
-            temp_battle_summary_exp_gained:    0,
-            temp_battle_summary_turns:         0,
-            temp_battle_summary_player_turns:  0,
-            temp_battle_summary_enemy_turns:   0,
-            temp_battle_summary_player_hits:   0,
-            temp_battle_summary_player_misses: 0,
-            temp_battle_summary_player_crits:  0,
-            temp_battle_summary_player_ohkos:  0,
-            temp_battle_summary_enemy_hits:    0,
-            temp_battle_summary_enemy_misses:  0,
-            temp_battle_summary_enemy_crits:   0,
-            temp_battle_summary_enemy_ohkos:   0,
-            temp_battle_summary_player_Sx:     0,
-            temp_battle_summary_player_4x:     0,
-            temp_battle_summary_player_2x:     0,
-            temp_battle_summary_player_1x:     0,
-            temp_battle_summary_player_Hx:     0,
-            temp_battle_summary_player_Qx:     0,
-            temp_battle_summary_player_0x:     0,
-            temp_battle_summary_player_con:    0,
-            temp_battle_summary_player_par:    0,
-            temp_battle_summary_player_brn:    0,
-            temp_battle_summary_player_frz:    0,
-            temp_battle_summary_player_psn:    0,
-            temp_battle_summary_player_bpn:    0,
-            temp_battle_summary_player_slp:    0,
-            temp_battle_summary_enemy_Sx:      0,
-            temp_battle_summary_enemy_4x:      0,
-            temp_battle_summary_enemy_2x:      0,
-            temp_battle_summary_enemy_1x:      0,
-            temp_battle_summary_enemy_Hx:      0,
-            temp_battle_summary_enemy_Qx:      0,
-            temp_battle_summary_enemy_0x:      0,
-            temp_battle_summary_enemy_con:     0,
-            temp_battle_summary_enemy_par:     0,
-            temp_battle_summary_enemy_brn:     0,
-            temp_battle_summary_enemy_frz:     0,
-            temp_battle_summary_enemy_psn:     0,
-            temp_battle_summary_enemy_bpn:     0,
-            temp_battle_summary_enemy_slp:     0,
-
             battle_summary_header: "Battle Summary",
         }
     },
@@ -1243,69 +1138,6 @@ const app = Vue.createApp({
                 timer_settings: this.timer_settings
             }
         },
-        interface_1_props() {
-            return {
-                game_name: this.game_name,
-                release: this.release,
-                test_run: this.test_run,
-                refilming_mode: this.refilming_mode,
-                no_attempt: this.no_attempt,
-                refilmed_attempt: this.refilmed_attempt,
-                refilmed_finish: this.refilmed_finish,
-                state: this.state,
-                mapper: this.mapper,
-                enemyState: this.enemyState,
-                blackout: this.blackout,
-                timer: this.timer,
-                timer_startTimeOffset: this.timer_startTimeOffset,
-                move1_replacement: this.move1_replacement,
-                move2_replacement: this.move2_replacement,
-                move3_replacement: this.move3_replacement,
-                move4_replacement: this.move4_replacement,
-                item1_replacement: this.item1_replacement,
-                item2_replacement: this.item2_replacement,
-                item3_replacement: this.item3_replacement,
-                item4_replacement: this.item4_replacement,
-                openFolder: this.openFolder,
-                starterName: this.starterName,
-                update_moveset: this.update_moveset,
-                update_battle_moveset: this.update_battle_moveset,
-                update_items: this.update_items,
-            }
-        },
-        interface_2_props() {
-            return {
-                starterName: this.starterName,
-                game_name: this.game_name,
-                release: this.release,
-                filtered_pokemon_list: this.filtered_pokemon_list,
-                search_term: this.search_term,
-                previous_label: this.previous_label,
-                current_label: this.current_label,
-                attempt_number: this.attempt_number,
-                finished_run_count: this.finished_run_count,
-                playerResets: this.playerResets,
-                blackout_counter: this.blackout_counter,
-                toggle_wEarlyEncounters: this.toggle_wEarlyEncounters,
-                toggle_wEarlyEncountersNoMoon: this.toggle_wEarlyEncountersNoMoon,
-                toggle_EVENT_ENCOUNTER_ROUTE1_TEST: this.toggle_EVENT_ENCOUNTER_ROUTE1_TEST,
-                toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY: this.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY,
-                toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW: this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW,
-                toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW: this.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW,
-                toggle_EVENT_ENCOUNTER_ROUTE16_DODUO: this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO,
-                toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW: this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW,
-                toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE: this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE,
-                toggle_EVENT_ENCOUNTER_MTMOON_PARAS: this.toggle_EVENT_ENCOUNTER_MTMOON_PARAS,
-                toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER: this.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER,
-                toggle_EVENT_ENCOUNTER_ROUTE16_DODUO: this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO,
-                newRun: this.newRun,
-                set_encounters: this.set_encounters,
-                load_splits: this.load_splits,
-                increment: this.increment,
-                decrement: this.decrement,
-                set_rom_starter: this.set_rom_starter,
-            }
-        },
         blackouts_resets() {
             const resets = this.playerResets
             const blackouts = this.blackout_counter
@@ -1384,21 +1216,6 @@ const app = Vue.createApp({
                 }
             }
         },
-        enemy_trainer() {
-            const trainer = this.mapper.properties.battle.trainer.class.value
-            const id = this.mapper.properties.battle.trainer.number.value
-            const identifier = `${trainer} ${id}`
-            if (this.game_name == 'Yellow') {
-                if (this.state == 'To Battle' || this.state == 'Battle' || this.state == 'From Battle') {
-                    return this.g1YellowTrainers[identifier]
-                }
-            }
-            if (this.game_name == 'Red' || this.game_name == 'Blue') {
-                if (this.state == 'To Battle' || this.state == 'Battle' || this.state == 'From Battle') {
-                    return this.g1RedBlueTrainers[identifier]
-                }
-            }
-        },
         species() {
             const mapping = {
                 0xBF: this.starterName,
@@ -1409,84 +1226,10 @@ const app = Vue.createApp({
                 return mapping[bytes]
             }
         },
-        g1trainerEnemySelector() {
-            if (this.ready) {
-                let trainerClass = this.mapper.properties.battle.trainer.class.value
-                if (this.showAllTrainers == false && (
-                    trainerClass == "BROCK" ||
-                    trainerClass == "MISTY" ||
-                    trainerClass == "LT.SURGE" ||
-                    trainerClass == "ERIKA" ||
-                    trainerClass == "KOGA" ||
-                    trainerClass == "SABRINA" ||
-                    trainerClass == "BLAINE" ||
-                    (trainerClass == "GIOVANNI" && this.mapper.properties.battle.trainer.number == 3) ||
-                    trainerClass == "LORELEI" ||
-                    trainerClass == "BRUNO" ||
-                    trainerClass == "AGATHA" ||
-                    trainerClass == "LANCE" ||
-                    trainerClass == "RIVAL1" ||
-                    trainerClass == "RIVAL2" ||
-                    trainerClass == "RIVAL3" ||
-                    (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3) || //pidgey jr trainer
-                    (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5) || //wrapping lass
-                    (trainerClass == "SUPER NERD" && this.mapper.properties.battle.trainer.number == 2) || //fossil nerd
-                    (trainerClass == "POKEMANIAC" && this.mapper.properties.battle.trainer.number == 7) || //cubone slowpoke maniac
-                    (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10) || //status condition jr trainer
-                    (trainerClass == "HIKER" && this.mapper.properties.battle.trainer.number == 9) || //Selfdestructing hiker
-                    (trainerClass == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 18) || //finisher
-                    (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 3) || //koga juggler 1
-                    (trainerClass == "JUGGLER" && this.mapper.properties.battle.trainer.number == 4) || //koga juggler 1
-                    (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 38) || //hypno rocket
-                    (trainerClass == "ROCKET" && this.mapper.properties.battle.trainer.number == 25) || //hypno sandwich
-                    (trainerClass == "CHANNELER" && this.mapper.properties.battle.trainer.number == 10) //2 gastly channeler
-                    )
-                    ) {
-                        return 1
-                    }
-                else if (this.showAllTrainers == true && this.mapper.properties.battle.type.value == "Trainer")
-                    return 1
-                else
-                    return 0
-            }
-        },
-        currentTrainer() {
-            const trainer_class = this.mapper.properties.battle.trainer.class
-            const trainer_number = this.mapper.properties.battle.trainer.number
-            const trainer_identifier = `${trainer_class} ${trainer_number}`
-            // console.log(trainer_identifier)
-            if (this.mapper.properties.meta.gameName == "Yellow") { 
-                return g1YellowTrainers[trainer_identifier] 
-            }
-            else if (this.mapper.properties.meta.gameName == "Red and Blue") { 
-                return g1RedBlueTrainers[trainer_identifier] 
-            }
-            else { 
-                return g1YellowTrainers[trainer_identifier] 
-            }
-        },
         dropdownDownMenuKeys() {
             return {
                 textures: Object.keys(this.textures)
             }
-        },
-        // dropshadowFix() {
-        //     if (imageFlip) {
-        //         return ""
-        //     }
-        //     else {
-        //         return "-"
-        //     }
-        // },
-        splitCountdown() {
-            if (!this.ready) { return }
-            var trainer = this.mapper?.properties?.battle?.trainer?.class?.value + "_" + this.mapper?.properties?.battle?.trainer?.number?.value
-            var splitName = this.autosplitter[this.mapper?.properties?.meta?.gameName?.value][trainer]
-            if (!splitName) { return }
-            // console.log(splitName)
-            var personalBestSplitTime = this.convertDurationToSeconds(this.pb_splits.find(subArray => subArray[2] == (splitName))[3] ?? "0")
-            var currentTime = this.convertDurationToSeconds(this.timer.formatted_time[0]) + (this.time_ms / 100)
-            return personalBestSplitTime - currentTime
         },
         playerResetsDisplay() {
             if (this.blackouts_as_resets == true) {
@@ -1501,36 +1244,11 @@ const app = Vue.createApp({
             if (this.mapper.properties.meta.gameName.value == "Yellow")       { return this.g1PokemonData }
             if (this.mapper.properties.meta.gameName.value == "Red and Blue") { return this.g1PokemonDataRB }
         },
-        gametimeHMS() {
-            h = this.mapper.properties.gameTime.hours
-            m = this.mapper.properties.gameTime.minutes
-            s = this.mapper.properties.gameTime.seconds
-            hour = ""
-            min = ""
-            sec = ""
-            //hour
-            if (h == 0) hour = ""
-            else if (h > 255) hour = 0 + ":"
-            else hour = h + ":"
-            //min
-            if (h > 0 && m < 10) min = "0" + m.toString() + ":"
-            else if (h == 0 && m == 0) min = ""
-            else min = m + ":"
-            //sec
-            if ((h > 0 || m > 0) && s < 10) sec = "0" + s.toString()
-            else sec = s
-            return hour.toString() + min.toString() + sec.toString()
-        },
         gametimeSplit() {
             h = this.mapper.properties.gameTime.hours
             m = this.mapper.properties.gameTime.minutes
             timecode = h + ":" + m.toString().padStart(2, "0")
             return timecode
-        },
-        gametime_frames() {
-            f = this.mapper.properties.gameTime.frames
-            if (f < 10) f = "0" + f.toString();
-            return f
         },
         //shorthands
         s1() {
@@ -1541,9 +1259,6 @@ const app = Vue.createApp({
         },
         batt() {
             return this.mapper?.properties?.battle
-        },
-        battEn() {
-            return this.mapper?.properties?.battle?.enemyPokemon
         },
         s1dynamic() {
             if (this.state == `Battle`) {
@@ -1606,8 +1321,6 @@ const app = Vue.createApp({
                 return [type1, type2]
             }
         },
-
-        //CO-PILOT REFACTOR
         battle_fade() {
             const trainerClasses = ["LORELEI", "BRUNO", "AGATHA", "LANCE", "RIVAL3"];
             const validStates = ["To Battle", "From Battle"];
@@ -1754,16 +1467,12 @@ const app = Vue.createApp({
                 ])
             }
         },
-
         get_nested_property(obj, path) {
             return path.split('.').reduce((o, p) => (o || {})[p], obj);
         },
         load_split_settings() {
             this.current_splits  = MyStorage['current_splits']  ?? []
             this.previous_splits = MyStorage['previous_splits'] ?? []
-        },
-        batp() { //player battle
-            return this.mapper?.properties?.battle?.yourPokemon
         },
         async load_temp_splits() {
             const text = await loadCsvFile();
@@ -1814,232 +1523,16 @@ const app = Vue.createApp({
             // and convert the string to lowercase
             return str.replace(/[^a-z0-9]/gi, '').toLowerCase();
         },
-        //enables encounters in viridian forest and resets all the Pokemon you can find to default
-        viridianEncounterEnable() {
-            const encounterRate = 0x19
-            const caterpie = 0x7B
-            const metapod = 0x7C
-            const pidgey = 0x24
-            const pidgeotto = 0x96
-            this.mapper.properties.overworld.encounters.common[0].level.setBytes([0x03], false),
-            this.mapper.properties.overworld.encounters.common[0].pokemon.setBytes([caterpie], false),
-            this.mapper.properties.overworld.encounters.common[1].level.setBytes([0x04], false),
-            this.mapper.properties.overworld.encounters.common[1].pokemon.setBytes([metapod], false),
-            this.mapper.properties.overworld.encounters.common[2].level.setBytes([0x04], false),
-            this.mapper.properties.overworld.encounters.common[2].pokemon.setBytes([caterpie], false),
-            this.mapper.properties.overworld.encounters.common[3].level.setBytes([0x05], false),
-            this.mapper.properties.overworld.encounters.common[3].pokemon.setBytes([caterpie], false),
-            this.mapper.properties.overworld.encounters.uncommon[0].level.setBytes([0x04], false),
-            this.mapper.properties.overworld.encounters.uncommon[0].pokemon.setBytes([pidgey], false),
-            this.mapper.properties.overworld.encounters.uncommon[1].level.setBytes([0x06], false),
-            this.mapper.properties.overworld.encounters.uncommon[1].pokemon.setBytes([pidgey], false),
-            this.mapper.properties.overworld.encounters.uncommon[2].level.setBytes([0x06], false),
-            this.mapper.properties.overworld.encounters.uncommon[2].pokemon.setBytes([caterpie], false),
-            this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([0x06], false),
-            this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([metapod], false),
-            this.mapper.properties.overworld.encounterRate.setBytes([encounterRate], false)
-        },
-        viridianForestPidgey() {
-            const viridianForestPidgey = 0x24
-            const viridianForestEncounterRate = 0x19
-            const pidgeyLevelFour = 0x04
-            const pidgeyLevelSix = 0x06
-            const pidgeyLevelEight = 0x08
-            this.mapper.properties.overworld.encounters.common[0].level.setBytes([pidgeyLevelFour], false),
-            this.mapper.properties.overworld.encounters.common[0].pokemon.setBytes([viridianForestPidgey], false),
-            this.mapper.properties.overworld.encounters.common[1].level.setBytes([pidgeyLevelFour], false),
-            this.mapper.properties.overworld.encounters.common[1].pokemon.setBytes([viridianForestPidgey], false),
-            this.mapper.properties.overworld.encounters.common[2].level.setBytes([pidgeyLevelFour], false),
-            this.mapper.properties.overworld.encounters.common[2].pokemon.setBytes([viridianForestPidgey], false),
-            this.mapper.properties.overworld.encounters.common[3].level.setBytes([pidgeyLevelSix], false),
-            this.mapper.properties.overworld.encounters.common[3].pokemon.setBytes([viridianForestPidgey], false),
-            this.mapper.properties.overworld.encounters.uncommon[0].level.setBytes([pidgeyLevelSix], false),
-            this.mapper.properties.overworld.encounters.uncommon[0].pokemon.setBytes([viridianForestPidgey], false),
-            this.mapper.properties.overworld.encounters.uncommon[1].level.setBytes([pidgeyLevelSix], false),
-            this.mapper.properties.overworld.encounters.uncommon[1].pokemon.setBytes([viridianForestPidgey], false),
-            this.mapper.properties.overworld.encounters.uncommon[2].level.setBytes([pidgeyLevelEight], false),
-            this.mapper.properties.overworld.encounters.uncommon[2].pokemon.setBytes([viridianForestPidgey], false),
-            this.mapper.properties.overworld.encounters.uncommon[3].level.setBytes([pidgeyLevelEight], false),
-            this.mapper.properties.overworld.encounters.uncommon[3].pokemon.setBytes([viridianForestPidgey], false),
-            this.mapper.properties.overworld.encounterRate.setBytes([viridianForestEncounterRate], false)
-        },
 
-        //*autosplitter methods
-        //format trainer names so they can be written to csv
-        format_trainer_name(trainer_class, trainer_number) {
-            const game = this.mapper.properties.meta.gameName.value
-            if (game == 'Red and Blue') {
-                //rivals
-                if (trainer_class == "RIVAL1" && trainer_number == 1)  { return "Rival1-Lab" }
-                if (trainer_class == "RIVAL1" && trainer_number == 2)  { return "Rival1-Lab" }
-                if (trainer_class == "RIVAL1" && trainer_number == 3)  { return "Rival1-Lab" }
-                if (trainer_class == "RIVAL1" && trainer_number == 4)  { return "Rival1a-Route 22" }
-                if (trainer_class == "RIVAL1" && trainer_number == 5)  { return "Rival1a-Route 22" }
-                if (trainer_class == "RIVAL1" && trainer_number == 6)  { return "Rival1a-Route 22" }
-                if (trainer_class == "RIVAL1" && trainer_number == 7)  { return "Rival2-Nugget Bridge" }
-                if (trainer_class == "RIVAL1" && trainer_number == 8)  { return "Rival2-Nugget Bridge" }
-                if (trainer_class == "RIVAL1" && trainer_number == 9)  { return "Rival2-Nugget Bridge" }
-                if (trainer_class == "RIVAL2" && trainer_number == 1)  { return "Rival3-SS Anne" }
-                if (trainer_class == "RIVAL2" && trainer_number == 2)  { return "Rival3-SS Anne"  }
-                if (trainer_class == "RIVAL2" && trainer_number == 3)  { return "Rival3-SS Anne"  }
-                if (trainer_class == "RIVAL2" && trainer_number == 4)  { return "Rival4-Pkmn Tower" }
-                if (trainer_class == "RIVAL2" && trainer_number == 5)  { return "Rival4-Pkmn Tower" }
-                if (trainer_class == "RIVAL2" && trainer_number == 6)  { return "Rival4-Pkmn Tower" }
-                if (trainer_class == "RIVAL2" && trainer_number == 7)  { return "Rival5-Silph" }
-                if (trainer_class == "RIVAL2" && trainer_number == 8)  { return "Rival5-Silph" }
-                if (trainer_class == "RIVAL2" && trainer_number == 9)  { return "Rival5-Silph" }
-                if (trainer_class == "RIVAL2" && trainer_number == 10) { return "Rival6-Route 22" }
-                if (trainer_class == "RIVAL2" && trainer_number == 11) { return "Rival6-Route 22" }
-                if (trainer_class == "RIVAL2" && trainer_number == 12) { return "Rival6-Route 22" }
-                if (trainer_class == "RIVAL3" && trainer_number == 1)  { return "Champion" }
-                if (trainer_class == "RIVAL3" && trainer_number == 2)  { return "Champion" }
-                if (trainer_class == "RIVAL3" && trainer_number == 3)  { return "Champion" }
-            }
-            if (game == 'Yellow') {
-                //rivals
-                if (trainer_class == "RIVAL1" && trainer_number == 1)  { return "Rival1-Lab" }
-                if (trainer_class == "RIVAL1" && trainer_number == 2)  { return "Rival1a-Route 22" }
-                if (trainer_class == "RIVAL1" && trainer_number == 3)  { return "Rival2-Nugget Bridge" }
-                if (trainer_class == "RIVAL2" && trainer_number == 1)  { return "Rival3-SS Anne" }
-                if (trainer_class == "RIVAL2" && trainer_number == 2)  { return "Rival4-Pkmn Tower" }
-                if (trainer_class == "RIVAL2" && trainer_number == 3)  { return "Rival4-Pkmn Tower" }
-                if (trainer_class == "RIVAL2" && trainer_number == 4)  { return "Rival4-Pkmn Tower" }
-                if (trainer_class == "RIVAL2" && trainer_number == 5)  { return "Rival5-Silph" }
-                if (trainer_class == "RIVAL2" && trainer_number == 6)  { return "Rival5-Silph" }
-                if (trainer_class == "RIVAL2" && trainer_number == 7)  { return "Rival5-Silph" }
-                if (trainer_class == "RIVAL2" && trainer_number == 8)  { return "Rival6-Route 22" }
-                if (trainer_class == "RIVAL2" && trainer_number == 9)  { return "Rival6-Route 22" }
-                if (trainer_class == "RIVAL2" && trainer_number == 10) { return "Rival6-Route 22" }
-                if (trainer_class == "RIVAL3" && trainer_number == 1) { return "Champion" }
-                if (trainer_class == "RIVAL3" && trainer_number == 2) { return "Champion" }
-                if (trainer_class == "RIVAL3" && trainer_number == 3) { return "Champion" }
-            }
-            //gym leaders
-            if (trainer_class == "BROCK")    { return "Brock" }
-            if (trainer_class == "MISTY")    { return "Misty" }
-            if (trainer_class == "LT.SURGE") { return "Surge" }
-            if (trainer_class == "ERIKA")    { return "Erika" }
-            if (trainer_class == "KOGA")     { return "Koga" }
-            if (trainer_class == "SARINA")   { return "Sabrina" }
-            if (trainer_class == "BLAINE")   { return "Blaine" }
-            //giovanni
-            if (trainer_class == "GIOVANNI" && trainer_number == 1) { return "Giovanni-Hideout" }
-            if (trainer_class == "GIOVANNI" && trainer_number == 2) { return "Giovanni-Silph" }
-            if (trainer_class == "GIOVANNI" && trainer_number == 3) { return "Giovanni" }
-            //elite4 members
-            if (trainer_class == "LORELEI") { return "Lorelei" }
-            if (trainer_class == "BRUNO")   { return "Bruno" }
-            if (trainer_class == "AGATHA")  { return "Agatha" }
-            if (trainer_class == "LANCE")   { return "Lance" }
-            //notable npcs
-            if (trainer_class == "ROCKET"       && this.mapper.properties.battle.trainer.number == 5)   { return "Cerulean Rocket" }
-            if (trainer_class == "YOUNGSTER"    && this.mapper.properties.battle.trainer.number == 1)   { return "Youngster Ben" }
-            if (trainer_class == "LASS"         && this.mapper.properties.battle.trainer.number == 10)  { return "Oddish Lass" } 
-            if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 1)   { return "Pecking Lass" } 
-            if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 3)   { return "Sandy" } 
-            if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 5)   { return "Wrapping Lass" } 
-            if (trainer_class == "SUPER NERD"   && this.mapper.properties.battle.trainer.number == 2)   { return "Fossil Nerd" }
-            if (trainer_class == "POKEMANIAC"   && this.mapper.properties.battle.trainer.number == 7)   { return "Slowbone" }
-            if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 10)  { return "Status-Condition-Jr-Trainer" }
-            if (trainer_class == "HIKER"        && this.mapper.properties.battle.trainer.number == 9)   { return "Selfdestructing Hiker" }
-            if (trainer_class == "JR TRAINER F" && this.mapper.properties.battle.trainer.number == 18)  { return "Finisher" }
-            if (trainer_class == "ROCKET"       && this.mapper.properties.battle.trainer.number == 38)  { return "Hypno Rocket" }
-            if (trainer_class == "CHANNELER"    && this.mapper.properties.battle.trainer.number == 10)  { return "Agatha Jr" }
-            else return this.capitalization_format(trainer_class)
-        },
-
-        // //*timer methods
-        // //start the timer
-        // startTime() {
-        //     if (this.timer_pause == false) {
-        //         return
-        //     }
-        //     const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
-        //     const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
-        //     const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
-
-        //     this.timer_startTime = Date.now() - timeOffset
-        //     this.timer_pause = false
-        //     this.updateTime()
-        // },
-        // //stop the timer
-        // stopTime() {
-        //     this.timer_pause_time = Date.now()
-        //     this.timer_pause = true
-        // },
-        // set_timer() {
-        //     const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
-        //     const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
-        //     const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
-
-        //     this.timer_pause = true
-        //     this.timer_startTime = Date.now() - timeOffset
-        //     this.timer_pause_time = Date.now()
-        //     this.timer_formatted_time = [ "0", ".00" ]
-        //     this.finished_logs = false
-
-        //     this.updateTime()
-        // },
         padTime(time) {
             return time.toString().padStart(2, "0")
         },
-        // //animate the timer
-        // updateTime() {
-        //     var time = Date.now() - this.timer_startTime
-        //     if (this.timer_pause == true) {
-        //         time = this.timer_pause_time - this.timer_startTime
-        //     }
-        //     var f = (x) => x.toString().padStart(2, "0")
-        //     var c = (Math.floor(time / 10) % 100)
-        //     var s = (Math.floor(time / 1000) % 60)
-        //     var m = (Math.floor(time / 60000) % 60)
-        //     var h = (Math.floor(time / 3600000))
-        //     this.time_h = h
-        //     this.time_m = m
-        //     this.time_s = s
-        //     this.time_ms = c
-        //     if (h != 0) {
-        //         this.timer_formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
-        //     }
-        //     else if (m != 0) {
-        //         this.timer_formatted_time = [ m + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
-        //     }
-        //     else {
-        //         this.timer_formatted_time = [ s, "." + f(c), h + "h" + m + "m" + s + "s", ]
-        //     }
-        //     if (this.timer_pause == false) {
-        //         requestAnimationFrame(this.updateTime)
-        //     }
-        // },
-        // //pause the timer
-        // pauseUnpauseTime() {
-        //     if (this.timer_pause == true) {
-        //         this.timer_pause = false
-        //         this.timer_startTime += Date.now() - this.timer_pause_time
-        //         this.updateTime()
-        //         retro.resume()
-        //     }
-        //     else {
-        //         this.timer_pause = true
-        //         this.timer_pause_time = Date.now()
-        //         retro.pause()
-        //     }
-        // },
         async newRun() {
-            // const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
-            // const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
-            // const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
-            
-            // this.current_splits = await this.load_temp_splits()
             this.compared_splits = []
             this.current_splits = []
 
             this.battle_summary_header = "Battle Summary"
             this.most_recent_move = ""
-            // this.timer_pause = true
-            // this.timer_startTime = Date.now() - timeOffset
-            // this.timer_pause_time = Date.now()
-            // this.timer_formatted_time = [ "0", ".00" ]
             this.timer.setTimer(this.timer_startTimeOffset)
 
             this.playerResets = 0
@@ -2125,56 +1618,6 @@ const app = Vue.createApp({
             this.showCritMultiplierInEP =     true
             this.rockTunnelDarkness =         false
         },
-        first_playthrough_settings() {
-            this.route1 =         true
-            this.viridianForest = true
-            this.route3 =         true
-            this.mtMoon =         true
-            this.route6 =         true
-            this.rockTunnel =     true
-            this.pokemonTower =   true
-            this.safariZone =     true
-            this.powerPlant =     true
-            this.mansion =        true
-            this.route21 =        true
-            this.route22 =        true
-            this.victoryRoad =    true
-            this.route24 =        true
-        },
-        second_playthrough_settings() {
-            this.route1 =         false
-            this.viridianForest = true
-            this.route3 =         false
-            this.mtMoon =         false
-            this.route6 =         false
-            this.rockTunnel =     true
-            this.pokemonTower =   true
-            this.safariZone =     true
-            this.powerPlant =     true
-            this.mansion =        true
-            this.route21 =        true
-            this.route22 =        true
-            this.victoryRoad =    true
-            this.route24 =        true
-            this.viridian_forest == "Pidgey"
-        },
-        all_off() {
-            this.route1 =         false
-            this.viridianForest = false
-            this.route3 =         false
-            this.mtMoon =         false
-            this.route6 =         false
-            this.rockTunnel =     false
-            this.pokemonTower =   false
-            this.safariZone =     false
-            this.powerPlant =     false
-            this.mansion =        false
-            this.route21 =        false
-            this.route22 =        false
-            this.victoryRoad =    false
-            this.route24 =        false
-            this.viridian_forest == "No Encounters"
-        },
         apply_settings(setting_group) { //pass in the name of the group of settings that are to have values assigned
             keys = this.settings[setting_group]
 
@@ -2247,53 +1690,6 @@ const app = Vue.createApp({
                 return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
             } else {
                 return `${remainingSeconds}`;
-            }
-        },
-        addDurations(duration1, duration2) {
-            const totalSeconds = this.convertDurationToSeconds(duration1) + this.convertDurationToSeconds(duration2);
-            return this.convertSecondsToDuration(totalSeconds);
-        },
-        subtractDurations(duration1, duration2) {
-            const totalSeconds = this.convertDurationToSeconds(duration1) - this.convertDurationToSeconds(duration2);
-            return this.convertSecondsToDuration(totalSeconds);
-        },
-        convertTimeToSeconds(time) {
-            const [minutes, seconds] = time.split(':').map(Number);
-            return minutes * 60 + seconds;
-        },
-        convertSecondsToTime(seconds) {
-            const absoluteSeconds = Math.abs(seconds);
-            const minutes = Math.floor(absoluteSeconds / 60);
-            const remainingSeconds = absoluteSeconds % 60;
-            const sign = seconds < 0 ? '-' : '+';
-            return `${sign}${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
-        },
-        timeUntilSplit(currentTime, splitTime) {
-            const differenceInSeconds = currentTime - splitTime;
-            var diff = differenceInSeconds;
-            var duration = this.convertSecondsToDuration(differenceInSeconds);
-            if (diff > 0) {
-                return "+" + duration
-            }
-            else if (diff < 0) {
-                return "" + duration
-            }
-            else {
-                return "" + duration
-            }
-        },
-        splitTextColor(current, pbTime) {
-            current = this.convertDurationToSeconds(current);
-            pbTime = this.convertDurationToSeconds(pbTime);
-        
-            if (current < pbTime) {
-                return "color: rgb(21, 153, 32);"; // green for worse times
-            }
-            else if (current > pbTime) {
-                return "color: rgb(202, 53, 33);"; // red for better times
-            }
-            else {
-                return "color: rgb(0, 0, 0);"; // black for equal times
             }
         },
         keys_function(object) {
@@ -2373,214 +1769,93 @@ const app = Vue.createApp({
               const trainerNumber = this.mapper.properties.battle.trainer.number
               if (this.mapper.properties.meta.gameName.value == "Yellow") {
                 switch (`${trainerClass}_${trainerNumber}`) {
-                    case "LT.SURGE_1":
-                        return "images/trainers/ltsurge.png";
-                    case "SABRINA_1":
-                        return "images/trainers/sabrina.png";
-                    case "BLAINE_1":
-                        return "images/trainers/blaine.png";
-                    case "RIVAL1_1":
-                        return "images/trainers/RIVAL1.png";
-                    case "RIVAL1_2":
-                        return "images/trainers/RIVAL1.png";
-                    case "RIVAL1_3":
-                        return "images/trainers/RIVAL2.png";
-                    case "RIVAL1_4":
-                        return "images/trainers/RIVAL2.png";
-                    case "RIVAL1_5":
-                        return "images/trainers/RIVAL2.png";
-                    case "RIVAL1_6":
-                        return "images/trainers/RIVAL2.png";
-                    case "RIVAL1_7":
-                        return "images/trainers/RIVAL2.png";
-                    case "RIVAL2_1":
-                        return "images/trainers/RIVAL2.png";
-                    case "ROCKET_42":
-                        return "images/trainers/JESSIE_JAMES_1.png";
-                    case "ROCKET_44":
-                        return "images/trainers/JESSIE_JAMES_2.png";
-                    case "ROCKET_45":
-                        return "images/trainers/JESSIE_JAMES_2.png";
-                    case "JR TRAINER F_5":
-                        return "images/trainers/JR TRAINER F_5.png";
-                    case "YOUNGSTER_1":
-                        return "images/trainers/BEN.png";
-                    case "POKEMANIAC_7":
-                        return "images/trainers/POKEMANIAC_7.png";
-                    case "SUPER NERD_2":
-                        return "images/trainers/FOSSIL_NERD.png";
-                    case "LASS_10":
-                        return "images/trainers/ODDISH_LASS.png";
-                    case "FISHER_7":
-                        return "images/trainers/SIKE.png";
-                    case "JR TRAINER F_10":
-                        return "images/trainers/JR TRAINER F_10.png";
-                    case "ROCKET_5":
-                        return "images/trainers/dig_rocket.png";
-                    case "ROCKET_38":
-                        return "images/trainers/ROCKET_38.png";
-                    case "HIKER_9":
-                        return "images/trainers/HIKER_9.png";
-                    case "LASS_3":
-                        return "images/trainers/LASS_3.png";
-                    case "JR TRAINER F_1":
-                        return "images/trainers/GOLDEEN.png";
-                    case "ROCKET_25":
-                        return "images/trainers/HYPNO_SANDWICH.png";
-                    case "JR TRAINER F_3":
-                        return "images/trainers/JR TRAINER F_3.png";
-                    case "CHANNELER_10":
-                        return "images/trainers/AGATHAJR.png";
-                    case "BROCK_1":
-                        return "images/trainers/brock.png";
-                    case "MISTY_1":
-                        return "images/trainers/misty.png";
-                    case "ERIKA_1":
-                        return "images/trainers/erika.png";
-                    case "KOGA_1":
-                        return "images/trainers/koga.png";
-                    case "LORELEI_1":
-                        return "images/trainers/lorelei.png";
-                    case "BRUNO_1":
-                        return "images/trainers/bruno.png";
-                    case "AGATHA_1":
-                        return "images/trainers/agatha.png";
-                    case "LANCE_1":
-                        return "images/trainers/lance.png";
-                    case "HIKER_2":
-                        return "images/trainers/elixir_hiker.png";
-                    default:
-                        return null;
+                    case "LT.SURGE_1":      return "images/trainers/ltsurge.png";
+                    case "SABRINA_1":       return "images/trainers/sabrina.png";
+                    case "BLAINE_1":        return "images/trainers/blaine.png";
+                    case "RIVAL1_1":        return "images/trainers/RIVAL1.png";
+                    case "RIVAL1_2":        return "images/trainers/RIVAL1.png";
+                    case "RIVAL1_3":        return "images/trainers/RIVAL2.png";
+                    case "RIVAL1_4":        return "images/trainers/RIVAL2.png";
+                    case "RIVAL1_5":        return "images/trainers/RIVAL2.png";
+                    case "RIVAL1_6":        return "images/trainers/RIVAL2.png";
+                    case "RIVAL1_7":        return "images/trainers/RIVAL2.png";
+                    case "RIVAL2_1":        return "images/trainers/RIVAL2.png";
+                    case "ROCKET_42":       return "images/trainers/JESSIE_JAMES_1.png";
+                    case "ROCKET_44":       return "images/trainers/JESSIE_JAMES_2.png";
+                    case "ROCKET_45":       return "images/trainers/JESSIE_JAMES_2.png";
+                    case "JR TRAINER F_5":  return "images/trainers/JR TRAINER F_5.png";
+                    case "YOUNGSTER_1":     return "images/trainers/BEN.png";
+                    case "POKEMANIAC_7":    return "images/trainers/POKEMANIAC_7.png";
+                    case "SUPER NERD_2":    return "images/trainers/FOSSIL_NERD.png";
+                    case "LASS_10":         return "images/trainers/ODDISH_LASS.png";
+                    case "FISHER_7":        return "images/trainers/SIKE.png";
+                    case "JR TRAINER F_10": return "images/trainers/JR TRAINER F_10.png";
+                    case "ROCKET_5":        return "images/trainers/dig_rocket.png";
+                    case "ROCKET_38":       return "images/trainers/ROCKET_38.png";
+                    case "HIKER_9":         return "images/trainers/HIKER_9.png";
+                    case "LASS_3":          return "images/trainers/LASS_3.png";
+                    case "JR TRAINER F_1":  return "images/trainers/GOLDEEN.png";
+                    case "ROCKET_25":       return "images/trainers/HYPNO_SANDWICH.png";
+                    case "JR TRAINER F_3":  return "images/trainers/JR TRAINER F_3.png";
+                    case "CHANNELER_10":    return "images/trainers/AGATHAJR.png";
+                    case "BROCK_1":         return "images/trainers/brock.png";
+                    case "MISTY_1":         return "images/trainers/misty.png";
+                    case "ERIKA_1":         return "images/trainers/erika.png";
+                    case "KOGA_1":          return "images/trainers/koga.png";
+                    case "LORELEI_1":       return "images/trainers/lorelei.png";
+                    case "BRUNO_1":         return "images/trainers/bruno.png";
+                    case "AGATHA_1":        return "images/trainers/agatha.png";
+                    case "LANCE_1":         return "images/trainers/lance.png";
+                    case "HIKER_2":         return "images/trainers/elixir_hiker.png";
+                    default:                return null;
                 }
               }
               if (this.mapper.properties.meta.gameName == "Red and Blue") {
                 switch (`${trainerClass}_${trainerNumber}`) {
-                    case "LT.SURGE_1":
-                        return "images/trainers/Red_and_Blue/ltsurge.png";
-                    case "SABRINA_1":
-                        return "images/trainers/Red_and_Blue/sabrina.png";
-                    case "BLAINE_1":
-                        return "images/trainers/Red_and_Blue/blaine.png";
-                    case "RIVAL1_1":
-                        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_2":
-                        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_3":
-                        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_4":
-                        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_5":
-                        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_6":
-                        return "images/trainers/Red_and_Blue/RIVAL1.png";
-                    case "RIVAL1_7":
-                        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "RIVAL1_8":
-                        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "RIVAL1_9":
-                        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "RIVAL2_1":
-                        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "RIVAL2_2":
-                        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "RIVAL2_3":
-                        return "images/trainers/Red_and_Blue/RIVAL2.png";
-                    case "JR TRAINER F_5":
-                        return "images/trainers/Red_and_Blue/JR TRAINER F_5.png";
-                    case "YOUNGSTER_1":
-                        return "images/trainers/Red_and_Blue/BEN.png";
-                    case "POKEMANIAC_7":
-                        return "images/trainers/Red_and_Blue/POKEMANIAC_7.png";
-                    case "SUPER NERD_2":
-                        return "images/trainers/Red_and_Blue/FOSSIL_NERD.png";
-                    case "LASS_10":
-                        return "images/trainers/Red_and_Blue/ODDISH_LASS.png";
-                    case "JR TRAINER F_10":
-                        return "images/trainers/Red_and_Blue/JR TRAINER F_10.png";
-                    case "ROCKET_5":
-                        return "images/trainers/dig_rocket.png";
-                    case "ROCKET_38":
-                        return "images/trainers/Red_and_Blue/ROCKET_38.png";
-                    case "HIKER_9":
-                        return "images/trainers/Red_and_Blue/HIKER_9.png";
-                    case "LASS_3":
-                        return "images/trainers/Red_and_Blue/LASS_3.png";
-                    case "JR TRAINER F_1":
-                        return "images/trainers/Red_and_Blue/GOLDEEN.png";
-                    case "ROCKET_25":
-                        return "images/trainers/Red_and_Blue/HYPNO_SANDWICH.png";
-                    case "JR TRAINER F_3":
-                        return "images/trainers/Red_and_Blue/JR TRAINER F_3.png";
-                    case "CHANNELER_10":
-                        return "images/trainers/Red_and_Blue/AGATHAJR.png";
-                    case "BROCK_1":
-                        return "images/trainers/Red_and_Blue/brock.png";
-                    case "MISTY_1":
-                        return "images/trainers/Red_and_Blue/misty.png";
-                    case "ERIKA_1":
-                        return "images/trainers/Red_and_Blue/erika.png";
-                    case "KOGA_1":
-                        return "images/trainers/Red_and_Blue/koga.png";
-                    case "LORELEI_1":
-                        return "images/trainers/lorelei.png";
-                    case "BRUNO_1":
-                        return "images/trainers/bruno.png";
-                    case "AGATHA_1":
-                        return "images/trainers/agatha.png";
-                    case "LANCE_1":
-                        return "images/trainers/lance.png";
-                    case "ROCKET_1":
-                        return "images/trainers/Red_and_Blue/mtmoon_rocket_boss.png";
-                    case "HIKER_2":
-                        return "images/trainers/Red_and_Blue/elixir_hiker.png";
-                    default:
-                        return null;
+                    case "LT.SURGE_1":      return "images/trainers/Red_and_Blue/ltsurge.png";
+                    case "SABRINA_1":       return "images/trainers/Red_and_Blue/sabrina.png";
+                    case "BLAINE_1":        return "images/trainers/Red_and_Blue/blaine.png";
+                    case "RIVAL1_1":        return "images/trainers/Red_and_Blue/RIVAL1.png";
+                    case "RIVAL1_2":        return "images/trainers/Red_and_Blue/RIVAL1.png";
+                    case "RIVAL1_3":        return "images/trainers/Red_and_Blue/RIVAL1.png";
+                    case "RIVAL1_4":        return "images/trainers/Red_and_Blue/RIVAL1.png";
+                    case "RIVAL1_5":        return "images/trainers/Red_and_Blue/RIVAL1.png";
+                    case "RIVAL1_6":        return "images/trainers/Red_and_Blue/RIVAL1.png";
+                    case "RIVAL1_7":        return "images/trainers/Red_and_Blue/RIVAL2.png";
+                    case "RIVAL1_8":        return "images/trainers/Red_and_Blue/RIVAL2.png";
+                    case "RIVAL1_9":        return "images/trainers/Red_and_Blue/RIVAL2.png";
+                    case "RIVAL2_1":        return "images/trainers/Red_and_Blue/RIVAL2.png";
+                    case "RIVAL2_2":        return "images/trainers/Red_and_Blue/RIVAL2.png";
+                    case "RIVAL2_3":        return "images/trainers/Red_and_Blue/RIVAL2.png";
+                    case "JR TRAINER F_5":  return "images/trainers/Red_and_Blue/JR TRAINER F_5.png";
+                    case "YOUNGSTER_1":     return "images/trainers/Red_and_Blue/BEN.png";
+                    case "POKEMANIAC_7":    return "images/trainers/Red_and_Blue/POKEMANIAC_7.png";
+                    case "SUPER NERD_2":    return "images/trainers/Red_and_Blue/FOSSIL_NERD.png";
+                    case "LASS_10":         return "images/trainers/Red_and_Blue/ODDISH_LASS.png";
+                    case "JR TRAINER F_10": return "images/trainers/Red_and_Blue/JR TRAINER F_10.png";
+                    case "ROCKET_5":        return "images/trainers/dig_rocket.png";
+                    case "ROCKET_38":       return "images/trainers/Red_and_Blue/ROCKET_38.png";
+                    case "HIKER_9":         return "images/trainers/Red_and_Blue/HIKER_9.png";
+                    case "LASS_3":          return "images/trainers/Red_and_Blue/LASS_3.png";
+                    case "JR TRAINER F_1":  return "images/trainers/Red_and_Blue/GOLDEEN.png";
+                    case "ROCKET_25":       return "images/trainers/Red_and_Blue/HYPNO_SANDWICH.png";
+                    case "JR TRAINER F_3":  return "images/trainers/Red_and_Blue/JR TRAINER F_3.png";
+                    case "CHANNELER_10":    return "images/trainers/Red_and_Blue/AGATHAJR.png";
+                    case "BROCK_1":         return "images/trainers/Red_and_Blue/brock.png";
+                    case "MISTY_1":         return "images/trainers/Red_and_Blue/misty.png";
+                    case "ERIKA_1":         return "images/trainers/Red_and_Blue/erika.png";
+                    case "KOGA_1":          return "images/trainers/Red_and_Blue/koga.png";
+                    case "LORELEI_1":       return "images/trainers/lorelei.png";
+                    case "BRUNO_1":         return "images/trainers/bruno.png";
+                    case "AGATHA_1":        return "images/trainers/agatha.png";
+                    case "LANCE_1":         return "images/trainers/lance.png";
+                    case "ROCKET_1":        return "images/trainers/Red_and_Blue/mtmoon_rocket_boss.png";
+                    case "HIKER_2":         return "images/trainers/Red_and_Blue/elixir_hiker.png";
+                    default:                return null;
                 }
               }
             }
         },
-
-        //determine if the player is in a `Mart` or `Department` store.
-        //this is currently used to display the number of remaining vitamins that can be used on each stat
-        //in the future it can be used to display the player's inventory (a feature that is not yet implemented)
-        g1martSelector(map) {
-            if (!this.inventory) {
-              return "Overworld";
-            }
-          
-            switch (map) {
-              case "Viridian City - Mart":
-              case "Pewter City - Mart":
-              case "Cerulean City - Mart":
-              case "Vermilion City - Mart":
-              case "Lavender Town - Mart":
-              case "Fuchsia City - Mart":
-              case "Cinnabar Island - Mart":
-              case "CINNABAR_MART_COPY":
-              case "Saffron City - Mart":
-              case "Indigo Plateau - Lobby":
-              case "Celadon City - Pokecenter":
-              case "Saffron City - Pokecenter":
-                return "Mart"; // currently unused
-              case "Celadon City - Department Store - 1F":
-              case "Celadon City - Department Store - 2F":
-              case "Celadon City - Department Store - 3F":
-              case "Celadon City - Department Store - 4F":
-              case "Celadon City - Department Store - 5F":
-              case "Celadon City - Department Store - Roof":
-              case "Celadon City - Department Store - Elevator":
-              case "Cinnabar Mansion":
-              case "Safari Zone (Center)":
-              case "Safari Zone (East)":
-              case "Safari Zone (North)":
-              case "Safari Zone (West)":
-              case "Safari Zone - Secret House":
-                return "Department"; // shows vitamins
-              default:
-                return "Overworld"; // shows regular stat labels
-            }
-        },
-
         //Sets the crop on the UI image for the enemy team so that unused party slots are not present
         battle_pokemon_crop() {
             const totalPokemon = this.mapper.properties.battle.trainer.totalPokemon;
@@ -2593,25 +1868,6 @@ const app = Vue.createApp({
               6: "1080px"
             };
             return `height: ${heights[totalPokemon]}; filter: saturate(${this.ui_saturation}) drop-shadow(0px 0px 1px #000000)`;
-        },
-        
-        //GAMETIME FUNCTIONS
-        //formats the gametime so that it is displayed correctly
-        //0:00 is the minimum values
-        gameTimeHM(h, m) {
-            if (h <= 0) return m;
-            if (m < 10) m = "0" + m.toString();
-            return `${h}:${m}`;
-        },
-        gameTimeHMS(h, m, s) {
-            if (h <= 0) {
-                if (m <= 0) return `${s}`;
-                if (s < 10) s = "0" + s.toString();
-                return `${m}:${s}`;
-            }
-            if (s < 10) s = "0" + s.toString();
-            if (m < 10) m = "0" + m.toString();
-            return `${h}:${m}:${s}`;
         },
         // MOVE MANAGEMENT
         sleep(ms) {
@@ -2665,17 +1921,13 @@ const app = Vue.createApp({
             }
         },
 
-
-        badgeBoost(badge, stat) {
-            return badge ? Math.floor(stat * 1.125) : stat;
-        },
         //text_functions.js
         move_name,
         capitalization_format,
-
         //autosplitter_functions.js
         log_split,
         autosplitter_process,
+        format_trainer_name,
     },
 
 //--------- PROGRAM MOUNTED ---------------------------------------------------------------------------------------------------------------//
@@ -3073,12 +2325,10 @@ const app = Vue.createApp({
         //F20 used 
         //F21 used
         //F22 unused
-
         keyhook.registerShortCut('F23', async () => {
             this.newRun()
         });
         keyhook.registerShortCut('F24', async () => {
-            // this.pauseUnpauseTime()
             this.timer.pauseUnpauseTime();
         });
     },
