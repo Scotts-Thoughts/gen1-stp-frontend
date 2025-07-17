@@ -32,6 +32,7 @@ function createWatchedObject(watcher) {
 }
 
 const MyStorage = require("./logic/MyStorage");
+const PokeData = require("./logic/PokeData.js");
 const Storage = require("./logic/Storage");
 
 const app = Vue.createApp({
@@ -51,7 +52,10 @@ const app = Vue.createApp({
     mounted: async function () {
         const that = this
         this.mapper = new GameHookMapperClient()
-        this.mapper.onMapperLoaded = (x) => this.ready = true
+        this.mapper.onMapperLoaded = (x) => {
+            this.ready = true;
+            PokeData.setGame(this.mapper.properties.meta.gameName.value);
+        }
         this.mapper.onMapperUnloaded = (x) => this.ready = false
         await this.mapper.connect()
     },

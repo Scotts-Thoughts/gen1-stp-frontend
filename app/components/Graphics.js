@@ -1,6 +1,7 @@
 const PubSub = require("../logic/PubSub");
 const textures = require("../data/textures");
-const UIStyles = require("../logic/UIStyles")
+const UIStyles = require("../logic/UIStyles");
+const PokeData = require("../logic/PokeData");
 
 const template = /*html*/`
     <div>
@@ -53,7 +54,6 @@ const template = /*html*/`
 module.exports = {
     template,
     props: [
-        "g1PokemonData",
         "game_name",
         "starterName",
         "dynamicReset",
@@ -83,7 +83,7 @@ module.exports = {
     watch: {
         async starterName(newValue, oldValue) {
                //transition between background textures
-            this.$refs.old_background_texture.src = `images/textures/${this.g1PokemonData[oldValue].type1}.png`
+            this.$refs.old_background_texture.src = `images/textures/${PokeData.getSpecies(oldValue).type_1}.png`
             this.$refs.old_background_texture.style.opacity = 1
             
             await transition((t) => {

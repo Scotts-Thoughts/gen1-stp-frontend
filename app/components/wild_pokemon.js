@@ -1,5 +1,5 @@
-const moveData = require("../data/g1MoveData")
 const { get_enemy_pkmn_styles } = require("../methods/enemy");
+const PokeData = require("../logic/PokeData")
 
 const template = /*html*/ `
 <div v-if="state == 'Battle' || state == 'From Battle'">
@@ -29,7 +29,7 @@ const template = /*html*/ `
                 <img v-if="wild_mon['move' + (move_index + 1)]?.value != null" 
                     :class="'ds eMoveIconStyle moveIcon' + (move_index + 1) + ' opacityTransition'" 
                     :style="enemy_pkmn_faint_types(wild_mon)" 
-                    :src="'images/elements/type-icons/' + (g1MoveData[move_name(wild_mon['move' + (move_index + 1)]?.value)]?.Type?.toLowerCase() || 'normal') + '.png'" 
+                    :src="'images/elements/type-icons/' + (getMove[move_name(wild_mon['move' + (move_index + 1)]?.value)]?.type?.toLowerCase() || 'normal') + '.png'" 
                 />
                 <div :class="'ePkmnMoveStyle ePkmnMove' + (move_index + 1) + ' opacityTransition'" 
                     :style="get_enemy_pkmn_styles(wild_mon).text">
@@ -82,7 +82,6 @@ module.exports = {
         "mapper",
         "state",
         "starterName",
-        "g1PokemonData",
         "enemyState",
         "battle_pokemon_crop",
         "move_name",
@@ -92,21 +91,21 @@ module.exports = {
     data() {
         return {
             enemyModColour:  ["0", "background: #d84444;"],
-            // we have to put this in the data for use in the template, but we also don't want vue to track this object.
-            // Accoridng to search engine results, Object.freeze() is the solution.
-            g1MoveData: Object.freeze(moveData.gen1), 
         }
     },
     methods: {
         get_enemy_pkmn_styles,
+        getMove(moveName) {
+            return PokeData.getMove(moveName);
+        },
         wild_pkmn_name(species_string) {
             if (species_string == null || species_string == undefined) { return "" }
             species_string = species_string.toLowerCase()
             const speciesMappings = {
-              "nidoranm":     "Nidoran M",
-              "nidoranf":     "Nidoran F",
-              "mr. mime":     "Mr. Mime",
-              "farfetch'd":   "Farfetch'd",
+                "nidoranm":     "Nidoran M",
+                "nidoranf":     "Nidoran F",
+                "mr. mime":     "Mr. Mime",
+                "farfetch'd":   "Farfetch'd",
             };
             const formattedMove = speciesMappings[species_string];
             // console.log(formattedMove, species_string)
@@ -115,7 +114,7 @@ module.exports = {
         capitalization_format(str) {
             if (str == null) { return "" }
             return str.toLowerCase().replace(/(^|\s|\-|\.)(\w)/g, function(match, p1, p2) {
-              return p1 + p2.toUpperCase();
+                return p1 + p2.toUpperCase();
             });
         },
         enemyMods(modValue) {
@@ -168,28 +167,28 @@ module.exports = {
             return 'red-svg';
         },
         enemyType1(slotNumber) {
-            const pkmn_species = this.mapper.properties.battle.enemyPokemon.species.value
-            if (pkmn_species == null) { 
+            const speciesName = this.mapper.properties.battle.enemyPokemon.species.value
+            if (speciesName == null) { 
                 return "Normal"
             }
-            return this.g1PokemonData[pkmn_species].type1
+            return PokeData.getSpecies(speciesName).type_1
         },
         enemyType2(slotNumber) {
-            const pkmn_species = this.mapper.properties.battle.enemyPokemon.species.value
+            const speciesName = this.mapper.properties.battle.enemyPokemon.species.value
             const type_1 = this.enemyType1(slotNumber)
-            if (pkmn_species == null) { 
+            if (speciesName == null) { 
                 return "Normal"
             }
-            const type_2 = this.g1PokemonData[pkmn_species].type2
+            const type_2 = PokeData.getSpecies(speciesName).type_2
             if (type_1 == type_2 && this.starterName == 'Pumpkaboo' && this.mapper.properties.patch.backport.prop_2.value == 8 && this.mapper.properties.battle.enemyPokemon.partyPos.value == slotNumber) {
                 return 'Ghost'
             }
             return type_2
         },
         enemyType3(slotNumber) {
-            const pkmn_species = this.mapper.properties.battle.enemyPokemon?.species.value
-            const type1 = this.g1PokemonData[pkmn_species]?.type1 || "Normal"
-            const type2 = this.g1PokemonData[pkmn_species]?.type2 || "Normal"
+            const speciesName = this.mapper.properties.battle.enemyPokemon?.species.value
+            const type1 = PokeData.getSpecies(speciesName)?.type_1 || "Normal"
+            const type2 = PokeData.getSpecies(speciesName)?.type_2 || "Normal"
             if (type2 != null && type1 != type2 && this.starterName == 'Pumpkaboo' && this.mapper.properties.patch.backport.prop_2.value == 8 && this.mapper.properties.battle.enemyPokemon.partyPos.value == slotNumber) {
                 return 'Ghost'
             }
@@ -223,8 +222,8 @@ module.exports = {
             return object
         },
         enemy_crit_rate(pkmnData) {
-            const species = pkmnData?.species.value
-            const base_speed = this.g1PokemonData[species]?.base_spd
+            const speciesName = pkmnData?.species.value
+            const base_speed = PokeData.getSpecies(speciesName)?.base_stats.speed
             if (base_speed) {
                 return Math.round(Math.round((Math.floor(base_speed/2)/256) * 10000) / 100)
             }

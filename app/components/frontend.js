@@ -1,3 +1,4 @@
+const PokeData = require("../logic/PokeData.js");
 const Timer = require("../logic/Timer.js");
 const UIStyles = require("../logic/UIStyles.js");
 
@@ -35,11 +36,10 @@ const template = /*html*/`
     </div>
     <type_icons :pkmn_type="pkmn_type"></type_icons>
     <moveset
-        :starter="starterName"
+        :starter-name="starterName"
         :mapper="mapper"
         :state="state"
         :move_name="move_name"
-        :pokedex_data="g1PokemonData"
         :dynamic_mon="s1dynamic"
         :capitalization_format="capitalization_format"
         :display_badge_boosts="display_badge_boosts"
@@ -47,20 +47,17 @@ const template = /*html*/`
     <stats
         :mapper="mapper"
         :state="state"    
-        :starter="starterName"    
+        :starter-name="starterName"    
         :stats_display="stats_display"
-        :pokedex_old="g1PokemonData"
-        :pokedex_yellow="pokedex_yellow"
         :display_badge_boosts="display_badge_boosts"
         :dynamic_mon="s1dynamicReset"
     ></stats>   
-    <!-- <exp_bar
+    <exp_bar
         :mapper="mapper"
         :dynamic-reset="s1dynamicReset"
         :starter-name="starterName"
-        :g1-pokemon-data="g1PokemonData"
         :sleep="sleep"
-    ></exp_bar> -->
+    ></exp_bar>
     <badge_boosts :mapper="mapper" ></badge_boosts>
     <badges :mapper="mapper"></badges>
     <timer></timer>
@@ -70,7 +67,6 @@ const template = /*html*/`
         <div v-if="right_panel == 'Movepool'" key=0>
             <movepool
                 :starter-name="starterName"
-                :pokemon_version_specific_data="pokemon_version_specific_data"
                 :dynamic-reset="s1dynamicReset"
                 :starting_type_fix="starting_type_fix"
             ></movepool>
@@ -90,7 +86,7 @@ const template = /*html*/`
                 <div v-else-if="toggle_compare_splits === 'First'">
                     <splits_first
                         :starting_type_fix="starting_type_fix"
-                        :compare_splits="compare_splits"
+                        :first_splits="first_splits"
                         :trainer_name_lookup="trainer_name_lookup"
                     ></splits_first>
                 </div>
@@ -107,7 +103,6 @@ const template = /*html*/`
                 :speed_comparison_toggle="speed_comparison_toggle"
                 :battle_pokemon_crop="battle_pokemon_crop"
                 :enemy_pkmn_faint_types="enemy_pkmn_faint_types"
-                :g1-pokemon-data="g1PokemonData"
                 :starter-name="starterName"
                 :enemy-state="enemyState"
                 :state="state"
@@ -119,7 +114,6 @@ const template = /*html*/`
                 :mapper="mapper"
                 :state="state"
                 :starter-name="starterName"
-                :g1-pokemon-data="g1PokemonData"
                 :enemy-state="enemyState"
                 :battle_pokemon_crop="battle_pokemon_crop"
                 :batt="batt"
@@ -131,7 +125,6 @@ const template = /*html*/`
         <div v-else-if="key_F14 == true" key=3>
             <movepool
                 :starter-name="starterName"
-                :pokemon_version_specific_data="pokemon_version_specific_data"
                 :dynamic-reset="s1dynamicReset"
                 :starting_type_fix="starting_type_fix"
             ></movepool>
@@ -199,8 +192,6 @@ module.exports = {
             game_name: "Yellow",
 
             // Static Data
-            g1PokemonData          : g1PokemonData,
-            g1PokemonDataRB        : g1PokemonDataRB,
             settings               : settings,
             auto_save_settings     : auto_save_settings,
             deprecated_autosplitter: deprecated_autosplitter,
@@ -212,12 +203,6 @@ module.exports = {
             time_settings          : time_settings,
             battle_summary         : battle_summary,
             backport_data          : backport_data,
-            cross_generation_moves : cross_generation_moves,
-
-            pokedex_red_blue   : pokedex_red_blue,
-            pokedex_yellow     : pokedex_yellow,
-            pokedex_gold_silver: pokedex_gold_silver,
-            pokedex_crystal    : pokedex_crystal,
 
             // Objects
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
@@ -588,7 +573,6 @@ module.exports = {
     computed: {
         graphicsProps() {
             return {
-                g1PokemonData: this.g1PokemonData,
                 game_name: this.game_name,
                 starterName: this.starterName,
                 dynamicReset: this.s1dynamicReset,
@@ -674,6 +658,21 @@ module.exports = {
                 return this.pokemon_list.filter(pokemon => pokemon.toLowerCase().includes(this.search_term.toLowerCase()));
             }
         },
+        first_splits()  {
+            const game = this.mapper.properties.meta.gameName.value;
+            const optional = ["Rival1a-Route 22"];
+            const completedSplits = this.current_splits
+                .filter(split => this.split_trainers[game].includes(split.trainer))
+                .map(split => { return { trainer: split.trainer, current_time: split.time}});
+            const upcomingSplits = this.split_trainers[game]
+                .filter(trainer => !optional.includes(trainer))
+                .filter(trainer => !completedSplits.some(split => split.trainer === trainer))
+                .map(x => ({trainer: x, current_time: "-" }));
+            return [
+                ...completedSplits,
+                ...upcomingSplits
+            ];
+        },
         compare_splits() {
             if (this.collect_split_data == true) {
                 const result = []
@@ -746,11 +745,6 @@ module.exports = {
                 return this.playerResets
             }
         },
-
-        pokemon_version_specific_data() {
-            if (this.mapper.properties.meta.gameName.value == "Yellow")       { return this.g1PokemonData }
-            if (this.mapper.properties.meta.gameName.value == "Red and Blue") { return this.g1PokemonDataRB }
-        },
         gametimeSplit() {
             h = this.mapper.properties.gameTime.hours
             m = this.mapper.properties.gameTime.minutes
@@ -792,7 +786,7 @@ module.exports = {
                 }
             }
             else if (this.state == `Base Stats` || this.mapper?.properties?.player?.team[0].species.value == null) {
-                const pokedex_data = this.g1PokemonData?.[this.starterName]
+                const pokedex_data = PokeData.getSpecies(this.starterName);
                 if (this.mapper.properties.player.team[0].species.value == "Backport") {
                     species = this.starterName
                 }
@@ -818,13 +812,12 @@ module.exports = {
         },
         starting_type_fix() {
             if (this.map.overworld.map.value == "Pallet Town - Oak's Lab" || this.state == "No Pokemon") {
-                const fixed_type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
-                const fixed_type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
+                const fixed_type1 = PokeData.getSpecies(this.starterName).type_1.toLowerCase();
+                const fixed_type2 = PokeData.getSpecies(this.starterName).type_2.toLowerCase();
                 return [fixed_type1, fixed_type2]
-            }
-            else {
-                const type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
-                const type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
+            } else {
+                const type1 = PokeData.getSpecies(this.starterName).type_1.toLowerCase();
+                const type2 = PokeData.getSpecies(this.starterName).type_2.toLowerCase();
                 return [type1, type2]
             }
         },
@@ -843,17 +836,17 @@ module.exports = {
             }
         },
         getStarterType() {
-            var type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
-            var type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
-            return { "type1": type1, "type2": type2 }
+            var type1 = PokeData.getSpecies(this.starterName).type_1.toLowerCase();
+            var type2 = PokeData.getSpecies(this.starterName).type_2.toLowerCase();
+            return { "type_1": type1, "type_2": type2 }
         },
     },
     methods: {
         async set_rom_starter() {
-            let starter        = this.starterName
-            let pokedex_data   = this.pokedex_yellow[starter]
-            let pokedex_number = pokedex_data.national_dex_number
-            let backport_index = [0xBF]
+            let starter        = this.starterName;
+            let pokedex_data   = PokeData.getSpecies(starter);
+            let pokedex_number = pokedex_data.national_dex_number;
+            let backport_index = [0xBF];
             if (pokedex_number > 151) {
                 await this.mapper.properties.patch.hChosenStarter.setBytes([backport_index], false)
             }
@@ -922,18 +915,23 @@ module.exports = {
             this.playerName = "NINTEN"
         },
         pkmn_type(typeNumber) {
-            data = this.g1PokemonData[this.starterName]
+            
+            data = PokeData.getSpecies(this.starterName);
             if (this.state == `Battle`) {
-                return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value ? this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value?.toLowerCase() : this.g1PokemonData[this.starterName]['type' + typeNumber.toString()]
+                return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value 
+                    ? this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value?.toLowerCase() 
+                    : PokeData.getSpecies(this.starterName)['type_' + typeNumber.toString()];
             }
             if (this.state == `Overworld` || this.state == `To Battle` || this.state == `From Battle`) {
-                return this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value ? this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value?.toLowerCase() : this.g1PokemonData[this.starterName]['type' + typeNumber.toString()]
+                return this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value 
+                    ? this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value?.toLowerCase() 
+                    : PokeData.getSpecies(this.starterName)['type_' + typeNumber.toString()];
             }
             if (this.state != `Battle`) {
-                return data["type" + typeNumber.toString()].toLowerCase()
+                return data["type_" + typeNumber.toString()].toLowerCase()
             }
             if (this.state == "No Pokemon" || this.mapper.properties.player.team[0].species.value == null) {
-                return this.g1PokemonData[this.starterName]["type" + typeNumber.toString()]?.toLowerCase()
+                return PokeData.getSpecies(this.starterName)["type_" + typeNumber.toString()]?.toLowerCase()
             }
         },
         increment(property) {
@@ -1001,10 +999,10 @@ module.exports = {
             }
             else {
                 if (typeNumber == 1) {
-                    return `images/elements/types/${this.getStarterType.type1.toLowerCase()}.png`
+                    return `images/elements/types/${this.getStarterType.type_1.toLowerCase()}.png`
                 }
                 else if (typeNumber == 2) {
-                    return `images/elements/types/${this.getStarterType.type2.toLowerCase()}.png`
+                    return `images/elements/types/${this.getStarterType.type_2.toLowerCase()}.png`
                 }
             }
         },
@@ -1040,7 +1038,7 @@ module.exports = {
     mounted: async function () {
         this.load_split_settings()
         this.timer.update();
-        this.pokemon_list = this.keys_function(this.g1PokemonData)
+        this.pokemon_list = PokeData.getAllSpecieNames(); 
 
         // reset tracking
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {

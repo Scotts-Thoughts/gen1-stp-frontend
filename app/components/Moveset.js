@@ -1,6 +1,6 @@
-const moveData = require("../data/g1MoveData");
 const stageModifiersData = require("../data/stage-modifiers");
 const typeEffectiveness = require("../data/type-effectiveness");
+const PokeData = require("../logic/PokeData");
 
 const template = /*html*/`
     <div>
@@ -17,10 +17,10 @@ const template = /*html*/`
                         {{ move_name(capitalization_format(get_backport_move(move))) }}
                     </div>
                     <div v-show="mapper.properties.player.team[0][move].value != null" :class="'movesetStyling powerStyling ' + move" :key="type_effectiveness(dynamic_mon,move,mapper.properties.battle.enemyPokemon)">
-                        {{ type_effectiveness(dynamic_mon,move,mapper.properties.battle.enemyPokemon) }}
+                        {{ type_effectiveness(dynamic_mon,move,mapper.properties.battle.enemyPokemon) || "-" }}
                     </div>
                     <div v-show="mapper.properties.player.team[0][move].value != null" :class="'movesetStyling accuracyStyling ' + move">
-                        {{ moveAccuracyEvasionDynamic(get_backport_move(move))}}<span style="font-size: 20px;">%</span>
+                        {{ moveAccuracyEvasionDynamic(get_backport_move(move)) || "-"}}<span style="font-size: 20px;">%</span>
                     </div>
                     <div v-show="mapper.properties.player.team[0][move].value != null" :class="'movesetStyling ppStyling ' + move">
                         {{ mapper.properties.player.team[0][move + "pp"] }}
@@ -38,8 +38,6 @@ module.exports = {
         "mapper",
         "state",
         "move_name",
-        "move_data",
-        "pokedex_data",
         "dynamic_mon",
         "capitalization_format",
         "display_badge_boosts",
@@ -48,7 +46,6 @@ module.exports = {
         return {
             typeCalcs             : true, // Calculates effective power based on the pokemon in battle, if false returns the move's base power with no modifications
             showCritMultiplierInEP: true, // Shows crit multiplier in the effective power if the Pokemon will always score a critical hit with the given move
-
             starterName: this.starter,
             pkmnMoves: ["move1","move2","move3","move4"],
         }
@@ -57,8 +54,8 @@ module.exports = {
         moveTypeIcon(move_name_string) {
             if (move_name_string != null && move_name_string != undefined) {
                 var moveName = this.move_name(move_name_string)
-                var move = moveData.gen1[moveName];
-                var moveType = move.Type.toLowerCase()
+                var move = PokeData.getMove(moveName);
+                var moveType = move.type.toLowerCase()
                 return `images/elements/type-icons/${moveType}.png`
             }
             return null
@@ -96,17 +93,16 @@ module.exports = {
 
         type_effectiveness(pkmnData, moveNumber, enemyData) { //pkmnData = team[0] etc
             if (this.typeCalcs == true) {
-                const move_data_array = Object.values(moveData.gen1);
                 var move_name          =  this.get_backport_move_name(pkmnData[moveNumber].value, this.starterName, pkmnData[moveNumber].bytes)
                 // console.log(move_name)
 
                 if (move_name == null) { return "" } //stop the function if there is no move in that slot
                 if (move_name == 'Doom Desire') { return 120 }
 
-                var move_type            = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Type
+                var move_type            = PokeData.getMove(move_name).type
                 var move_info            = typeEffectiveness.find(x => x.moveType === move_type)
                 var move_power           = this.movePower(move_name)
-                var move_category        = move_data_array.find(x => x.Move.toLowerCase() == move_name.toLowerCase()).Category
+                var move_category        = PokeData.getMove(move_name).category
                 var attacker_type1       = pkmnData.type1.value
                 var attacker_type2       = pkmnData.type2.value
                 var defender_type1       = enemyData.type1.value
@@ -148,15 +144,18 @@ module.exports = {
             if (y) {
                 const state = this.mapper.properties.meta.state.value
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
-                var move = moveData.gen1[this.move_name(y)]
+                var move = PokeData.getMove(this.move_name(y));
+                if (move.power === 0) {
+                    return 0;
+                }
                 if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP" || y.toUpperCase() == "AEROBLAST")) {
-                    level = this.mapper.properties.player.team[0].level.value
-                    critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
-                    power = move.Power
-                    pokemon = this.g1PokemonData[this.starterName]
-                    baseSpeed = pokemon.base_spd
-                    //test to see if the Pokemon always crits
-                    if (baseSpeed > 64) { //if the Pokemon has 63 or less base speed it will crit less often
+                    const level = this.mapper.properties.player.team[0].level.value
+                    const critModifier = (2*level+5)/(level+5) // This part of the function is currently an approximation
+                    const power = move.power
+                    const pokemon = PokeData.getSpecies(this.starterName);
+                    const baseSpeed = pokemon.base_stats.speed;
+                    // test to see if the Pokemon always crits
+                    if (baseSpeed > 64) { // if the Pokemon has 63 or less base speed it will crit less often
                         return power * critModifier
                     }
                     else {
@@ -172,15 +171,15 @@ module.exports = {
                     if (rage_fist_power > 350) { return 350 }
                     else { return rage_fist_power }
                 }
-                else if (move) { return move.Power }
+                else if (move) { return move.power }
             }
             return null
         },
         moveAccuracyEvasionDynamic(move) {
             if (move) {
-                var move_name = this.move_name(move)
-                var moveObject = moveData.gen1[move_name]
-                var moveAccuracy = moveObject.Accuracy
+                var move_name = this.move_name(move);
+                var moveObject = PokeData.getMove(move_name);
+                var moveAccuracy = moveObject.accuracy
                 var accuracyStageMods = stageModifiersData.find(x => x.modType === "accuracy")
                 var currentAccuracyModStage = this.mapper?.properties?.battle?.yourPokemon.modStageAccuracy.value
                 var evasionStageMods = stageModifiersData.find(x => x.modType === "evasion")

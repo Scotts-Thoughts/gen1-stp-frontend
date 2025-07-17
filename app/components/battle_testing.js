@@ -1,3 +1,5 @@
+const PokeData = require("../logic/PokeData")
+
 const template = /*html*/`
     <div>
         <div>Moveset Updating:</div>
@@ -57,61 +59,59 @@ module.exports = {
             }
         },
         async update_moveset() {
-            const move_data = this.cross_generation_moves.g1
-            var move1 = this.move1_replacement.toUpperCase()
-            var move2 = this.move2_replacement.toUpperCase()
-            var move3 = this.move3_replacement.toUpperCase()
-            var move4 = this.move4_replacement.toUpperCase()
-            var pp1   = move_data[this.move_name(move1)]
-            var pp2   = move_data[this.move_name(move2)]
-            var pp3   = move_data[this.move_name(move3)]
-            var pp4   = move_data[this.move_name(move4)]
-            if (move1 != "") {
-                await this.mapper.properties.player.team[0].move1.set(move1, false)
-                await this.mapper.properties.player.team[0].move1pp.set(pp1.PP, false)
+            const moveName1 = this.move1_replacement.toUpperCase();
+            const moveName2 = this.move2_replacement.toUpperCase();
+            const moveName3 = this.move3_replacement.toUpperCase();
+            const moveName4 = this.move4_replacement.toUpperCase();
+            const move1   = PokeData.getMove(this.move_name(moveName1));
+            const move2   = PokeData.getMove(this.move_name(moveName2));
+            const move3   = PokeData.getMove(this.move_name(moveName3));
+            const move4   = PokeData.getMove(this.move_name(moveName4));
+            if (moveName1 != "") {
+                await this.mapper.properties.player.team[0].move1.set(moveName1, false)
+                await this.mapper.properties.player.team[0].move1pp.set(move1.pp, false)
             }
-            if (move2 != "") {
-                await this.mapper.properties.player.team[0].move2.set(move2, false)
-                await this.mapper.properties.player.team[0].move2pp.set(pp2.PP, false)
+            if (moveName2 != "") {
+                await this.mapper.properties.player.team[0].move2.set(moveName2, false)
+                await this.mapper.properties.player.team[0].move2pp.set(move2.pp, false)
             }
-            if (move3 != "") {
-                await this.mapper.properties.player.team[0].move3.set(move3, false)
-                await this.mapper.properties.player.team[0].move3pp.set(pp3.PP, false)
+            if (moveName3 != "") {
+                await this.mapper.properties.player.team[0].move3.set(moveName3, false)
+                await this.mapper.properties.player.team[0].move3pp.set(move3.pp, false)
             }
-            if (move4 != "") {
-                await this.mapper.properties.player.team[0].move4.set(move4, false)
-                await this.mapper.properties.player.team[0].move4pp.set(pp4.PP, false)
+            if (moveName4 != "") {
+                await this.mapper.properties.player.team[0].move4.set(moveName4, false)
+                await this.mapper.properties.player.team[0].move4pp.set(move4.pp, false)
             }
         },
         async update_battle_moveset() {
-            if (this.mapper.properties.meta.state.value == "Battle") {
-                const move_data = this.cross_generation_moves.g1
-                var move1 = this.move1_replacement.toUpperCase()
-                var move2 = this.move2_replacement.toUpperCase()
-                var move3 = this.move3_replacement.toUpperCase()
-                var move4 = this.move4_replacement.toUpperCase()
-                var pp1   = move_data[this.move_name(move1)]
-                var pp2   = move_data[this.move_name(move2)]
-                var pp3   = move_data[this.move_name(move3)]
-                var pp4   = move_data[this.move_name(move4)]
-                if (move1 != "") {
-                    await this.mapper.properties.battle.yourPokemon.move1.set(move1, false)
-                    await this.mapper.properties.battle.yourPokemon.move1pp.set(pp1.PP, false)
-                }
-                if (move2 != "") {
-                    await this.mapper.properties.battle.yourPokemon.move2.set(move2, false)
-                    await this.mapper.properties.battle.yourPokemon.move2pp.set(pp2.PP, false)
-                }
-                if (move3 != "") {
-                    await this.mapper.properties.battle.yourPokemon.move3.set(move3, false)
-                    await this.mapper.properties.battle.yourPokemon.move3pp.set(pp3.PP, false)
-                }
-                if (move4 != "") {
-                    await this.mapper.properties.battle.yourPokemon.move4.set(move4, false)
-                    await this.mapper.properties.battle.yourPokemon.move4pp.set(pp4.PP, false)
-                }
+            if (this.mapper.properties.meta.state.value !== "Battle") {
+                return;
             }
-            else { return }
+            const moveName1 = this.move1_replacement.toUpperCase();
+            const moveName2 = this.move2_replacement.toUpperCase();
+            const moveName3 = this.move3_replacement.toUpperCase();
+            const moveName4 = this.move4_replacement.toUpperCase();
+            const move1   = move_data[this.move_name(moveName1)];
+            const move2   = move_data[this.move_name(moveName2)];
+            const move3   = move_data[this.move_name(moveName3)];
+            const move4   = move_data[this.move_name(moveName4)];
+            if (move1 != "") {
+                await this.mapper.properties.battle.yourPokemon.move1.set(move1, false)
+                await this.mapper.properties.battle.yourPokemon.move1pp.set(move1.PP, false)
+            }
+            if (move2 != "") {
+                await this.mapper.properties.battle.yourPokemon.move2.set(move2, false)
+                await this.mapper.properties.battle.yourPokemon.move2pp.set(move2.PP, false)
+            }
+            if (move3 != "") {
+                await this.mapper.properties.battle.yourPokemon.move3.set(move3, false)
+                await this.mapper.properties.battle.yourPokemon.move3pp.set(move3.PP, false)
+            }
+            if (move4 != "") {
+                await this.mapper.properties.battle.yourPokemon.move4.set(move4, false)
+                await this.mapper.properties.battle.yourPokemon.move4pp.set(move4.PP, false)
+            }            
         },
     }
 }

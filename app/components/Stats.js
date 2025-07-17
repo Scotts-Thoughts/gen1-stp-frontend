@@ -1,6 +1,8 @@
+const PokeData = require("../logic/PokeData")
+
 const template = /*html*/`
     <div class="statsContainer"> 
-        <div class="critrate">Crit rate: {{ crit_rate(g1PokemonData[starterName]) }}%</div>
+        <div class="critrate">Crit rate: {{ crit_rate }}%</div>
         <div>
             <div class="statsheader">{{stats_header}}</div>
             <div class="expLabelGen1">Exp:</div>
@@ -37,17 +39,13 @@ module.exports = {
     props: [
         "mapper",
         "state",
-        "starter",
+        "starterName",
         "stats_display",
-        "pokedex_old",
-        "pokedex_yellow",
         "display_badge_boosts",
         "dynamic_mon",
     ],
     data() {
         return {
-            starterName: this.starter,
-            g1PokemonData: this.pokedex_old,
             s1dynamicReset: this.dynamic_mon,
             stat_object: [
                 { name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             mod_path: "Hp",      statExpPath: "statExpHp",      vitamin: "HP Up",  }, 
@@ -59,6 +57,9 @@ module.exports = {
         }
     },
     computed: {
+        crit_rate() {
+            return this.calculate_crit_rate(PokeData.getSpecies(this.starterName));
+        },
         stats_header() {
             const stat_type = this.stats_display
             const state     = this.state
@@ -80,24 +81,29 @@ module.exports = {
             }
         },
         growthRate() {
-            var species = this.s1dynamicReset.species.value == 'Backport' ? this.starterName : this.s1dynamicReset.species.value
+            var species = this.s1dynamicReset.species.value == 'Backport' 
+            ? this.starterName 
+            : this.s1dynamicReset.species.value;
             // debugger
-            return this.g1PokemonData[species ?? this.starterName].growth_rate
+            return PokeData.getSpecies(species ?? this.starterName).growth_rate
         },
     },
     methods: {
+        base_stats(statPath) {
+            return PokeData.getSpecies(this.starterName).base_stats[statPath];
+        },
         usable_vitamins(stat_experience) { //stat exp ranges from 0 - 65535
             const vitaminsUsed = stat_experience / 2560;
             const usable_vitamins = Math.ceil(10 - vitaminsUsed);
             return usable_vitamins < 0 ? 0 : usable_vitamins;
         },
-        crit_rate(pkmnData) {
-            var baseSpeed = pkmnData?.base_spd
+        calculate_crit_rate(pkmnData) {
+            var baseSpeed = pkmnData?.base_stats.speed;
             if (baseSpeed) {
                 return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
             }
             else {
-                return this.g1PokemonData[this.starterName].crit_rate
+                return PokeData.getSpecies(this.starterName).crit_rate
             }
         },
         average_median_stats(stat_label) {
@@ -105,7 +111,8 @@ module.exports = {
             let count = 0;
             let values = [];
             
-            for (let pokemon of Object.values(this.pokedex_yellow)) {
+            var completeDex = PokeData.getAllSpecies();
+            for (let pokemon of Object.values(completeDex)) {
                 // console.log(stat_label)
                 let stat = pokemon[`base_stats`][stat_label];
                 sum += stat;
@@ -172,12 +179,13 @@ module.exports = {
                 }
             }
             if (state == `Base Stats`) {
+                const dexData = PokeData.getSpecies(this.starterName);
                 switch (stat_name) {
-                    case "Hp":      return this.pokedex_yellow[this.starterName].base_stats.hp
-                    case "Attack":  return this.pokedex_yellow[this.starterName].base_stats.attack
-                    case "Defense": return this.pokedex_yellow[this.starterName].base_stats.defense
-                    case "Special": return this.pokedex_yellow[this.starterName].base_stats.special_attack
-                    case "Speed":   return this.pokedex_yellow[this.starterName].base_stats.speed
+                    case "Hp":      return dexData.base_stats.hp
+                    case "Attack":  return dexData.base_stats.attack
+                    case "Defense": return dexData.base_stats.defense
+                    case "Special": return dexData.base_stats.special_attack
+                    case "Speed":   return dexData.base_stats.speed
                 }
             }
         },
