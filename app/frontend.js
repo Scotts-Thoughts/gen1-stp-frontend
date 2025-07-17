@@ -51,7 +51,6 @@ const fs = require("fs");
 const path = require("path");
 const Timer = require("./logic/Timer.js");
 const UIStyles = require("./logic/UIStyles.js");
-const pokemonData = require("./data/pokemonData.js");
 
 for (let folder of folders = ['splits', 'splits/Yellow', 'splits/Red and Blue']) {
     if (!fs.existsSync(folder)) {
@@ -123,6 +122,8 @@ const app = Vue.createApp({
             release: false, //If set to false then development features will be displayed
 
             // Static Data
+            g1PokemonData          : g1PokemonData,
+            g1PokemonDataRB        : g1PokemonDataRB,
             settings               : settings,
             auto_save_settings     : auto_save_settings,
             deprecated_autosplitter: deprecated_autosplitter,
@@ -640,6 +641,7 @@ const app = Vue.createApp({
     computed: {
         graphicsProps() {
             return {
+                g1PokemonData: this.g1PokemonData,
                 ui_type_color_modifier: this.ui_type_color_modifier,
                 ui_stat_arrangement_modifier: this.ui_stat_arrangement_modifier,
                 game_name: this.game_name,
@@ -800,6 +802,11 @@ const app = Vue.createApp({
                 return this.playerResets
             }
         },
+
+        pokemon_version_specific_data() {
+            if (this.mapper.properties.meta.gameName.value == "Yellow")       { return this.g1PokemonData }
+            if (this.mapper.properties.meta.gameName.value == "Red and Blue") { return this.g1PokemonDataRB }
+        },
         gametimeSplit() {
             h = this.mapper.properties.gameTime.hours
             m = this.mapper.properties.gameTime.minutes
@@ -841,7 +848,7 @@ const app = Vue.createApp({
                 }
             }
             else if (this.state == `Base Stats` || this.mapper?.properties?.player?.team[0].species.value == null) {
-                const pokedex_data = pokemonData.gen1?.[this.starterName]
+                const pokedex_data = this.g1PokemonData?.[this.starterName]
                 if (this.mapper.properties.player.team[0].species.value == "Backport") {
                     species = this.starterName
                 }
@@ -867,13 +874,13 @@ const app = Vue.createApp({
         },
         starting_type_fix() {
             if (this.map.overworld.map.value == "Pallet Town - Oak's Lab" || this.state == "Base Stats") {
-                const fixed_type1 = pokemonData.gen1[this.starterName].type1.toLowerCase()
-                const fixed_type2 = pokemonData.gen1[this.starterName].type2.toLowerCase()
+                const fixed_type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
+                const fixed_type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
                 return [fixed_type1, fixed_type2]
             }
             else {
-                const type1 = pokemonData.gen1[this.starterName].type1.toLowerCase()
-                const type2 = pokemonData.gen1[this.starterName].type2.toLowerCase()
+                const type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
+                const type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
                 return [type1, type2]
             }
         },
@@ -892,8 +899,8 @@ const app = Vue.createApp({
             }
         },
         getStarterType() {
-            var type1 = pokemonData.gen1[this.starterName].type1.toLowerCase()
-            var type2 = pokemonData.gen1[this.starterName].type2.toLowerCase()
+            var type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
+            var type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
             return { "type1": type1, "type2": type2 }
         },
     },
@@ -1084,18 +1091,18 @@ const app = Vue.createApp({
             this.playerName = "NINTEN"
         },
         pkmn_type(typeNumber) {
-            data = pokemonData.gen1[this.starterName]
+            data = this.g1PokemonData[this.starterName]
             if (this.state == `Battle`) {
-                return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value ? this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value?.toLowerCase() : pokemonData.gen1[this.starterName]['type' + typeNumber.toString()]
+                return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value ? this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value?.toLowerCase() : this.g1PokemonData[this.starterName]['type' + typeNumber.toString()]
             }
             if (this.state == `Overworld` || this.state == `To Battle` || this.state == `From Battle`) {
-                return this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value ? this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value?.toLowerCase() : pokemonData.gen1[this.starterName]['type' + typeNumber.toString()]
+                return this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value ? this.mapper?.properties?.player?.team[0]?.["type" + typeNumber.toString()]?.value?.toLowerCase() : this.g1PokemonData[this.starterName]['type' + typeNumber.toString()]
             }
             if (this.state != `Battle`) {
                 return data["type" + typeNumber.toString()].toLowerCase()
             }
             if (this.state == "Base Stats" || this.mapper.properties.player.team[0].species.value == null) {
-                return pokemonData.gen1[this.starterName]["type" + typeNumber.toString()]?.toLowerCase()
+                return this.g1PokemonData[this.starterName]["type" + typeNumber.toString()]?.toLowerCase()
             }
         },
         //string can be: clear, increment, decrement
@@ -1250,6 +1257,19 @@ const app = Vue.createApp({
                 }
             }
         },
+        //Sets the crop on the UI image for the enemy team so that unused party slots are not present
+        battle_pokemon_crop() {
+            const totalPokemon = this.mapper.properties.battle.trainer.totalPokemon;
+            const heights = {
+              1: "242px",
+              2: "402px",
+              3: "562px",
+              4: "722px",
+              5: "886px",
+              6: "1080px"
+            };
+            return `height: ${heights[totalPokemon]}; drop-shadow(0px 0px 1px #000000)`;
+        },
         // MOVE MANAGEMENT
         sleep(ms) {
             return new Promise((res) => setTimeout(res, ms))
@@ -1279,7 +1299,7 @@ const app = Vue.createApp({
         }
         this.load_split_settings()
         this.timer.update();
-        this.pokemon_list = this.keys_function(pokemonData.gen1)
+        this.pokemon_list = this.keys_function(this.g1PokemonData)
 
         //image transition
         await transition(t => {

@@ -12054,6 +12054,4 @@ const g1PokemonData = {
 //         ],
 //         levelup_moveset: []
 //     },
-};
-
-module.exports = g1PokemonData;
+}

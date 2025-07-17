@@ -39,6 +39,7 @@ module.exports = {
         "state",
         "move_name",
         "move_data",
+        "pokedex_data",
         "dynamic_mon",
         "capitalization_format",
         "display_badge_boosts",
@@ -152,7 +153,7 @@ module.exports = {
                     level = this.mapper.properties.player.team[0].level.value
                     critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
                     power = move.Power
-                    pokemon = pokemonData.gen1[this.starterName]
+                    pokemon = this.g1PokemonData[this.starterName]
                     baseSpeed = pokemon.base_spd
                     //test to see if the Pokemon always crits
                     if (baseSpeed > 64) { //if the Pokemon has 63 or less base speed it will crit less often

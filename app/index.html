@@ -48,6 +48,7 @@
                     :mapper="mapper"
                     :state="state"
                     :move_name="move_name"
+                    :pokedex_data="g1PokemonData"
                     :dynamic_mon="s1dynamic"
                     :capitalization_format="capitalization_format"
                     :display_badge_boosts="display_badge_boosts"
@@ -55,18 +56,20 @@
                 <stats
                     :mapper="mapper"
                     :state="state"    
-                    :starter-name="starterName"    
+                    :starter="starterName"    
                     :stats_display="stats_display"
+                    :pokedex_old="g1PokemonData"
                     :pokedex_yellow="pokedex_yellow"
                     :display_badge_boosts="display_badge_boosts"
                     :dynamic_mon="s1dynamicReset"
                 ></stats>   
-                <exp_bar
+                <!-- <exp_bar
                     :mapper="mapper"
                     :dynamic-reset="s1dynamicReset"
                     :starter-name="starterName"
+                    :g1-pokemon-data="g1PokemonData"
                     :sleep="sleep"
-                ></exp_bar>
+                ></exp_bar> -->
                 <badge_boosts :mapper="mapper" ></badge_boosts>
                 <badges :mapper="mapper"></badges>
                 <timer></timer>
@@ -76,6 +79,7 @@
                     <div v-if="right_panel == 'Movepool'" key=0>
                         <movepool
                             :starter-name="starterName"
+                            :pokemon_version_specific_data="pokemon_version_specific_data"
                             :dynamic-reset="s1dynamicReset"
                             :starting_type_fix="starting_type_fix"
                         ></movepool>
@@ -113,8 +117,10 @@
                             :capitalization_format="capitalization_format"
                             :move_name="move_name"
                             :speed_comparison_toggle="speed_comparison_toggle"
+                            :battle_pokemon_crop="battle_pokemon_crop"
                             :get_enemy_pkmn_styles="get_enemy_pkmn_styles"
                             :enemy_pkmn_faint_types="enemy_pkmn_faint_types"
+                            :g1-pokemon-data="g1PokemonData"
                             :starter-name="starterName"
                             :enemy-state="enemyState"
                             :state="state"
@@ -126,7 +132,9 @@
                             :mapper="mapper"
                             :state="state"
                             :starter-name="starterName"
+                            :g1-pokemon-data="g1PokemonData"
                             :enemy-state="enemyState"
+                            :battle_pokemon_crop="battle_pokemon_crop"
                             :batt="batt"
                             :move_name="move_name"
                             :get_enemy_pkmn_styles="get_enemy_pkmn_styles"
@@ -137,6 +145,7 @@
                     <div v-else-if="key_F14 == true" key=3>
                         <movepool
                             :starter-name="starterName"
+                            :pokemon_version_specific_data="pokemon_version_specific_data"
                             :dynamic-reset="s1dynamicReset"
                             :starting_type_fix="starting_type_fix"
                         ></movepool>
@@ -156,6 +165,8 @@
     <script src="https://unpkg.com/@microsoft/signalr@7.0.14/dist/browser/signalr.min.js"></script> 
     <script src="packages/vue.global.js"></script>
     <script src="packages/gameHookMapperClient.js"></script>
+    <script src="data/g1PokemonData.js"></script>
+    <script src="data/g1PokemonDataRB.js"></script>
     <script src="data/gen1YellowTrainers.js"></script>
     <script src="data/gen1RedBlueTrainers.js"></script>
     <script src="data/settings.js"></script>

@@ -1,4 +1,3 @@
-const pokemonData = require("../data/pokemonData");
 const template = /*html*/`
 <div>
     <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" id="exp-bar"></div></div></div>
@@ -11,6 +10,7 @@ module.exports = {
         "mapper",
         "dynamicReset",
         "starterName",
+        "g1PokemonData",
         "sleep",
     ],
     data() {
@@ -52,7 +52,7 @@ module.exports = {
     mounted() {
         //EXP BAR
         var species = this.dynamicReset.species.value == 'Backport' ? this.starterName : this.dynamicReset.species.value;
-        var growthRate = species ? pokemonData.gen1[species].growth_rate : pokemonData.gen1[this.starterName].growth_rate
+        var growthRate = species ? this.g1PokemonData[species].growth_rate : this.g1PokemonData[this.starterName].growth_rate
         var expStats = this.calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value);
         document.getElementById("exp-bar").style.width = (expStats.percent * 100) + "%";
         this.prevSpecies = species
@@ -67,7 +67,7 @@ module.exports = {
             }
             if (this.expBarAnimation == true) {
                 const currSpecies = this.dynamicReset.species.value;
-                const growthRate = pokemonData.gen1[currSpecies]?.growth_rate ?? pokemonData.gen1[this.starterName].growth_rate // TODO - this may cause issues
+                const growthRate = this.g1PokemonData[currSpecies]?.growth_rate ?? this.g1PokemonData[this.starterName].growth_rate // TODO - this may cause issues
                 const oldExpStats = this.calcExpStats(growthRate, this.oldExpValue);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
                 const animationMaxDuration = 600

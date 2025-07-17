@@ -9162,5 +9162,3 @@ const g1PokemonDataRB = {
         ]
     }
 }
-
-module.exports = g1PokemonDataRB;
