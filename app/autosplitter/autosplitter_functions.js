@@ -1,3 +1,5 @@
+const path = require("path");
+const fs = require("fs");
 function log_split(timer) {
     const time = this.timer.formatted_time;
     const opponent = this.mapper.properties.battle.trainer.class.value;

@@ -1,6 +1,5 @@
-const g1MoveData = require("../data/g1MoveData");
-const trainers = require("../data/trainers");
 const { get_enemy_pkmn_styles } = require("../methods/enemy");
+const PokeData = require("../logic/PokeData");
 const template = /*html*/`
 <div>
     <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
@@ -28,7 +27,7 @@ const template = /*html*/`
                     <img v-if="mapper.properties.battle.trainer.team[x]['move' + (move_index + 1)]?.value != null" 
                         :class="'ds eMoveIconStyle moveIcon' + (move_index + 1) + ' opacityTransition'" 
                         :style="enemy_pkmn_faint_types(batt.trainer.team[x])" 
-                        :src="'images/elements/type-icons/' + g1MoveData[move_name(mapper.properties.battle.trainer.team[x]['move' + (move_index + 1)]?.value)]?.Type?.toLowerCase() + '.png'" 
+                        :src="'images/elements/type-icons/' + getMove(move_name(mapper.properties.battle.trainer.team[x]['move' + (move_index + 1)]?.value))?.type?.toLowerCase() + '.png'" 
                     />
                     <div :class="'ePkmnMoveStyle ePkmnMove' + (move_index + 1) + ' opacityTransition'" 
                         :style="get_enemy_pkmn_styles(batt.trainer.team[x]).text">
@@ -86,7 +85,6 @@ module.exports = {
         "speed_comparison_toggle",
         "battle_pokemon_crop",
         "enemy_pkmn_faint_types",
-        "g1PokemonData",
         "starterName",
         "enemyState",
         "state",
@@ -95,9 +93,6 @@ module.exports = {
     data() {
         return {
             pkmnSlots: [0, 1, 2, 3, 4, 5],
-            // we have to put this in the data for use in the template, but we also don't want vue to track this object.
-            // Accoridng to search engine results, Object.freeze() is the solution.
-            g1MoveData: Object.freeze(g1MoveData.gen1), 
         }
     },
     computed: {
@@ -107,17 +102,19 @@ module.exports = {
     },
     methods: {
         get_enemy_pkmn_styles,
+        getMove(moveName) {
+            return PokeData.getMove(moveName);
+        },
         speed_comparison(enemy_slot, enemy_speed_incoming) {
             const state          = this.mapper.properties.meta.state.value
             const trainer        = this.mapper.properties.battle.trainer.class.value
             const trainer_number = this.mapper.properties.battle.trainer.number.value
-            const gameName       = this.mapper.properties.meta.gameName.value;
-            let data = trainers[gameName];
+            const trainerData = PokeData.getTrainer(`${trainer} ${trainer_number}`);
             let enemy_hp = this.mapper.properties.battle.trainer.team[enemy_slot].hp.value
             let player_speed   = this.mapper.properties.battle.yourPokemon.speed.value
             let enemy_speed = enemy_speed_incoming
             if (state == 'To Battle') {
-                enemy_speed = data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd
+                enemy_speed = trainerData.party[enemy_slot].stats.speed
                 player_speed = this.mapper.properties.player.team[0].speed.value
             }
             let object = {
@@ -218,7 +215,7 @@ module.exports = {
             if (pkmn_species == null) { 
                 return "Normal"
             }
-            return this.g1PokemonData[pkmn_species].type1
+            return PokeData.getSpecies(pkmn_species).type_1
         },
         enemyType2(slotNumber) {
             const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
@@ -226,7 +223,7 @@ module.exports = {
             if (pkmn_species == null) { 
                 return "Normal"
             }
-            const type_2 = this.g1PokemonData[pkmn_species].type2
+            const type_2 = PokeData.getSpecies(pkmn_species).type_2
             if (type_1 == type_2 && this.starterName == 'Pumpkaboo' && this.mapper.properties.patch.backport.prop_2.value == 8 && this.mapper.properties.battle.enemyPokemon.partyPos.value == slotNumber) {
                 return 'Ghost'
             }
@@ -234,8 +231,8 @@ module.exports = {
         },
         enemyType3(slotNumber) {
             const pkmn_species = this.mapper.properties.battle.trainer.team[slotNumber].species.value
-            const type1 = this.g1PokemonData[pkmn_species].type1
-            const type2 = this.g1PokemonData[pkmn_species].type2
+            const type1 = PokeData.getSpecies(pkmn_species).type_1;
+            const type2 = PokeData.getSpecies(pkmn_species).type_2;
             if (type2 != null && type1 != type2 && this.starterName == 'Pumpkaboo' && this.mapper.properties.patch.backport.prop_2.value == 8 && this.mapper.properties.battle.enemyPokemon.partyPos.value == slotNumber) {
                 return 'Ghost'
             }
@@ -295,8 +292,8 @@ module.exports = {
             }
         },
         enemy_crit_rate(pkmnData) {
-            const species = pkmnData?.species.value
-            const base_speed = this.g1PokemonData[species]?.base_spd
+            const species = pkmnData?.species.value;
+            const base_speed = PokeData.getSpecies(species)?.base_stats.speed;
             if (base_speed) {
                 return Math.round(Math.round((Math.floor(base_speed/2)/256) * 10000) / 100)
             }

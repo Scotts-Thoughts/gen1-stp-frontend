@@ -1,4 +1,4 @@
-const moveData = require("../data/g1MoveData");
+const PokeData = require("../logic/PokeData");
 const typeEffectiveness = require("../data/type-effectiveness");
 
 //determine if the player is in a `Mart` or `Department` store.
@@ -39,7 +39,7 @@ function g1martSelector(map) {
     }
 }
 function enemy_move_power(move_name) {
-    var move_power = moveData.gen1[this.move_name(move_name)].Power ?? 0
+    var move_power = moveData[this.move_name(move_name)].Power ?? 0
     if (move_power == 0) { return "—" }
     if (move_power == 1) { return "—" }
     if (move_power == "—") { return "—" }
@@ -53,18 +53,18 @@ function enemy_effective_power(move_name, enemy_mon, slot) {
     const move = this.move_name(move_name)
     if (state == 'To Battle' || state == 'Battle' || state == 'From Battle') { 
         const species = enemy_mon.species.value
-        const move_data = moveData.gen1[move]
+        const move_data = PokeData.getMove(move);
         //This logs the setup of this function if the next line is going fail due to move data being undefined
         if (move_data == undefined) { 
             console.log("enemy_effective_power", state, enemy_state, move_name, species, move_data)
         }
-        const move_type = move_data.Type
+        const move_type = move_data.type
         const move_base_power = this.enemy_move_power(move) ?? move_data.Power
         const move_category = move_data.Category
-        const user_type_1 = this.g1PokemonData[species].type1
-        const user_type_2 = this.g1PokemonData[species].type2
-        const target_type_1 = this.mapper.properties.battle.yourPokemon.type1.value
-        const target_type_2 = this.mapper.properties.battle.yourPokemon.type2.value
+        const user_type_1 = PokeData.getSpecies(species).type_1
+        const user_type_2 = PokeData.getSpecies(species).type_2
+        const target_type_1 = this.mapper.properties.battle.yourPokemon.type_1.value
+        const target_type_2 = this.mapper.properties.battle.yourPokemon.type_2.value
         if (move_base_power == "—" || move_base_power == "-") { return "—" }
         var player_reflect = this.mapper.properties.battle.yourPokemon.effects.reflect.value == true && move_category == 'Physical' ? 0.5 : 1
         var player_light_screen = this.mapper.properties.battle.yourPokemon.effects.lightScreen.value == true && move_category == 'Special' ? 0.5 : 1 
