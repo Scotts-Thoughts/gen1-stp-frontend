@@ -917,16 +917,6 @@ const app = Vue.createApp({
                 this.mapper.properties.patch.hChosenStarter.set(starter, false), 
             ])
         },
-        openFolder(folderName, game_name = "Yellow", path = "", path2) {
-            const fs = require('fs');
-            const fullPath = path ? `.\\${folderName}\\${game_name}\\${path}\\${path2}` : `.\\${folderName}\\${game_name}\\${path}\\${path2}`;
-        
-            if (!fs.existsSync(fullPath)) {
-                fs.mkdirSync(fullPath, { recursive: true });
-            }
-        
-            require('child_process').exec(`start ${fullPath}`);
-        },
         async update_items() {
             var item1 = this.item1_replacement.toUpperCase()
             var item2 = this.item2_replacement.toUpperCase()
@@ -1283,6 +1273,8 @@ const app = Vue.createApp({
         format_trainer_name,
         logData,
         logCopy,
+        //file_system_functions.js
+        openFolder,
     },
     mounted: async function () {
         const that = this
