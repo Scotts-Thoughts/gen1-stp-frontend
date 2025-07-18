@@ -1,6 +1,6 @@
 {
     "global_variables": {
-        "starter": "Wooper",
+        "starter": "Nidoking",
         "game": "Yellow"
     },
     "application_settings": {
@@ -8269,7 +8269,7 @@
                     "backgroundContrast": "119",
                     "backgroundSaturation": 100,
                     "backgroundHue": 0,
-                    "playerId": 58925,
+                    "playerId": 0,
                     "playerName": "NINTEN",
                     "resetCatcher": "NINTEN",
                     "playerResets": 3,
@@ -8277,7 +8277,7 @@
                     "resetCounter": true,
                     "game_over": true,
                     "lance_defeated": false,
-                    "finished_logs": true,
+                    "finished_logs": false,
                     "blackouts_as_resets": false,
                     "blackout": false,
                     "faults": 0,
