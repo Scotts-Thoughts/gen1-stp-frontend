@@ -37,7 +37,7 @@ const Storage = require("./logic/Storage");
 const app = Vue.createApp({
     components: {
         "frontend": require("./components/frontend.js"),
-        "no_mapper": require("./components/no_mapper.js"),
+        "no_mapper": require("./components/No_mapper.js"),
         "keyhook": require("./components/keyhook.js"),
     },
     data() {
@@ -51,8 +51,8 @@ const app = Vue.createApp({
     mounted: async function () {
         const that = this
         this.mapper = new GameHookMapperClient()
-        this.mapper.onConnected = (x) => this.ready = true
-        this.mapper.onDisconnected = (x) => this.ready = false
+        this.mapper.onMapperLoaded = (x) => this.ready = true
+        this.mapper.onMapperUnloaded = (x) => this.ready = false
         await this.mapper.connect()
     },
 }).mount('#app')

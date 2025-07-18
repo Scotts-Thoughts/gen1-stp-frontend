@@ -155,7 +155,7 @@ const template = /*html*/`
 module.exports = {
     template,
     components: {
-        "no_mapper": require("./no_mapper.js"),
+        "no_mapper": require("./No_mapper.js"),
         "graphics": require("./Graphics.js"),
 
         //Background Processes
