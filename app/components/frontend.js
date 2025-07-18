@@ -1,125 +1,204 @@
-function createWatchedObject(watcher) {
-    const root = {};
-    const handler = {
-        get(target, property, receiver) {
-            const value = Reflect.get(target, property, receiver);
-            if (typeof value === 'object' && value !== null) {
-                return new Proxy(value, handler);
-            }
-            return value;
-        },
-        set(target, property, value, receiver) {
-            const result = Reflect.set(target, property, value, receiver);
-            watcher(root, {target, property, value});
-            return result;
-        },
-        deleteProperty(target, property) {
-            if (property in target) {
-                delete target[property];    
-                watcher(root, {target, property, value: undefined});  
-            }
-        },
-        //* Using the deleteProperty function:
-            // Storage.test = 10
-            // delete Storage.test
-            //
-            // OR
-            //
-            // Storage["test"] = 20
-            // delete Storage["test"]
-    };
-    return new Proxy(root, handler);
-}
+const Timer = require("../logic/Timer.js");
+const UIStyles = require("../logic/UIStyles.js");
 
-const MyStorage = require("./logic/MyStorage");
-const Storage = require("./logic/Storage");
+const template = /*html*/`
+<div>
+    <div class="mainContainer">
+    <graphics v-bind="graphicsProps"></graphics>
 
-async function loadCsvFile() {
-    const file = await window.showOpenFilePicker({
-        id: "Gen1SplitsFolder",
-        types: [{
-            description: "Split files",
-            accept: { "text/csv": [".csv"] }
-        }]
-    });
-    const contents = await file[0].getFile();
-    const text = await contents.text();
-    return text;
-}
+    <!-- Background Processes -->
+    <enemy_state :mapper="mapper"></enemy_state>
 
-const fs = require("fs");
-const path = require("path");
-const Timer = require("./logic/Timer.js");
-const UIStyles = require("./logic/UIStyles.js");
+    <!-- Left Panel -->
+    <faults></faults>
+    <div v-if="battlePopUps == true" style="position: absolute;">
+        <pop_ups
+            :mapper="mapper"
+            :state="state"
+            :battle_fade="battle_fade"
+        ></pop_ups>
+        
+        <bonk_counter
+            :mapper="mapper"
+            :state="state"
+            :show_bonk_counter="show_bonk_counter"
+            :blackouts_resets="blackouts_resets"
+            :dropdown_bonks_items="dropdown_bonks_items"
+        ></bonk_counter>
+        
+        <repel_counter
+            :mapper="mapper"
+            :state="state"
+            :show_repel_counter="show_repel_counter"
+            :blackouts_resets="blackouts_resets"
+        ></repel_counter>
+    </div>
+    <type_icons :pkmn_type="pkmn_type"></type_icons>
+    <moveset
+        :starter="starterName"
+        :mapper="mapper"
+        :state="state"
+        :move_name="move_name"
+        :pokedex_data="g1PokemonData"
+        :dynamic_mon="s1dynamic"
+        :capitalization_format="capitalization_format"
+        :display_badge_boosts="display_badge_boosts"
+    ></moveset>
+    <stats
+        :mapper="mapper"
+        :state="state"    
+        :starter="starterName"    
+        :stats_display="stats_display"
+        :pokedex_old="g1PokemonData"
+        :pokedex_yellow="pokedex_yellow"
+        :display_badge_boosts="display_badge_boosts"
+        :dynamic_mon="s1dynamicReset"
+    ></stats>   
+    <!-- <exp_bar
+        :mapper="mapper"
+        :dynamic-reset="s1dynamicReset"
+        :starter-name="starterName"
+        :g1-pokemon-data="g1PokemonData"
+        :sleep="sleep"
+    ></exp_bar> -->
+    <badge_boosts :mapper="mapper" ></badge_boosts>
+    <badges :mapper="mapper"></badges>
+    <timer></timer>
 
-for (let folder of folders = ['splits', 'splits/Yellow', 'splits/Red and Blue']) {
-    if (!fs.existsSync(folder)) {
-        fs.mkdirSync(folder);
-    }
-}
+    <!-- Right Panel -->
+    <transition name="fade">
+        <div v-if="right_panel == 'Movepool'" key=0>
+            <movepool
+                :starter-name="starterName"
+                :pokemon_version_specific_data="pokemon_version_specific_data"
+                :dynamic-reset="s1dynamicReset"
+                :starting_type_fix="starting_type_fix"
+            ></movepool>
+        </div>
+        <div v-else-if="right_panel == 'Splits'" key=5>
+            <div key=3>
+                <div class="split_label">Splits</div>
+                <div v-if="toggle_compare_splits === 'Followup'">
+                    <splits_followup
+                        :ui_type_color_modifier="ui_type_color_modifier"
+                        :starting_type_fix="starting_type_fix"
+                        :compare_splits="compare_splits"
+                        :trainer_name_lookup="trainer_name_lookup"
+                        :previous_label="previous_label"
+                        :current_label="current_label"
+                    ></splits_followup>
+                </div>
+                <div v-else-if="toggle_compare_splits === 'First'">
+                    <splits_first
+                        :ui_type_color_modifier="ui_type_color_modifier"
+                        :starting_type_fix="starting_type_fix"
+                        :compare_splits="compare_splits"
+                        :trainer_name_lookup="trainer_name_lookup"
+                    ></splits_first>
+                </div>
+                <div v-else-if="toggle_compare_splits === 'Followup + Summary'">
+                    <splits_summary v-bind="splits_summary_props"></splits_summary>
+                </div>
+            </div>
+        </div>
+        <div v-else-if="right_panel == 'Automatic' && (state != 'Base Stats' && (state == 'To Battle' || state == 'Battle') && mapper.properties.battle.type.value == 'Trainer')" style="position: absolute;" key=1>
+            <enemy_graphic
+                :mapper="mapper"
+                :ui_type_color_modifier="ui_type_color_modifier"
+                :capitalization_format="capitalization_format"
+                :move_name="move_name"
+                :speed_comparison_toggle="speed_comparison_toggle"
+                :battle_pokemon_crop="battle_pokemon_crop"
+                :get_enemy_pkmn_styles="get_enemy_pkmn_styles"
+                :enemy_pkmn_faint_types="enemy_pkmn_faint_types"
+                :g1-pokemon-data="g1PokemonData"
+                :starter-name="starterName"
+                :enemy-state="enemyState"
+                :state="state"
+                :right_panel="right_panel"
+            ></enemy_graphic>
+        </div>
+        <div v-else-if="right_panel == 'Automatic' && (state == 'Battle' || state == 'From Battle') && (mapper.properties.battle.type.value == 'Wild' && show_wild_battles == true)" style="position: absolute;">
+            <wild_pokemon
+                :mapper="mapper"
+                :state="state"
+                :starter-name="starterName"
+                :g1-pokemon-data="g1PokemonData"
+                :enemy-state="enemyState"
+                :battle_pokemon_crop="battle_pokemon_crop"
+                :batt="batt"
+                :move_name="move_name"
+                :get_enemy_pkmn_styles="get_enemy_pkmn_styles"
+                :enemy_pkmn_faint_types="enemy_pkmn_faint_types"
+                :speed_comparison_toggle="speed_comparison_toggle"
+            ></wild_pokemon>
+        </div>
+        <div v-else-if="key_F14 == true" key=3>
+            <movepool
+                :starter-name="starterName"
+                :pokemon_version_specific_data="pokemon_version_specific_data"
+                :dynamic-reset="s1dynamicReset"
+                :starting_type_fix="starting_type_fix"
+            ></movepool>
+        </div>
+    </transition>
+    </div>
 
-function hash(s) {
-    return [...s].reduce((h, x) => Math.imul(31, h) + x.charCodeAt(0), 0) >>> 0
-}
+    <!-- Game-Area Panel -->
+    <div class="testingArea1" style="z-index: 50000;"><interface_1></interface_1></div>
+    <div class="testingArea2" style="z-index: 50000;"><interface_2></interface_2></div>
+    <div class="testingArea4" style="z-index: 50000;"><interface_3></interface_3></div>
+    <div class="testingArea3" style="z-index: 50000;"><interface_4></interface_4></div>
+</div>
+`
 
-function transition(fn, ms) {
-    return new Promise((resolve) => {
-        const T = performance.now()
-        function step() {
-            const t = performance.now() - T
-            fn(Math.min(t / ms, 1))
-            if (t < ms) requestAnimationFrame(step)
-            else resolve()
-        }
-        requestAnimationFrame(step)
-    })
-}
-
-const app = Vue.createApp({
+module.exports = {
+    template,
     components: {
-        "no_mapper": require("./components/No_mapper.js"),
-        "graphics": require("./components/Graphics.js"),
+        "no_mapper": require("./no_mapper.js"),
+        "graphics": require("./Graphics.js"),
 
         //Background Processes
-        "enemy_state": require("./components/enemy_state.js"),
+        "enemy_state": require("./enemy_state.js"),
 
         //Left Panel
-        "timer": require("./components/Timer.js"),
-        "badges": require("./components/Badges.js"),
-        "faults": require("./components/faults.js"),
-        "repel_counter": require("./components/repel_counter.js"),
-        "bonk_counter": require("./components/bonk_counter.js"),
-        "pop_ups": require("./components/pop_ups.js"),
-        "type_icons": require("./components/type_icons.js"),
-        "moveset": require("./components/Moveset.js"),
-        "stats": require("./components/Stats.js"),
-        "exp_bar": require("./components/exp_bar.js"),
-        "badge_boosts": require("./components/badge_boosts.js"),
+        "timer": require("./Timer.js"),
+        "badges": require("./Badges.js"),
+        "faults": require("./faults.js"),
+        "repel_counter": require("./repel_counter.js"),
+        "bonk_counter": require("./bonk_counter.js"),
+        "pop_ups": require("./pop_ups.js"),
+        "type_icons": require("./type_icons.js"),
+        "moveset": require("./Moveset.js"),
+        "stats": require("./Stats.js"),
+        "exp_bar": require("./exp_bar.js"),
+        "badge_boosts": require("./badge_boosts.js"),
 
         //Middle Panel
-        "interface_1": require("./components/interface_1.js"),
-        "interface_2": require("./components/interface_2.js"),
-        "interface_3": require("./components/interface_3.js"),
-        "interface_4": require("./components/interface_4.js"),
+        "interface_1": require("./interface_1.js"),
+        "interface_2": require("./interface_2.js"),
+        "interface_3": require("./interface_3.js"),
+        "interface_4": require("./interface_4.js"),
 
         //Right Panel
-        "movepool": require("./components/Movepool.js"),
-        "splits_first": require("./components/Splits_first.js"),
-        "splits_followup": require("./components/Splits_followup.js"),
-        "splits_summary": require("./components/Splits_summary.js"),
-        "enemy_graphic": require("./components/enemy_graphic.js"),
-        "wild_pokemon": require("./components/wild_pokemon.js"),
-
-        //Background Logic
-        "keyhook": require("./components/keyhook.js"),
+        "movepool": require("./Movepool.js"),
+        "splits_first": require("./Splits_first.js"),
+        "splits_followup": require("./Splits_followup.js"),
+        "splits_summary": require("./Splits_summary.js"),
+        "enemy_graphic": require("./enemy_graphic.js"),
+        "wild_pokemon": require("./wild_pokemon.js"),
     },
+    props: [
+        "mapper",
+    ],
     data() {
         return {
-            ready  : false,
-            mapper : null,
             state  : "Base Stats",
             obs    : null,
             release: false, //If set to false then development features will be displayed
+
+            starterName: "Venomoth",
+            game_name: "Yellow",
 
             // Static Data
             g1PokemonData          : g1PokemonData,
@@ -154,9 +233,6 @@ const app = Vue.createApp({
                 // application_settings store within `Storage.application_settings`
                 // pokemon_settings store within `Storage.games.game.style`
             // Application Settings
-            starterName: "Venomoth", //Enter starter name, Special cases: Mr. Mime, Farfetchd
-            game_name:   "Yellow",
-
             search_term : "",
             move1_replacement: "",
             move2_replacement: "",
@@ -516,36 +592,52 @@ const app = Vue.createApp({
             if (newValue == false) { this.mapper?.properties.patch.wEarlyEncounters.set("Off", false)}
         },
         toggle_EVENT_ENCOUNTER_ROUTE1_TEST(newValue) {
-            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.set(true, false)}
-            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.set(false, false)}
+            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_ROUTE1_TEST) {
+                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.set(true, false)}
+                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.set(false, false)}
+            }
         },
         toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY(newValue) {
-            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.set(true, false)}
-            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.set(false, false)}
+            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY) {
+                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.set(true, false)}
+                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.set(false, false)}
+            }
         },
         toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW(newValue) {
-            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(true, false)}
-            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(false, false)}
+            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_ROUTE3_SPEAROW) {
+                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(true, false)}
+                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(false, false)}
+            }
         },
         toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW(newValue) {
-            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.set(true, false)}
-            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.set(false, false)}
+            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_MTMOON_SANDSHREW) {
+                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.set(true, false)}
+                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.set(false, false)}
+            }
         },
         toggle_EVENT_ENCOUNTER_ROUTE16_DODUO(newValue) {
-            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
-            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
+            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_ROUTE16_DODUO) {
+                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
+                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
+            }
         },
         toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE(newValue) {
-            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(true, false)}
-            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(false, false)}
+            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_MTMOON_GEODUDE) {
+                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(true, false)}
+                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(false, false)}
+            }
         },
         toggle_EVENT_ENCOUNTER_MTMOON_PARAS(newValue) {
-            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(true, false)}
-            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(false, false)}
+            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_MTMOON_PARAS) {
+                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(true, false)}
+                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(false, false)}
+            }
         },
         toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER(newValue) {
-            if (newValue == true)  { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(true, false)}
-            if (newValue == false) { this.mapper?.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(false, false)}
+            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_ROUTE6_CUT_USER) {
+                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(true, false)}
+                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(false, false)}
+            }
         },
         current_splits: {
             handler: function (newVal, oldVal) {
@@ -1277,12 +1369,6 @@ const app = Vue.createApp({
         openFolder,
     },
     mounted: async function () {
-        const that = this
-        this.mapper = new GameHookMapperClient()
-        this.mapper.onConnected = (x) => this.ready = true
-        this.mapper.onDisconnected = (x) => this.ready = false
-        await this.mapper.connect()
-
         if (this.mapper.properties.meta.state.value == "No Pokemon") {
             this.state = "Base Stats"
         }
@@ -1292,12 +1378,6 @@ const app = Vue.createApp({
         this.load_split_settings()
         this.timer.update();
         this.pokemon_list = this.keys_function(this.g1PokemonData)
-
-        //image transition
-        await transition(t => {
-        // this part gets called at every frame of the browser
-        // the variable t starts at 0 and advances to 1
-        }, 500)
 
         // reset tracking
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {
@@ -1560,4 +1640,4 @@ const app = Vue.createApp({
             }
         });
     },
-}).mount('#app')
+}
