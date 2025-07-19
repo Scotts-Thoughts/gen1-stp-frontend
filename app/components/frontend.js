@@ -331,9 +331,6 @@ module.exports = {
             current_label:   "Current",
 
             // UI
-            ui_stat_arrangement:    "Speed: top right",
-            ui_stat_arrangement_modifier: "hp_spe_",
-
             stats_display: "Automatic",
             right_panel:   "Automatic",
             disallow_right_panel_switching: true,
@@ -569,14 +566,6 @@ module.exports = {
             },
             deep: true,
         },
-        ui_stat_arrangement(newValue) {
-            if (newValue == 'Speed: bottom right') {
-                this.ui_stat_arrangement_modifier = "hp_spe_"
-            }
-            if (newValue == 'Speed: top right') {
-                this.ui_stat_arrangement_modifier = "hp_spd_"
-            }
-        },
         async starterName(newValue, oldValue) {
             if (this.ready == false) await this.sleep(250)
                 
@@ -641,7 +630,6 @@ module.exports = {
         graphicsProps() {
             return {
                 g1PokemonData: this.g1PokemonData,
-                ui_stat_arrangement_modifier: this.ui_stat_arrangement_modifier,
                 game_name: this.game_name,
                 starterName: this.starterName,
                 dynamicReset: this.s1dynamicReset,

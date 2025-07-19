@@ -44,22 +44,16 @@ const template = /*html*/`
         />
         <div class="colored-image ds colored-box saturation" :style="'drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/stats.svg)"></div>
         <div class="colored-image ds colored-box saturation" :style="'drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/moveset.svg)"></div>
-        <img class="svg" :src="'images/ui/current_' + ui_stat_arrangement_modifier + 'stats_backgrounds.svg'"/>
+        <img class="svg" src="images/ui/current_hp_spd_stats_backgrounds.svg"/>
         <img class="svg" style="opacity: .8; filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.svg"/>
         <div class="genericLabels timerLabel" style="z-index: 200000; font-size: 16px;">time played at 4x game speed</div>
     </div>
-    <div class="colored-image ds saturation" :style="\`drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/stats.svg)"></div>
-    <div class="colored-image ds saturation" :style="\`drop-shadow(0px 0px 1px #000000)\`" style="--url: url(images/ui/moveset.svg)"></div>
-    <img class="svg" :src="\`images/ui/current_\${ui_stat_arrangement_modifier}stats_backgrounds.svg\`"/>
-    <img class="svg" style="opacity: .8; filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.svg"/>
-    <img class="canvas" src="images/elements/badges.png"/>
 `
 
 module.exports = {
     template,
     props: [
         "g1PokemonData",
-        "ui_stat_arrangement_modifier",
         "game_name",
         "starterName",
         "dynamicReset",

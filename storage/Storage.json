@@ -59,8 +59,6 @@
         "automatic_post_battle_splits": true,
         "ui_type_colors": "Bulbapedia Current",
         "ui_type_color_modifier": "current_",
-        "ui_stat_arrangement": "Speed: top right",
-        "ui_stat_arrangement_modifier": "hp_spd_",
         "stats_display": "Automatic",
         "test_run": true,
         "right_panel": "Automatic",

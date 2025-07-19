@@ -55,7 +55,6 @@ const application_settings = [
     [ "automatic_post_battle_splits",   true],
 
     [ "ui_stat_arrangement",          "Speed: top right"],
-    [ "ui_stat_arrangement_modifier", "hp_spd_"],
     [ "stats_display",                "Automatic"],
     [ "test_run",                     false],
     [ "right_panel",                  "Battle Graphic"],
