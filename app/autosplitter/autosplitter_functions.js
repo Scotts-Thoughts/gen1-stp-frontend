@@ -16,7 +16,7 @@ function autosplitter_process() {
         //data to be collected with the autosplitter
         let date_string = (d.getMonth() + 1) + "-" + d.getDate().toString().padStart(2, "0")
         let time_string = d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0")
-        let player_name = this.playerNameChoice
+        let player_name = this.mapper.properties.player.name.value
         let pokemon = this.starterName
         let trainer_name = this.format_trainer_name(this.mapper.properties.battle.trainer.class.value, this.mapper.properties.battle.trainer.number.value)
         let trainer_id = this.mapper.properties.battle.trainer.number.value

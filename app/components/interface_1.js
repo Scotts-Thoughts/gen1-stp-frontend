@@ -31,23 +31,7 @@ const template = /*html*/`
         <br>
     </div>
     <div v-if="$parent.test_run == true">
-        <div>Moveset Updating:</div>
-        <input type="text" v-model="$parent.move1_replacement" placeholder="Input move 1">
-        <input type="text" v-model="$parent.move2_replacement" placeholder="Input move 2">
-        <input type="text" v-model="$parent.move3_replacement" placeholder="Input move 3">
-        <input type="text" v-model="$parent.move4_replacement" placeholder="Input move 4">
-        <button class="buttonStyle buttonStyle_column3" @click="$parent.update_moveset">Update Party Moves</button>
-        <button class="buttonStyle buttonStyle_column3" @click="$parent.update_battle_moveset">Update Battle Moves</button>
-        <br>
-        <br>
-        <div>Item Updating:</div>
-        <input type="text" v-model="$parent.item1_replacement" placeholder="Input item 1">
-        <input type="text" v-model="$parent.item2_replacement" placeholder="Input item 2">
-        <input type="text" v-model="$parent.item3_replacement" placeholder="Input item 3">
-        <input type="text" v-model="$parent.item4_replacement" placeholder="Input item 4">
-        <button class="buttonStyle buttonStyle_column3" @click="$parent.update_items">Update</button>
-        <br>
-        <br>
+        <battle_testing :mapper="$parent.mapper"></battle_testing>
     </div>
     <div v-if="$parent.release == false">
         <div>Debugging:</div>
@@ -65,4 +49,7 @@ const template = /*html*/`
 
 module.exports = {
     template,
+    components: {
+        "battle_testing": require("./battle_testing"),
+    },
 }

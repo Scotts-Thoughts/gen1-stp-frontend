@@ -191,7 +191,6 @@ module.exports = {
     data() {
         return {
             state  : "Base Stats",
-            obs    : null,
             release: false, //If set to false then development features will be displayed
 
             starterName: "Venomoth",
@@ -219,40 +218,17 @@ module.exports = {
             pokedex_crystal    : pokedex_crystal,
 
             // Objects
-            fieldEffects:    ["reflect","lightScreen","bide","thrash","multiHit","flinch","charging","multiTurn","invulnerable","confusion","xAccuracy","mist","focusEnergy","hasSubstitute","recharge","rage","leechSeeded","toxic","transformed"],
-            accuracyEvasion: ["accuracy", "evasion"],
-            enemyModColour:  ["0", "background: #d84444;"],
             enemyState:      "Not In Battle", //"Pokemon", "Fainted"
 
-            // Settings:
-                // These automatically store into the `Storage` object
-                // To add a new setting place it here as well as within the the files: `application_settings.js` or `pokemon_settings.js`
-                // application_settings store within `Storage.application_settings`
-                // pokemon_settings store within `Storage.games.game.style`
             // Application Settings
             search_term : "",
-            move1_replacement: "",
-            move2_replacement: "",
-            move3_replacement: "",
-            move4_replacement: "",
-            item1_replacement: "Rare Candy",
-            item2_replacement: "PP UP",
-            item3_replacement: "Full Restore",
-            item4_replacement: "Max Elixer",
             pokemon_list: [],
-            gamehook_disable_settings : false,
-            gamehook_encounter_writes : false,
             dvSetting                 : "Max",   //Max, Min, NPC, Max with Min Atk, or Random
-            gametimeDisplay           : false,   //shows the options menu when set to true
             inventory                 : true,    //uses inventory when in the department store & marts
-            battleGraphic             : true,    //uses battle graphic with enemy moveset & stats
             showAllTrainers           : true,    //when false only shows gym leaders and rivals, when true shows all enemy trainers
             showSpecialTrainerGraphics: true,    //shows drawn art for defined trainers
             battlePopUps              : true,    //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
-            typeCalcs                 : true,    //displays type effectiveness for enemy pokemon
-            showCritMultiplierInEP    : true,    //shows high crit ratio moves with adjusted power if the move always scores a crit
             show_wild_battles         : false,   //shows wild battles in the battle screen
-            automaticallySavePBSplits : true,    //saves splits if the player beats their PB (this overwrites currently saved PB splits)
             autosplitter_toggle       : true,
             display_badge_boosts      : true,
             test_run                  : false,
@@ -262,21 +238,12 @@ module.exports = {
             show_bonk_counter         : false,
             dropdown_bonks_items      : 'Bonks',
             toggle_compare_splits     : 'First',
-            show_frame                : false,
             no_attempt                : false,
             speed_comparison_toggle   : true,
             enable_blackouts          : false,
 
             toggle_wEarlyEncounters: false,
             toggle_wEarlyEncountersNoMoon: false,
-
-            // What behavior should these toggle have?
-            // - Set them to the desired value before the run
-            // - Have them apply within the run so that the correct HM users show up
-            // - They should save between runs so that the setting loads correctly
-            //
-            // - Whenever the property changes, check to see if the value is the same as the toggle, if it isn't, set it to the value of the toggle
-            // - Do nothing else
 
             // Yellow toggles
             toggle_EVENT_ENCOUNTER_ROUTE1_TEST           : false,
@@ -290,12 +257,9 @@ module.exports = {
             toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW : false,
             toggle_EVENT_ENCOUNTER_ROUTE16_DODUO  : false,
 
-
             refilming_mode  : false,
             refilmed_attempt: 0,
             refilmed_finish : 0,
-
-            help_menus: "Settings",
 
             // Keyhook shortcuts
             lastExecuted: 0,
@@ -321,24 +285,9 @@ module.exports = {
             key_F24:                  "",
 
             // Encounters
-            route1:         true,
-            viridianForest: true,
-            route3:         true,
-            mtMoon:         true,
-            route6:         true,
-            rockTunnel:     true,
-            pokemonTower:   true,
-            safariZone:     true,
-            powerPlant:     true,
-            mansion:        true,
-            route21:        true,
-            route22:        true,
-            victoryRoad:    true,
-            route24:        true,
             goal_level:     13,
             goal_speed:     24,
             rockTunnelDarkness: false, //if true it will make rock tunnel bright
-            viridian_forest:    "Pidgey",
 
             // Timer variables
             timer_startTimeOffset: MyStorage["timer_startTimeOffset"] ?? "00:00:00.00",
@@ -351,7 +300,6 @@ module.exports = {
             
             // Splits
             split_data:             [],
-            pb_splits:              [],
 
             // Pokemon Settings
             playerId:              0,
@@ -381,9 +329,6 @@ module.exports = {
             compared_splits: [],
             previous_label:  "Previous",
             current_label:   "Current",
-
-            // Background texture settings
-            playerNameChoice:      "NINTEN",
 
             // UI
             ui_stat_arrangement:    "Speed: top right",
@@ -580,59 +525,37 @@ module.exports = {
             console.log(`Success!`) 
             console.log(`Loaded all settings from Storage.`) 
         }
+        // Setup encounter toggle watchers
+        const set_encounter_toggle = (subPath, value) => {
+            if (this.mapper?.properties?.patch?.encounter_flags?.[subPath]) {
+                this.mapper.properties.patch.encounter_flags[subPath].set(value, false);
+            } 
+            else {
+                console.log(`Property ${subPath} not found in encounter_flags`);
+            }
+        };
+        const toggleToEncounterFlag = {
+            "toggle_EVENT_ENCOUNTER_ROUTE1_TEST": "EVENT_ENCOUNTER_ROUTE1_TEST",
+            "toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY": "EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY",
+            "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW": "EVENT_ENCOUNTER_ROUTE3_SPEAROW",
+            "toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW": "EVENT_ENCOUNTER_MTMOON_SANDSHREW",
+            "toggle_EVENT_ENCOUNTER_ROUTE16_DODUO": "EVENT_ENCOUNTER_ROUTE16_DODUO",
+            "toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE": "EVENT_ENCOUNTER_MTMOON_GEODUDE",
+            "toggle_EVENT_ENCOUNTER_MTMOON_PARAS": "EVENT_ENCOUNTER_MTMOON_PARAS",
+            "toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER": "EVENT_ENCOUNTER_ROUTE6_CUT_USER",
+        };
+        for (const [toggleProp, encounterFlag] of Object.entries(toggleToEncounterFlag)) {
+            this.$watch(
+                () => this[toggleProp],
+                (new_value) => {
+                    set_encounter_toggle(encounterFlag, new_value);
+                }
+            );
+        }
     },
     watch: {
         toggle_wEarlyEncounters(newValue) {
-            if (newValue == true)  { this.mapper?.properties.patch.wEarlyEncounters.set("On", false)}
-            if (newValue == false) { this.mapper?.properties.patch.wEarlyEncounters.set("Off", false)}
-        },
-        toggle_EVENT_ENCOUNTER_ROUTE1_TEST(newValue) {
-            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_ROUTE1_TEST) {
-                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.set(true, false)}
-                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST.set(false, false)}
-            }
-        },
-        toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY(newValue) {
-            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY) {
-                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.set(true, false)}
-                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY.set(false, false)}
-            }
-        },
-        toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW(newValue) {
-            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_ROUTE3_SPEAROW) {
-                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(true, false)}
-                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW.set(false, false)}
-            }
-        },
-        toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW(newValue) {
-            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_MTMOON_SANDSHREW) {
-                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.set(true, false)}
-                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW.set(false, false)}
-            }
-        },
-        toggle_EVENT_ENCOUNTER_ROUTE16_DODUO(newValue) {
-            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_ROUTE16_DODUO) {
-                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(true, false)}
-                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO.set(false, false)}
-            }
-        },
-        toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE(newValue) {
-            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_MTMOON_GEODUDE) {
-                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(true, false)}
-                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE.set(false, false)}
-            }
-        },
-        toggle_EVENT_ENCOUNTER_MTMOON_PARAS(newValue) {
-            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_MTMOON_PARAS) {
-                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(true, false)}
-                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS.set(false, false)}
-            }
-        },
-        toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER(newValue) {
-            if (this.mapper?.properties?.patch?.encounter_flags?.EVENT_ENCOUNTER_ROUTE6_CUT_USER) {
-                if (newValue == true)  { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(true, false)}
-                if (newValue == false) { this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER.set(false, false)}
-            }
+            this.mapper?.properties.patch.wEarlyEncounters.set(newValue ? "On" : "Off", false);
         },
         current_splits: {
             handler: function (newVal, oldVal) {
@@ -713,9 +636,6 @@ module.exports = {
                 return
             }
         },  
-        playerNameChoice() {
-            this.overlay_color = `lch(75% 100 ${hash(this.playerNameChoice) % 360})`
-        }
     },
     computed: {
         graphicsProps() {
@@ -994,81 +914,6 @@ module.exports = {
                 this.mapper.properties.patch.hChosenStarter.set(starter, false), 
             ])
         },
-        async update_items() {
-            var item1 = this.item1_replacement.toUpperCase()
-            var item2 = this.item2_replacement.toUpperCase()
-            var item3 = this.item3_replacement.toUpperCase()
-            var item4 = this.item4_replacement.toUpperCase()
-            await this.mapper.properties.player.items[0].item.set(item1, false)
-            await this.mapper.properties.player.items[0].quantity.set(99, false)
-            await this.mapper.properties.player.items[1].item.set(item2, false)
-            await this.mapper.properties.player.items[1].quantity.set(99, false)
-            await this.mapper.properties.player.items[2].item.set(item3, false)
-            await this.mapper.properties.player.items[2].quantity.set(99, false)
-            await this.mapper.properties.player.items[3].item.set(item4, false)
-            await this.mapper.properties.player.items[3].quantity.set(99, false)
-            if (this.mapper.properties.player.items[4].item.value == null) {
-                await this.mapper.properties.player.items[4].item.setBytes([0xFF], false)
-                await this.mapper.properties.player.itemCount.set(4, false)
-            }
-        },
-        async update_moveset() {
-            const move_data = this.cross_generation_moves.g1
-            var move1 = this.move1_replacement.toUpperCase()
-            var move2 = this.move2_replacement.toUpperCase()
-            var move3 = this.move3_replacement.toUpperCase()
-            var move4 = this.move4_replacement.toUpperCase()
-            var pp1   = move_data[this.move_name(move1)]
-            var pp2   = move_data[this.move_name(move2)]
-            var pp3   = move_data[this.move_name(move3)]
-            var pp4   = move_data[this.move_name(move4)]
-            if (move1 != "") {
-                await this.mapper.properties.player.team[0].move1.set(move1, false)
-                await this.mapper.properties.player.team[0].move1pp.set(pp1.PP, false)
-            }
-            if (move2 != "") {
-                await this.mapper.properties.player.team[0].move2.set(move2, false)
-                await this.mapper.properties.player.team[0].move2pp.set(pp2.PP, false)
-            }
-            if (move3 != "") {
-                await this.mapper.properties.player.team[0].move3.set(move3, false)
-                await this.mapper.properties.player.team[0].move3pp.set(pp3.PP, false)
-            }
-            if (move4 != "") {
-                await this.mapper.properties.player.team[0].move4.set(move4, false)
-                await this.mapper.properties.player.team[0].move4pp.set(pp4.PP, false)
-            }
-        },
-        async update_battle_moveset() {
-            if (this.mapper.properties.meta.state.value == "Battle") {
-                const move_data = this.cross_generation_moves.g1
-                var move1 = this.move1_replacement.toUpperCase()
-                var move2 = this.move2_replacement.toUpperCase()
-                var move3 = this.move3_replacement.toUpperCase()
-                var move4 = this.move4_replacement.toUpperCase()
-                var pp1   = move_data[this.move_name(move1)]
-                var pp2   = move_data[this.move_name(move2)]
-                var pp3   = move_data[this.move_name(move3)]
-                var pp4   = move_data[this.move_name(move4)]
-                if (move1 != "") {
-                    await this.mapper.properties.battle.yourPokemon.move1.set(move1, false)
-                    await this.mapper.properties.battle.yourPokemon.move1pp.set(pp1.PP, false)
-                }
-                if (move2 != "") {
-                    await this.mapper.properties.battle.yourPokemon.move2.set(move2, false)
-                    await this.mapper.properties.battle.yourPokemon.move2pp.set(pp2.PP, false)
-                }
-                if (move3 != "") {
-                    await this.mapper.properties.battle.yourPokemon.move3.set(move3, false)
-                    await this.mapper.properties.battle.yourPokemon.move3pp.set(pp3.PP, false)
-                }
-                if (move4 != "") {
-                    await this.mapper.properties.battle.yourPokemon.move4.set(move4, false)
-                    await this.mapper.properties.battle.yourPokemon.move4pp.set(pp4.PP, false)
-                }
-            }
-            else { return }
-        },
         set_encounters() {
             const game = this.mapper.properties.meta.gameName.value
             let early_encounters_value = this.toggle_wEarlyEncounters == true ? "On" : "Off"
@@ -1214,20 +1059,6 @@ module.exports = {
             Object.keys(keys).forEach(key => {
                 this[key] = keys[key];
             });
-        },
-        pb_split(splitName) {
-            if (this.pb_splits) {
-                let result = this.pb_splits.find(x => x.includes(splitName))
-                if (result) {
-                    return result
-                }
-                else {
-                    return null
-                }
-            }
-            else {
-                return null
-            }
         },
         splits_clear() {
             this.split_data = []
