@@ -557,8 +557,8 @@
                 <button class="buttonStyle set_button_style" @click="this.timer.setTimer(this.timer_startTimeOffset)">Set Timer</button><br><input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
                 <br>
                 <!-- <button class="buttonStyle buttonStyle_column3" onClick="openFolder('splits')">Open Splits Folder</button><br> -->
-                <button class="buttonStyle buttonStyle_column3" @click="openFolder(`splits`, game, starterName, ``)">Open Splits Folder</button>
-                <button class="buttonStyle buttonStyle_column3" @click="openFolder(`splits`, game, starterName, `finishes`)">Finished Splits</button>
+                <!-- <button class="buttonStyle buttonStyle_column3" @click="openFolder(`splits`, game, starterName, ``)">Open Splits Folder</button> -->
+                <button class="buttonStyle buttonStyle_column3" @click="openFolder(`splits`, game, starterName, `finishes`)">Open Splits Folder</button>
                 <br>
                 <br>
                 <div v-if="release == false">

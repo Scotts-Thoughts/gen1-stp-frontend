@@ -131,11 +131,6 @@ async function loadCsvFile() {
     return text;
 }
 
-// Open the folder ./splits/ in the file explorer with node.js
-// function openFolder(folderName) {
-//     require('child_process').exec(`start .\\${folderName}\\`);
-// }
-
 function downloadFile(content, downloadFileName) {
     const blob = new Blob([content], {type: "application/octet-stream"});
     const url = window.URL.createObjectURL(blob);
@@ -1669,8 +1664,14 @@ const app = Vue.createApp({
     methods: {
         async set_rom_starter() {
             let starter = this.starterName
+            let pokedex = this.pokedex_yellow
+            let backport_byte_index = 0xBF
             // console.log(starter)
             // This system requires a check in the case that the Pokemon is not one of the original 151, in that case it needs to get the value to "Backport" instead
+            if (pokedex[starter].national_dex_number > 151) {
+                this.mapper.properties.patch.hChosenStarter.setBytes([backport_byte_index], false)
+                return
+            }
             await Promise.all([
                 await this.mapper.properties.patch.hChosenStarter.set(starter, false), 
             ])
@@ -1707,16 +1708,15 @@ const app = Vue.createApp({
         },
         openFolder(folderName, game_name = "Yellow", path = "", path2) {
             const fs = require('fs');
-            const fullPath = path ? `.\\${folderName}\\${game_name}\\${path}\\${path2}` : `.\\${folderName}\\${game_name}\\${path}\\${path2}`;
-        
-            // Check if the folder exists
+            const fullPath = path ? `.\\${folderName}\\${game_name}\\${path}\\${path2}` : `.\\${folderName}\\${game_name}\\${path2}`;
+            // Check if the folder exists   
             if (!fs.existsSync(fullPath)) {
                 // Create the folder (recursive ensures all parent directories are created)
                 fs.mkdirSync(fullPath, { recursive: true });
             }
         
-            // Open the folder
-            require('child_process').exec(`start ${fullPath}`);
+            // Open the folder in Windows Explorer
+            require('child_process').exec(`explorer "${fullPath}"`);
         },
         async update_items() {
             var item1 = this.item1_replacement.toUpperCase()
@@ -2334,9 +2334,9 @@ const app = Vue.createApp({
 
         //     this.updateTime()
         // },
-        // padTime(time) {
-        //     return time.toString().padStart(2, "0")
-        // },
+        padTime(time) {
+            return time.toString().padStart(2, "0")
+        },
         // //animate the timer
         // updateTime() {
         //     var time = Date.now() - this.timer_startTime
@@ -3428,8 +3428,8 @@ const app = Vue.createApp({
     mounted: async function () {
         const that = this
         this.mapper = new GameHookMapperClient()
-        this.mapper.onConnected = (x) => this.ready = true
-        this.mapper.onDisconnected = (x) => this.ready = false
+        this.mapper.onMapperLoaded = (x) => this.ready = true
+        this.mapper.onMapperUnloaded = (x) => this.ready = false
         await this.mapper.connect()
 
         if (this.mapper.properties.meta.state.value == "No Pokemon") {
@@ -3438,31 +3438,8 @@ const app = Vue.createApp({
         else {
             this.state = this.mapper.properties.meta.state.value
         }
-        // this.load_timer_settings()
         this.load_split_settings()
-        // this.updateTime()
         this.timer.update();
-
-        // // Load settings
-        // // this.starterName = this.mapper.properties.patch.hChosenStarter.value
-        // if (this.mapper.properties.patch.wEarlyEncounters.value == "On") {
-        //     this.toggle_wEarlyEncounters = true
-        // }
-        // else {
-        //     this.toggle_wEarlyEncounters = false
-        // }
-        // // Yellow toggle init
-        // this.toggle_EVENT_ENCOUNTER_ROUTE1_TEST            = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST?.value            ?? false
-        // this.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY?.value ?? false
-        // this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW         = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW?.value         ?? false
-        // this.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW       = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW?.value       ?? false
-        // this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO          = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO?.value          ?? false
-        // // Red/Blue toggle init
-        // this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW  = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW?.value  ?? false
-        // this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE  = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE?.value  ?? false
-        // this.toggle_EVENT_ENCOUNTER_MTMOON_PARAS    = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS?.value    ?? false
-        // this.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER?.value ?? false
-        // this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO   = this.mapper.properties.patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO?.value   ?? false
 
         this.pokemon_list = this.keys_function(g1PokemonData)
 
@@ -3523,7 +3500,9 @@ const app = Vue.createApp({
         //*autosplitter
         //log the start of a battle to the console
         this.mapper.properties.battle.type.change((newProp) => {
-            var logStr = `Autosplitter - Battle Started: ${this.mapper.properties.battle.trainer.class.value} started at ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} (Gametime: ${this.gametimeSplit})`
+            const time = this.timer.formatted_time;
+            const opponent = this.mapper.properties.battle.trainer.class.value;
+            var logStr = `Autosplitter - Battle Started: ${opponent} started at ${time[0]}${time[1]} (Gametime: ${this.gametimeSplit})`
             var log_start = (x) => console.log(logStr)
 
             if (newProp.value == "Trainer") {
@@ -3543,7 +3522,8 @@ const app = Vue.createApp({
 
                 this.split_logStr = logStr
                 this.battle_start = Date.now()
-                this.time_split_start = this.padTime(this.time_h) + ":" + this.padTime(this.time_m) + ":" + this.padTime(this.time_s) + "." + this.padTime(this.time_ms)
+                const time = this.timer.getTime();
+                this.time_split_start = this.padTime(time.hours) + ":" + this.padTime(time.minutes) + ":" + this.padTime(time.seconds) + "." + this.padTime(time.ms)
                 log_start()
             }
         });
@@ -3834,7 +3814,7 @@ const app = Vue.createApp({
                 let id = this.mapper.properties.battle.trainer.number.value
                 let unique = `${trainer}_${id}`
                 let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red' ? "R" : "B"
-                let gameName_Path = gameName == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data   
+                let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data   
 
                 if (this.collect_split_data == true) {
                     // Use for...of loop to iterate over the array
@@ -3860,7 +3840,6 @@ const app = Vue.createApp({
                     this.exp_per_second = Math.round(this.battle_summary_exp_gained / this.battle_duration_ms)
                     this.battle_summary_battle_number = this.mapper.properties.patch?.battles?.trainerBattles?.value
                 }
-
                 //write full split data (this is written for every single battle)
                 logData(gameName, gameName_Path, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                 
@@ -3936,7 +3915,7 @@ const app = Vue.createApp({
         //I am watching tile1 for a specifc tile that appears when the gametime displays on screen
         this.mapper.properties.screen.tiles.column1.tile1.change((newProp) => {
             let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red' ? "R" : "B"
-            let gameName_Path = gameName == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data     
+            let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data     
             if (newProp.value == 122) {
                 if (this.mapper.properties.events.beatChampion.value == true && this.mapper.properties.overworld.map.value == "Hall of Fame") {
                     autosplitter_process()
