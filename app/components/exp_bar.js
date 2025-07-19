@@ -74,7 +74,7 @@ module.exports = {
                 if (this.oldExpValue == newProp.value) { 
                     return 
                 }
-                if (this.state == `Overworld` || this.state == "Base Stats") {
+                if (this.state == `Overworld` || this.state == "No Pokemon") {
                     document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
                 }
                 else if (this.prevSpecies != currSpecies) {

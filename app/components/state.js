@@ -1,13 +1,18 @@
-const template = /*html*/`
-`
+const template = `<div></div>`
 
 module.exports = {
     template,
     props: [
         "mapper",
     ],
-    mounted() {
-        //Functions to track the battle's state
+    mounted: async function () {
+        //Update the state to match the mapper's state
+        this.$parent.state = this.mapper.properties.meta.state.value
+        this.mapper.properties.meta.state.change(async (newProp) => {
+            this.$parent.state = newProp.value
+        });
+
+        //Update the enemy state to track the enemy's Pokemon's condition
         if (this.mapper.properties.player.team[0].level.value == 0) 
             this.$parent.enemyState = "Not In Battle";
         else if (this.mapper.properties.battle.type.value == "None")

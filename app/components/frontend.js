@@ -7,7 +7,7 @@ const template = /*html*/`
     <graphics v-bind="graphicsProps"></graphics>
 
     <!-- Background Processes -->
-    <enemy_state :mapper="mapper"></enemy_state>
+    <state :mapper="mapper"></state>
 
     <!-- Left Panel -->
     <faults></faults>
@@ -143,7 +143,10 @@ const template = /*html*/`
 
     <!-- Game-Area Panel -->
     <div class="testingArea1" style="z-index: 50000;"><interface_1></interface_1></div>
-    <div class="testingArea2" style="z-index: 50000;"><interface_2></interface_2></div>
+    <div class="testingArea2" style="z-index: 50000;">
+        <interface_2></interface_2>
+        <encounters :mapper="mapper"></encounters>
+    </div>
     <div class="testingArea4" style="z-index: 50000;"><interface_3></interface_3></div>
     <div class="testingArea3" style="z-index: 50000;"><interface_4></interface_4></div>
 </div>
@@ -156,7 +159,7 @@ module.exports = {
         "graphics": require("./Graphics.js"),
 
         //Background Processes
-        "enemy_state": require("./enemy_state.js"),
+        "state": require("./state.js"),
 
         //Left Panel
         "timer": require("./Timer.js"),
@@ -174,6 +177,7 @@ module.exports = {
         //Middle Panel
         "interface_1": require("./interface_1.js"),
         "interface_2": require("./interface_2.js"),
+        "encounters": require("./encounters.js"),
         "interface_3": require("./interface_3.js"),
         "interface_4": require("./interface_4.js"),
 
@@ -190,7 +194,7 @@ module.exports = {
     ],
     data() {
         return {
-            state  : "Base Stats",
+            state  : "No Pokemon",
             release: false, //If set to false then development features will be displayed
 
             starterName: "Venomoth",
@@ -242,20 +246,7 @@ module.exports = {
             speed_comparison_toggle   : true,
             enable_blackouts          : false,
 
-            toggle_wEarlyEncounters: false,
-            toggle_wEarlyEncountersNoMoon: false,
 
-            // Yellow toggles
-            toggle_EVENT_ENCOUNTER_ROUTE1_TEST           : false,
-            toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY: false,
-            toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW      : false,
-            // Red and Blue toggles
-            toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE : false,
-            toggle_EVENT_ENCOUNTER_MTMOON_PARAS   : false,
-            toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER: false,
-            // Red/Blue/Yellow toggles
-            toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW : false,
-            toggle_EVENT_ENCOUNTER_ROUTE16_DODUO  : false,
 
             refilming_mode  : false,
             refilmed_attempt: 0,
@@ -522,38 +513,8 @@ module.exports = {
             console.log(`Success!`) 
             console.log(`Loaded all settings from Storage.`) 
         }
-        // Setup encounter toggle watchers
-        const set_encounter_toggle = (subPath, value) => {
-            if (this.mapper?.properties?.patch?.encounter_flags?.[subPath]) {
-                this.mapper.properties.patch.encounter_flags[subPath].set(value, false);
-            } 
-            else {
-                console.log(`Property ${subPath} not found in encounter_flags`);
-            }
-        };
-        const toggleToEncounterFlag = {
-            "toggle_EVENT_ENCOUNTER_ROUTE1_TEST": "EVENT_ENCOUNTER_ROUTE1_TEST",
-            "toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY": "EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY",
-            "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW": "EVENT_ENCOUNTER_ROUTE3_SPEAROW",
-            "toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW": "EVENT_ENCOUNTER_MTMOON_SANDSHREW",
-            "toggle_EVENT_ENCOUNTER_ROUTE16_DODUO": "EVENT_ENCOUNTER_ROUTE16_DODUO",
-            "toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE": "EVENT_ENCOUNTER_MTMOON_GEODUDE",
-            "toggle_EVENT_ENCOUNTER_MTMOON_PARAS": "EVENT_ENCOUNTER_MTMOON_PARAS",
-            "toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER": "EVENT_ENCOUNTER_ROUTE6_CUT_USER",
-        };
-        for (const [toggleProp, encounterFlag] of Object.entries(toggleToEncounterFlag)) {
-            this.$watch(
-                () => this[toggleProp],
-                (new_value) => {
-                    set_encounter_toggle(encounterFlag, new_value);
-                }
-            );
-        }
     },
     watch: {
-        toggle_wEarlyEncounters(newValue) {
-            this.mapper?.properties.patch.wEarlyEncounters.set(newValue ? "On" : "Off", false);
-        },
         current_splits: {
             handler: function (newVal, oldVal) {
                 MyStorage['current_splits'] = newVal
@@ -754,7 +715,7 @@ module.exports = {
             const stat_type = this.stats_display
             if (toggle) {
                 switch (stat_type) {
-                    case "Base Stats": this.stats_display = "Base Stats"; break;
+                    case "No Pokemon": this.stats_display = "No Pokemon"; break;
                     case "DVs":        this.stats_display = "DVs"       ; break;
                     case "EVs":        this.stats_display = "EVs"       ; break;
                     case "Automatic":  this.stats_display = "Automatic" ; break;
@@ -762,7 +723,7 @@ module.exports = {
             }
             else {
                 switch (stat_type) {
-                    case "Base Stats": this.stats_display = "Base Stats"; break;
+                    case "No Pokemon": this.stats_display = "No Pokemon"; break;
                     case "DVs":        this.stats_display = "DVs"       ; break;
                     case "EVs":        this.stats_display = "EVs"       ; break;
                     case "Automatic":  this.stats_display = "Automatic" ; break;
@@ -858,7 +819,7 @@ module.exports = {
             }
         },
         starting_type_fix() {
-            if (this.map.overworld.map.value == "Pallet Town - Oak's Lab" || this.state == "Base Stats") {
+            if (this.map.overworld.map.value == "Pallet Town - Oak's Lab" || this.state == "No Pokemon") {
                 const fixed_type1 = this.g1PokemonData[this.starterName].type1.toLowerCase()
                 const fixed_type2 = this.g1PokemonData[this.starterName].type2.toLowerCase()
                 return [fixed_type1, fixed_type2]
@@ -901,34 +862,6 @@ module.exports = {
             await Promise.all([
                 this.mapper.properties.patch.hChosenStarter.set(starter, false), 
             ])
-        },
-        set_encounters() {
-            const game = this.mapper.properties.meta.gameName.value
-            let early_encounters_value = this.toggle_wEarlyEncounters == true ? "On" : "Off"
-            this.mapper.properties.patch.wEarlyEncounters.set(early_encounters_value, false)
-            if (game == 'Yellow') {
-                this.mapper.setBits([ // Set bits can only be called on properties that share the same address
-                    {path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST', value: this.toggle_EVENT_ENCOUNTER_ROUTE1_TEST, freeze: false},
-                ])
-                this.mapper.setBits([
-                    {path: 'patch.encounter_flags.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY', value: this.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY, freeze: false},
-                    {path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW',         value: this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW,         freeze: false},
-                    {path: 'patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_SANDSHREW',       value: this.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW,       freeze: false},
-                    {path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO',          value: this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO,          freeze: false},
-                ])
-            }
-            else if (game == 'Red and Blue') {
-                // this.mapper.properties.patch.wEarlyEncounters.set(early_encounters_value, false)
-                this.mapper.setBits([ // Set bits can only be called on properties that share the same address
-                    {path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW',  value: this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW,  freeze: false},
-                    {path: 'patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE',  value: this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE,  freeze: false},
-                    {path: 'patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_PARAS',    value: this.toggle_EVENT_ENCOUNTER_MTMOON_PARAS,    freeze: false},
-                    {path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE6_CUT_USER', value: this.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER, freeze: false},
-                ])
-                this.mapper.setBits([
-                    {path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO',  value: this.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO, freeze: false},
-                ])
-            }
         },
         get_nested_property(obj, path) {
             return path.split('.').reduce((o, p) => (o || {})[p], obj);
@@ -1001,35 +934,8 @@ module.exports = {
             if (this.state != `Battle`) {
                 return data["type" + typeNumber.toString()].toLowerCase()
             }
-            if (this.state == "Base Stats" || this.mapper.properties.player.team[0].species.value == null) {
+            if (this.state == "No Pokemon" || this.mapper.properties.player.team[0].species.value == null) {
                 return this.g1PokemonData[this.starterName]["type" + typeNumber.toString()]?.toLowerCase()
-            }
-        },
-        //string can be: clear, increment, decrement
-        resets_clear() {
-            this.playerResets = 0
-            this.blackout_counter = 0
-        },
-        resets_increment() {
-            if (this.key_F16 == "blackouts") {
-                this.blackout_counter++
-            }
-            if (this.key_F16 == "resets") {
-                this.playerResets++
-            }
-            if (this.key_F16 == "faults") {
-                this.playerResets++
-            }
-        },
-        resets_decrement() {
-            if (this.key_F16 == "blackouts") {
-                this.blackout_counter--
-            }
-            if (this.key_F16 == "resets") {
-                this.playerResets--
-            }
-            if (this.key_F16 == "faults") {
-                this.playerResets--
             }
         },
         increment(property) {
@@ -1040,20 +946,6 @@ module.exports = {
                 return 0
             }
             this[property]--;
-        },
-        apply_settings(setting_group) { //pass in the name of the group of settings that are to have values assigned
-            keys = this.settings[setting_group]
-
-            Object.keys(keys).forEach(key => {
-                this[key] = keys[key];
-            });
-        },
-        splits_clear() {
-            this.split_data = []
-        },
-        split_offset_calculation(duration1, duration2) {
-            const totalSeconds = this.convertDurationToSeconds(duration1) - this.convertDurationToSeconds(duration2);
-            return this.convertSecondsToDuration(totalSeconds);
         },
         convertDurationToSeconds(duration) {
             const parts = duration.split(':').map(part => parseInt(part, 10));
@@ -1116,12 +1008,6 @@ module.exports = {
               species: isFainted ? "opacity: .3" : "opacity: .7"
             };
         },
-        trainerName(trainerClass) {
-            if (trainerClass == "RIVAL1" || trainerClass == "RIVAL2" || trainerClass == "RIVAL3")
-                return "Rival"
-            else
-                return trainerClass
-        },
         pkmnType(typeNumber, type1, type2) {
             if (type1 && this.state != `Base Stats`) {
                 if (type1 == type2) {
@@ -1173,12 +1059,6 @@ module.exports = {
         openFolder,
     },
     mounted: async function () {
-        if (this.mapper.properties.meta.state.value == "No Pokemon") {
-            this.state = "Base Stats"
-        }
-        else {
-            this.state = this.mapper.properties.meta.state.value
-        }
         this.load_split_settings()
         this.timer.update();
         this.pokemon_list = this.keys_function(this.g1PokemonData)
@@ -1248,7 +1128,6 @@ module.exports = {
                 log_start()
             }
         });
-
         //write to file at the end of a key battle
         //the `lowHealthAlarm` property is used to play the Red-bar sound effect
         //it is turned off as soon as "Player defeated Trainer" starts to render in the textbox
@@ -1357,7 +1236,6 @@ module.exports = {
                 }
             }   
         });
-        
         //log the final times with the final gametime
         //I am watching tile1 for a specifc tile that appears when the gametime displays on screen
         this.mapper.properties.screen.tiles.column1.tile1.change((newProp) => {
@@ -1377,7 +1255,6 @@ module.exports = {
                 }
             }
         });
-
         //when the triangular cursor appears on the screen, log the gametime
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
             let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red' ? "R" : "B"
@@ -1396,7 +1273,6 @@ module.exports = {
                 this.blackout = true;
             }
         })
-
         //new blackout tracking for loop processed gamestate
         this.mapper.properties.meta.state.change((newProp, oldProp) => {
             if (newProp.value == "Overworld" && oldProp.value == "Battle" && this.blackout == true) {
@@ -1412,31 +1288,6 @@ module.exports = {
             }
         });
 
-        this.mapper.properties.meta.state.change(async (newProp) => {
-            if (newProp.value == "No Pokemon") {
-                this.state = "Base Stats"
-            }
-            else {
-                this.state = newProp.value
-            }
-        });
-
-        //HM Encounters
-        this.mapper.properties.overworld.map.change((newValue, oldValue) => {
-            if (newValue.value == "Pallet Town" && oldValue.value == "Pallet Town - Oak's Lab" && this.mapper.properties.events.got_pokedex.value == false) {
-                this.set_encounters()
-            }
-            else if (this.toggle_wEarlyEncountersNoMoon && (newValue.value == "Mt Moon - 1" || newValue.value == "Mt Moon - 2" || newValue.value == "Mt Moon - 3")) {
-                this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
-            }
-            // Alakazam Yellow exception
-            else if (this.game_name == "Yellow" && this.starterName == "Alakazam" && newValue.value == "Mt Moon - 1" || newValue.value == "Mt Moon - 2" || newValue.value == "Mt Moon - 3") {
-                this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
-            }
-            else if (newValue.value == "Viridian Forest" && this.game_name == "Yellow" && this.starterName == "Alakazam" && this.mapper.properties?.trainers?.viridianForest?.bugcatcher2?.value == false) {
-                this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
-            }
-        })
         // Alakazam Yellow exception
         this.mapper.properties?.trainers?.viridianForest?.bugcatcher2.change((newValue, oldValue) => {
             if (this.game_name == "Yellow" && this.starterName == "Alakazam" && newValue.value == true) {

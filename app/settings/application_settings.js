@@ -60,15 +60,4 @@ const application_settings = [
     [ "right_panel",                  "Battle Graphic"],
     [ "collect_summary_files",        true],
     [ "collect_split_data",           true],
-
-    [ "toggle_wEarlyEncounters",                       false ],
-    [ "toggle_wEarlyEncountersNoMoon",                 false ],
-    [ "toggle_EVENT_ENCOUNTER_ROUTE1_TEST",            false ],
-    [ "toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY", false ],
-    [ "toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW",       false ],
-    [ "toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE",         false ],
-    [ "toggle_EVENT_ENCOUNTER_MTMOON_PARAS",           false ],
-    [ "toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER",        false ],
-    [ "toggle_EVENT_ENCOUNTER_ROUTE16_DODUO",          false ],
-    [ "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW",         false ],
 ];

@@ -9,7 +9,7 @@ export function pkmn_type(typeNumber) {
     if (this.state != `Battle`) {
         return data["type" + typeNumber.toString()].toLowerCase()
     }
-    if (this.state == "Base Stats" || this.mapper.properties.player.team[0].species.value == null) {
+    if (this.state == "No Pokemon" || this.mapper.properties.player.team[0].species.value == null) {
         return this.g1PokemonData[this.starterName]["type" + typeNumber.toString()]?.toLowerCase()
     }
 }

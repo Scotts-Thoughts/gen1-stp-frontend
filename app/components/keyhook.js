@@ -268,7 +268,7 @@ module.exports = {
         //F15
         keyhook.registerShortCut('F15', async () => { // Show Base Stats
             console.log("Key: F15 pressed. Base Stats displayed.")
-            this.$parent.stats_display = "Base Stats";
+            this.$parent.stats_display = "No Pokemon";
         });
         //F16
         keyhook.registerShortCut('F16', async () => { // Automatic

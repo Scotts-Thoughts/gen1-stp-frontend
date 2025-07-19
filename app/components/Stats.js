@@ -1,11 +1,11 @@
 const template = /*html*/`
     <div class="statsContainer"> 
-        <div class="critrate">Crit rate: {{ g1CritRate(g1PokemonData[starterName]) }}%</div>
+        <div class="critrate">Crit rate: {{ crit_rate(g1PokemonData[starterName]) }}%</div>
         <div>
             <div class="statsheader">{{stats_header}}</div>
             <div class="expLabelGen1">Exp:</div>
             <div v-for="stat in stat_object" class="stat">
-                <div v-if="stat.name != 'HP' && state == 'Battle'" class="stat_label mod_style">{{ stageModifiers(this.mapper?.properties?.battle?.yourPokemon['modStage'+stat.mod_path]) }}</div>
+                <div v-if="stat.name != 'HP' && state == 'Battle'" class="stat_label mod_style">{{ stringify_stage_modifiers(this.mapper?.properties?.battle?.yourPokemon['modStage'+stat.mod_path]) }}</div>
                 <div :style="{ opacity: statLabelOpacity()[stat.name]}" class="stat_label">{{stat.label}}</div>
                 
                 <div v-if="stats_display == 'Base Stats'"   class="stat_value">{{pokedex_yellow[starterName].base_stats[stat.base_stat_path]}}</div>
@@ -63,7 +63,7 @@ module.exports = {
             const stat_type = this.stats_display
             const state     = this.state
             switch (stat_type) {
-                case "Base Stats":   return `Base Stats`
+                case "No Pokemon":   return `Base Stats`
                 case "DVs":          return `${this.starterName}'s DVs`
                 case "EVs":          return `Stat Experience`
                 case "Detailed EVs": return `Detailed Stat Experience`
@@ -91,7 +91,7 @@ module.exports = {
             const usable_vitamins = Math.ceil(10 - vitaminsUsed);
             return usable_vitamins < 0 ? 0 : usable_vitamins;
         },
-        g1CritRate(pkmnData) {
+        crit_rate(pkmnData) {
             var baseSpeed = pkmnData?.base_spd
             if (baseSpeed) {
                 return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
@@ -253,7 +253,7 @@ module.exports = {
             }
             return object
         },
-        stageModifiers(y) {
+        stringify_stage_modifiers(y) {
             if (y === null) {
                 return " "
             }

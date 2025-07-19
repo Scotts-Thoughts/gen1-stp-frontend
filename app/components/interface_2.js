@@ -9,7 +9,6 @@ const template = /*html*/`
     <input type="text" v-model="$parent.search_term" placeholder="Search for a species">
     <button class="buttonStyle set_starter_button" @click="$parent.set_rom_starter">Set ROM Starter</button>
     <button class="buttonStyle new_run_button" @click="$parent.newRun">New Run</button>
-    <button class="buttonStyle new_run_button" @click="$parent.set_encounters">Set Encounters</button>
     <br>
     <button class="buttonStyle comparison_button" @click="$parent.load_splits()">Split Comparison</button><br>
     <table>
@@ -63,32 +62,6 @@ const template = /*html*/`
                 <th style="text-align: left;">Faults:</th>
                 <th>{{this.$parent.playerResets + this.$parent.blackout_counter}}</th>
             </tr>
-        </tbody>
-    </table>
-    <br>
-    <div>Encounter Settings:</div>
-    <table>
-        <tbody>
-            <tr><td>Early Encounters:</td><td><input class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_wEarlyEncounters"/></td></tr>
-            <tr><td>No Moon:</td><td>         <input class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_wEarlyEncountersNoMoon"/></td></tr>
-        </tbody>
-    </table>
-    <table v-if="$parent.game_name == 'Yellow'" class="ui_table">
-        <tbody>
-            <tr v-if="$parent.release == false"><td>Route 1</td>        <td>- Test:</td><td><input      class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_EVENT_ENCOUNTER_ROUTE1_TEST"/></td></tr>
-            <tr>                                <td>Viridian Forest</td><td>- Pidgey:</td><td><input    class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY"/></td></tr>
-            <tr>                                <td>Route 3</td>        <td>- Spearow:</td><td><input   class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW"/></td></tr>
-            <tr>                                <td>Mt. Moon</td>       <td>- Sandshrew:</td><td><input class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW"/></td></tr>
-            <tr>                                <td>Route 16</td>       <td>- Doduo:</td><td><input     class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO"/></td></tr>
-        </tbody>
-    </table>
-    <table v-if="$parent.game_name == 'Red' || $parent.game_name == 'Blue'" class="ui_table">
-        <tbody>
-            <tr><td>Route 3</td> <td>- Spearow:</td> <td><input class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW"/></td></tr>
-            <tr><td>Mt. Moon</td><td>- Geodude:</td> <td><input class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE"/></td></tr>
-            <tr><td>Mt. Moon</td><td>- Paras:</td>   <td><input class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_EVENT_ENCOUNTER_MTMOON_PARAS"/></td></tr>
-            <tr><td>Route 6</td> <td>- Cut User:</td><td><input class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER"/></td></tr>
-            <tr><td>Route 16</td><td>- Doduo:</td>   <td><input class="checkBoxStyle" type="checkbox" v-model="$parent.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO"/></td></tr>
         </tbody>
     </table>
     <br>
