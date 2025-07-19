@@ -30,7 +30,6 @@ const template = /*html*/`
     <br>
     <table>
         <tbody>
-            <tr><td>Blackouts?:</td><td>                  <input class="checkBoxStyle" type="checkbox" v-model="$parent.enable_blackouts"/></td></tr>
             <tr><td>Disable right panel hotkeys:</td><td> <input class="checkBoxStyle" type="checkbox" v-model="$parent.disallow_right_panel_switching"/></td></tr>
             <tr><td>Automatic post-battle splits:</td><td><input class="checkBoxStyle" type="checkbox" v-model="$parent.automatic_post_battle_splits"/></td></tr>
             <tr><td>Show repel counter:</td><td>          <input class="checkBoxStyle" type="checkbox" v-model="$parent.show_repel_counter"/></td></tr>

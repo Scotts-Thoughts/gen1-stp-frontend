@@ -22,20 +22,13 @@ const pokemon_settings = [
     [ "backgroundHue",          0,         ],
     [ "playerId",               0,         ],
     [ "playerName",             "NINTEN",  ],
-    [ "resetCatcher",           "NINTEN",  ],
-    [ "playerResets",           0,         ],
     [ "blackout_counter",       0,         ],
-    [ "resetCounter",           true,      ],
-    [ "game_over",              false,     ],
-    [ "lance_defeated",         false,     ],
     [ "finished_logs",          false,     ],
     [ "attempt_number",         0,         ],
     [ "finished_run_count",     0,         ],
-    [ "blackouts_as_resets",    false,     ], //counts blackouts as resets
     [ "blackout",               false,     ],
     [ "faults",                 0,         ],
     [ "pb_time",                "None",    ],
-    [ "most_recent_move",       "",        ],
     [ "split_logStr",           "",        ],
     [ "simple_data_str",        "",        ],
     [ "full_data_str",          "",        ],
@@ -54,6 +47,4 @@ const pokemon_settings = [
     [ "show_bonk_counter",      true, ],
     [ "toggle_compare_splits",  'First', ],
     [ "show_repel_counter",     true, ],
-    [ "enable_blackouts",       true, ],
-    
 ];

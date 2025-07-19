@@ -10,7 +10,12 @@ const template = /*html*/`
     <state :mapper="mapper"></state>
 
     <!-- Left Panel -->
-    <faults></faults>
+    <faults 
+        :mapper="mapper" 
+        :game_over="game_over" 
+        :game_name="game_name" 
+        :starterName="starterName"
+    ></faults>
     <div v-if="battlePopUps == true" style="position: absolute;">
         <pop_ups
             :mapper="mapper"
@@ -22,7 +27,7 @@ const template = /*html*/`
             :mapper="mapper"
             :state="state"
             :show_bonk_counter="show_bonk_counter"
-            :blackouts_resets="blackouts_resets"
+            :timer_ui_style="timer_ui_style"
             :dropdown_bonks_items="dropdown_bonks_items"
         ></bonk_counter>
         
@@ -30,7 +35,7 @@ const template = /*html*/`
             :mapper="mapper"
             :state="state"
             :show_repel_counter="show_repel_counter"
-            :blackouts_resets="blackouts_resets"
+            :timer_ui_style="timer_ui_style"
         ></repel_counter>
     </div>
     <type_icons :pkmn_type="pkmn_type"></type_icons>
@@ -242,9 +247,6 @@ module.exports = {
             toggle_compare_splits     : 'First',
             no_attempt                : false,
             speed_comparison_toggle   : true,
-            enable_blackouts          : false,
-
-
 
             refilming_mode  : false,
             refilmed_attempt: 0,
@@ -293,23 +295,16 @@ module.exports = {
             // Pokemon Settings
             playerId:              0,
             playerName:            "NINTEN",
-            resetCatcher:          "NINTEN",
-            playerResets:          0,
-            blackout_counter:      0,
-            resetCounter:          true,
             game_over:             false,
-            lance_defeated:        false,
             finished_logs:         false,
             attempt_number:        0,
             finished_run_count:    0,
             pb_time:               "None",
-            most_recent_move:      "",
             split_logStr:          "",
             simple_data_str:       "",
             full_data_str:         "",
             deprecated_data_str:   "",
             simple_data:           "",
-            blackouts_as_resets:   false, //counts blackouts as resets
             blackout:              false,
             battle_summary_array:  [],
 
@@ -562,17 +557,6 @@ module.exports = {
             this.finished_logs == false;
             this.blackout_counter = 0;
         },
-        playerResets(newProp) {
-            if (this.playerResets < 0) {
-                this.playerResets = 0;
-            }
-            this.blackout == false
-        },
-        blackout_counter(newProp) {
-            if (this.blackout_counter < 0) {
-                this.blackout_counter = 0;
-            }
-        },
         rockTunnelDarkness() {
             if (this.rockTunnelDarkness == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
                 this.mapper.properties.overworld.mapData.palette.set(0, false)
@@ -650,9 +634,9 @@ module.exports = {
                 battle_summary_enemy_slp: this.battle_summary_enemy_slp,
             }
         },
-        blackouts_resets() {
-            const resets = this.playerResets
-            const blackouts = this.blackout_counter
+        timer_ui_style() {
+            const resets = Storage.games[this.game_name][this.starterName].data.player_resets ?? 0
+            const blackouts = Storage.games[this.game_name][this.starterName].data.blackout_counter ?? 0
             const allow_none = true // Toggle that allows for the UI to display no border if there are no faults
             if (allow_none == true && blackouts == 0 && resets == 0) {
                 return "None"
@@ -736,14 +720,6 @@ module.exports = {
             const value = this.mapper.properties.player.team[0].species.value
             if (bytes > 0 && value === null) {
                 return mapping[bytes]
-            }
-        },
-        playerResetsDisplay() {
-            if (this.blackouts_as_resets == true) {
-                return this.playerResets + this.blackout_counter
-            }
-            else {
-                return this.playerResets
             }
         },
 
@@ -907,20 +883,6 @@ module.exports = {
             if (!time) { return "00" }
             return time.toString().padStart(2, "0")
         },
-        async newRun() {
-            this.compared_splits = []
-            this.current_splits = []
-
-            this.battle_summary_header = "Battle Summary"
-            this.most_recent_move = ""
-            this.timer.setTimer(this.timer_startTimeOffset)
-
-            this.playerResets = 0
-            this.finished_logs = false
-            this.blackout_counter = 0
-            this.playerId = 0
-            this.playerName = "NINTEN"
-        },
         pkmn_type(typeNumber) {
             data = this.g1PokemonData[this.starterName]
             if (this.state == `Battle`) {
@@ -1041,44 +1003,6 @@ module.exports = {
         this.load_split_settings()
         this.timer.update();
         this.pokemon_list = this.keys_function(this.g1PokemonData)
-
-        // reset tracking
-        this.mapper.properties.player.playerId.change((newProp, oldProp) => {
-            if (this.lance_defeated == true) {
-                this.lance_defeated = false
-            }
-            else if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
-                this.blackout = false;
-                this.playerResets++;
-            } 
-        })
-        this.mapper.properties.player.playerId.change((newProp) => {
-            if (newProp.value > 0 && this.game_over == false) {
-                if (newProp.value != this.playerId) {
-                    if (this.no_attempt == true) {
-                        return
-                    }
-                    this.playerResets = 0;
-                    this.blackout_counter = 0;
-                    this.finished_logs = false;
-                    if (this.test_run == false && this.refilming_mode == false) {
-                        this.attempt_number++
-                    };
-                    this.most_recent_move = "";
-                    // this.startTime();
-                    this.timer.startTime(this.timer_startTimeOffset);
-                    if (this.toggle_wEarlyEncounters == false && this.toggle_wEarlyEncountersNoMoon == true) {
-                        this.toggle_wEarlyEncounters == true
-                    }
-                    this.playerId = newProp.value;
-                }
-            }
-        })
-        this.mapper.properties.player.name.change((newProp) => {
-            if (this.game_over == true && newProp.value == "NINTEN") {
-                this.game_over = false;
-            }
-        })
 
         //*autosplitter
         //log the start of a battle to the console
@@ -1242,28 +1166,6 @@ module.exports = {
                 this.logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //copy the current `attempt_number` split data to the finished folder
                 console.log("Run complete - moving attempt files to finished folder.")
                 this.finished_logs = true
-            }
-        });
-
-        //*blackout tracking
-        //track when the player has a blackout
-        this.mapper.properties.player.team[0].hp.change((newProp, oldProp) => {
-            if (newProp.value == 0 && this.state == `Battle`) {
-                this.blackout = true;
-            }
-        })
-        //new blackout tracking for loop processed gamestate
-        this.mapper.properties.meta.state.change((newProp, oldProp) => {
-            if (newProp.value == "Overworld" && oldProp.value == "Battle" && this.blackout == true) {
-                this.blackout = false;
-                if (this.enable_blackouts) { this.blackout_counter++; }
-            }
-            else if (newProp.value == "Overworld") {
-                this.blackout = false;
-            }
-            if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") {
-                this.automatic_splits = false
-                this.right_panel = 'Automatic'
             }
         });
 
