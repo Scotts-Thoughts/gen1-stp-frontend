@@ -1,5 +1,6 @@
 const g1MoveData = require("../data/g1MoveData");
 const trainers = require("../data/trainers");
+const { get_enemy_pkmn_styles } = require("../methods/enemy");
 const template = /*html*/`
 <div>
     <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
@@ -84,7 +85,6 @@ module.exports = {
         "move_name",
         "speed_comparison_toggle",
         "battle_pokemon_crop",
-        "get_enemy_pkmn_styles",
         "enemy_pkmn_faint_types",
         "g1PokemonData",
         "starterName",
@@ -106,6 +106,7 @@ module.exports = {
         },
     },
     methods: {
+        get_enemy_pkmn_styles,
         speed_comparison(enemy_slot, enemy_speed_incoming) {
             const state          = this.mapper.properties.meta.state.value
             const trainer        = this.mapper.properties.battle.trainer.class.value

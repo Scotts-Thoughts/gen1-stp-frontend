@@ -1,4 +1,5 @@
 const moveData = require("../data/g1MoveData")
+const { get_enemy_pkmn_styles } = require("../methods/enemy");
 
 const template = /*html*/ `
 <div v-if="state == 'Battle' || state == 'From Battle'">
@@ -85,7 +86,6 @@ module.exports = {
         "enemyState",
         "battle_pokemon_crop",
         "move_name",
-        "get_enemy_pkmn_styles",
         "enemy_pkmn_faint_types",
         "speed_comparison_toggle",
     ],
@@ -98,6 +98,7 @@ module.exports = {
         }
     },
     methods: {
+        get_enemy_pkmn_styles,
         wild_pkmn_name(species_string) {
             if (species_string == null || species_string == undefined) { return "" }
             species_string = species_string.toLowerCase()
