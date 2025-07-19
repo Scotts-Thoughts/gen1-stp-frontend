@@ -42,8 +42,6 @@ const pokemon_settings = [
     [ "deprecated_data_str",    "",        ],
     [ "simple_data",            "",        ],
     [ "ui_saturation",          0.6,       ],
-    [ "ui_type_colors",         "Bulbapedia Current", ],
-    [ "ui_type_color_modifier", "current_",           ],
     // [ "previous_splits",        [], ],
     // [ "current_splits",         [], ],
     // [ "compared_splits",        [], ],

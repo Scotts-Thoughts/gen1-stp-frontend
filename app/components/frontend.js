@@ -80,7 +80,6 @@ const template = /*html*/`
                 <div class="split_label">Splits</div>
                 <div v-if="toggle_compare_splits === 'Followup'">
                     <splits_followup
-                        :ui_type_color_modifier="ui_type_color_modifier"
                         :starting_type_fix="starting_type_fix"
                         :compare_splits="compare_splits"
                         :trainer_name_lookup="trainer_name_lookup"
@@ -90,7 +89,6 @@ const template = /*html*/`
                 </div>
                 <div v-else-if="toggle_compare_splits === 'First'">
                     <splits_first
-                        :ui_type_color_modifier="ui_type_color_modifier"
                         :starting_type_fix="starting_type_fix"
                         :compare_splits="compare_splits"
                         :trainer_name_lookup="trainer_name_lookup"
@@ -104,7 +102,6 @@ const template = /*html*/`
         <div v-else-if="right_panel == 'Automatic' && (state != 'Base Stats' && (state == 'To Battle' || state == 'Battle') && mapper.properties.battle.type.value == 'Trainer')" style="position: absolute;" key=1>
             <enemy_graphic
                 :mapper="mapper"
-                :ui_type_color_modifier="ui_type_color_modifier"
                 :capitalization_format="capitalization_format"
                 :move_name="move_name"
                 :speed_comparison_toggle="speed_comparison_toggle"
@@ -389,8 +386,6 @@ module.exports = {
             playerNameChoice:      "NINTEN",
 
             // UI
-            ui_type_colors:         "Current",
-            ui_type_color_modifier: "current_",
             ui_stat_arrangement:    "Speed: top right",
             ui_stat_arrangement_modifier: "hp_spe_",
 
@@ -659,14 +654,6 @@ module.exports = {
                 this.ui_stat_arrangement_modifier = "hp_spd_"
             }
         },
-        ui_type_colors(newValue) {
-            if (newValue == 'Current') {
-                this.ui_type_color_modifier = "current_"
-            }
-            if (newValue == 'Legacy') {
-                this.ui_type_color_modifier = "legacy_"
-            }
-        },
         async starterName(newValue, oldValue) {
             if (this.ready == false) await this.sleep(250)
                 
@@ -734,7 +721,6 @@ module.exports = {
         graphicsProps() {
             return {
                 g1PokemonData: this.g1PokemonData,
-                ui_type_color_modifier: this.ui_type_color_modifier,
                 ui_stat_arrangement_modifier: this.ui_stat_arrangement_modifier,
                 game_name: this.game_name,
                 starterName: this.starterName,
@@ -744,7 +730,6 @@ module.exports = {
         },
         splits_summary_props() {
             return {
-                ui_type_color_modifier: this.ui_type_color_modifier,
                 starting_type_fix: this.starting_type_fix,
                 compare_splits: this.compare_splits,
                 trainer_name_lookup: this.trainer_name_lookup,

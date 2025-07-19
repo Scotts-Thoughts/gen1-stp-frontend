@@ -17,7 +17,11 @@ const template = /*html*/`
                 
                 <!-- Moves -->
                 <img class="canvas" :class="svgColorClass(speed_comparison(x, mapper.properties.battle.trainer.team[x]?.speed).comparison, batt.trainer.team[x])" :src="'images/ui/speed_comp/' + x + '.svg'"/>
-                <img class="enemyStatsArea opacityTransition" :style="get_enemy_pkmn_styles(batt.trainer.team[x]).faint_stats_background" :src="'images/stats/' + ui_type_color_modifier + '/' + x + '.svg'"/>
+                <img 
+                    class="enemyStatsArea opacityTransition" 
+                    :style="get_enemy_pkmn_styles(batt.trainer.team[x]).faint_stats_background" 
+                    :src="'images/stats/' + x + '.svg'"
+                />
 
                 <div v-for="move_index in moves = [0, 1, 2, 3]">
                     <img v-if="mapper.properties.battle.trainer.team[x]['move' + (move_index + 1)]?.value != null" 
@@ -76,7 +80,6 @@ module.exports = {
     template,
     props: [
         "mapper",
-        "ui_type_color_modifier",
         "capitalization_format",
         "move_name",
         "speed_comparison_toggle",

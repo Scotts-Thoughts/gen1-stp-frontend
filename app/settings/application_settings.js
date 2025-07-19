@@ -78,8 +78,6 @@ const application_settings = [
     [ "disallow_right_panel_switching", true],
     [ "automatic_post_battle_splits",   true],
 
-    [ "ui_type_colors",               "Current"],
-    [ "ui_type_color_modifier",       "current_"],
     [ "ui_stat_arrangement",          "Speed: top right"],
     [ "ui_stat_arrangement_modifier", "hp_spd_"],
     [ "stats_display",                "Automatic"],

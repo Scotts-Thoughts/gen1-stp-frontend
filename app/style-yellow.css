@@ -8,15 +8,6 @@
     width: 1080px;
 
     /* Overlay Colors */
-    --gradient1: hsl(0, 55%, 60%);
-    --gradient2: hsl(0, 55%, 63%);
-    --gradient3: hsl(0, 55%, 72%);
-    --gradient4: hsl(0, 55%, 78%);
-    --gradient5: hsl(0, 55%, 80%);
-    --gradient6: hsl(0, 55%, 78%);
-    --gradient7: hsl(0, 55%, 72%);
-    --gradient8: hsl(0, 55%, 63%);
-    --gradient9: hsl(0, 55%, 60%);
     --outline1: #808080;
     --outline2: #4d4d4d;
     --outline3: #000000;
@@ -31,9 +22,6 @@
     --gradient7: hsl(0, 55%, 72%);
     --gradient8: hsl(0, 55%, 63%);
     --gradient9: hsl(0, 55%, 60%);
-    --outline1: #808080;
-    --outline2: #4d4d4d;
-    --outline3: #000000;
 
     /* Movepool Type Colours */
     /* Bulbapedia pre-2024 */
@@ -55,46 +43,6 @@
     --steel:    #60a1b8;
     --dark:     #624d4e;
     --fairy:    #ef70ef; 
-   
-    /* Bulbapedia (present) */
-    --current_normal:   #9fa19f;
-    --current_fighting: #ff8000;
-    --current_grass:    #3fa129;
-    --current_fire:     #e62829;
-    --current_water:    #2980ef;
-    --current_electric: #fac000;
-    --current_ground:   #915121;
-    --current_rock:     #afa981;
-    --current_psychic:  #ef4179;
-    --current_poison:   #9141cb;
-    --current_flying:   #81b9ef;
-    --current_bug:      #91a119;
-    --current_ice:      #3dcef3;
-    --current_ghost:    #704170;
-    --current_dragon:   #5060e1;
-    --current_steel:    #60a1b8;
-    --current_dark:     #624d4e;
-    --current_fairy:    #ef70ef;
-        
-    --legacy_normal:   #a8a878;
-    --legacy_fighting: #c03028;
-    --legacy_grass:    #78c850;
-    --legacy_fire:     #f08030;
-    --legacy_water:    #6890f0;
-    --legacy_electric: #f3d230;
-    --legacy_ground:   #e0c068;
-    --legacy_rock:     #b8a038;
-    --legacy_psychic:  #f85888;
-    --legacy_poison:   #a040a0;
-    --legacy_flying:   #a890f0;
-    --legacy_bug:      #a8b820;
-    --legacy_ice:      #98d8d8;
-    --legacy_ghost:    #705898;
-    --legacy_dragon:   #7038f8;
-    --legacy_steel:    #b8b8d0;
-    --legacy_dark:     #705848;
-    --legacy_fairy:    #ee99ac; 
-   
 
     /* Stat Colours */
     --hp:     #ff5959;
@@ -115,62 +63,6 @@
     /* Stat Gradients */
 
     /* Default Border Colours */
-    /* Bulbapedia pre-2024 */
-    --legacy_normal1:   #6d6d4e;
-    --legacy_normal2:   #a8a878;
-    --legacy_normal3:   #c6c6a7;
-    --legacy_fighting1: #791c17;
-    --legacy_fighting2: #bf2923;
-    --legacy_fighting3: #d67873;
-    --legacy_grass1:    #497d30;
-    --legacy_grass2:    #78c850;
-    --legacy_grass3:    #a7db8d;
-    --legacy_fire1:     #9c531f;
-    --legacy_fire2:     #f08030;
-    --legacy_fire3:     #f5ac78;
-    --legacy_water1:    #445e9c;
-    --legacy_water2:    #6890f0;
-    --legacy_water3:    #9db7f5;
-    --legacy_electric1: #a1871f;
-    --legacy_electric2: #f8d030;
-    --legacy_electric3: #fae078;
-    --legacy_ground1:   #927d44;
-    --legacy_ground2:   #e0c068;
-    --legacy_ground3:   #ebd69d;
-    --legacy_rock1:     #716019;
-    --legacy_rock2:     #b89f34;
-    --legacy_rock3:     #d1c17d;
-    --legacy_psychic1:  #9c3152;
-    --legacy_psychic2:  #fa5889;
-    --legacy_psychic3:  #fa92b2;
-    --legacy_poison1:   #682a68;
-    --legacy_poison2:   #a743a7;
-    --legacy_poison3:   #c183c1;
-    --legacy_flying1:   #675797;
-    --legacy_flying2:   #b294e2;
-    --legacy_flying3:   #c6b7f5;
-    --legacy_bug1:      #697413;
-    --legacy_bug2:      #a9bf1f;
-    --legacy_bug3:      #c6d16e;
-    --legacy_ice1:      #588585;
-    --legacy_ice2:      #98dbdb;
-    --legacy_ice3:      #bce6e6;
-    --legacy_ghost1:    #4f4067;
-    --legacy_ghost2:    #6e5597;
-    --legacy_ghost3:    #a292bc;
-    --legacy_dragon1:   #3b139a;
-    --legacy_dragon2:   #6432dd;
-    --legacy_dragon3:   #a27dfa;
-    --legacy_steel1:    #737382;
-    --legacy_steel2:    #bcbcd5;
-    --legacy_steel3:    #d1d1e0;
-    --legacy_dark1:     #3b291e;
-    --legacy_dark2:     #695948;
-    --legacy_dark3:     #a29288;
-    --legacy_fairy1:    #9b6470;
-    --legacy_fairy2:    #ee99ac;
-    --legacy_fairy3:    #f4bdc9; 
-
     /* Bulbapedia (present) */
     --current_normal1:   #676867;
     --current_normal2:   #9FA19F;
@@ -2287,7 +2179,7 @@ box-shadow:
 .movepoolTable {
     font-size: 17px;
 }
-.movepoolDemo tr:nth-child(odd) {
+.movepoolDemo tr:nth-child(odd):not(:first-child) {
     background-color: #cfcfcf;
 }
 .ui_table {
@@ -2483,3 +2375,22 @@ box-shadow:
 .saturation {
     filter: saturate(var(--style_ui_saturation));
 }
+
+.background-normal { background-color: var(--normal); }
+.background-fighting { background-color: var(--fighting); }
+.background-grass { background-color: var(--grass); }
+.background-fire { background-color: var(--fire); }
+.background-water { background-color: var(--water); }
+.background-electric { background-color: var(--electric); }
+.background-ground { background-color: var(--ground); }
+.background-rock { background-color: var(--rock); }
+.background-psychic { background-color: var(--psychic); }
+.background-poison { background-color: var(--poison); }
+.background-flying { background-color: var(--flying); }
+.background-bug { background-color: var(--bug); }
+.background-ice { background-color: var(--ice); }
+.background-ghost { background-color: var(--ghost); }
+.background-dragon { background-color: var(--dragon); }
+.background-steel { background-color: var(--steel); }
+.background-dark { background-color: var(--dark); }
+.background-fairy { background-color: var(--fairy); }

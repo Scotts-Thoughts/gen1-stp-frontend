@@ -2,7 +2,7 @@ const template = /*html*/`
     <div>
         <table style="height: 960px;" class="splits_table" cellspacing="0">
             <tbody>
-                <tr :style="{'background-color': \`var(--\${ui_type_color_modifier}\${starting_type_fix[1]})\`, 'outline': '2px solid #000'}">
+                <tr :class="\`background-\${starting_type_fix[1]}\`" style="outline: 2px solid #000">
                     <td style="font-size: 18px; padding-left: 3px">Split</td>
                     <td style="font-size: 18px; width: 80px;  text-align: left; padding-left: 3px;"></td>
                     <td style="font-size: 18px; width: 110px; text-align: right;">{{previous_label}}</td>
@@ -25,7 +25,6 @@ const template = /*html*/`
 module.exports = {
     template,
     props: [
-        "ui_type_color_modifier",
         "starting_type_fix",
         "compare_splits",
         "trainer_name_lookup",

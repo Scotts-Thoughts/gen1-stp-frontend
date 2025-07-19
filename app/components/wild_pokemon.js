@@ -12,7 +12,7 @@ const template = /*html*/ `
             
             <!-- UI Elements -->
             <img class="canvas" :class="svgColorClass(speed_comparison(wild_mon.speed).comparison, wild_mon)" :src="'images/ui/speed_comp/0.svg'"/>
-            <img class="enemyStatsArea opacityTransition" :style="get_enemy_pkmn_styles(wild_mon).faint_stats_background" :src="'images/stats/current_/0.svg'"/>
+            <img class="enemyStatsArea opacityTransition" :style="get_enemy_pkmn_styles(wild_mon).faint_stats_background" :src="'images/stats/0.svg'"/>
             
             <!-- Types -->
             <img                                       class="ePkmnTypeIcons ePkmnType_1 ds opacityTransition" :style="enemy_pkmn_faint_types(wild_mon)" :src="'images/elements/type-icons/' + enemyType1(0).toLowerCase() + '.png'"/>

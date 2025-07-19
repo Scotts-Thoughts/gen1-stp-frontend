@@ -5,7 +5,7 @@ const template = /*html*/`
     <div class="movepool-container">
         <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
             <tbody>
-                <tr class="movepool_header" :style="{'background-color': \`var(--\${ui_type_color_modifier}\${starting_type_fix[1]})\`, 'outline': '2px solid #000'}">
+                <tr :class="\`movepool_header background-\${starting_type_fix[1]}\`" style="outline: 2px solid #000">
                     <th class="movepool_header movepool_way">Way</th>
                     <th class="movepool_header movepool_move">Move</th>
                     <th class="movepool_header movepool_type">Type</th>
@@ -16,7 +16,7 @@ const template = /*html*/`
                 <tr v-for="(x, index) in getMovepool(pokemon_version_specific_data, 'gen1', dynamicReset?.species?.value).initial" :class="{ 'first-row': index === 0 }">
                     <td class="movepool_way">1</td>
                     <td class="movepool_move">{{x.Move}}</td>
-                    <td class="movepool_type" :style="{'background-color': \`var(--\${ui_type_color_modifier}\${x.Type.toLowerCase()})\`}">{{x.Type}}</td>
+                    <td :class="\`movepool_type background-\${x.Type.toLowerCase()}\`">{{x.Type}}</td>
                     <td class="movepool_tableC">{{x.Power}}</td>
                     <td class="movepool_tableC">{{x.Accuracy}}%</td>
                     <td class="movepool_tableC">{{x.PP}}</td>
@@ -24,7 +24,7 @@ const template = /*html*/`
                 <tr v-for="x in getMovepool(pokemon_version_specific_data, 'gen1', dynamicReset?.species?.value).level">
                     <td class="movepool_way">{{x.Level}}</td>
                     <td class="movepool_move">{{x.Move}}</td>
-                    <td class="movepool_type" :style="{'background-color': \`var(--\${ui_type_color_modifier}\${x.Type.toLowerCase()})\`}">{{x.Type}}</td>
+                    <td :class="\`movepool_type background-\${x.Type.toLowerCase()}\`">{{x.Type}}</td>
                     <td class="movepool_tableC">{{x.Power}}</td>
                     <td class="movepool_tableC">{{x.Accuracy}}%</td>
                     <td class="movepool_tableC">{{x.PP}}</td>
@@ -32,7 +32,7 @@ const template = /*html*/`
                 <tr v-for="x in getMovepool(pokemon_version_specific_data, 'gen1', dynamicReset?.species?.value).tmhm">
                     <td class="movepool_way">{{x.tmhm}}</td>
                     <td class="movepool_move">{{x.Move}}</td>
-                    <td class="movepool_type" :style="{'background-color': \`var(--\${ui_type_color_modifier}\${x.Type?.toLowerCase()})\`}">{{x.Type}}</td>
+                    <td :class="\`movepool_type background-\${x.Type.toLowerCase()}\`">{{x.Type}}</td>
                     <td class="movepool_tableC">{{x.Power}}</td>
                     <td class="movepool_tableC">{{x.Accuracy}}%</td>
                     <td class="movepool_tableC">{{x.PP}}</td>
@@ -52,11 +52,6 @@ module.exports = {
         "dynamicReset",
         "starting_type_fix",
     ],
-    data() {
-        return {
-            ui_type_color_modifier: "current_",
-        }
-    },
     computed: {        
         mew_movepool_style() {
             if (this.starterName == "Mew") {
