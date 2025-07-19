@@ -2,7 +2,7 @@ const template = /*html*/`
     <div>
         <table style="height: 960px;" class="splits_table" cellspacing="0">
             <tbody>
-                <tr :class="\`background-\${starting_type_fix[1]}\`" style="outline: 2px solid #000">
+                <tr :style="{'background-color': \`var(--\${starting_type_fix[1]})\`, 'outline': '2px solid #000'}">
                     <td style="font-size: 18px; padding-left: 3px">Split</td>
                     <td style="font-size: 18px; width: 80px;  text-align: left; padding-left: 3px;"></td>
                     <td style="font-size: 18px; width: 110px; text-align: right;">{{previous_label}}</td>

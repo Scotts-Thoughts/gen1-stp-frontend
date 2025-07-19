@@ -3,7 +3,7 @@ const template = /*html*/`
         <div class="battle_summary_label">{{battle_summary_header}}</div>
         <table class="splits_table_old" cellspacing="0">
             <tbody>
-                <tr :class="\`background-\${starting_type_fix[1]}\`" style="outline: 2px solid #000">
+                <tr :style="{'background-color': \`var(--\${starting_type_fix[1]})\`, 'outline': '2px solid #000'}">
                     <td style="font-size: 16px; text-align: left; padding-left: 3px">Split</td>
                     <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
                     <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
@@ -19,7 +19,7 @@ const template = /*html*/`
         </table>
         <table class="battle_summary_table" cellspacing="0">
             <tbody>
-                <tr :class="\`background-\${starting_type_fix[1]}\`" style="outline: 2px solid #000">
+                <tr :style="{'background-color': \`var(--\${starting_type_fix[1]})\`, 'outline': '2px solid #000'}">
                     <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Metric</td>
                     <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">Value</td>
                 </tr>
