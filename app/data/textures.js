@@ -15,7 +15,7 @@ const textures = {
     'Ice 2': 'images\\textures\\aurora.jpg',
     'Normal 1': 'images\\textures\\normal.png',
     'Poison 1': 'images\\textures\\poison.png',
-    'Psychic 1': 'images\\textures\\psychic.png',
+    'Psychic 1': 'images\\textures\\Psychic (crisp).jpg',
     'Rock 1': 'images\\textures\\rock.png',
     'Water 1': 'images\\textures\\water1.png',
     'Water 2': 'images\\textures\\water.png',
@@ -24,7 +24,6 @@ const textures = {
     'Dark Clouds': 'images\\textures\\Dark Clouds.jpg',
     'Roses': 'images\\textures\\Roses.jpg',
     'Ghost Fighting': 'images\\textures\\Ghost Fighting.png',
-    'Psychic (crisp)': 'images\\textures\\Psychic (crisp).jpg',
     'Digital': 'images\\textures\\digital.jpg',
 };
 
