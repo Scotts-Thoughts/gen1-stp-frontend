@@ -1,4 +1,4 @@
-const PokeData = require("../logic/PokeData");
+const PokeData = require("../../logic/PokeData");
 
 const template = /*html*/`
     <div class="movepool-container">

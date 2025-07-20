@@ -1,6 +1,6 @@
-const stageModifiersData = require("../data/stage-modifiers");
-const typeEffectiveness = require("../data/type-effectiveness");
-const PokeData = require("../logic/PokeData");
+const stageModifiersData = require("../../data/stage-modifiers");
+const typeEffectiveness = require("../../data/type-effectiveness");
+const PokeData = require("../../logic/PokeData");
 
 const template = /*html*/`
     <div>

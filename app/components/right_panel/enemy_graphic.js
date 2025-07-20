@@ -1,5 +1,5 @@
-const { get_enemy_pkmn_styles } = require("../methods/enemy");
-const PokeData = require("../logic/PokeData");
+const { get_enemy_pkmn_styles } = require("../../methods/enemy");
+const PokeData = require("../../logic/PokeData");
 const template = /*html*/`
 <div>
     <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>

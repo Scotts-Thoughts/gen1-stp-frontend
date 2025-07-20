@@ -1,6 +1,6 @@
-const textures = require("../data/textures");
-const PubSub = require("../logic/PubSub");
-const UIStyles = require("../logic/UIStyles");
+const textures = require("../../data/textures");
+const PubSub = require("../../logic/PubSub");
+const UIStyles = require("../../logic/UIStyles");
 
 const template = /*html*/`
     <div>UI Color:</div>

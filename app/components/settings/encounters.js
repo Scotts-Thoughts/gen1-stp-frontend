@@ -1,4 +1,4 @@
-const Storage = require("../logic/Storage.js");
+const Storage = require("../../logic/Storage.js");
 
 const template = /*html*/`
     <div>Encounter Settings:</div>

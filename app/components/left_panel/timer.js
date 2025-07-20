@@ -1,4 +1,4 @@
-const PubSub = require("../logic/PubSub");
+const PubSub = require("../../logic/PubSub");
 
 // How the component will render:
 const template = /*html*/`

@@ -149,39 +149,39 @@ const template = /*html*/`
 module.exports = {
     template,
     components: {
-        "no_mapper": require("./No_mapper.js"),
-        "graphics": require("./Graphics.js"),
+        "no_mapper": require("./no_mapper.js"),
+        "graphics": require("./graphics.js"),
 
         //Background Processes
         "state": require("./state.js"),
 
         //Left Panel
-        "timer": require("./Timer.js"),
-        "badges": require("./Badges.js"),
-        "faults": require("./faults.js"),
-        "repel_counter": require("./repel_counter.js"),
-        "bonk_counter": require("./bonk_counter.js"),
-        "pop_ups": require("./pop_ups.js"),
-        "type_icons": require("./type_icons.js"),
-        "moveset": require("./Moveset.js"),
-        "stats": require("./Stats.js"),
-        "exp_bar": require("./exp_bar.js"),
-        "badge_boosts": require("./badge_boosts.js"),
+        "timer": require("./left_panel/timer.js"),
+        "badges": require("./left_panel/badges.js"),
+        "faults": require("./left_panel/faults.js"),
+        "repel_counter": require("./left_panel/repel_counter.js"),
+        "bonk_counter": require("./left_panel/bonk_counter.js"),
+        "pop_ups": require("./left_panel/pop_ups.js"),
+        "type_icons": require("./left_panel/type_icons.js"),
+        "moveset": require("./left_panel/move_set.js"),
+        "stats": require("./left_panel/stats.js"),
+        "exp_bar": require("./left_panel/exp_bar.js"),
+        "badge_boosts": require("./left_panel/badge_boosts.js"),
 
         //Middle Panel
-        "interface_1": require("./interface_1.js"),
-        "interface_2": require("./interface_2.js"),
-        "encounters": require("./encounters.js"),
-        "interface_3": require("./interface_3.js"),
-        "interface_4": require("./interface_4.js"),
+        "interface_1": require("./settings/interface_1.js"),
+        "interface_2": require("./settings/interface_2.js"),
+        "encounters": require("./settings/encounters.js"),
+        "interface_3": require("./settings/interface_3.js"),
+        "interface_4": require("./settings/interface_4.js"),
 
         //Right Panel
-        "movepool": require("./Movepool.js"),
-        "splits_first": require("./Splits_first.js"),
-        "splits_followup": require("./Splits_followup.js"),
-        "splits_summary": require("./Splits_summary.js"),
-        "enemy_graphic": require("./enemy_graphic.js"),
-        "wild_pokemon": require("./wild_pokemon.js"),
+        "movepool": require("./right_panel/move_pool.js"),
+        "splits_first": require("./right_panel/splits_first.js"),
+        "splits_followup": require("./right_panel/splits_followup.js"),
+        "splits_summary": require("./right_panel/splits_summary.js"),
+        "enemy_graphic": require("./right_panel/enemy_graphic.js"),
+        "wild_pokemon": require("./right_panel/wild_pokemon.js"),
     },
     props: [
         "mapper",

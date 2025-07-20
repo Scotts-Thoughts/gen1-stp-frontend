@@ -38,7 +38,7 @@ const Storage = require("./logic/Storage");
 const app = Vue.createApp({
     components: {
         "frontend": require("./components/frontend.js"),
-        "no_mapper": require("./components/No_mapper.js"),
+        "no_mapper": require("./components/no_mapper.js"),
         "keyhook": require("./components/keyhook.js"),
     },
     data() {

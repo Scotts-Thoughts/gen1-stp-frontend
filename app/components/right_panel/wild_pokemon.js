@@ -1,5 +1,5 @@
-const { get_enemy_pkmn_styles } = require("../methods/enemy");
-const PokeData = require("../logic/PokeData")
+const { get_enemy_pkmn_styles } = require("../../methods/enemy");
+const PokeData = require("../../logic/PokeData")
 
 const template = /*html*/ `
 <div v-if="state == 'Battle' || state == 'From Battle'">
