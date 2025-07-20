@@ -83,6 +83,9 @@ module.exports = {
             else return move_name
         },
         get_backport_move(slot) {
+            if (!this.dynamic_mon[slot]) {
+                return null;
+            }
             const move = this.dynamic_mon[slot].value
             const byte = this.dynamic_mon[slot].bytes[0]
             const starter = this.starterName
@@ -91,9 +94,15 @@ module.exports = {
         },
 
         type_effectiveness(pkmnData, moveNumber, enemyData) { //pkmnData = team[0] etc
+            if (!pkmnData[moveNumber]) {
+                return;
+            }
             if (this.typeCalcs == true) {
-                var move_name          =  this.get_backport_move_name(pkmnData[moveNumber].value, this.starterName, pkmnData[moveNumber].bytes)
-                // console.log(move_name)
+                const move_name = this.get_backport_move_name(
+                    pkmnData[moveNumber].value, 
+                    this.starterName, 
+                    pkmnData[moveNumber].bytes
+                )
 
                 if (move_name == null) { return "" } //stop the function if there is no move in that slot
                 if (move_name == 'Doom Desire') { return 120 }

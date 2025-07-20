@@ -6,7 +6,7 @@ const template = /*html*/ `
     <div class="trainerLabel">{{"Wild " + wild_pkmn_name(wild_mon.species.value)}}</div>
     <div class="colored-image ds saturation" :style="battle_pokemon_crop()" style="--url: url(images/ui/opponent.svg);"></div>
     <div class="enemyGraphic">
-        <div class="ePkmnStyle ePkmn1">
+        <div class="ePkmnStyle">
             <!-- Art -->
             <img v-if="mapper.properties.meta.gameName == 'Yellow'"            class="ePkmnSprite" :style="get_enemy_pkmn_styles(wild_mon).faint" :src="'images/pokemon/' + wild_mon.species.value + '.png'"/>
             <img v-else-if="mapper.properties.meta.gameName == 'Red and Blue'" class="ePkmnSprite" :style="get_enemy_pkmn_styles(wild_mon).faint" :src="'images/pokemon/Red_and_Blue/' + wild_mon.species.value + '.png'"/>
