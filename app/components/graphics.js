@@ -26,7 +26,7 @@ const template = /*html*/`
                 drop-shadow(\${style.imageFlip ? '-3px' : '3px'} 3px 3px #000)
                 \`
             }" 
-            :src="\`images/pokemon/\${dynamicReset.species.value == 'Backport' ? this.starterName : dynamicReset.species.value}.png\`" 
+            :src="\`images/pokemon/\${pokemonArt}.png\`" 
         />
         <img v-if="game_name == 'Red' || game_name == 'Blue'" class="pokemon_art2" ref="pokemon_art"
             :style="{
@@ -74,6 +74,12 @@ module.exports = {
         currentBackground() {
             // can't directly reference the textures object in the template.
             return textures[this.style.backgroundTexture];
+        },
+        pokemonArt() {
+            if (this.dynamicReset.species.value == 'Backport') {
+                return this.starterName;
+            } 
+            return this.dynamicReset.species.value ?? this.starterName;
         }
     },
     onUnmounted() {

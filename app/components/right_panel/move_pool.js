@@ -60,7 +60,7 @@ module.exports = {
         moves() {
             // really PokeDex should be a single-instance thing that gets the generation set once the mapper is detected
             // but this is just a proof of concept:
-            const result = PokeData.getMovepool(this.dynamicReset?.species?.value);
+            const result = PokeData.getMovepool(this.dynamicReset?.species?.value ?? this.starterName);
             return result;
         },
     },
