@@ -4,13 +4,13 @@ const template = /*html*/`
     <div class="statsContainer"> 
         <div class="critrate">Crit rate: {{ crit_rate }}%</div>
         <div>
-            <div class="statsheader">{{stats_header}}</div>
+            <div class="statsheader">{{stats_display}} </div>
             <div class="expLabelGen1">Exp:</div>
             <div v-for="stat in stat_object" class="stat">
                 <div v-if="stat.name != 'HP' && state == 'Battle'" class="stat_label mod_style">{{ stringify_stage_modifiers(this.mapper?.properties?.battle?.yourPokemon['modStage'+stat.mod_path]) }}</div>
                 <div :style="{ opacity: statLabelOpacity()[stat.name]}" class="stat_label">{{stat.label}}</div>
                 
-                <div v-if="stats_display == 'Base Stats'"   class="stat_value">{{pokedex_yellow[starterName].base_stats[stat.base_stat_path]}}</div>
+                <div v-if="stats_display == 'Base Stats'"   class="stat_value">{{base_stats(stat.base_stat_path)}}</div>
                 <div v-if="stats_display == 'Averages'"     class="stat_value">{{average_median_stats(stat.base_stat_path).average}}</div>
                 <div v-if="stats_display == 'Medians'"      class="stat_value">{{average_median_stats(stat.base_stat_path).median}}</div>
                 <div v-if="stats_display == 'DVs'"          class="stat_value dv">{{get_dv(stat.name)}}/15</div>
@@ -45,7 +45,6 @@ module.exports = {
     ],
     data() {
         return {
-            s1dynamicReset: this.dynamic_mon,
             stat_object: [
                 { name: "Hp",      label: "HP",   path: "maxHp",   base_stat_path: "hp",             mod_path: "Hp",      statExpPath: "statExpHp",      vitamin: "HP Up",  }, 
                 { name: "Speed",   label: "Spe.", path: "speed",   base_stat_path: "speed",          mod_path: "Speed",   statExpPath: "statExpSpeed",   vitamin: "Carbos", }, 
@@ -60,15 +59,13 @@ module.exports = {
             return this.calculate_crit_rate(PokeData.getSpecies(this.starterName));
         },
         stats_header() {
-            const stat_type = this.stats_display
-            const state     = this.state
-            switch (stat_type) {
-                case "No Pokemon":   return 'Base Stats'
+            switch (this.stats_display) {
+                case "Base Stats":   return 'Base Stats'
                 case "DVs":          return `${this.starterName}'s DVs`
                 case "EVs":          return 'Stat Experience'
                 case "Detailed EVs": return 'Detailed Stat Experience'
                 case "Automatic":    {
-                    if (state == 'Base Stats') {
+                    if (this.state == 'No Pokemon') {
                         return `Base Stats`
                     }
                     return `Level ${this.mapper.properties.player.team[0].level.value}`
@@ -80,15 +77,17 @@ module.exports = {
             }
         },
         growthRate() {
-            var species = this.s1dynamicReset.species.value == 'Backport' 
-            ? this.starterName 
-            : this.s1dynamicReset.species.value;
+            var species = this.dynamic_mon.species.value == 'Backport' 
+                ? this.starterName 
+                : this.dynamic_mon.species.value;
             // debugger
             return PokeData.getSpecies(species ?? this.starterName).growth_rate
         },
     },
     methods: {
         base_stats(statPath) {
+            console.log(statPath);
+            console.log(PokeData.getSpecies(this.starterName).base_stats);
             return PokeData.getSpecies(this.starterName).base_stats[statPath];
         },
         usable_vitamins(stat_experience) { //stat exp ranges from 0 - 65535
@@ -177,8 +176,9 @@ module.exports = {
                     case "Speed":   return this.mapper.properties.battle.yourPokemon.speed.value
                 }
             }
-            if (state == `Base Stats`) {
+            if (state == `No Pokemon`) {
                 const dexData = PokeData.getSpecies(this.starterName);
+                console.log
                 switch (stat_name) {
                     case "Hp":      return dexData.base_stats.hp
                     case "Attack":  return dexData.base_stats.attack
