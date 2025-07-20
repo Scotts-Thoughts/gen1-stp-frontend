@@ -9,7 +9,7 @@ const template = /*html*/`
         <div class="movesetLabel labelAcc"  >acc.</div>
         <div class="movesetLabel labelPP"   >pp</div>
         <div class="movesetContainer">
-            <div v-for="move in pkmnMoves">
+            <div v-for="move in pkmnMoves" v-if="state != 'No Pokemon'">
                 <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0][move].value != null">
                     <img :class="'movesetStyling iconStyling ' + move + 'icon'" 
                         :src="moveTypeIcon(get_backport_move(move))" />
@@ -145,8 +145,9 @@ module.exports = {
 
                 //calculate the move's effective power
                 return Math.floor(move_power * multiplier_stab * multiplier_type1 * multiplier_type2 * multiplier_type3 * screen_reflect * screen_lightscreen)
+            } else { 
+                return this.movePower(pkmnData[moveNumber].value);
             }
-            else { return this.movePower(pkmnData[moveNumber].value) }
         },
         movePower(y) { //y = move1.value
             if (y) {
