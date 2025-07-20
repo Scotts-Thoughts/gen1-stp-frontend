@@ -851,15 +851,6 @@ module.exports = {
                 return PokeData.getSpecies(this.starterName)["type_" + typeNumber.toString()]?.toLowerCase()
             }
         },
-        increment(property) {
-            this[property]++;
-        },
-        decrement(property) {
-            if (this[property] == 0) {
-                return 0
-            }
-            this[property]--;
-        },
         convertDurationToSeconds(duration) {
             const parts = duration.split(':').map(part => parseInt(part, 10));
             if (parts.length === 1) {
