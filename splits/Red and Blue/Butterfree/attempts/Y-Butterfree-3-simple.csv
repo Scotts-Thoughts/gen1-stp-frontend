@@ -1,0 +1,7 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Butterfree,Rival1-Lab,42,0,0,6,0:02,8.496,CONFUSION,,,
+NINTEN,Butterfree,Brock,3:32,0,0,11,0:13,12.032,CONFUSION,,,
+NINTEN,Butterfree,Rival2-Nugget Bridge,7:16,0,0,18,0:28,32.282,CONFUSION,POISONPOWDER,STUN SPORE,SLEEP POWDER
+NINTEN,Butterfree,Misty,11:11,1,0,22,0:42,16.437,CONFUSION,BIDE,STUN SPORE,SLEEP POWDER
+NINTEN,Butterfree,Cerulean Rocket,11:47,1,0,23,0:44,17.568,CONFUSION,BIDE,STUN SPORE,SLEEP POWDER
+NINTEN,Butterfree,Rival3-SS Anne,13:23,1,0,24,0:51,24.215,CONFUSION,BIDE,STUN SPORE,SLEEP POWDER
