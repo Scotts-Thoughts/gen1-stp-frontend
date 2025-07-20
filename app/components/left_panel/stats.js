@@ -63,20 +63,20 @@ module.exports = {
             const stat_type = this.stats_display
             const state     = this.state
             switch (stat_type) {
-                case "No Pokemon":   return `Base Stats`
+                case "No Pokemon":   return 'Base Stats'
                 case "DVs":          return `${this.starterName}'s DVs`
-                case "EVs":          return `Stat Experience`
-                case "Detailed EVs": return `Detailed Stat Experience`
+                case "EVs":          return 'Stat Experience'
+                case "Detailed EVs": return 'Detailed Stat Experience'
                 case "Automatic":    {
                     if (state == 'Base Stats') {
                         return `Base Stats`
                     }
                     return `Level ${this.mapper.properties.player.team[0].level.value}`
                 }
-                case "Badge Boosts": return `Badge Boosts`
-                case "Averages":     return `Gen1 Average Stats`
-                case "Medians":      return `Gen1 Median Stats`
-                case "Vitamins":     return `Vitamins`
+                case "Badge Boosts": return 'Badge Boosts'
+                case "Averages":     return 'Gen1 Average Stats'
+                case "Medians":      return 'Gen1 Median Stats'
+                case "Vitamins":     return 'Vitamins'
             }
         },
         growthRate() {

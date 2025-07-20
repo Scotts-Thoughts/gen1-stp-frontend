@@ -12,7 +12,7 @@ const auto_save_settings = [
     "prevSpecies",
     "enemyState",
     "oldExpValue",
-    "playerId",
+    "player_id",
     "blackout_counter",
     "attempt_number",
     "blackout",

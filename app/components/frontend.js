@@ -1,6 +1,7 @@
 const PokeData = require("../logic/PokeData.js");
 const Timer = require("../logic/Timer.js");
 const UIStyles = require("../logic/UIStyles.js");
+const PubSub = require("../logic/PubSub");
 
 const template = /*html*/`
 <div>
@@ -13,9 +14,10 @@ const template = /*html*/`
     <!-- Left Panel -->
     <faults 
         :mapper="mapper" 
-        :game_over="game_over" 
+        :flag_player_finished_the_run="flag_player_finished_the_run" 
         :game_name="game_name" 
         :starterName="starterName"
+        :no_attempt="no_attempt"
     ></faults>
     <div v-if="battlePopUps == true" style="position: absolute;">
         <pop_ups
@@ -28,15 +30,15 @@ const template = /*html*/`
             :mapper="mapper"
             :state="state"
             :show_bonk_counter="show_bonk_counter"
-            :timer_ui_style="timer_ui_style"
             :dropdown_bonks_items="dropdown_bonks_items"
+            :top_left_ui_selector="top_left_ui_selector"
         ></bonk_counter>
         
         <repel_counter
             :mapper="mapper"
             :state="state"
             :show_repel_counter="show_repel_counter"
-            :timer_ui_style="timer_ui_style"
+            :top_left_ui_selector="top_left_ui_selector"
         ></repel_counter>
     </div>
     <type_icons :pkmn_type="pkmn_type"></type_icons>
@@ -45,7 +47,7 @@ const template = /*html*/`
         :mapper="mapper"
         :state="state"
         :move_name="move_name"
-        :dynamic_mon="s1dynamic"
+        :dynamic_mon="s1dynamicReset"
         :capitalization_format="capitalization_format"
     ></moveset>
     <stats
@@ -139,6 +141,7 @@ const template = /*html*/`
     <div class="testingArea1" style="z-index: 50000;"><interface_1></interface_1></div>
     <div class="testingArea2" style="z-index: 50000;">
         <interface_2></interface_2>
+        <metrics :game_name="game_name" :starterName="starterName"></metrics>
         <encounters :mapper="mapper"></encounters>
     </div>
     <div class="testingArea4" style="z-index: 50000;"><interface_3></interface_3></div>
@@ -171,6 +174,7 @@ module.exports = {
         //Middle Panel
         "interface_1": require("./settings/interface_1.js"),
         "interface_2": require("./settings/interface_2.js"),
+        "metrics": require("./settings/metrics.js"),
         "encounters": require("./settings/encounters.js"),
         "interface_3": require("./settings/interface_3.js"),
         "interface_4": require("./settings/interface_4.js"),
@@ -210,6 +214,7 @@ module.exports = {
             // Application Settings
             search_term : "",
             pokemon_list: [],
+            top_left_ui_selector      : Storage.games[this.game_name]?.[this.starterName]?.data?.top_left_ui_selector ?? "Both",
             battlePopUps              : true,    //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             show_wild_battles         : false,   //shows wild battles in the battle screen
             autosplitter_toggle       : true,
@@ -239,9 +244,9 @@ module.exports = {
             split_data:             [],
 
             // Pokemon Settings
-            playerId:              0,
-            game_over:             false,
-            finished_logs:         false,
+            player_id:              0,
+            flag_player_finished_the_run: false,
+            flag_finished_logging_splits: false,
             attempt_number:        0,
             finished_run_count:    0,
             pb_time:               "None",
@@ -312,6 +317,10 @@ module.exports = {
         }
     },
     created() {
+        PubSub.subscribe("@run/cleared", this.clear_splits_header_timer);
+        PubSub.subscribe("@property/increment", this.increment_property);
+        PubSub.subscribe("@property/decrement", this.decrement_property);
+        PubSub.subscribe("@ui/top_left_ui", this.set_top_left_ui);
         // Timer settings
         for (let i = 0; i < this.time_settings.length; i++) {
             let prop_name = this.time_settings[i];
@@ -491,11 +500,9 @@ module.exports = {
             }
             UIStyles.setGameName(newValue);
         },
-        playerId(newValue) {
-            this.game_over = false;
-            this.playerResets = 0;
-            this.finished_logs == false;
-            this.blackout_counter = 0;
+        player_id(newValue) {
+            this.flag_player_finished_the_run = false;
+            this.flag_finished_logging_splits == false;
         },
         rockTunnelDarkness() {
             if (this.rockTunnelDarkness == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
@@ -571,23 +578,6 @@ module.exports = {
                 battle_summary_enemy_psn: this.battle_summary_enemy_psn,
                 battle_summary_enemy_bpn: this.battle_summary_enemy_bpn,
                 battle_summary_enemy_slp: this.battle_summary_enemy_slp,
-            }
-        },
-        timer_ui_style() {
-            const resets = Storage.games[this.game_name][this.starterName].data.player_resets ?? 0
-            const blackouts = Storage.games[this.game_name][this.starterName].data.blackout_counter ?? 0
-            const allow_none = true // Toggle that allows for the UI to display no border if there are no faults
-            if (allow_none == true && blackouts == 0 && resets == 0) {
-                return "None"
-            }
-            else if (blackouts == 0 && resets > 0) {
-                return "Resets"
-            }
-            else if (blackouts > 0 && resets == 0) {
-                return "Blackouts"
-            }
-            else {
-                return "Both"
             }
         },
         filtered_pokemon_list() {
@@ -692,17 +682,9 @@ module.exports = {
         batt() {
             return this.mapper?.properties?.battle
         },
-        s1dynamic() {
-            if (this.state == `Battle`) {
-                return this.mapper?.properties?.battle?.yourPokemon
-            }
-            else {
-                return this.mapper?.properties?.player?.team[0]
-            }
-        },
         s1dynamicReset() {
             var species = ""
-            if (this.state == `Battle`) {
+            if (this.state == 'Battle') {
                 const battle_data = this.mapper?.properties?.battle?.yourPokemon
                 species = battle_data.species.value
                 if (species == null || species == undefined) {
@@ -716,7 +698,7 @@ module.exports = {
                     species: { value: species }
                 }
             }
-            else if (this.state == `Base Stats` || this.mapper?.properties?.player?.team[0].species.value == null) {
+            else if (this.state == 'No Pokemon' || this.mapper?.properties?.player?.team[0].species.value == null) {
                 const pokedex_data = PokeData.getSpecies(this.starterName);
                 if (this.mapper.properties.player.team[0].species.value == "Backport") {
                     species = this.starterName
@@ -773,6 +755,25 @@ module.exports = {
         },
     },
     methods: {
+        set_top_left_ui(value) {
+            this.top_left_ui_selector = value;
+            Storage.games[this.game_name][this.starterName].data.top_left_ui_selector = value
+        },
+        increment_property(property) {
+            this[property]++;
+        },
+        decrement_property(property) {
+            if (this[property] == 0) {
+                return 0
+            }
+            this[property]--;
+        },
+        clear_splits_header_timer(value) {
+            this.current_splits = []
+            this.battle_summary_header = "Battle Summary"
+            this.timer.setTimer(this.timer_startTimeOffset)
+            this.player_id = 0
+        },
         async set_rom_starter() {
             let starter        = this.starterName;
             let pokedex_data   = PokeData.getSpecies(starter);
@@ -948,6 +949,43 @@ module.exports = {
         this.timer.update();
         this.pokemon_list = PokeData.getAllSpecieNames(); 
 
+        // RESET - Identifies when a reset occurs and publishes an event
+        this.mapper.properties.player.playerId.change((newProp, oldProp) => {
+            if (newProp.value == 0 && oldProp.value > 0 && this.flag_player_finished_the_run == false) {
+                PubSub.publish("@run/reset_occurred");
+            } 
+        })
+        // BLACKOUT - Identifies when a blackout might have occurred
+        this.mapper.properties.meta.state.change((newProp, oldProp) => {
+            PubSub.publish("@run/check_blackout", newProp, oldProp);
+            //! WHAT IS THIS? I DON'T REMEMBER WHAT IT DOES...
+            if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") {
+                this.automatic_splits = false
+                this.right_panel = 'Automatic'
+            }
+        });
+        // NEW_RUN_STARTED - Determines if the player has pressed 'New Game' and started a new playthrough
+        this.mapper.properties.player.playerId.change((newProp) => {
+            if (newProp.value > 0 && this.flag_player_finished_the_run == false && newProp.value != this.player_id) {
+                PubSub.publish("@run/new_run_started", this.player_id);
+                this.flag_finished_logging_splits = false;
+                if (this.test_run == false && this.refilming_mode == false) {
+                    this.attempt_number++
+                };
+                this.timer.startTime(this.timer_startTimeOffset);
+                if (this.toggle_wEarlyEncounters == false && this.toggle_wEarlyEncountersNoMoon == true) {
+                    this.toggle_wEarlyEncounters == true
+                }
+                this.player_id = newProp.value;
+            }
+        })
+        // Only allow the player to reset once after the champion without resets incrementing
+        this.mapper.properties.player.name.change((newProp) => {
+            if (this.flag_player_finished_the_run == true && newProp.value == "NINTEN") {
+                this.flag_player_finished_the_run = false;
+            }
+        })
+
         //*autosplitter
         //log the start of a battle to the console
         this.mapper.properties.battle.type.change((newProp) => {
@@ -994,13 +1032,6 @@ module.exports = {
                         // usage
                         if (property !== null) {
                             let data = this.get_nested_property(this.mapper.properties, property.path)
-                            // if (trainer == "RIVAL3") {
-                            //     this.battle_summary_header = "Run Summary"
-                            //     this[property.data_name] = data
-                            // }
-                            // else {
-                            //     this[property.data_name] = data - this[`temp_${property.data_name}`]
-                            // }
                             this[property.data_name] = data - this[`temp_${property.data_name}`]
                         } else {
                             console.error(`Property ${property.data_name} not found in battle_summary`);
@@ -1098,18 +1129,18 @@ module.exports = {
                     this.logData(gameName, gameName_Path, this.full_data_str, this.finished_run_count, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                     console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer.formatted_time[0]}${this.time.formatted_time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
-                    this.game_over = true; //stop incrementing resets
+                    this.flag_player_finished_the_run = true; //stop incrementing resets
                 }
             }
         });
         //when the triangular cursor appears on the screen, log the gametime
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
             let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red' ? "R" : "B"
-            let gameName_Path = gameName == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data    
-            if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
+            let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data    
+            if (this.flag_finished_logging_splits == false && this.flag_player_finished_the_run == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
                 this.logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //copy the current `attempt_number` split data to the finished folder
                 console.log("Run complete - moving attempt files to finished folder.")
-                this.finished_logs = true
+                this.flag_finished_logging_splits = true
             }
         });
 

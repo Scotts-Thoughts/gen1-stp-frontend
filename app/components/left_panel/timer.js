@@ -11,20 +11,20 @@ const template = /*html*/`
 
 module.exports = {
     template,
-    setup() {
-        const time = Vue.ref("0");     // with a "ref", we can update the value of the variable and vue will automatically
-        const frames = Vue.ref(".00"); // renrender the component.
-        const onTimeUpdate = (value) => {
-            time.value = value[0];
-            frames.value = value[1];
-        };
-        PubSub.subscribe("time_update", onTimeUpdate);
-        // Everything we return here can be accessed by other functions (and the rendering) of the component:
+    data() {
         return {
-            time,
-            frames,
-            onTimeUpdate
-        }
+            time: "0",
+            frames: ".00",
+        };
+    },
+    methods: {
+        onTimeUpdate(value) {
+            this.time = value[0];
+            this.frames = value[1];
+        },
+    },
+    created() {
+        PubSub.subscribe("time_update", this.onTimeUpdate);
     },
     onUnmounted() {
         // Not strictly necessary for this component, but unsubscribe from the time_update event:

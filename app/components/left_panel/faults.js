@@ -1,81 +1,115 @@
 const Storage = require("../../logic/Storage.js");
+const PubSub = require("../../logic/PubSub");
 
 const template = /*html*/`
 <div>
-    <div v-show="$parent.timer_ui_style != 'Both'" class="colored-image ds saturation" :style="'drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/timer_2.svg)"></div>
-    <div v-show="$parent.timer_ui_style == 'Both'" class="colored-image ds saturation" :style="'drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/timer.svg)"></div>
+    <div v-show="top_left_ui_selector != 'Both'" class="colored-image ds saturation" :style="'drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/timer_2.svg)"></div>
+    <div v-show="top_left_ui_selector == 'Both'" class="colored-image ds saturation" :style="'drop-shadow(0px 0px 1px #000000)'" style="--url: url(images/ui/timer.svg)"></div>
 
-    <div v-show="$parent.timer_ui_style == 'None'"      class="genericLabels resetsLabel_1">faults</div>
-    <div v-show="$parent.timer_ui_style == 'Resets'"    class="genericLabels resetsLabel_1">resets</div>
-    <div v-show="$parent.timer_ui_style == 'Blackouts'" class="genericLabels blackoutLabel_1">blackouts</div>
-    <div v-show="$parent.timer_ui_style == 'Both'">
+    <div v-show="top_left_ui_selector == 'None'"      class="genericLabels resetsLabel_1">faults</div>
+    <div v-show="top_left_ui_selector == 'Resets'"    class="genericLabels resetsLabel_1">resets</div>
+    <div v-show="top_left_ui_selector == 'Blackouts'" class="genericLabels blackoutLabel_1">blackouts</div>
+    <div v-show="top_left_ui_selector == 'Both'">
         <div class="genericLabels resetsLabel">resets</div>
         <div class="genericLabels blackoutLabel">blackouts</div>
     </div>
 
-    <div v-show="$parent.timer_ui_style == 'None' || $parent.timer_ui_style == 'Resets'">
+    <div v-show="top_left_ui_selector == 'None' || top_left_ui_selector == 'Resets'">
         <transition name="fade">
-            <div class="faults_style resets_1" :style="{ 'font-size': font_size(player_resets) + 'px' }"><div id="reset_counter">{{player_resets}}</div></div>
+            <div class="faults_style resets_1" :style="{ 'font-size': font_size(counter_resets) + 'px' }"><div id="reset_counter">{{counter_resets}}</div></div>
         </transition>
     </div>
-    <div v-show="$parent.timer_ui_style == 'Blackouts'">
+    <div v-show="top_left_ui_selector == 'Blackouts'">
         <transition name="fade">
-            <div class="faults_style blackouts_1" :style="{ 'font-size': font_size(blackout_counter) + 'px' }" id="reset_counter">{{blackout_counter}}</div>
+            <div class="faults_style blackouts_1" :style="{ 'font-size': font_size(counter_blackouts) + 'px' }" id="reset_counter">{{counter_blackouts}}</div>
         </transition>
     </div>
-    <div v-show="$parent.timer_ui_style == 'Both'">
+    <div v-show="top_left_ui_selector == 'Both'">
         <transition name="fade">
-            <div class="faults_style resets"><div :style="{ 'font-size': font_size(player_resets) + 'px' }" id="reset_counter">{{player_resets}}</div></div>
+            <div class="faults_style resets"><div :style="{ 'font-size': font_size(counter_resets) + 'px' }" id="reset_counter">{{counter_resets}}</div></div>
         </transition>
         <transition name="fade">
-            <div class="faults_style blackouts" :style="{ 'font-size': font_size(blackout_counter) + 'px' }" id="reset_counter">{{blackout_counter}}</div>
+            <div class="faults_style blackouts" :style="{ 'font-size': font_size(counter_blackouts) + 'px' }" id="reset_counter">{{counter_blackouts}}</div>
         </transition>
     </div>
 </div>
 `
 
-// EVENTS
-// RESET - increment value
-// BLACKOUT PREREQUISITE - set flag
-// BLACKOUT - increment value, clear flag
-
 module.exports = {
     template,
     props: [
         "mapper",
-        "game_over",
+        "flag_player_finished_the_run",
         "game_name",
         "starterName",
+        "no_attempt",
     ],
     data() {
         return {
-            //! Initialize the values from the storage object because these values need to persist through refreshes/crashes
-            player_resets   : Storage.games[this.game_name][this.starterName].data.player_resets    ?? 0,
-            blackout_counter: Storage.games[this.game_name][this.starterName].data.blackout_counter ?? 0,
-            blackout        : Storage.games[this.game_name][this.starterName].data.blackout ?? false,
+            counter_resets            : Storage.games[this.game_name]?.[this.starterName]?.data?.counter_resets             ?? 0,
+            counter_blackouts         : Storage.games[this.game_name]?.[this.starterName]?.data?.counter_blackouts          ?? 0,
+            flag_blackout_prerequisite: Storage.games[this.game_name]?.[this.starterName]?.data?.flag_blackout_prerequisite ?? false,
         }
     },
-    watch: {
-        //! These watchers are just used to emit the changes of these properties for other components to use, there will be a better way to do this.
-        //! This may be important just to keep thes values backed up
-        player_resets() {
-            if (this.player_resets < 0) {
-                this.player_resets = 0;
+    computed: {
+        top_left_ui_selector() {
+            const allow_none = true // Toggle that allows for the UI to display no border if there are no faults
+            let value = ""
+            if (allow_none == true && this.counter_blackouts == 0 && this.counter_resets == 0) {
+                value = "None"
             }
-            this.blackout == false
-            Storage.games[this.game_name][this.starterName].data.player_resets = this.player_resets
-        },
-        blackout_counter() {
-            if (this.blackout_counter < 0) {
-                this.blackout_counter = 0;
+            else if (this.counter_blackouts == 0 && this.counter_resets > 0) {
+                value = "Resets"
             }
-            Storage.games[this.game_name][this.starterName].data.blackout_counter = this.blackout_counter
+            else if (this.counter_blackouts > 0 && this.counter_resets == 0) {
+                value = "Blackouts"
+            }
+            else {
+                value = "Both"
+            }
+            PubSub.publish("@ui/top_left_ui", value);
+            return value
         },
-        blackout(new_value) {
-            Storage.games[this.game_name][this.starterName].data.blackout = new_value
-        }
     },
     methods: {
+        clear_playthrough_data() {
+            this.counter_resets = 0
+            this.counter_blackouts = 0
+            this.flag_blackout_prerequisite = false
+        },
+        reset_occurred() {
+            this.flag_blackout_prerequisite = false;
+            this.counter_resets++;
+            PubSub.publish("@property/update/counter_resets", this.counter_resets);
+        },
+        check_blackout(newProp, oldProp) {
+            if (newProp?.value == "Overworld" && oldProp?.value == "Battle" && this.flag_blackout_prerequisite == true) {
+                this.flag_blackout_prerequisite = false;
+                this.counter_blackouts++;
+                PubSub.publish("@property/update/counter_blackouts", this.counter_blackouts);
+            }
+            else if (newProp.value == "Overworld") {
+                this.flag_blackout_prerequisite = false;
+            }
+        },
+        new_run_started() {
+            if (this.no_attempt == true) {
+                return
+            }
+            this.counter_resets = 0;
+            this.counter_blackouts = 0;
+        },
+        increment_property(property) {
+            this[property]++;
+            PubSub.publish(`@property/update/${property}`, this[property]);
+        },
+        decrement_property(property) {
+            if (this[property] == 0) {
+                return 0
+            }
+            this[property]--;
+            PubSub.publish(`@property/update/${property}`, this[property]);
+        },
         font_size(value) {
             var faultDisplayLength = value.toString().length;
 			if (faultDisplayLength > 3) {
@@ -86,80 +120,46 @@ module.exports = {
 			}
 			return 75;
         },
-        //! EVENT_CLEAR_RUN - clears resets, blackouts, flags, sets battle summary header, resets timer, clears finished logs, clears playerId, clears current splits
-        async newRun() {
-            this.current_splits = []
-
-            this.battle_summary_header = "Battle Summary"
-            this.timer.setTimer(this.timer_startTimeOffset)
-
-            this.playerResets = 0
-            this.finished_logs = false
-            this.blackout_counter = 0
-            this.playerId = 0
+    },
+    created() {
+        PubSub.subscribe("@run/cleared", this.clear_playthrough_data);
+        PubSub.subscribe("@run/reset_occurred", this.reset_occurred);
+        PubSub.subscribe("@run/check_blackout", this.check_blackout);
+        PubSub.subscribe("@run/new_run_started", this.new_run_started);
+        PubSub.subscribe("@property/increment", this.increment_property);
+        PubSub.subscribe("@property/decrement", this.decrement_property);
+    },
+    watch: {
+        //! These watchers are just used to emit the changes of these properties for other components to use, there will be a better way to do this.
+        //! This may be important just to keep thes values backed up
+        counter_resets() {
+            if (this.counter_resets < 0) {
+                this.counter_resets = 0;
+            }
+            this.blackout == false
+            Storage.games[this.game_name][this.starterName].data.counter_resets = this.counter_resets
         },
+        counter_blackouts() {
+            if (this.counter_blackouts < 0) {
+                this.counter_blackouts = 0;
+            }
+            Storage.games[this.game_name][this.starterName].data.counter_blackouts = this.counter_blackouts
+        },
+        flag_blackout_prerequisite(new_value) {
+            Storage.games[this.game_name][this.starterName].data.flag_blackout_prerequisite = new_value
+        }
     },
     mounted() {
-        // reset tracking
-        //! EVENT_RESET - Identifies when a reset occurs => clears blackout flag, increments resets
-        this.mapper.properties.player.playerId.change((newProp, oldProp) => {
-            if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
-                this.blackout = false;
-                this.player_resets++;
-            } 
-        })
-        //! EVENT_NEW_RUN - everything from EVENT_CLEAR_RUN + startTime
-        this.mapper.properties.player.playerId.change((newProp) => {
-            if (newProp.value > 0 && this.game_over == false) {
-                if (newProp.value != this.playerId) { //! 'playerId' In frontend.js
-                    if (this.no_attempt == true) {
-                        return
-                    }
-                    this.player_resets = 0;
-                    this.blackout_counter = 0;
-                    this.$parent.finished_logs = false; //! 'finished_logs' In frontend.js
-                    if (this.test_run == false && this.refilming_mode == false) {
-                        this.attempt_number++
-                    };
-                    this.timer.startTime(this.timer_startTimeOffset); //! Does this work?
-                    if (this.toggle_wEarlyEncounters == false && this.toggle_wEarlyEncountersNoMoon == true) { //! 'toggle_wEarlyEncounters' In frontend.js
-                        this.toggle_wEarlyEncounters == true
-                    }
-                    this.playerId = newProp.value;
-                }
-            }
-        })
-        //! EVENT_GAME_OVER - allows reseting after the champion without resets incrementing
-        this.mapper.properties.player.name.change((newProp) => {
-            if (this.game_over == true && newProp.value == "NINTEN") {
-                this.game_over = false;
-            }
-        })
-
-        // blackout tracking
-        //! EVENT_PREPARE_BLACKOUT - Identifies the prerequesite state for a blackout, sets a flag that later events can use to confirm the blackout
         this.mapper.properties.player.team[0].hp.change((newProp, oldProp) => {
-            if (newProp.value == 0 && this.state == `Battle`) {
-                this.blackout = true;
+            if (newProp.value == 0 && this.mapper.properties.meta.state.value == 'Battle') {
+                this.flag_blackout_prerequisite = true;
             }
         })
-        //! EVENT_BLACKOUT - Identifies when a blackout occurs => resets blackout prerequesite flag, increment blackout counter
-        this.mapper.properties.meta.state.change((newProp, oldProp) => {
-            if (newProp.value == "Overworld" && oldProp.value == "Battle" && this.blackout == true) {
-                this.blackout = false;
-                this.blackout_counter++;
-            }
-            else if (newProp.value == "Overworld") {
-                this.blackout = false;
-            }
-            if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") { //! WHAT IS THIS? I DON'T REMEMBER WHAT IT DOES...
-                this.automatic_splits = false
-                this.right_panel = 'Automatic'
-            }
-        });
-        //! How much logic from the frontend.js needs to be in this component? 
-        //!     UI for metrics? 
-        //!     newRun function? 
-        //!     I think it needs to be everything under the 'Set ROM Starter' button.
+    },
+    onUnmounted() {
+        PubSub.unsubscribe("@run/cleared", this.clear_playthrough_data);
+        PubSub.unsubscribe("@run/reset_occurred", this.reset_occurred);
+        PubSub.unsubscribe("@run/check_blackout", this.check_blackout);
+        PubSub.unsubscribe("@run/new_run_started", this.new_run_started);
     }
 }
