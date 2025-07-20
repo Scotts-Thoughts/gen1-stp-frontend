@@ -280,13 +280,13 @@ module.exports = {
             this.$parent.stats_display = "Automatic";
         });
         //F17
-        keyhook.registerShortCut('F17', async () => { // Inventory
+        keyhook.registerShortCut('F17', async () => { // Automatic Right Panel
             console.log("Key: F17 pressed. Automatic battle graphics will be displayed.")
             if (this.$parent.disallow_right_panel_switching == true) { 
                 this.$parent.right_panel = "Automatic"
                 return 
             }
-            this.right_panel = "Automatic";
+            this.$parent.right_panel = "Automatic";
         });
         //F18
         keyhook.registerShortCut('F18', async () => { // Trainer Graphic during Battle

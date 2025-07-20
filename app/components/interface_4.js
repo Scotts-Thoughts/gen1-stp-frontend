@@ -16,7 +16,6 @@ const template = /*html*/`
     Right Panel:<br>
     <select v-model="$parent.right_panel" class="dropdownMenu dropdown_menu_column3">
         <option>Automatic</option>
-        <option v-if="$parent.release == false">Inventory</option>
         <option>Movepool</option>
         <option>Splits</option>
     </select>

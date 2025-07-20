@@ -41,7 +41,6 @@ module.exports = {
         "state",
         "starterName",
         "stats_display",
-        "display_badge_boosts",
         "dynamic_mon",
     ],
     data() {
@@ -239,7 +238,6 @@ module.exports = {
             }
         },
         badge_boost(badge, stat) {
-            if (this.display_badge_boosts == false) { return stat }
             return badge ? Math.floor(stat * 1.125) : stat;
         },
         decimalToPercentage(decimal) {

@@ -47,14 +47,12 @@ const template = /*html*/`
         :move_name="move_name"
         :dynamic_mon="s1dynamic"
         :capitalization_format="capitalization_format"
-        :display_badge_boosts="display_badge_boosts"
     ></moveset>
     <stats
         :mapper="mapper"
         :state="state"    
         :starter-name="starterName"    
         :stats_display="stats_display"
-        :display_badge_boosts="display_badge_boosts"
         :dynamic_mon="s1dynamicReset"
     ></stats>   
     <exp_bar
@@ -127,7 +125,7 @@ const template = /*html*/`
                 :speed_comparison_toggle="speed_comparison_toggle"
             ></wild_pokemon>
         </div>
-        <div v-else-if="key_F14 == true" key=3>
+        <div v-else key=3>
             <movepool
                 :starter-name="starterName"
                 :dynamic-reset="s1dynamicReset"
@@ -190,11 +188,11 @@ module.exports = {
     ],
     data() {
         return {
-            state  : "No Pokemon",
-            release: false, //If set to false then development features will be displayed
-
+            state      : "No Pokemon",
+            enemyState : "Not In Battle", //"Pokemon", "Fainted"
+            release    : false, //If set to false then development features will be displayed
             starterName: "Venomoth",
-            game_name: "Yellow",
+            game_name  : "Yellow",
 
             // Static Data
             settings               : settings,
@@ -209,60 +207,23 @@ module.exports = {
             battle_summary         : battle_summary,
             backport_data          : backport_data,
 
-            // Objects
-            enemyState:      "Not In Battle", //"Pokemon", "Fainted"
-
             // Application Settings
             search_term : "",
             pokemon_list: [],
-            dvSetting                 : "Max",   //Max, Min, NPC, Max with Min Atk, or Random
-            inventory                 : true,    //uses inventory when in the department store & marts
-            showAllTrainers           : true,    //when false only shows gym leaders and rivals, when true shows all enemy trainers
-            showSpecialTrainerGraphics: true,    //shows drawn art for defined trainers
             battlePopUps              : true,    //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
             show_wild_battles         : false,   //shows wild battles in the battle screen
             autosplitter_toggle       : true,
-            display_badge_boosts      : true,
             test_run                  : false,
             collect_split_data        : true,
-            collect_summary_files     : true,
             show_repel_counter        : false,
             show_bonk_counter         : false,
             dropdown_bonks_items      : 'Bonks',
             toggle_compare_splits     : 'First',
             no_attempt                : false,
             speed_comparison_toggle   : true,
-
             refilming_mode  : false,
             refilmed_attempt: 0,
             refilmed_finish : 0,
-
-            // Keyhook shortcuts
-            lastExecuted: 0,
-            cycleIndex_rightDisplay:  0, //F13
-            cycleIndex_stats:         0, //F15
-            cycleIndex_failures:      0, //F17
-            cycleIndex_screens:       0, //F16
-            cycleValues_rightDisplay: ["movepool", "inventory", "splits", "none"],   //F13
-            cycleValues_stats:        ["base", "stats", "evs", "ivs"],               //F15
-            cycleValues_failures:     ["resets", "blackouts"],                       //F16
-            cycleValues_screens:      ["screens", "bonks"],                          //F17
-            key_F13:                  "movepool", //rightDisplay
-            key_F14:                  true, //show movepool
-            key_F15:                  "stats", //stat display type
-            key_F16:                  "resets",
-            key_F17:                  "screens",
-            key_F18:                  "",
-            key_F19:                  "",
-            key_F20:                  "",
-            key_F21:                  "",
-            key_F22:                  "",
-            key_F23:                  "",
-            key_F24:                  "",
-
-            // Encounters
-            goal_level:     13,
-            goal_speed:     24,
             rockTunnelDarkness: false, //if true it will make rock tunnel bright
 
             // Timer variables
@@ -279,7 +240,6 @@ module.exports = {
 
             // Pokemon Settings
             playerId:              0,
-            playerName:            "NINTEN",
             game_over:             false,
             finished_logs:         false,
             attempt_number:        0,
@@ -291,11 +251,9 @@ module.exports = {
             deprecated_data_str:   "",
             simple_data:           "",
             blackout:              false,
-            battle_summary_array:  [],
 
             previous_splits: [],
             current_splits:  [],
-            compared_splits: [],
             previous_label:  "Previous",
             current_label:   "Current",
 
@@ -305,10 +263,7 @@ module.exports = {
             disallow_right_panel_switching: true,
             automatic_post_battle_splits: false,
             automatic_splits: false,
-            automatic_ivs: true,
-            automatic_evs: true,
             automatic_stats: true,
-            ui_stats_styling_modifier: "2024",
 
             // Battle Summary
             battle_summary_header: "Battle Summary",

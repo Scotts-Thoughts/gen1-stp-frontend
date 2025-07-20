@@ -4,55 +4,10 @@
         "game": "Yellow"
     },
     "application_settings": {
-        "dvSetting": "Max",
-        "trashCans": true,
         "options": true,
-        "inventory": true,
-        "showAllTrainers": true,
-        "expBarAnimation": true,
-        "showSpecialTrainerGraphics": true,
         "battlePopUps": true,
         "show_wild_battles": true,
         "autosplitter_toggle": true,
-        "lastExecuted": 0,
-        "cycleIndex_rightDisplay": 0,
-        "cycleIndex_stats": 0,
-        "cycleIndex_failures": 0,
-        "cycleIndex_screens": 0,
-        "cycleValues_rightDisplay": [
-            "movepool",
-            "inventory",
-            "splits",
-            "none"
-        ],
-        "cycleValues_stats": [
-            "base",
-            "stats",
-            "evs",
-            "ivs"
-        ],
-        "cycleValues_failures": [
-            "resets",
-            "blackouts"
-        ],
-        "cycleValues_screens": [
-            "screens",
-            "bonks"
-        ],
-        "key_F13": "movepool",
-        "key_F14": true,
-        "key_F15": "stats",
-        "key_F16": "resets",
-        "key_F17": "screens",
-        "key_F18": "",
-        "key_F19": "",
-        "key_F20": "",
-        "key_F21": "",
-        "key_F22": "",
-        "key_F23": "",
-        "key_F24": "",
-        "goal_level": 13,
-        "goal_speed": 24,
         "rockTunnelDarkness": false,
         "viridian_forest": "Pidgey",
         "disallow_right_panel_switching": false,
@@ -62,7 +17,6 @@
         "stats_display": "Automatic",
         "test_run": true,
         "right_panel": "Automatic",
-        "collect_summary_files": true,
         "collect_split_data": true,
         "toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE": false,
         "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW": false,

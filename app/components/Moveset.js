@@ -40,7 +40,6 @@ module.exports = {
         "move_name",
         "dynamic_mon",
         "capitalization_format",
-        "display_badge_boosts",
     ],
     data() {
         return {

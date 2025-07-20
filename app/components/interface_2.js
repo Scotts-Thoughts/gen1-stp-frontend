@@ -30,32 +30,32 @@ const template = /*html*/`
                 <th style="text-align: left;">Attempt:</th>
                 <th>{{this.$parent.attempt_number}}</th>
                 <th>
-                    <button @click="$parent.increment('attempt_number')" class="smallButtonStyle increment">+</button>
-                    <button @click="$parent.decrement('attempt_number')" class="smallButtonStyle decrement">-</button>
+                    <button @click="increment('attempt_number')" class="smallButtonStyle increment">+</button>
+                    <button @click="decrement('attempt_number')" class="smallButtonStyle decrement">-</button>
                 </th>
             </tr>
             <tr>
                 <th style="text-align: left;">Finished Runs:</th>
                 <th>{{this.$parent.finished_run_count}}</th>
                 <th>
-                    <button @click="$parent.increment('finished_run_count')" class="smallButtonStyle increment">+</button>
-                    <button @click="$parent.decrement('finished_run_count')" class="smallButtonStyle decrement">-</button>
+                    <button @click="increment('finished_run_count')" class="smallButtonStyle increment">+</button>
+                    <button @click="decrement('finished_run_count')" class="smallButtonStyle decrement">-</button>
                 </th>
             </tr>
             <tr>
                 <th style="text-align: left;">Resets:</th>
                 <th>{{this.$parent.playerResets}}</th>
                 <th>
-                    <button @click="$parent.increment('playerResets')" class="smallButtonStyle increment">+</button>
-                    <button @click="$parent.decrement('playerResets')" class="smallButtonStyle decrement">-</button>
+                    <button @click="increment('playerResets')" class="smallButtonStyle increment">+</button>
+                    <button @click="decrement('playerResets')" class="smallButtonStyle decrement">-</button>
                 </th>
             </tr>
             <tr>
                 <th style="text-align: left;">Blackouts:</th>
                 <th>{{this.$parent.blackout_counter}}</th>
                 <th>
-                    <button @click="$parent.increment('blackout_counter')" class="smallButtonStyle increment">+</button>
-                    <button @click="$parent.decrement('blackout_counter')" class="smallButtonStyle decrement">-</button>
+                    <button @click="increment('blackout_counter')" class="smallButtonStyle increment">+</button>
+                    <button @click="decrement('blackout_counter')" class="smallButtonStyle decrement">-</button>
                 </th>
             </tr>
             <tr>
@@ -70,4 +70,15 @@ const template = /*html*/`
 
 module.exports = {
     template,
+    methods: {
+        increment(property) {
+            this[property]++;
+        },
+        decrement(property) {
+            if (this[property] == 0) {
+                return 0
+            }
+            this[property]--;
+        },
+    }
 }

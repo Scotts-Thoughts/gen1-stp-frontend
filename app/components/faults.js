@@ -34,6 +34,11 @@ const template = /*html*/`
 </div>
 `
 
+// EVENTS
+// RESET - increment value
+// BLACKOUT PREREQUISITE - set flag
+// BLACKOUT - increment value, clear flag
+
 module.exports = {
     template,
     props: [
@@ -44,12 +49,15 @@ module.exports = {
     ],
     data() {
         return {
+            //! Initialize the values from the storage object because these values need to persist through refreshes/crashes
             player_resets   : Storage.games[this.game_name][this.starterName].data.player_resets    ?? 0,
             blackout_counter: Storage.games[this.game_name][this.starterName].data.blackout_counter ?? 0,
             blackout        : Storage.games[this.game_name][this.starterName].data.blackout ?? false,
         }
     },
     watch: {
+        //! These watchers are just used to emit the changes of these properties for other components to use, there will be a better way to do this.
+        //! This may be important just to keep thes values backed up
         player_resets() {
             if (this.player_resets < 0) {
                 this.player_resets = 0;
@@ -76,10 +84,10 @@ module.exports = {
 			if (faultDisplayLength > 2) {
 				return 65
 			}
-			return 75; // >= 3 digits.
+			return 75;
         },
+        //! EVENT_CLEAR_RUN - clears resets, blackouts, flags, sets battle summary header, resets timer, clears finished logs, clears playerId, clears current splits
         async newRun() {
-            this.compared_splits = []
             this.current_splits = []
 
             this.battle_summary_header = "Battle Summary"
@@ -89,17 +97,18 @@ module.exports = {
             this.finished_logs = false
             this.blackout_counter = 0
             this.playerId = 0
-            this.playerName = "NINTEN"
         },
     },
     mounted() {
         // reset tracking
+        //! EVENT_RESET - Identifies when a reset occurs => clears blackout flag, increments resets
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {
             if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
                 this.blackout = false;
                 this.player_resets++;
             } 
         })
+        //! EVENT_NEW_RUN - everything from EVENT_CLEAR_RUN + startTime
         this.mapper.properties.player.playerId.change((newProp) => {
             if (newProp.value > 0 && this.game_over == false) {
                 if (newProp.value != this.playerId) { //! 'playerId' In frontend.js
@@ -120,20 +129,21 @@ module.exports = {
                 }
             }
         })
+        //! EVENT_GAME_OVER - allows reseting after the champion without resets incrementing
         this.mapper.properties.player.name.change((newProp) => {
             if (this.game_over == true && newProp.value == "NINTEN") {
                 this.game_over = false;
             }
         })
 
-        //*blackout tracking
-        //track when the player has a blackout
+        // blackout tracking
+        //! EVENT_PREPARE_BLACKOUT - Identifies the prerequesite state for a blackout, sets a flag that later events can use to confirm the blackout
         this.mapper.properties.player.team[0].hp.change((newProp, oldProp) => {
             if (newProp.value == 0 && this.state == `Battle`) {
                 this.blackout = true;
             }
         })
-        //new blackout tracking for loop processed gamestate
+        //! EVENT_BLACKOUT - Identifies when a blackout occurs => resets blackout prerequesite flag, increment blackout counter
         this.mapper.properties.meta.state.change((newProp, oldProp) => {
             if (newProp.value == "Overworld" && oldProp.value == "Battle" && this.blackout == true) {
                 this.blackout = false;
@@ -142,9 +152,9 @@ module.exports = {
             else if (newProp.value == "Overworld") {
                 this.blackout = false;
             }
-            if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") { //! 'automatic_splits' In frontend.js
+            if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") { //! WHAT IS THIS? I DON'T REMEMBER WHAT IT DOES...
                 this.automatic_splits = false
-                this.right_panel = 'Automatic' //! 'right_panel' In frontend.js
+                this.right_panel = 'Automatic'
             }
         });
         //! How much logic from the frontend.js needs to be in this component? 
