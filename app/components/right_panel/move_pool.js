@@ -5,7 +5,7 @@ const template = /*html*/`
         <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
 
             <tbody>
-                <tr :class="\`movepool_header background-\${starting_type_fix[1]}\`" style="outline: 2px solid #000">
+                <tr :class="\`movepool_header background-\${starter_type_2}\`" style="outline: 2px solid #000">
                     <th class="movepool_header movepool_way">Way</th>
                     <th class="movepool_header movepool_move">Move</th>
                     <th class="movepool_header movepool_type">Type</th>
@@ -49,7 +49,6 @@ module.exports = {
     props: [
         "starterName",
         "dynamicReset",
-        "starting_type_fix",
     ],
     computed: {        
         mew_movepool_style() {
@@ -63,5 +62,8 @@ module.exports = {
             const result = PokeData.getMovepool(this.dynamicReset?.species?.value ?? this.starterName);
             return result;
         },
+        starter_type_2() {
+            return PokeData.getSpecies(this.starterName).type_2.toLowerCase();
+        }
     },
 }

@@ -100,5 +100,27 @@ module.exports = {
         decrement(property) {
             PubSub.publish("@property/decrement", property);
         },
+        async load_csv_file() {
+            const file = await window.showOpenFilePicker({
+                id: "Gen1SplitsFolder",
+                types: [{
+                    description: "Split files",
+                    accept: { "text/csv": [".csv"] }
+                }]
+            });
+            const contents = await file[0].getFile();
+            const text = await contents.text();
+            return text;
+        },
+        async load_splits() {
+            const text = await this.load_csv_file();
+            const rows = text.split("\n").slice(1).filter(x => x !== '');
+            const results = []
+            for (const row of rows) {
+                const columns = row.split(",");
+                results.push({trainer: columns[2], time: columns[3]})
+            }
+            this.$parent.previous_splits = results;
+        },
     },
 }

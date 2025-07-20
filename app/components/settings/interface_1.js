@@ -11,7 +11,7 @@ const template = /*html*/`
     <button class="buttonStyle buttonStyle_column3" @click="this.$parent.timer.pauseUnpauseTime()">Play/Pause</button>
     <button class="buttonStyle set_button_style" @click="this.$parent.timer.setTimer(this.timer_startTimeOffset)">Set Timer</button><input type="text" class="inputContainer" v-model="$parent.timer_startTimeOffset" placeholder="00:00:00.00"/><br>
     <br>
-    <button class="buttonStyle buttonStyle_column3" @click="$parent.openFolder('splits', game, starterName, 'finishes')">Open Splits Folder</button>
+    <button class="buttonStyle buttonStyle_column3" @click="$parent.openFolder('splits', $parent.game_name, $parent.starterName, 'finishes')">Open Splits Folder</button>
     <br>
     <br>
     <div v-if="$parent.release == false">

@@ -4,5 +4,4 @@ const time_settings = [
     "timer_pause",
     "timer_formatted_time",
     "timer_pause_time",
-    "timer_settings",
 ]

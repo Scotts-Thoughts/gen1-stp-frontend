@@ -96,3 +96,16 @@ function removeSpecialChars(str) {
     // and convert the string to lowercase
     return str.replace(/[^a-z0-9]/gi, '').toLowerCase();
 }
+
+// This is an unused watcher
+function rockTunnelDarkness() {
+    if (this.rockTunnelDarkness == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
+        this.mapper.properties.overworld.mapData.palette.set(0, false)
+    }
+    else if (this.rockTunnelDarkness == false && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
+        this.mapper.properties.overworld.mapData.palette.set(6, false)
+    }
+    else {
+        return
+    }
+}

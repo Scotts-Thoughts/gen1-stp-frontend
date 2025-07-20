@@ -10,7 +10,6 @@ module.exports = {
         "mapper",
         "dynamicReset",
         "starterName",
-        "sleep",
     ],
     data() {
         return {
@@ -46,6 +45,9 @@ module.exports = {
                 level: index,
                 percent: (exp - currLvlExp) / (nextLvlExp - currLvlExp),
             };
+        },
+        sleep(ms) {
+            return new Promise((res) => setTimeout(res, ms))
         },
     },
     mounted() {

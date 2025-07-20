@@ -3,7 +3,6 @@ const application_settings = [
     [ "battlePopUps",                   true], //shows reflect, lightscreen, safeguard, weather, accuracy, evasion, etc
     [ "show_wild_battles",              false], //shows wild battles in the battle screen
     [ "autosplitter_toggle",            true],
-    [ "rockTunnelDarkness",             false], //if true it will make rock tunnel bright
     [ "disallow_right_panel_switching", true],
     [ "automatic_post_battle_splits",   true],
     [ "stats_display",                  "Automatic"],

@@ -1,9 +1,11 @@
+const PokeData = require("../../logic/PokeData.js");
+
 const template = /*html*/`
     <div>
         <div class="battle_summary_label">{{battle_summary_header}}</div>
         <table class="splits_table_old" cellspacing="0">
             <tbody>
-                <tr :style="{'background-color': \`var(--\${starting_type_fix[1]})\`, 'outline': '2px solid #000'}">
+                <tr :style="{'background-color': \`var(--\${starter_type_2})\`, 'outline': '2px solid #000'}">
                     <td style="font-size: 16px; text-align: left; padding-left: 3px">Split</td>
                     <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
                     <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
@@ -19,7 +21,7 @@ const template = /*html*/`
         </table>
         <table class="battle_summary_table" cellspacing="0">
             <tbody>
-                <tr :style="{'background-color': \`var(--\${starting_type_fix[1]})\`, 'outline': '2px solid #000'}">
+                <tr :style="{'background-color': \`var(--\${starter_type_2})\`, 'outline': '2px solid #000'}">
                     <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Metric</td>
                     <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">Value</td>
                 </tr>
@@ -35,7 +37,7 @@ const template = /*html*/`
                     <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
                     <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
                 </tr>
-                <tr :class="\`background-\${starting_type_fix[1]}\`" style="outline: 1px solid #000">
+                <tr :class="\`background-\${starter_type_2}\`" style="outline: 1px solid #000">
                     <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Player:</td>
                     <td></td>
                 </tr>
@@ -43,7 +45,7 @@ const template = /*html*/`
                     <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">{{stat.name}}</td>
                     <td style="font-size: 16px; width: 184px; text-align: right; padding-right: 3px;">{{this[stat.data_name] != 0 ? this[stat.data_name] : "-"}}</td>
                 </tr>
-                <tr :class="\`background-\${starting_type_fix[1]}\`" style="outline: 1px solid #000">
+                <tr :class="\`background-\${starter_type_2}\`" style="outline: 1px solid #000">
                     <td style="font-size: 16px; width: 184px;  text-align: left; padding-left: 3px;">Enemy:</td>
                     <td></td>
                 </tr>
@@ -60,7 +62,7 @@ const template = /*html*/`
 module.exports = {
     template,
     props: [
-        "starting_type_fix",
+        "starterName",
         "compare_splits",
         "trainer_name_lookup",
         "battle_summary_header",
@@ -119,5 +121,10 @@ module.exports = {
             if (difference_string.charAt(0) == "+") { return "color: red" }
             if (difference_string.charAt(0) == "-") { return "color: green" }
         },
+    },
+    computed: {
+        starter_type_2() {
+            return PokeData.getSpecies(this.starterName).type_2.toLowerCase();
+        }
     }
 }

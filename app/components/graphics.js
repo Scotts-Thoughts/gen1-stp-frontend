@@ -57,7 +57,6 @@ module.exports = {
         "game_name",
         "starterName",
         "dynamicReset",
-        "timer_settings",
     ],
     setup(){
         const style = Vue.ref(UIStyles.settings);

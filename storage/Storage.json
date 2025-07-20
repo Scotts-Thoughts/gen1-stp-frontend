@@ -1,6 +1,6 @@
 {
     "global_variables": {
-        "starter": "Nidoking",
+        "starter": "Butterfree",
         "game": "Yellow"
     },
     "application_settings": {
@@ -8,7 +8,6 @@
         "battlePopUps": true,
         "show_wild_battles": true,
         "autosplitter_toggle": true,
-        "rockTunnelDarkness": false,
         "viridian_forest": "Pidgey",
         "disallow_right_panel_switching": false,
         "automatic_post_battle_splits": true,
@@ -16,7 +15,7 @@
         "ui_type_color_modifier": "current_",
         "stats_display": "Automatic",
         "test_run": true,
-        "right_panel": "Automatic",
+        "right_panel": "Splits",
         "collect_split_data": true,
         "toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE": false,
         "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW": false,
@@ -9202,7 +9201,7 @@
                     "pb_time": "None",
                     "backgroundXOffset": 100,
                     "backgroundYOffset": "61",
-                    "backgroundTexture": "Psychic (crisp)",
+                    "backgroundTexture": "Psychic 1",
                     "backgroundBrightness": "85",
                     "backgroundContrast": "170",
                     "backgroundSaturation": 100,
@@ -9255,7 +9254,9 @@
                 },
                 "settings": {},
                 "splits": {},
-                "data": {}
+                "data": {
+                    "top_left_ui_selector": "None"
+                }
             },
             "undefined": {
                 "style": {

@@ -61,7 +61,6 @@ const template = /*html*/`
         :mapper="mapper"
         :dynamic-reset="s1dynamicReset"
         :starter-name="starterName"
-        :sleep="sleep"
     ></exp_bar>
     <badge_boosts :mapper="mapper" ></badge_boosts>
     <badges :mapper="mapper"></badges>
@@ -73,7 +72,6 @@ const template = /*html*/`
             <movepool
                 :starter-name="starterName"
                 :dynamic-reset="s1dynamicReset"
-                :starting_type_fix="starting_type_fix"
             ></movepool>
         </div>
         <div v-else-if="right_panel == 'Splits'" key=5>
@@ -81,7 +79,7 @@ const template = /*html*/`
                 <div class="split_label">Splits</div>
                 <div v-if="toggle_compare_splits === 'Followup'">
                     <splits_followup
-                        :starting_type_fix="starting_type_fix"
+                        :starter-name="starterName"    
                         :compare_splits="compare_splits"
                         :trainer_name_lookup="trainer_name_lookup"
                         :previous_label="previous_label"
@@ -90,7 +88,7 @@ const template = /*html*/`
                 </div>
                 <div v-else-if="toggle_compare_splits === 'First'">
                     <splits_first
-                        :starting_type_fix="starting_type_fix"
+                        :starter-name="starterName"
                         :first_splits="first_splits"
                         :trainer_name_lookup="trainer_name_lookup"
                     ></splits_first>
@@ -131,7 +129,6 @@ const template = /*html*/`
             <movepool
                 :starter-name="starterName"
                 :dynamic-reset="s1dynamicReset"
-                :starting_type_fix="starting_type_fix"
             ></movepool>
         </div>
     </transition>
@@ -211,7 +208,6 @@ module.exports = {
             battle_summary         : battle_summary,
             backport_data          : backport_data,
 
-            // Application Settings
             search_term : "",
             pokemon_list: [],
             top_left_ui_selector      : Storage.games[this.game_name]?.[this.starterName]?.data?.top_left_ui_selector ?? "Both",
@@ -229,46 +225,33 @@ module.exports = {
             refilming_mode  : false,
             refilmed_attempt: 0,
             refilmed_finish : 0,
-            rockTunnelDarkness: false, //if true it will make rock tunnel bright
-
-            // Timer variables
             timer_startTimeOffset: MyStorage["timer_startTimeOffset"] ?? "00:00:00.00",
             time_split_start: "00:00:00:00",
             battle_start:     0,
             timer:            new Timer(MyStorage),
             battle_duration:  0,
             exp_per_second:   0,
-            timer_settings:   MyStorage["timer_settings"] ?? "Real-Time",
-            
-            // Splits
             split_data:             [],
-
-            // Pokemon Settings
             player_id:              0,
             flag_player_finished_the_run: false,
             flag_finished_logging_splits: false,
             attempt_number:        0,
             finished_run_count:    0,
-            pb_time:               "None",
             split_logStr:          "",
             simple_data_str:       "",
             full_data_str:         "",
             deprecated_data_str:   "",
             simple_data:           "",
             blackout:              false,
-
             previous_splits: [],
             current_splits:  [],
             previous_label:  "Previous",
             current_label:   "Current",
-
-            // UI
             stats_display: "Automatic",
             right_panel:   "Automatic",
             disallow_right_panel_switching: true,
             automatic_post_battle_splits: false,
             automatic_splits: false,
-            automatic_stats: true,
 
             // Battle Summary
             battle_summary_header: "Battle Summary",
@@ -426,7 +409,7 @@ module.exports = {
         this.starterName = Storage['global_variables'].starter;
         this.game_name   = Storage['global_variables'].game;
 
-        // // Application Settings
+        // Application Settings
         for (let key in Storage.application_settings) {
             if (debug_mode) { 
                 console.log(`Application Setting Key: ${key}`) 
@@ -471,10 +454,6 @@ module.exports = {
         },
         async starterName(newValue, oldValue) {
             if (this.ready == false) await this.sleep(250)
-                
-            // Set the new value for hChosenStarter so that the ROM responds to the change
-            // this.mapper.properties.patch.hChosenStarter.set(newValue, false)
-
             //update the saved starter in the overlay's local storage
             Storage['global_variables'].starter = newValue
             if (!Storage['games'][this.game_name][newValue]) {
@@ -500,21 +479,10 @@ module.exports = {
             }
             UIStyles.setGameName(newValue);
         },
-        player_id(newValue) {
+        player_id() {
             this.flag_player_finished_the_run = false;
             this.flag_finished_logging_splits == false;
         },
-        rockTunnelDarkness() {
-            if (this.rockTunnelDarkness == true && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
-                this.mapper.properties.overworld.mapData.palette.set(0, false)
-            }
-            else if (this.rockTunnelDarkness == false && (this.mapper.properties.overworld.map.value == "Rock Tunnel - 1" || this.mapper.properties.overworld.map.value == "Rock Tunnel")) {
-                this.mapper.properties.overworld.mapData.palette.set(6, false)
-            }
-            else {
-                return
-            }
-        },  
     },
     computed: {
         graphicsProps() {
@@ -522,12 +490,11 @@ module.exports = {
                 game_name: this.game_name,
                 starterName: this.starterName,
                 dynamicReset: this.s1dynamicReset,
-                timer_settings: this.timer_settings
             }
         },
         splits_summary_props() {
             return {
-                starting_type_fix: this.starting_type_fix,
+                starterName: this.starterName,
                 compare_splits: this.compare_splits,
                 trainer_name_lookup: this.trainer_name_lookup,
                 battle_summary_header: this.battle_summary_header,
@@ -637,33 +604,12 @@ module.exports = {
             }
         },
         automatic_stats_type() {
-            const toggle    = this.automatic_stats
             const stat_type = this.stats_display
-            if (toggle) {
-                switch (stat_type) {
-                    case "No Pokemon": this.stats_display = "No Pokemon"; break;
-                    case "DVs":        this.stats_display = "DVs"       ; break;
-                    case "EVs":        this.stats_display = "EVs"       ; break;
-                    case "Automatic":  this.stats_display = "Automatic" ; break;
-                }
-            }
-            else {
-                switch (stat_type) {
-                    case "No Pokemon": this.stats_display = "No Pokemon"; break;
-                    case "DVs":        this.stats_display = "DVs"       ; break;
-                    case "EVs":        this.stats_display = "EVs"       ; break;
-                    case "Automatic":  this.stats_display = "Automatic" ; break;
-                }
-            }
-        },
-        species() {
-            const mapping = {
-                0xBF: this.starterName,
-            }
-            const bytes = this.mapper.properties.player.team[0].species.bytes
-            const value = this.mapper.properties.player.team[0].species.value
-            if (bytes > 0 && value === null) {
-                return mapping[bytes]
+            switch (stat_type) {
+                case "No Pokemon": this.stats_display = "No Pokemon"; break;
+                case "DVs":        this.stats_display = "DVs"       ; break;
+                case "EVs":        this.stats_display = "EVs"       ; break;
+                case "Automatic":  this.stats_display = "Automatic" ; break;
             }
         },
         gametimeSplit() {
@@ -673,14 +619,8 @@ module.exports = {
             return timecode
         },
         //shorthands
-        s1() {
-            return this.mapper?.properties?.player?.team[0]
-        },
         map() {
             return this.mapper?.properties
-        },
-        batt() {
-            return this.mapper?.properties?.battle
         },
         s1dynamicReset() {
             var species = ""
@@ -723,17 +663,6 @@ module.exports = {
                 }
             }
         },
-        starting_type_fix() {
-            if (this.map.overworld.map.value == "Pallet Town - Oak's Lab" || this.state == "No Pokemon") {
-                const fixed_type1 = PokeData.getSpecies(this.starterName).type_1.toLowerCase();
-                const fixed_type2 = PokeData.getSpecies(this.starterName).type_2.toLowerCase();
-                return [fixed_type1, fixed_type2]
-            } else {
-                const type1 = PokeData.getSpecies(this.starterName).type_1.toLowerCase();
-                const type2 = PokeData.getSpecies(this.starterName).type_2.toLowerCase();
-                return [type1, type2]
-            }
-        },
         battle_fade() {
             const trainerClasses = ["LORELEI", "BRUNO", "AGATHA", "LANCE", "RIVAL3"];
             const validStates = ["To Battle", "From Battle"];
@@ -741,17 +670,12 @@ module.exports = {
               return true;
             }
             if (validStates.includes(this.state) &&
-                (trainerClasses.includes(this.batt.trainer.class.value) ||
+                (trainerClasses.includes(this.mapper.properties.battle.trainer.class.value) ||
                  this.state != "From Battle")) {
               return true;
             } else {
               return false;
             }
-        },
-        getStarterType() {
-            var type1 = PokeData.getSpecies(this.starterName).type_1.toLowerCase();
-            var type2 = PokeData.getSpecies(this.starterName).type_2.toLowerCase();
-            return { "type_1": type1, "type_2": type2 }
         },
     },
     methods: {
@@ -793,30 +717,6 @@ module.exports = {
             this.current_splits  = MyStorage['current_splits']  ?? []
             this.previous_splits = MyStorage['previous_splits'] ?? []
         },
-        async load_temp_splits() {
-            const text = await loadCsvFile();
-            const rows = text.split("\n").slice(1).filter(x => x !== '');
-            const results = []
-            for (const row of rows) {
-                const columns = row.split(",");
-                results.push({trainer: columns[2], time: columns[3]})
-            }
-            return results
-        },
-        async load_splits() {
-            const text = await loadCsvFile();
-            const rows = text.split("\n").slice(1).filter(x => x !== '');
-            const results = []
-            for (const row of rows) {
-                const columns = row.split(",");
-                results.push({trainer: columns[2], time: columns[3]})
-            }
-            this.previous_splits = results;
-        },
-        get_ev(stat_exp) {
-            //add more data to this function for details (stat gain in gen1, and gen3 for comparisons)
-            return Math.floor(Math.sqrt(stat_exp) / 4)
-        },
         enemy_pkmn_faint_types(pkmnData) {
             if (this.state == `To Battle`) {
                 return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
@@ -833,7 +733,6 @@ module.exports = {
             return time.toString().padStart(2, "0")
         },
         pkmn_type(typeNumber) {
-            
             data = PokeData.getSpecies(this.starterName);
             if (this.state == `Battle`) {
                 return this.mapper?.properties?.battle?.yourPokemon?.["type" + typeNumber.toString()].value 
@@ -907,11 +806,13 @@ module.exports = {
                 }
             }
             else {
+                var starter_type_1 = PokeData.getSpecies(this.starterName).type_1.toLowerCase();
+                var starter_type_2 = PokeData.getSpecies(this.starterName).type_2.toLowerCase();
                 if (typeNumber == 1) {
-                    return `images/elements/types/${this.getStarterType.type_1.toLowerCase()}.png`
+                    return `images/elements/types/${starter_type_1}.png`
                 }
                 else if (typeNumber == 2) {
-                    return `images/elements/types/${this.getStarterType.type_2.toLowerCase()}.png`
+                    return `images/elements/types/${starter_type_2}.png`
                 }
             }
         },
@@ -958,7 +859,6 @@ module.exports = {
         // BLACKOUT - Identifies when a blackout might have occurred
         this.mapper.properties.meta.state.change((newProp, oldProp) => {
             PubSub.publish("@run/check_blackout", newProp, oldProp);
-            //! WHAT IS THIS? I DON'T REMEMBER WHAT IT DOES...
             if (newProp.value == "To Battle" && this.automatic_splits == true && this.mapper.properties.battle.type.value == "Trainer") {
                 this.automatic_splits = false
                 this.right_panel = 'Automatic'
@@ -986,7 +886,8 @@ module.exports = {
             }
         })
 
-        //*autosplitter
+        //! Refactor into 'components/autosplitter.js' component
+        //* Autosplitter
         //log the start of a battle to the console
         this.mapper.properties.battle.type.change((newProp) => {
             var logStr = `Autosplitter - Battle Started: ${this.mapper.properties.battle.trainer.class.value} started at ${this.timer.formatted_time[0]}${this.timer.formatted_time[1]} (Gametime: ${this.gametimeSplit})`
@@ -1143,6 +1044,7 @@ module.exports = {
                 this.flag_finished_logging_splits = true
             }
         });
+        //! end of autosplitter
 
         // Alakazam Yellow exception
         this.mapper.properties?.trainers?.viridianForest?.bugcatcher2.change((newValue, oldValue) => {
