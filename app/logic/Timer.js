@@ -51,7 +51,7 @@ class Timer {
 		this.setTimer(startTimeOffset);
 		this.storage.timer_pause = false;
 		this.update();
-		PubSub.publish("time_start", this.formatted_time);
+		PubSub.publish("@timer/start", this.formatted_time);
 	}
 
 	/**
@@ -105,7 +105,7 @@ class Timer {
 		} else {
 			this.formatted_time = [ s, "." + f(ms), h + "h" + m + "m" + s + "s", ]
 		}
-		PubSub.publish("time_update", this.formatted_time);
+		PubSub.publish("@timer/update", this.formatted_time);
 	}
 
 	/**

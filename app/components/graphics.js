@@ -64,7 +64,7 @@ module.exports = {
         const onStyles = (newSettings) => {
             style.value = newSettings;
         };
-        PubSub.subscribe("ui_styles", onStyles);
+        PubSub.subscribe("@settings/ui_styles", onStyles);
         return {
             style,
             onStyles
@@ -84,7 +84,7 @@ module.exports = {
     },
     onUnmounted() {
         // Not strictly necessary for this component, but unsubscribe from the time_update event:
-        PubSub.unsubscribe("ui_styles", onStyles);
+        PubSub.unsubscribe("@settings/ui_styles", onStyles);
     },
     watch: {
         async starterName(newValue, oldValue) {

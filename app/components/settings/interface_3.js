@@ -120,13 +120,13 @@ module.exports = {
         const onStyles = (newSettings) => {
             style.value = newSettings;
         };
-        PubSub.subscribe("ui_styles", onStyles);
+        PubSub.subscribe("@settings/ui_styles", onStyles);
         return {
             style,
             onStyles
         };
     },
     onUnmounted() {
-        PubSub.unsubscribe("ui_styles", onStyles);
+        PubSub.unsubscribe("@settings/ui_styles", onStyles);
     },
 }

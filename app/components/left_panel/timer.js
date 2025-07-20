@@ -24,10 +24,10 @@ module.exports = {
         },
     },
     created() {
-        PubSub.subscribe("time_update", this.onTimeUpdate);
+        PubSub.subscribe("@timer/update", this.onTimeUpdate);
     },
     onUnmounted() {
         // Not strictly necessary for this component, but unsubscribe from the time_update event:
-        PubSub.unsubscribe("time_update", this.onTimeUpdate);
+        PubSub.unsubscribe("@timer/update", this.onTimeUpdate);
     }
 }
