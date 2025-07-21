@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Scott's Thoughts - Generation 1 Overlay - v1.5.0</title>
+    <link rel="stylesheet" href="style-yellow.css">
+</head>
+<body>
+    <div id="app">
+        <keyhook></keyhook>
+        <div v-if="ready == false">
+            <div>Please load a mapper in PokeAByte...</div>
+            <br>
+            <no_mapper></no_mapper>
+        </div>
+        <div v-else>
+            <frontend 
+                :mapper="mapper"
+            ></frontend>
+        </div>
+    </div>
+
+    <!-- Imports -->
+    <script type="module" src="/main.ts"></script>
+</body>

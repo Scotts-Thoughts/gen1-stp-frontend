@@ -1,0 +1,9 @@
+{
+    "timer": "00:00:00.00",
+    "timer_override": "00:00:00.00",
+    "attempts": 0,
+    "finishes": 0,
+    "resets": 0,
+    "blackouts": 0,
+    "splits_path": ""
+}

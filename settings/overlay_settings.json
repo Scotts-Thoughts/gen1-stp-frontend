@@ -1,0 +1,45 @@
+{
+    "game": null,
+    "starter": "",
+    "starter_search": "",
+    "keyboard_shortcuts": {},
+    "visualization": {
+        "left_panel": {
+            "stats": {
+                "mode": "Automatic"
+            }
+        },
+        "pop_ups": {
+            "bonks": {
+                "enabled": true,
+                "mode": "Bonks"
+            },
+            "repel": {
+                "enabled": true
+            },
+            "accuracy": {
+                "enabled": true
+            },
+            "evasion": {
+                "enabled": true
+            },
+            "field": {
+                "enabled": true
+            }
+        },
+        "right_panel": {
+            "inventory": {},
+            "mode": "Automatic",
+            "movepool": {},
+            "splits": {
+                "mode": "First"
+            },
+            "trainer": {},
+            "wild_pokemon": {},
+            "battle_splits_auto": true,
+            "right_panel_hotkeys": false,
+            "mode_override": null,
+            "wild_battles": false
+        }
+    }
+}
