@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Venomoth,Rival1-Lab,42,0,0,6,0:02,8.649,CONFUSION,DISABLE,SUPERSONIC,TACKLE
+NINTEN,Venomoth,Brock,2:49,0,0,10,0:10,14.984,CONFUSION,DISABLE,SUPERSONIC,TACKLE
