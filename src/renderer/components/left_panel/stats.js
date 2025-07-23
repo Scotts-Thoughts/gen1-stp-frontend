@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import PokeData from "../../logic/PokeData";
-import { useOverlaySettingsStore } from "../../stores/useOverlaySettingsStore";
+import { StatsPanelMode, useOverlaySettingsStore } from "../../stores/useOverlaySettingsStore";
 import { GameState, useMetaStore } from "../../stores/metaStore";
 
 const template = /*html*/`
@@ -292,16 +292,16 @@ export default defineComponent({
                 case "Safari Zone (North)":
                 case "Safari Zone (West)":
                 case "Safari Zone - Secret House":
-                    this.$parent.stats_display = "Vitamins"
+                    this.settings.setStatsPanelMode(StatsPanelMode.vitamins);
                     break
                 case "Route 16": {
                     if (old_property.value == "Route 16 - House") {
-                        this.$parent.stats_display = "Vitamins"
+                        this.settings.setStatsPanelMode(StatsPanelMode.vitamins);
                         break
                     }
                 }
                 default:
-                    this.$parent.stats_display = "Automatic"
+                    this.settings.setStatsPanelMode(StatsPanelMode.automatic);
                     break
             }
         })

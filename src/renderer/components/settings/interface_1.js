@@ -1,3 +1,5 @@
+import { inject } from "vue";
+import { useMetaStore } from "../../stores/metaStore";
 import battle_testing from "./battle_testing";
 // todo: remove the "parent.parent" stuff.
 // todo: Put timer_startTimeOffset into the game/species settings.
@@ -14,15 +16,15 @@ const template = /*html*/`
     <button class="buttonStyle buttonStyle_column3" @click="this.$parent.$parent.timer.pauseUnpauseTime()">Play/Pause</button>
     <button class="buttonStyle set_button_style" @click="this.$parent.$parent.timer.setTimer(this.timer_startTimeOffset)">Set Timer</button><input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
     <br>
-    <button class="buttonStyle buttonStyle_column3" @click="$parent.openFolder('splits', $parent.game_name, $parent.starterName, 'finishes')">Open Splits Folder</button>
+    <button class="buttonStyle buttonStyle_column3" @click="$parent.openFolder('splits', $parent.$parent.game_name, meta.starter, 'finishes')">Open Splits Folder</button>
     <br>
     <br>
     <div v-if="isRelease == false">
         <table>
             <tbody>
-                <tr><td>Test run:</td><td>        <input class="checkBoxStyle" type="checkbox" v-model="$parent.test_run"/></td></tr>
-                <tr><td>Refilming mode:</td><td>  <input class="checkBoxStyle" type="checkbox" v-model="$parent.refilming_mode"/></td></tr>
-                <tr><td>No attempt/split:</td><td><input class="checkBoxStyle" type="checkbox" v-model="$parent.no_attempt"/></td></tr>
+                <tr><td>Test run:</td><td>        <input class="checkBoxStyle" type="checkbox" v-model="$parent.$parent.test_run"/></td></tr>
+                <tr><td>Refilming mode:</td><td>  <input class="checkBoxStyle" type="checkbox" v-model="$parent.$parent.refilming_mode"/></td></tr>
+                <tr><td>No attempt/split:</td><td><input class="checkBoxStyle" type="checkbox" v-model="$parent.$parent.no_attempt"/></td></tr>
             </tbody>
         </table>
         <table v-if="$parent.$parent.refilming_mode">
@@ -40,11 +42,11 @@ const template = /*html*/`
         <div>Debugging:</div>
         <table>
             <tbody>
-                <tr><td>State:</td><td>{{$parent.state}}</td></tr>
-                <tr><td>Mapper State:</td><td>{{$parent.mapper.properties.meta.state.value}}</td></tr>
-                <tr><td>Enemy State:</td><td>{{$parent.enemyState}}</td></tr>
+                <tr><td>State:</td><td>{{meta.gameState}}</td></tr>
+                <tr><td>Mapper State:</td><td>{{game_properties.meta.state.value}}</td></tr>
+                <tr><td>Enemy State:</td><td>{{meta.enemyState}}</td></tr>
                 <tr><td></td><td></td></tr>
-                <tr><td>blackout:</td><td>{{$parent.blackout}}</td></tr>
+                <tr><td>blackout:</td><td>{{$parent.$parent.blackout}}</td></tr>
             </tbody>
         </table>
     </div>
@@ -52,17 +54,15 @@ const template = /*html*/`
 
 export default {
     template,
+    inject: ["game_properties"],
     components: {
         battle_testing,
     },
     data() {
         return {
+            meta: useMetaStore(),
             timer_startTimeOffset: "00:00:00.00",
+            isRelease: process.env.NODE_ENV !== "development",
         }
     },
-    computed: {
-        isRelease() {
-            return process.env.NODE_ENV === "development";
-        }
-    }
 }

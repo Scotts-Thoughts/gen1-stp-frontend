@@ -10551,7 +10551,8 @@
                     "backgroundBrightness": "94",
                     "backgroundContrast": "128",
                     "backgroundSaturation": 100,
-                    "backgroundHue": 0
+                    "backgroundHue": 0,
+                    "player_id": 12306
                 },
                 "settings": {},
                 "splits": {},

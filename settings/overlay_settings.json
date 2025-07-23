@@ -39,7 +39,7 @@
             "battle_splits_auto": true,
             "right_panel_hotkeys": false,
             "mode_override": null,
-            "wild_battles": false
+            "wild_battles": true
         }
     }
 }

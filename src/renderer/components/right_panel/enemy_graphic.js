@@ -59,7 +59,7 @@ const template = /*html*/`
                 ['modEnemyStageSpecial', 'Spc',],
                 ['modEnemyStageSpeed',   'Spd',],
                 ]">
-                <div v-show="(enemyState == 'Pokemon' || enemyState == 'Pokemon Sent Out' || enemyState == 'Fainting') && battle.enemyPokemon.partyPos.value == x && battle.enemyPokemon[mod[0]].value != '0'" 
+                <div v-show="(meta.enemyState == 'Pokemon' || meta.enemyState == 'Pokemon Sent Out' || meta.enemyState == 'Fainting') && battle.enemyPokemon.partyPos.value == x && battle.enemyPokemon[mod[0]].value != '0'" 
                 :class="'ePkmnModsStyle ePkmnMod' + mod[1]">
                     {{stat_mod(battle.enemyPokemon[mod[0]].value, x).mod}}
                 </div>
@@ -84,7 +84,6 @@ export default defineComponent({
     props: [
         "speed_comparison_toggle",
         "enemy_pkmn_faint_types",
-        "enemyState",
         "right_panel",
     ],
     data() {
@@ -306,20 +305,15 @@ export default defineComponent({
         //edge case management (prevent flickering of the stat values due to overlay stage multipliers being applied on Pokemon that are not yet in battle)
         //determine which Pokemon is currently in battle and display only their stage multipliers
         activeSlot(activePkmn, currentSlot, statLabel, stat, side) {
-            if (this.enemyState == "Fainted" || this.meta.gameState == "From Battle") {
-                return stat
-            }
-            else if (this.enemyState == "Pokemon" || this.enemyState == "Pokemon Sent Out" || this.enemyState == "Fainting") {
+            if (this.meta.enemyState == "Fainted" || this.meta.gameState == "From Battle") {
+                return stat;
+            } else if (this.meta.enemyState == "Pokemon" || this.meta.enemyState == "Pokemon Sent Out" || this.meta.enemyState == "Fainting") {
                 if (activePkmn == currentSlot && this.meta.gameState == "Battle") {
-                    return this.game_properties.battle[side][statLabel].value
+                    return this.game_properties.battle[side][statLabel].value;
                 }
-                else {
-                    return stat
-                }
+                return stat;
             }
-            else {
-                return stat
-            }
+            return stat;
         },
         enemy_crit_rate(pkmnData) {
             const species = pkmnData?.species.value;

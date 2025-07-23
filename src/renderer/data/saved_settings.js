@@ -7,7 +7,6 @@ export const auto_save_settings = [
     "pkmnSlots",
     "state",
     "prevSpecies",
-    "enemyState",
     "oldExpValue",
     "player_id",
     "blackout",

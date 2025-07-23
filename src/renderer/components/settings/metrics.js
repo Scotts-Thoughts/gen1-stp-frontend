@@ -106,7 +106,7 @@ export default defineComponent({
                 const columns = row.split(",");
                 results.push({trainer: columns[2], time: columns[3]})
             }
-            this.$parent.previous_splits = results;
+            this.$parent.$parent.previous_splits = results;
         },
     },
 });

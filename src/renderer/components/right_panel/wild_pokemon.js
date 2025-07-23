@@ -63,8 +63,8 @@ const template = /*html*/ `
                 ['modEnemyStageSpecial', 'Spc',],
                 ['modEnemyStageSpeed',   'Spd',],
                 ]">
-                <div v-show="(enemyState == 'Pokemon' || enemyState == 'Pokemon Sent Out' || enemyState == 'Fainting') && wild_mon[mod[0]].value != '0'" 
-                :class="'ePkmnModsStyle ePkmnMod' + mod[1]">
+                <div v-show="(meta.enemyState == 'Pokemon' || meta.enemyState == 'Pokemon Sent Out' || meta.enemyState == 'Fainting') && wild_mon[mod[0]].value != '0'" 
+                    :class="'ePkmnModsStyle ePkmnMod' + mod[1]">
                     {{stat_mod(wild_mon[mod[0]].value).mod}}
                 </div>
             </div>
@@ -82,7 +82,6 @@ const template = /*html*/ `
 export default defineComponent({
     template,
     props: [
-        "enemyState",
         "enemy_pkmn_faint_types",
         "speed_comparison_toggle",
     ],

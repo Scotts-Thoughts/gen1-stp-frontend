@@ -26,12 +26,10 @@ export default defineComponent({
         return { 
             meta: useMetaStore(),
             game_selection: "Yellow",
+            isRelease: process.env.NODE_ENV !== "development",
         }
     },
     computed: {
-        isRelease() {
-            return process.env.NODE_ENV === "development";
-        },
         filtered_pokemon_list() {
             if (this.game_selection === "Yellow") {
                 PokeData.setGame("Yellow")

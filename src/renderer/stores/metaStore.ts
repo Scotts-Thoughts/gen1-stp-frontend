@@ -9,16 +9,27 @@ export enum GameState {
 	from_battle = "From Battle",
 }
 
+export enum EnemyState {
+	not_in_battle = "Not In Battle",
+	battle_starting = "Battle Starting",
+	pokemon_sent_out = "Pokemon Sent Out",
+	pokemon = "Pokemon",
+	fainting = "Fainting",
+	fainted = "Fainted",
+	battle_finished = "Battle Finished",
+}
+
 /** 
  * Store for general purpose information that is not specific to a game or generation. 
  * Things like the current game, selected starter and the game state (which can be normalized accross generations).
  */
 export const useMetaStore = defineStore('meta', {
 	state: () => ({
-		game: null as PokemonGame|null,
+		game: null as PokemonGame | null,
 		starter: "",
 		currentSpecies: "",
 		gameState: GameState.no_pokemon,
+		enemyState: EnemyState.not_in_battle,
 	}),
 	actions: {
 		setStarter(starter: string) {
@@ -29,6 +40,9 @@ export const useMetaStore = defineStore('meta', {
 		},
 		setGameState(state: GameState) {
 			this.gameState = state;
+		},
+		setEnemyState(state: EnemyState) {
+			this.enemyState = state;
 		},
 		setGame(game: PokemonGame) {
 			this.game = game;

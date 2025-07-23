@@ -81,12 +81,10 @@ const template = /*html*/`
                     v-if="mapper.properties.battle.type.value == 'Trainer'" 
                     :speed_comparison_toggle="speed_comparison_toggle"
                     :enemy_pkmn_faint_types="enemy_pkmn_faint_types"
-                    :enemy-state="enemyState"
                     :right_panel="overlaySettings.right_panel_mode"
                 />
                 <wild_pokemon
                     v-else-if="mapper.properties.battle.type.value == 'Wild'" 
-                    :enemy-state="enemyState"
                     :enemy_pkmn_faint_types="enemy_pkmn_faint_types"
                     :speed_comparison_toggle="speed_comparison_toggle"
                 />
@@ -107,7 +105,6 @@ export default defineComponent({
     components: {
         graphics,
 
-        
         state, // Background Processes
 
         // Left Panel:
@@ -135,7 +132,6 @@ export default defineComponent({
             uiStyleStore: useUIStylesStore(),
             overlaySettings: useOverlaySettingsStore(),
             trainer_name_lookup,
-            enemyState: "Not In Battle", //"Pokemon", "Fainted"
             release: false, //If set to false then development features will be displayed
             /** The game selected by the user. Used to specify editions that use the same mapper, 
              * e.g. "Blue" from "Red and Blue".  

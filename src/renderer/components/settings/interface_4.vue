@@ -78,12 +78,8 @@ export default defineComponent({
             StatsPanelMode,
             RightPanelMode,
             SplitsMode,
+            isRelease: process.env.NODE_ENV !== "development",
         }
     },
-    computed: {
-        isRelease() {
-            return process.env.NODE_ENV === "development";
-        }
-    }
 });
 </script>
