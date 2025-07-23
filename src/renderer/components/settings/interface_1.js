@@ -1,6 +1,6 @@
-import { inject } from "vue";
 import { useMetaStore } from "../../stores/metaStore";
 import battle_testing from "./battle_testing";
+import { useOverlaySettingsStore } from "../../stores/useOverlaySettingsStore";
 // todo: remove the "parent.parent" stuff.
 // todo: Put timer_startTimeOffset into the game/species settings.
 const template = /*html*/`
@@ -22,7 +22,7 @@ const template = /*html*/`
     <div v-if="isRelease == false">
         <table>
             <tbody>
-                <tr><td>Test run:</td><td>        <input class="checkBoxStyle" type="checkbox" v-model="$parent.$parent.test_run"/></td></tr>
+                <tr><td>Test run:</td><td>        <input class="checkBoxStyle" type="checkbox" v-model="settings.test_run"/></td></tr>
                 <tr><td>Refilming mode:</td><td>  <input class="checkBoxStyle" type="checkbox" v-model="$parent.$parent.refilming_mode"/></td></tr>
                 <tr><td>No attempt/split:</td><td><input class="checkBoxStyle" type="checkbox" v-model="$parent.$parent.no_attempt"/></td></tr>
             </tbody>
@@ -35,8 +35,8 @@ const template = /*html*/`
         </table>
         <br>
     </div>
-    <div v-if="$parent.$parent.test_run == true">
-        <battle_testing :mapper="$parent.mapper"></battle_testing>
+    <div v-if="settings.test_run == true">
+        <battle_testing />
     </div>
     <div v-if="isRelease == false">
         <div>Debugging:</div>
@@ -61,6 +61,7 @@ export default {
     data() {
         return {
             meta: useMetaStore(),
+            settings: useOverlaySettingsStore(),
             timer_startTimeOffset: "00:00:00.00",
             isRelease: process.env.NODE_ENV !== "development",
         }

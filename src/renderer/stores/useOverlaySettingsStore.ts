@@ -35,61 +35,23 @@ export enum SplitsMode {
 	followup_summary = "Followup + Summary",
 }
 
-export interface OverlaySettings {
-	// Overlay settings save on change
-	game: PokemonGame | null,
-	starter: string,
-	starter_search: string,
-	keyboard_shortcuts: any,
-	visualization: {
-		pop_ups: {
-			/* 
-			 * Enable/disable the pop-ups in general. If set to false, no pop up will be displayed, even if the 
-			 * individual popup has `enabled === true`.
-			 */
-			enabled: boolean,
-			bonks: OverlayPopupSettings & { mode: "Bonks" | "Item Count"},
-			repel: OverlayPopupSettings,
-			accuracy: OverlayPopupSettings,
-			evasion: OverlayPopupSettings,
-			field: OverlayPopupSettings,
-		},
-		left_panel: {
-			stats: {
-				mode: StatsPanelMode
-			},
-		},
-		right_panel: {
-			/** The preferred mode for the right-hand panel. */
-			mode: RightPanelMode,
-			/** Temporary override for the right hand panel, used for post-battle splits. */
-			mode_override?: RightPanelMode | null,
-			/** Whether or not the hotkeys are allowed to change the right hand panel mode. */
-			hotkeys?: boolean,
-			/** Whether to automatically switch to "splits" after a battle. */
-			post_battle_splits?: boolean,
-			/** Whether or not to show battle details in the right panel (on mode == Automatic) on wild pokemon encounters */
-			wild_battles?: boolean,
-			/** Movepool settings */
-			movepool: {},
-			/** Splits settings */
-			splits: { mode: SplitsMode},
-			/** Trainer battle settings */
-			trainer: {},
-			/** Wild encounter battle settings */
-			wild_pokemon: {},
-			/** Inventory settings */
-			inventory: {},
-		}
-	},
-}
+export interface BonksSettings extends OverlayPopupSettings { 
+	mode: "Bonks" | "Item Count"
+};
 
-function defaultOverlaySettings(): OverlaySettings {
+/**
+ * General overlay settings, that apply regardless of game and starer species. 
+ * Saved automatically when changes are made, at the appropriate app-settings directory of the user.
+ */
+export type OverlaySettings = ReturnType<typeof defaultOverlaySettings>;
+
+function defaultOverlaySettings() {
 	return {
-		game: null,
+		game: null as PokemonGame | null,
 		starter: "",
 		starter_search: "",
 		keyboard_shortcuts: {},
+		test_run: false as boolean,
 		visualization: {
 			left_panel: {
 				stats: {
@@ -97,22 +59,34 @@ function defaultOverlaySettings(): OverlaySettings {
 				}
 			},
 			pop_ups: {
-				enabled: true,
-				bonks: { enabled: true, mode: "Bonks"  },
-				repel: { enabled: true },
-				accuracy: { enabled: true },
-				evasion: { enabled: true },
-				field: { enabled: true },
+				enabled: true as boolean,
+				bonks: { enabled: true, mode: "Bonks" } as BonksSettings,
+				repel: { enabled: true } as OverlayPopupSettings,
+				accuracy: { enabled: true } as OverlayPopupSettings,
+				evasion: { enabled: true } as OverlayPopupSettings,
+				field: { enabled: true } as OverlayPopupSettings,
 			},
 			right_panel: {		
-				hotkeys: false,
-				post_battle_splits: true,
-				inventory: {},
+				/** The preferred mode for the right-hand panel. */
 				mode: RightPanelMode.automatic,
+				/** Temporary override for the right hand panel, used for post-battle splits. */
+				mode_override: null as RightPanelMode | null,
+				/** Whether or not the hotkeys are allowed to change the right hand panel mode. */
+				hotkeys: false as boolean,
+				/** Whether to automatically switch to "splits" after a battle. */
+				post_battle_splits: true as boolean,
+				/** Whether or not to show battle details in the right panel (on mode == Automatic) on wild pokemon encounters */
+				wild_battles: false as boolean, 
+				/** Movepool settings */
 				movepool: {},
+				/** Splits settings */
 				splits: { mode: SplitsMode.followup },
+				/** Trainer battle settings */
 				trainer: {},
+				/** Wild encounter battle settings */
 				wild_pokemon: {},
+				/** Inventory settings */
+				inventory: {},
 			}
 		}
 	};

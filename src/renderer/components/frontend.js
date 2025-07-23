@@ -53,13 +53,13 @@ const template = /*html*/`
 
         <!-- Right Panel -->
         <transition name="fade">
-            <div v-if="overlaySettings.right_panel_mode == 'Movepool'" key=0>
+            <div v-if="settings.right_panel_mode == 'Movepool'" key=0>
                 <movepool />
             </div>
-            <div v-else-if="overlaySettings.right_panel_mode == 'Splits'" key=5>
+            <div v-else-if="settings.right_panel_mode == 'Splits'" key=5>
                 <div key=3>
                     <div class="split_label">Splits</div>
-                    <div v-if="overlaySettings.right_panel.splits.mode === 'Followup'">
+                    <div v-if="settings.right_panel.splits.mode === 'Followup'">
                         <splits_followup
                             :compare_splits="compare_splits"
                             :trainer_name_lookup="trainer_name_lookup"
@@ -67,21 +67,21 @@ const template = /*html*/`
                             :current_label="current_label"
                         />
                     </div>
-                    <div v-else-if="overlaySettings.right_panel.splits.mode === 'First'">
+                    <div v-else-if="settings.right_panel.splits.mode === 'First'">
                         <splits_first :first_splits="first_splits" :trainer_name_lookup="trainer_name_lookup" />
                     </div>
-                    <div v-else-if="overlaySettings.right_panel.splits.mode === 'Followup + Summary'">
+                    <div v-else-if="settings.right_panel.splits.mode === 'Followup + Summary'">
                         <splits_summary v-bind="splits_summary_props" />
                     </div>
                 </div>
             </div>
             
-            <div v-else-if="overlaySettings.right_panel_mode == 'Automatic' && (meta.gameState != 'No Pokemon' && (meta.gameState == 'To Battle' || meta.gameState == 'Battle'))" style="position: absolute;" key=1>
+            <div v-else-if="settings.right_panel_mode == 'Automatic' && (meta.gameState != 'No Pokemon' && (meta.gameState == 'To Battle' || meta.gameState == 'Battle'))" style="position: absolute;" key=1>
                 <enemy_graphic 
                     v-if="mapper.properties.battle.type.value == 'Trainer'" 
                     :speed_comparison_toggle="speed_comparison_toggle"
                     :enemy_pkmn_faint_types="enemy_pkmn_faint_types"
-                    :right_panel="overlaySettings.right_panel_mode"
+                    :right_panel="settings.right_panel_mode"
                 />
                 <wild_pokemon
                     v-else-if="mapper.properties.battle.type.value == 'Wild'" 
@@ -130,9 +130,8 @@ export default defineComponent({
             meta: useMetaStore(),
             metrics: useSpeciesMetricsStore(),
             uiStyleStore: useUIStylesStore(),
-            overlaySettings: useOverlaySettingsStore(),
+            settings: useOverlaySettingsStore(),
             trainer_name_lookup,
-            release: false, //If set to false then development features will be displayed
             /** The game selected by the user. Used to specify editions that use the same mapper, 
              * e.g. "Blue" from "Red and Blue".  
              * Only used to determine the storage location of the split data, not for any other logic.
@@ -142,7 +141,6 @@ export default defineComponent({
             // Static Data
             pokemon_list: [],
             autosplitter_toggle: true,
-            test_run: false,
             collect_split_data: true,
 
             no_attempt: false,
@@ -574,7 +572,7 @@ export default defineComponent({
         this.mapper.properties.meta.state.change((newProp, oldProp) => {
             PubSub.publish("@run/check_blackout", newProp, oldProp);
             if (newProp.value == "To Battle" && this.mapper.properties.battle.type.value == "Trainer") {
-                this.overlaySettings.clearRightPanelOverride();
+                this.settings.clearRightPanelOverride();
             }
         });
         // NEW_RUN_STARTED - Determines if the player has pressed 'New Game' and started a new playthrough
@@ -582,7 +580,7 @@ export default defineComponent({
             if (newProp.value > 0 && this.flag_player_finished_the_run == false && newProp.value != this.player_id) {
                 PubSub.publish("@run/new_run_started", this.player_id);
                 this.flag_finished_logging_splits = false;
-                if (this.test_run == false && this.refilming_mode == false) {
+                if (this.settings.test_run == false && this.refilming_mode == false) {
                     this.metrics.update("attempts", this.metrics.attempts + 1);
                 };
                 this.timer.startTime(this.timer_startTimeOffset);
@@ -659,19 +657,19 @@ export default defineComponent({
                 }
 
                 //write full split data (this is written for every single battle)
-                this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.attempts, this.meta.starter, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.attempts, this.meta.starter, "Full", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
 
                 //write deprecated split data (this is written for only pre-defined trainers)
                 //a list of these trainers can be found within `autosplitter.js` and inside the parent `Yellow` or `Red and Blue`
                 if (autosplitter[this.mapper.properties.meta.gameName.value][unique]) {
-                    this.logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.attempts, this.meta.starter, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.attempts, this.meta.starter, "Deprecated", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                 }
 
                 //write simple split data
                 //a list of these can be found within `autosplitter.js` and inside the parent `Simple`
                 const simpleSplit = () => {
                     this.log_split()
-                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                 }
                 //log simple data for only these trainers
@@ -690,8 +688,8 @@ export default defineComponent({
                     case "AGATHA":
                     case "LANCE": {
                         simpleSplit()
-                        if (this.overlaySettings.right_panel.post_battle_splits == true) {
-                            this.overlaySettings.setRightPanelOverride(RightPanelMode.splits, true);
+                        if (this.settings.right_panel.post_battle_splits == true) {
+                            this.settings.setRightPanelOverride(RightPanelMode.splits, true);
                         }
                     }
                 }
@@ -699,8 +697,8 @@ export default defineComponent({
                     //this is the Giovanni fight in the 8th gym
                     case "GIOVANNI_3":
                         simpleSplit()
-                        if (this.overlaySettings.right_panel.post_battle_splits === true) {
-                            this.overlaySettings.setRightPanelOverride(RightPanelMode.splits, true);
+                        if (this.settings.right_panel.post_battle_splits === true) {
+                            this.settings.setRightPanelOverride(RightPanelMode.splits, true);
                         }
                         break;
                     case "ROCKET_5": {
@@ -712,15 +710,15 @@ export default defineComponent({
                 //stop timer
                 if (trainer == "RIVAL3") { //this is the champion in gen1
                     this.log_split() //log the final split
-                    if (this.overlaySettings.right_panel.post_battle_splits === true) {
-                        this.overlaySettings.setRightPanelOverride(RightPanelMode.splits, true);
+                    if (this.settings.right_panel.post_battle_splits === true) {
+                        this.settings.setRightPanelOverride(RightPanelMode.splits, true);
                     }
-                    if (this.test_run == false && this.refilming_mode == false && this.no_attempt == false) {
+                    if (this.settings.test_run == false && this.refilming_mode == false && this.no_attempt == false) {
                         this.metrics.update("finished", this.metrics.finishes + 1); //increment finished count if this is not a test run
                     };
                     // this.stopTime() //stop the timer
                     this.timer.stopTime();
-                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
+                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }
             }
@@ -734,9 +732,9 @@ export default defineComponent({
                     this.autosplitter_process()
                     console.log("Run Ended - Backing up split data now...")
                     let gameName = this.mapper.properties.meta.gameName.value
-                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.finishes, this.meta.starter, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    this.logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.finishes, this.meta.starter, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.finishes, this.meta.starter, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.finishes, this.meta.starter, "Simple", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.finishes, this.meta.starter, "Deprecated", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.finishes, this.meta.starter, "Full", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                     console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer.formatted_time[0]}${this.time.formatted_time[1]} Resets: ${this.metrics.resets} Blackouts: ${this.metrics.blackouts} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
                     this.flag_player_finished_the_run = true; //stop incrementing resets

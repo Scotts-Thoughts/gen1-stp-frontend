@@ -26,7 +26,7 @@ const template = /*html*/`
 
 export default defineComponent({
     template,
-    props: [
+    inject: [
         "mapper",
     ],
     data() {
@@ -66,23 +66,23 @@ export default defineComponent({
             const moveName2 = this.move2_replacement.toUpperCase();
             const moveName3 = this.move3_replacement.toUpperCase();
             const moveName4 = this.move4_replacement.toUpperCase();
-            const move1   = PokeData.getMove(this.move_name(moveName1));
-            const move2   = PokeData.getMove(this.move_name(moveName2));
-            const move3   = PokeData.getMove(this.move_name(moveName3));
-            const move4   = PokeData.getMove(this.move_name(moveName4));
-            if (moveName1 != "") {
+            if (moveName1 !== "") {
+                const move1   = PokeData.getMove(this.move_name(moveName1));
                 await this.mapper.properties.player.team[0].move1.set(moveName1, false)
                 await this.mapper.properties.player.team[0].move1pp.set(move1.pp, false)
             }
-            if (moveName2 != "") {
+            if (moveName2 !== "") {
+                const move2   = PokeData.getMove(this.move_name(moveName2));
                 await this.mapper.properties.player.team[0].move2.set(moveName2, false)
                 await this.mapper.properties.player.team[0].move2pp.set(move2.pp, false)
             }
-            if (moveName3 != "") {
+            if (moveName3 !== "") {
+                const move3   = PokeData.getMove(this.move_name(moveName3));
                 await this.mapper.properties.player.team[0].move3.set(moveName3, false)
                 await this.mapper.properties.player.team[0].move3pp.set(move3.pp, false)
             }
-            if (moveName4 != "") {
+            if (moveName4 !== "") {
+                const move4   = PokeData.getMove(this.move_name(moveName4));
                 await this.mapper.properties.player.team[0].move4.set(moveName4, false)
                 await this.mapper.properties.player.team[0].move4pp.set(move4.pp, false)
             }
@@ -95,23 +95,23 @@ export default defineComponent({
             const moveName2 = this.move2_replacement.toUpperCase();
             const moveName3 = this.move3_replacement.toUpperCase();
             const moveName4 = this.move4_replacement.toUpperCase();
-            const move1   = move_data[this.move_name(moveName1)];
-            const move2   = move_data[this.move_name(moveName2)];
-            const move3   = move_data[this.move_name(moveName3)];
-            const move4   = move_data[this.move_name(moveName4)];
-            if (move1 != "") {
+            if (move1 !== "") {
+                const move1   = move_data[this.move_name(moveName1)];
                 await this.mapper.properties.battle.yourPokemon.move1.set(move1, false)
                 await this.mapper.properties.battle.yourPokemon.move1pp.set(move1.PP, false)
             }
-            if (move2 != "") {
+            if (move2 !== "") {
+                const move2   = move_data[this.move_name(moveName2)];
                 await this.mapper.properties.battle.yourPokemon.move2.set(move2, false)
                 await this.mapper.properties.battle.yourPokemon.move2pp.set(move2.PP, false)
             }
-            if (move3 != "") {
+            if (move3 !== "") {
+                const move3   = move_data[this.move_name(moveName3)];
                 await this.mapper.properties.battle.yourPokemon.move3.set(move3, false)
                 await this.mapper.properties.battle.yourPokemon.move3pp.set(move3.PP, false)
             }
-            if (move4 != "") {
+            if (move4 !== "") {
+                const move4   = move_data[this.move_name(moveName4)];
                 await this.mapper.properties.battle.yourPokemon.move4.set(move4, false)
                 await this.mapper.properties.battle.yourPokemon.move4pp.set(move4.PP, false)
             }            
