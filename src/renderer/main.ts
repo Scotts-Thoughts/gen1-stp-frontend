@@ -8,6 +8,7 @@ import { PokemonGame } from "./logic/PokeDataTypes.js";
 import { createPinia } from "pinia";
 import { useSettingsStore } from "./stores/useSettingsStore.js";
 import { useMetaStore } from "./stores/metaStore.js";
+import { useOverlaySettingsStore } from "./stores/useOverlaySettingsStore.js";
 
 const main = defineComponent({
     components: {
@@ -19,6 +20,7 @@ const main = defineComponent({
         return {
             metaStore: useMetaStore(),
             settings: useSettingsStore(),
+            overlaySettings: useOverlaySettingsStore(),
             ready: false as boolean,
             mapper: null as GameHookMapperClient|null,
             starterName: "Venomoth" as string,
@@ -29,12 +31,13 @@ const main = defineComponent({
         this.mapper = new GameHookMapperClient();
         this.mapper.onMapperLoaded = () => {
             this.ready = true;
+            // todo: this needs cleaning up. setting the game here is correct, 
+            // but not sure about the starter and current species.
             this.metaStore.setGame(this.mapper.properties.meta.gameName.value);
             this.metaStore.setStarter(this.starterName);
             this.metaStore.setCurrentSpecies(this.starterName);
+            this.overlaySettings.load();
 
-            this.settings.setStarter(this.starterName);
-            this.settings.setGame(this.mapper.properties.meta.gameName.value);
             PokeData.setGame(this.mapper.properties.meta.gameName.value);
             this.mapper.properties.player.team[0].species.change(e => {
                 console.log("this.mapper.properties.player.team[0].species: " + e.value);

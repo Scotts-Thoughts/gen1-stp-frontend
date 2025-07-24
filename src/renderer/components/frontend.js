@@ -32,9 +32,9 @@ import { time_settings } from "../settings/time_settings.js";
 import { trainer_name_lookup } from "../autosplitter/trainer_name_lookup.js";
 import { split_trainers } from "../autosplitter/split_trainers.js";
 import { battle_summary } from "../autosplitter/battle_summary.js";
-import { useUIStylesStore } from "../stores/styleStore.js";
 import { computed, defineComponent } from "vue";
-import { RightPanelMode, useOverlaySettingsStore } from "../stores/useOverlaySettingsStore.js";
+import { RightPanelMode,  useOverlaySettingsStore } from "../stores/useOverlaySettingsStore.js";
+import { useGameSpeciesData } from "../stores/useGameSpeciesData.js";
 import { useSpeciesMetricsStore } from "../stores/useSpeciesMetricsStore.js";
 import { useMetaStore } from "../stores/metaStore";
 import { convertDurationToSeconds, convertMSToDuration, convertSecondsToDuration } from "../utils/timehelpers.js";
@@ -48,7 +48,7 @@ const template = /*html*/`
         <state />
 
         <!-- Left Panel: TODO: also move faults there. -->
-        <faults :flag_player_finished_the_run="flag_player_finished_the_run" :no_attempt="no_attempt" />
+        <faults :flag_player_finished_the_run="flag_player_finished_the_run" />
         <left_panel />
 
         <!-- Right Panel -->
@@ -129,8 +129,9 @@ export default defineComponent({
         return {
             meta: useMetaStore(),
             metrics: useSpeciesMetricsStore(),
-            uiStyleStore: useUIStylesStore(),
+            gameSpeciesData: useGameSpeciesData(),
             settings: useOverlaySettingsStore(),
+            runConfig: useGameSpeciesData(),
             trainer_name_lookup,
             /** The game selected by the user. Used to specify editions that use the same mapper, 
              * e.g. "Blue" from "Red and Blue".  
@@ -143,9 +144,7 @@ export default defineComponent({
             autosplitter_toggle: true,
             collect_split_data: true,
 
-            no_attempt: false,
             speed_comparison_toggle: true,
-            refilming_mode: false,
             refilmed_attempt: 0,
             refilmed_finish: 0,
             timer_startTimeOffset: MyStorage["timer_startTimeOffset"] ?? "00:00:00.00",
@@ -366,7 +365,7 @@ export default defineComponent({
             },
             deep: true,
         },
-        async "meta.starter"(newValue) {
+        async "meta.starter"(newValue) { // TODO: This can be removed once we obsoleted all uses of "Storage".
             if (this.ready == false) {
                 await this.sleep(250)
             }
@@ -380,12 +379,11 @@ export default defineComponent({
                     data: {},
                 };
             }
-            this.uiStyleStore.setStarterName(newValue);
         },
         starterName(newValue, oldValue) {
             this.meta.setStarter(newValue);
         },
-        async game_selection(newValue, oldValue) {
+        async game_selection(newValue) {  // TODO: This can be removed once we obsoleted all uses of "Storage".
             //update the saved starter in the overlay's local storage
             Storage['global_variables'].game = newValue
             if (!Storage['games'][newValue][this.meta.starter]) {
@@ -396,7 +394,6 @@ export default defineComponent({
                     data: {},
                 };
             }
-            this.uiStyleStore.selectGame(newValue );
         },
         player_id() {
             this.flag_player_finished_the_run = false;
@@ -580,7 +577,7 @@ export default defineComponent({
             if (newProp.value > 0 && this.flag_player_finished_the_run == false && newProp.value != this.player_id) {
                 PubSub.publish("@run/new_run_started", this.player_id);
                 this.flag_finished_logging_splits = false;
-                if (this.settings.test_run == false && this.refilming_mode == false) {
+                if (this.runConfig.advanced.test_run == false && this.runConfig.advanced.refilming_mode == false) {
                     this.metrics.update("attempts", this.metrics.attempts + 1);
                 };
                 this.timer.startTime(this.timer_startTimeOffset);
@@ -657,19 +654,19 @@ export default defineComponent({
                 }
 
                 //write full split data (this is written for every single battle)
-                this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.attempts, this.meta.starter, "Full", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.attempts, this.meta.starter, "Full", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
 
                 //write deprecated split data (this is written for only pre-defined trainers)
                 //a list of these trainers can be found within `autosplitter.js` and inside the parent `Yellow` or `Red and Blue`
                 if (autosplitter[this.mapper.properties.meta.gameName.value][unique]) {
-                    this.logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.attempts, this.meta.starter, "Deprecated", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.attempts, this.meta.starter, "Deprecated", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                 }
 
                 //write simple split data
                 //a list of these can be found within `autosplitter.js` and inside the parent `Simple`
                 const simpleSplit = () => {
                     this.log_split()
-                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                 }
                 //log simple data for only these trainers
@@ -713,12 +710,12 @@ export default defineComponent({
                     if (this.settings.right_panel.post_battle_splits === true) {
                         this.settings.setRightPanelOverride(RightPanelMode.splits, true);
                     }
-                    if (this.settings.test_run == false && this.refilming_mode == false && this.no_attempt == false) {
+                    if (this.runConfig.advanced.test_run == false && this.runConfig.advanced.refilming_mode == false && this.runConfig.advanced.no_attempt == false) {
                         this.metrics.update("finished", this.metrics.finishes + 1); //increment finished count if this is not a test run
                     };
                     // this.stopTime() //stop the timer
                     this.timer.stopTime();
-                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
+                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }
             }
@@ -732,9 +729,9 @@ export default defineComponent({
                     this.autosplitter_process()
                     console.log("Run Ended - Backing up split data now...")
                     let gameName = this.mapper.properties.meta.gameName.value
-                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.finishes, this.meta.starter, "Simple", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    this.logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.finishes, this.meta.starter, "Deprecated", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.finishes, this.meta.starter, "Full", this.settings.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.finishes, this.meta.starter, "Simple", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.finishes, this.meta.starter, "Deprecated", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.finishes, this.meta.starter, "Full", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                     console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer.formatted_time[0]}${this.time.formatted_time[1]} Resets: ${this.metrics.resets} Blackouts: ${this.metrics.blackouts} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
                     this.flag_player_finished_the_run = true; //stop incrementing resets
@@ -752,7 +749,7 @@ export default defineComponent({
                     this.metrics.attempts,
                     this.meta.starter,
                     this.metrics.finishes,
-                    this.refilming_mode,
+                    this.runConfig.advanced.refilming_mode,
                     this.refilmed_attempt,
                     this.refilmed_finish
                 );

@@ -13,7 +13,6 @@ export default defineComponent({
     },
     methods: {
         updateCurrentSpecies() {
-            console.log("state.updateCurrentSpecies", this.getCurrentSpecies());
             this.meta.setCurrentSpecies(this.getCurrentSpecies());
         },
         getCurrentSpecies() {

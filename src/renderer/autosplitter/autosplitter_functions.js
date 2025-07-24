@@ -10,7 +10,7 @@ export function log_split(timer) {
 }
 
 export function autosplitter_process() {
-    if (this.autosplitter_toggle == true && this.no_attempt == false) {
+    if (this.autosplitter_toggle == true && this.runConfig.advanced.no_attempt == false) {
         const d = new Date()
         const battle_end = Date.now()
         //values

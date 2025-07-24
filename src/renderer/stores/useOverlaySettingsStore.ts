@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { PokemonGame } from "../logic/PokeDataTypes";
+import { loadAppSettings, saveAppSettings } from "./helper/files";
 
 export interface OverlayPopupSettings {
 	enabled: boolean,
@@ -35,7 +36,7 @@ export enum SplitsMode {
 	followup_summary = "Followup + Summary",
 }
 
-export interface BonksSettings extends OverlayPopupSettings { 
+export interface BonksSettings extends OverlayPopupSettings {
 	mode: "Bonks" | "Item Count"
 };
 
@@ -51,7 +52,6 @@ function defaultOverlaySettings() {
 		starter: "",
 		starter_search: "",
 		keyboard_shortcuts: {},
-		test_run: false as boolean,
 		visualization: {
 			left_panel: {
 				stats: {
@@ -66,7 +66,7 @@ function defaultOverlaySettings() {
 				evasion: { enabled: true } as OverlayPopupSettings,
 				field: { enabled: true } as OverlayPopupSettings,
 			},
-			right_panel: {		
+			right_panel: {
 				/** The preferred mode for the right-hand panel. */
 				mode: RightPanelMode.automatic,
 				/** Temporary override for the right hand panel, used for post-battle splits. */
@@ -76,7 +76,7 @@ function defaultOverlaySettings() {
 				/** Whether to automatically switch to "splits" after a battle. */
 				post_battle_splits: true as boolean,
 				/** Whether or not to show battle details in the right panel (on mode == Automatic) on wild pokemon encounters */
-				wild_battles: false as boolean, 
+				wild_battles: false as boolean,
 				/** Movepool settings */
 				movepool: {},
 				/** Splits settings */
@@ -101,64 +101,50 @@ export function saveOverlaySettings(data: OverlaySettings) {
 	fs.writeFileSync("settings/overlay_settings.json", json);
 }
 
-function loadOverlaySettings(): OverlaySettings  {
-	const fs = require('fs');
-	try {
-		const data = fs.readFileSync("settings/overlay_settings.json", 'utf8');
-		return JSON.parse(data);
-	} catch {
-		const data = defaultOverlaySettings();
-		saveOverlaySettings(data);
-		return data;
-	}
-}
-
 export const useOverlaySettingsStore = defineStore('overlay_settings', {
-	state: () => ({
-		settings: loadOverlaySettings(),
-	}),
+	state: () => defaultOverlaySettings(),
 	getters: {
 		// Useful shorthands:
-		game(state) {
-			return state.settings.game;
-		},
-		starter(state) {
-			return state.settings.starter;
-		},
 		left_panel(state) {
-			return state.settings.visualization.left_panel;
+			return state.visualization.left_panel;
 		},
 		pop_ups(state) {
-			return state.settings.visualization.pop_ups;
+			return state.visualization.pop_ups;
 		},
 		right_panel(state) {
-			return state.settings.visualization.right_panel;
+			return state.visualization.right_panel;
 		},
 		right_panel_mode(state) {
-			return state.settings.visualization.right_panel.mode_override 
-				?? state.settings.visualization.right_panel.mode;
+			return state.visualization.right_panel.mode_override
+				?? state.visualization.right_panel.mode;
 		}
 	},
 	actions: {
+		async save() {
+			await saveAppSettings<OverlaySettings>("", "overlay_settings.json", this.$state);
+		},
+		async load() {
+			const loadedSettigns = await loadAppSettings<OverlaySettings>("", "overlay_settings.json")
+				?? defaultOverlaySettings();
+			Object.assign(this.$state, loadedSettigns);			
+		},
 		setRightPanelOverride(mode: RightPanelMode) {
-			this.settings.visualization.right_panel.mode_override = mode;
+			this.visualization.right_panel.mode_override = mode;
 		},
 		setRightPanelMode(mode: RightPanelMode) {
-			this.settings.visualization.right_panel.mode = mode;
+			this.visualization.right_panel.mode = mode;
 		},
 		setStatsPanelMode(mode: StatsPanelMode) {
-			this.settings.visualization.left_panel.stats.mode = mode;
+			this.visualization.left_panel.stats.mode = mode;
 		},
 		clearRightPanelOverride() {
-			this.settings.visualization.right_panel.mode_override = null;
+			this.visualization.right_panel.mode_override = null;
 		},
-		setGame(value: PokemonGame|null) {
-			this.settings.game = value;
-			saveOverlaySettings(this.settings);
+		setGame(value: PokemonGame | null) {
+			this.game = value;
 		},
 		setStarter(value: string) {
-			this.settings.starter = value;
-			saveOverlaySettings(this.settings);
+			this.starter = value;
 		},
 	}
 });

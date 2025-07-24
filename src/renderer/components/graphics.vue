@@ -2,38 +2,38 @@
     <div>
         <img class="canvas" ref="background_texture" :src="currentBackground" 
             :style="{ 
-                'filter': `blur(${style.backgroundBlur}px) hue-rotate(${style.backgroundHue}deg) brightness(${style.backgroundBrightness}%) contrast(${style.backgroundContrast}%) saturate(${style.backgroundSaturation}%)` ,
-                'transform': `scale(${style.backgroundScale}%) ${style.backgroundFlip ? 'rotateY(180deg)' : ''} translate(${style.backgroundXOffset}px, ${-style.backgroundYOffset}px)`
+                'filter': `blur(${background.blur}px) hue-rotate(${background.hue}deg) brightness(${background.brightness}%) contrast(${background.contrast}%) saturate(${background.saturation}%)` ,
+                'transform': `scale(${background.scale}%) ${background.flip ? 'rotateY(180deg)' : ''} translate(${background.offset_x}px, ${-background.offset_y}px)`
             }"
         />
         <img class="canvas" ref="old_background_texture" style="opacity: 0" />
         <img class="canvas" style="top: -160px;" src="/images/elements/floor/pokeball.png" />
         <img v-show="meta.game == 'Yellow'" class="pokemon_art"
             :style="{
-                'transform': `scale(${style.imageScale}) ${style.imageFlip ? 'rotateY(180deg)' : ''} translate(${style.imageXOffset}px, ${-style.imageYOffset}px) rotate(${style.imageRotation}deg)`,
-                'filter': `saturate(${style.imageSat}%)
+                'transform': `scale(${artwork.scale}) ${artwork.flip ? 'rotateY(180deg)' : ''} translate(${artwork.offset_x}px, ${-artwork.offset_y}px) rotate(${artwork.rotation}deg)`,
+                'filter': `saturate(${artwork.saturation}%)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
-                drop-shadow(${style.imageFlip ? '-3px' : '3px'} 3px 3px #000)
+                drop-shadow(${artwork.flip ? '-3px' : '3px'} 3px 3px #000)
                 `
             }" 
             :src="`images/pokemon/${pokemonArt}.png`" 
         />
         <img v-if="meta.game == 'Red and Blue'" class="pokemon_art2" 
             :style="{
-                'transform': `scale(${style.imageScale}) ${style.imageFlip ? 'rotateY(180deg)' : ''} translate(${style.imageXOffset}px, ${-style.imageYOffset}px)`,
-                'filter': `saturate(${style.imageSat}%)
+                'transform': `scale(${artwork.scale}) ${artwork.flip ? 'rotateY(180deg)' : ''} translate(${artwork.offset_x}px, ${-artwork.offset_y}px)`,
+                'filter': `saturate(${artwork.saturation}%)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
                 drop-shadow(0 0 0.4px #000)
-                drop-shadow(${style.imageFlip ? '-3px' : '3px'} 3px 3px #000)
+                drop-shadow(${artwork.flip ? '-3px' : '3px'} 3px 3px #000)
                 `
             }" 
             :src="`images/pokemon/Red_and_Blue/${meta.currentSpecies}.png`" 
@@ -50,17 +50,17 @@
 import { ref, computed, watch } from 'vue';
 import { textures } from '../data/textures';
 import { transition } from "../utils/transition";
-import { useUIStylesStore } from "../stores/styleStore";
-import { storeToRefs } from "pinia";
 import { useMetaStore } from "../stores/metaStore";
-const style = storeToRefs(useUIStylesStore()).settings;
+import { useGameSpeciesData } from "../stores/useGameSpeciesData";
+import { storeToRefs } from "pinia";
+const { artwork, background } = storeToRefs(useGameSpeciesData());
 const meta = useMetaStore();
 
 const background_texture = ref<HTMLImageElement | null>(null);
 const old_background_texture = ref<HTMLImageElement | null>(null);
 
 const currentBackground = computed(() => {
-    return textures[style.value.backgroundTexture];
+    return textures[background.value.texture];
 });
 
 const pokemonArt = computed(() => {

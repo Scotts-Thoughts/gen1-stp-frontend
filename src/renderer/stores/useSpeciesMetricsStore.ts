@@ -2,23 +2,17 @@
 
 import { defineStore } from "pinia";
 import { PokemonGame } from "../logic/PokeDataTypes";
-import { useSettingsStore } from "./useSettingsStore";
-import { computed, reactive, toRefs, watch } from "vue";
+const path = require('path');
+import { loadAppSettings, saveAppSettings } from "./helper/files";
 
-// Path: Storage/${game}/${starter}/metrics.json
-export type SpeciesMetrics = {
-    timer: string,
-    timer_override: string,
-    attempts: number,
-    finishes: number,
-    resets: number,
-    blackouts: number,
-    splits_path: string,
-};
 
-function defaultSpeciesMetrics(): SpeciesMetrics {
+export type SpeciesMetrics = ReturnType<typeof defaultSpeciesMetrics>;
+
+function defaultSpeciesMetrics() {
 	return {
+		/** Saved timer value */
 		timer: "00:00:00.00",
+		/** Timer override */
 		timer_override: "00:00:00.00",
 		attempts: 0,
 		finishes: 0,
@@ -29,34 +23,11 @@ function defaultSpeciesMetrics(): SpeciesMetrics {
 }
 
 export async function saveSpeciesMetrics(game: string|null, starter: string, data: SpeciesMetrics) {
-	if (!game) {
+	if (!game || !starter) {
 		return;
 	}
-	const fs = require('fs');
-	const path = require('path');
-	const settingsDir = await window.api.settings_dir();
-	const filePath = path.join(settingsDir, game, starter, "metrics.json");
-	const fileDirectory = path.dirname(filePath);
-	if (!fs.existsSync(fileDirectory)) {
-		fs.mkdirSync(fileDirectory, { recursive: true });
-	}
-	const json = JSON.stringify(data, null, 4);
-	fs.writeFileSync(filePath, json);
-}
 
-async function loadSpeciesMetrics(game: string, starter: string): Promise<SpeciesMetrics>  {
-	const fs = require('fs');
-	const path = require('path');
-	const settingsDir = await window.api.settings_dir();
-	const filePath =path.join(settingsDir, game, starter, "metrics.json");
-	try {
-		const data = fs.readFileSync(filePath, 'utf8');
-		return JSON.parse(data);
-	} catch {
-		const data = defaultSpeciesMetrics();
-		saveSpeciesMetrics(game, starter, data);
-		return data;
-	}
+	await saveAppSettings<SpeciesMetrics>(path.join(game, starter), "metrics.json", data);
 }
 
 export enum FaultMode  {
@@ -66,53 +37,51 @@ export enum FaultMode  {
 	both = "Both",
 }
 
-export const useSpeciesMetricsStore = defineStore('species_metrics', () => {
-	const parent = useSettingsStore();
-	const metrics = reactive(defaultSpeciesMetrics());
-	const faults = computed(() => {
-		return metrics.blackouts + metrics.resets;
-	});
-	const faultsMode = computed(() => {
-		if (metrics.blackouts == 0 && metrics.resets == 0) {
-			return FaultMode.none;
+export const useSpeciesMetricsStore = defineStore('species_metrics', {
+	state: () => defaultSpeciesMetrics(),
+	getters: {
+		/** Computed: Whether the user currently has no faults, only blackouts, only resets or both. */
+		faultsMode(state) {
+			if (state.blackouts == 0 && state.resets == 0) {
+				return FaultMode.none;
+			}
+			if (state.blackouts === 0 && state.resets > 0) {
+				return FaultMode.resets;
+			}
+			if (state.blackouts > 0 &&  state.resets === 0) {
+				return FaultMode.blackouts;
+			}
+			return FaultMode.both;
+		},
+		/** Computed: Combined blackouts and resets. */
+		faults(state) {
+			return state.blackouts + state.resets;
 		}
-		if (metrics.blackouts === 0 && metrics.resets > 0) {
-			return FaultMode.resets;
+	},
+	actions: {
+		/** Loads from %APPDATA%/stp-generation1-overlay/data/${game}/${starter}/metrics.json */
+		async load(game: PokemonGame|null, starter: string|null) {
+			if (game && starter) {
+				const loadedSettings = await loadAppSettings<SpeciesMetrics>(path.join(game, starter), "metrics.json")
+					?? defaultSpeciesMetrics();
+				Object.assign(this.$state, loadedSettings);
+			} else {
+				Object.assign(this.$state, defaultSpeciesMetrics());
+			}
+		},
+		/** Saves to %APPDATA%/stp-generation1-overlay/data/${game}/${starter}/metrics.json */
+		async save(game: PokemonGame|null, starter: string|null) {
+			if (game && starter) {
+				await saveAppSettings<SpeciesMetrics>(path.join(game, starter), "metrics.json", this.$state);
+			}
+		},
+		update<K extends keyof SpeciesMetrics>(key: K, value: SpeciesMetrics[K]) {
+			this.$state[key] = value;
+		},
+		clearCounters() {
+			this.blackouts = 0;
+			this.resets = 0;
 		}
-		if (metrics.blackouts > 0 &&  metrics.resets === 0) {
-			return FaultMode.blackouts;
-		}
-		return FaultMode.both;
-	});
-	watch(
-		metrics, 
-		async (state) => {
-			await saveSpeciesMetrics(parent.game, parent.starter, state)
-		}, 
-		{ deep: true }
-	);
-	async function initialize(game: PokemonGame|null, starter: string) {
-		if (game && starter) {
-			Object.assign(metrics, await loadSpeciesMetrics(game, starter));
-		} else {
-			Object.assign(metrics, defaultSpeciesMetrics());
-		}
-	}
-	function update<K extends keyof SpeciesMetrics>(key: K, value: SpeciesMetrics[K]) {
-		metrics[key] = value;
-	}
-	function clearCounters() {
-		metrics.blackouts = 0;
-		metrics.resets = 0;
-	}
-	
-	return {
-		...toRefs(metrics),
-		faults,
-		faultsMode,
-		initialize,
-		update,
-		clearCounters,
 	}
 });
 

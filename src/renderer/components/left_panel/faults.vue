@@ -38,17 +38,18 @@ import PubSub from "../../logic/PubSub";
 import { FaultMode, useSpeciesMetricsStore } from "../../stores/useSpeciesMetricsStore.js";
 import { defineComponent } from "vue";
 import { useMetaStore } from "../../stores/metaStore.js";
+import { useGameSpeciesData } from "../../stores/useGameSpeciesData.js";
 export default defineComponent({
     inject: [ "game_properties" ],
     props: [
         "flag_player_finished_the_run",
-        "no_attempt",
     ],
     data() {
         this.meta = useMetaStore;
         return {
             meta: useMetaStore,
             metrics: useSpeciesMetricsStore(),
+            runConfig: useGameSpeciesData(),
             counter_resets            : Storage.games[this.meta.game]?.[this.meta.starter]?.data?.counter_resets             ?? 0,
             counter_blackouts         : Storage.games[this.meta.game]?.[this.meta.starter]?.data?.counter_blackouts          ?? 0,
             flag_blackout_prerequisite: Storage.games[this.meta.game]?.[this.meta.starter]?.data?.flag_blackout_prerequisite ?? false,
@@ -84,7 +85,7 @@ export default defineComponent({
             }
         },
         new_run_started() {
-            if (this.no_attempt == true) {
+            if (this.runConfig.advanced.no_attempt == true) {
                 return
             }
             this.metrics.update("resets", 0);

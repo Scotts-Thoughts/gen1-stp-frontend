@@ -15,7 +15,7 @@ import interface_1 from "./settings/interface_1.js";
 import interface_2 from "./settings/interface_2.js";
 import metrics from "./settings/metrics.js";
 import encounters from "./settings/encounters.js";
-import interface_3 from "./settings/interface_3.js";
+import interface_3 from "./settings/interface_3.vue";
 import Interface_4 from "./settings/interface_4.vue";
 
 export default defineComponent({

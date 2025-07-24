@@ -1,39 +1,48 @@
-import { ref } from "vue";
-import { saveOverlaySettings, useOverlaySettingsStore } from "./useOverlaySettingsStore"
+import { ref, watch } from "vue";
+import { useOverlaySettingsStore } from "./useOverlaySettingsStore"
+import { useGameSpeciesData } from "./useGameSpeciesData";
 import { useSpeciesMetricsStore } from "./useSpeciesMetricsStore"
 import { PokemonGame } from "../logic/PokeDataTypes";
 import { defineStore } from "pinia";
+import { useMetaStore } from "./metaStore";
 
 export const useSettingsStore = defineStore('settings', () => {
+	const meta = useMetaStore();
 	const metrics = useSpeciesMetricsStore();
 	const overlay = useOverlaySettingsStore();
-	const starter = ref<string>("");
+	const game_species = useGameSpeciesData();
+	const starter = ref<string|null>("");
 	const game = ref<PokemonGame|null>(null);
+	
+	meta.$subscribe(async (_, state) => {
+		if (state.game !== game.value) {
+			game.value = state.game;
+			await metrics.load(game.value, starter.value);
+			await game_species.loadConfig(game.value, starter.value);
+			await game_species.loadStyle(game.value, starter.value);
+		}
+		if (state.starter !== starter.value) {
+			starter.value = state.starter;
+			await metrics.load(game.value, starter.value);
+			await game_species.loadConfig(game.value, starter.value);
+			await game_species.loadStyle(game.value, starter.value);
+		}
+	});
 
-	async function setStarter(value: string) {
-		starter.value = value;
-		if (game.value && starter.value) {
-			await metrics.initialize(game.value, starter.value);
-		}
-	}
-	async function setGame(value: PokemonGame|null) {
-		game.value = value;
-		if (game.value && starter.value) {
-			await metrics.initialize(game.value, starter.value);
-		}
-	}
-	overlay.$subscribe(
+	// Save overlay settings on any change:
+	overlay.$subscribe(() => overlay.save());
+	game_species.$subscribe(
 		(_, state) => {
-			saveOverlaySettings(state.settings);
-		}, 
+			document.documentElement.style.setProperty('--overlay-color', state.styling.ui.color);
+			document.documentElement.style.setProperty('--style_ui_saturation', state.styling.ui.saturation.toString());
+		}
 	);
+	// Automatically save the "config" section of the game_species data:
+	watch(() => game_species.config, () => game_species.saveConfig(game.value, starter.value), { deep: true });
 
 	return {
-		starter,
-		game,
 		metrics,
 		overlay,
-		setStarter,
-		setGame,
+		game_species,
 	};
 })
