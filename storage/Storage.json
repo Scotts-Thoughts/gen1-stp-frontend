@@ -1,8 +1,4 @@
 {
-    "global_variables": {
-        "starter": "Haunter",
-        "game": "Yellow"
-    },
     "application_settings": {
         "options": true,
         "autosplitter_toggle": true,
@@ -11209,6 +11205,30 @@
                 "data": {}
             },
             "Tangela": {
+                "style": {},
+                "settings": {},
+                "splits": {},
+                "data": {}
+            },
+            "": {
+                "style": {},
+                "settings": {},
+                "splits": {},
+                "data": {}
+            },
+            "Seel": {
+                "style": {},
+                "settings": {},
+                "splits": {},
+                "data": {}
+            },
+            "Scyther": {
+                "style": {},
+                "settings": {},
+                "splits": {},
+                "data": {}
+            },
+            "Sandshrew": {
                 "style": {},
                 "settings": {},
                 "splits": {},

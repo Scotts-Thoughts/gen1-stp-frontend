@@ -5,7 +5,7 @@ export function move_name(move_string) {
         return "" 
     }
     if (move_string.includes("BACKPORT")) { 
-        return backport_data[this.starterName].moves[move_string] 
+        return backport_data[this.meta.starter].moves[move_string] 
     }
     move_string = move_string.toLowerCase()
     const moveMappings = {

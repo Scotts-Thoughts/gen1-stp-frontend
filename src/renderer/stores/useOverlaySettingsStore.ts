@@ -48,8 +48,10 @@ export type OverlaySettings = ReturnType<typeof defaultOverlaySettings>;
 
 function defaultOverlaySettings() {
 	return {
+		/** The game that is currently being played and that Poke-A-Byte has a mapper loaded for. */
 		game: null as PokemonGame | null,
-		starter: "",
+		/** The starter chosen for the run. */
+		starter: "Venomoth",
 		starter_search: "",
 		keyboard_shortcuts: {},
 		visualization: {

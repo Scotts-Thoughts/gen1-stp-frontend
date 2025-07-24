@@ -4,17 +4,15 @@ import { useGameSpeciesData } from "./useGameSpeciesData";
 import { useSpeciesMetricsStore } from "./useSpeciesMetricsStore"
 import { PokemonGame } from "../logic/PokeDataTypes";
 import { defineStore } from "pinia";
-import { useMetaStore } from "./metaStore";
 
 export const useSettingsStore = defineStore('settings', () => {
-	const meta = useMetaStore();
 	const metrics = useSpeciesMetricsStore();
 	const overlay = useOverlaySettingsStore();
 	const game_species = useGameSpeciesData();
 	const starter = ref<string|null>("");
 	const game = ref<PokemonGame|null>(null);
 	
-	meta.$subscribe(async (_, state) => {
+	overlay.$subscribe(async (_, state) => {
 		if (state.game !== game.value) {
 			game.value = state.game;
 			await metrics.load(game.value, starter.value);

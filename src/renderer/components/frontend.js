@@ -229,13 +229,7 @@ export default defineComponent({
         const debug_mode = false; // This enables the printing of storage related console logs
         const clear_storage = false; // Use this to test functionality. It resets all the data blocks within the Storage.json file to their default values
         if (debug_mode) { console.log(`Initializing the Storage Object...`) }
-        if (!Storage['global_variables'] || clear_storage == true) { //If the global variables don't exist, create them
-            // Assigns the global variables to the Storage object
-            Storage['global_variables'] = {
-                starter: this.meta.starter,
-                game: this.meta.game,
-            }
-        }
+ 
         if (!Storage['application_settings'] || clear_storage == true) {
             //Assigns the application settings to the Storage object, these persist when the user changes the starter Pokemon
             Storage['application_settings'] = {}
@@ -310,14 +304,10 @@ export default defineComponent({
         if (debug_mode) {
             console.log(`Storage finished initialization. Printing Storage object to console...`)
             console.log(Storage)
-            console.log(`Loading settings from the Storage object into the application...`)
-            console.log(Storage['global_variables'].starter)
-            console.log(Storage['global_variables'].game)
         }
         // Load Settings from the Storage object
         // Load Starter and Game
-        this.meta.setStarter(Storage['global_variables'].starter);
-        this.game_selection = Storage['global_variables'].game;
+
 
         // Application Settings
         for (let key in Storage.application_settings) {
@@ -367,25 +357,18 @@ export default defineComponent({
                 await this.sleep(250)
             }
             //update the saved starter in the overlay's local storage
-            Storage['global_variables'].starter = newValue
             if (!Storage['games'][this.meta.game][newValue]) {
                 Storage['games'][this.meta.game][newValue] = {
-                    style: {},
                     settings: {},
                     splits: {},
                     data: {},
                 };
             }
         },
-        starterName(newValue, oldValue) {
-            this.meta.setStarter(newValue);
-        },
         async game_selection(newValue) {  // TODO: This can be removed once we obsoleted all uses of "Storage".
             //update the saved starter in the overlay's local storage
-            Storage['global_variables'].game = newValue
             if (!Storage['games'][newValue][this.meta.starter]) {
                 Storage['games'][newValue][this.meta.starter] = {
-                    style: {},
                     settings: {},
                     splits: {},
                     data: {},
