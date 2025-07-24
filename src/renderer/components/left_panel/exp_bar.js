@@ -79,7 +79,6 @@ export default defineComponent({
                 const growthRate = PokeData.getSpecies(this.metaStore.currentSpecies)?.growth_rate ?? PokeData.getSpecies(this.metaStore.starter).growth_rate // TODO - this may cause issues
                 const oldExpStats = this.calcExpStats(growthRate, this.oldExpValue);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
-                console.log(newExpStats.percent);
                 const animationMaxDuration = 600
                 if (this.oldExpValue == newProp.value) { 
                     return 
