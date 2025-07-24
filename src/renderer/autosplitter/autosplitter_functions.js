@@ -1,10 +1,11 @@
 import { deprecated_autosplitter } from "../data/deprecated_autosplitter";
+import Timer from "../logic/Timer";
 import { capitalize_words } from "../methods/text_functions";
 
 const path = require("path");
 const fs = require("fs");
 export function log_split(timer) {
-    const time = this.timer.formatted_time;
+    const time = Timer.formatted_time;
     const opponent = this.mapper.properties.battle.trainer.class.value;
     console.log(`Autosplitter - Battle Ended: Split: ${opponent} at ${time[0]}${time[1]} (Gametime: ${this.gametimeSplit})`)
 }
@@ -28,7 +29,7 @@ export function autosplitter_process() {
         let trainer_id = this.mapper.properties.battle.trainer.number.value
         let location = this.mapper.properties.overworld.map.value
         let total_pokemon = this.mapper.properties.battle.trainer.totalPokemon
-        const formattedTime = this.timer.formatted_time;
+        const formattedTime = Timer.formatted_time;
         let real_time_total = formattedTime[0] + formattedTime[1]
         let real_time_hmmss = formattedTime[0]
         let real_time_file_label = formattedTime[2]
@@ -71,7 +72,7 @@ export function autosplitter_process() {
         let incremented_finished_run_count = this.metrics.finishes + 1
         let runIdentifier = this.meta.starter.toString() + " " + incremented_finished_run_count.toString()
         let trainerName = deprecated_autosplitter[this.mapper.properties.meta.gameName.value][`${this.mapper.properties.battle.trainer.class}_${this.mapper.properties.battle.trainer.number}`]
-        const time = this.timer.getTime();
+        const time = Timer.getTime();
         let RTHours = time.hours;
         let RTMinutes = time.minutes;
         let RTSeconds = time.seconds;

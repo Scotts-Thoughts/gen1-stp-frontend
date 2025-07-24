@@ -1,4 +1,5 @@
 import PubSub from "./PubSub";
+import MyStorage from "./MyStorage";
 const f = (x) => x.toString().padStart(2, "0");
 
 /**
@@ -120,4 +121,4 @@ class Timer {
 	}
 }
 
-export default Timer;
+export default new Timer(MyStorage);

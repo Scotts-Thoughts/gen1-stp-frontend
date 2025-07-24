@@ -1,5 +1,6 @@
 import { defineComponent } from "vue";
 import { RightPanelMode, StatsPanelMode, useOverlaySettingsStore } from "../stores/useOverlaySettingsStore";
+import Timer from "../logic/Timer";
 
 const Keys = {
     "ESCAPE":         0x1B,
@@ -247,7 +248,9 @@ class KeyHook {
     }
 }
 
-const keyhook = new KeyHook();
+const keyhook = process.platform !== "linux"
+    ? new KeyHook()
+    : null;
 
 const template = /*html*/`<div></div>`
 
@@ -259,6 +262,9 @@ export default defineComponent({
         }
     },
     mounted() {
+        if (process.platform === "linux") {
+            return;
+        }
         //F13
         keyhook.registerShortCut('F13', async () => { // Show IVs
             console.log("Key: F13 pressed: EVs displayed.")
@@ -323,7 +329,7 @@ export default defineComponent({
         });
         //F24
         keyhook.registerShortCut('F24', async () => {
-            this.$parent.timer.pauseUnpauseTime();
+            Timer.pauseUnpauseTime();
         });
     }
 });

@@ -24,7 +24,6 @@ import splits_summary from "./right_panel/splits_summary.js";
 import enemy_graphic from "./right_panel/enemy_graphic.js";
 import wild_pokemon from "./right_panel/wild_pokemon.js";
 import { log_split, autosplitter_process, format_trainer_name, logData, logCopy } from "../autosplitter/autosplitter_functions.js";
-import { openFolder } from "../methods/file_system_functions.js";
 import { autosplitter } from "../data/autosplitter.js";
 import { application_settings } from "../settings/application_settings.js";
 import { pokemon_settings } from "../settings/pokemon_settings.js";
@@ -147,10 +146,8 @@ export default defineComponent({
             speed_comparison_toggle: true,
             refilmed_attempt: 0,
             refilmed_finish: 0,
-            timer_startTimeOffset: MyStorage["timer_startTimeOffset"] ?? "00:00:00.00",
             time_split_start: "00:00:00:00",
             battle_start: 0,
-            timer: new Timer(MyStorage),
             battle_duration: 0,
             exp_per_second: 0,
             split_data: [],
@@ -516,7 +513,7 @@ export default defineComponent({
         clear_splits_header_timer(value) {
             this.current_splits = []
             this.battle_summary_header = "Battle Summary"
-            this.timer.setTimer(this.timer_startTimeOffset)
+            Timer.setTimer(this.metrics.timer_override)
             this.player_id = 0
         },
         get_nested_property(obj, path) {
@@ -551,12 +548,10 @@ export default defineComponent({
         format_trainer_name,
         logData,
         logCopy,
-        //file_system_functions.js
-        openFolder,
     },
     mounted: async function () {
         this.load_split_settings()
-        this.timer.update();
+        Timer.update();
         this.pokemon_list = PokeData.getAllSpecieNames();
 
         // RESET - Identifies when a reset occurs and publishes an event
@@ -580,7 +575,7 @@ export default defineComponent({
                 if (this.runConfig.advanced.test_run == false && this.runConfig.advanced.refilming_mode == false) {
                     this.metrics.update("attempts", this.metrics.attempts + 1);
                 };
-                this.timer.startTime(this.timer_startTimeOffset);
+                Timer.startTime(this.metrics.timer_override);
                 if (this.toggle_wEarlyEncounters == false && this.toggle_wEarlyEncountersNoMoon == true) {
                     this.toggle_wEarlyEncounters == true
                 }
@@ -598,7 +593,7 @@ export default defineComponent({
         //* Autosplitter
         //log the start of a battle to the console
         this.mapper.properties.battle.type.change((newProp) => {
-            var logStr = `Autosplitter - Battle Started: ${this.mapper.properties.battle.trainer.class.value} started at ${this.timer.formatted_time[0]}${this.timer.formatted_time[1]} (Gametime: ${this.gametimeSplit})`
+            var logStr = `Autosplitter - Battle Started: ${this.mapper.properties.battle.trainer.class.value} started at ${Timer.formatted_time[0]}${Timer.formatted_time[1]} (Gametime: ${this.gametimeSplit})`
             var log_start = (x) => console.log(logStr)
 
             if (newProp.value == "Trainer") {
@@ -714,7 +709,7 @@ export default defineComponent({
                         this.metrics.update("finished", this.metrics.finishes + 1); //increment finished count if this is not a test run
                     };
                     // this.stopTime() //stop the timer
-                    this.timer.stopTime();
+                    Timer.stopTime();
                     this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }
@@ -733,7 +728,7 @@ export default defineComponent({
                     this.logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.finishes, this.meta.starter, "Deprecated", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.finishes, this.meta.starter, "Full", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
-                    console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer.formatted_time[0]}${this.time.formatted_time[1]} Resets: ${this.metrics.resets} Blackouts: ${this.metrics.blackouts} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
+                    console.log(`Autosplitter - Run Ended: Real-Time: ${Timer.formatted_time[0]}${this.time.formatted_time[1]} Resets: ${this.metrics.resets} Blackouts: ${this.metrics.blackouts} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
                     this.flag_player_finished_the_run = true; //stop incrementing resets
                 }
             }

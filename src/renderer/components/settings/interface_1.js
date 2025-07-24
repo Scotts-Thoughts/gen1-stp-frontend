@@ -2,8 +2,11 @@ import { useMetaStore } from "../../stores/metaStore";
 import battle_testing from "./battle_testing";
 import { useOverlaySettingsStore } from "../../stores/useOverlaySettingsStore";
 import { useGameSpeciesData } from "../../stores/useGameSpeciesData";
+import Timer from "../../logic/Timer";
+import { useSpeciesMetricsStore } from "../../stores/useSpeciesMetricsStore";
+import { defineComponent } from "vue";
+import { openFolder } from "../../methods/file_system_functions";
 // todo: remove the "parent.parent" stuff.
-// todo: Put timer_startTimeOffset into the game/species settings.
 const template = /*html*/`
     <div>Game:</div>
     <select v-model="$parent.$parent.game_selection" class="dropdownMenu dropdown_menu_column3">
@@ -14,10 +17,11 @@ const template = /*html*/`
     </select><br>
     <br>
     <div>Timer Setting:</div>
-    <button class="buttonStyle buttonStyle_column3" @click="this.$parent.$parent.timer.pauseUnpauseTime()">Play/Pause</button>
-    <button class="buttonStyle set_button_style" @click="this.$parent.$parent.timer.setTimer(this.timer_startTimeOffset)">Set Timer</button><input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
+    <button class="buttonStyle buttonStyle_column3" @click="toggle_timer">Play/Pause</button>
+    <button class="buttonStyle set_button_style" @click="override_timer">Set Timer</button>
+    <input type="text" class="inputContainer" v-model="metrics.timer_override" placeholder="00:00:00.00"/><br>
     <br>
-    <button class="buttonStyle buttonStyle_column3" @click="$parent.openFolder('splits', $parent.$parent.game_name, meta.starter, 'finishes')">Open Splits Folder</button>
+    <button class="buttonStyle buttonStyle_column3" @click="open_splits_folder">Open Splits Folder</button>
     <br>
     <br>
     <div v-if="isRelease == false">
@@ -53,7 +57,7 @@ const template = /*html*/`
     </div>
 `
 
-export default {
+export default defineComponent({
     template,
     inject: ["game_properties"],
     components: {
@@ -64,8 +68,19 @@ export default {
             meta: useMetaStore(),
             settings: useOverlaySettingsStore(),
             runConfig: useGameSpeciesData(),
-            timer_startTimeOffset: "00:00:00.00",
+            metrics: useSpeciesMetricsStore(),
             isRelease: process.env.NODE_ENV !== "development",
         }
     },
-}
+    methods: {
+        toggle_timer() {
+            Timer.pauseUnpauseTime();
+        },
+        override_timer() {
+            Timer.setTimer(this.metrics.timer_override);
+        },
+        open_splits_folder() {
+            openFolder('splits', this.meta.game, this.meta.starter, 'finishes')
+        }
+    }
+});
