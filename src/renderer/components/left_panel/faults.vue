@@ -50,8 +50,6 @@ export default defineComponent({
             meta: useMetaStore,
             metrics: useSpeciesMetricsStore(),
             runConfig: useGameSpeciesData(),
-            counter_resets            : Storage.games[this.meta.game]?.[this.meta.starter]?.data?.counter_resets             ?? 0,
-            counter_blackouts         : Storage.games[this.meta.game]?.[this.meta.starter]?.data?.counter_blackouts          ?? 0,
             flag_blackout_prerequisite: Storage.games[this.meta.game]?.[this.meta.starter]?.data?.flag_blackout_prerequisite ?? false,
         }
     },
