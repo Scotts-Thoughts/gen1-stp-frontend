@@ -30,13 +30,12 @@ import { pokemon_settings } from "../settings/pokemon_settings.js";
 import { time_settings } from "../settings/time_settings.js";
 import { trainer_name_lookup } from "../autosplitter/trainer_name_lookup.js";
 import { split_trainers } from "../autosplitter/split_trainers.js";
-import { battle_summary } from "../autosplitter/battle_summary.js";
 import { computed, defineComponent } from "vue";
 import { RightPanelMode,  useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
 import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
 import { useMetaStore } from "~/stores/metaStore";
-import { convertDurationToSeconds, convertMSToDuration, convertSecondsToDuration } from "../utils/timehelpers.js";
+import { convertDurationToSeconds, convertSecondsToDuration } from "../utils/timehelpers.js";
 import { useBattleStore } from "~/stores/useBattleStore";
 
 const template = /*html*/`

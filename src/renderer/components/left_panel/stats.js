@@ -10,7 +10,7 @@ const template = /*html*/`
             <div class="statsheader">{{stats_display}} </div>
             <div class="expLabelGen1">Exp:</div>
             <div v-for="stat in stat_object" class="stat">
-                <div v-if="stat.name != 'HP' && meta.gameState == 'Battle'" class="stat_label mod_style">{{ stringify_stage_modifiers(game_properties?.properties?.battle?.yourPokemon['modStage'+stat.mod_path]) }}</div>
+                <div v-if="stat.name != 'HP' && meta.gameState == 'Battle'" class="stat_label mod_style">{{ mod_stage_label(game_properties.battle.yourPokemon['modStage'+stat.mod_path]) }}</div>
                 <div :style="{ opacity: statLabelOpacity()[stat.name]}" class="stat_label">{{stat.label}}</div>
                 
                 <div v-if="stats_display == 'Base Stats'"   class="stat_value">{{base_stats(stat.base_stat_path)}}</div>
@@ -263,15 +263,15 @@ export default defineComponent({
             }
             return object
         },
-        stringify_stage_modifiers(y) {
-            if (y === null) {
+        mod_stage_label(value) {
+            if (value === null) {
                 return " "
             }
-            if (y > 0) {
-                return "+" + y.toString()
+            if (value > 0) {
+                return "+" + value.toString()
             }
-            if (y < 0) {
-                return y.toString()
+            if (value < 0) {
+                return value.toString()
             }
             return " "
         },
