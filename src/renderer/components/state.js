@@ -99,6 +99,7 @@ export default defineComponent({
                 this.meta.setEnemyState("Fainting");
             }
         });
+        // TODO: this does not seem to work properly. - Ion
         this.game_properties.screen.tiles.column1.tile7.change((prop) => {
             if (prop == 127 && 
                 this.game_properties.screen.tiles.column1.tile6 == 127 && 
@@ -112,6 +113,13 @@ export default defineComponent({
                 this.meta.setEnemyState("Fainted");
             }
         });
+        // alternative that should work:
+        // this.game_properties.screen.text.prompt.change(prop => {
+        //     if (prop.value === "▼" && this.meta.enemyState === "Fainting") {
+        //         this.meta.setEnemyState("Fainted");
+        //     }
+        // });
+
         this.game_properties.battle.turnInfo.trainerDefeated.change(async (prop) => {
             if (prop == 1) {
                 this.meta.setEnemyState("Battle Finished");
