@@ -41,9 +41,6 @@ import { useMetaStore } from "~/stores/metaStore.js";
 import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";
 export default defineComponent({
     inject: [ "game_properties" ],
-    props: [
-        "flag_player_finished_the_run",
-    ],
     data() {
         this.meta = useMetaStore;
         return {

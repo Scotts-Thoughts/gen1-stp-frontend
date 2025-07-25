@@ -1,5 +1,6 @@
 import PubSub from "~/logic/PubSub";
-import {useSpeciesMetricsStore} from "~/stores/useSpeciesMetricsStore.js";
+import {useSpeciesMetricsStore} from "~/stores/useSpeciesMetricsStore.ts";
+import {useGameSpeciesData} from "~/stores/useGameSpeciesData.ts";
 import { defineComponent } from "vue";
 
 const template = /*html*/`
@@ -11,11 +12,11 @@ const template = /*html*/`
         <tbody>
             <tr>
                 <td>Previous: </td>
-                <td><input type="text" class="inputContainer" v-model="$parent.previous_label" placeholder="Previous"/></td>
+                <td><input type="text" class="inputContainer" v-model="runConfig.config.labels.split_previous" placeholder="Previous"/></td>
             </tr>
             <tr>
                 <td>Current: </td>
-                <td><input type="text" class="inputContainer" v-model="$parent.current_label" placeholder="Current"/></td>
+                <td><input type="text" class="inputContainer" v-model="runConfig.config.labels.split_current" placeholder="Current"/></td>
             </tr>
         </tbody>
     </table>
@@ -68,12 +69,14 @@ export default defineComponent({
     template,
     data() {
         return {
+            runConfig: useGameSpeciesData(),
             metrics: useSpeciesMetricsStore(),
         }
     },
     computed: {
         faults() {
-            return this.metrics.resets + this.metrics.blackouts
+            
+            return this.metrics.resets + this.metrics.blackouts;
         }
     },
     methods: {

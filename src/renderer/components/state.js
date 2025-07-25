@@ -47,7 +47,7 @@ export default defineComponent({
             this.updateCurrentSpecies();
         }
     },
-    mounted: async function () {
+    created: async function () {
         //Update the state to match the mapper's state
         this.meta.setGameState(this.game_properties.meta.state.value);
         

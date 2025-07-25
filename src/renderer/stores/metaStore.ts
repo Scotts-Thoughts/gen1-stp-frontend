@@ -58,6 +58,8 @@ function getDefaultMetaState() {
 		gameState: GameState.no_pokemon,
 		/** The current state of the enemy trainer or enemy wild pokemon. */
 		enemyState: EnemyState.not_in_battle,
+
+		run_finished: false,
 	}
 }
 

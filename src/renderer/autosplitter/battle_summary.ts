@@ -107,4 +107,4 @@ export const battle_summary = {
         { data_name: "battle_summary_enemy_crits",  name: "Crits",  path: "patch.battle_info.hits.criticalsTaken.value",   type: "number",},
         // { data_name: "battle_summary_enemy_ohkos",  name: "OHKOs",  path: "patch.battle_info.hits.oHKOsTaken.value",       type: "number",},
     ],
-}
+} as const

@@ -38,7 +38,7 @@ export function autosplitter_process() {
         let failures = this.metrics.resets + this.metrics.blackouts
         let level = this.mapper.properties.player.team[0].level.value.toString()
         let game_time = this.gametimeSplit.toString()
-        let battle_duration = (battle_end - this.battle_start)/1000 
+        let battle_duration = (battle_end - this.battle.statistics.battle_start)/1000 
         let move1 = this.mapper.properties.player.team[0].move1.value
         let move2 = this.mapper.properties.player.team[0].move2.value
         let move3 = this.mapper.properties.player.team[0].move3.value
@@ -77,7 +77,7 @@ export function autosplitter_process() {
         let RTMinutes = time.minutes;
         let RTSeconds = time.seconds;
         let RTMilliseconds = time.ms;
-        let startTime = this.time_split_start
+        let startTime = this.battle.statistics.time_split_start
         let realTime = this.padTime(time.hours) + ":" + this.padTime(time.minutes) + ":" + this.padTime(time.seconds) + "." + this.padTime(time.ms)
         let gameTime = this.padTime(gameTimeH) + ":" + this.padTime(gameTimeM) + ":" + this.padTime(gameTimeS) + "." + this.padTime(gameTimeF)
         let hp = this.mapper.properties.player.team[0].hp.value

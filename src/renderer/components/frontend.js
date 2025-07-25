@@ -20,7 +20,7 @@ import game_area from "./game_area.vue";
 import movepool from "./right_panel/move_pool.vue";
 import splits_first from "./right_panel/splits_first.js";
 import splits_followup from "./right_panel/splits_followup.js";
-import splits_summary from "./right_panel/splits_summary.js";
+import splits_summary from "./right_panel/splits_summary.vue";
 import enemy_graphic from "./right_panel/enemy_graphic.js";
 import wild_pokemon from "./right_panel/wild_pokemon.js";
 import { log_split, autosplitter_process, format_trainer_name, logData, logCopy } from "../autosplitter/autosplitter_functions.js";
@@ -37,6 +37,7 @@ import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
 import { useMetaStore } from "~/stores/metaStore";
 import { convertDurationToSeconds, convertMSToDuration, convertSecondsToDuration } from "../utils/timehelpers.js";
+import { useBattleStore } from "~/stores/useBattleStore";
 
 const template = /*html*/`
 <div>
@@ -46,8 +47,7 @@ const template = /*html*/`
         <!-- Background Processes -->
         <state />
 
-        <!-- Left Panel: TODO: also move faults there. -->
-        <faults :flag_player_finished_the_run="flag_player_finished_the_run" />
+        <!-- Left Panel:-->
         <left_panel />
 
         <!-- Right Panel -->
@@ -62,8 +62,6 @@ const template = /*html*/`
                         <splits_followup
                             :compare_splits="compare_splits"
                             :trainer_name_lookup="trainer_name_lookup"
-                            :previous_label="previous_label"
-                            :current_label="current_label"
                         />
                     </div>
                     <div v-else-if="settings.right_panel.splits.mode === 'First'">
@@ -126,6 +124,7 @@ export default defineComponent({
     ],
     data() {
         return {
+            battle: useBattleStore(),
             meta: useMetaStore(),
             metrics: useSpeciesMetricsStore(),
             gameSpeciesData: useGameSpeciesData(),
@@ -146,13 +145,8 @@ export default defineComponent({
             speed_comparison_toggle: true,
             refilmed_attempt: 0,
             refilmed_finish: 0,
-            time_split_start: "00:00:00:00",
-            battle_start: 0,
-            battle_duration: 0,
-            exp_per_second: 0,
             split_data: [],
             player_id: 0,
-            flag_player_finished_the_run: false,
             flag_finished_logging_splits: false,
             split_logStr: "",
             simple_data_str: "",
@@ -162,53 +156,9 @@ export default defineComponent({
             blackout: false,
             previous_splits: [],
             current_splits: [],
-            previous_label: "Previous",
-            current_label: "Current",
 
             // Battle Summary
             battle_summary_header: "Battle Summary",
-            battle_summary_frames: 0,
-            battle_summary_battle_number: 0,
-            battle_summary_exp_gained: 0,
-            battle_summary_turns: 0,
-            battle_summary_player_turns: 0,
-            battle_summary_enemy_turns: 0,
-            battle_summary_player_hits: 0,
-            battle_summary_player_misses: 0,
-            battle_summary_player_crits: 0,
-            battle_summary_player_ohkos: 0,
-            battle_summary_enemy_hits: 0,
-            battle_summary_enemy_misses: 0,
-            battle_summary_enemy_crits: 0,
-            battle_summary_enemy_ohkos: 0,
-            battle_summary_player_Sx: 0,
-            battle_summary_player_4x: 0,
-            battle_summary_player_2x: 0,
-            battle_summary_player_1x: 0,
-            battle_summary_player_Hx: 0,
-            battle_summary_player_Qx: 0,
-            battle_summary_player_0x: 0,
-            battle_summary_player_con: 0,
-            battle_summary_player_par: 0,
-            battle_summary_player_brn: 0,
-            battle_summary_player_frz: 0,
-            battle_summary_player_psn: 0,
-            battle_summary_player_bpn: 0,
-            battle_summary_player_slp: 0,
-            battle_summary_enemy_Sx: 0,
-            battle_summary_enemy_4x: 0,
-            battle_summary_enemy_2x: 0,
-            battle_summary_enemy_1x: 0,
-            battle_summary_enemy_Hx: 0,
-            battle_summary_enemy_Qx: 0,
-            battle_summary_enemy_0x: 0,
-            battle_summary_enemy_con: 0,
-            battle_summary_enemy_par: 0,
-            battle_summary_enemy_brn: 0,
-            battle_summary_enemy_frz: 0,
-            battle_summary_enemy_psn: 0,
-            battle_summary_enemy_bpn: 0,
-            battle_summary_enemy_slp: 0,
         }
     },
     created() {
@@ -376,64 +326,16 @@ export default defineComponent({
             }
         },
         player_id() {
-            this.flag_player_finished_the_run = false;
+            this.meta.run_finished = false;
             this.flag_finished_logging_splits == false;
         },
     },
     computed: {
         splits_summary_props() {
             return {
-                starterName: this.meta.starter,
                 compare_splits: this.compare_splits,
                 trainer_name_lookup: trainer_name_lookup,
                 battle_summary_header: this.battle_summary_header,
-                previous_label: this.previous_label,
-                current_label: this.current_label,
-                battle_duration: this.battle_duration,
-                exp_per_second: this.exp_per_second,
-                battle_summary: battle_summary,
-                battle_summary_frames: this.battle_summary_frames,
-                battle_summary_battle_number: this.battle_summary_battle_number,
-                battle_summary_exp_gained: this.battle_summary_exp_gained,
-                battle_summary_turns: this.battle_summary_turns,
-                battle_summary_player_turns: this.battle_summary_player_turns,
-                battle_summary_enemy_turns: this.battle_summary_enemy_turns,
-                battle_summary_player_hits: this.battle_summary_player_hits,
-                battle_summary_player_misses: this.battle_summary_player_misses,
-                battle_summary_player_crits: this.battle_summary_player_crits,
-                battle_summary_player_ohkos: this.battle_summary_player_ohkos,
-                battle_summary_enemy_hits: this.battle_summary_enemy_hits,
-                battle_summary_enemy_misses: this.battle_summary_enemy_misses,
-                battle_summary_enemy_crits: this.battle_summary_enemy_crits,
-                battle_summary_enemy_ohkos: this.battle_summary_enemy_ohkos,
-                battle_summary_player_Sx: this.battle_summary_player_Sx,
-                battle_summary_player_4x: this.battle_summary_player_4x,
-                battle_summary_player_2x: this.battle_summary_player_2x,
-                battle_summary_player_1x: this.battle_summary_player_1x,
-                battle_summary_player_Hx: this.battle_summary_player_Hx,
-                battle_summary_player_Qx: this.battle_summary_player_Qx,
-                battle_summary_player_0x: this.battle_summary_player_0x,
-                battle_summary_player_con: this.battle_summary_player_con,
-                battle_summary_player_par: this.battle_summary_player_par,
-                battle_summary_player_brn: this.battle_summary_player_brn,
-                battle_summary_player_frz: this.battle_summary_player_frz,
-                battle_summary_player_psn: this.battle_summary_player_psn,
-                battle_summary_player_bpn: this.battle_summary_player_bpn,
-                battle_summary_player_slp: this.battle_summary_player_slp,
-                battle_summary_enemy_Sx: this.battle_summary_enemy_Sx,
-                battle_summary_enemy_4x: this.battle_summary_enemy_4x,
-                battle_summary_enemy_2x: this.battle_summary_enemy_2x,
-                battle_summary_enemy_1x: this.battle_summary_enemy_1x,
-                battle_summary_enemy_Hx: this.battle_summary_enemy_Hx,
-                battle_summary_enemy_Qx: this.battle_summary_enemy_Qx,
-                battle_summary_enemy_0x: this.battle_summary_enemy_0x,
-                battle_summary_enemy_con: this.battle_summary_enemy_con,
-                battle_summary_enemy_par: this.battle_summary_enemy_par,
-                battle_summary_enemy_brn: this.battle_summary_enemy_brn,
-                battle_summary_enemy_frz: this.battle_summary_enemy_frz,
-                battle_summary_enemy_psn: this.battle_summary_enemy_psn,
-                battle_summary_enemy_bpn: this.battle_summary_enemy_bpn,
-                battle_summary_enemy_slp: this.battle_summary_enemy_slp,
             }
         },
         first_splits() {
@@ -539,7 +441,7 @@ export default defineComponent({
 
         // RESET - Identifies when a reset occurs and publishes an event
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {
-            if (newProp.value == 0 && oldProp.value > 0 && this.flag_player_finished_the_run == false) {
+            if (newProp.value == 0 && oldProp.value > 0 && this.meta.finished_runed == false) {
                 PubSub.publish("@run/reset_occurred");
             }
         })
@@ -552,7 +454,7 @@ export default defineComponent({
         });
         // NEW_RUN_STARTED - Determines if the player has pressed 'New Game' and started a new playthrough
         this.mapper.properties.player.playerId.change((newProp) => {
-            if (newProp.value > 0 && this.flag_player_finished_the_run == false && newProp.value != this.player_id) {
+            if (newProp.value > 0 && this.meta.finished_runed == false && newProp.value != this.player_id) {
                 PubSub.publish("@run/new_run_started", this.player_id);
                 this.flag_finished_logging_splits = false;
                 if (this.runConfig.advanced.test_run == false && this.runConfig.advanced.refilming_mode == false) {
@@ -567,8 +469,8 @@ export default defineComponent({
         })
         // Only allow the player to reset once after the champion without resets incrementing
         this.mapper.properties.player.name.change((newProp) => {
-            if (this.flag_player_finished_the_run == true && newProp.value == "NINTEN") {
-                this.flag_player_finished_the_run = false;
+            if (this.meta.finished_runed == true && newProp.value == "NINTEN") {
+                this.meta.finished_runed = false;
             }
         })
 
@@ -576,29 +478,7 @@ export default defineComponent({
         //* Autosplitter
         //log the start of a battle to the console
         this.mapper.properties.battle.type.change((newProp) => {
-            var logStr = `Autosplitter - Battle Started: ${this.mapper.properties.battle.trainer.class.value} started at ${Timer.formatted_time[0]}${Timer.formatted_time[1]} (Gametime: ${this.gametimeSplit})`
-            var log_start = (x) => console.log(logStr)
-
-            if (newProp.value == "Trainer") {
-                if (this.collect_split_data == true) {
-                    // Use for...of loop to iterate over the array
-                    for (let property of battle_summary["global_stats"]) {
-                        // usage
-                        if (property !== null) {
-                            let data = this.get_nested_property(this.mapper.properties, property.path)
-                            this[`temp_${property.data_name}`] = data
-                        } else {
-                            console.error(`Property ${property.data_name} not found in battle_summary`);
-                            continue
-                        }
-                    }
-                }
-
-                this.split_logStr = logStr
-                this.battle_start = Date.now()
-                this.time_split_start = this.padTime(this.time_h) + ":" + this.padTime(this.time_m) + ":" + this.padTime(this.time_s) + "." + this.padTime(this.time_ms)
-                log_start()
-            }
+            this.battle.startBattle(this.mapper.properties, newProp.value, this.collect_split_data);
         });
         //write to file at the end of a key battle
         //the `lowHealthAlarm` property is used to play the Red-bar sound effect
@@ -613,23 +493,7 @@ export default defineComponent({
                 let gameName = this.gameSelection == 'Yellow' ? "Y" : this.meta.game == 'Red' ? "R" : "B"
                 let gameName_Path = this.meta.game // Used for split data   
 
-                if (this.collect_split_data == true) {
-                    // Use for...of loop to iterate over the array
-                    for (let property of battle_summary["global_stats"]) {
-                        // usage
-                        if (property !== null) {
-                            let data = this.get_nested_property(this.mapper.properties, property.path)
-                            this[property.data_name] = data - this[`temp_${property.data_name}`]
-                        } else {
-                            console.error(`Property ${property.data_name} not found in battle_summary`);
-                            continue
-                        }
-                    }
-                    this.battle_duration_ms = (Date.now() - this.battle_start) / 1000
-                    this.battle_duration = convertMSToDuration(Date.now() - this.battle_start)
-                    this.exp_per_second = Math.round(this.battle_summary_exp_gained / this.battle_duration_ms)
-                    this.battle_summary_battle_number = this.mapper.properties.patch?.battles?.trainerBattles?.value
-                }
+                this.battle.endBattle(this.mapper.properties, this.collect_split_data);
 
                 //write full split data (this is written for every single battle)
                 this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.attempts, this.meta.starter, "Full", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
@@ -712,7 +576,7 @@ export default defineComponent({
                     this.logData(gameName, gameName_Path, this.full_data_str, this.metrics.finishes, this.meta.starter, "Full", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                     console.log(`Autosplitter - Run Ended: Real-Time: ${Timer.formatted_time[0]}${this.time.formatted_time[1]} Resets: ${this.metrics.resets} Blackouts: ${this.metrics.blackouts} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
-                    this.flag_player_finished_the_run = true; //stop incrementing resets
+                    this.meta.finished_runed = true; //stop incrementing resets
                 }
             }
         });
@@ -720,7 +584,7 @@ export default defineComponent({
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
             let gameName = this.game_selection == 'Yellow' ? "Y" : this.game_selection == 'Red' ? "R" : "B"
             let gameName_Path = this.meta.game // Used for split data    
-            if (this.flag_finished_logging_splits == false && this.flag_player_finished_the_run == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
+            if (this.flag_finished_logging_splits == false && this.meta.finished_runed == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
                 this.logCopy(  //copy the current `attempt_number` split data to the finished folder
                     gameName,
                     gameName_Path,

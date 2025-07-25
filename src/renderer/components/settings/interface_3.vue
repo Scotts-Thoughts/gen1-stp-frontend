@@ -16,7 +16,7 @@
             </tr>
             <tr>
                 <td>Y-Offset:   </td>
-                <td><input type="range" min="-400" max="400" :value="artwork.offset_y" /></td>
+                <td><input type="range" min="-400" max="400" v-model="artwork.offset_y" /></td>
             </tr>
             <tr>
                 <td>Scale:      </td>

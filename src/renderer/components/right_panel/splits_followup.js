@@ -1,6 +1,7 @@
 import { defineComponent } from "vue";
 import PokeData from "~/logic/PokeData";
 import { useMetaStore } from "~/stores/metaStore";
+import { useGameSpeciesData } from "~/stores/useGameSpeciesData";
 
 const template = /*html*/`
     <div>
@@ -9,8 +10,8 @@ const template = /*html*/`
                 <tr :style="{'background-color': \`var(--\${starter_type_2})\`, 'outline': '2px solid #000'}">
                     <td style="font-size: 18px; padding-left: 3px">Split</td>
                     <td style="font-size: 18px; width: 80px;  text-align: left; padding-left: 3px;"></td>
-                    <td style="font-size: 18px; width: 110px; text-align: right;">{{previous_label}}</td>
-                    <td style="font-size: 18px; width: 110px; text-align: right;">{{current_label}}</td>
+                    <td style="font-size: 18px; width: 110px; text-align: right;">{{runConfig.config.labels.split_previous}}</td>
+                    <td style="font-size: 18px; width: 110px; text-align: right;">{{runConfig.config.labels.split_current}}</td>
                     <td style="font-size: 18px; width: 68px;  text-align: right; padding-right: 3px;">Diff</td>
                 </tr>
                 <tr v-for="split in compare_splits">
@@ -30,12 +31,10 @@ export default defineComponent({
     template,
     props: [
         "compare_splits",
-        "trainer_name_lookup",
-        "previous_label",
-        "current_label",
+        "trainer_name_lookup"
     ],
     data() {
-        return { meta: useMetaStore() };
+        return { meta: useMetaStore(), runConfig: useGameSpeciesData() };
     },
     methods: {
         split_diff_color(difference_string) {

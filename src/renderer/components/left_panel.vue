@@ -1,5 +1,6 @@
 
 <template>
+	<faults/>
 	<battle_popups/>
 	<type_icons/>
 	<moveset />
@@ -20,6 +21,7 @@ import exp_bar from "./left_panel/exp_bar";
 import badge_boosts from "./left_panel/badge_boosts.vue";
 import badges from "./left_panel/badges.vue";
 import timer from "./left_panel/timer";
+import faults from "./left_panel/faults.vue";
 
 export default defineComponent({
 	components: {
@@ -28,6 +30,7 @@ export default defineComponent({
 		moveset,
 		stats,
 		exp_bar,
+		faults,
 		badge_boosts,
 		badges,
 		timer

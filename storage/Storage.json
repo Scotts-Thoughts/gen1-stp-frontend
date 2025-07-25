@@ -11229,7 +11229,27 @@
                 "data": {}
             },
             "Sandshrew": {
-                "style": {},
+                "style": {
+                    "simple_data_str": "SCOTT,Sandshrew,Super Nerd,0,0,0,35,32:01,1753478783.845,BODY SLAM,AMNESIA,WATER GUN,SEISMIC TOSS\n",
+                    "full_data_str": "7-25,23:26:23,SCOTT,Sandshrew,Super Nerd,5,Route 8,1,0.00,0,0h0m0s,0,0,0,35,32:01,1753478783.845,BODY SLAM,AMNESIA,WATER GUN,SEISMIC TOSS,12,6821,922,80,91,408,359,230,13,32272,Flareon, ,Normal,Normal,57918,Sandshrew 1,Sandshrew,,00:00:00:00,00:00:00.00,32:01:16.09,35,0,0,0,0,0,BODY SLAM,AMNESIA,WATER GUN,SEISMIC TOSS,0,20,18,18,0,0,0,0,66,173,101,64,65,65,41,12802,11798,12087,9864,9864,11456,15,6,9,10,0,0,0,0,0,0,0,113,72,65,65,41,6919965,1245220,4814296,856960,6045,12,8,0,6821,6821,0,0,922,171,80,91,43,3,18514,9440,2248,1228,330,56,186,0,0,0,0,0,9,0,21,0,0,2,3,1,0,0,0,0,0,2,0,0,0,0,4,1,16,3,0,0,3,2,16,0,0,0,6,224,57762,0,0,0,0,11,10,0,7,1,5,0,0,0,Flareon\n",
+                    "deprecated_data_str": "Sandshrew 1,Sandshrew,,00:00:00:00,00:00:00.00,32:01:16.09,35,0,0,0,0,0,BODY SLAM,AMNESIA,WATER GUN,SEISMIC TOSS,101,64,65,65,41,0,0,0,0,0,0,0,113,72,65,65,41,6919965,1245220,4814296,856960,6045,12,8,0,6821,6821,0,0,922,171,80,91,43,3,18514,9440,2248,1228,330,56,186,0,0,0,0,0,9,0,21,0,0,2,3,1,0,0,0,0,0,2,0,0,0,0,4,1,16,3,0,0,3,2,0,0,6,224,57762,0,0,0,0,11,10,0,7,1,5,0,0,0,Flareon\n",
+                    "simple_data": [
+                        "SCOTT",
+                        "Sandshrew",
+                        "Super Nerd",
+                        0,
+                        "0",
+                        "0",
+                        "35",
+                        "32:01",
+                        1753478783.845,
+                        "BODY SLAM",
+                        "AMNESIA",
+                        "WATER GUN",
+                        "SEISMIC TOSS"
+                    ],
+                    "split_logStr": "Autosplitter - Battle Started: LASS started at 3:10:48.73 (Gametime: 32:34)"
+                },
                 "settings": {},
                 "splits": {},
                 "data": {}

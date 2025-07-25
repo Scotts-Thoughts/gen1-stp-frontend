@@ -76,7 +76,8 @@ export default defineComponent({
                 document.getElementById("exp-bar").style.transition = null;
             }
             if (this.expBarAnimation == true) {
-                const growthRate = PokeData.getSpecies(this.metaStore.currentSpecies)?.growth_rate ?? PokeData.getSpecies(this.metaStore.starter).growth_rate // TODO - this may cause issues
+                const growthRate = PokeData.getSpecies(this.metaStore.currentSpecies)?.growth_rate 
+                    ?? PokeData.getSpecies(this.metaStore.starter).growth_rate // TODO - this may cause issues
                 const oldExpStats = this.calcExpStats(growthRate, this.oldExpValue);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
                 const animationMaxDuration = 600

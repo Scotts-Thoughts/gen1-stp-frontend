@@ -11,6 +11,7 @@
     "noUnusedLocals": false,  
     "noUnusedParameters": false,
     "baseUrl": ".",
+    "allowJs": true,
     "paths": {
       "~/*": [
         "src/renderer/*"

@@ -8,6 +8,7 @@ import keyhook from "~/components/keyhook.js";
 import { PokemonGame } from "~/logic/PokeDataTypes.js";
 import { createPinia } from "pinia";
 import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
+import { useMetaStore } from "./stores/metaStore";
 
 const main = defineComponent({
     components: {
@@ -26,22 +27,17 @@ const main = defineComponent({
     },
     created() {
         this.mapper = new GameHookMapperClient();
-        this.mapper.onMapperLoaded = () => {
+        this.mapper.onMapperLoaded = async () => {
             const gameName = this.mapper!.properties.meta.gameName.value;
+            PokeData.setGame(gameName);
 
-            this.overlaySettings.load().then(() => {
-                PokeData.setGame(gameName);
-                this.overlaySettings.setGame(gameName);
-                this.ready = true;
-            });
-
-            this.mapper!.properties.player.team[0].species.change(e => {
-                console.log("this.mapper.properties.player.team[0].species: " + e.value);
-            });
-        }
+            await this.overlaySettings.load();
+            this.overlaySettings.setGame(gameName);
+            this.ready = true;
+        };
         this.mapper.onMapperUnloaded = () => {
             this.ready = false
-        }
+        };
         this.mapper.connect();
     },
 });
