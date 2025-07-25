@@ -7,8 +7,7 @@ import no_mapper from "~/components/no_mapper.js";
 import keyhook from "~/components/keyhook.js";
 import { PokemonGame } from "~/logic/PokeDataTypes.js";
 import { createPinia } from "pinia";
-import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
-import { useMetaStore } from "./stores/metaStore";
+import { useSettingsStore } from "./stores/useSettingsStore";
 
 const main = defineComponent({
     components: {
@@ -18,7 +17,7 @@ const main = defineComponent({
     },
     data() {
         return {
-            overlaySettings: useOverlaySettingsStore(),
+            settings: useSettingsStore(),
             ready: false as boolean,
             mapper: null as GameHookMapperClient|null,
             starterName: "Venomoth" as string,
@@ -31,8 +30,8 @@ const main = defineComponent({
             const gameName = this.mapper!.properties.meta.gameName.value;
             PokeData.setGame(gameName);
 
-            await this.overlaySettings.load();
-            this.overlaySettings.setGame(gameName);
+            await this.settings.overlay.load();
+            this.settings.overlay.setGame(gameName);
             this.ready = true;
         };
         this.mapper.onMapperUnloaded = () => {
@@ -46,7 +45,7 @@ const pinia = createPinia();
 export const app = createApp(main);
 app.use(pinia);
 
-app.config.errorHandler = ((err) => {
+app.config.errorHandler = ((err: any) => {
     console.log(err);
 });
 
