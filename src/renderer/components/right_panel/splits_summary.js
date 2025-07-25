@@ -1,4 +1,4 @@
-import PokeData from "../../logic/PokeData";
+import PokeData from "~/logic/PokeData";
 
 const template = /*html*/`
     <div>

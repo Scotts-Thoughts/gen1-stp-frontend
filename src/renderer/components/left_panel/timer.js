@@ -1,4 +1,4 @@
-import PubSub from "../../logic/PubSub";
+import PubSub from "~/logic/PubSub";
 
 // How the component will render:
 const template = /*html*/`

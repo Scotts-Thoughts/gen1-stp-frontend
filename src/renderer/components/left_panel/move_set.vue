@@ -35,10 +35,10 @@
 </template>
 
 <script lang="js">
-import { GameState, useMetaStore } from "../../stores/metaStore";
-import { stageModifiersData } from "../../data/stage-modifiers";
-import typeEffectiveness from "../../data/type-effectiveness";
-import PokeData from "../../logic/PokeData";
+import { GameState, useMetaStore } from "~/stores/metaStore";
+import { stageModifiersData } from "~/data/stage-modifiers";
+import typeEffectiveness from "~/data/type-effectiveness";
+import PokeData from "~/logic/PokeData";
 import { capitalize_words, move_name } from "../../methods/text_functions";
 import { defineComponent } from "vue";
 

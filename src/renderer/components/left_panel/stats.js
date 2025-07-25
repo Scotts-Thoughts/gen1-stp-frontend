@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
-import PokeData from "../../logic/PokeData";
-import { StatsPanelMode, useOverlaySettingsStore } from "../../stores/useOverlaySettingsStore";
-import { GameState, useMetaStore } from "../../stores/metaStore";
+import PokeData from "~/logic/PokeData";
+import { StatsPanelMode, useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
+import { GameState, useMetaStore } from "~/stores/metaStore";
 
 const template = /*html*/`
     <div class="statsContainer"> 

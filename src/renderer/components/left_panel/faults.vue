@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import Storage from "../../logic/Storage.js";
-import PubSub from "../../logic/PubSub";
-import { FaultMode, useSpeciesMetricsStore } from "../../stores/useSpeciesMetricsStore.js";
+import Storage from "~/logic/Storage.js";
+import PubSub from "~/logic/PubSub";
+import { FaultMode, useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
 import { defineComponent } from "vue";
-import { useMetaStore } from "../../stores/metaStore.js";
-import { useGameSpeciesData } from "../../stores/useGameSpeciesData.js";
+import { useMetaStore } from "~/stores/metaStore.js";
+import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";
 export default defineComponent({
     inject: [ "game_properties" ],
     props: [

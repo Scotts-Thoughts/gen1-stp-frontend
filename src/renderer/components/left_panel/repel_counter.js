@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
-import { useSpeciesMetricsStore } from "../../stores/useSpeciesMetricsStore.js";
-import { useOverlaySettingsStore } from "../../stores/useOverlaySettingsStore.js";
-import { GameState, useMetaStore } from "../../stores/metaStore.js";
+import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
+import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
+import { GameState, useMetaStore } from "~/stores/metaStore.js";
 const template = /*html*/`
     <div v-if="display">
         <transition name="fade">

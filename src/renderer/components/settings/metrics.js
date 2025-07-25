@@ -1,5 +1,5 @@
-import PubSub from "../../logic/PubSub";
-import {useSpeciesMetricsStore} from "../../stores/useSpeciesMetricsStore.js";
+import PubSub from "~/logic/PubSub";
+import {useSpeciesMetricsStore} from "~/stores/useSpeciesMetricsStore.js";
 import { defineComponent } from "vue";
 
 const template = /*html*/`

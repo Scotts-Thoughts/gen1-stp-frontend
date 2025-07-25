@@ -1,4 +1,4 @@
-import { PokemonSpecies } from "../../logic/PokeDataTypes";
+import { PokemonSpecies } from "~/logic/PokeDataTypes";
 
 export const CrystalDex: Record<string, PokemonSpecies> = {
 	"Abra": {

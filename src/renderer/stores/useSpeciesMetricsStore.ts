@@ -1,7 +1,7 @@
 // Metrics save when the game-species pair is changed or when the overlay unmounts
 
 import { defineStore } from "pinia";
-import { PokemonGame } from "../logic/PokeDataTypes";
+import { PokemonGame } from "~/logic/PokeDataTypes";
 const path = require('path');
 import { loadAppSettings, saveAppSettings } from "./helper/files";
 

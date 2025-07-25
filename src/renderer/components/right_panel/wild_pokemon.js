@@ -1,7 +1,7 @@
 import { get_enemy_pkmn_styles } from "../../methods/enemy";
-import PokeData from "../../logic/PokeData";
+import PokeData from "~/logic/PokeData";
 import { capitalize_words, move_name } from "../../methods/text_functions";
-import { useMetaStore } from "../../stores/metaStore";
+import { useMetaStore } from "~/stores/metaStore";
 import { defineComponent } from "vue";
 
 const template = /*html*/ `

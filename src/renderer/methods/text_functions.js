@@ -1,4 +1,4 @@
-import { backport_data } from "../data/backports";
+import { backport_data } from "~/data/backports";
 
 export function move_name(move_string) {
     if (!move_string) { 

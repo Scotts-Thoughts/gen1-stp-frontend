@@ -1,4 +1,4 @@
-import { Trainer } from "../../logic/PokeDataTypes";
+import { Trainer } from "~/logic/PokeDataTypes";
 
 export const YellowTrainers: Record<string, Trainer> = {
     "YOUNGSTER 1": {

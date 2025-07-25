@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
-import PokeData from "../../logic/PokeData";
-import { useOverlaySettingsStore } from "../../stores/useOverlaySettingsStore";
+import PokeData from "~/logic/PokeData";
+import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
 
 const template = /*html*/`
 <div>

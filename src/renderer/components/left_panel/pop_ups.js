@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import { useMetaStore } from "../../stores/metaStore";
+import { useMetaStore } from "~/stores/metaStore";
 
 const template = /*html*/`
     <div v-if="battle_fade == true && (meta.gameState == 'Battle' || meta.gameState == 'From Battle')">

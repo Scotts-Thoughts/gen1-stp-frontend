@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import { GameHookProperty } from "../../packages/gameHookMapperClient";
+import { GameHookProperty } from "~/packages/gameHookMapperClient";
 import { inject } from "vue"
 
 const game_properties = inject<Record<string, GameHookProperty>>("game_properties", {});

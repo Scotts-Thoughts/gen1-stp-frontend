@@ -1,9 +1,9 @@
-import { useMetaStore } from "../../stores/metaStore";
+import { useMetaStore } from "~/stores/metaStore";
 import battle_testing from "./battle_testing";
-import { useOverlaySettingsStore } from "../../stores/useOverlaySettingsStore";
-import { useGameSpeciesData } from "../../stores/useGameSpeciesData";
-import Timer from "../../logic/Timer";
-import { useSpeciesMetricsStore } from "../../stores/useSpeciesMetricsStore";
+import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
+import { useGameSpeciesData } from "~/stores/useGameSpeciesData";
+import Timer from "~/logic/Timer";
+import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore";
 import { defineComponent } from "vue";
 import { openFolder } from "../../methods/file_system_functions";
 // todo: remove the "parent.parent" stuff.

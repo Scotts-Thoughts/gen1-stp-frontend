@@ -1,8 +1,8 @@
-import PokeData from "../logic/PokeData.js";
-import Timer from "../logic/Timer.js";
-import PubSub from "../logic/PubSub";
-import Storage from "../logic/Storage.js";
-import MyStorage from "../logic/MyStorage.js";
+import PokeData from "~/logic/PokeData.js";
+import Timer from "~/logic/Timer.js";
+import PubSub from "~/logic/PubSub";
+import Storage from "~/logic/Storage.js";
+import MyStorage from "~/logic/MyStorage.js";
 
 import graphics from "./graphics.vue";
 
@@ -24,7 +24,7 @@ import splits_summary from "./right_panel/splits_summary.js";
 import enemy_graphic from "./right_panel/enemy_graphic.js";
 import wild_pokemon from "./right_panel/wild_pokemon.js";
 import { log_split, autosplitter_process, format_trainer_name, logData, logCopy } from "../autosplitter/autosplitter_functions.js";
-import { autosplitter } from "../data/autosplitter.js";
+import { autosplitter } from "~/data/autosplitter.js";
 import { application_settings } from "../settings/application_settings.js";
 import { pokemon_settings } from "../settings/pokemon_settings.js";
 import { time_settings } from "../settings/time_settings.js";
@@ -32,10 +32,10 @@ import { trainer_name_lookup } from "../autosplitter/trainer_name_lookup.js";
 import { split_trainers } from "../autosplitter/split_trainers.js";
 import { battle_summary } from "../autosplitter/battle_summary.js";
 import { computed, defineComponent } from "vue";
-import { RightPanelMode,  useOverlaySettingsStore } from "../stores/useOverlaySettingsStore.js";
-import { useGameSpeciesData } from "../stores/useGameSpeciesData.js";
-import { useSpeciesMetricsStore } from "../stores/useSpeciesMetricsStore.js";
-import { useMetaStore } from "../stores/metaStore";
+import { RightPanelMode,  useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
+import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";
+import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
+import { useMetaStore } from "~/stores/metaStore";
 import { convertDurationToSeconds, convertMSToDuration, convertSecondsToDuration } from "../utils/timehelpers.js";
 
 const template = /*html*/`

@@ -1,5 +1,5 @@
-import PokeData from "../../logic/PokeData";
-import typeEffectiveness from "../data/type-effectiveness";
+import PokeData from "~/logic/PokeData";
+import typeEffectiveness from "~/data/type-effectiveness";
 
 //determine if the player is in a `Mart` or `Department` store.
 //this is currently used to display the number of remaining vitamins that can be used on each stat

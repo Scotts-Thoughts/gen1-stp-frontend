@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
-import { RightPanelMode, StatsPanelMode, useOverlaySettingsStore } from "../stores/useOverlaySettingsStore";
-import Timer from "../logic/Timer";
+import { RightPanelMode, StatsPanelMode, useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
+import Timer from "~/logic/Timer";
 
 const Keys = {
     "ESCAPE":         0x1B,

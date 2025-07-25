@@ -1,4 +1,4 @@
-import { PokemonSpecies } from "../../logic/PokeDataTypes";
+import { PokemonSpecies } from "~/logic/PokeDataTypes";
 
 export const FireRedAndLeafGreenDex: Record<string, PokemonSpecies> = {
     "Bulbasaur": {

@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
-import Storage from "../../logic/Storage.js";
-import { useMetaStore } from "../../stores/metaStore.js";
+import Storage from "~/logic/Storage.js";
+import { useMetaStore } from "~/stores/metaStore.js";
 
 const template = /*html*/`
     <div>Encounter Settings:</div>

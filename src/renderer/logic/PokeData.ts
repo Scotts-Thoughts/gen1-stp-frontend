@@ -1,7 +1,7 @@
-import moves from "../data/moves.js";
-import { GameDexes } from "../data/pokedex";
-import { tmhm } from "../data/tmhm";
-import { trainers } from "../data/trainers/trainers";
+import moves from "~/data/moves.js";
+import { GameDexes } from "~/data/pokedex";
+import { tmhm } from "~/data/tmhm";
+import { trainers } from "~/data/trainers/trainers";
 import { PokemonGame, PokemonGeneration, PokemonMove, PokemonMovePool, PokemonSpecies } from "./PokeDataTypes.js";
 
 /**

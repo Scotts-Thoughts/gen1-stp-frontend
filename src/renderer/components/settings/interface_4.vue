@@ -70,7 +70,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import { RightPanelMode, SplitsMode, StatsPanelMode, useOverlaySettingsStore } from "../../stores/useOverlaySettingsStore";
+import { RightPanelMode, SplitsMode, StatsPanelMode, useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
 export default defineComponent({
     data() {
         return { 

@@ -1,5 +1,5 @@
-import { deprecated_autosplitter } from "../data/deprecated_autosplitter";
-import Timer from "../logic/Timer";
+import { deprecated_autosplitter } from "~/data/deprecated_autosplitter";
+import Timer from "~/logic/Timer";
 import { capitalize_words } from "../methods/text_functions";
 
 const path = require("path");

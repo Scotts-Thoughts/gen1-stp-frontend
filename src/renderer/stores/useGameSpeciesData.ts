@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { loadAppSettings, saveAppSettings } from "./helper/files";
-import Storage from "../logic/Storage.js";
+import Storage from "~/logic/Storage.js";
 const path = require('path');
 
 const SETTINGS_FILE_NAME = "settings.json";

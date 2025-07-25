@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { PokemonGame } from "../logic/PokeDataTypes";
+import { PokemonGame } from "~/logic/PokeDataTypes";
 import { loadAppSettings, saveAppSettings } from "./helper/files";
 
 export interface OverlayPopupSettings {

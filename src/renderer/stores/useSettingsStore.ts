@@ -2,7 +2,7 @@ import { ref, watch } from "vue";
 import { useOverlaySettingsStore } from "./useOverlaySettingsStore"
 import { useGameSpeciesData } from "./useGameSpeciesData";
 import { useSpeciesMetricsStore } from "./useSpeciesMetricsStore"
-import { PokemonGame } from "../logic/PokeDataTypes";
+import { PokemonGame } from "~/logic/PokeDataTypes";
 import { defineStore } from "pinia";
 
 export const useSettingsStore = defineStore('settings', () => {

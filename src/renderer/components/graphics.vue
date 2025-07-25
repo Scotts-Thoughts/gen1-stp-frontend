@@ -48,10 +48,10 @@
 
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue';
-import { textures } from '../data/textures';
+import { textures } from '~/data/textures';
 import { transition } from "../utils/transition";
-import { useMetaStore } from "../stores/metaStore";
-import { useGameSpeciesData } from "../stores/useGameSpeciesData";
+import { useMetaStore } from "~/stores/metaStore";
+import { useGameSpeciesData } from "~/stores/useGameSpeciesData";
 import { storeToRefs } from "pinia";
 const { artwork, background } = storeToRefs(useGameSpeciesData());
 const meta = useMetaStore();

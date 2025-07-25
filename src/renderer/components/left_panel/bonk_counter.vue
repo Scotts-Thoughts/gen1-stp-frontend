@@ -38,9 +38,9 @@
 
 <script lang="js">
 import { defineComponent } from "vue";
-import { useOverlaySettingsStore } from "../../stores/useOverlaySettingsStore.js";
-import { useSpeciesMetricsStore } from "../../stores/useSpeciesMetricsStore.js";
-import { GameState, useMetaStore } from "../../stores/metaStore.js";
+import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
+import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
+import { GameState, useMetaStore } from "~/stores/metaStore.js";
 export default defineComponent({
     inject: ["game_properties"],
     data() {

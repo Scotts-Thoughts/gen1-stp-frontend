@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
-import PokeData from "../../logic/PokeData";
-import { useMetaStore } from "../../stores/metaStore";
+import PokeData from "~/logic/PokeData";
+import { useMetaStore } from "~/stores/metaStore";
 
 const template = /*html*/`
 <div>

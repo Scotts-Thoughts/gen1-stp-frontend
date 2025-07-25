@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import PokeData from "../../logic/PokeData";
+import PokeData from "~/logic/PokeData";
 import { move_name } from "../../methods/text_functions";
 
 const template = /*html*/`

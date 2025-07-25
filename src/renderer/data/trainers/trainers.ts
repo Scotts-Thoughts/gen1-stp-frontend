@@ -1,4 +1,4 @@
-import { PokemonGame, Trainer } from "../../logic/PokeDataTypes.js";
+import { PokemonGame, Trainer } from "~/logic/PokeDataTypes.js";
 import { RedAndBlueTrainers } from "./RedAndBlueTrainers.js";
 import { YellowTrainers } from "./YellowTrainers.js";
 

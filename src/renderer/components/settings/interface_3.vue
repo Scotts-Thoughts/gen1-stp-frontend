@@ -98,9 +98,9 @@
 
 <script>
 import { defineComponent } from "vue";
-import { textures } from "../../data/textures";
-import { useGameSpeciesData } from "../../stores/useGameSpeciesData";
-import { useMetaStore } from "../../stores/metaStore";
+import { textures } from "~/data/textures";
+import { useGameSpeciesData } from "~/stores/useGameSpeciesData";
+import { useMetaStore } from "~/stores/metaStore";
 
 export default defineComponent({
     data() {

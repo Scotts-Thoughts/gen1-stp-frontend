@@ -35,9 +35,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import PokeData from "../../logic/PokeData";
-import { PokemonMovePool } from "../../logic/PokeDataTypes";
-import { useMetaStore } from "../../stores/metaStore";
+import PokeData from "~/logic/PokeData";
+import { PokemonMovePool } from "~/logic/PokeDataTypes";
+import { useMetaStore } from "~/stores/metaStore";
 export default defineComponent({
     data() {
         return { meta: useMetaStore() };

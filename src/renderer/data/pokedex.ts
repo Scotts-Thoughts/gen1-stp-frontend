@@ -1,4 +1,4 @@
-import { PokemonGame, PokemonSpecies } from "../logic/PokeDataTypes";
+import { PokemonGame, PokemonSpecies } from "~/logic/PokeDataTypes";
 import { CrystalDex } from "./pokedex/CrystalDex";
 import { DiamondAndPearlDex } from "./pokedex/DiamondAndPearlDex";
 import { HeartGoldAndSoulSilverDex } from "./pokedex/HeartGoldAndSoulSilverDex";

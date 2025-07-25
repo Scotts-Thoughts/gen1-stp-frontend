@@ -14,7 +14,7 @@ export default defineConfig({
     assetsInclude: ['**/*.svg', '**/*.png'],
     resolve: {
       alias: {
-        '@renderer': resolve('app'),
+        '~': resolve('src/renderer'),
       }
     },
     plugins: [
