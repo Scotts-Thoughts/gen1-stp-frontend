@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { loadAppSettings, saveAppSettings } from "./helper/files";
-import Storage from "~/logic/Storage.js";
+import { JsonStorage } from "~/logic/Storage.js";
 const path = require('path');
 
 const SETTINGS_FILE_NAME = "settings.json";
@@ -61,7 +61,7 @@ export const useGameSpeciesData = defineStore("game_species_data", {
 			}
 			const loadedSettings = await loadAppSettings<GameSpeciesSettigns>(path.join(game, starter), SETTINGS_FILE_NAME);
 			if (loadedSettings === null)  {
-				this.applyPresetStyle(Storage['games'][game][starter].style)
+				this.applyPresetStyle(JsonStorage['games'][game][starter].style)
 				return;
 			}
 			Object.assign(this.$state.styling, loadedSettings.styling);

@@ -1,8 +1,8 @@
 import PokeData from "~/logic/PokeData.js";
 import Timer from "~/logic/Timer.js";
 import PubSub from "~/logic/PubSub";
-import Storage from "~/logic/Storage.js";
-import MyStorage from "~/logic/MyStorage.js";
+import { JsonStorage} from "~/logic/Storage.js";
+import { LocalStorageProxy } from "~/logic/LocalStorageProxy.js";
 
 import graphics from "./graphics.vue";
 
@@ -22,7 +22,7 @@ import splits_first from "./right_panel/splits_first.js";
 import splits_followup from "./right_panel/splits_followup.js";
 import splits_summary from "./right_panel/splits_summary.vue";
 import enemy_graphic from "./right_panel/enemy_graphic.js";
-import wild_pokemon from "./right_panel/wild_pokemon.js";
+import wild_pokemon from "./right_panel/wild_pokemon.vue";
 import { log_split, autosplitter_process, format_trainer_name, logData, logCopy } from "../autosplitter/autosplitter_functions.js";
 import { autosplitter } from "~/data/autosplitter.js";
 import { application_settings } from "../settings/application_settings.js";
@@ -169,7 +169,7 @@ export default defineComponent({
             this.$watch(
                 () => this[prop_name],
                 (new_value) => {
-                    MyStorage[`${prop_name}`] = new_value;
+                    LocalStorageProxy[`${prop_name}`] = new_value;
                 }
             );
         }
@@ -179,16 +179,16 @@ export default defineComponent({
         const clear_storage = false; // Use this to test functionality. It resets all the data blocks within the Storage.json file to their default values
         if (debug_mode) { console.log(`Initializing the Storage Object...`) }
  
-        if (!Storage['application_settings'] || clear_storage == true) {
+        if (!JsonStorage['application_settings'] || clear_storage == true) {
             //Assigns the application settings to the Storage object, these persist when the user changes the starter Pokemon
-            Storage['application_settings'] = {}
+            JsonStorage['application_settings'] = {}
             application_settings.forEach(setting => {
-                Storage['application_settings'][setting[0]] = setting[1];
+                JsonStorage['application_settings'][setting[0]] = setting[1];
             });
         }
-        if (!Storage['games'] || clear_storage == true) {
+        if (!JsonStorage['games'] || clear_storage == true) {
             // Assigns the game data to the Storage object, these properties will be switched between depending on the game and starter currently selected
-            Storage['games'] = { //If the games object doesn't exist, create it; everything will be stored within here
+            JsonStorage['games'] = { //If the games object doesn't exist, create it; everything will be stored within here
                 Red: {},
                 Blue: {},
                 Yellow: {},
@@ -198,15 +198,15 @@ export default defineComponent({
             console.log(`Success!`)
             console.log(`Initializing Starter Storage Object...`)
         }
-        if (!Storage['games'][this.meta.game][this.meta.starter] || clear_storage == true) {
-            Storage['games'][this.meta.game][this.meta.starter] = {
+        if (!JsonStorage['games'][this.meta.game][this.meta.starter] || clear_storage == true) {
+            JsonStorage['games'][this.meta.game][this.meta.starter] = {
                 style: {},
                 settings: {},
                 splits: {},
                 data: {},
             };
             pokemon_settings.forEach(setting => {
-                Storage['games'][this.meta.game][this.meta.starter].style[setting[0]] = setting[1];
+                JsonStorage['games'][this.meta.game][this.meta.starter].style[setting[0]] = setting[1];
             });
         }
         if (debug_mode) { console.log(`Success!`) }
@@ -224,11 +224,11 @@ export default defineComponent({
             this.$watch(
                 () => this[prop_name],
                 (new_value) => {
-                    if (!Storage.application_settings) {
-                        Storage.application_settings = {};
+                    if (!JsonStorage.application_settings) {
+                        JsonStorage.application_settings = {};
                     }
-                    Storage.application_settings = {
-                        ...Storage.application_settings,
+                    JsonStorage.application_settings = {
+                        ...JsonStorage.application_settings,
                         [prop_name]: new_value
                     };
                 }
@@ -240,11 +240,11 @@ export default defineComponent({
             this.$watch(
                 () => this[prop_name],
                 (new_value) => {
-                    if (!Storage.games[this.meta.game][this.meta.starter]?.style) {
-                        Storage.games[this.meta.game][this.meta.starter].style = {};
+                    if (!JsonStorage.games[this.meta.game][this.meta.starter]?.style) {
+                        JsonStorage.games[this.meta.game][this.meta.starter].style = {};
                     }
-                    Storage.games[this.meta.game][this.meta.starter].style = {
-                        ...Storage.games[this.meta.game][this.meta.starter].style,
+                    JsonStorage.games[this.meta.game][this.meta.starter].style = {
+                        ...JsonStorage.games[this.meta.game][this.meta.starter].style,
                         [prop_name]: new_value
                     };
                 }
@@ -252,35 +252,35 @@ export default defineComponent({
         }
         if (debug_mode) {
             console.log(`Storage finished initialization. Printing Storage object to console...`)
-            console.log(Storage)
+            console.log(JsonStorage)
         }
         // Load Settings from the Storage object
         // Load Starter and Game
 
 
         // Application Settings
-        for (let key in Storage.application_settings) {
+        for (let key in JsonStorage.application_settings) {
             if (debug_mode) {
                 console.log(`Application Setting Key: ${key}`)
             }
-            let application_settings = Object.entries(Storage.application_settings); // Assign the Pokemon's style settings to an array
+            let application_settings = Object.entries(JsonStorage.application_settings); // Assign the Pokemon's style settings to an array
             for (let i = 0; i < application_settings.length; i++) { // Iterate through the array
-                this[key] = Storage.application_settings[key]; // Assign the values for each setting to the data() properties
+                this[key] = JsonStorage.application_settings[key]; // Assign the values for each setting to the data() properties
             }
         }
         // Pokemon Style Settings
-        for (let key in Storage.games[this.meta.game][this.meta.starter].style) {
+        for (let key in JsonStorage.games[this.meta.game][this.meta.starter].style) {
             let game = this.meta.game
             let starter = this.meta.starter
             // let game = "Yellow"
             // let starter = "Pikachu"
             if (debug_mode) {
                 console.log(`Pokemon Style Key: ${key}`)
-                console.log(Storage.games[game][starter].style[key])
+                console.log(JsonStorage.games[game][starter].style[key])
             }
-            let style_settings = Object.entries(Storage.games[game][starter].style); // Assign the Pokemon's style settings to an array
+            let style_settings = Object.entries(JsonStorage.games[game][starter].style); // Assign the Pokemon's style settings to an array
             for (let i = 0; i < style_settings.length; i++) { // Iterate through the array
-                this[key] = Storage.games[game][starter].style[key]; // Assign the values for each setting to the data() properties
+                this[key] = JsonStorage.games[game][starter].style[key]; // Assign the values for each setting to the data() properties
             }
         }
         if (debug_mode) {
@@ -291,13 +291,13 @@ export default defineComponent({
     watch: {
         current_splits: {
             handler: function (newVal, oldVal) {
-                MyStorage['current_splits'] = newVal
+                LocalStorageProxy['current_splits'] = newVal
             },
             deep: true,
         },
         previous_splits: {
             handler: function (newVal, oldVal) {
-                MyStorage['previous_splits'] = newVal
+                LocalStorageProxy['previous_splits'] = newVal
             },
             deep: true,
         },
@@ -306,8 +306,8 @@ export default defineComponent({
                 await this.sleep(250)
             }
             //update the saved starter in the overlay's local storage
-            if (!Storage['games'][this.meta.game][newValue]) {
-                Storage['games'][this.meta.game][newValue] = {
+            if (!JsonStorage['games'][this.meta.game][newValue]) {
+                JsonStorage['games'][this.meta.game][newValue] = {
                     settings: {},
                     splits: {},
                     data: {},
@@ -316,8 +316,8 @@ export default defineComponent({
         },
         async game_selection(newValue) {  // TODO: This can be removed once we obsoleted all uses of "Storage".
             //update the saved starter in the overlay's local storage
-            if (!Storage['games'][newValue][this.meta.starter]) {
-                Storage['games'][newValue][this.meta.starter] = {
+            if (!JsonStorage['games'][newValue][this.meta.starter]) {
+                JsonStorage['games'][newValue][this.meta.starter] = {
                     settings: {},
                     splits: {},
                     data: {},
@@ -404,8 +404,8 @@ export default defineComponent({
             return path.split('.').reduce((o, p) => (o || {})[p], obj);
         },
         load_split_settings() {
-            this.current_splits = MyStorage['current_splits'] ?? []
-            this.previous_splits = MyStorage['previous_splits'] ?? []
+            this.current_splits = LocalStorageProxy['current_splits'] ?? []
+            this.previous_splits = LocalStorageProxy['previous_splits'] ?? []
         },
         enemy_pkmn_faint_types(pkmnData) {
             if (this.meta.gameState == `To Battle`) {
@@ -414,9 +414,7 @@ export default defineComponent({
             else if (pkmnData?.hp == 0 || this.meta.gameState == `From Battle`) {
                 return "filter: grayscale(100%) drop-shadow(0px 0px 1px #000000c5); opacity: .5; "
             }
-            else {
-                return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"
-            }
+            return "filter: grayscale(0%) drop-shadow(0px 0px 1px #000000c5);"            
         },
         padTime(time) {
             if (!time) { return "00" }

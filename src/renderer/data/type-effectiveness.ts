@@ -1,3 +1,8 @@
+import { PokemonType } from "~/logic/PokeDataTypes"
+
+export type ExpandedType = PokemonType | "Bird"
+export type TypeEffectiveness = { moveType: ExpandedType } & Record<ExpandedType, number>
+
 export default [
     {    
         moveType: "Normal",    
@@ -417,4 +422,4 @@ export default [
         Fairy:    1,
         Bird:     1,
     },
-]
+] as TypeEffectiveness[];

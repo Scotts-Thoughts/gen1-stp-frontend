@@ -1,12 +1,14 @@
 import PubSub from "./PubSub";
-import MyStorage from "./MyStorage";
-const f = (x) => x.toString().padStart(2, "0");
+import { LocalStorageProxy } from "./LocalStorageProxy";
+const f = (x: number) => x.toString().padStart(2, "0");
 
 /**
  * Real-world timer.
  */
 class Timer {
-	constructor(storage) {
+	storage: Record<string, any>;
+	formatted_time: string[];
+	constructor(storage: Record<string, any>) {
 		// We use the storage for keeping track of timer_pause, timer_startTime and timer_pause_time:
 		// formatted_time is initalized here only as good practise. update() will always set it to the correct value.
 		// We do not keep formatted_time in storage, because we can always reconstruct it from the 3 variables we do
@@ -31,9 +33,9 @@ class Timer {
 
 	/**
  	 * Pause and set the timer back to default
-	 * @param {string} startTimeOffset The default value to set the timer to, as a string in the format `hh:mm:ss.ms`
+	 * @param startTimeOffset The default value to set the timer to, as a string in the format `hh:mm:ss.ms`
 	 */
-	setTimer = (startTimeOffset) => {
+	setTimer = (startTimeOffset: string) => {
 		const timeOffset = this.parseOffsetString(startTimeOffset);
 		this.storage.timer_pause = true;
 		this.storage.timer_startTime = Date.now() - timeOffset;
@@ -43,9 +45,9 @@ class Timer {
 
 	/**
 	 * Sets the timer (see {@link setTimer}) and unpauses it.
-	 * @param {*} startTimeOffset An offset to add to the timer value, a string in the format hh:mm:ss.ms.
+	 * @param startTimeOffset An offset to add to the timer value, a string in the format hh:mm:ss.ms.
 	 */
-	startTime = (startTimeOffset) => {
+	startTime = (startTimeOffset: string) => {
 		if (this.storage.timer_pause == false) {
 			return
 		}
@@ -104,21 +106,21 @@ class Timer {
 		} else if (m != 0) {
 			this.formatted_time = [ m + ":" + f(s), "." + f(ms), h + "h" + m + "m" + s + "s", ]
 		} else {
-			this.formatted_time = [ s, "." + f(ms), h + "h" + m + "m" + s + "s", ]
+			this.formatted_time = [ s.toString(), "." + f(ms), h + "h" + m + "m" + s + "s", ]
 		}
 		PubSub.publish("@timer/update", this.formatted_time);
 	}
 
 	/**
 	 * Parses a time value string with format `hh:mm:ss.ms` and returns the number of milliseconds that value describes.
-	 * @param {string} offset The offset string to parse.
-	 * @returns {number} Milliseconds
+	 * @param offset The offset string to parse.
+	 * @returns Milliseconds
 	 */
-	parseOffsetString = (offset) => {
+	parseOffsetString = (offset: string): number => {
 		const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
 		const timeOffsetArray = offset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
 		return timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
 	}
 }
 
-export default new Timer(MyStorage);
+export default new Timer(LocalStorageProxy);

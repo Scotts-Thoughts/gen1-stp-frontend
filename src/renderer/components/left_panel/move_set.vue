@@ -6,26 +6,22 @@
         <div class="movesetLabel labelPP">pp</div>
         <div class="movesetContainer">
             <div v-for="move in pkmnMoves" v-if="meta.gameState != 'No Pokemon'">
-                <div
-                    v-if="game_properties.player.team[0].level > 0 && game_properties.player.team[0][move].value != null">
-                    <img :class="'movesetStyling iconStyling ' + move + 'icon'"
-                        :src="moveTypeIcon(get_backport_move(move))" />
-                    <div v-show="game_properties.player.team[0][move].value != null"
-                        :class="'movesetStyling moveStyling ' + move">
+                <div v-if="game_properties.player.team[0].level.value > 0 && game_properties.player.team[0][move].value != null">
+                    <img :class="'movesetStyling iconStyling ' + move + 'icon'" :src="moveTypeIcon(get_backport_move(move))" />
+                    <div v-show="game_properties.player.team[0][move].value != null" :class="'movesetStyling moveStyling ' + move">
                         {{ move_name(capitalize_words(get_backport_move(move))) }}
                     </div>
                     <div v-show="game_properties.player.team[0][move].value != null"
                         :class="'movesetStyling powerStyling ' + move"
-                        :key="type_effectiveness(dynamic_mon, move, game_properties.battle.enemyPokemon)">
+                        :key="type_effectiveness(dynamic_mon, move, game_properties.battle.enemyPokemon)"
+                    >
                         {{ type_effectiveness(dynamic_mon, move, game_properties.battle.enemyPokemon) || "-" }}
                     </div>
-                    <div v-show="game_properties.player.team[0][move].value != null"
-                        :class="'movesetStyling accuracyStyling ' + move">
-                        {{ moveAccuracyEvasionDynamic(get_backport_move(move)) || "-" }}<span
-                            style="font-size: 20px;">%</span>
+                    <div v-show="game_properties.player.team[0][move].value != null" :class="'movesetStyling accuracyStyling ' + move">
+                        {{ moveAccuracyEvasionDynamic(get_backport_move(move)) || "-" }}
+                        <span style="font-size: 20px;">%</span>
                     </div>
-                    <div v-show="game_properties.player.team[0][move].value != null"
-                        :class="'movesetStyling ppStyling ' + move">
+                    <div v-show="game_properties.player.team[0][move].value != null" :class="'movesetStyling ppStyling ' + move">
                         {{ game_properties.player.team[0][move + "pp"] }}
                     </div>
                 </div>
@@ -34,18 +30,20 @@
     </div>
 </template>
 
-<script lang="js">
-import { GameState, useMetaStore } from "~/stores/metaStore";
-import { stageModifiersData } from "~/data/stage-modifiers";
-import typeEffectiveness from "~/data/type-effectiveness";
-import PokeData from "~/logic/PokeData";
+<script lang="ts">
+import { GameState, useMetaStore } from "~/stores/metaStore.ts";
+import { stageModifiersData } from "~/data/stage-modifiers.ts";
+import typeEffectiveness from "~/data/type-effectiveness.ts";
+import PokeData from "~/logic/PokeData.ts";
 import { capitalize_words, move_name } from "../../methods/text_functions";
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
+import { GameHookProperty } from "~/packages/gameHookMapperClient";
 
 export default defineComponent({
-    inject: [ "game_properties" ],
     data() {
         return {
+            /** Provided by the `frontend` component. */
+            game_properties: inject<Record<string, GameHookProperty>>("game_properties", {}),
             meta: useMetaStore(),
             typeCalcs: true, // Calculates effective power based on the pokemon in battle, if false returns the move's base power with no modifications
             showCritMultiplierInEP: true, // Shows crit multiplier in the effective power if the Pokemon will always score a critical hit with the given move
@@ -75,8 +73,8 @@ export default defineComponent({
                     species = this.meta.starter
                 }
                 return {
-                    species: { value: pokedex_data.name },
-                    ...pokedex_data
+                    ...pokedex_data,
+                    species: { value: pokedex_data.species },
                 }
             }
             else {
@@ -128,7 +126,7 @@ export default defineComponent({
                     default: return move_name
                 }
             }
-            else return move_name
+            return move_name
         },
         get_backport_move(slot) {
             if (!this.dynamic_mon[slot]) {

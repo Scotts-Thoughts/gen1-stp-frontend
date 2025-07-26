@@ -14,7 +14,7 @@
 <script>
 import { defineComponent } from "vue";
 import battle_popups from "./left_panel/battle_popups.vue";
-import type_icons from "./left_panel/type_icons.js";
+import type_icons from "./left_panel/type_icons.vue";
 import moveset from "./left_panel/move_set.vue";
 import stats from "./left_panel/stats.vue";
 import exp_bar from "./left_panel/exp_bar";

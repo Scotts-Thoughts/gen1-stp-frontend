@@ -360,6 +360,7 @@ export function format_trainer_name(trainer_class, trainer_number) {
     else return capitalize_words(trainer_class)
 }
 
+// TODO: the `refilmed_finish` parameter is unused.
 export function logData(gameName, gameName_Path, str, file_name, starterName, log_type, testStatus, refilming_mode, refilmed_attempt, refilmed_finish) {
     const dirPath = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/attempts/` : `./splits/${gameName_Path}/${starterName}/attempts/`;
     const testStatusText = testStatus ? "test_run_" : "";
@@ -457,6 +458,7 @@ export function logData(gameName, gameName_Path, str, file_name, starterName, lo
     });
 }
 
+// TODO: the `refilmed_finish` parameter is unused.
 export function logCopy(gameName, gameName_Path, file_name, starterName, finished_run_count, refilming_mode, refilmed_attempt, refilmed_finish) {
     var dirPathAttempts = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/attempts/` : `./splits/${gameName_Path}/${starterName}/attempts/`
     var dirPathFinishes = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/finishes/` : `./splits/${gameName_Path}/${starterName}/finishes/`

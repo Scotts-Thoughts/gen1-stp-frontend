@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import Storage from "~/logic/Storage.js";
+import { JsonStorage } from "~/logic/Storage.js";
 import { useMetaStore } from "~/stores/metaStore.js";
 
 const template = /*html*/`
@@ -36,16 +36,16 @@ export default defineComponent({
     data() {
         return {
             meta: useMetaStore(),
-            toggle_wEarlyEncounters: Storage.application_settings.toggle_wEarlyEncounters ?? false,
-            toggle_wEarlyEncountersNoMoon: Storage.application_settings.toggle_wEarlyEncountersNoMoon ?? false,
-            toggle_EVENT_ENCOUNTER_ROUTE1_TEST: Storage.application_settings.toggle_EVENT_ENCOUNTER_ROUTE1_TEST ?? false, // Yellow
-            toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY: Storage.application_settings.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY ?? false, // Yellow
-            toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW: Storage.application_settings.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW ?? false, // Yellow
-            toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE: Storage.application_settings.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE ?? false, // Red and Blue
-            toggle_EVENT_ENCOUNTER_MTMOON_PARAS: Storage.application_settings.toggle_EVENT_ENCOUNTER_MTMOON_PARAS ?? false, // Red and Blue
-            toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER: Storage.application_settings.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER ?? false, // Red and Blue
-            toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW: Storage.application_settings.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW ?? false, // Red/Blue/Yellow
-            toggle_EVENT_ENCOUNTER_ROUTE16_DODUO: Storage.application_settings.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO ?? false, // Red/Blue/Yellow
+            toggle_wEarlyEncounters: JsonStorage.application_settings.toggle_wEarlyEncounters ?? false,
+            toggle_wEarlyEncountersNoMoon: JsonStorage.application_settings.toggle_wEarlyEncountersNoMoon ?? false,
+            toggle_EVENT_ENCOUNTER_ROUTE1_TEST: JsonStorage.application_settings.toggle_EVENT_ENCOUNTER_ROUTE1_TEST ?? false, // Yellow
+            toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY: JsonStorage.application_settings.toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY ?? false, // Yellow
+            toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW: JsonStorage.application_settings.toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW ?? false, // Yellow
+            toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE: JsonStorage.application_settings.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE ?? false, // Red and Blue
+            toggle_EVENT_ENCOUNTER_MTMOON_PARAS: JsonStorage.application_settings.toggle_EVENT_ENCOUNTER_MTMOON_PARAS ?? false, // Red and Blue
+            toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER: JsonStorage.application_settings.toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER ?? false, // Red and Blue
+            toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW: JsonStorage.application_settings.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW ?? false, // Red/Blue/Yellow
+            toggle_EVENT_ENCOUNTER_ROUTE16_DODUO: JsonStorage.application_settings.toggle_EVENT_ENCOUNTER_ROUTE16_DODUO ?? false, // Red/Blue/Yellow
         }
     },
     created() {
@@ -73,7 +73,7 @@ export default defineComponent({
                 () => this[toggleProp],
                 (new_value) => {
                     set_encounter_toggle(encounterFlag, new_value);
-                    Storage.application_settings[toggleProp] = new_value;
+                    JsonStorage.application_settings[toggleProp] = new_value;
                 }
             );
         }
@@ -83,10 +83,10 @@ export default defineComponent({
     watch: {
         toggle_wEarlyEncounters(newValue) {
             this.game_properties.patch.wEarlyEncounters.set(newValue ? "On" : "Off", false);
-            Storage.application_settings.toggle_wEarlyEncounters = newValue
+            JsonStorage.application_settings.toggle_wEarlyEncounters = newValue
         },
         toggle_wEarlyEncountersNoMoon(newValue) {
-            Storage.application_settings.toggle_wEarlyEncountersNoMoon = newValue
+            JsonStorage.application_settings.toggle_wEarlyEncountersNoMoon = newValue
         },
     },
     methods: {

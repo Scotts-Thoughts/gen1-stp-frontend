@@ -1,41 +1,37 @@
-import { get_enemy_pkmn_styles } from "../../methods/enemy";
-import PokeData from "~/logic/PokeData";
-import { capitalize_words, move_name } from "../../methods/text_functions";
-import { useMetaStore } from "~/stores/metaStore";
-import { defineComponent } from "vue";
 
-const template = /*html*/ `
+
+<template>
 <div v-if="meta.gameState == 'Battle' || meta.gameState == 'From Battle'">
     <div class="trainerLabel">{{"Wild " + wild_pkmn_name(wild_mon.species.value)}}</div>
     <div class="tinted-box" style="height: 242px; --url: url(../images/ui/opponent.svg);"></div>
     <div class="enemyGraphic">
         <div class="ePkmnStyle">
             <!-- Art -->
-            <img v-if="game_properties.meta.gameName == 'Yellow'"            class="ePkmnSprite" :style="get_enemy_pkmn_styles(wild_mon).faint" :src="'images/pokemon/' + wild_mon.species.value + '.png'"/>
-            <img v-else-if="game_properties.meta.gameName == 'Red and Blue'" class="ePkmnSprite" :style="get_enemy_pkmn_styles(wild_mon).faint" :src="'images/pokemon/Red_and_Blue/' + wild_mon.species.value + '.png'"/>
+            <img v-if="meta.game == 'Yellow'"            class="ePkmnSprite" :style="enemy_styles.faint" :src="'images/pokemon/' + wild_mon.species.value + '.png'"/>
+            <img v-else-if="meta.game == 'Red and Blue'" class="ePkmnSprite" :style="enemy_styles.faint" :src="'images/pokemon/Red_and_Blue/' + wild_mon.species.value + '.png'"/>
             
             <!-- UI Elements -->
             <img class="canvas" :class="svgColorClass(speed_comparison(wild_mon.speed).comparison, wild_mon)" :src="'images/ui/speed_comp/0.svg'"/>
-            <img class="enemyStatsArea opacityTransition" :style="get_enemy_pkmn_styles(wild_mon).faint_stats_background" :src="'images/stats/0.svg'"/>
+            <img class="enemyStatsArea opacityTransition" :style="enemy_styles.faint_stats_background" :src="'images/stats/0.svg'"/>
             
             <!-- Types -->
-            <img                                       class="ePkmnTypeIcons ePkmnType_1 ds opacityTransition" :style="enemy_pkmn_faint_types(wild_mon)" :src="'images/elements/type-icons/' + enemyType1(0).toLowerCase() + '.png'"/>
-            <img v-if="enemyType1(0) != enemyType2(0)" class="ePkmnTypeIcons ePkmnType_2 ds opacityTransition" :style="enemy_pkmn_faint_types(wild_mon)" :src="'images/elements/type-icons/' + enemyType2(0).toLowerCase() + '.png'"/>
-            <img v-if="enemyType3(0) == 'Ghost'"       class="ePkmnTypeIcons ePkmnType_3 ds opacityTransition" :style="enemy_pkmn_faint_types(wild_mon)" :src="images/elements/type-icons/ghost.png"/>
+            <img                                       class="ePkmnTypeIcons ePkmnType_1 ds opacityTransition" :style="enemy_fainted_styles" :src="'images/elements/type-icons/' + enemyType1().toLowerCase() + '.png'"/>
+            <img v-if="enemyType1() != enemyType2(0)"  class="ePkmnTypeIcons ePkmnType_2 ds opacityTransition" :style="enemy_fainted_styles" :src="'images/elements/type-icons/' + enemyType2(0).toLowerCase() + '.png'"/>
+            <img v-if="enemyType3(0) == 'Ghost'"       class="ePkmnTypeIcons ePkmnType_3 ds opacityTransition" :style="enemy_fainted_styles" :src="'images/elements/type-icons/ghost.png'"/>
             
             <!-- Species & Level -->
-            <div class="ePkmnSpecies opacityTransition" :style="get_enemy_pkmn_styles(wild_mon).species">{{wild_mon.species.value}}</div>
-            <div class="ePkmnLevel opacityTransition"   :style="get_enemy_pkmn_styles(wild_mon).species">Lv:{{wild_mon.level.value}}</div>
+            <div class="ePkmnSpecies opacityTransition" :style="enemy_styles.species">{{wild_mon.species.value}}</div>
+            <div class="ePkmnLevel opacityTransition"   :style="enemy_styles.species">Lv:{{wild_mon.level.value}}</div>
             
             <!-- Moves -->
-            <div v-for="move_index in moves = [0, 1, 2, 3]">
+            <div v-for="move_index in [0, 1, 2, 3]">
                 <img v-if="wild_mon['move' + (move_index + 1)]?.value != null" 
                     :class="'ds eMoveIconStyle moveIcon' + (move_index + 1) + ' opacityTransition'" 
-                    :style="enemy_pkmn_faint_types(wild_mon)" 
+                    :style="enemy_fainted_styles" 
                     :src="'images/elements/type-icons/' + (getMove[move_name(wild_mon['move' + (move_index + 1)]?.value)]?.type?.toLowerCase() || 'normal') + '.png'" 
                 />
                 <div :class="'ePkmnMoveStyle ePkmnMove' + (move_index + 1) + ' opacityTransition'" 
-                    :style="get_enemy_pkmn_styles(wild_mon).text">
+                    :style="enemy_styles.text">
                     {{move_name(wild_mon['move' + (move_index + 1)]?.value)}}
                 </div>
             </div>
@@ -49,20 +45,20 @@ const template = /*html*/ `
             <div class="ePkmnStatLabelStyle ePkmnLabelCrit opacityTransition" :style="stat_mod(0).style"                                           >Crit.</div>
 
             <!-- Stats -->
-            <div class="ePkmnStatsStyle ePkmnHp   opacityTransition" :style="get_enemy_pkmn_styles(wild_mon).text">{{wild_mon.maxHp.value}}</div>
-            <div class="ePkmnStatsStyle ePkmnAtk  opacityTransition" :style="get_enemy_pkmn_styles(wild_mon).text">{{wild_mon.attack.value}}</div>
-            <div class="ePkmnStatsStyle ePkmnDef  opacityTransition" :style="get_enemy_pkmn_styles(wild_mon).text">{{wild_mon.defense.value}}</div>
-            <div class="ePkmnStatsStyle ePkmnSpc  opacityTransition" :style="get_enemy_pkmn_styles(wild_mon).text">{{wild_mon.speed.value}}</div>
-            <div class="ePkmnStatsStyle ePkmnSpe  opacityTransition" :style="get_enemy_pkmn_styles(wild_mon).text">{{wild_mon.special.value}}</div>
-            <div class="ePkmnStatsStyle ePkmnCrit opacityTransition" :style="get_enemy_pkmn_styles(wild_mon).text">{{enemy_crit_rate(wild_mon)}}%</div>
+            <div class="ePkmnStatsStyle ePkmnHp   opacityTransition" :style="enemy_styles.text">{{wild_mon.maxHp.value}}</div>
+            <div class="ePkmnStatsStyle ePkmnAtk  opacityTransition" :style="enemy_styles.text">{{wild_mon.attack.value}}</div>
+            <div class="ePkmnStatsStyle ePkmnDef  opacityTransition" :style="enemy_styles.text">{{wild_mon.defense.value}}</div>
+            <div class="ePkmnStatsStyle ePkmnSpc  opacityTransition" :style="enemy_styles.text">{{wild_mon.speed.value}}</div>
+            <div class="ePkmnStatsStyle ePkmnSpe  opacityTransition" :style="enemy_styles.text">{{wild_mon.special.value}}</div>
+            <div class="ePkmnStatsStyle ePkmnCrit opacityTransition" :style="enemy_styles.text">{{enemy_crit_rate(wild_mon)}}%</div>
         
             <!-- Modifiers -->
-            <div v-for="mod in modifiers = [
+            <div v-for="mod in [
                 ['modEnemyStageAttack',  'Atk',],
                 ['modEnemyStageDefense', 'Def',],
                 ['modEnemyStageSpecial', 'Spc',],
                 ['modEnemyStageSpeed',   'Spd',],
-                ]">
+            ]">
                 <div v-show="(meta.enemyState == 'Pokemon' || meta.enemyState == 'Pokemon Sent Out' || meta.enemyState == 'Fainting') && wild_mon[mod[0]].value != '0'" 
                     :class="'ePkmnModsStyle ePkmnMod' + mod[1]">
                     {{stat_mod(wild_mon[mod[0]].value).mod}}
@@ -71,23 +67,31 @@ const template = /*html*/ `
             <!-- Speed Comparison -->
             <div>
                 <transition name="fade">
-                    <div v-show="speed_comparison_toggle == true" :style="get_enemy_pkmn_styles(wild_mon).text" class="speed_comparison">{{speed_comparison(wild_mon.speed).comparison}}</div>
+                    <div v-show="speed_comparison_toggle == true" :style="enemy_styles.text" class="speed_comparison">{{speed_comparison(wild_mon.speed).comparison}}</div>
                 </transition>
             </div>
         </div>
     </div> 
 </div>
-`
+</template>
 
+<script lang="ts">
+import { get_enemy_pkmn_styles } from "../../methods/enemy";
+import PokeData from "~/logic/PokeData";
+import { capitalize_words, move_name } from "../../methods/text_functions";
+import { useMetaStore } from "~/stores/metaStore";
+import { defineComponent, inject } from "vue";
+import { GameHookProperty } from "~/packages/gameHookMapperClient";
+
+type SpeedComparison = "Outspeeds" | "Outsped" | "Speed-tie";
 export default defineComponent({
-    template,
     props: [
         "enemy_pkmn_faint_types",
         "speed_comparison_toggle",
     ],
-    inject: [ "game_properties" ],
     data() {
         return {
+            game_properties: inject<Record<string, GameHookProperty>>("game_properties", {}),
             meta: useMetaStore(),
             enemyModColour:  ["0", "background: #d84444;"],
         }
@@ -114,7 +118,6 @@ export default defineComponent({
             if (this.meta.gameState !== "Battle") { 
                 return this.enemyModColour
             }
-            var neutral = ["0", "background: #a1a1a1;"]
             var raised = [modValue, "background: #d84444;"]
             var lowered = [modValue, "background: #21c500"]
             if (modValue < 0) { 
@@ -127,12 +130,12 @@ export default defineComponent({
             }
             return this.enemyModColour 
         },
-        speed_comparison(enemy_speed_incoming) {
+        speed_comparison(enemy_speed_incoming): { comparison: SpeedComparison, color: string} {
             let enemy_hp = this.game_properties.battle.enemyPokemon.hp.value
             let player_speed   = this.game_properties.battle.yourPokemon.speed.value
             let enemy_speed = enemy_speed_incoming.value
             let object = {
-                comparison: "Outspeeds",
+                comparison: "Outspeeds" as SpeedComparison,
                 color: "background-color: rgba(255, 63, 63, 0.6)",
             }
             if (player_speed > enemy_speed) {
@@ -148,7 +151,7 @@ export default defineComponent({
             }
             return object
         },
-        svgColorClass(speed_comparison, enemy_data) {
+        svgColorClass(speed_comparison: SpeedComparison, enemy_data: GameHookProperty) {
             const isFainted = enemy_data.hp.value
             if (isFainted == 0) {
                 return 'grey-svg';
@@ -161,16 +164,16 @@ export default defineComponent({
             }
             return 'red-svg';
         },
-        enemyType1(slotNumber) {
+        enemyType1() {
             const speciesName = this.game_properties.battle.enemyPokemon.species.value
             if (speciesName == null) { 
                 return "Normal"
             }
             return PokeData.getSpecies(speciesName).type_1
         },
-        enemyType2(slotNumber) {
+        enemyType2(slotNumber: number) {
             const speciesName = this.game_properties.battle.enemyPokemon.species.value
-            const type_1 = this.enemyType1(slotNumber)
+            const type_1 = this.enemyType1()
             if (speciesName == null) { 
                 return "Normal"
             }
@@ -180,7 +183,7 @@ export default defineComponent({
             }
             return type_2
         },
-        enemyType3(slotNumber) {
+        enemyType3(slotNumber: number) {
             const speciesName = this.game_properties.battle.enemyPokemon?.species.value
             const type1 = PokeData.getSpecies(speciesName)?.type_1 || "Normal"
             const type2 = PokeData.getSpecies(speciesName)?.type_2 || "Normal"
@@ -216,17 +219,25 @@ export default defineComponent({
             // console.log(object)
             return object
         },
-        enemy_crit_rate(pkmnData) {
+        enemy_crit_rate(pkmnData: GameHookProperty) {
             const speciesName = pkmnData?.species.value
             const base_speed = PokeData.getSpecies(speciesName)?.base_stats.speed
             if (base_speed) {
                 return Math.round(Math.round((Math.floor(base_speed/2)/256) * 10000) / 100)
             }
+            return "";
         },
     },
     computed: {
+        enemy_fainted_styles() {
+            return this.enemy_pkmn_faint_types(this.game_properties.battle.enemyPokemon);
+        },
+        enemy_styles() {
+            return this.get_enemy_pkmn_styles(this.game_properties.battle.enemyPokemon);
+        },
         wild_mon() {
             return this.game_properties.battle.enemyPokemon
         }
     }
 });
+</script>

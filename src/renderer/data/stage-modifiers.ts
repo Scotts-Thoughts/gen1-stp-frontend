@@ -1,3 +1,6 @@
+type ModifierStage = "-6" | "-5" | "-4" | "-3" | "-2" | "-1" | "0" | "1" | "2" | "3" | "4" | "5" | "6";
+type ModifierData = {modType: "stat" | "accuracy" | "evasion" } & Record<ModifierStage, number>;
+
 export const stageModifiersData = [
   {
     "modType": "stat",
@@ -47,4 +50,4 @@ export const stageModifiersData = [
     "5": (28/100),
     "6": (25/100),
   },
-];
+] as ModifierData[];

@@ -60,7 +60,7 @@ function createStoredObject(folder_path, file_name, { saveTimeout, onSave } = {}
 }
 
 
-export default createStoredObject('./storage', 'Storage.json', {
+export const JsonStorage = createStoredObject('./storage', 'Storage.json', {
     saveTimeout: 250,
     onSave: (data) => {
         // console.log('[Storage] saved:', data);

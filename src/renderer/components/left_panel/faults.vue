@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Storage from "~/logic/Storage.js";
+import { JsonStorage } from "~/logic/Storage.js";
 import PubSub from "~/logic/PubSub";
 import { FaultMode, useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
 import { defineComponent } from "vue";
@@ -47,13 +47,12 @@ export default defineComponent({
             meta: useMetaStore,
             metrics: useSpeciesMetricsStore(),
             runConfig: useGameSpeciesData(),
-            flag_blackout_prerequisite: Storage.games[this.meta.game]?.[this.meta.starter]?.data?.flag_blackout_prerequisite ?? false,
+            flag_blackout_prerequisite: JsonStorage.games[this.meta.game]?.[this.meta.starter]?.data?.flag_blackout_prerequisite ?? false,
         }
     },
     computed: {
         top_left_ui_selector() {
             const allow_none = true // Toggle that allows for the UI to display no border if there are no faults
-            let value = ""
             if (!allow_none && this.metrics.faultsMode === FaultMode.none) {
                 return FaultMode.resets;
             }
@@ -107,7 +106,7 @@ export default defineComponent({
         //! These watchers are just used to emit the changes of these properties for other components to use, there will be a better way to do this.
         //! This may be important just to keep thes values backed up
         flag_blackout_prerequisite(new_value) {
-            Storage.games[this.meta.game][this.meta.starter].data.flag_blackout_prerequisite = new_value
+            JsonStorage.games[this.meta.game][this.meta.starter].data.flag_blackout_prerequisite = new_value
         }
     },
     mounted() {

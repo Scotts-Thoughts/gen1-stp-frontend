@@ -7,11 +7,15 @@
     "src/preload/*.d.ts"
   ],
   "compilerOptions": {
+    "noEmit": true,
     "composite": true,
     "noUnusedLocals": false,  
     "noUnusedParameters": false,
+    "allowImportingTsExtensions": true,
     "baseUrl": ".",
     "allowJs": true,
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
     "paths": {
       "~/*": [
         "src/renderer/*"
