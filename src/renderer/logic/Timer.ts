@@ -3,10 +3,44 @@ import { SpeciesMetricStore } from "~/stores/useSpeciesMetricsStore";
 const f = (x: number) => x.toString().padStart(2, "0");
 
 export type TimerData = {
+	/** Whether the timer is paused. */
 	paused: boolean
+	/** The timestamp of when the timer was started (milliseconds since UNIX epoch). */
 	started_at: number
+	/** The timestamp of when the timer was paused (milliseconds since UNIX epoch). */
 	paused_at: number
 };
+
+/** Calculate the elapsed time (in hours, seconds, minunutes, milliseconds) on the timer. */
+export function getTime(timer: TimerData) {
+	var time = Date.now() - timer.started_at
+	if (timer.paused == true) {
+		time = timer.paused_at - timer.started_at
+	}
+	return {
+		ms: (Math.floor(time / 10) % 100),
+		seconds: (Math.floor(time / 1000) % 60),
+		minutes: (Math.floor(time / 60000) % 60),
+		hours: (Math.floor(time / 3600000))
+	};
+}
+
+/** 
+ * Format a time object into an array of strings with the following formats:
+ * 
+ * * 0: `[<hh>:][<mm>:][<ss>]` (e.g. `01:23:45` or `23:45`).
+ * * 1: `.<ms>` (e.g. `.67`)
+ * * 2: `<h>h<m>m<s>s`  (e.g. `1h23m45s`)
+ */
+export function formatTime(time: ReturnType<typeof getTime>): [string, string, string] {
+	const {ms: ms, seconds: s, minutes: m, hours: h} = time;
+	if (h != 0) {
+		return [ h + ":" + f(m) + ":" + f(s), "." + f(ms), h + "h" + m + "m" + s + "s", ];
+	} else if (m != 0) {
+		return [ m + ":" + f(s), "." + f(ms), h + "h" + m + "m" + s + "s", ];
+	} 
+	return [ s.toString(), "." + f(ms), h + "h" + m + "m" + s + "s", ];
+}
 
 /**
  * Real-world timer.
@@ -94,37 +128,10 @@ export class Timer {
 	}
 
 	/**
-	 * Get the current timer value as an object.
-	 * @returns {{ms: number, seconds:number,minutes: number ,hours: number}} 
-	 * An object containing the hours, minutes, seconds and milliseconds that have elapsed on the timer.
-	 */
-	getTime = () => {
-		var time = Date.now() - this._store.timer.started_at
-		if (this._store.timer.paused == true) {
-			time = this._store.timer.paused_at - this._store.timer.started_at
-		}
-		return {
-			ms: (Math.floor(time / 10) % 100),
-			seconds: (Math.floor(time / 1000) % 60),
-			minutes: (Math.floor(time / 60000) % 60),
-			hours: (Math.floor(time / 3600000))
-		};
-	}
-
-	/**
 	 * Updates the {@link formatted_time} and publishes a `time_update` event which the "Timer" vue component listens for.
 	 */
 	update = () => {
-		const {ms: ms, seconds: s, minutes: m, hours: h} = this.getTime();		
-		if (h != 0) {
-			this.formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(ms), h + "h" + m + "m" + s + "s", ]
-		} else if (m != 0) {
-			this.formatted_time = [ m + ":" + f(s), "." + f(ms), h + "h" + m + "m" + s + "s", ]
-		} else {
-			this.formatted_time = [ s.toString(), "." + f(ms), h + "h" + m + "m" + s + "s", ]
-		}
-		// console.log(`PubSub.publish("@timer/update", this.formatted_time);`, this.formatted_time, this.getTime());
-		PubSub.publish("@timer/update", this.formatted_time);
+		PubSub.publish("@timer/update", formatTime(getTime(this._store.timer)));
 	}
 
 	/**

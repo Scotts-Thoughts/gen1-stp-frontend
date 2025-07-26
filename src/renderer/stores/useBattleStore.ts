@@ -1,9 +1,9 @@
 
 import { defineStore } from "pinia";
 import { GameHookProperty } from "~/packages/gameHookMapperClient";
-import { Timer } from "~/logic/Timer";
 import { battle_summary  } from "~/autosplitter/battle_summary";
 import { convertMSToDuration } from "~/utils/timehelpers";
+import { useSpeciesMetricsStore } from "./useSpeciesMetricsStore";
 
 function getByPath(obj: Record<string, GameHookProperty>, path: string): any {
 	return path.split('.').reduce((o, p) => (o || {})[p], obj);
@@ -60,8 +60,7 @@ export const useBattleStore = defineStore('battle', {
 			if (battleType !== "Trainer" || !collectData) {
 				return;
 			}
-			const time = Timer.instance().getTime();
-			const formatted_time = Timer.instance().formatted_time;
+			const { raw: time, formatted: formatted_time } = useSpeciesMetricsStore().getTime();
 			var logStr = `Autosplitter - Battle Started: ${properties.battle.trainer.class.value} started at ${formatted_time[0]}${formatted_time[1]} (Gametime: ${gametimeSplit(properties)})`;
 			
 			// Use for...of loop to iterate over the array
