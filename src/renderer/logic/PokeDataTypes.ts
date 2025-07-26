@@ -10,6 +10,11 @@ export type PokemonGame = "Yellow"
 	| "Platinum"
 	| "HeartGold and SoulSilver";
 	
+/** Possible pokemon growth rates. */
+export type GrowthRate = "Erratic" | "Fast" | "Medium Fast" | "Medium Slow" | "Slow" | "Fluctuating";
+
+
+
 export type PokemonSpecies = {
 	"species": string;
 	"rom_id": number;
@@ -39,7 +44,7 @@ export type PokemonSpecies = {
 	"gender_ratio": (number | null);
 	"egg_cycles": (number | null);
 	"base_friendship": (number | null);
-	"growth_rate": string;
+	"growth_rate": GrowthRate;
 	"egg_group_1": (string | null);
 	"egg_group_2": (string | null);
 	"abilities": string[];
@@ -128,3 +133,5 @@ export type TrainerPokemon = {
 	};
 	moves: string[];
 };
+
+export type BaseStats = PokemonSpecies["base_stats"];

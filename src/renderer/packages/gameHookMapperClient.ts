@@ -33,7 +33,7 @@ type GameHookPropertyOwnAttributes =
     | "once"
     | "toString"
 
-type GamehookPropertyData = {
+type GamehookPropertyData<T = any> = {
     path: string,
     memoryContainer: string | null,
     address: number,
@@ -43,19 +43,23 @@ type GamehookPropertyData = {
     reference: string | null,
     bits: string | null,
     description: string | null,
-    value: any,
+    value: T,
     bytes: number[],
     isFrozen: boolean,
     isReadOnly: boolean,
     fieldsChanged: string[]
 };
 
-interface IGameHookProperty {
+interface IGameHookProperty<T = any> {
     _client: GameHookMapperClient;
     set(value: any, freeze?: boolean): Promise<void>;
     setBytes(bytes: number[], freeze?: boolean): Promise<void>;
     freeze(freeze?: boolean): Promise<void>;
-    change(fn: Function): void;
+    /**
+     * Register a function that is called whenever the property received an update that changes it's `value`.
+     * @param fn The callback function that will be invoked, with both the new and old property values.
+     */
+    change<T>(fn: (newValue: GameHookProperty, oldValue: GameHookProperty) => any): void;
     once(fn: Function): void;
     toString(): string | null;
 }
