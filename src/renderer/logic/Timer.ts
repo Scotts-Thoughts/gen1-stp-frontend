@@ -1,23 +1,39 @@
 import PubSub from "./PubSub";
-import { LocalStorageProxy } from "./LocalStorageProxy";
+import { SpeciesMetricStore } from "~/stores/useSpeciesMetricsStore";
 const f = (x: number) => x.toString().padStart(2, "0");
+
+export type TimerData = {
+	paused: boolean
+	started_at: number
+	paused_at: number
+};
 
 /**
  * Real-world timer.
  */
-class Timer {
-	storage: Record<string, any>;
-	formatted_time: string[];
-	constructor(storage: Record<string, any>) {
-		// We use the storage for keeping track of timer_pause, timer_startTime and timer_pause_time:
-		// formatted_time is initalized here only as good practise. update() will always set it to the correct value.
-		// We do not keep formatted_time in storage, because we can always reconstruct it from the 3 variables we do
-		// store.
-		this.storage = storage;
-		/** 
-		 * An array with formatted time information. First item is the general time as `hh:mm:ss`. 
-		 * Second is the number of milliseconds elapsed as `.ms` 
-		 */
+export class Timer {
+	static _instance: Timer| null;
+
+	static initialize(store: SpeciesMetricStore) {
+		this._instance = new Timer(store);
+	}
+
+	static instance() {
+		if (!this._instance)  {
+			throw new Error("Timer has not been initialized");
+		}
+		return this._instance;
+	}
+
+	_store: SpeciesMetricStore;
+
+	/** 
+	 * An array with formatted time information. First item is the general time as `hh:mm:ss`. 
+	 * Second is the number of milliseconds elapsed as `.ms` 
+	 */
+	formatted_time: string[] = ["0", ".00"];
+	constructor(store: SpeciesMetricStore) {
+		this._store = store;
 		this.formatted_time  = ["0", ".00"];
 		this.update();     // update once to set everything correctly.
 		this.updateLoop(); // then start the timer loop.
@@ -25,7 +41,7 @@ class Timer {
 	}
 
 	updateLoop = () => {
-		if (!this.storage.timer_pause) {
+		if (!this._store.timer.paused) {
 			this.update();
 		}
 		window.requestAnimationFrame(this.updateLoop);
@@ -35,47 +51,46 @@ class Timer {
  	 * Pause and set the timer back to default
 	 * @param startTimeOffset The default value to set the timer to, as a string in the format `hh:mm:ss.ms`
 	 */
-	setTimer = (startTimeOffset: string) => {
+	set = (startTimeOffset: string) => {
 		const timeOffset = this.parseOffsetString(startTimeOffset);
-		this.storage.timer_pause = true;
-		this.storage.timer_startTime = Date.now() - timeOffset;
-		this.storage.timer_pause_time = Date.now();
+		this._store.timer.paused = true;
+		this._store.timer.started_at = Date.now() - timeOffset;
+		this._store.timer.paused_at = Date.now();
 		this.update();
 	}
 
 	/**
-	 * Sets the timer (see {@link setTimer}) and unpauses it.
+	 * Sets the timer (see {@link set}) and unpauses it.
 	 * @param startTimeOffset An offset to add to the timer value, a string in the format hh:mm:ss.ms.
 	 */
-	startTime = (startTimeOffset: string) => {
-		if (this.storage.timer_pause == false) {
+	start = (startTimeOffset: string) => {
+		if (this._store.timer.paused == false) {
 			return
 		}
-		this.setTimer(startTimeOffset);
-		this.storage.timer_pause = false;
+		this.set(startTimeOffset);
+		this._store.timer.paused = false;
 		this.update();
-		PubSub.publish("@timer/start", this.formatted_time);
 	}
 
 	/**
 	 * Pauses the timer if it's currently running and vice versa.
 	 */
-	pauseUnpauseTime = () => {
-		if (this.storage.timer_pause == true) {
-			this.storage.timer_pause = false;
-			this.storage.timer_startTime += Date.now() - this.storage.timer_pause_time;
+	toggle = () => {
+		if (this._store.timer.paused == true) {
+			this._store.timer.paused = false;
+			this._store.timer.started_at += Date.now() - this._store.timer.paused_at;
 			this.update();
 		}
 		else {
-			this.storage.timer_pause = true;
-			this.storage.timer_pause_time = Date.now();
+			this._store.timer.paused = true;
+			this._store.timer.paused_at = Date.now();
 		}
 	}
 
 	/** Pause the timer. */
-	stopTime = () => {
-		this.storage.timer_pause_time = Date.now();
-		this.storage.timer_pause = true;
+	stop = () => {
+		this._store.timer.paused_at = Date.now();
+		this._store.timer.paused = true;
 	}
 
 	/**
@@ -84,9 +99,9 @@ class Timer {
 	 * An object containing the hours, minutes, seconds and milliseconds that have elapsed on the timer.
 	 */
 	getTime = () => {
-		var time = Date.now() - this.storage.timer_startTime
-		if (this.storage.timer_pause == true) {
-			time = this.storage.timer_pause_time - this.storage.timer_startTime
+		var time = Date.now() - this._store.timer.started_at
+		if (this._store.timer.paused == true) {
+			time = this._store.timer.paused_at - this._store.timer.started_at
 		}
 		return {
 			ms: (Math.floor(time / 10) % 100),
@@ -108,6 +123,7 @@ class Timer {
 		} else {
 			this.formatted_time = [ s.toString(), "." + f(ms), h + "h" + m + "m" + s + "s", ]
 		}
+		// console.log(`PubSub.publish("@timer/update", this.formatted_time);`, this.formatted_time, this.getTime());
 		PubSub.publish("@timer/update", this.formatted_time);
 	}
 
@@ -122,5 +138,3 @@ class Timer {
 		return timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
 	}
 }
-
-export default new Timer(LocalStorageProxy);

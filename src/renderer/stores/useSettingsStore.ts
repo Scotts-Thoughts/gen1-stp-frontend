@@ -13,22 +13,21 @@ export const useSettingsStore = defineStore('settings', () => {
 	const game = ref<PokemonGame|null>(null);
 	
 	overlay.$subscribe(async (_, state) => {
-		if (state.game !== game.value) {
+		if (state.game !== game.value || state.starter !== starter.value) {
 			game.value = state.game;
-			await metrics.load(game.value, starter.value);
-			await game_species.loadConfig(game.value, starter.value);
-			await game_species.loadStyle(game.value, starter.value);
-		}
-		if (state.starter !== starter.value) {
 			starter.value = state.starter;
-			await metrics.load(game.value, starter.value);
-			await game_species.loadConfig(game.value, starter.value);
-			await game_species.loadStyle(game.value, starter.value);
+			if (game.value && starter.value) {
+
+				await metrics.load(game.value, starter.value);
+				await game_species.loadConfig(game.value, starter.value);
+				await game_species.loadStyle(game.value, starter.value);
+			}
 		}
 	});
 
 	// Save overlay settings on any change:
 	overlay.$subscribe(() => overlay.save());
+	metrics.$subscribe(() => metrics.save(overlay.game, overlay.starter));
 	game_species.$subscribe(
 		(_, state) => {
 			document.documentElement.style.setProperty('--overlay-color', state.styling.ui.color);

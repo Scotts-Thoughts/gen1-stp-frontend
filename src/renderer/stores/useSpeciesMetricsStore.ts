@@ -4,16 +4,21 @@ import { defineStore } from "pinia";
 import { PokemonGame } from "~/logic/PokeDataTypes";
 const path = require('path');
 import { loadAppSettings, saveAppSettings } from "./helper/files";
+import { Timer, TimerData } from "~/logic/Timer";
 
 
+export type SpeciesMetricStore = ReturnType<typeof useSpeciesMetricsStore>;
 export type SpeciesMetrics = ReturnType<typeof defaultSpeciesMetrics>;
 
 function defaultSpeciesMetrics() {
 	return {
-		/** Saved timer value */
-		timer: "00:00:00.00",
 		/** Timer override */
 		timer_override: "00:00:00.00",
+		timer: {
+			paused: true,
+			started_at: 0,
+			paused_at: 0,
+		} as TimerData,
 		attempts: 0,
 		finishes: 0,
 		resets: 0,
@@ -68,9 +73,11 @@ export const useSpeciesMetricsStore = defineStore('species_metrics', {
 			} else {
 				Object.assign(this.$state, defaultSpeciesMetrics());
 			}
+			Timer.initialize(this);
 		},
 		/** Saves to %APPDATA%/stp-generation1-overlay/data/${game}/${starter}/metrics.json */
 		async save(game: PokemonGame|null, starter: string|null) {
+			console.log(`metrics.save(${game}, ${starter});`);
 			if (game && starter) {
 				await saveAppSettings<SpeciesMetrics>(path.join(game, starter), "metrics.json", this.$state);
 			}
@@ -78,6 +85,22 @@ export const useSpeciesMetricsStore = defineStore('species_metrics', {
 		update<K extends keyof SpeciesMetrics>(key: K, value: SpeciesMetrics[K]) {
 			this.$state[key] = value;
 		},
+		/** Start the timer. Sets {@link timer_override} as the starting time. */
+		startTime() {
+			Timer.instance().start(this.timer_override);
+		},
+		/** Resets the timer and pauses it. Sets {@link timer_override} as the starting time. */
+		resetTimer() {
+			Timer.instance().set(this.timer_override);
+		},
+		/** Stop the timer */
+		stopTimer() {
+			Timer.instance().stop();
+		},
+		/** Pause or unpause the timer. */
+		toggleTimer() {
+            Timer.instance().toggle();
+        },
 		clearCounters() {
 			this.blackouts = 0;
 			this.resets = 0;

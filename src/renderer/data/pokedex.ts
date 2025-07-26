@@ -10,7 +10,7 @@ import { EmeraldDex } from "./pokedex/EmeraldDex";
 import { FireRedAndLeafGreenDex } from "./pokedex/FireRedAndLeafGreenDex";
 import { RubyAndSapphireDex } from "./pokedex/RubyAndSapphire";
 
-export const GameDexes: Record<PokemonGame, Record<string, PokemonSpecies>> = {
+export const GameDexes: Partial<Record<PokemonGame, Record<string, PokemonSpecies>>> = {
     "Yellow": YellowDex,
     "Red and Blue": RedAndBlueDex,
     "Gold and Silver": GoldAndSilverDex,

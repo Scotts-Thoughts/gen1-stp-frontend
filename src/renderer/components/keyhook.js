@@ -1,6 +1,8 @@
 import { defineComponent } from "vue";
 import { RightPanelMode, StatsPanelMode, useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
-import Timer from "~/logic/Timer";
+import { Timer } from "~/logic/Timer";
+import metrics from "./settings/metrics";
+import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore";
 
 const Keys = {
     "ESCAPE":         0x1B,
@@ -259,6 +261,7 @@ export default defineComponent({
     data() {
         return {
             settings: useOverlaySettingsStore(),
+            metrics: useSpeciesMetricsStore(),
         }
     },
     mounted() {
@@ -329,7 +332,7 @@ export default defineComponent({
         });
         //F24
         keyhook.registerShortCut('F24', async () => {
-            Timer.pauseUnpauseTime();
+            this.metrics.toggleTimer();
         });
     }
 });

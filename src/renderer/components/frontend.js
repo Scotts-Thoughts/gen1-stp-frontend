@@ -1,5 +1,5 @@
 import PokeData from "~/logic/PokeData.js";
-import Timer from "~/logic/Timer.js";
+import { Timer } from "~/logic/Timer.js";
 import PubSub from "~/logic/PubSub";
 import { JsonStorage} from "~/logic/Storage.js";
 import { LocalStorageProxy } from "~/logic/LocalStorageProxy.js";
@@ -27,7 +27,6 @@ import { log_split, autosplitter_process, format_trainer_name, logData, logCopy 
 import { autosplitter } from "~/data/autosplitter.js";
 import { application_settings } from "../settings/application_settings.js";
 import { pokemon_settings } from "../settings/pokemon_settings.js";
-import { time_settings } from "../settings/time_settings.js";
 import { trainer_name_lookup } from "../autosplitter/trainer_name_lookup.js";
 import { split_trainers } from "../autosplitter/split_trainers.js";
 import { computed, defineComponent } from "vue";
@@ -163,16 +162,7 @@ export default defineComponent({
     created() {
         PubSub.subscribe("@run/cleared", this.clear_splits_header_timer);
         PubSub.subscribe("@property/increment", this.increment_property);
-        // Timer settings
-        for (let i = 0; i < time_settings.length; i++) {
-            let prop_name = time_settings[i];
-            this.$watch(
-                () => this[prop_name],
-                (new_value) => {
-                    LocalStorageProxy[`${prop_name}`] = new_value;
-                }
-            );
-        }
+
         // Initialize the Storage object
         // This creates all of the objects that will then be filled
         const debug_mode = false; // This enables the printing of storage related console logs
@@ -397,7 +387,7 @@ export default defineComponent({
         clear_splits_header_timer(value) {
             this.current_splits = []
             this.battle_summary_header = "Battle Summary"
-            Timer.setTimer(this.metrics.timer_override)
+            this.metrics.resetTimer();
             this.player_id = 0
         },
         get_nested_property(obj, path) {
@@ -433,7 +423,6 @@ export default defineComponent({
     },
     mounted: async function () {
         this.load_split_settings()
-        Timer.update();
         this.pokemon_list = PokeData.getAllSpecieNames();
 
         // RESET - Identifies when a reset occurs and publishes an event
@@ -457,7 +446,7 @@ export default defineComponent({
                 if (this.runConfig.advanced.test_run == false && this.runConfig.advanced.refilming_mode == false) {
                     this.metrics.update("attempts", this.metrics.attempts + 1);
                 };
-                Timer.startTime(this.metrics.timer_override);
+                this.metrics.startTime();
                 if (this.toggle_wEarlyEncounters == false && this.toggle_wEarlyEncountersNoMoon == true) {
                     this.toggle_wEarlyEncounters == true
                 }
@@ -553,7 +542,7 @@ export default defineComponent({
                         this.metrics.update("finished", this.metrics.finishes + 1); //increment finished count if this is not a test run
                     };
                     // this.stopTime() //stop the timer
-                    Timer.stopTime();
+                    this.metrics.stopTimer();
                     this.logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }

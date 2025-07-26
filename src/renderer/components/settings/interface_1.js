@@ -2,7 +2,7 @@ import { useMetaStore } from "~/stores/metaStore";
 import battle_testing from "./battle_testing";
 import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
 import { useGameSpeciesData } from "~/stores/useGameSpeciesData";
-import Timer from "~/logic/Timer";
+import { Timer } from "~/logic/Timer";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore";
 import { defineComponent } from "vue";
 import { openFolder } from "../../methods/file_system_functions";
@@ -17,8 +17,8 @@ const template = /*html*/`
     </select><br>
     <br>
     <div>Timer Setting:</div>
-    <button class="buttonStyle buttonStyle_column3" @click="toggle_timer">Play/Pause</button>
-    <button class="buttonStyle set_button_style" @click="override_timer">Set Timer</button>
+    <button class="buttonStyle buttonStyle_column3" @click="metrics.toggleTimer">Play/Pause</button>
+    <button class="buttonStyle set_button_style" @click="metrics.resetTimer">Set Timer</button>
     <input type="text" class="inputContainer" v-model="metrics.timer_override" placeholder="00:00:00.00"/><br>
     <br>
     <button class="buttonStyle buttonStyle_column3" @click="open_splits_folder">Open Splits Folder</button>
@@ -73,12 +73,6 @@ export default defineComponent({
         }
     },
     methods: {
-        toggle_timer() {
-            Timer.pauseUnpauseTime();
-        },
-        override_timer() {
-            Timer.setTimer(this.metrics.timer_override);
-        },
         open_splits_folder() {
             openFolder('splits', this.meta.game, this.meta.starter, 'finishes')
         }

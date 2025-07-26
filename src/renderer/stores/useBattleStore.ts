@@ -1,8 +1,7 @@
 
 import { defineStore } from "pinia";
-import { useOverlaySettingsStore } from "./useOverlaySettingsStore";
-import { GameHookMapperClient, GameHookProperty } from "~/packages/gameHookMapperClient";
-import Timer from "~/logic/Timer";
+import { GameHookProperty } from "~/packages/gameHookMapperClient";
+import { Timer } from "~/logic/Timer";
 import { battle_summary  } from "~/autosplitter/battle_summary";
 import { convertMSToDuration } from "~/utils/timehelpers";
 
@@ -30,7 +29,9 @@ type BattleSummaryRecord = Partial<Record<BattleSummaryProperties, number|undefi
  */
 export const useBattleStore = defineStore('battle', {
 	state: () => { return {
+		/** The battle summary items read at the beginning of the battle. */
 		start: {} as BattleSummaryRecord,
+		/** The difference between the summary item values at the start and end of the battle. */
 		end: {} as BattleSummaryRecord,
 		split_logStr: "",
 		battle_start: 0,
@@ -59,8 +60,9 @@ export const useBattleStore = defineStore('battle', {
 			if (battleType !== "Trainer" || !collectData) {
 				return;
 			}
-			const time = Timer.getTime();
-			var logStr = `Autosplitter - Battle Started: ${properties.battle.trainer.class.value} started at ${Timer.formatted_time[0]}${Timer.formatted_time[1]} (Gametime: ${gametimeSplit(properties)})`;
+			const time = Timer.instance().getTime();
+			const formatted_time = Timer.instance().formatted_time;
+			var logStr = `Autosplitter - Battle Started: ${properties.battle.trainer.class.value} started at ${formatted_time[0]}${formatted_time[1]} (Gametime: ${gametimeSplit(properties)})`;
 			
 			// Use for...of loop to iterate over the array
 			for (let property of battle_summary.global_stats) {
