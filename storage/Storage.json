@@ -1,23 +1,7 @@
 {
     "application_settings": {
-        "options": true,
         "autosplitter_toggle": true,
-        "viridian_forest": "Pidgey",
-        "ui_type_colors": "Bulbapedia Current",
-        "ui_type_color_modifier": "current_",
-        "test_run": true,
-        "right_panel": "Automatic",
-        "collect_split_data": true,
-        "toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE": false,
-        "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW": false,
-        "toggle_EVENT_ENCOUNTER_MTMOON_PARAS": true,
-        "toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER": false,
-        "toggle_wEarlyEncounters": true,
-        "toggle_wEarlyEncountersNoMoon": true,
-        "toggle_EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY": false,
-        "toggle_EVENT_ENCOUNTER_ROUTE16_DODUO": false,
-        "toggle_EVENT_ENCOUNTER_ROUTE1_TEST": false,
-        "toggle_EVENT_ENCOUNTER_MTMOON_SANDSHREW": false
+        "collect_split_data": true
     },
     "games": {
         "Red": {
@@ -11250,6 +11234,12 @@
                     ],
                     "split_logStr": "Autosplitter - Battle Started: LASS started at 3:10:48.73 (Gametime: 32:34)"
                 },
+                "settings": {},
+                "splits": {},
+                "data": {}
+            },
+            "Raticate": {
+                "style": {},
                 "settings": {},
                 "splits": {},
                 "data": {}

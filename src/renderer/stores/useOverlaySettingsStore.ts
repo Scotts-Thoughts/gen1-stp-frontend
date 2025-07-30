@@ -73,6 +73,7 @@ function defaultOverlaySettings() {
 				field: { enabled: true } as OverlayPopupSettings,
 			},
 			right_panel: {
+				speed_comparison: true as boolean, 
 				/** The preferred mode for the right-hand panel. */
 				mode: RightPanelMode.automatic,
 				/** Temporary override for the right hand panel, used for post-battle splits. */

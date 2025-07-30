@@ -19,6 +19,9 @@ export const useGameSpeciesData = defineStore("game_species_data", {
 		},
 		ui(state) {
 			return state.styling.ui;
+		},
+		gameSpecific<T extends Record<string, any>>(state) {
+			return () =>  state.config.gameSpecific as T ?? {};
 		}
 	},
 	actions: {
@@ -126,7 +129,8 @@ export function defaultGameSpeciesSettings() {
 					},
 					dvs: {},
 				},
-			}
+			},
+			gameSpecific: {} as Record<string, any>
 		},
 		// Styling settings are saved with the click of a button on the overlay
 		styling: {
