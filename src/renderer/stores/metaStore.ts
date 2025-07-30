@@ -3,6 +3,7 @@ import { useOverlaySettingsStore } from "./useOverlaySettingsStore";
 import { PokemonGame } from "~/logic/PokeDataTypes";
 import { GameState } from "./types/GameState";
 import { EnemyState } from "./types/EnemyState";
+import { RunState, useSpeciesMetricsStore } from "./useSpeciesMetricsStore";
 
 /** 
  * Store for general purpose information that is not specific to a game or generation. 
@@ -21,6 +22,10 @@ export const useMetaStore = defineStore('meta', {
 			const overlaySettings = useOverlaySettingsStore();
 			return overlaySettings.game;
 		},
+		/** Whether the current run is completed */
+		run_finished: () => {
+			return useSpeciesMetricsStore().state == RunState.finished;
+		}
 	},
 	actions: {
 		/** Set the species of the currently active pokemon. */
@@ -46,8 +51,6 @@ function getDefaultMetaState() {
 		gameState: GameState.no_pokemon,
 		/** The current state of the enemy trainer or enemy wild pokemon. */
 		enemyState: EnemyState.not_in_battle,
-		/** Flag that is set to true when the run is finished and reset on a new run. */
-		run_finished: false,
 	}
 }
 

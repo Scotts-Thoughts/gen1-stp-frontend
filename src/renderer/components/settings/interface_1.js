@@ -33,8 +33,8 @@ const template = /*html*/`
         </table>
         <table v-if="runConfig.advanced.refilming_mode">
             <tbody>
-                <tr><td>Attempt:</td><td><input class="inputContainer" type="text" v-model="$parent.$parent.refilmed_attempt"/></td></tr>
-                <tr><td>Finish:</td><td> <input class="inputContainer" type="text" v-model="$parent.$parent.refilmed_finish"/></td></tr>
+                <tr><td>Attempt:</td><td><input class="inputContainer" type="text" v-model="runConfig.advanced.refilmed_attempt"/></td></tr>
+                <!--- <tr><td>Finish:</td><td> <input class="inputContainer" type="text" v-model="runConfig.advanced.refilmed_finish"/></td></tr> -->
             </tbody>
         </table>
         <br>
@@ -50,7 +50,8 @@ const template = /*html*/`
                 <tr><td>Mapper State:</td><td>{{game_properties.meta.state.value}}</td></tr>
                 <tr><td>Enemy State:</td><td>{{meta.enemyState}}</td></tr>
                 <tr><td></td><td></td></tr>
-                <tr><td>blackout:</td><td>{{$parent.$parent.blackout}}</td></tr>
+                <tr><td>blackout:</td><td>{{metrics.flag_blackout_prerequisite}}</td></tr>
+                <tr><td>run: </td><td>{{metrics.state}}</td></tr>
             </tbody>
         </table>
     </div>

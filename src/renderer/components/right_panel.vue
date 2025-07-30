@@ -10,7 +10,7 @@
 					<splits_followup :compare_splits :trainer_name_lookup />
 				</div>
 				<div v-else-if="settings.right_panel.splits.mode === 'First'">
-					<splits_first :current_splits :trainer_name_lookup />
+					<splits_first :trainer_name_lookup />
 				</div>
 				<div v-else-if="settings.right_panel.splits.mode === 'Followup + Summary'">
 					<splits_summary :compare_splits :trainer_name_lookup :battle_summary_header />
@@ -41,9 +41,10 @@ import splits_first from "./right_panel/splits_first"
 import splits_summary from "./right_panel/splits_summary.vue"
 import enemy_graphic from "./right_panel/enemy_graphic.vue"
 import wild_pokemon from "./right_panel/wild_pokemon.vue"
+import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore";
 
 export default defineComponent({
-	props: [ "current_splits", "previous_splits", "collect_split_data"],
+	props: ["previous_splits"],
 	components: {
 		movepool,
 		splits_followup,
@@ -55,9 +56,11 @@ export default defineComponent({
 	data() {
 		return {
 			meta: useMetaStore(),
+			metrics: useSpeciesMetricsStore(),
 			settings: useOverlaySettingsStore(),
 			game_properties: inject<Record<string, GameHookProperty>>("game_properties", {}),
 			trainer_name_lookup,
+			collect_split_data: true,
             battle_summary_header: "Battle Summary",
 		}
 	},
@@ -72,7 +75,7 @@ export default defineComponent({
             for (const x of this.previous_splits) {
                 if (split_trainers[game].includes(x.trainer)) {
                     const default_string = "-"
-                    const cur_split = this.current_splits.find(y => y.trainer === x.trainer)
+                    const cur_split = this.metrics.splits.find(y => y.trainer === x.trainer)
                     const prev = convertDurationToSeconds(x.time)
                     if (cur_split == undefined) {
                         if (!addedTrainers.has(x.trainer)) { // Check if the trainer has already been added to the result

@@ -1,0 +1,4771 @@
+{
+    "Red": {
+        "Mewtwo": {
+            "artwork": {
+                "offset_x": 117,
+                "offset_y": 124,
+                "scale": 0.6,
+                "flip": true,
+                "saturation": 90,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 126,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Psychic (crisp)",
+                "brightness": 100,
+                "contrast": 161,
+                "saturation": 100,
+                "hue": 257
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f9e935"
+            }
+        },
+        "Mew": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Alakazam": {
+            "artwork": {
+                "offset_x": 152,
+                "offset_y": 159,
+                "scale": 0.52,
+                "flip": true,
+                "saturation": 90,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 126,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Psychic (crisp)",
+                "brightness": "92",
+                "contrast": 146,
+                "saturation": "117",
+                "hue": 257
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#fbe92f"
+            }
+        },
+        "Venusaur": {
+            "artwork": {
+                "offset_x": 287,
+                "offset_y": 124,
+                "scale": 0.54,
+                "flip": true,
+                "saturation": 90,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 126,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Poison 1",
+                "brightness": "43",
+                "contrast": 98,
+                "saturation": "117",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.4,
+                "color": "#1579c8"
+            }
+        },
+        "null": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Meowth": {
+            "artwork": {
+                "offset_x": -166,
+                "offset_y": 74,
+                "scale": 0.46,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": "73",
+                "contrast": 123,
+                "saturation": "89",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f2f395"
+            }
+        },
+        "Vulpix": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Zapdos": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Charizard": {
+            "artwork": {
+                "offset_x": 138,
+                "offset_y": 110,
+                "scale": 0.56,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "2",
+                "scale": 149,
+                "flip": false,
+                "offset_x": "28",
+                "offset_y": "-125",
+                "texture": "Fire 1",
+                "brightness": "78",
+                "contrast": 144,
+                "saturation": "87",
+                "hue": 324
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#740404"
+            }
+        },
+        "Blastoise": {
+            "artwork": {
+                "offset_x": -180,
+                "offset_y": 110,
+                "scale": 0.54,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 120,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "55",
+                "texture": "Water 2",
+                "brightness": "87",
+                "contrast": 119,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.5,
+                "color": "#4ecbf1"
+            }
+        },
+        "Pidgey": {
+            "artwork": {
+                "offset_x": -272,
+                "offset_y": 244,
+                "scale": 0.5,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 137,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "81",
+                "texture": "Flying 1",
+                "brightness": 100,
+                "contrast": 105,
+                "saturation": "64",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#d6bd94"
+            }
+        },
+        "Rattata": {
+            "artwork": {
+                "offset_x": -216,
+                "offset_y": -32,
+                "scale": 0.46,
+                "flip": false,
+                "saturation": 104,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 126,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "22",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": "48",
+                "hue": 333
+            },
+            "ui": {
+                "saturation": 1.4,
+                "color": "#62387e"
+            }
+        },
+        "Mankey": {
+            "artwork": {
+                "offset_x": -180,
+                "offset_y": 82,
+                "scale": 0.52,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 128,
+                "flip": false,
+                "offset_x": "70",
+                "offset_y": "64",
+                "texture": "Fighting 1",
+                "brightness": "100",
+                "contrast": 128,
+                "saturation": "130",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#fe754a"
+            }
+        },
+        "Cloyster": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Dewgong": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Butterfree": {
+            "artwork": {
+                "offset_x": -187,
+                "offset_y": 202,
+                "scale": 0.52,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 116,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "59",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": "62",
+                "hue": 349
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#73baca"
+            }
+        },
+        "Beedrill": {
+            "artwork": {
+                "offset_x": 188,
+                "offset_y": 166,
+                "scale": 0.58,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "6",
+                "scale": 140,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 2 (Honey Comb)",
+                "brightness": "66",
+                "contrast": 130,
+                "saturation": "62",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#da4740"
+            }
+        },
+        "Miraidon": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Drowzee": {
+            "artwork": {
+                "offset_x": -53,
+                "offset_y": 39,
+                "scale": 0.58,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "57",
+                "texture": "Psychic (crisp)",
+                "brightness": 100,
+                "contrast": 156,
+                "saturation": 100,
+                "hue": 17
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#ede63a"
+            }
+        },
+        "Gastly": {
+            "artwork": {
+                "offset_x": 67,
+                "offset_y": 237,
+                "scale": 0.58,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 126,
+                "flip": false,
+                "offset_x": "125",
+                "offset_y": "-14",
+                "texture": "Ghost 1",
+                "brightness": 100,
+                "contrast": 124,
+                "saturation": "124",
+                "hue": 17
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#8d3a74"
+            }
+        },
+        "Poliwag": {
+            "artwork": {
+                "offset_x": -173,
+                "offset_y": -145,
+                "scale": 0.44,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 127,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "75",
+                "texture": "Water 2",
+                "brightness": "89",
+                "contrast": 138,
+                "saturation": "77",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#96c9d5"
+            }
+        },
+        "Electabuzz": {
+            "artwork": {
+                "offset_x": 181,
+                "offset_y": 181,
+                "scale": 0.56,
+                "flip": true,
+                "saturation": 107,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "59",
+                "texture": "Electric 2",
+                "brightness": "85",
+                "contrast": 154,
+                "saturation": "160",
+                "hue": 352
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#ffff94"
+            }
+        },
+        "Magmar": {
+            "artwork": {
+                "offset_x": -145,
+                "offset_y": 159,
+                "scale": 0.64,
+                "flip": false,
+                "saturation": 119,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 137,
+                "flip": false,
+                "offset_x": "30",
+                "offset_y": "-89",
+                "texture": "Fire 1",
+                "brightness": "85",
+                "contrast": 126,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#e76343"
+            }
+        },
+        "Mr. Mime": {
+            "artwork": {
+                "offset_x": -39,
+                "offset_y": 124,
+                "scale": 0.64,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 175,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "61",
+                "texture": "Psychic (crisp)",
+                "brightness": "87",
+                "contrast": 167,
+                "saturation": 100,
+                "hue": 261
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#d6392b"
+            }
+        },
+        "Lickitung": {
+            "artwork": {
+                "offset_x": 32,
+                "offset_y": 110,
+                "scale": 0.64,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 117,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "68",
+                "texture": "Bug 1",
+                "brightness": "69",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#f3d7d1"
+            }
+        },
+        "Jynx": {
+            "artwork": {
+                "offset_x": 202,
+                "offset_y": 138,
+                "scale": 0.52,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 119,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "37",
+                "texture": "Psychic (crisp)",
+                "brightness": "85",
+                "contrast": 153,
+                "saturation": "101",
+                "hue": 17
+            },
+            "ui": {
+                "saturation": 1,
+                "color": "#7fa8a1"
+            }
+        },
+        "Dragonair": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Zubat": {
+            "artwork": {
+                "offset_x": -145,
+                "offset_y": 273,
+                "scale": 0.46,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 118,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "33",
+                "texture": "Poison 1",
+                "brightness": "78",
+                "contrast": 121,
+                "saturation": "62",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#3ab8de"
+            }
+        },
+        "Paras": {
+            "artwork": {
+                "offset_x": -315,
+                "offset_y": -195,
+                "scale": 0.38,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 119,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "64",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 115,
+                "saturation": "77",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#e59429"
+            }
+        },
+        "Gyarados": {
+            "artwork": {
+                "offset_x": -187,
+                "offset_y": 117,
+                "scale": 0.6,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "2",
+                "scale": 121,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "44",
+                "texture": "Water 2",
+                "brightness": "78",
+                "contrast": 121,
+                "saturation": 100,
+                "hue": 7
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#40c2e8"
+            }
+        },
+        "Onix": {
+            "artwork": {
+                "offset_x": -88,
+                "offset_y": 152,
+                "scale": 0.64,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 126,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Ground 1",
+                "brightness": "78",
+                "contrast": 115,
+                "saturation": "0",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#7ed3e6"
+            }
+        },
+        "Clefable": {
+            "artwork": {
+                "offset_x": 96,
+                "offset_y": 117,
+                "scale": 0.64,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 118,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "57",
+                "texture": "Rock 1",
+                "brightness": "71",
+                "contrast": 119,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.7,
+                "color": "#eac8c1"
+            }
+        },
+        "Steelix": {
+            "background": {
+                "blur": 0,
+                "scale": 120,
+                "flip": false,
+                "offset_x": "88",
+                "offset_y": "53",
+                "texture": "Ground 1",
+                "brightness": "68",
+                "contrast": 121,
+                "saturation": "101",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0,
+                "color": "#000000"
+            }
+        },
+        "Dhelmise": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Girafarig": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Machamp": {
+            "artwork": {
+                "offset_x": -117,
+                "offset_y": 195,
+                "scale": 0.64,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 122,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "50",
+                "texture": "Fighting 1",
+                "brightness": "100",
+                "contrast": 98,
+                "saturation": "156",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#64bfd3"
+            }
+        },
+        "Nidoking": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Goldeen": {
+            "artwork": {
+                "offset_x": 195,
+                "offset_y": -46,
+                "scale": 0.46,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 131,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "70",
+                "texture": "Water 2",
+                "brightness": 100,
+                "contrast": 117,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eca6a3"
+            }
+        },
+        "Seaking": {
+            "artwork": {
+                "offset_x": -88,
+                "offset_y": 188,
+                "scale": 0.64,
+                "flip": false,
+                "saturation": 100,
+                "rotation": "0"
+            },
+            "background": {
+                "blur": 0,
+                "scale": 117,
+                "flip": false,
+                "offset_x": "83",
+                "offset_y": "57",
+                "texture": "Water 2",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#ec9251"
+            }
+        },
+        "Oddish": {
+            "artwork": {
+                "offset_x": -173,
+                "offset_y": -3,
+                "scale": 0.46,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "59",
+                "texture": "Bug 1",
+                "brightness": "91",
+                "contrast": 121,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#1e8eb5"
+            }
+        },
+        "Porygon": {
+            "artwork": {
+                "offset_x": -145,
+                "offset_y": 110,
+                "scale": 0.44,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 170,
+                "flip": false,
+                "offset_x": "-3",
+                "offset_y": "125",
+                "texture": "Digital",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": "146",
+                "hue": 358
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f28188"
+            }
+        },
+        "Scream Tail": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "NidoranM": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Ekans": {
+            "artwork": {
+                "offset_x": -400,
+                "offset_y": 110,
+                "scale": 0.42,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "44",
+                "texture": "Poison 1",
+                "brightness": "85",
+                "contrast": 128,
+                "saturation": "91",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#fed73b"
+            }
+        },
+        "Koffing": {
+            "artwork": {
+                "offset_x": -117,
+                "offset_y": 188,
+                "scale": 0.54,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 112,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "48",
+                "texture": "Ghost 1",
+                "brightness": "107",
+                "contrast": 119,
+                "saturation": "64",
+                "hue": 159
+            },
+            "ui": {
+                "saturation": 1.2,
+                "color": "#704774"
+            }
+        },
+        "Walking Wake": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Dugtrio": {},
+        "Chansey": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        }
+    },
+    "Blue": {
+        "Lapras": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Mewtwo": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Koffing": {
+            "artwork": {
+                "offset_x": -117,
+                "offset_y": 188,
+                "scale": 0.54,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 112,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "48",
+                "texture": "Ghost 1",
+                "brightness": "107",
+                "contrast": 119,
+                "saturation": "64",
+                "hue": 159
+            },
+            "ui": {
+                "saturation": 1.2,
+                "color": "#704774"
+            }
+        },
+        "Grimer": {},
+        "Dugtrio": {}
+    },
+    "Yellow": {
+        "Venomoth": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Annihilape": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 32,
+                "scale": 1.14,
+                "flip": false,
+                "saturation": 122,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 113,
+                "offset_x": 100,
+                "offset_y": "39",
+                "texture": "Ghost Fighting",
+                "brightness": "96",
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1,
+                "color": "#6f6e86"
+            }
+        },
+        "Pumpkaboo": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": 53,
+                "scale": 0.78,
+                "flip": true,
+                "saturation": 144,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 141,
+                "offset_x": "97",
+                "offset_y": "-125",
+                "texture": "Fire 1",
+                "brightness": "50",
+                "contrast": 126,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.9,
+                "color": "#6a5639"
+            }
+        },
+        "Sableye": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": -25,
+                "scale": 0.76,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 117,
+                "offset_x": 100,
+                "offset_y": "59",
+                "texture": "Rock 1",
+                "brightness": "75",
+                "contrast": 131,
+                "saturation": 100,
+                "hue": 184
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#846ba8"
+            }
+        },
+        "Chandelure": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 39,
+                "scale": 0.96,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "3",
+                "scale": 113,
+                "offset_x": 100,
+                "offset_y": "50",
+                "texture": "Ghost 1",
+                "brightness": "77",
+                "contrast": 126,
+                "saturation": 100,
+                "hue": 83
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#7371b0"
+            }
+        },
+        "Shedinja": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": 25,
+                "scale": 0.72,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 118,
+                "offset_x": 100,
+                "offset_y": "53",
+                "texture": "Ghost 1",
+                "brightness": "130",
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 191
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#bb9b6a"
+            }
+        },
+        "Houndoom": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -11,
+                "scale": 0.8,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 126,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Dark Clouds",
+                "brightness": 100,
+                "contrast": 115,
+                "saturation": 100,
+                "hue": 108
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#e38957"
+            }
+        },
+        "Seadra": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": -3,
+                "scale": 0.82,
+                "flip": true,
+                "saturation": 124,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "offset_x": "79",
+                "offset_y": "-25",
+                "texture": "Water 3",
+                "brightness": "87",
+                "contrast": 119,
+                "saturation": "130",
+                "hue": 1
+            },
+            "ui": {
+                "saturation": 1.3,
+                "color": "#74bddb"
+            }
+        },
+        "Staryu": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": -39,
+                "scale": 0.74,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 157,
+                "offset_x": "123",
+                "offset_y": "-122",
+                "texture": "Water 2",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1,
+                "color": "#f3de68"
+            }
+        },
+        "Machop": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -18,
+                "scale": 0.72,
+                "flip": false,
+                "saturation": 134,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 152,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Fighting 1",
+                "brightness": "78",
+                "contrast": 117,
+                "saturation": "105",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.3,
+                "color": "#b3ced6"
+            }
+        },
+        "Shellder": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -131,
+                "scale": 0.56,
+                "flip": true,
+                "saturation": 100,
+                "rotation": "26"
+            },
+            "background": {
+                "blur": 0,
+                "scale": 156,
+                "offset_x": 100,
+                "offset_y": "-125",
+                "texture": "Water 2",
+                "brightness": "78",
+                "contrast": 110,
+                "saturation": "101",
+                "hue": 352
+            },
+            "ui": {
+                "saturation": 1.2,
+                "color": "#8980b9"
+            }
+        },
+        "Weepinbell": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": -11,
+                "scale": 0.7,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "4",
+                "scale": 200,
+                "offset_x": "103",
+                "offset_y": "125",
+                "texture": "Grass 1",
+                "brightness": "46",
+                "contrast": 169,
+                "saturation": "114",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.2,
+                "color": "#8ec987"
+            }
+        },
+        "Poliwhirl": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": -32,
+                "scale": 0.82,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "2",
+                "scale": 146,
+                "flip": false,
+                "offset_x": "123",
+                "offset_y": "68",
+                "texture": "Water 3",
+                "brightness": "91",
+                "contrast": 117,
+                "saturation": "114",
+                "hue": 17
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#5b85bb"
+            }
+        },
+        "Toxicroak": {
+            "artwork": {
+                "offset_x": -3,
+                "offset_y": 4,
+                "scale": 0.92,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 131,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Poison 1",
+                "brightness": "71",
+                "contrast": 114,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.3,
+                "color": "#6795c0"
+            }
+        },
+        "Poliwag": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": -117,
+                "scale": 0.6,
+                "flip": false,
+                "saturation": 122,
+                "rotation": "0"
+            },
+            "background": {
+                "blur": "0",
+                "scale": 160,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "-125",
+                "texture": "Water 2",
+                "brightness": "123",
+                "contrast": 100,
+                "saturation": "69",
+                "hue": 23
+            },
+            "ui": {
+                "saturation": 1,
+                "color": "#5a83b8"
+            }
+        },
+        "Roselia": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": -25,
+                "scale": 0.82,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "4",
+                "scale": 127,
+                "offset_x": "97",
+                "offset_y": "65",
+                "texture": "Roses",
+                "brightness": "78",
+                "contrast": 135,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.3,
+                "color": "#80c27d"
+            }
+        },
+        "Bellsprout": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Jirachi": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 53,
+                "scale": 0.78,
+                "flip": false,
+                "saturation": 128,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 124,
+                "flip": true,
+                "offset_x": "59",
+                "offset_y": "61",
+                "texture": "Psychic (crisp)",
+                "brightness": "101",
+                "contrast": 124,
+                "saturation": "110",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#39bbbe"
+            }
+        },
+        "Dugtrio": {
+            "artwork": {
+                "offset_x": -3,
+                "offset_y": -25,
+                "scale": 0.76,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 128,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Ground 1",
+                "brightness": "68",
+                "contrast": 133,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.5,
+                "color": "#9f826f"
+            }
+        },
+        "Starmie": {
+            "artwork": {
+                "offset_x": -3,
+                "offset_y": -32,
+                "scale": 0.76,
+                "flip": true,
+                "saturation": 134,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 152,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "-118",
+                "texture": "Water 2",
+                "brightness": "80",
+                "contrast": 105,
+                "saturation": "144",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#ffe867"
+            }
+        },
+        "Lapras": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 0,
+                "scale": 0.88,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 155,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "-120",
+                "texture": "Water 2",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1,
+                "color": "#4893b8"
+            }
+        },
+        "Rattata": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Lugia": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 53,
+                "scale": 1.3,
+                "flip": true,
+                "saturation": 104,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 155,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "-116",
+                "texture": "Water 2",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": "82",
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#3f518b"
+            }
+        },
+        "Ho-oh": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 74,
+                "scale": 1.24,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 119,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "39",
+                "texture": "Fire 1",
+                "brightness": "66",
+                "contrast": 142,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#f9a43c"
+            }
+        },
+        "Arcanine": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": 11,
+                "scale": 1,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "2",
+                "scale": 176,
+                "flip": false,
+                "offset_x": "95",
+                "offset_y": "-96",
+                "texture": "Fire 1",
+                "brightness": "78",
+                "contrast": 160,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#f8964d"
+            }
+        },
+        "Sandile": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": -138,
+                "scale": 0.58,
+                "flip": true,
+                "saturation": 100,
+                "rotation": "0"
+            },
+            "background": {
+                "blur": "0",
+                "scale": 132,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "52",
+                "texture": "Ground 1",
+                "brightness": "64",
+                "contrast": 125,
+                "saturation": "23",
+                "hue": 333
+            },
+            "ui": {
+                "saturation": 1,
+                "color": "#b79468"
+            }
+        },
+        "Tentacool": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Tauros": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": 18,
+                "scale": 1,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 129,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "53",
+                "texture": "Ground 1",
+                "brightness": "55",
+                "contrast": 123,
+                "saturation": "123",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#daab66"
+            }
+        },
+        "Seaking": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 32,
+                "scale": 0.82,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 159,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "-125",
+                "texture": "Water 2",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#edab93"
+            }
+        },
+        "Testmoth": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Ivysaur": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": -53,
+                "scale": 0.66,
+                "flip": false,
+                "saturation": 115,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "3",
+                "scale": 150,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "125",
+                "texture": "Grass 1",
+                "brightness": "46",
+                "contrast": 147,
+                "saturation": "146",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.4,
+                "color": "#6db48f"
+            }
+        },
+        "Charmeleon": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": -39,
+                "scale": 0.7,
+                "flip": true,
+                "saturation": 113,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 126,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "-9",
+                "texture": "Fire 1",
+                "brightness": "62",
+                "contrast": 163,
+                "saturation": "94",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1,
+                "color": "#c66351"
+            }
+        },
+        "Wartortle": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -53,
+                "scale": 0.64,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 155,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "-120",
+                "texture": "Water 2",
+                "brightness": "85",
+                "contrast": 110,
+                "saturation": "119",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.3,
+                "color": "#b6c6e7"
+            }
+        },
+        "Partner Eevee": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Pikachu": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": -25,
+                "scale": 0.82,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 168,
+                "flip": false,
+                "offset_x": "106",
+                "offset_y": "101",
+                "texture": "Electric 1",
+                "brightness": "77",
+                "contrast": 200,
+                "saturation": 100,
+                "hue": 302
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#ffe882"
+            }
+        },
+        "PartnerPikachu": {
+            "artwork": {
+                "offset_x": -11,
+                "offset_y": -39,
+                "scale": 0.8,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 132,
+                "flip": false,
+                "offset_x": "53",
+                "offset_y": "50",
+                "texture": "Electric 2",
+                "brightness": "87",
+                "contrast": 144,
+                "saturation": "154",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#f7dc5f"
+            }
+        },
+        "PartnerEevee": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": -39,
+                "scale": 0.82,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 129,
+                "flip": false,
+                "offset_x": "97",
+                "offset_y": "86",
+                "texture": "Rock 1",
+                "brightness": "78",
+                "contrast": 130,
+                "saturation": "128",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#d89e5b"
+            }
+        },
+        "Clefairy": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": -124,
+                "scale": 0.5,
+                "flip": false,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 129,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Psychic (crisp)",
+                "brightness": "73",
+                "contrast": 147,
+                "saturation": "101",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.4,
+                "color": "#ffd6dc"
+            }
+        },
+        "Slugma": {
+            "artwork": {
+                "offset_x": 25,
+                "offset_y": -88,
+                "scale": 0.6,
+                "flip": true,
+                "saturation": 125,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 120,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "2",
+                "texture": "Fire 1",
+                "brightness": "59",
+                "contrast": 174,
+                "saturation": "75",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#fc725b"
+            }
+        },
+        "Girafarig": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": 25,
+                "scale": 1,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "46",
+                "texture": "Psychic (crisp)",
+                "brightness": "77",
+                "contrast": 138,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#f7aeb2"
+            }
+        },
+        "Stantler": {
+            "artwork": {
+                "offset_x": -3,
+                "offset_y": 25,
+                "scale": 1,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 106,
+                "flip": false,
+                "offset_x": "15",
+                "offset_y": "4",
+                "texture": "Ghost 1",
+                "brightness": "121",
+                "contrast": 110,
+                "saturation": "64",
+                "hue": 289
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#be9782"
+            }
+        },
+        "Wooper": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -67,
+                "scale": 0.64,
+                "flip": false,
+                "saturation": 125,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "33",
+                "texture": "Ground 1",
+                "brightness": "77",
+                "contrast": 140,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#97c9e2"
+            }
+        },
+        "Jigglypuff": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -110,
+                "scale": 0.54,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Flying 1",
+                "brightness": 100,
+                "contrast": 124,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.3,
+                "color": "#89c2cd"
+            }
+        },
+        "Eevee": {
+            "artwork": {
+                "offset_x": 25,
+                "offset_y": -32,
+                "scale": 0.72,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 119,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "68",
+                "texture": "Dragon 1",
+                "brightness": "62",
+                "contrast": 124,
+                "saturation": 100,
+                "hue": 219
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#ddc5a6"
+            }
+        },
+        "Espathra": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 18,
+                "scale": 1,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 136,
+                "flip": true,
+                "offset_x": "-9",
+                "offset_y": "-34",
+                "texture": "Psychic (crisp)",
+                "brightness": 100,
+                "contrast": 126,
+                "saturation": "123",
+                "hue": 314
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#f9be59"
+            }
+        },
+        "Snorlax": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -25,
+                "scale": 0.96,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Ground 1",
+                "brightness": "82",
+                "contrast": 126,
+                "saturation": "119",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#6199ad"
+            }
+        },
+        "Iron Bundle": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": -11,
+                "scale": 0.8,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 131,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "46",
+                "texture": "Ice 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#c94132"
+            }
+        },
+        "Weedle": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -95,
+                "scale": 0.54,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 130,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Poison 1",
+                "brightness": "48",
+                "contrast": 117,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#c1985a"
+            }
+        },
+        "Aerodactyl": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": 39,
+                "scale": 1.12,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 127,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Dragon 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.3,
+                "color": "#205569"
+            }
+        },
+        "Mewtwo": {
+            "background": {
+                "blur": 0,
+                "scale": 123,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Psychic (crisp)",
+                "brightness": 100,
+                "contrast": 117,
+                "saturation": "114",
+                "hue": 261
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#997b95"
+            }
+        },
+        "Kingler": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "null": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Mew": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 60,
+                "scale": 0.56,
+                "flip": false,
+                "saturation": 106,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 133,
+                "flip": false,
+                "offset_x": "92",
+                "offset_y": 100,
+                "texture": "Electric 2",
+                "brightness": "89",
+                "contrast": 144,
+                "saturation": "149",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.2,
+                "color": "#c999b7"
+            }
+        },
+        "Cloyster": {
+            "artwork": {
+                "offset_x": -18,
+                "offset_y": 53,
+                "scale": 0.84,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "70",
+                "texture": "Water 2",
+                "brightness": "73",
+                "contrast": 126,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1,
+                "color": "#a49fc1"
+            }
+        },
+        "Dewgong": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 39,
+                "scale": 0.78,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 137,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "46",
+                "texture": "Ice 1",
+                "brightness": "57",
+                "contrast": 154,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#86def5"
+            }
+        },
+        "Miraidon": {
+            "artwork": {
+                "offset_x": -32,
+                "offset_y": 32,
+                "scale": 1.08,
+                "flip": true,
+                "saturation": 102,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "3",
+                "scale": 122,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "-3",
+                "texture": "Electric 2",
+                "brightness": "98",
+                "contrast": 172,
+                "saturation": "142",
+                "hue": 219
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#302d85"
+            }
+        },
+        "Koraidon": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Growlithe": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": 32,
+                "scale": 0.68,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 121,
+                "flip": false,
+                "offset_x": "33",
+                "offset_y": "15",
+                "texture": "Fire 1",
+                "brightness": "94",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#d19565"
+            }
+        },
+        "Vulpix": {
+            "artwork": {
+                "offset_x": 25,
+                "offset_y": 18,
+                "scale": 0.68,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 123,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "-49",
+                "texture": "Fire 1",
+                "brightness": "68",
+                "contrast": 117,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#c18770"
+            }
+        },
+        "Ponyta": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 46,
+                "scale": 0.74,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 163,
+                "flip": false,
+                "offset_x": "64",
+                "offset_y": "-56",
+                "texture": "Fire 1",
+                "brightness": 100,
+                "contrast": 131,
+                "saturation": "96",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f5c000"
+            }
+        },
+        "Drowzee": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Mr. Mime": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Lickitung": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Dragonite": {
+            "artwork": {
+                "offset_x": 25,
+                "offset_y": 32,
+                "scale": 0.92,
+                "flip": false,
+                "saturation": 115,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 127,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Flying 1",
+                "brightness": "91",
+                "contrast": 142,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#f9b460"
+            }
+        },
+        "Dhelmise": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": 25,
+                "scale": 0.92,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 123,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "19",
+                "texture": "Water 2",
+                "brightness": "89",
+                "contrast": 110,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#39868f"
+            }
+        },
+        "NidoranF": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -60,
+                "scale": 0.48,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 116,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "35",
+                "texture": "Poison 1",
+                "brightness": "69",
+                "contrast": 131,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.2,
+                "color": "#514f7f"
+            }
+        },
+        "NidoranM": {
+            "artwork": {
+                "offset_x": -3,
+                "offset_y": -32,
+                "scale": 0.52,
+                "flip": true,
+                "saturation": 108,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Ground 1",
+                "brightness": "59",
+                "contrast": 123,
+                "saturation": "121",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.6,
+                "color": "#805675"
+            }
+        },
+        "Nidorino": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 4,
+                "scale": 0.7,
+                "flip": true,
+                "saturation": 100,
+                "rotation": "6"
+            },
+            "background": {
+                "blur": 0,
+                "scale": 120,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "41",
+                "texture": "Ground 1",
+                "brightness": "66",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.5,
+                "color": "#6fa3a1"
+            }
+        },
+        "Nidorina": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": 18,
+                "scale": 0.7,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 117,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "44",
+                "texture": "Poison 1",
+                "brightness": "75",
+                "contrast": 126,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#294d7f"
+            }
+        },
+        "Nidoqueen": {
+            "artwork": {
+                "offset_x": -18,
+                "offset_y": 39,
+                "scale": 0.78,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 118,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "50",
+                "texture": "Ground 1",
+                "brightness": "75",
+                "contrast": 153,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#668cb1"
+            }
+        },
+        "Nidoking": {
+            "artwork": {
+                "offset_x": -3,
+                "offset_y": 18,
+                "scale": 1.12,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 111,
+                "flip": false,
+                "offset_x": "66",
+                "offset_y": "28",
+                "texture": "Poison 1",
+                "brightness": "69",
+                "contrast": 119,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#6e3e19"
+            }
+        },
+        "Parasect": {
+            "artwork": {
+                "offset_x": -11,
+                "offset_y": -3,
+                "scale": 0.7,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 200,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "125",
+                "texture": "Bug 1",
+                "brightness": "61",
+                "contrast": 133,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#e4984c"
+            }
+        },
+        "Dragonair": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 18,
+                "scale": 0.76,
+                "flip": true,
+                "saturation": 134,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 119,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "19",
+                "texture": "Water 2",
+                "brightness": "78",
+                "contrast": 119,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#255c98"
+            }
+        },
+        "Paras": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Machamp": {
+            "artwork": {
+                "offset_x": 19,
+                "offset_y": 47,
+                "scale": 0.9,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 116,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "40",
+                "texture": "Fighting 1",
+                "brightness": "85",
+                "contrast": 110,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#a7b6c9"
+            }
+        },
+        "Charizard": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Steelix": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 39,
+                "scale": 0.9,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 120,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "68",
+                "texture": "Ground 1",
+                "brightness": "62",
+                "contrast": 126,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#7a86a1"
+            }
+        },
+        "Alakazam": {
+            "artwork": {
+                "offset_x": -11,
+                "offset_y": 60,
+                "scale": 0.9,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "44",
+                "texture": "Electric 1",
+                "brightness": "84",
+                "contrast": 154,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1,
+                "color": "#f4ecab"
+            }
+        },
+        "Iron Hands": {
+            "artwork": {
+                "offset_x": 25,
+                "offset_y": 32,
+                "scale": 1.32,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "48",
+                "texture": "Fighting 1",
+                "brightness": 100,
+                "contrast": 119,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#ffdc3f"
+            }
+        },
+        "Brute Bonnet": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 25,
+                "scale": 0.88,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "70",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 121,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#a5d184"
+            }
+        },
+        "Clefable": {
+            "artwork": {
+                "offset_x": 5,
+                "offset_y": 28,
+                "scale": 1,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.8,
+                "color": "#d7aab0"
+            }
+        },
+        "Scream Tail": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": -11,
+                "scale": 0.82,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 130,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "81",
+                "texture": "Psychic (crisp)",
+                "brightness": 100,
+                "contrast": 135,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#ce606f"
+            }
+        },
+        "Ekans": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 4
+            }
+        },
+        "Walking Wake": {
+            "artwork": {
+                "offset_x": 39,
+                "offset_y": 32,
+                "scale": 1.12,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 123,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "50",
+                "texture": "Water 2",
+                "brightness": "64",
+                "contrast": 114,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1,
+                "color": "#60b7be"
+            }
+        },
+        "Abra": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Chansey": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Meowth": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Butterfree": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 96,
+                "scale": 0.68,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 134,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "61",
+                "texture": "Psychic 1",
+                "brightness": "85",
+                "contrast": 170,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#5588a1"
+            }
+        },
+        "undefined": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Arbok": {
+            "artwork": {
+                "offset_x": -11,
+                "offset_y": 60,
+                "scale": 0.9,
+                "flip": true,
+                "saturation": 100,
+                "rotation": "0"
+            },
+            "background": {
+                "blur": 0,
+                "scale": 121,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "44",
+                "texture": "Psychic (crisp)",
+                "brightness": "84",
+                "contrast": 154,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#f0e17b"
+            }
+        },
+        "Articuno": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": 11,
+                "scale": 1,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "2",
+                "scale": 176,
+                "flip": false,
+                "offset_x": "95",
+                "offset_y": "-96",
+                "texture": "Fire 1",
+                "brightness": "78",
+                "contrast": 160,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#f8964d"
+            }
+        },
+        "Beedrill": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": 11,
+                "scale": 1,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "2",
+                "scale": 176,
+                "flip": false,
+                "offset_x": "95",
+                "offset_y": "-96",
+                "texture": "Fire 1",
+                "brightness": "78",
+                "contrast": 160,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#f8964d"
+            }
+        },
+        "Blastoise": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Bulbasaur": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Caterpie": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 96,
+                "scale": 0.68,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 134,
+                "flip": true,
+                "offset_x": 100,
+                "offset_y": "61",
+                "texture": "Psychic 1",
+                "brightness": "85",
+                "contrast": 170,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#5588a1"
+            }
+        },
+        "Charmander": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Nidoran_M": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 46,
+                "scale": 0.74,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 163,
+                "flip": false,
+                "offset_x": "64",
+                "offset_y": "-56",
+                "texture": "Fire 1",
+                "brightness": 100,
+                "contrast": 131,
+                "saturation": "96",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f5c000"
+            }
+        },
+        "Magmar": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 46,
+                "scale": 0.74,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 163,
+                "flip": false,
+                "offset_x": "64",
+                "offset_y": "-56",
+                "texture": "Fire 1",
+                "brightness": 100,
+                "contrast": 131,
+                "saturation": "96",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f5c000"
+            }
+        },
+        "Magikarp": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 46,
+                "scale": 0.74,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 163,
+                "flip": false,
+                "offset_x": "64",
+                "offset_y": "-56",
+                "texture": "Fire 1",
+                "brightness": 100,
+                "contrast": 131,
+                "saturation": "96",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f5c000"
+            }
+        },
+        "Magnemite": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 46,
+                "scale": 0.74,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 163,
+                "flip": false,
+                "offset_x": "64",
+                "offset_y": "-56",
+                "texture": "Fire 1",
+                "brightness": 100,
+                "contrast": 131,
+                "saturation": "96",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f5c000"
+            }
+        },
+        "Magneton": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 46,
+                "scale": 0.74,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 163,
+                "flip": false,
+                "offset_x": "64",
+                "offset_y": "-56",
+                "texture": "Fire 1",
+                "brightness": 100,
+                "contrast": 131,
+                "saturation": "96",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f5c000"
+            }
+        },
+        "Mankey": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 46,
+                "scale": 0.74,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 163,
+                "flip": false,
+                "offset_x": "64",
+                "offset_y": "-56",
+                "texture": "Fire 1",
+                "brightness": 100,
+                "contrast": 131,
+                "saturation": "96",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f5c000"
+            }
+        },
+        "Marowak": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 46,
+                "scale": 0.74,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 163,
+                "flip": false,
+                "offset_x": "64",
+                "offset_y": "-56",
+                "texture": "Fire 1",
+                "brightness": 100,
+                "contrast": 131,
+                "saturation": "96",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f5c000"
+            }
+        },
+        "Exeggutor": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Cubone": {
+            "artwork": {
+                "offset_x": 5,
+                "offset_y": 28,
+                "scale": 1,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.8,
+                "color": "#d7aab0"
+            }
+        },
+        "Diglett": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 39,
+                "scale": 0.78,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 137,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "46",
+                "texture": "Ice 1",
+                "brightness": "57",
+                "contrast": 154,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#86def5"
+            }
+        },
+        "Ditto": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 39,
+                "scale": 0.78,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 137,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "46",
+                "texture": "Ice 1",
+                "brightness": "57",
+                "contrast": 154,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#86def5"
+            }
+        },
+        "Dodrio": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 39,
+                "scale": 0.78,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 137,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "46",
+                "texture": "Ice 1",
+                "brightness": "57",
+                "contrast": 154,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#86def5"
+            }
+        },
+        "Doduo": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": 39,
+                "scale": 0.78,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 137,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "46",
+                "texture": "Ice 1",
+                "brightness": "57",
+                "contrast": 154,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.8,
+                "color": "#86def5"
+            }
+        },
+        "Dratini": {
+            "artwork": {
+                "offset_x": 25,
+                "offset_y": 32,
+                "scale": 0.92,
+                "flip": false,
+                "saturation": 115,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 127,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Flying 1",
+                "brightness": "91",
+                "contrast": 142,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.7,
+                "color": "#f9b460"
+            }
+        },
+        "Electabuzz": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 4
+            }
+        },
+        "Electrode": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 4
+            }
+        },
+        "Exeggcute": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 4
+            }
+        },
+        "Farfetch'd": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Fearow": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Flareon": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Gastly": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Gengar": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Geodude": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Gloom": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Golbat": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Goldeen": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Golduck": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Golem": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Graveler": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Grimer": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -81,
+                "scale": 0.62,
+                "flip": true,
+                "saturation": 117,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "0",
+                "scale": 124,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "72",
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 32
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#eeeb5a"
+            }
+        },
+        "Gyarados": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": 32,
+                "scale": 0.68,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 121,
+                "flip": false,
+                "offset_x": "33",
+                "offset_y": "15",
+                "texture": "Fire 1",
+                "brightness": "94",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#d19565"
+            }
+        },
+        "Haunter": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": 32,
+                "scale": 0.68,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 121,
+                "flip": false,
+                "offset_x": "33",
+                "offset_y": "15",
+                "texture": "Fire 1",
+                "brightness": "94",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#d19565"
+            }
+        },
+        "Hitmonchan": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": 32,
+                "scale": 0.68,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 121,
+                "flip": false,
+                "offset_x": "33",
+                "offset_y": "15",
+                "texture": "Fire 1",
+                "brightness": "94",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#d19565"
+            }
+        },
+        "Hitmonlee": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": 32,
+                "scale": 0.68,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 121,
+                "flip": false,
+                "offset_x": "33",
+                "offset_y": "15",
+                "texture": "Fire 1",
+                "brightness": "94",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#d19565"
+            }
+        },
+        "Horsea": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": 32,
+                "scale": 0.68,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 121,
+                "flip": false,
+                "offset_x": "33",
+                "offset_y": "15",
+                "texture": "Fire 1",
+                "brightness": "94",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#d19565"
+            }
+        },
+        "Hypno": {
+            "artwork": {
+                "offset_x": -25,
+                "offset_y": 32,
+                "scale": 0.68,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 121,
+                "flip": false,
+                "offset_x": "33",
+                "offset_y": "15",
+                "texture": "Fire 1",
+                "brightness": "94",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#d19565"
+            }
+        },
+        "Jolteon": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -110,
+                "scale": 0.54,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Flying 1",
+                "brightness": 100,
+                "contrast": 124,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.3,
+                "color": "#89c2cd"
+            }
+        },
+        "Jynx": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -110,
+                "scale": 0.54,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Flying 1",
+                "brightness": 100,
+                "contrast": 124,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.3,
+                "color": "#89c2cd"
+            }
+        },
+        "Kabuto": {
+            "artwork": {
+                "offset_x": 18,
+                "offset_y": -110,
+                "scale": 0.54,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Flying 1",
+                "brightness": 100,
+                "contrast": 124,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.3,
+                "color": "#89c2cd"
+            }
+        },
+        "Sandslash": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -25,
+                "scale": 0.96,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Ground 1",
+                "brightness": "82",
+                "contrast": 126,
+                "saturation": "119",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#6199ad"
+            }
+        },
+        "Rhyhorn": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -25,
+                "scale": 0.96,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Ground 1",
+                "brightness": "82",
+                "contrast": 126,
+                "saturation": "119",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#6199ad"
+            }
+        },
+        "Persian": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -25,
+                "scale": 0.96,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Ground 1",
+                "brightness": "82",
+                "contrast": 126,
+                "saturation": "119",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#6199ad"
+            }
+        },
+        "Metapod": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -25,
+                "scale": 0.96,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Ground 1",
+                "brightness": "82",
+                "contrast": 126,
+                "saturation": "119",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#6199ad"
+            }
+        },
+        "Moltres": {
+            "background": {
+                "blur": 0,
+                "scale": 123,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Psychic (crisp)",
+                "brightness": 100,
+                "contrast": 117,
+                "saturation": "114",
+                "hue": 261
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#997b95"
+            }
+        },
+        "Muk": {
+            "background": {
+                "blur": 0,
+                "scale": 100,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Bug 1",
+                "brightness": 100,
+                "contrast": 100,
+                "saturation": 100,
+                "hue": 0
+            }
+        },
+        "Nidoran_F": {
+            "artwork": {
+                "offset_x": -18,
+                "offset_y": 39,
+                "scale": 0.78,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 118,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "50",
+                "texture": "Ground 1",
+                "brightness": "75",
+                "contrast": 153,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#668cb1"
+            }
+        },
+        "Ninetales": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 4,
+                "scale": 0.7,
+                "flip": true,
+                "saturation": 100,
+                "rotation": "6"
+            },
+            "background": {
+                "blur": 0,
+                "scale": 120,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "41",
+                "texture": "Ground 1",
+                "brightness": "66",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.5,
+                "color": "#6fa3a1"
+            }
+        },
+        "Oddish": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 4,
+                "scale": 0.7,
+                "flip": true,
+                "saturation": 100,
+                "rotation": "6"
+            },
+            "background": {
+                "blur": 0,
+                "scale": 120,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "41",
+                "texture": "Ground 1",
+                "brightness": "66",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.5,
+                "color": "#6fa3a1"
+            }
+        },
+        "Omanyte": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 4,
+                "scale": 0.7,
+                "flip": true,
+                "saturation": 100,
+                "rotation": "6"
+            },
+            "background": {
+                "blur": 0,
+                "scale": 120,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "41",
+                "texture": "Ground 1",
+                "brightness": "66",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.5,
+                "color": "#6fa3a1"
+            }
+        },
+        "Omastar": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 4,
+                "scale": 0.7,
+                "flip": true,
+                "saturation": 100,
+                "rotation": "6"
+            },
+            "background": {
+                "blur": 0,
+                "scale": 120,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "41",
+                "texture": "Ground 1",
+                "brightness": "66",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.5,
+                "color": "#6fa3a1"
+            }
+        },
+        "Onix": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 4,
+                "scale": 0.7,
+                "flip": true,
+                "saturation": 100,
+                "rotation": "6"
+            },
+            "background": {
+                "blur": 0,
+                "scale": 120,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": "41",
+                "texture": "Ground 1",
+                "brightness": "66",
+                "contrast": 128,
+                "saturation": 100,
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 1.5,
+                "color": "#6fa3a1"
+            }
+        },
+        "Pidgeot": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -25,
+                "scale": 0.96,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Ground 1",
+                "brightness": "82",
+                "contrast": 126,
+                "saturation": "119",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#6199ad"
+            }
+        },
+        "Pidgeotto": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -25,
+                "scale": 0.96,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Ground 1",
+                "brightness": "82",
+                "contrast": 126,
+                "saturation": "119",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#6199ad"
+            }
+        },
+        "Pidgey": {
+            "artwork": {
+                "offset_x": 0,
+                "offset_y": -25,
+                "scale": 0.96,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 134,
+                "flip": false,
+                "offset_x": 100,
+                "offset_y": 100,
+                "texture": "Ground 1",
+                "brightness": "82",
+                "contrast": 126,
+                "saturation": "119",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#6199ad"
+            }
+        },
+        "Pinsir": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": -25,
+                "scale": 0.82,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": 0,
+                "scale": 168,
+                "flip": false,
+                "offset_x": "106",
+                "offset_y": "101",
+                "texture": "Electric 1",
+                "brightness": "77",
+                "contrast": 200,
+                "saturation": 100,
+                "hue": 302
+            },
+            "ui": {
+                "saturation": 0.9,
+                "color": "#ffe882"
+            }
+        },
+        "Poliwrath": {
+            "artwork": {
+                "offset_x": 11,
+                "offset_y": -32,
+                "scale": 0.82,
+                "flip": false,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "2",
+                "scale": 146,
+                "flip": false,
+                "offset_x": "123",
+                "offset_y": "68",
+                "texture": "Water 3",
+                "brightness": "91",
+                "contrast": 117,
+                "saturation": "114",
+                "hue": 17
+            },
+            "ui": {
+                "saturation": 1.1,
+                "color": "#5b85bb"
+            }
+        },
+        "Koffing": {
+            "artwork": {
+                "offset_x": 4,
+                "offset_y": 46,
+                "scale": 0.74,
+                "flip": true,
+                "saturation": 100,
+                "rotation": 0
+            },
+            "background": {
+                "blur": "1",
+                "scale": 163,
+                "flip": false,
+                "offset_x": "64",
+                "offset_y": "-56",
+                "texture": "Fire 1",
+                "brightness": 100,
+                "contrast": 131,
+                "saturation": "96",
+                "hue": 0
+            },
+            "ui": {
+                "saturation": 0.6,
+                "color": "#f5c000"
+            }
+        }
+    }
+}

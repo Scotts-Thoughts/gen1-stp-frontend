@@ -33,13 +33,13 @@
 </template>
 
 <script>
-import { JsonStorage } from "~/logic/Storage.js";
 import PubSub from "~/logic/PubSub";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
 import { FaultMode } from "~/stores/types/FaultMode";
 import { defineComponent } from "vue";
 import { useMetaStore } from "~/stores/metaStore.js";
 import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";
+
 export default defineComponent({
     inject: [ "game_properties" ],
     data() {
@@ -48,7 +48,6 @@ export default defineComponent({
             meta: useMetaStore(),
             metrics: useSpeciesMetricsStore(),
             runConfig: useGameSpeciesData(),
-            flag_blackout_prerequisite: JsonStorage.games[this.meta.game]?.[this.meta.starter]?.data?.flag_blackout_prerequisite ?? false,
         }
     },
     computed: {
@@ -61,30 +60,18 @@ export default defineComponent({
         },
     },
     methods: {
-        clear_playthrough_data() {
-            this.metrics.update("resets", 0);
-            this.metrics.update("blackouts", 0);
-            this.flag_blackout_prerequisite = false
-        },
         reset_occurred() {
-            this.flag_blackout_prerequisite = false;
+            this.metrics.flag_blackout_prerequisite = false;
             this.metrics.update("resets", this.metrics.resets+1);
         },
         check_blackout([newProp, oldProp]) {
-            if (newProp?.value == "Overworld" && oldProp?.value == "Battle" && this.flag_blackout_prerequisite == true) {
-                this.flag_blackout_prerequisite = false;
+            if (newProp?.value == "Overworld" && oldProp?.value == "Battle" && this.metrics.flag_blackout_prerequisite == true) {
+                this.metrics.flag_blackout_prerequisite = false;
                 this.metrics.update("blackouts", this.metrics.blackouts+1);
             }
             else if (newProp.value == "Overworld") {
-                this.flag_blackout_prerequisite = false;
+                this.metrics.flag_blackout_prerequisite = false;
             }
-        },
-        new_run_started() {
-            if (this.runConfig.advanced.no_attempt == true) {
-                return
-            }
-            this.metrics.update("resets", 0);
-            this.metrics.update("blackouts", 0);
         },
         font_size(value) {
             var faultDisplayLength = value.toString().length;
@@ -98,33 +85,19 @@ export default defineComponent({
         },
     },
     created() {
-        PubSub.subscribe("@run/cleared", this.clear_playthrough_data);
         PubSub.subscribe("@run/reset_occurred", this.reset_occurred);
         PubSub.subscribe("@run/check_blackout", this.check_blackout);
-        PubSub.subscribe("@run/new_run_started", this.new_run_started);
-    },
-    watch: {
-        //! These watchers are just used to emit the changes of these properties for other components to use, there will be a better way to do this.
-        //! This may be important just to keep thes values backed up
-        flag_blackout_prerequisite(new_value) {
-            if (!JsonStorage.games[this.meta.game][this.meta.starter]?.data)  {
-                JsonStorage.games[this.meta.game][this.meta.starter].data = {};
-            }
-            JsonStorage.games[this.meta.game][this.meta.starter].data.flag_blackout_prerequisite = new_value
-        }
     },
     mounted() {
         this.game_properties.player.team[0].hp.change((newProp, oldProp) => {
             if (newProp.value == 0 && this.game_properties.meta.state.value == 'Battle') {
-                this.flag_blackout_prerequisite = true;
+                this.metrics.flag_blackout_prerequisite = true;
             }
         })
     },
-    onUnmounted() {
-        PubSub.unsubscribe("@run/cleared", this.clear_playthrough_data);
+    onUnmounted() {        
         PubSub.unsubscribe("@run/reset_occurred", this.reset_occurred);
         PubSub.unsubscribe("@run/check_blackout", this.check_blackout);
-        PubSub.unsubscribe("@run/new_run_started", this.new_run_started);
     }
 });
 </script>

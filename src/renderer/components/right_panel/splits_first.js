@@ -2,6 +2,7 @@ import { defineComponent } from "vue";
 import { split_trainers } from "~/autosplitter/split_trainers";
 import PokeData from "~/logic/PokeData";
 import { useMetaStore } from "~/stores/metaStore";
+import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore";
 
 const template = /*html*/`
     <div>
@@ -29,19 +30,16 @@ const template = /*html*/`
 
 export default defineComponent({
     template,
-    props: [
-        "current_splits",
-        "trainer_name_lookup",
-    ],
+    props: [ "trainer_name_lookup" ],
     inject: ["game_properties"],
     data() {
-        return { meta: useMetaStore() };
+        return { meta: useMetaStore(), metrics: useSpeciesMetricsStore() };
     },
     computed: {
         first_splits() {
-            const game = this.game_properties.meta.gameName.value;
+            const game = this.meta.game;
             const optional = ["Rival1a-Route 22"];
-            const completedSplits = this.current_splits
+            const completedSplits = this.metrics.splits
                 .filter(split => split_trainers[game].includes(split.trainer))
                 .map(split => { return { trainer: split.trainer, current_time: split.time } });
             const upcomingSplits = split_trainers[game]

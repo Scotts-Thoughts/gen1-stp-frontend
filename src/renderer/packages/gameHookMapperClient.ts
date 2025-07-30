@@ -1,5 +1,7 @@
 import {HubConnection, HubConnectionBuilder, HubConnectionState, LogLevel} from "@microsoft/signalr";
 
+export type GamePropertyMap = Record<string, GameHookProperty>
+
 export enum GamePropertyType {
 	binaryCodedDecimal = "binaryCodedDecimal",
 	bitArray = "bitArray",

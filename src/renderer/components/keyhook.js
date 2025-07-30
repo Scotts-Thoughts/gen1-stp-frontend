@@ -328,7 +328,7 @@ export default defineComponent({
         //F22 unused
         //F23
         keyhook.registerShortCut('F23', async () => {
-            this.$parent.newRun()
+            this.metrics.start_new_run()
         });
         //F24
         keyhook.registerShortCut('F24', async () => {

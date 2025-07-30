@@ -55,4 +55,4 @@ export const useSettingsStore = defineStore('settings', () => {
 		overlay,
 		game_species: runConfig,
 	};
-})
+});

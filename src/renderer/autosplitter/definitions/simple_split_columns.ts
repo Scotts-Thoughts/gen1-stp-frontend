@@ -1,0 +1,17 @@
+import { SplitHeading } from "../types";
+
+export const simple_split_columns: Readonly<SplitHeading[]> = Object.freeze([
+	"player_name",
+	"pokemon",
+	"trainer_name",
+	"real_time_hmmss",
+	"resets",
+	"blackouts",
+	"level",
+	"game_time",
+	"battle_duration",
+	"move1",
+	"move2",
+	"move3",
+	"move4",
+]);

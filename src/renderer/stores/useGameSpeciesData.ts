@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { loadAppSettings, saveAppSettings } from "./helper/files";
-import { JsonStorage } from "~/logic/Storage.js";
+import style_presets from "../data/style_presets.json";
 const path = require('path');
 
 const SETTINGS_FILE_NAME = "settings.json";
@@ -64,38 +64,20 @@ export const useGameSpeciesData = defineStore("game_species_data", {
 			}
 			const loadedSettings = await loadAppSettings<GameSpeciesData>(path.join(game, starter), SETTINGS_FILE_NAME);
 			if (loadedSettings === null)  {
-				this.applyPresetStyle(JsonStorage['games'][game][starter].style)
+				this.applyPresetStyle(
+					style_presets[game][starter] ?? null
+				);
 				return;
 			}
 			Object.assign(this.$state.styling, loadedSettings.styling);
 		},
-		applyPresetStyle(preset: DeprecatedStyleSettings) {
+		applyPresetStyle(preset: object|null) {
 			const newStyle = structuredClone(defaultGameSpeciesSettings().styling);
 			// TODO: Hopefully this is temporary code 'til we migrated all the presets to the new format. 
 			// Then loading them is a lot less code. - Ion.
-			if (Object.getOwnPropertyNames(preset).length === 0) {
-				return;
+			if (preset ) {
+				Object.assign(newStyle, preset);
 			}
-			newStyle.ui.saturation = parseFloat(preset.ui_saturation.toString());
-			newStyle.ui.color = preset.overlay_color;
-
-			newStyle.artwork.offset_x = parseInt(preset.imageXOffset.toString());
-			newStyle.artwork.offset_y = parseInt(preset.imageYOffset.toString());
-			newStyle.artwork.scale = parseFloat(preset.imageScale);
-			newStyle.artwork.flip = preset.imageFlip;
-			newStyle.artwork.saturation = parseInt(preset.imageSat);
-			newStyle.artwork.rotation = preset.imageRotation;
-
-			newStyle.background.blur = preset.backgroundBlur;
-			newStyle.background.scale = parseFloat(preset.backgroundScale);
-			newStyle.background.flip = preset.backgroundFlip;
-			newStyle.background.offset_x = preset.backgroundXOffset;
-			newStyle.background.offset_y = preset.backgroundYOffset;
-			newStyle.background.texture = preset.backgroundTexture;
-			newStyle.background.brightness = preset.backgroundBrightness;
-			newStyle.background.contrast = parseInt(preset.backgroundContrast);
-			newStyle.background.saturation = preset.backgroundSaturation;
-			newStyle.background.hue = parseInt(preset.backgroundHue);
 			Object.assign(this.$state.styling, newStyle);
 		}
 	}
@@ -121,6 +103,7 @@ export function defaultGameSpeciesSettings() {
 			advanced: {
 				test_run: false,
 				refilming_mode: false,
+				refilmed_attempt: 0,
 				no_attempt: false,
 				editor: {
 					moves: {},
@@ -168,25 +151,3 @@ export function defaultGameSpeciesSettings() {
 		}
 	}
 }
-
-export interface DeprecatedStyleSettings {
-	overlay_color: string,
-	imageXOffset: string,
-	imageYOffset: string,
-	imageScale: string,
-	imageFlip: true,
-	imageSat: string,
-	imageRotation: number,
-	backgroundBlur: number,
-	backgroundScale: string,
-	backgroundFlip: false,
-	backgroundXOffset: number,
-	backgroundYOffset: number,
-	backgroundTexture: string,
-	backgroundBrightness: number,
-	backgroundContrast: string,
-	backgroundSaturation: number,
-	backgroundHue: string,
-	ui_saturation: string,
-}
-

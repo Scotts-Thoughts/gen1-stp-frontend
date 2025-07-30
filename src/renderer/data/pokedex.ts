@@ -21,4 +21,4 @@ export const GameDexes: Record<PokemonGame, Record<string, PokemonSpecies>> = {
     "Diamond and Pearl": DiamondAndPearlDex,
     "Platinum": PlatinumDex,
     "HeartGold and SoulSilver": HeartGoldAndSoulSilverDex,
-}
+};

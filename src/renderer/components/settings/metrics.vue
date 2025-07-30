@@ -81,7 +81,7 @@ export default defineComponent({
     },
     methods: {
         clear_run() {
-            PubSub.publish("@run/cleared");
+            this.metrics.clear_run();
         },
         increment(property: keyof SpeciesMetrics) {
             if (typeof this.metrics[property] === "number") {

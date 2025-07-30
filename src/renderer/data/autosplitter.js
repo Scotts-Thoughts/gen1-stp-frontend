@@ -17,6 +17,26 @@ export const autosplitter = {
         "ROCKET",
         "RIVAL3",
     ],
+    "Simple": [
+        "RIVAL1_1",
+        "RIVAL2_1",
+        "BROCK_1",
+        "MISTY_1",
+        "LT.SURGE_1",
+        "ERIKA_1",
+        "KOGA_1",
+        "SABRINA_1",
+        "BLAINE_1",
+        "GIOVANNI_3", // this is the Giovanni fight in the 8th gym
+        "LORELEI_1",
+        "BRUNO_1",
+        "AGATHA_1",
+        "LANCE_1",
+        "ROCKET_5", // this is the rocket outside of Cerulean city, collecting this data allows for better comparisons for Pokemon that take different choices in Cerulean Nugget->Misty or Misty->Nugget
+        "RIVAL3_1",
+        "RIVAL3_2",
+        "RIVAL3_3",
+    ],
     "Yellow": {
         //Gym Leaders
         "BROCK_1":         "Brock",

@@ -2,7 +2,7 @@ import { createApp } from "vue/dist/vue.esm-bundler.js";
 import { defineComponent } from "vue";
 import PokeData from "~/logic/PokeData.js";
 import { GameHookMapperClient } from "~/packages/gameHookMapperClient";
-import frontend from "~/components/frontend.js";
+import frontend from "~/components/frontend.vue";
 import no_mapper from "~/components/no_mapper.js";
 import keyhook from "~/components/keyhook.js";
 import { PokemonGame } from "~/logic/PokeDataTypes.js";

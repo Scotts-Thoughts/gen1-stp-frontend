@@ -6,6 +6,19 @@ const path = require('path');
 import { loadAppSettings, saveAppSettings } from "./helper/files";
 import { formatTime, getTime, Timer, TimerData } from "~/logic/Timer";
 import { FaultMode } from "./types/FaultMode";
+import { SlimSplit } from "./autoSplitterStore";
+import { useGameSpeciesData } from "./useGameSpeciesData";
+
+export enum RunState {
+	/** No run is currently in progress */
+	initial,
+	/** Run has been started. */
+	started,
+	/** The final split was reached (e.g. the final rival battle in gen 1 or defeating red in gen 2.). */
+	finished,
+	/** The run has been completed, all metrics collected and saved in their appropriate places. */
+	saved,
+}
 
 /**
  * The species metrics store is in control of the timer and keeps track of relevant run statistics like faults and attempts. 
@@ -55,17 +68,9 @@ export const useSpeciesMetricsStore = defineStore('species_metrics', {
 		update<K extends keyof SpeciesMetrics>(key: K, value: SpeciesMetrics[K]) {
 			this.$state[key] = value;
 		},
-		/** Start the timer. Sets {@link timer_override} as the starting time. */
-		startTime() {
-			Timer.instance().start(this.timer_override);
-		},
 		/** Resets the timer and pauses it. Sets {@link timer_override} as the starting time. */
 		resetTimer() {
 			Timer.instance().set(this.timer_override);
-		},
-		/** Stop the timer */
-		stopTimer() {
-			Timer.instance().stop();
 		},
 		/** Pause or unpause the timer. */
 		toggleTimer() {
@@ -80,9 +85,38 @@ export const useSpeciesMetricsStore = defineStore('species_metrics', {
 				formatted: formatTime(raw),
 			}
 		},
-		clearCounters() {
+		addSplit(split: SlimSplit) {
+			const existingSplit = this.splits.find(x => x.unique_trainer_id === split.unique_trainer_id);
+			if (existingSplit) {
+				existingSplit.time = split.time;
+			} else {
+				this.splits.push(split);
+			}
+		},
+		clear_run() {
+			this.flag_blackout_prerequisite = false;
+			this.resetTimer();
 			this.blackouts = 0;
 			this.resets = 0;
+			this.splits = [];
+			this.player_id = 0;
+			this.state = RunState.initial;
+		},
+		start_new_run(player_id: number) {
+			const runConfig = useGameSpeciesData();
+			if (runConfig.advanced.test_run == false && runConfig.advanced.refilming_mode == false) {
+				this.attempts++;
+			};
+			if (!runConfig.advanced.no_attempt) {
+				this.clear_run();
+			}
+			this.player_id = player_id;
+			this.state = RunState.started;
+			Timer.instance().start(this.timer_override);
+		},
+		finish_run() {
+			Timer.instance().stop();
+			this.state = RunState.finished;
 		}
 	}
 });
@@ -106,5 +140,9 @@ function defaultSpeciesMetrics() {
 		/** Number of blackouts in the current attempt. */
 		blackouts: 0,
 		splits_path: "",
+		player_id: 0,
+		state: RunState.initial,
+		flag_blackout_prerequisite: false,
+		splits: [] as SlimSplit[],
 	};
 }
