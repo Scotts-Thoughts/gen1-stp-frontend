@@ -365,7 +365,7 @@ export default defineComponent({
                     case "AGATHA_1": return "images/trainers/agatha.png";
                     case "LANCE_1": return "images/trainers/lance.png";
                     case "HIKER_2": return "images/trainers/elixir_hiker.png";
-                    default: return null;
+                    default: return;
                 }
             }
             if (this.game_properties.meta.gameName.value == "Red and Blue") {
@@ -409,7 +409,7 @@ export default defineComponent({
                     case "LANCE_1": return "images/trainers/lance.png";
                     case "ROCKET_1": return "images/trainers/Red_and_Blue/mtmoon_rocket_boss.png";
                     case "HIKER_2": return "images/trainers/Red_and_Blue/elixir_hiker.png";
-                    default: return null;
+                    default: return;
                 }
             }
             return;

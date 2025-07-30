@@ -1,5 +1,4 @@
 import PokeData from "~/logic/PokeData.js";
-import { Timer } from "~/logic/Timer.js";
 import PubSub from "~/logic/PubSub";
 import { JsonStorage} from "~/logic/Storage.js";
 import { LocalStorageProxy } from "~/logic/LocalStorageProxy.js";
@@ -165,13 +164,6 @@ export default defineComponent({
         const clear_storage = false; // Use this to test functionality. It resets all the data blocks within the Storage.json file to their default values
         if (debug_mode) { console.log(`Initializing the Storage Object...`) }
 
-        if (!JsonStorage['application_settings'] || clear_storage == true) {
-            //Assigns the application settings to the Storage object, these persist when the user changes the starter Pokemon
-            JsonStorage['application_settings'] = {}
-            application_settings.forEach(setting => {
-                JsonStorage['application_settings'][setting[0]] = setting[1];
-            });
-        }
         if (!JsonStorage['games'] || clear_storage == true) {
             // Assigns the game data to the Storage object, these properties will be switched between depending on the game and starter currently selected
             JsonStorage['games'] = { //If the games object doesn't exist, create it; everything will be stored within here
@@ -180,43 +172,22 @@ export default defineComponent({
                 Yellow: {},
             }
         }
+
         if (debug_mode) {
             console.log(`Success!`)
             console.log(`Initializing Starter Storage Object...`)
         }
         if (!JsonStorage['games'][this.meta.game][this.meta.starter] || clear_storage == true) {
-            JsonStorage['games'][this.meta.game][this.meta.starter] = {
-                style: {},
-                settings: {},
-                splits: {},
-                data: {},
-            };
+            JsonStorage['games'][this.meta.game][this.meta.starter] = { style: {} };
         }
         if (debug_mode) { console.log(`Success!`) }
-
         // Initialize watchers for all of the style properties. 
         // These are game and Pokemon specific saved within: Storage.games[game][starter]
         // Define variables
-        if (debug_mode) {
-            console.log(`Stored Starter: ${this.meta.starter}`)
-            console.log(`Stored Game: ${this.meta.game}`)
-        }
-        //Loop through application settings and create watchers
-        for (let i = 0; i < application_settings.length; i++) {
-            let [prop_name, value] = application_settings[i];
-            this.$watch(
-                () => this[prop_name],
-                (new_value) => {
-                    if (!JsonStorage.application_settings) {
-                        JsonStorage.application_settings = {};
-                    }
-                    JsonStorage.application_settings = {
-                        ...JsonStorage.application_settings,
-                        [prop_name]: new_value
-                    };
-                }
-            );
-        }
+
+        // Set up application settings watchers
+        this.$watch(this.autosplitter_toggle, (newValue) => JsonStorage.application_settings.autosplitter_toggle = newValue);
+        this.$watch(this.collect_split_data, (newValue) => JsonStorage.application_settings.collect_split_data = newValue);
         //Loop through style settings that will be saved within a game and specific Pokemon
         for (let i = 0; i < pokemon_settings.length; i++) {
             let [prop_name, value] = pokemon_settings[i];
@@ -237,20 +208,9 @@ export default defineComponent({
             console.log(`Storage finished initialization. Printing Storage object to console...`)
             console.log(JsonStorage)
         }
-        // Load Settings from the Storage object
-        // Load Starter and Game
-
-
-        // Application Settings
-        for (let key in JsonStorage.application_settings) {
-            if (debug_mode) {
-                console.log(`Application Setting Key: ${key}`)
-            }
-            let application_settings = Object.entries(JsonStorage.application_settings); // Assign the Pokemon's style settings to an array
-            for (let i = 0; i < application_settings.length; i++) { // Iterate through the array
-                this[key] = JsonStorage.application_settings[key]; // Assign the values for each setting to the data() properties
-            }
-        }
+        // Load Application Settings from the Storage object
+        this.autosplitter_toggle = JsonStorage.application_settings.autosplitter_toggle;
+        this.collect_split_data = JsonStorage.application_settings.collect_split_data;
         if (debug_mode) {
             console.log(`Success!`)
             console.log(`Loaded all settings from Storage.`)
@@ -275,21 +235,13 @@ export default defineComponent({
             }
             //update the saved starter in the overlay's local storage
             if (!JsonStorage['games'][this.meta.game][newValue]) {
-                JsonStorage['games'][this.meta.game][newValue] = {
-                    settings: {},
-                    splits: {},
-                    data: {},
-                };
+                JsonStorage['games'][this.meta.game][newValue] = { style: {} };
             }
         },
         async game_selection(newValue) {  // TODO: This can be removed once we obsoleted all uses of "Storage".
             //update the saved starter in the overlay's local storage
             if (!JsonStorage['games'][newValue][this.meta.starter]) {
-                JsonStorage['games'][newValue][this.meta.starter] = {
-                    settings: {},
-                    splits: {},
-                    data: {},
-                };
+                JsonStorage['games'][newValue][this.meta.starter] = { style: {} };
             }
         },
         player_id() {
