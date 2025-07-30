@@ -1,21 +1,17 @@
-import { get_enemy_pkmn_styles } from "../../methods/enemy";
-import PokeData from "~/logic/PokeData";
-import { capitalize_words, move_name } from "../../methods/text_functions";
-import { useMetaStore } from "~/stores/metaStore";
-import { defineComponent } from "vue";
-const template = /*html*/`
+
+<template>
 <div>
     <div class="trainerLabel">{{capitalize_words(fixTrainerName(battle.trainer.class.value, battle.trainer.number))}}</div>
     <div class="tinted-box" :style="battle_pokemon_crop" style="--url: url(../images/ui/opponent.svg);"></div>
     <div class="enemyGraphic">
         <div v-for="[x, pokemon] in party" class="ePkmnStyle">
-            <img v-if="game_properties.meta.gameName == 'Yellow'" class="ePkmnSprite" :style="pokemon.style.faint" :src="'images/pokemon/' + game_properties.battle.trainer.team[x]?.species + '.png'"/>
-            <img v-else-if="game_properties.meta.gameName == 'Red and Blue'" class="ePkmnSprite" :style="pokemon.style.faint" :src="'images/pokemon/Red_and_Blue/' + game_properties.battle.trainer.team[x]?.species + '.png'"/>
+            <img v-if="meta.game == 'Yellow'" class="ePkmnSprite" :style="pokemon.style.faint" :src="'images/pokemon/' + game_properties.battle.trainer.team[x]?.species + '.png'"/>
+            <img v-else-if="meta.game == 'Red and Blue'" class="ePkmnSprite" :style="pokemon.style.faint" :src="'images/pokemon/Red_and_Blue/' + game_properties.battle.trainer.team[x]?.species + '.png'"/>
             <div class="ePkmnSpecies opacityTransition" :style="pokemon.style.species">{{game_properties.battle.trainer.team[x]?.species}}</div>
             <div class="ePkmnLevel opacityTransition" :style="pokemon.style.species">Lv:{{game_properties.battle.trainer.team[x]?.level}}</div>
             <img class="ePkmnTypeIcons ePkmnType_1 ds opacityTransition" :style="enemy_pkmn_faint_types(battle.trainer.team[x])" :src="'images/elements/type-icons/' + enemyType1(x).toLowerCase() + '.png'"/>
             <img v-if="enemyType1(x) != enemyType2(x)" :style="enemy_pkmn_faint_types(battle.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_2 ds opacityTransition" :src="'images/elements/type-icons/' + enemyType2(x).toLowerCase() + '.png'"/>
-            <img v-if="enemyType3(x) == 'Ghost'" :style="enemy_pkmn_faint_types(battle.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_3 ds opacityTransition" :src="images/elements/type-icons/ghost.png"/>
+            <img v-if="enemyType3(x) == 'Ghost'" :style="enemy_pkmn_faint_types(battle.trainer.team[x])" class="ePkmnTypeIcons ePkmnType_3 ds opacityTransition" :src="'images/elements/type-icons/ghost.png'"/>
             
             <!-- Moves -->
             <img class="canvas" :class="svgColorClass(speed_comparison(x, game_properties.battle.trainer.team[x]?.speed).comparison, battle.trainer.team[x])" :src="'images/ui/speed_comp/' + x + '.svg'"/>
@@ -25,7 +21,7 @@ const template = /*html*/`
                 :src="'images/stats/' + x + '.svg'"
             />
 
-            <div v-for="move_index in moves = [0, 1, 2, 3]">
+            <div v-for="move_index in [0, 1, 2, 3]">
                 <img v-if="game_properties.battle.trainer.team[x]['move' + (move_index + 1)]?.value != null" 
                     :class="'ds eMoveIconStyle moveIcon' + (move_index + 1) + ' opacityTransition'" 
                     :style="enemy_pkmn_faint_types(battle.trainer.team[x])" 
@@ -53,12 +49,12 @@ const template = /*html*/`
             <div class="ePkmnStatsStyle ePkmnCrit opacityTransition" :style="pokemon.style.text">{{enemy_crit_rate(game_properties.battle.trainer.team[x])}}%</div>
         
             <!-- Modifiers -->
-            <div v-for="mod in modifiers = [
+            <div v-for="mod in [
                 ['modEnemyStageAttack',  'Atk',],
                 ['modEnemyStageDefense', 'Def',],
                 ['modEnemyStageSpecial', 'Spc',],
                 ['modEnemyStageSpeed',   'Spd',],
-                ]">
+            ]">
                 <div v-show="(meta.enemyState == 'Pokemon' || meta.enemyState == 'Pokemon Sent Out' || meta.enemyState == 'Fainting') && battle.enemyPokemon.partyPos.value == x && battle.enemyPokemon[mod[0]].value != '0'" 
                 :class="'ePkmnModsStyle ePkmnMod' + mod[1]">
                     {{stat_mod(battle.enemyPokemon[mod[0]].value, x).mod}}
@@ -66,7 +62,7 @@ const template = /*html*/`
             </div>
             <div>
                 <transition name="fade">
-                    <div v-show="speed_comparison_toggle == true" :style="pokemon.style.text" class="speed_comparison">{{speed_comparison(x, game_properties.battle.trainer.team[x]?.speed).comparison}}</div>
+                    <div v-show="overlay.right_panel.speed_comparison" :style="pokemon.style.text" class="speed_comparison">{{speed_comparison(x, game_properties.battle.trainer.team[x]?.speed).comparison}}</div>
                 </transition>
             </div>
         </div>
@@ -75,19 +71,27 @@ const template = /*html*/`
         <img class="canvas" :src="trainer_artwork()"/>
     </div>
 </div>
-`
+</template>
 
+<script lang="ts">
+import { get_enemy_pkmn_styles } from "../../methods/enemy";
+import PokeData from "~/logic/PokeData";
+import { capitalize_words, move_name } from "../../methods/text_functions";
+import { useMetaStore } from "~/stores/metaStore";
+import { defineComponent, inject } from "vue";
+import {  useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
+import { GameHookProperty } from "~/packages/gameHookMapperClient";
 export default defineComponent({
-    template,
     name: "EnemyGraphics",
-    inject: ["game_properties"],
     props: [
-        "speed_comparison_toggle",
         "enemy_pkmn_faint_types",
-        "right_panel",
     ],
     data() {
-        return { meta: useMetaStore() }
+        return { 
+            game_properties: inject<Record<string, GameHookProperty>>("game_properties", {}),
+            meta: useMetaStore(), 
+            overlay: useOverlaySettingsStore() 
+        }
     },
     computed: {
         showtrainerArtwork() {
@@ -96,12 +100,12 @@ export default defineComponent({
                 && this.meta.gameState != 'No Pokemon' 
                 && this.meta.gameState != 'Overworld' 
                 && this.meta.gameState != 'From Battle' 
-                && this.game_properties.battle.type.value == 'Trainer' 
-                && right_panel == 'Automatic';
+                && (this.game_properties.battle.type as unknown  as GameHookProperty).value == 'Trainer' 
+                && this.overlay.right_panel.mode === 'Automatic';
         },
         party() {
-            const result = [];
-            for (let i = 0; i < this.game_properties.battle.trainer.totalPokemon; i++) {
+            const result: any[] = [];
+            for (let i = 0; i < this.game_properties.battle.trainer.totalPokemon.value; i++) {
                 result.push([
                     i,
                     {
@@ -116,7 +120,7 @@ export default defineComponent({
         },
         //Sets the crop on the UI image for the enemy team so that unused party slots are not present
         battle_pokemon_crop() {
-            const totalPokemon = this.game_properties.battle.trainer.totalPokemon;
+            const totalPokemon = this.game_properties.battle.trainer.totalPokemon.value;
             const heights = {
                 1: "242px",
                 2: "402px",
@@ -143,7 +147,7 @@ export default defineComponent({
             let player_speed = this.game_properties.battle.yourPokemon.speed.value
             let enemy_speed = enemy_speed_incoming
             if (this.meta.gameState == 'To Battle') {
-                enemy_speed = trainerData.party[enemy_slot].stats.speed
+                enemy_speed = trainerData?.party[enemy_slot].stats.speed
                 player_speed = this.game_properties.player.team[0].speed.value
             }
             let object = {
@@ -177,7 +181,7 @@ export default defineComponent({
             return 'red-svg';
         },
         fixTrainerName(trainerName, trainerNumber) {
-            const gameName = this.game_properties.meta.gameName;
+            const gameName = this.meta.game;
             const rival1Teams = [
                 "rival 1's team",
                 "rival 1A's team",
@@ -199,17 +203,14 @@ export default defineComponent({
                 if (trainerName == "RIVAL1") {
                     return rival1Teams[trainerNumber - 1];
                 }
-                else if (trainerName == "RIVAL2") {
+                if (trainerName == "RIVAL2") {
                     return rival2Teams[trainerNumber - 1];
                 }
-                else if (trainerName == "RIVAL3") {
+                if (trainerName == "RIVAL3") {
                     return "champion's team";
                 }
-                else {
-                    return trainerName.toLowerCase() + "'s team";
-                }
             }
-            else if (gameName == "Red and Blue") {
+            if (gameName == "Red and Blue") {
                 if (trainerName == "RIVAL1" && (trainerNumber == 1 || trainerNumber == 2 || trainerNumber == 3)) {
                     return "rival1's team";
                 }
@@ -234,10 +235,8 @@ export default defineComponent({
                 else if (trainerName == "RIVAL3") {
                     return "champion's team";
                 }
-                else {
-                    return trainerName.toLowerCase() + "'s team";
-                }
             }
+            return trainerName.toLowerCase() + "'s team";                
         },
         enemyType1(slotNumber) {
             const pkmn_species = this.game_properties.battle.trainer.team[slotNumber].species.value
@@ -321,8 +320,9 @@ export default defineComponent({
             if (base_speed) {
                 return Math.round(Math.round((Math.floor(base_speed / 2) / 256) * 10000) / 100)
             }
+            return 0;
         },
-        trainer_artwork() { //pick the trainer graphic based on the trainer class and number
+        trainer_artwork(): string|undefined { //pick the trainer graphic based on the trainer class and number
             const trainerClass = this.game_properties.battle.trainer.class
             const trainerNumber = this.game_properties.battle.trainer.number
             if (this.game_properties.meta.gameName.value == "Yellow") {
@@ -412,6 +412,8 @@ export default defineComponent({
                     default: return null;
                 }
             }
+            return;
         }
     },
 });
+</script>

@@ -67,7 +67,7 @@
             <!-- Speed Comparison -->
             <div>
                 <transition name="fade">
-                    <div v-show="speed_comparison_toggle == true" :style="enemy_styles.text" class="speed_comparison">{{speed_comparison(wild_mon.speed).comparison}}</div>
+                    <div v-show="overlay.right_panel.speed_comparison" :style="enemy_styles.text" class="speed_comparison">{{speed_comparison(wild_mon.speed).comparison}}</div>
                 </transition>
             </div>
         </div>
@@ -82,16 +82,17 @@ import { capitalize_words, move_name } from "../../methods/text_functions";
 import { useMetaStore } from "~/stores/metaStore";
 import { defineComponent, inject } from "vue";
 import { GameHookProperty } from "~/packages/gameHookMapperClient";
+import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
 
 type SpeedComparison = "Outspeeds" | "Outsped" | "Speed-tie";
 export default defineComponent({
     props: [
         "enemy_pkmn_faint_types",
-        "speed_comparison_toggle",
     ],
     data() {
         return {
             game_properties: inject<Record<string, GameHookProperty>>("game_properties", {}),
+            overlay: useOverlaySettingsStore(),
             meta: useMetaStore(),
             enemyModColour:  ["0", "background: #d84444;"],
         }
