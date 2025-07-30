@@ -38,7 +38,7 @@ type GamehookPropertyData<T = any> = {
     memoryContainer: string | null,
     address: number,
     length: number,
-    type: GamePropertyType,
+    type: GamePropertyType | GameHookProperty,
     size: number | null,
     reference: string | null,
     bits: string | null,

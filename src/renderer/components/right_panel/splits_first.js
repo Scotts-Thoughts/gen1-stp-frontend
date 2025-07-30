@@ -29,13 +29,29 @@ const template = /*html*/`
 export default defineComponent({
     template,
     props: [
-        "first_splits",
+        "current_splits",
         "trainer_name_lookup",
     ],
+    inject: ["game_properties"],
     data() {
         return { meta: useMetaStore() };
     },
     computed: {
+        first_splits() {
+            const game = this.game_properties.meta.gameName.value;
+            const optional = ["Rival1a-Route 22"];
+            const completedSplits = this.current_splits
+                .filter(split => split_trainers[game].includes(split.trainer))
+                .map(split => { return { trainer: split.trainer, current_time: split.time } });
+            const upcomingSplits = split_trainers[game]
+                .filter(trainer => !optional.includes(trainer))
+                .filter(trainer => !completedSplits.some(split => split.trainer === trainer))
+                .map(x => ({ trainer: x, current_time: "-" }));
+            return [
+                ...completedSplits,
+                ...upcomingSplits
+            ];
+        },
         starter_type_2() {
             return PokeData.getSpecies(this.meta.starter)?.type_2.toLowerCase();
         }
