@@ -42,9 +42,9 @@ import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";
 export default defineComponent({
     inject: [ "game_properties" ],
     data() {
-        this.meta = useMetaStore;
+        this.meta = useMetaStore();
         return {
-            meta: useMetaStore,
+            meta: useMetaStore(),
             metrics: useSpeciesMetricsStore(),
             runConfig: useGameSpeciesData(),
             flag_blackout_prerequisite: JsonStorage.games[this.meta.game]?.[this.meta.starter]?.data?.flag_blackout_prerequisite ?? false,
@@ -69,7 +69,7 @@ export default defineComponent({
             this.flag_blackout_prerequisite = false;
             this.metrics.update("resets", this.metrics.resets+1);
         },
-        check_blackout(newProp, oldProp) {
+        check_blackout([newProp, oldProp]) {
             if (newProp?.value == "Overworld" && oldProp?.value == "Battle" && this.flag_blackout_prerequisite == true) {
                 this.flag_blackout_prerequisite = false;
                 this.metrics.update("blackouts", this.metrics.blackouts+1);
@@ -106,6 +106,9 @@ export default defineComponent({
         //! These watchers are just used to emit the changes of these properties for other components to use, there will be a better way to do this.
         //! This may be important just to keep thes values backed up
         flag_blackout_prerequisite(new_value) {
+            if (!JsonStorage.games[this.meta.game][this.meta.starter]?.data)  {
+                JsonStorage.games[this.meta.game][this.meta.starter].data = {};
+            }
             JsonStorage.games[this.meta.game][this.meta.starter].data.flag_blackout_prerequisite = new_value
         }
     },

@@ -1,4 +1,5 @@
 import { defineComponent } from "vue";
+import { split_trainers } from "~/autosplitter/split_trainers";
 import PokeData from "~/logic/PokeData";
 import { useMetaStore } from "~/stores/metaStore";
 

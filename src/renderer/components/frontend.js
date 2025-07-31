@@ -103,7 +103,10 @@ export default defineComponent({
             console.log(`Initializing Starter Storage Object...`)
         }
         if (!JsonStorage['games'][this.meta.game][this.meta.starter] || clear_storage == true) {
-            JsonStorage['games'][this.meta.game][this.meta.starter] = { style: {} };
+            JsonStorage['games'][this.meta.game][this.meta.starter] = { 
+                style: {},
+                data: {}
+            };
         }
         if (debug_mode) { console.log(`Success!`) }
         // Initialize watchers for all of the style properties. 
@@ -111,8 +114,8 @@ export default defineComponent({
         // Define variables
 
         // Set up application settings watchers
-        this.$watch(this.autosplitter_toggle, (newValue) => JsonStorage.application_settings.autosplitter_toggle = newValue);
-        this.$watch(this.collect_split_data, (newValue) => JsonStorage.application_settings.collect_split_data = newValue);
+        this.$watch(() => this.autosplitter_toggle, (newValue) => JsonStorage.application_settings.autosplitter_toggle = newValue);
+        this.$watch(() => this.collect_split_data, (newValue) => JsonStorage.application_settings.collect_split_data = newValue);
         //Loop through style settings that will be saved within a game and specific Pokemon
         for (let i = 0; i < pokemon_settings.length; i++) {
             let [prop_name, value] = pokemon_settings[i];
@@ -217,7 +220,7 @@ export default defineComponent({
         });
         // BLACKOUT - Identifies when a blackout might have occurred
         this.mapper.properties.meta.state.change((newProp, oldProp) => {
-            PubSub.publish("@run/check_blackout", newProp, oldProp);
+            PubSub.publish("@run/check_blackout", [newProp, oldProp]);
             if (newProp.value == "To Battle" && this.mapper.properties.battle.type.value == "Trainer") {
                 this.settings.clearRightPanelOverride();
             }
@@ -382,7 +385,6 @@ export default defineComponent({
     provide() {
         return {
             "game_properties": computed(() => {
-                console.log("asdasd");
                 return this.mapper.properties;
             }),
             "mapper": this.mapper,

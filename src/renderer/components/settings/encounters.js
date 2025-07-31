@@ -70,7 +70,6 @@ export default defineComponent({
         }
     },
     created() {
-        console.log(this.runConfig.config.gameSpecific);
         if (Object.keys(this.runConfig.config.gameSpecific).length == 0 ) {
             this.runConfig.config.gameSpecific.EVENT_ENCOUNTER_MTMOON_GEODUDE = false;
             this.runConfig.config.gameSpecific.EVENT_ENCOUNTER_ROUTE3_SPEAROW = false;
