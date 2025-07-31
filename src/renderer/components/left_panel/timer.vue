@@ -1,16 +1,14 @@
-import PubSub from "~/logic/PubSub";
-
-// How the component will render:
-const template = /*html*/`
+<template>
     <div class="gametime">
         <!-- <div class="genericLabels timerLabel">time played at 4x game speed</div> -->
         <div class="gametimeClock">{{time}}</div>
         <div class="gametimeFrames">{{frames}}</div>
     </div>
-`;
+</template>
 
+<script lang="ts">
+import PubSub from "~/logic/PubSub";
 export default {
-    template,
     data() {
         return {
             time: "0",
@@ -18,7 +16,7 @@ export default {
         };
     },
     methods: {
-        onTimeUpdate(value) {
+        onTimeUpdate(value: string[]) {
             this.time = value[0];
             this.frames = value[1];
         },
@@ -27,7 +25,7 @@ export default {
         PubSub.subscribe("@timer/update", this.onTimeUpdate);
     },
     onUnmounted() {
-        // Not strictly necessary for this component, but unsubscribe from the time_update event:
         PubSub.unsubscribe("@timer/update", this.onTimeUpdate);
     }
 }
+</script>

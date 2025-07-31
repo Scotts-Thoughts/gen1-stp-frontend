@@ -20,7 +20,7 @@ import stats from "./left_panel/stats.vue";
 import exp_bar from "./left_panel/exp_bar";
 import badge_boosts from "./left_panel/badge_boosts.vue";
 import badges from "./left_panel/badges.vue";
-import timer from "./left_panel/timer";
+import timer from "./left_panel/timer.vue";
 import faults from "./left_panel/faults.vue";
 
 export default defineComponent({

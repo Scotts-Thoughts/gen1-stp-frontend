@@ -49,7 +49,7 @@ export const useGameSpeciesData = defineStore("game_species_data", {
 				?? defaultGameSpeciesSettings();
 			Object.assign(this.$state.config, loadedSettings.config);
 		},
-		/** Saves the style section to %APPSETTINGS%/data/${game}/${starter}/settings.json */
+		/** Saves the style section to `%APPSETTINGS%/data/${game}/${starter}/settings.json` */
 		async saveStyle(game: string|null, starter:string|null) {
 			if (!game || !starter) {
 				return;
@@ -57,7 +57,7 @@ export const useGameSpeciesData = defineStore("game_species_data", {
 			// We can just save the entire state in this case:
 			saveAppSettings(path.join(game, starter), SETTINGS_FILE_NAME, this.$state)
 		},
-		/** Loads the style section from %APPSETTINGS%/data/${game}/${starter}/settings.json */
+		/** Loads the style section from `%APPSETTINGS%/data/${game}/${starter}/settings.json` */
 		async loadStyle(game: string|null, starter:string|null) {
 			if (!game || !starter) {
 				return;

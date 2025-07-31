@@ -1,49 +1,49 @@
-import { defineComponent } from "vue";
-import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
-import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
-import { GameState, useMetaStore } from "~/stores/metaStore.js";
-const template = /*html*/`
+
+<template>
     <div v-if="display">
         <transition name="fade">
             <div v-if="metrics.faultsMode != 'Both'">
                 <div class="tinted-box" :style="boxStyle"></div>
                 <div class="repelLabel">repel steps</div>
-                <div class="popUpsStyle repelSteps">{{ repelCount }}</div>
+                <div class="popUpsStyle repelSteps">{{ game_properties.overworld.repelCount.value }}</div>
             </div>
         </transition>
         <transition name="fade">
             <div v-if="metrics.faultsMode == 'Both'">
                 <div class="tinted-box" :style="boxStyle"></div>
                 <div class="repelLabel_1">repel steps</div>
-                <div class="popUpsStyle repelSteps_1">{{ repelCount }}</div>
+                <div class="popUpsStyle repelSteps_1">{{ game_properties.overworld.repelCount.value }}</div>
             </div>
         </transition>
     </div>
-`
+</template>
 
+<script lang="ts">
+import { defineComponent, inject } from "vue";
+import { FaultMode, useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
+import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
+import { GameState, useMetaStore } from "~/stores/metaStore.js";
+import {  GameHookProperty } from "~/packages/gameHookMapperClient";
 export default defineComponent({
-    template,
-    inject: [ "game_properties" ],
     data() {
         return { 
+            game_properties: inject<Record<string, GameHookProperty>>("game_properties", {}),
             meta: useMetaStore(),
-            settigns: useOverlaySettingsStore(), 
+            settings: useOverlaySettingsStore(), 
             metrics: useSpeciesMetricsStore() 
         }
     },
     computed: {
         display() {
-            return this.settigns.pop_ups.repel.enabled
+            return this.settings.pop_ups.repel.enabled
                 && this.meta.gameState === GameState.overworld 
-                && this.repelCount > 0;
-        },
-        repelCount() {
-            return this.game_properties.overworld.repelCount.value;
+                && this.game_properties.overworld.repelCount.value > 0;
         },
         boxStyle() {
-            return this.metrics.faultsMode != 'Both'
+            return this.metrics.faultsMode != FaultMode.both
                 ? "--url: url(../images/ui/repel.svg)"
                 : "--url: url(../images/ui/repel_2.svg)"
         }
     }
 });
+</script>

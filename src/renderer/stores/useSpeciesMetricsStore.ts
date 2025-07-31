@@ -42,10 +42,14 @@ export async function saveSpeciesMetrics(game: string|null, starter: string, dat
 	await saveAppSettings<SpeciesMetrics>(path.join(game, starter), "metrics.json", data);
 }
 
-export enum FaultMode  {
+export enum FaultMode {
+	/** Player has neither resets nor blackouts. */
 	none = "None",
+	/** Player has at least one reset, zero blackouts. */
 	resets = "Resets",
+	/** Player has at least one blackout, zero resets. */
 	blackouts = "Blackouts",
+	/** Player at least one reset and blackout. */
 	both = "Both",
 }
 

@@ -106,7 +106,7 @@ export default defineComponent({
     data() {
         return {
             meta: useMetaStore(),
-            gameSpeciesData: useGameSpeciesData(),
+            runConfig: useGameSpeciesData(),
         };
     },
     methods: {
@@ -114,21 +114,21 @@ export default defineComponent({
             this.ui.color = await new EyeDropper().open().then(res => res.sRGBHex);           
         },
         async save() {
-            this.gameSpeciesData.saveStyle(this.meta.game, this.meta.starter);
+            this.runConfig.saveStyle(this.meta.game, this.meta.starter);
         },
         async reload() {
-            this.gameSpeciesData.loadStyle(this.meta.game, this.meta.starter);
+            this.runConfig.loadStyle(this.meta.game, this.meta.starter);
         },
     },
     computed: {
         artwork() {
-            return this.gameSpeciesData.artwork;
+            return this.runConfig.artwork;
         },
         ui() {
-            return this.gameSpeciesData.ui;
+            return this.runConfig.ui;
         },
         background() {
-            return this.gameSpeciesData.background;
+            return this.runConfig.background;
         },
         dropdownDownMenuKeys() {
             return Object.keys(textures);
