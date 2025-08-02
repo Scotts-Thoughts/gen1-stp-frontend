@@ -70,18 +70,6 @@ export default defineComponent({
         }
     },
     created() {
-        if (Object.keys(this.runConfig.config.gameSpecific).length == 0 ) {
-            this.runConfig.config.gameSpecific.EVENT_ENCOUNTER_MTMOON_GEODUDE = false;
-            this.runConfig.config.gameSpecific.EVENT_ENCOUNTER_ROUTE3_SPEAROW = false;
-            this.runConfig.config.gameSpecific.EVENT_ENCOUNTER_MTMOON_PARAS = true;
-            this.runConfig.config.gameSpecific.EVENT_ENCOUNTER_ROUTE6_CUT_USER = false;
-            this.runConfig.config.gameSpecific.wEarlyEncounters = true;
-            this.runConfig.config.gameSpecific.wEarlyEncountersNoMoon = true;
-            this.runConfig.config.gameSpecific.EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY = false;
-            this.runConfig.config.gameSpecific.EVENT_ENCOUNTER_ROUTE16_DODUO = false;
-            this.runConfig.config.gameSpecific.EVENT_ENCOUNTER_ROUTE1_TEST = false;
-            this.runConfig.config.gameSpecific.EVENT_ENCOUNTER_MTMOON_SANDSHREW = false;
-        }
         this.$watch(
             () => this.runConfig.config.gameSpecific,
             this.set_encounters,
@@ -89,7 +77,25 @@ export default defineComponent({
         );        
     },
     methods: {
+        initialize_encounter_settings() {
+            // If the game specific data has no attributes, set the defaults:
+            if (Object.keys(this.runConfig.config.gameSpecific).length == 0 ) {
+                this.runConfig.config.gameSpecific = {
+                    wEarlyEncounters: true,
+                    wEarlyEncountersNoMoon: true,
+                    EVENT_ENCOUNTER_MTMOON_GEODUDE: false,
+                    EVENT_ENCOUNTER_ROUTE3_SPEAROW: false,
+                    EVENT_ENCOUNTER_MTMOON_PARAS: true,
+                    EVENT_ENCOUNTER_ROUTE6_CUT_USER: false,
+                    EVENT_ENCOUNTER_VIRIDIAN_FOREST_PIDGEY: false,
+                    EVENT_ENCOUNTER_ROUTE16_DODUO: false,
+                    EVENT_ENCOUNTER_ROUTE1_TEST: false,
+                    EVENT_ENCOUNTER_MTMOON_SANDSHREW: false,
+                }
+            }
+        },
         set_encounters() {
+            this.initialize_encounter_settings();
             const game = this.game_properties.meta.gameName.value;
             const encounterSettings = this.runConfig.config.gameSpecific;
             const early_encounters_value = encounterSettings.wEarlyEncounters == true ? "On" : "Off";
@@ -105,7 +111,6 @@ export default defineComponent({
                     { path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE16_DODUO', value: encounterSettings.EVENT_ENCOUNTER_ROUTE16_DODUO },
                 ])
             } else if (game == 'Red and Blue') {
-                // this.game_properties.patch.wEarlyEncounters.set(early_encounters_value, false)
                 this.mapper.setBits([ // Set bits can only be called on properties that share the same address
                     { path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW', value: encounterSettings.EVENT_ENCOUNTER_ROUTE3_SPEAROW },
                     { path: 'patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE', value: encounterSettings.EVENT_ENCOUNTER_MTMOON_GEODUDE },
@@ -119,6 +124,7 @@ export default defineComponent({
         },
     },
     mounted: async function () {
+        this.initialize_encounter_settings();
         //HM Encounters
         this.game_properties.overworld.map.change((newValue, oldValue) => {
             const mtMoon = ["Mt Moon - 1", "Mt Moon - 2", "Mt Moon - 3"];
