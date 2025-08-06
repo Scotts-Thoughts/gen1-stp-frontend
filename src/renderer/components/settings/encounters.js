@@ -10,7 +10,7 @@ const template = /*html*/`
             <tr><td>No Moon:</td><td>         <input class="checkBoxStyle" type="checkbox" v-model="runConfig.config.gameSpecific.wEarlyEncountersNoMoon"/></td></tr>
         </tbody>
     </table>
-    <table v-if="game_properties.meta.gameName.value == 'Yellow'" class="ui_table">
+    <table v-if="mapper.properties.meta.gameName.value == 'Yellow'" class="ui_table">
         <tbody>
             <tr>
                 <td>Route 1</td>        <td>- Test:</td>
@@ -34,7 +34,7 @@ const template = /*html*/`
             </tr>
         </tbody>
     </table>
-    <table v-if="game_properties.meta.gameName.value == 'Red and Blue'" class="ui_table">
+    <table v-if="mapper.properties.meta.gameName.value == 'Red and Blue'" class="ui_table">
         <tbody>
             <tr>
                 <td>Route 3</td> <td>- Spearow:</td> 
@@ -62,7 +62,7 @@ const template = /*html*/`
 
 export default defineComponent({
     template,
-    inject: ["game_properties", "mapper"],
+    inject: ["mapper"],
     data() {
         return {
             meta: useMetaStore(),
@@ -96,10 +96,10 @@ export default defineComponent({
         },
         set_encounters() {
             this.initialize_encounter_settings();
-            const game = this.game_properties.meta.gameName.value;
+            const game = this.mapper.properties.meta.gameName.value;
             const encounterSettings = this.runConfig.config.gameSpecific;
             const early_encounters_value = encounterSettings.wEarlyEncounters == true ? "On" : "Off";
-            this.game_properties.patch.wEarlyEncounters.set(early_encounters_value, false)
+            this.mapper.properties.patch.wEarlyEncounters.set(early_encounters_value, false)
             if (game == 'Yellow') {
                 this.mapper.setBits([ // Set bits can only be called on properties that share the same address
                     { path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE1_TEST', value: encounterSettings.EVENT_ENCOUNTER_ROUTE1_TEST, freeze: false },
@@ -126,20 +126,20 @@ export default defineComponent({
     mounted: async function () {
         this.initialize_encounter_settings();
         //HM Encounters
-        this.game_properties.overworld.map.change((newValue, oldValue) => {
+        this.mapper.properties.overworld.map.change((newValue, oldValue) => {
             const mtMoon = ["Mt Moon - 1", "Mt Moon - 2", "Mt Moon - 3"];
-            if (newValue.value == "Pallet Town" && oldValue.value == "Pallet Town - Oak's Lab" && this.game_properties.events.got_pokedex.value == false) {
+            if (newValue.value == "Pallet Town" && oldValue.value == "Pallet Town - Oak's Lab" && this.mapper.properties.events.got_pokedex.value == false) {
                 this.set_encounters()
             }
             else if (this.runConfig.gameSpecific.wEarlyEncountersNoMoon && mtMoon.includes(newValue.value)) {
-                this.game_properties.patch.wEarlyEncounters.set("Off", false)
+                this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
             }
             // Alakazam Yellow exception
             else if (this.meta.game == "Yellow" && this.meta.starter == "Alakazam" && newValue.value == "Mt Moon - 1" || newValue.value == "Mt Moon - 2" || newValue.value == "Mt Moon - 3") {
-                this.game_properties.patch.wEarlyEncounters.set("Off", false)
+                this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
             }
-            else if (newValue.value == "Viridian Forest" && this.meta.game == "Yellow" && this.meta.starter == "Alakazam" && this.game_properties?.trainers?.viridianForest?.bugcatcher2?.value == false) {
-                this.game_properties.patch.wEarlyEncounters.set("Off", false)
+            else if (newValue.value == "Viridian Forest" && this.meta.game == "Yellow" && this.meta.starter == "Alakazam" && this.mapper.properties?.trainers?.viridianForest?.bugcatcher2?.value == false) {
+                this.mapper.properties.patch.wEarlyEncounters.set("Off", false)
             }
         })
     }

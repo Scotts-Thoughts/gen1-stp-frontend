@@ -1,4 +1,3 @@
-
 <template>
 	<transition name="fade">
 		<div v-if="settings.right_panel_mode == 'Movepool'" key=0>

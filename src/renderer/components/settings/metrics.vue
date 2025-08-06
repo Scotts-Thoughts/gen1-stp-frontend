@@ -1,13 +1,8 @@
-import PubSub from "~/logic/PubSub";
-import {useSpeciesMetricsStore} from "~/stores/useSpeciesMetricsStore.ts";
-import {useGameSpeciesData} from "~/stores/useGameSpeciesData.ts";
-import { defineComponent } from "vue";
-
-const template = /*html*/`
+<template>
 <div>
     <button class="buttonStyle new_run_button" @click="clear_run">New Run</button>
     <br>
-    <button class="buttonStyle comparison_button" @click="$parent.load_splits()">Split Comparison</button><br>
+    <button class="buttonStyle comparison_button" @click="load_splits()">Split Comparison</button><br>
     <table>
         <tbody>
             <tr>
@@ -63,10 +58,15 @@ const template = /*html*/`
     </table>
     <br>
 </div>
-`
+</template>
+
+<script lang="ts">
+import PubSub from "~/logic/PubSub";
+import { SpeciesMetrics, useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.ts";
+import { useGameSpeciesData } from "~/stores/useGameSpeciesData.ts";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-    template,
     data() {
         return {
             runConfig: useGameSpeciesData(),
@@ -83,13 +83,18 @@ export default defineComponent({
         clear_run() {
             PubSub.publish("@run/cleared");
         },
-        increment(property) {
-            this.metrics.update(property, this.metrics[property] +1);
+        increment(property: keyof SpeciesMetrics) {
+            if (typeof this.metrics[property] === "number") {
+                this.metrics.update(property, this.metrics[property] +1);
+            }
         },
-        decrement(property) {
-            this.metrics.update(property, Math.max(0, this.metrics[property] -1));
+        decrement(property: keyof SpeciesMetrics) {
+            if (typeof this.metrics[property] === "number") {
+                this.metrics.update(property, Math.max(0, this.metrics[property] -1));
+            }
         },
         async load_csv_file() {
+            // @ts-expect-error
             const file = await window.showOpenFilePicker({
                 id: "Gen1SplitsFolder",
                 types: [{
@@ -104,12 +109,14 @@ export default defineComponent({
         async load_splits() {
             const text = await this.load_csv_file();
             const rows = text.split("\n").slice(1).filter(x => x !== '');
-            const results = []
+            const results: any[] = []
             for (const row of rows) {
                 const columns = row.split(",");
                 results.push({trainer: columns[2], time: columns[3]})
             }
+            // @ts-expect-error
             this.$parent.$parent.previous_splits = results;
         },
     },
 });
+</script>

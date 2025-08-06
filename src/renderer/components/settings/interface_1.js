@@ -1,5 +1,5 @@
 import { useMetaStore } from "~/stores/metaStore";
-import battle_testing from "./battle_testing";
+import battle_testing from "./battle_testing.vue";
 import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
 import { useGameSpeciesData } from "~/stores/useGameSpeciesData";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore";

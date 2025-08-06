@@ -1,7 +1,5 @@
 import { defineComponent } from "vue";
 import { RightPanelMode, StatsPanelMode, useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
-import { Timer } from "~/logic/Timer";
-import metrics from "./settings/metrics";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore";
 
 const Keys = {
