@@ -1,5 +1,6 @@
 import { defineComponent } from "vue";
-import { GameState, useMetaStore } from "~/stores/metaStore";
+import { useMetaStore } from "~/stores/metaStore";
+import { GameState } from "~/stores/types/GameState";
 
 const template = `<div></div>`
 

@@ -31,7 +31,8 @@
 </template>
 
 <script lang="ts">
-import { GameState, useMetaStore } from "~/stores/metaStore.ts";
+import { useMetaStore } from "~/stores/metaStore.ts";
+import { GameState } from "~/stores/types/GameState";
 import { stageModifiersData } from "~/data/stage-modifiers.ts";
 import typeEffectiveness from "~/data/type-effectiveness.ts";
 import PokeData from "~/logic/PokeData.ts";

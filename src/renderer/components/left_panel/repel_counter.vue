@@ -20,9 +20,11 @@
 
 <script lang="ts">
 import { defineComponent, inject } from "vue";
-import { FaultMode, useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
+import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
+import { FaultMode } from "~/stores/types/FaultMode";
 import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
-import { GameState, useMetaStore } from "~/stores/metaStore.js";
+import { useMetaStore } from "~/stores/metaStore.js";
+import { GameState } from "~/stores/types/GameState";
 import {  GameHookProperty } from "~/packages/gameHookMapperClient";
 export default defineComponent({
     data() {

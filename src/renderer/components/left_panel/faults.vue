@@ -35,7 +35,8 @@
 <script>
 import { JsonStorage } from "~/logic/Storage.js";
 import PubSub from "~/logic/PubSub";
-import { FaultMode, useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
+import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
+import { FaultMode } from "~/stores/types/FaultMode";
 import { defineComponent } from "vue";
 import { useMetaStore } from "~/stores/metaStore.js";
 import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";

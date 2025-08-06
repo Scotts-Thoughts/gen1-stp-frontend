@@ -35,8 +35,10 @@
 <script lang="ts">
 import { defineComponent, inject } from "vue";
 import PokeData from "~/logic/PokeData";
-import { StatsPanelMode, useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
-import { GameState, useMetaStore } from "~/stores/metaStore";
+import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
+import { StatsPanelMode } from "~/stores/types/StatsPanelMode";
+import { useMetaStore } from "~/stores/metaStore";
+import { GameState } from "~/stores/types/GameState";
 import { GameHookProperty } from "~/packages/gameHookMapperClient";
 import { BaseStats, GrowthRate } from "~/logic/PokeDataTypes";
 

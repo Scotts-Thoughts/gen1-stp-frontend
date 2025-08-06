@@ -5,7 +5,8 @@ import { log_split, autosplitter_process, format_trainer_name, logData, logCopy 
 import { autosplitter } from "~/data/autosplitter.js";
 import { pokemon_settings } from "../settings/pokemon_settings.js";
 import { computed, defineComponent } from "vue";
-import { RightPanelMode, useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
+import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
+import { RightPanelMode } from "~/stores/types/RightPanelMode.js";
 import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
 import { useMetaStore } from "~/stores/metaStore";

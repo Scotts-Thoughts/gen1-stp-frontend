@@ -5,53 +5,13 @@ import { PokemonGame } from "~/logic/PokeDataTypes";
 const path = require('path');
 import { loadAppSettings, saveAppSettings } from "./helper/files";
 import { formatTime, getTime, Timer, TimerData } from "~/logic/Timer";
+import { FaultMode } from "./types/FaultMode";
 
 /**
  * The species metrics store is in control of the timer and keeps track of relevant run statistics like faults and attempts. 
  */
 export type SpeciesMetricStore = ReturnType<typeof useSpeciesMetricsStore>;
 export type SpeciesMetrics = ReturnType<typeof defaultSpeciesMetrics>;
-
-function defaultSpeciesMetrics() {
-	return {
-		/** Timer override, determines the start time when the timer is set or reset. */
-		timer_override: "00:00:00.00",
-		/** Timer data from which the formatted time can be computed */
-		timer: {
-			paused: true,
-			started_at: 0,
-			paused_at: 0,
-		} as TimerData,
-		/** Number of attempts for the current species and game. */
-		attempts: 0,
-		/** Number of finished runs for the current species and game. */
-		finishes: 0,
-		/** Number of resets in the current attempt. */
-		resets: 0,
-		/** Number of blackouts in the current attempt. */
-		blackouts: 0,
-		splits_path: "",
-	};
-}
-
-export async function saveSpeciesMetrics(game: string|null, starter: string, data: SpeciesMetrics) {
-	if (!game || !starter) {
-		return;
-	}
-
-	await saveAppSettings<SpeciesMetrics>(path.join(game, starter), "metrics.json", data);
-}
-
-export enum FaultMode {
-	/** Player has neither resets nor blackouts. */
-	none = "None",
-	/** Player has at least one reset, zero blackouts. */
-	resets = "Resets",
-	/** Player has at least one blackout, zero resets. */
-	blackouts = "Blackouts",
-	/** Player at least one reset and blackout. */
-	both = "Both",
-}
 
 export const useSpeciesMetricsStore = defineStore('species_metrics', {
 	state: () => defaultSpeciesMetrics(),
@@ -127,3 +87,24 @@ export const useSpeciesMetricsStore = defineStore('species_metrics', {
 	}
 });
 
+function defaultSpeciesMetrics() {
+	return {
+		/** Timer override, determines the start time when the timer is set or reset. */
+		timer_override: "00:00:00.00",
+		/** Timer data from which the formatted time can be computed */
+		timer: {
+			paused: true,
+			started_at: 0,
+			paused_at: 0,
+		} as TimerData,
+		/** Number of attempts for the current species and game. */
+		attempts: 0,
+		/** Number of finished runs for the current species and game. */
+		finishes: 0,
+		/** Number of resets in the current attempt. */
+		resets: 0,
+		/** Number of blackouts in the current attempt. */
+		blackouts: 0,
+		splits_path: "",
+	};
+}

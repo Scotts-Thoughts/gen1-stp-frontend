@@ -31,7 +31,7 @@ export const useGameSpeciesData = defineStore("game_species_data", {
 				return;
 			}
 			// load the currently saved settigns:
-			const settings = await loadAppSettings<GameSpeciesSettigns>(path.join(game, starter), SETTINGS_FILE_NAME)
+			const settings = await loadAppSettings<GameSpeciesData>(path.join(game, starter), SETTINGS_FILE_NAME)
 				?? defaultGameSpeciesSettings();
 			// Apply the config sub-section:
 			Object.assign(settings.config, this.$state.config);
@@ -45,7 +45,7 @@ export const useGameSpeciesData = defineStore("game_species_data", {
 			if (!game || !starter) {
 				return;
 			}
-			const loadedSettings = await loadAppSettings<GameSpeciesSettigns>(path.join(game, starter), SETTINGS_FILE_NAME)
+			const loadedSettings = await loadAppSettings<GameSpeciesData>(path.join(game, starter), SETTINGS_FILE_NAME)
 				?? defaultGameSpeciesSettings();
 			Object.assign(this.$state.config, loadedSettings.config);
 		},
@@ -62,7 +62,7 @@ export const useGameSpeciesData = defineStore("game_species_data", {
 			if (!game || !starter) {
 				return;
 			}
-			const loadedSettings = await loadAppSettings<GameSpeciesSettigns>(path.join(game, starter), SETTINGS_FILE_NAME);
+			const loadedSettings = await loadAppSettings<GameSpeciesData>(path.join(game, starter), SETTINGS_FILE_NAME);
 			if (loadedSettings === null)  {
 				this.applyPresetStyle(JsonStorage['games'][game][starter].style)
 				return;
@@ -101,7 +101,7 @@ export const useGameSpeciesData = defineStore("game_species_data", {
 	}
 });
 
-type GameSpeciesSettigns = ReturnType<typeof defaultGameSpeciesSettings>;
+type GameSpeciesData = ReturnType<typeof defaultGameSpeciesSettings>;
 
 export function defaultGameSpeciesSettings() {
 	return {

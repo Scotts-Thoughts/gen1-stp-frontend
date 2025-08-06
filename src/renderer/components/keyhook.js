@@ -1,5 +1,7 @@
 import { defineComponent } from "vue";
-import { RightPanelMode, StatsPanelMode, useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
+import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
+import { RightPanelMode } from "~/stores/types/RightPanelMode";
+import { StatsPanelMode } from "~/stores/types/StatsPanelMode";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore";
 
 const Keys = {
