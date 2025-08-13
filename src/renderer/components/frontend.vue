@@ -57,9 +57,10 @@ export default defineComponent({
         }
     },
     watch: {
+        // TODO: Handle previous_splits some other way. And then remove LocalStorageProxy.
         previous_splits: {
             handler: function (newVal) {
-                LocalStorageProxy['previous_splits'] = newVal
+                LocalStorageProxy.previous_splits = newVal
             },
             deep: true,
         },
@@ -69,8 +70,14 @@ export default defineComponent({
             this.battle_summary_header = "Battle Summary"
         },
         load_split_settings() {
-            this.previous_splits = LocalStorageProxy['previous_splits'] as unknown as [] ?? []
+            // TODO: Handle previous_splits some other way. 
+            this.previous_splits = LocalStorageProxy.previous_splits as unknown as [] ?? []
         },
+
+        /** 
+         * Configures the {@link useAutoSplitterStore} for generation 1 of pokemon. Also sets up all the game property
+         * listeners necessary for making splits. 
+         */
         setup_splitter() {
             this.load_split_settings();
             this.autosplitterStore.configure(
@@ -159,9 +166,7 @@ export default defineComponent({
     },
     provide() {
         return {
-            "game_properties": computed(() => {
-                return this.mapper.properties;
-            }),
+            "game_properties": computed(() => this.mapper.properties),
             "mapper": this.mapper,
         }
     }
