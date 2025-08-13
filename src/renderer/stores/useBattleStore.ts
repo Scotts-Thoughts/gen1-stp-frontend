@@ -1,10 +1,11 @@
 
 import { defineStore } from "pinia";
 import { GameHookMapperClient, GameHookProperty } from "~/packages/gameHookMapperClient";
-import { battle_summary  } from "~/autosplitter/battle_summary";
+import { gen1_battle_summary  } from "~/autosplitter/gen1/gen1_battle_summary";
 import { convertMSToDuration } from "~/utils/timehelpers";
 import { useSpeciesMetricsStore } from "./useSpeciesMetricsStore";
 import { UniqueTrainerIdFunction } from "~/autosplitter/split_functions";
+import { BattleSummaryConfig } from "~/autosplitter/types";
 
 function padTime(time: number) {
 	if (!time) { return "00" }
@@ -18,7 +19,7 @@ function gametimeSplit(gameProperties: Record<string, GameHookProperty>) {
 	return timecode
 }
 
-type BattleSummaryProperties = typeof battle_summary.global_stats[number]["data_name"];
+type BattleSummaryProperties = typeof gen1_battle_summary.global_stats[number]["data_name"];
 type BattleSummaryRecord = Partial<Record<BattleSummaryProperties, number|undefined>>;
 
 /** 
@@ -53,14 +54,14 @@ export const useBattleStore = defineStore('battle', {
 		}
 	},
 	actions: {
-		startBattle(mapper: GameHookMapperClient, battleType: string, trainerIdFunction: UniqueTrainerIdFunction) {
+		startBattle(mapper: GameHookMapperClient, battleType: string, trainerIdFunction: UniqueTrainerIdFunction, summaryConfig: BattleSummaryConfig) {
 			if (battleType !== "Trainer") {
 				return;
 			}
 			const { raw: time } = useSpeciesMetricsStore().getTime();
 			
 			// Use for...of loop to iterate over the array
-			for (let property of battle_summary.global_stats) {
+			for (let property of summaryConfig.global_stats) {
 				if (property !== null) {
 					this.start[property.data_name] = mapper.get(property.path)?.value as number|undefined;
 				}
@@ -70,8 +71,8 @@ export const useBattleStore = defineStore('battle', {
 			this.time_split_start = `${padTime(time.hours)}:${padTime(time.minutes)}:${padTime(time.seconds)}.${padTime(time.ms)}`;
 			console.log(`Autosplitter - Battle Started: ${unique_trainer_id} started at ${this.time_split_start} (Gametime: ${gametimeSplit(mapper.properties)})`);
 		},
-		endBattle(mapper: GameHookMapperClient) {
-			for (let property of battle_summary["global_stats"]) {
+		endBattle(mapper: GameHookMapperClient, summaryConfig: BattleSummaryConfig) {
+			for (let property of summaryConfig.global_stats) {
 				if (property !== null) {
 					let data = mapper.get(property.path)?.value as number;
 					this.end[property.data_name] = data - this.start[property.data_name]!;

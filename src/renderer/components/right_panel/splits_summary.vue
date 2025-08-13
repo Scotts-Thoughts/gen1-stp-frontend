@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { battle_summary } from "~/autosplitter/battle_summary";
+import { gen1_battle_summary } from "~/autosplitter/gen1/gen1_battle_summary";
 import PokeData from "~/logic/PokeData";
 import { useMetaStore } from "~/stores/metaStore";
 import { useBattleStore } from "~/stores/useBattleStore";
@@ -75,9 +75,9 @@ export default defineComponent({
             runConfig: useGameSpeciesData(),
             battle: useBattleStore(),
             meta: useMetaStore(),
-            global_stats: battle_summary.global,
-            player_stats: battle_summary.player,
-            enemy_stats: battle_summary.enemy,
+            global_stats: gen1_battle_summary.global,
+            player_stats: gen1_battle_summary.player,
+            enemy_stats: gen1_battle_summary.enemy,
         }
     },
     methods: {

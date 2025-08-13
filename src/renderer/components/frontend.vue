@@ -31,6 +31,7 @@ import state from "./state.js"; // background process.
 import left_panel from "./left_panel.vue";
 import game_area from "./game_area.vue";
 import right_panel from "./right_panel.vue";
+import { gen1_battle_summary } from "~/autosplitter/gen1/gen1_battle_summary.js";
 
 export default defineComponent({
     components: {
@@ -74,9 +75,12 @@ export default defineComponent({
             this.load_split_settings();
             this.autosplitterStore.configure(
                 this.mapper, 
-                createFullSplitGen1, 
-                getUniqueTrainerIdGen1, 
-                this.meta.game === "Yellow" ? yellow_splits : red_blue_splits
+                {
+                    splits: this.meta.game === "Yellow" ? yellow_splits : red_blue_splits,
+                    getSplitData: createFullSplitGen1,
+                    getUniqueTrainerId: getUniqueTrainerIdGen1,
+                    battleSummary: gen1_battle_summary,
+                }
             );
             onStoreAction(this.metrics, "clear_run", this.clear_splits_header_timer);
 

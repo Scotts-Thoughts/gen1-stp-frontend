@@ -1,3 +1,16 @@
+export type BattleSummaryItem = {
+    data_name: string,
+    name: string,
+    path: string,
+}
+
+export type BattleSummaryConfig = {
+    global_stats: BattleSummaryItem[],
+    global: BattleSummaryItem[],
+    player: BattleSummaryItem[],
+    enemy: BattleSummaryItem[],
+}
+
 export type FullSplit = {
 	"date_string": any,
 	"time_string": any,
