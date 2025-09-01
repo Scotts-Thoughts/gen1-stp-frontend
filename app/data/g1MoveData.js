@@ -1,4 +1,14 @@
 const g1MoveData = {
+"Shadow Bone" :
+  {
+    Move: "Shadow Bone",
+    Type: "Ghost",
+    Power: 85,
+    Accuracy: 100,
+    PP: 10,
+    Category: "Physical",
+    Description: "Deals damage."
+  },
 "Anchor Shot" :
   {
     Move: "Anchor Shot",

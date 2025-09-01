@@ -252,7 +252,7 @@
                             <tr v-for="x in getMovepool(g1PokemonData, g1MoveData, tmhmMapping, s1dynamicReset.species.value).initial">
                                 <td class="movepool_way">1</td>
                                 <td class="movepool_move">{{x.Move}}</td>
-                                <td class="movepool_type" :style="{'background-color': `var(--${x.Type.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
                                 <td class="movepool_tableC">{{x.Power}}</td>
                                 <td class="movepool_tableC">{{x.Accuracy}}%</td>
                                 <td class="movepool_tableC">{{x.PP}}</td>
@@ -260,7 +260,7 @@
                             <tr v-for="x in getMovepool(g1PokemonData, g1MoveData, tmhmMapping, s1dynamicReset.species.value).level">
                                 <td class="movepool_way">{{x.Level}}</td>
                                 <td class="movepool_move">{{x.Move}}</td>
-                                <td class="movepool_type" :style="{'background-color': `var(--${x.Type.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
                                 <td class="movepool_tableC">{{x.Power}}</td>
                                 <td class="movepool_tableC">{{x.Accuracy}}%</td>
                                 <td class="movepool_tableC">{{x.PP}}</td>

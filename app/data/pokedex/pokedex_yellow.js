@@ -1,5 +1,117 @@
 const pokedex_yellow = {
-"Raging Bolt": {
+    "Alolan Marowak":{
+        "species": "Alolan Marowak",
+        "rom_id": 152,
+        "national_dex_number": 105,
+        "base_stats": {
+            "hp": 60,
+            "attack": 80,
+            "defense": 110,
+            "speed": 45,
+            "special_attack": 50,
+            "special_defense": 50
+        },
+        "ev_yield": {
+            "hp": 60,
+            "attack": 80,
+            "defense": 110,
+            "speed": 45,
+            "special_attack": 50,
+            "special_defense": 50
+        },
+        "type_1": "Fire",
+        "type_2": "Ghost",
+        "catch_rate": 75,
+        "base_experience": 124,
+        "common_item": null,
+        "rare_item": null,
+        "gender_ratio": null,
+        "egg_cycles": null,
+        "base_friendship": null,
+        "growth_rate": "Medium Fast",
+        "egg_group_1": null,
+        "egg_group_2": null,
+        "abilities": [],
+        "level_up_learnset": [
+            [
+                1,
+                "Bone Club"
+            ],
+            [
+                1,
+                "Ember"
+            ],
+            [
+                10,
+                "Bone Club"
+            ],
+            [
+                13,
+                "Tail Whip"
+            ],
+            [
+                18,
+                "Night Shade"
+            ],
+            [
+                25,
+                "Shadow Bone"
+            ],
+            [
+                33,
+                "Thrash"
+            ],
+            [
+                41,
+                "Dig"
+            ],
+            [
+                48,
+                "Bonemerang"
+            ],
+            [
+                55,
+                "Fire Blast"
+            ]
+        ],
+        "tm_hm_learnset": [
+            "Mega Punch",
+            "Swords Dance",
+            "Mega Kick",
+            "Toxic",
+            "Body Slam",
+            "Take Down",
+            "Double-Edge",
+            "BubbleBeam",
+            "Water Gun",
+            "Ice Beam",
+            "Blizzard",
+            "Hyper Beam",
+            "Submission",
+            "Counter",
+            "Seismic Toss",
+            "Rage",
+            "Thunderbolt",
+            "Thunder",
+            "Earthquake",
+            "Fissure",
+            "Dig",
+            "Mimic",
+            "Double Team",
+            "Bide",
+            "Fire Blast",
+            "Skull Bash",
+            "Rest",
+            "Rock Slide",
+            "Substitute",
+            "Strength"
+        ],
+        "tutor_learnset": [],
+        "egg_moves": [],
+        "weight": null,
+        "evolution_family": []
+    },
+    "Raging Bolt": {
         "species": "Raging Bolt",
         "rom_id": 152,
         "national_dex_number": 1021,
