@@ -1,4 +1,69 @@
 const g1PokemonData = {
+"Mimikyu": {
+    name: "Mimikyu",
+    rom_id: 152,
+    national_dex_number: null,
+    base_hp: 55,
+    base_atk: 90,
+    base_def: 80,
+    base_spd: 96,
+    base_spc: 105,
+    ev_yield: null,
+    type1: "Ghost",
+    type2: "Fairy",
+    catch_rate: 45,
+    base_xp: 167,
+    common_item: null,
+    rare_item: null,
+    gender_ratio: null,
+    egg_cycles: null,
+    base_friendship: null,
+    growth_rate: "Medium Fast",
+    egg_group_1: null,
+    egg_group_2: null,
+    abilities: [
+
+    ],
+    initial_moveset: [
+        "Splash",
+        "Scratch",
+        "Lick",
+        "Double Team"
+    ],
+    levelup_moveset: [[19, 'Mimic'], [23, 'Swift'], [28, 'Growl'], [32, 'Slash'], [37, 'Shadow Claw'], [41, 'Sharpen'], [46, 'Play Rough']],
+    tm_hm_learnset: [
+        "Swords Dance",
+        "Whirlwind",
+        "Toxic",
+        "Take Down",
+        "Double-Edge",
+        "Hyper Beam",
+        "Rage",
+        "Mega Drain",
+        "Thunderbolt",
+        "Thunder",
+        "Psychic",
+        "Teleport",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Metronome",
+        "Swift",
+        "Dream Eater",
+        "Rest",
+        "Thunder Wave",
+        "Psywave",
+        "Substitute",
+        "Flash",
+    ],
+    tutor_learnset: [
+
+    ],
+    egg_moves: [
+
+    ],
+    weight: null,
+},
 "Alolan Marowak": {
     name: "Alolan Marowak",
     rom_id: 152,
@@ -37,6 +102,7 @@ const g1PokemonData = {
         "Body Slam",
         "Take Down",
         "Double-Edge",
+        "BubbleBeam",
         "Water Gun",
         "Ice Beam",
         "Blizzard",
@@ -58,8 +124,7 @@ const g1PokemonData = {
         "Rest",
         "Rock Slide",
         "Substitute",
-        "Strength",
-        "Bubblebeam"
+        "Strength"
     ],
     tutor_learnset: [
 

@@ -1694,6 +1694,17 @@ const app = Vue.createApp({
                             case (169): return 'Struggle'
                         }
                     }
+                    case "Alolan Marowak": {
+                        switch (byte_value) {
+                            case (165): return 'Shadow Bone'
+                        }
+                    }
+                    case "Mimikyu": {
+                        switch (byte_value) {
+                            case (165): return 'Shadow Claw'
+                            case (166): return 'Play Rough'
+                        }
+                    }
                     default: return move_name
                 }
             }
@@ -3371,8 +3382,8 @@ const app = Vue.createApp({
         type_effectiveness(pkmnData, moveNumber, enemyData) { //pkmnData = team[0] etc
             if (this.typeCalcs == true) {
                 const move_data_array = Object.values(this.g1MoveData);
-                var move_name          =  this.get_backport_move_name(pkmnData[moveNumber].value, this.starterName, pkmnData[moveNumber].bytes)
-                // console.log(move_name)
+
+                var move_name          =  this.get_backport_move_name(pkmnData[moveNumber].value, this.starterName, pkmnData[moveNumber].bytes[0])
 
                 if (move_name == null) { return "" } //stop the function if there is no move in that slot
                 if (move_name == 'Doom Desire') { return 120 }

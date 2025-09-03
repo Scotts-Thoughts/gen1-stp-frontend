@@ -1,4 +1,14 @@
 const g1MoveData = {
+"Shadow Claw" :
+  {
+    Move: "Shadow Bone",
+    Type: "Ghost",
+    Power: 70,
+    Accuracy: 100,
+    PP: 15,
+    Category: "Physical",
+    Description: "Deals damage."
+  },
 "Shadow Bone" :
   {
     Move: "Shadow Bone",
@@ -1851,7 +1861,7 @@ const g1MoveData = {
   Move: "Play Rough",
   Type: "Fairy",
   Power: 90,
-  Accuracy: 100,
+  Accuracy: 90,
   PP: 10,
   Category: "Special",
   Description: "Deals damage and lowers Special by 2 stages."
