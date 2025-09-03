@@ -1,4 +1,14 @@
 const g1MoveData = {
+"Spectral Thief" :
+  {
+    Move: "Spectral Thief",
+    Type: "Ghost",
+    Power: 90,
+    Accuracy: 100,
+    PP: 10,
+    Category: "Physical",
+    Description: "Deals damage."
+  },
 "Shadow Claw" :
   {
     Move: "Shadow Bone",
