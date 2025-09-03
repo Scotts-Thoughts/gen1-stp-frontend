@@ -28,7 +28,7 @@ const g1PokemonData = {
         "Lick",
         "Low Kick"
     ],
-    levelup_moveset: [[15, 'Rolling Kick'], [26, 'Night Shade'], [35, 'Jump Kick'], [45, 'New Move 1'], [56, 'Submission']],
+    levelup_moveset: [[15, 'Rolling Kick'], [26, 'Night Shade'], [35, 'Jump Kick'], [45, 'Spectral Thief'], [56, 'Submission']],
     tm_hm_learnset: [
         "Mega Punch",
         "Mega Kick",

@@ -11,7 +11,7 @@ const g1MoveData = {
   },
 "Shadow Claw" :
   {
-    Move: "Shadow Bone",
+    Move: "Shadow Claw",
     Type: "Ghost",
     Power: 70,
     Accuracy: 100,
