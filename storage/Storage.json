@@ -1,6 +1,6 @@
 {
     "global_variables": {
-        "starter": "Marshadow",
+        "starter": "Alolan Marowak",
         "game": "Yellow"
     },
     "application_settings": {
@@ -84,7 +84,7 @@
         "ui_stat_arrangement": "Speed: top right",
         "ui_stat_arrangement_modifier": "hp_spd_",
         "stats_display": "Automatic",
-        "test_run": false,
+        "test_run": true,
         "right_panel": "Automatic",
         "collect_summary_files": true,
         "collect_split_data": true,
@@ -9557,7 +9557,7 @@
                     "playerId": 62998,
                     "playerName": "NINTEN",
                     "resetCatcher": "NINTEN",
-                    "playerResets": 13,
+                    "playerResets": 10,
                     "blackout_counter": 0,
                     "resetCounter": true,
                     "game_over": false,
@@ -9693,7 +9693,7 @@
                     "playerId": 0,
                     "playerName": "NINTEN",
                     "resetCatcher": "NINTEN",
-                    "playerResets": 0,
+                    "playerResets": 1,
                     "blackout_counter": 0,
                     "resetCounter": true,
                     "game_over": false,
