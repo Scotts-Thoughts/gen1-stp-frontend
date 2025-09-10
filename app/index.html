@@ -148,9 +148,9 @@
                 <div class="movesetLabel labelPP"   >pp</div>
                 <div class="movesetContainer">
                     <div v-for="move in pkmnMoves">
-                        <div v-if="mapper.properties.player.team[0].level > 0 && mapper.properties.player.team[0][move].value != null">
+                        <div v-if="mapper.properties.player.team[0].level > 0 && get_backport_move(move) != null">
                             <img :class="`movesetStyling iconStyling ${move}icon`" :src="moveTypeIcon(get_backport_move(move))" />
-                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling moveStyling ${move}`">{{ move_name(capitalization_format(get_backport_move(move))) }}</div>
+                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling moveStyling ${move}`">{{ get_backport_move(move) }}</div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling powerStyling ${move}`" :key="type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon)">{{ type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon) }}</div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling accuracyStyling ${move}`">{{ moveAccuracyEvasionDynamic(get_backport_move(move)) }}<span style="font-size: 20px;">%</span></div>
                             <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling ppStyling ${move}`">{{ mapper.properties.player.team[0][move + "pp"] }}</div>

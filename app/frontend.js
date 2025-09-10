@@ -1677,7 +1677,7 @@ const app = Vue.createApp({
             ])
         },
         get_backport_move_name(move_name, starter, byte_value) {
-            if (move_name == 'STRUGGLE' || move_name == null) {
+            if (move_name == 'STRUGGLE' || move_name == null || move_name == undefined) {
                 switch (starter) {
                     case "Scream Tail": {
                         switch (byte_value) {
@@ -1711,11 +1711,11 @@ const app = Vue.createApp({
             else return move_name
         },
         get_backport_move(slot) {
-            const move = this.s1dynamic[slot].value
-            const byte = this.s1dynamic[slot].bytes[0]
+            const move = this.s1dynamic[slot]?.value
+            const byte = this.s1dynamic[slot]?.bytes[0]
             const starter = this.starterName
             const return_value = this.get_backport_move_name(move, starter, byte)
-            return return_value
+            return this.move_name(this.capitalization_format(return_value))
         },
         openFolder(folderName, game_name = "Yellow", path = "", path2) {
             const fs = require('fs');
@@ -2576,14 +2576,25 @@ const app = Vue.createApp({
             return this.convertSecondsToDuration(totalSeconds);
         },
         convertDurationToSeconds(duration) {
-            const parts = duration.split(':').map(part => parseInt(part, 10));
-            if (parts.length === 1) {
-                return parts[0];
-            } else if (parts.length === 2) {
-                return parts[0] * 60 + parts[1];
-            } else if (parts.length === 3) {
-                return parts[0] * 3600 + parts[1] * 60 + parts[2];
+            // Handle case where duration is already a number
+            if (typeof duration === 'number') {
+                return duration;
             }
+            
+            // Handle case where duration is a string
+            if (typeof duration === 'string') {
+                const parts = duration.split(':').map(part => parseInt(part, 10));
+                if (parts.length === 1) {
+                    return parts[0];
+                } else if (parts.length === 2) {
+                    return parts[0] * 60 + parts[1];
+                } else if (parts.length === 3) {
+                    return parts[0] * 3600 + parts[1] * 60 + parts[2];
+                }
+            }
+            
+            // Fallback for unexpected input types
+            return 0;
         },
         convertSecondsToDuration(seconds) {
             const hours = Math.floor(seconds / 3600);
@@ -3277,7 +3288,7 @@ const app = Vue.createApp({
                 const state = this.mapper.properties.meta.state.value
                 // var move = this.gen1moves.find(x => x.Move.toLowerCase() === y.toLowerCase())
                 var move = this.g1MoveData[this.move_name(y)]
-                if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP" || y.toUpperCase() == "AEROBLAST")) {
+                if (this.showCritMultiplierInEP == true && (y.toUpperCase() == "RAZOR LEAF" || y.toUpperCase() == "CRABHAMMER" || y.toUpperCase() == "SLASH" || y.toUpperCase() == "KARATE CHOP" || y.toUpperCase() == "AEROBLAST" || y.toUpperCase() == "SHADOW CLAW")) {
                     level = this.mapper.properties.player.team[0].level.value
                     critModifier = (2*level+5)/(level+5) //This part of the function is currently an approximation
                     power = move.Power

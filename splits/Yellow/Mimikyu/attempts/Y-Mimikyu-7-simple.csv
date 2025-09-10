@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Mimikyu,Rival1-Lab,44,0,0,6,0:02,10.195,SCRATCH,SPLASH,LICK,DOUBLE TEAM
+NINTEN,Mimikyu,Brock,3:14,0,0,10,0:12,40.376,SCRATCH,SPLASH,DOUBLE TEAM,LICK
+NINTEN,Mimikyu,Rival2-Nugget Bridge,7:38,0,0,16,0:29,39.571,SCRATCH,SPLASH,DOUBLE TEAM,LICK
+NINTEN,Mimikyu,Cerulean Rocket,11:25,0,0,21,0:44,17.056,SCRATCH,SPLASH,MIMIC,LICK
