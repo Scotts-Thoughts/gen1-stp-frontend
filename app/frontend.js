@@ -2932,8 +2932,10 @@ const app = Vue.createApp({
 
         //MOVE ICON DISPLAY
         moveTypeIcon(y) { //y = move1.value
-            if (y != null && y != undefined) {
+            if (y != null && y != undefined && y != "") {
+                console.log(y)
                 var moveName = this.move_name(y)
+                console.log(moveName)
                 var move = this.g1MoveData[moveName]
                 var moveType = move.Type.toLowerCase()
                 return `images/elements/type-icons/${moveType}.png`
