@@ -563,7 +563,6 @@ function logCopy(gameName, gameName_Path, file_name, starterName, finished_run_c
     var dirPathFinishes = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/finishes/` : `./splits/${gameName_Path}/${starterName}/finishes/`
     let attempt_number = refilming_mode ? refilmed_attempt : file_name;
     let finish_number = refilming_mode ? refilmed_attempt : finished_run_count;
-    console.log("LogCopy Variables", gameName, gameName_Path, file_name, starterName, finished_run_count, dirPathAttempts, dirPathFinishes, attempt_number, finish_number)
     fs.mkdir(dirPathFinishes, { recursive: true }, (err) => {
         fs.copyFile(
             path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-simple.csv`), 
@@ -730,8 +729,9 @@ const app = Vue.createApp({
             show_bonk_counter         : false,
             dropdown_bonks_items      : 'Bonks',
             toggle_compare_splits     : 'First',
-            show_frame                : false,
             no_attempt                : false,
+            debugging                 : false,
+            editor                    : false,
             speed_comparison_toggle   : true,
             enable_blackouts          : false,
 
@@ -1666,7 +1666,6 @@ const app = Vue.createApp({
             let starter = this.starterName
             let pokedex = this.pokedex_yellow
             let backport_byte_index = 0xBF
-            // console.log(starter)
             // This system requires a check in the case that the Pokemon is not one of the original 151, in that case it needs to get the value to "Backport" instead
             if (pokedex[starter].national_dex_number > 151) {
                 this.mapper.properties.patch.hChosenStarter.setBytes([backport_byte_index], false)
@@ -1820,7 +1819,6 @@ const app = Vue.createApp({
                 ])
             }
             else if (game == 'Red and Blue') {
-                // this.mapper.properties.patch.wEarlyEncounters.set(early_encounters_value, false)
                 this.mapper.setBits([ // Set bits can only be called on properties that share the same address
                     {path: 'patch.encounter_flags.EVENT_ENCOUNTER_ROUTE3_SPEAROW',  value: this.toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW,  freeze: false},
                     {path: 'patch.encounter_flags.EVENT_ENCOUNTER_MTMOON_GEODUDE',  value: this.toggle_EVENT_ENCOUNTER_MTMOON_GEODUDE,  freeze: false},
@@ -1841,7 +1839,6 @@ const app = Vue.createApp({
             let player_speed   = this.mapper.properties.battle.yourPokemon.speed.value
             let enemy_speed = enemy_speed_incoming
             if (state == 'To Battle') {
-                // console.log(trainer, trainer_number, data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd)
                 enemy_speed = data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd
                 player_speed = this.mapper.properties.player.team[0].speed.value
             }
@@ -1849,14 +1846,6 @@ const app = Vue.createApp({
                 comparison: "Outspeeds",
                 color: "background-color: rgba(255, 63, 63, 0.6)",
             }
-            // if (state == `To Battle`) {
-            //     object.comparison = "Calculating..."
-            //     object.color      = "background-color: rgba(28, 255, 58, 0)"
-            // }
-            // else if (player_speed > enemy_speed) {
-            //     object.comparison = "Outsped"
-            //     object.color      = "background-color: rgba(28, 255, 58, 0.4)"
-            // }
             if (player_speed > enemy_speed) {
                 object.comparison = "Outsped"
                 object.color      = "background-color: rgba(28, 255, 58, 0.4)"
@@ -1905,7 +1894,6 @@ const app = Vue.createApp({
             let values = [];
             
             for (let pokemon of Object.values(this.pokedex_yellow)) {
-                // console.log(stat_label)
                 let stat = pokemon[`base_stats`][stat_label];
                 sum += stat;
                 count++;
@@ -1928,31 +1916,9 @@ const app = Vue.createApp({
                 median : Math.round(median),
             };
         },
-        // movepool_power(move, power) {
-        //     if (move == 'Doom Desire') {
-        //         return 120
-        //     }
-        //     else {
-        //         return power
-        //     }
-        // },
         get_nested_property(obj, path) {
             return path.split('.').reduce((o, p) => (o || {})[p], obj);
         },
-        // load_timer_settings() {
-        //     this.timer_startTimeOffset = MyStorage['timer_startTimeOffset'] ?? "00:00:00.00"
-        //     this.timer_startTime       = MyStorage['timer_startTime']       ?? 0
-        //     this.timer_pause           = MyStorage['timer_pause']           ?? true
-        //     this.timer_formatted_time  = MyStorage['timer_formatted_time']  ?? ["0", ".00"]
-        //     this.timer_pause_time      = MyStorage['timer_pause_time']      ?? 0
-        //     this.time_h                = MyStorage['time_h']                ?? 0
-        //     this.time_m                = MyStorage['time_m']                ?? 0
-        //     this.time_s                = MyStorage['time_s']                ?? 0
-        //     this.time_ms               = MyStorage['time_ms']               ?? 0
-        //     this.time_split_start      = MyStorage['time_split_start']      ?? "00:00:00:00"
-        //     this.battle_start          = MyStorage['battle_start']          ?? 0
-        //     this.timer_settings        = MyStorage['timer_settings']        ?? "Real-Time"
-        // },
         load_split_settings() {
             this.current_splits  = MyStorage['current_splits']  ?? []
             this.previous_splits = MyStorage['previous_splits'] ?? []
@@ -2123,8 +2089,6 @@ const app = Vue.createApp({
                 mod: mod_string,
                 style: style_string,
             }
-            // return { mod: -1, style: 'opacity: .7;' }
-            // console.log(object)
             return object
         },
         enemyPkmnFaintTypes(pkmnData) {
@@ -2312,99 +2276,15 @@ const app = Vue.createApp({
             if (trainer_class == "CHANNELER"    && this.mapper.properties.battle.trainer.number == 10)  { return "Agatha Jr" }
             else return this.capitalization_format(trainer_class)
         },
-
-        // //*timer methods
-        // //start the timer
-        // startTime() {
-        //     if (this.timer_pause == false) {
-        //         return
-        //     }
-        //     const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
-        //     const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
-        //     const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
-
-        //     this.timer_startTime = Date.now() - timeOffset
-        //     this.timer_pause = false
-        //     this.updateTime()
-        // },
-        // //stop the timer
-        // stopTime() {
-        //     this.timer_pause_time = Date.now()
-        //     this.timer_pause = true
-        // },
-        // set_timer() {
-        //     const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
-        //     const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
-        //     const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
-
-        //     this.timer_pause = true
-        //     this.timer_startTime = Date.now() - timeOffset
-        //     this.timer_pause_time = Date.now()
-        //     this.timer_formatted_time = [ "0", ".00" ]
-        //     this.finished_logs = false
-
-        //     this.updateTime()
-        // },
         padTime(time) {
             return time.toString().padStart(2, "0")
         },
-        // //animate the timer
-        // updateTime() {
-        //     var time = Date.now() - this.timer_startTime
-        //     if (this.timer_pause == true) {
-        //         time = this.timer_pause_time - this.timer_startTime
-        //     }
-        //     var f = (x) => x.toString().padStart(2, "0")
-        //     var c = (Math.floor(time / 10) % 100)
-        //     var s = (Math.floor(time / 1000) % 60)
-        //     var m = (Math.floor(time / 60000) % 60)
-        //     var h = (Math.floor(time / 3600000))
-        //     this.time_h = h
-        //     this.time_m = m
-        //     this.time_s = s
-        //     this.time_ms = c
-        //     if (h != 0) {
-        //         this.timer_formatted_time = [ h + ":" + f(m) + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
-        //     }
-        //     else if (m != 0) {
-        //         this.timer_formatted_time = [ m + ":" + f(s), "." + f(c), h + "h" + m + "m" + s + "s", ]
-        //     }
-        //     else {
-        //         this.timer_formatted_time = [ s, "." + f(c), h + "h" + m + "m" + s + "s", ]
-        //     }
-        //     if (this.timer_pause == false) {
-        //         requestAnimationFrame(this.updateTime)
-        //     }
-        // },
-        // //pause the timer
-        // pauseUnpauseTime() {
-        //     if (this.timer_pause == true) {
-        //         this.timer_pause = false
-        //         this.timer_startTime += Date.now() - this.timer_pause_time
-        //         this.updateTime()
-        //         retro.resume()
-        //     }
-        //     else {
-        //         this.timer_pause = true
-        //         this.timer_pause_time = Date.now()
-        //         retro.pause()
-        //     }
-        // },
         async newRun() {
-            // const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
-            // const timeOffsetArray = this.timer_startTimeOffset.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
-            // const timeOffset = timeOffsetArray[0] * 3600000 + timeOffsetArray[1] * 60000 + timeOffsetArray[2] * 1000 + timeOffsetArray[3] * 10;
-            
-            // this.current_splits = await this.load_temp_splits()
             this.compared_splits = []
             this.current_splits = []
 
             this.battle_summary_header = "Battle Summary"
             this.most_recent_move = ""
-            // this.timer_pause = true
-            // this.timer_startTime = Date.now() - timeOffset
-            // this.timer_pause_time = Date.now()
-            // this.timer_formatted_time = [ "0", ".00" ]
             this.timer.setTimer(this.timer_startTimeOffset)
 
             this.playerResets = 0
@@ -2489,56 +2369,6 @@ const app = Vue.createApp({
             this.battlePopUps =               true
             this.showCritMultiplierInEP =     true
             this.rockTunnelDarkness =         false
-        },
-        first_playthrough_settings() {
-            this.route1 =         true
-            this.viridianForest = true
-            this.route3 =         true
-            this.mtMoon =         true
-            this.route6 =         true
-            this.rockTunnel =     true
-            this.pokemonTower =   true
-            this.safariZone =     true
-            this.powerPlant =     true
-            this.mansion =        true
-            this.route21 =        true
-            this.route22 =        true
-            this.victoryRoad =    true
-            this.route24 =        true
-        },
-        second_playthrough_settings() {
-            this.route1 =         false
-            this.viridianForest = true
-            this.route3 =         false
-            this.mtMoon =         false
-            this.route6 =         false
-            this.rockTunnel =     true
-            this.pokemonTower =   true
-            this.safariZone =     true
-            this.powerPlant =     true
-            this.mansion =        true
-            this.route21 =        true
-            this.route22 =        true
-            this.victoryRoad =    true
-            this.route24 =        true
-            this.viridian_forest == "Pidgey"
-        },
-        all_off() {
-            this.route1 =         false
-            this.viridianForest = false
-            this.route3 =         false
-            this.mtMoon =         false
-            this.route6 =         false
-            this.rockTunnel =     false
-            this.pokemonTower =   false
-            this.safariZone =     false
-            this.powerPlant =     false
-            this.mansion =        false
-            this.route21 =        false
-            this.route22 =        false
-            this.victoryRoad =    false
-            this.route24 =        false
-            this.viridian_forest == "No Encounters"
         },
         apply_settings(setting_group) { //pass in the name of the group of settings that are to have values assigned
             keys = this.settings[setting_group]
@@ -2933,9 +2763,7 @@ const app = Vue.createApp({
         //MOVE ICON DISPLAY
         moveTypeIcon(y) { //y = move1.value
             if (y != null && y != undefined && y != "") {
-                console.log(y)
                 var moveName = this.move_name(y)
-                console.log(moveName)
                 var move = this.g1MoveData[moveName]
                 var moveType = move.Type.toLowerCase()
                 return `images/elements/type-icons/${moveType}.png`
@@ -3944,12 +3772,12 @@ const app = Vue.createApp({
                 if (this.mapper.properties.events.beatChampion.value == true && this.mapper.properties.overworld.map.value == "Hall of Fame") {
                     autosplitter_process()
                     console.log("Run Ended - Backing up split data now...")
-                    let gameName = this.mapper.properties.meta.gameName.value
                     logData(gameName, gameName_Path, this.simple_data_str, this.finished_run_count, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     logData(gameName, gameName_Path, this.deprecated_data_str, this.finished_run_count, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     logData(gameName, gameName_Path, this.full_data_str, this.finished_run_count, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
-                    console.log(`Autosplitter - Run Ended: Real-Time: ${this.timer_formatted_time[0]}${this.timer_formatted_time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
+                    const time = this.timer.formatted_time;
+                    console.log(`Autosplitter - Run Ended: Real-Time: ${time[0]}${time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
                     this.game_over = true; //stop incrementing resets
                 }
             }
@@ -3957,7 +3785,7 @@ const app = Vue.createApp({
 
         //when the triangular cursor appears on the screen, log the gametime
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
-            let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red' ? "R" : "B"
+            let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red and Blue' ? "R" : "B"
             let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data    
             if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
                 logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //copy the current `attempt_number` split data to the finished folder

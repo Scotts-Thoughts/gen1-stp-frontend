@@ -551,13 +551,9 @@
                     <option>Off - Real-Time Label</option>
                     <option>Off - Game-Time Label</option>
                 </select><br>
-                <!-- <button class="buttonStyle buttonStyle_column3" @click="pauseUnpauseTime">Play/Pause</button><br> -->
-                <!-- <button class="buttonStyle set_button_style" @click="set_timer">Set</button> -->
                 <button class="buttonStyle buttonStyle_column3" @click="this.timer.pauseUnpauseTime()">Play/Pause</button>
-                <button class="buttonStyle set_button_style" @click="this.timer.setTimer(this.timer_startTimeOffset)">Set Timer</button><br><input type="text" class="inputContainer" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
+                <button class="buttonStyle set_button_style" @click="this.timer.setTimer(this.timer_startTimeOffset)">Set Timer</button><input type="text" class="inputContainer" style="width: 130px; text-align: right;" v-model="timer_startTimeOffset" placeholder="00:00:00.00"/><br>
                 <br>
-                <!-- <button class="buttonStyle buttonStyle_column3" onClick="openFolder('splits')">Open Splits Folder</button><br> -->
-                <!-- <button class="buttonStyle buttonStyle_column3" @click="openFolder(`splits`, game, starterName, ``)">Open Splits Folder</button> -->
                 <button class="buttonStyle buttonStyle_column3" @click="openFolder(`splits`, game, starterName, `finishes`)">Open Splits Folder</button>
                 <br>
                 <br>
@@ -565,34 +561,37 @@
                     <table>
                         <tr><td>Test run:</td><td><input class="checkBoxStyle" type="checkbox" v-model="test_run"/></td></tr>
                         <tr><td>Refilming mode:</td><td><input class="checkBoxStyle" type="checkbox" v-model="refilming_mode"/></td></tr>
+                        <tr v-if="refilming_mode"><td>Attempt:</td><td><input class="inputContainer" style="width: 50px;" type="text" v-model="refilmed_attempt"/></td></tr>
+                        <tr v-if="refilming_mode"><td>Finish:</td><td> <input class="inputContainer" style="width: 50px;" type="text" v-model="refilmed_finish"/></td></tr>
                         <tr><td>No attempt/split:</td><td><input class="checkBoxStyle" type="checkbox" v-model="no_attempt"/></td></tr>
+                        <tr><td>Debugging:</td><td><input class="checkBoxStyle" type="checkbox" v-model="debugging"/></td></tr>
+                        <tr><td>Editor:</td><td><input class="checkBoxStyle" type="checkbox" v-model="editor"/></td></tr>
                     </table>
-                    <table v-if="refilming_mode">
-                        <tr><td>Attempt:</td><td><input class="inputContainer" type="text" v-model="refilmed_attempt"/></td></tr>
-                        <tr><td>Finish:</td><td><input class="inputContainer" type="text" v-model="refilmed_finish"/></td></tr>
+                    <table >
+
                     </table>
                     <br>
                 </div>
-                <div v-if="test_run == true">
+                <div v-if="editor == true">
                     <div>Moveset Updating:</div>
-                    <input type="text" v-model="move1_replacement" placeholder="Input move 1">
-                    <input type="text" v-model="move2_replacement" placeholder="Input move 2">
-                    <input type="text" v-model="move3_replacement" placeholder="Input move 3">
-                    <input type="text" v-model="move4_replacement" placeholder="Input move 4">
+                    <input type="text" class="inputContainer" v-model="move1_replacement" placeholder="Input move 1">
+                    <input type="text" class="inputContainer" v-model="move2_replacement" placeholder="Input move 2">
+                    <input type="text" class="inputContainer" v-model="move3_replacement" placeholder="Input move 3">
+                    <input type="text" class="inputContainer" v-model="move4_replacement" placeholder="Input move 4">
                     <button class="buttonStyle buttonStyle_column3" @click="update_moveset">Update Party Moves</button>
                     <button class="buttonStyle buttonStyle_column3" @click="update_battle_moveset">Update Battle Moves</button>
                     <br>
                     <br>
                     <div>Item Updating:</div>
-                    <input type="text" v-model="item1_replacement" placeholder="Input item 1">
-                    <input type="text" v-model="item2_replacement" placeholder="Input item 2">
-                    <input type="text" v-model="item3_replacement" placeholder="Input item 3">
-                    <input type="text" v-model="item4_replacement" placeholder="Input item 4">
+                    <input type="text" class="inputContainer" v-model="item1_replacement" placeholder="Input item 1">
+                    <input type="text" class="inputContainer" v-model="item2_replacement" placeholder="Input item 2">
+                    <input type="text" class="inputContainer" v-model="item3_replacement" placeholder="Input item 3">
+                    <input type="text" class="inputContainer" v-model="item4_replacement" placeholder="Input item 4">
                     <button class="buttonStyle buttonStyle_column3" @click="update_items">Update</button>
                     <br>
                     <br>
                 </div>
-                <div v-if="release == false">
+                <div v-if="debugging == true && release == false">
                     <div>Debugging:</div>
                     <table>
                         <tr><td>State:</td><td>{{state}}</td></tr>
@@ -610,7 +609,7 @@
                     <option v-for="key in filtered_pokemon_list" :value="`${key}`">{{key}}</option>
                 </select><br>
                 <div>Search Pokemon:</div>
-                <input type="text" v-model="search_term" placeholder="Search for a species">
+                <input type="text" class="inputContainer" v-model="search_term" placeholder="Search for a species">
                 <button class="buttonStyle set_starter_button" @click="set_rom_starter">Set ROM Starter</button>
                 <button class="buttonStyle new_run_button" @click="newRun">New Run</button>
                 <button class="buttonStyle new_run_button" @click="set_encounters">Set Encounters</button>
@@ -619,11 +618,11 @@
                 <table>
                     <tr>
                         <td>Previous: </td>
-                        <td><input type="text" class="inputContainer" v-model="previous_label" placeholder="Previous"/></td>
+                        <td><input type="text" class="inputContainer split_label_input_container" v-model="previous_label" placeholder="Previous"/></td>
                     </tr>
                     <tr>
                         <td>Current: </td>
-                        <td><input type="text" class="inputContainer" v-model="current_label" placeholder="Current"/></td>
+                        <td><input type="text" class="inputContainer split_label_input_container" v-model="current_label" placeholder="Current"/></td>
                     </tr>
                 </table>
                 <br>
@@ -690,15 +689,15 @@
             <div class="testingArea4" style="z-index: 50000;">
                 <div>UI Color:</div>
                 <button @click="color_picker" class="buttonStyle buttonStyle_column3">Color Picker</button><br>
-                Saturation: <input type="range" min="0" max="2" step="0.1" v-model="ui_saturation"/><br>
+                Saturation: <input style="width: 142px;" type="range" min="0" max="2" step="0.1" v-model="ui_saturation"/><br>
                 <br>
                 <div>Pokemon:</div>
                 <table>
-                    <tr><td>X-Offset:   </td><td><input type="range" min="-400" max="400" v-model="imageXOffset"/></td></tr>
-                    <tr><td>Y-Offset:   </td><td><input type="range" min="-400" max="400" v-model="imageYOffset"/></td></tr>
-                    <tr><td>Scale:      </td><td><input type="range" min="0.3"  max="2"   step="0.02" v-model="imageScale"/></td></tr>
-                    <tr><td>Saturation: </td><td><input type="range" min="90"   max="150" step="1"    v-model="imageSat"/></td></tr>
-                    <tr><td>Rotation:   </td><td><input type="range" min="0"    max="360" step="1"    v-model="imageRotation"/></td></tr>
+                    <tr><td>X-Offset:   </td><td><input style="width: 142px;" type="range" min="-400" max="400" v-model="imageXOffset"/></td></tr>
+                    <tr><td>Y-Offset:   </td><td><input style="width: 142px;" type="range" min="-400" max="400" v-model="imageYOffset"/></td></tr>
+                    <tr><td>Scale:      </td><td><input style="width: 142px;" type="range" min="0.3"  max="2"   step="0.02" v-model="imageScale"/></td></tr>
+                    <tr><td>Saturation: </td><td><input style="width: 142px;" type="range" min="90"   max="150" step="1"    v-model="imageSat"/></td></tr>
+                    <tr><td>Rotation:   </td><td><input style="width: 142px;" type="range" min="0"    max="360" step="1"    v-model="imageRotation"/></td></tr>
                     <tr><td>Flip:       </td><td><input class="checkBoxStyle" type="checkbox" v-model="imageFlip"/></td></tr>
                 </table>
                 <br>
@@ -711,14 +710,14 @@
                 <!-- <img src="images/screenshots/pidgey_pallete.png" /> -->
                 <br>
                 <table>
-                    <tr><td>X-Offset:   </td><td><input type="range" min="-125" max="125" v-model="backgroundXOffset"/></td></tr>
-                    <tr><td>Y-Offset:   </td><td><input type="range" min="-125" max="125" v-model="backgroundYOffset"/></td></tr>
-                    <tr><td>Scale:      </td><td><input type="range" min="100"  max="200" v-model="backgroundScale"/></td></tr>
-                    <tr><td>Brightness: </td><td><input type="range" min="0"    max="200" v-model="backgroundBrightness"/></td></tr>
-                    <tr><td>Contrast:   </td><td><input type="range" min="0"    max="200" v-model="backgroundContrast"/></td></tr>
-                    <tr><td>Saturation: </td><td><input type="range" min="0"    max="200" v-model="backgroundSaturation"/></td></tr>
-                    <tr><td>Blur:       </td><td><input type="range" min="0"    max="10"  v-model="backgroundBlur"/></td></tr>
-                    <tr><td>Hue:        </td><td><input type="range" min="0"    max="358" v-model="backgroundHue"/></td></tr>
+                    <tr><td>X-Offset:   </td><td><input style="width: 142px;" type="range" min="-125" max="125" v-model="backgroundXOffset"/></td></tr>
+                    <tr><td>Y-Offset:   </td><td><input style="width: 142px;" type="range" min="-125" max="125" v-model="backgroundYOffset"/></td></tr>
+                    <tr><td>Scale:      </td><td><input style="width: 142px;" type="range" min="100"  max="200" v-model="backgroundScale"/></td></tr>
+                    <tr><td>Brightness: </td><td><input style="width: 142px;" type="range" min="0"    max="200" v-model="backgroundBrightness"/></td></tr>
+                    <tr><td>Contrast:   </td><td><input style="width: 142px;" type="range" min="0"    max="200" v-model="backgroundContrast"/></td></tr>
+                    <tr><td>Saturation: </td><td><input style="width: 142px;" type="range" min="0"    max="200" v-model="backgroundSaturation"/></td></tr>
+                    <tr><td>Blur:       </td><td><input style="width: 142px;" type="range" min="0"    max="10"  v-model="backgroundBlur"/></td></tr>
+                    <tr><td>Hue:        </td><td><input style="width: 142px;" type="range" min="0"    max="358" v-model="backgroundHue"/></td></tr>
                     <tr><td>Flip:     </td><td><input class="checkBoxStyle" type="checkbox" v-model="backgroundFlip"/></td></tr>
                 </table>
             </div>

@@ -54,10 +54,9 @@ const pokemon_settings = [
     [ "refilmed_attempt",       0, ],
     [ "refilmed_finish",        0, ],
     [ "dropdown_bonks_items",   'Bonks', ],
-    [ "show_bonk_counter",      true, ],
+    [ "show_bonk_counter",      false, ],
     [ "toggle_compare_splits",  'First', ],
-    [ "show_repel_counter",     true, ],
-    [ "show_frame",             true, ],
+    [ "show_repel_counter",     false, ],
     [ "enable_blackouts",       true, ],
     
 ];

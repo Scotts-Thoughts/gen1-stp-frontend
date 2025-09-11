@@ -62,20 +62,6 @@ const application_settings = [
     [ "rockTunnelDarkness", false,    ], //if true it will make rock tunnel bright
     [ "viridian_forest",    "Pidgey", ],
 
-    // Timer settings
-    // [ "timer_startTimeOffset", "00:00:00.00", ],
-    // [ "timer_startTime",       0, ],
-    // [ "timer_pause",           true, ],
-    // [ "timer_formatted_time",  ["0", ".00"], ],
-    // [ "timer_pause_time",      0, ],
-    // [ "time_h",                0, ],
-    // [ "time_m",                0, ],
-    // [ "time_s",                0, ],
-    // [ "time_ms",               0, ],
-    // [ "time_split_start",      "00:00:00:00", ],
-    // [ "battle_start",          0, ],
-    // [ "timer_settings",        "Real-Time", ],
-
     [ "disallow_right_panel_switching", true],
     [ "automatic_post_battle_splits",   true],
 
@@ -99,4 +85,8 @@ const application_settings = [
     [ "toggle_EVENT_ENCOUNTER_ROUTE6_CUT_USER",        false ],
     [ "toggle_EVENT_ENCOUNTER_ROUTE16_DODUO",          false ],
     [ "toggle_EVENT_ENCOUNTER_ROUTE3_SPEAROW",         false ],
+    [ "search_term",                                   "" ],
+    [ "debugging",                                     false ],
+    [ "editor",                                        false ],
+    [ "no_attempt",                                    false ],
 ];
