@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Rattata,Rival1-Lab,42,0,0,6,0:02,8.868,TACKLE,TAIL WHIP,,
+NINTEN,Rattata,Brock,8:12,0,11,14,0:31,24.046,QUICK ATTACK,TAIL WHIP,TACKLE,HYPER FANG
+NINTEN,Rattata,Rival2-Nugget Bridge,11:44,1,11,19,0:44,19.361,HYPER FANG,TAIL WHIP,WATER GUN,QUICK ATTACK
+NINTEN,Rattata,Champion,1:07:54,25,11,69,3:37,71.411,BODY SLAM,MIMIC,BLIZZARD,THUNDER
