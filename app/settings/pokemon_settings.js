@@ -9,6 +9,7 @@ const pokemon_settings = [
     [ "backgroundBlur",         0,         ],
     [ "backgroundScale",        100,       ],
     [ "backgroundFlip",         false,     ],
+    [ "backgroundXFlip",        false,     ],
     [ "backgroundUrl",          '',        ],
     [ "use_custom_background",  false,     ],
     [ "attempt_number",         0,         ],

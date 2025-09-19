@@ -871,6 +871,7 @@ const app = Vue.createApp({
             backgroundBlur:        0,
             backgroundScale:       100,
             backgroundFlip:        false,
+            backgroundXFlip:       false,
             backgroundUrl:         "",
             use_custom_background: false,
             backgroundXOffset:     0,
@@ -1294,6 +1295,23 @@ const app = Vue.createApp({
     },
 
     computed: {
+        hp_tracker_style() {
+            const state = this.mapper.properties.meta.state.value
+            const hp = this.mapper.properties.player.team[0].hp.value
+            const hp_max = this.mapper.properties.player.team[0].maxHp.value
+            const hp_percentage = hp / hp_max
+            const status_condition = this.mapper.properties.player.team[0].statusCondition.bytes
+            console.log(status_condition)
+            if (state == "Overworld" && hp_percentage != 1) {
+                return "--overlay-color: rgb(255, 167, 167);"
+            }
+            else if (status_condition != 0) {
+                return "--overlay-color: rgb(98, 192, 255);"
+            }
+            else {
+                return "--overlay-color: #39b54a;"
+            }
+        },
         blackouts_resets() {
             const resets = this.playerResets
             const blackouts = this.blackout_counter
@@ -3725,7 +3743,9 @@ const app = Vue.createApp({
                     case "LANCE": { 
                         simpleSplit() 
                         if (this.automatic_post_battle_splits == true) {
-                            this.right_panel = "Splits"
+                            if (this.mapper.properties.overworld.map.value != "Pallet Town - Oak's Lab") { 
+                                this.right_panel = "Splits"
+                            }
                             this.automatic_splits = true
                         }
                     }

@@ -373,6 +373,7 @@ html, body {
     -webkit-mask-image: var(--url); /* fallback, just to be safe */
     mask-image: var(--url); /* use the alpha channel of provided image as a mask of this layer */
     mix-blend-mode: color; /* color blend mode, I'm not sure if 'color' is the right one - might need to be changed */
+    transition: background-color 1s ease-in-out; /* smooth transition between colors over 1 second */
 }
 
 .grey-svg {   filter: invert(29%) sepia(96%)  saturate(0%)    hue-rotate(180deg) brightness(95%)  contrast(101%) drop-shadow(0px 1px 2px #000000); opacity: .2;}
@@ -561,9 +562,9 @@ box-shadow:
 }
 .testingArea1 {
     display: block;
-    border: 4px solid #000000;
-    background-color: #c9ffbba6;
-    filter: drop-shadow(0px 4px 4px #000000c5);
+    border: 2px solid #000000af;
+    background-color: #dcdcdc69;
+    filter: drop-shadow(0px 4px 4px #00000089);
     padding: 8px;
     position: absolute;
     font-family: play;
@@ -576,10 +577,10 @@ box-shadow:
 }
 .testingArea2 {
     display: block;
-    border: 4px solid #000000;
+    border: 2px solid #000000af;
+    background-color: #dcdcdc69;
+    filter: drop-shadow(0px 4px 4px #00000089);
     padding: 8px;
-    background-color: #c9ffbba6;
-    filter: drop-shadow(0px 4px 4px #000000c5);
     position: absolute;
     font-family: play;
     font-size: 15px;
@@ -604,10 +605,10 @@ box-shadow:
 }
 .testingArea4 {
     display: block;
-    border: 4px solid #000000;
+    border: 2px solid #000000af;
+    background-color: #dcdcdc69;
+    filter: drop-shadow(0px 4px 4px #00000089);
     padding: 8px;
-    background-color: #c9ffbba6;
-    filter: drop-shadow(0px 4px 4px #000000c5);
     position: absolute;
     font-family: play;
     font-size: 15px;
