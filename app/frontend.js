@@ -1722,6 +1722,12 @@ const app = Vue.createApp({
                             case (166): return 'Play Rough'
                         }
                     }
+                    case "Flutter Mane": {
+                        switch (byte_value) {
+                            case (165): return 'Dazzling Gleam'
+                            case (166): return 'Shadow Ball'
+                        }
+                    }
                     default: return move_name
                 }
             }

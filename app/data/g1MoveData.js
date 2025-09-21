@@ -1,4 +1,14 @@
 const g1MoveData = {
+"Dazzling Gleam" :
+  {
+    Move: "Dazzling Gleam",
+    Type: "Fairy",
+    Power: 80,
+    Accuracy: 100,
+    PP: 10,
+    Category: "Special",
+    Description: "Deals damage."
+  },
 "Spectral Thief" :
   {
     Move: "Spectral Thief",

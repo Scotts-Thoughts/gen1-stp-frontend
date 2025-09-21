@@ -1,4 +1,68 @@
 const g1PokemonData = {
+"Flutter Mane": {
+    name: "Flutter Mane",
+    rom_id: 152,
+    national_dex_number: null,
+    base_hp: 55,
+    base_atk: 55,
+    base_def: 55,
+    base_spd: 135,
+    base_spc: 135,
+    ev_yield: null,
+    type1: "Ghost",
+    type2: "Fairy",
+    catch_rate: 30,
+    base_xp: 255,
+    common_item: null,
+    rare_item: null,
+    gender_ratio: null,
+    egg_cycles: null,
+    base_friendship: null,
+    growth_rate: "Slow",
+    egg_group_1: null,
+    egg_group_2: null,
+    abilities: [
+
+    ],
+    initial_moveset: [
+        "Confuse Ray",
+        "Lick",
+        "Psybeam"
+    ],
+    levelup_moveset: [[21, 'Night Shade'], [28, 'Psywave'], [35, 'Dazzling Gleam'], [42, 'Shadow Ball'], [49, 'Flamethrower'], [56, 'Rock Slide']],
+    tm_hm_learnset: [
+        "Toxic",
+        "Take Down",
+        "Double-Edge",
+        "Hyper Beam",
+        "Pay Day",
+        "Rage",
+        "Thunderbolt",
+        "Thunder",
+        "SolarBeam",
+        "Psychic",
+        "Teleport",
+        "Mimic",
+        "Double Team",
+        "Reflect",
+        "Bide",
+        "Metronome",
+        "Swift",
+        "Rest",
+        "Thunder Wave",
+        "Psywave",
+        "Rock Slide",
+        "Substitute",
+        "Flash"
+    ],
+    tutor_learnset: [
+
+    ],
+    egg_moves: [
+
+    ],
+    weight: null,
+},
 "Marshadow": {
     name: "Marshadow",
     rom_id: 152,
