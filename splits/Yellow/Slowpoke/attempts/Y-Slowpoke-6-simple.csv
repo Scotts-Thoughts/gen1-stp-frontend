@@ -1,0 +1,3 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Slowpoke,Rival1-Lab,42,0,0,6,0:02,9.012,CONFUSION,,,
+NINTEN,Slowpoke,Brock,2:53,0,0,10,0:10,19.763,CONFUSION,,,
