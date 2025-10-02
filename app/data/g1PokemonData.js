@@ -1,4 +1,65 @@
 const g1PokemonData = {
+"Slither Wing": {
+    name: "Slither Wing",
+    rom_id: 152,
+    national_dex_number: null,
+    base_hp: 85,
+    base_atk: 135,
+    base_def: 79,
+    base_spd: 81,
+    base_spc: 105,
+    ev_yield: null,
+    type1: "Bug",
+    type2: "Fighting",
+    catch_rate: 30,
+    base_xp: 255,
+    common_item: null,
+    rare_item: null,
+    gender_ratio: null,
+    egg_cycles: null,
+    base_friendship: null,
+    growth_rate: "Slow",
+    egg_group_1: null,
+    egg_group_2: null,
+    abilities: [
+
+    ],
+    initial_moveset: [
+        "Gust",
+        "Ember",
+        "Twineedle",
+        "PoisonPowder"
+    ],
+    levelup_moveset: [[21, 'Stomp'], [28, 'Low Kick'], [35, 'Recover'], [42, 'Pin Missile'], [49, 'Submission'], [56, 'Sharpen'], [56, 'Defense Curl']],
+    tm_hm_learnset: [
+        "Toxic",
+        "Body Slam",
+        "Take Down",
+        "Double-Edge",
+        "Hyper Beam",
+        "Pay Day",
+        "Submission",
+        "Counter",
+        "Seismic Toss",
+        "Rage",
+        "Mega Drain",
+        "Earthquake",
+        "Psychic",
+        "Mimic",
+        "Double Team",
+        "Bide",
+        "Fire Blast",
+        "Rest",
+        "Substitute"
+    ],
+    tutor_learnset: [
+
+    ],
+    egg_moves: [
+
+    ],
+    weight: null,
+},
 "Flutter Mane": {
     name: "Flutter Mane",
     rom_id: 152,
