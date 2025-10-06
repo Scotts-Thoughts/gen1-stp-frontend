@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Nidoqueen,Rival1-Lab,41,0,0,6,0:02,7.36,BODY SLAM,SCRATCH,TAIL WHIP,TACKLE
+NINTEN,Nidoqueen,Brock,3:08,0,0,13,0:11,16.119,BODY SLAM,SCRATCH,TAIL WHIP,DOUBLE KICK
+NINTEN,Nidoqueen,Rival2-Nugget Bridge,6:09,0,0,19,0:23,18.152,BODY SLAM,SCRATCH,TAIL WHIP,DOUBLE KICK
+NINTEN,Nidoqueen,Champion,37:05,4,0,61,2:23,57.703,EARTHQUAKE,THUNDERBOLT,BLIZZARD,ICE BEAM

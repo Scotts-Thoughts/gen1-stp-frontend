@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Nidoqueen,Rival1-Lab,41,0,0,6,0:02,6.695,BODY SLAM,SCRATCH,TAIL WHIP,TACKLE
+NINTEN,Nidoqueen,Brock,3:09,0,0,13,0:11,13.378,BODY SLAM,SCRATCH,TAIL WHIP,DOUBLE KICK
+NINTEN,Nidoqueen,Rival2-Nugget Bridge,6:11,0,0,19,0:23,21.808,BODY SLAM,SCRATCH,TAIL WHIP,DOUBLE KICK
