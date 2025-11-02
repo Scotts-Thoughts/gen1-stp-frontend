@@ -70,7 +70,9 @@
                     <div class="colored-image ds" :style="`filter: saturate(${ui_saturation}) drop-shadow(0px 0px 1px #000000)`" style="--url: url(images/ui/moveset.svg)"></div>
                     <div class="expBar"><div class="expMeterStyle expMeterOuter"><div class="expMeterStyle expMeterInner" ref="expBar"></div></div></div>
                     <img class="svg" :src="`images/ui/${ui_type_color_modifier}${ui_stat_arrangement_modifier}stats_backgrounds.svg`"/>
-                    <div class="colored-image ds" :style="hp_tracker_style" style="--url: url(images/ui/gamearea.svg); filter: drop-shadow(0px 0px 2px #000000);"></div>
+                    <!-- <div class="colored-image ds" :style="hp_tracker_style" style="--url: url(images/ui/gamearea_new.svg); filter: drop-shadow(0px 0px 2px #000000);"></div> -->
+                    <!-- <div class="colored-image ds" :style="hp_tracker_style" style="--url: url(images/ui/gamearea_new.svg); filter: drop-shadow(0px 0px 2px #000000);"></div> -->
+                    <img class="canvas" style="filter: drop-shadow(0px 0px 2px #000000);" src="images/ui/gamearea.png"/>
                     <img class="canvas" src="images/elements/badges.png"/>
 
                     <div class="exp_growthRate">{{ growthRate }}</div>
@@ -220,18 +222,18 @@
                             <div v-else-if="toggle_compare_splits === 'First'">
                                 <table  class="splits_table" style="height: 960px;" cellspacing="0">
                                     <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
-                                        <td style="font-size: 18px; padding-left: 3px">Split</td>
-                                        <td style="font-size: 18px; width: 180px;  text-align: left; padding-left: 3px;"></td>
-                                        <td style="font-size: 18px; width: 10px;  text-align: left; padding-left: 3px;"></td>
-                                        <td style="font-size: 18px; width: 10px;  text-align: left; padding-left: 3px;"></td>
-                                        <td style="font-size: 18px; width: 110px; text-align: right; padding-right: 3px;">Time</td>
+                                        <td style="font-size: 18px; padding-left: 5px">Split</td>
+                                        <td style="font-size: 18px; width: 180px;  text-align: left; padding-left: 5px;"></td>
+                                        <td style="font-size: 18px; width: 10px;  text-align: left; padding-left: 5px;"></td>
+                                        <td style="font-size: 18px; width: 10px;  text-align: left; padding-left: 5px;"></td>
+                                        <td style="font-size: 18px; width: 110px; text-align: right; padding-right: 5px;">Time</td>
                                     </tr>
                                     <tr v-for="split in compare_splits">
                                         <td class="scaled_icon" style="font-size: 20px; width: 40px;  text-align: left;"><img :src="`images/split_images/${trainer_name_lookup.basic[split.trainer]?.trainer}.png`"></td>
-                                        <td style="font-size: 20px; width: 180px; text-align: left; padding-left: 3px;">{{trainer_name_lookup.detailed[split.trainer]?.trainer}}</td>
-                                        <td style="font-size: 20px; width: 10px;  text-align: left; padding-left: 3px;"></td>
-                                        <td style="font-size: 20px; width: 10px;  text-align: left; padding-left: 3px;"></td>
-                                        <td style="font-size: 20px; width: 110px; text-align: right; padding-right: 3px;">{{split.current_time}}</td>
+                                        <td style="font-size: 20px; width: 180px; text-align: left; padding-left: 5px;">{{trainer_name_lookup.detailed[split.trainer]?.trainer}}</td>
+                                        <td style="font-size: 20px; width: 10px;  text-align: left; padding-left: 5px;"></td>
+                                        <td style="font-size: 20px; width: 10px;  text-align: left; padding-left: 5px;"></td>
+                                        <td style="font-size: 20px; width: 110px; text-align: right; padding-right: 5px;">{{split.current_time}}</td>
                                     </tr>
                                 </table>
                                 <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg)"></div>

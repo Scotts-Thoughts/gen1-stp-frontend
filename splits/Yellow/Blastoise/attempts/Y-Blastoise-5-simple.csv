@@ -1,0 +1,8 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Blastoise,Rival1-Lab,42,0,0,6,0:02,8.256,WATER GUN,TAIL WHIP,BUBBLE,TACKLE
+NINTEN,Blastoise,Brock,2:18,0,0,11,0:08,8.983,WATER GUN,TAIL WHIP,BUBBLE,TACKLE
+NINTEN,Blastoise,Misty,5:56,0,0,19,0:22,19.221,WATER GUN,MEGA PUNCH,BUBBLE,TACKLE
+NINTEN,Blastoise,Rival2-Nugget Bridge,6:40,0,0,20,0:25,21.884,BUBBLEBEAM,MEGA PUNCH,BUBBLE,WATER GUN
+NINTEN,Blastoise,Cerulean Rocket,9:13,0,0,24,0:35,7.196,BUBBLEBEAM,MEGA PUNCH,BUBBLE,BITE
+NINTEN,Blastoise,Rival3-SS Anne,10:41,0,0,26,0:41,12.094,BUBBLEBEAM,DIG,BUBBLE,BITE
+NINTEN,Blastoise,Surge,11:26,0,0,26,0:44,5.755,BUBBLEBEAM,DIG,BUBBLE,BITE

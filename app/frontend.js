@@ -1863,8 +1863,9 @@ const app = Vue.createApp({
             let player_speed   = this.mapper.properties.battle.yourPokemon.speed.value
             let enemy_speed = enemy_speed_incoming
             if (state == 'To Battle') {
+                koga_badge = this.mapper.properties.player.badges.badge5.value
                 enemy_speed = data[`${trainer} ${trainer_number}`].pokemon[enemy_slot].spd
-                player_speed = this.mapper.properties.player.team[0].speed.value
+                player_speed = koga_badge ? Math.floor(this.mapper.properties.player.team[0].speed.value * 1.125) : this.mapper.properties.player.team[0].speed.value
             }
             let object = {
                 comparison: "Outspeeds",

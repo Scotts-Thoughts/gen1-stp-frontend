@@ -1,2 +1,3 @@
 player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
 NINTEN,Psyduck,Rival1-Lab,44,0,0,6,0:02,10.419,SCRATCH,,,
+NINTEN,Psyduck,Champion,1:07:42,12,11,66,4:11,90.95,SURF,DIG,SEISMIC TOSS,REST

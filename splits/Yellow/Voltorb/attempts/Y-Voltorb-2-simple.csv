@@ -1,2 +1,3 @@
 player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
 NINTEN,Voltorb,Rival1-Lab,46,0,0,6,0:02,12.323,TACKLE,SCREECH,,
+NINTEN,Voltorb,Champion,1:37:26,4,28,80,6:11,164.369,REFLECT,REST,MIMIC,TOXIC

@@ -1,0 +1,8 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Charizard,Rival1-Lab,42,0,0,6,0:02,9.166,EMBER,GROWL,LEER,SCRATCH
+NINTEN,Charizard,Brock,2:36,0,0,12,0:09,17.903,EMBER,GROWL,LEER,SCRATCH
+NINTEN,Charizard,Rival2-Nugget Bridge,6:12,0,0,19,0:23,18.824,EMBER,MEGA PUNCH,LEER,SCRATCH
+NINTEN,Charizard,Cerulean Rocket,9:05,0,0,23,0:35,10.423,EMBER,MEGA PUNCH,LEER,SCRATCH
+NINTEN,Charizard,Misty,10:10,1,0,25,0:38,12.862,DIG,MEGA PUNCH,EMBER,SCRATCH
+NINTEN,Charizard,Rival3-SS Anne,12:01,1,0,27,0:45,12.013,BODY SLAM,DIG,EMBER,SCRATCH
+NINTEN,Charizard,Champion,38:02,7,0,60,2:22,57.45,EARTHQUAKE,BODY SLAM,FIRE BLAST,SWORDS DANCE
