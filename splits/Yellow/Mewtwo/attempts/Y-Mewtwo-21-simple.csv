@@ -1,0 +1,5 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Mewtwo,Rival1-Lab,37,0,0,5,0:01,4.152,CONFUSION,DISABLE,SWIFT,PSYCHIC
+NINTEN,Mewtwo,Brock,2:12,0,0,8,0:08,10.918,CONFUSION,DISABLE,SWIFT,PSYCHIC
+NINTEN,Mewtwo,Misty,4:57,0,0,16,0:19,15.077,CONFUSION,DISABLE,SWIFT,PSYCHIC
+NINTEN,Mewtwo,Rival2-Nugget Bridge,5:25,0,0,17,0:20,11.699,CONFUSION,DISABLE,SWIFT,PSYCHIC

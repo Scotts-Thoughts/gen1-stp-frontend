@@ -1,0 +1,4 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Mewtwo,Rival1-Lab,39,0,0,5,0:02,5.942,PSYCHIC,DISABLE,SWIFT,CONFUSION
+NINTEN,Mewtwo,Brock,2:14,0,0,8,0:08,11.345,PSYCHIC,DISABLE,SWIFT,CONFUSION
+NINTEN,Mewtwo,Champion,30:15,0,0,53,2:00,54.284,BODY SLAM,ICE BEAM,THUNDERBOLT,PSYCHIC

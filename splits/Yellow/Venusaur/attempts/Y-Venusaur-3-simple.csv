@@ -1,0 +1,6 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Venusaur,Rival1-Lab,42,0,0,6,0:02,8.428,TACKLE,GROWL,LEECH SEED,VINE WHIP
+NINTEN,Venusaur,Brock,2:26,0,0,11,0:09,8.862,TACKLE,GROWL,LEECH SEED,VINE WHIP
+NINTEN,Venusaur,Misty,6:05,0,0,19,0:23,13.522,TACKLE,GROWL,LEECH SEED,VINE WHIP
+NINTEN,Venusaur,Rival2-Nugget Bridge,6:50,0,0,20,0:26,25.119,TACKLE,GROWL,LEECH SEED,VINE WHIP
+NINTEN,Venusaur,Champion,38:33,1,0,60,2:31,63.437,MIMIC,SLEEP POWDER,SWORDS DANCE,BODY SLAM
