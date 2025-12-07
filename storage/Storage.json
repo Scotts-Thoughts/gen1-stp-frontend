@@ -78,7 +78,7 @@
         "rockTunnelDarkness": false,
         "viridian_forest": "Pidgey",
         "disallow_right_panel_switching": false,
-        "automatic_post_battle_splits": false,
+        "automatic_post_battle_splits": true,
         "ui_type_colors": "Current",
         "ui_type_color_modifier": "current_",
         "ui_stat_arrangement": "Speed: top right",
@@ -99,7 +99,8 @@
         "search_term": "Mew",
         "debugging": true,
         "editor": false,
-        "no_attempt": false
+        "no_attempt": false,
+        "mew_race_name": "SteveMPlays"
     },
     "games": {
         "Red": {
@@ -7192,7 +7193,8 @@
                     "show_repel_counter": false,
                     "show_frame": true,
                     "toggle_compare_splits": "First",
-                    "backgroundXFlip": true
+                    "backgroundXFlip": true,
+                    "enable_blackouts": true
                 },
                 "settings": {},
                 "splits": {},

@@ -1158,6 +1158,13 @@ box-shadow:
     top: 41px;
     left: 32px;
 }
+.timerLabel_mew_race {
+    top: 39px;
+    left: 32px;
+    width: 337px;
+    border: 1px solid #ff000000;
+    text-align: center;
+}
 .resetsLabel {
     border: 1px solid #ff000000;
     font-size: 14px;

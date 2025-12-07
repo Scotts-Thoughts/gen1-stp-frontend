@@ -90,8 +90,10 @@
                     <img class="canvas" src="images/elements/badges.png"/>
 
                     <div class="exp_growthRate">{{ growthRate }}</div>
-                    <transition name="fade"><div v-show="timer_settings == `Off - Real-Time Label` || timer_settings == `Real-Time`" class="genericLabels timerLabel">time played at 4x game speed</div></transition>
-                    <transition name="fade"><div v-show="timer_settings == `Off - Game-Time Label` || timer_settings == `Game-Time`" class="genericLabels timerLabel">gametime</div></transition>
+                    <transition name="fade">
+                        <div v-if="mew_race" class="genericLabels timerLabel_mew_race">{{mew_race_name}}</div>
+                        <div v-else class="genericLabels timerLabel">time played at 4x game speed</div>
+                    </transition>
                     <div v-show="blackouts_resets == 'None'">
                         <div class="genericLabels resetsLabel_1">faults</div>
                     </div>

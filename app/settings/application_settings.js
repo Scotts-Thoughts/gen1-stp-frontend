@@ -89,4 +89,5 @@ const application_settings = [
     [ "debugging",                                     false ],
     [ "editor",                                        false ],
     [ "no_attempt",                                    false ],
+    [ "mew_race_name",                                 "" ],
 ];
