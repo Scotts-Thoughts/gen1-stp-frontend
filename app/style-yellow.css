@@ -1256,6 +1256,30 @@ box-shadow:
     border: 1px solid #df2c2c00;
     z-index: 10101;
 }
+.movepoolLabel_ditto {
+    position: absolute;
+    font-family: titan;
+    font-size: 26px;
+    width: 400px;
+    top: 39px;
+    left: 1538px;
+    text-align: center;
+    width: 362px;
+    border: 1px solid #df2c2c00;
+    z-index: 10101;
+}
+.splitLabel_ditto {
+    position: absolute;
+    font-family: titan;
+    font-size: 26px;
+    width: 400px;
+    top: 134px;
+    left: 1538px;
+    text-align: center;
+    width: 362px;
+    border: 1px solid #df2c2c00;
+    z-index: 10101;
+}
 .split_label {
     position: absolute;
     font-family: titan;
@@ -2081,36 +2105,6 @@ box-shadow:
 .fadeDelayed-leave-to     { opacity: 0; }
 .fadeDelayed-leave-active { transition: opacity 200ms ease-in-out; }
 
-.splits_table_old {
-    display: table; /* Ensure table layout */
-    position: absolute;
-    width: 365px;
-    height: 456px; /* Fixed height */
-    font-size: 12px;
-    font-family: play;
-    left: 1538px;
-    top: 74px;
-    opacity: .9;
-    border-spacing: 0; /* Remove spacing between cells */
-    margin: 0;
-}
-.splits_table_old tr {
-    height: calc(100% / auto); /* Dynamically adjust row height */
-}
-
-.splits_table_old td {
-    vertical-align: middle; /* Center content vertically */
-    text-align: center; /* Center content horizontally */
-}
-.splits_table_old tr:nth-child(odd) {
-    background-color: #cfcfcf;
-}
-.splits_table_old tr:nth-child(even) {
-    background-color: #cfcfcf;
-}
-.splits_table_old tr:nth-child(odd) {
-    background-color: #ffffff;
-}
 .splits_table {
     display: table; /* Changed to table to make use of table properties */
     position: absolute;
@@ -2146,6 +2140,30 @@ box-shadow:
 .splits_table tr:nth-child(odd) {
     background-color: #ffffff;
 }
+
+
+.splits_table_ditto {
+    display: table; /* Changed to table to make use of table properties */
+    position: absolute;
+    width: 364px;
+    font-size: 12px;
+    font-family: 'Play', sans-serif; /* Ensure the font family is correctly referenced */
+    left: 1538px;
+    top: 171px;
+    opacity: .9;
+    border-spacing: 0; /* Removes spacing between cells */
+    margin: 0; /* Removes margin around the table */
+}
+.splits_table_ditto tr:nth-child(odd) {
+    background-color: #cfcfcf;
+}
+.splits_table_ditto tr:nth-child(even) {
+    background-color: #cfcfcf;
+}
+.splits_table_ditto tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
 
 .second_splits_table {
     display: block;
@@ -2318,6 +2336,47 @@ box-shadow:
     font-size: 17px;
 }
 .movepoolDemo tr:nth-child(odd) {
+    background-color: #cfcfcf;
+}
+.movepoolDemo_ditto {
+    display: block;
+    position: absolute;
+    /* border: 1px solid #00ff0d00; */
+    background-color: #ffffff;
+    font-size: 16px;
+    line-height: 20px;
+
+    /* line-height: 35px; */
+    width: 366px;
+    font-family: play;
+    left: 1536px;
+    top: 74px;
+    opacity: .9;
+    border: none;
+}
+
+.movepoolDemo_ditto th:nth-child(1) {
+    width: 50px;
+}
+.movepoolDemo_ditto th:nth-child(2) {
+    width: 162px;
+}
+.movepoolDemo_ditto th:nth-child(3) {
+    width: 89px;
+}
+.movepoolDemo_ditto th:nth-child(4) {
+    width: 37px;
+}
+.movepoolDemo_ditto th:nth-child(5) {
+    width: 46px;
+}
+.movepoolDemo_ditto th:nth-child(6) {
+    width: 42px;
+}
+.movepoolTable {
+    font-size: 17px;
+}
+.movepoolDemo_ditto tr:nth-child(odd) {
     background-color: #cfcfcf;
 }
 .ui_table {

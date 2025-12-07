@@ -33,7 +33,21 @@
                     }"/>
                     <img class="canvas" ref="old_background_texture" style="opacity: 0" />
                     <img class="canvas" style="top: -160px;" :src="`images/elements/floor/pokeball.png`" />
-                    <img v-show="game_name == 'Yellow'" class="pokemon_art" ref="pokemon_art"
+                    <img v-if="game_name == 'Yellow' && ditto_overlay" class="pokemon_art" ref="pokemon_art"
+                        :style="{
+                            'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px) rotate(${imageRotation}deg)`,
+                            'filter': `saturate(${imageSat}%)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(0 0 0.4px #000)
+                            drop-shadow(${imageFlip ? '-3px' : '3px'} 3px 3px #000)
+                            `
+                        }" 
+                        :src="`images/pokemon/ditto.png`" />
+                    <img v-else-if="game_name == 'Yellow'" class="pokemon_art" ref="pokemon_art"
                         :style="{
                             'transform': `scale(${imageScale}) ${imageFlip ? 'rotateY(180deg)' : ''} translate(${imageXOffset}px, ${-imageYOffset}px) rotate(${imageRotation}deg)`,
                             'filter': `saturate(${imageSat}%)
@@ -147,20 +161,145 @@
                 <div class="movesetLabel labelAcc"  >acc.</div>
                 <div class="movesetLabel labelPP"   >pp</div>
                 <div class="movesetContainer">
-                    <div v-for="move in pkmnMoves">
-                        <div v-if="mapper.properties.player.team[0].level > 0 && get_backport_move(move) != null">
-                            <img :class="`movesetStyling iconStyling ${move}icon`" :src="moveTypeIcon(get_backport_move(move))" />
-                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling moveStyling ${move}`">{{ get_backport_move(move) }}</div>
-                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling powerStyling ${move}`" :key="type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon)">{{ type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon) }}</div>
-                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling accuracyStyling ${move}`">{{ moveAccuracyEvasionDynamic(get_backport_move(move)) }}<span style="font-size: 20px;">%</span></div>
-                            <div v-show="mapper.properties.player.team[0][move].value != null" :class="`movesetStyling ppStyling ${move}`">{{ mapper.properties.player.team[0][move + "pp"] }}</div>
+                    <div v-if="struggle_check == false">
+                        <div v-for="move in pkmnMoves">
+                            <div v-if="mapper.properties.player.team[0].level > 0 && get_backport_move(move) != null">
+                                <img :class="`movesetStyling iconStyling ${move}icon`" :src="moveTypeIcon(get_backport_move(move))" />
+                                <div v-show="get_backport_move(move) != ''" :class="`movesetStyling moveStyling ${move}`">{{ get_backport_move(move) }}</div>
+                                <div v-show="get_backport_move(move) != ''" :class="`movesetStyling powerStyling ${move}`" :key="type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon)">{{ type_effectiveness(s1dynamic,move,mapper.properties.battle.enemyPokemon) }}</div>
+                                <div v-show="get_backport_move(move) != ''" :class="`movesetStyling accuracyStyling ${move}`">{{ moveAccuracyEvasionDynamic(get_backport_move(move)) }}<span style="font-size: 20px;">%</span></div>
+                                <div v-show="get_backport_move(move) != ''" :class="`movesetStyling ppStyling ${move}`">{{ s1dynamic[move + "pp"] }}</div>
+                            </div>
                         </div>
+                    </div>
+                    <div v-if="struggle_check == true">
+                        <img :class="`movesetStyling iconStyling move1icon`" src="images/elements/type-icons/normal.png" />
+                        <div :class="`movesetStyling moveStyling move1`">Struggle</div>
+                        <div :class="`movesetStyling powerStyling move1`" :key="type_effectiveness(s1dynamic,'move1',mapper.properties.battle.enemyPokemon)">{{ type_effectiveness(s1dynamic,'move1',mapper.properties.battle.enemyPokemon, true) }}</div>
+                        <div :class="`movesetStyling accuracyStyling move1`">{{ moveAccuracyEvasionDynamic('Struggle') }}<span style="font-size: 20px;">%</span></div>
+                        <div :class="`movesetStyling ppStyling move1`">-</div>
                     </div>
                 </div>
                 <!-- Enemy Graphics -->
                 <transition name="fade">
-                    <div v-if="right_panel == 'Movepool'" key=0>
+                    <div v-if="right_panel == 'Movepool' && ditto_overlay == true" key=0>
+                        <table class="movepoolDemo_ditto" cellspacing="0" :style="mew_movepool_style">
+                            <tr class="movepool_header" :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                <th class="movepool_header movepool_way">Way</th>
+                                <th class="movepool_header movepool_move">Move</th>
+                                <th class="movepool_header movepool_type">Type</th>
+                                <th class="movepool_header movepool_tableC">Pwr.</th>
+                                <th class="movepool_header movepool_tableC">Acc.</th>
+                                <th class="movepool_header movepool_tableC">PP</th>
+                            </tr>
+                            <tr v-for="(x, index) in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, 'Ditto').initial" :class="{ 'first-row': index === 0 }">
+                                <td class="movepool_way">1</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, 'Ditto').level">
+                                <td class="movepool_way">{{x.Level}}</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, 'Ditto').tmhm">
+                                <td class="movepool_way">{{x.tmhm}}</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                        </table>
+
+
+                        <div v-if="toggle_compare_splits === 'Followup'">
+                            <table style="height: 865px;" class="splits_table_ditto" cellspacing="0">
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                    <td style="font-size: 16px; padding-left: 4px">Split</td>
+                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;"></td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
+                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 5px;">Diff</td>
+                                </tr>
+                                <tr v-for="split in compare_splits">
+                                    <td class="scaled_icon" style="font-size: 16px; width: 35px;  text-align: left;"><img :src="`images/split_images/${trainer_name_lookup.basic[split.trainer]?.trainer}.png`"></td>
+                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">{{trainer_name_lookup.basic[split.trainer]?.trainer}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.previous_time}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.current_time}}</td>
+                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 5px;" :style="split_diff_color(split.difference)">{{split.difference}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div v-else-if="toggle_compare_splits === 'First'">
+                            <table  class="splits_table_ditto" style="height: 865px;" cellspacing="0">
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                    <td style="font-size: 15px; padding-left: 4px">Split</td>
+                                    <td style="font-size: 15px; width: 180px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 110px; text-align: right; padding-right: 5px;">Time</td>
+                                </tr>
+                                <tr v-for="split in compare_splits">
+                                    <td class="scaled_icon" style="font-size: 15px; width: 35px;  text-align: left;"><img :src="`images/split_images/${trainer_name_lookup.basic[split.trainer]?.trainer}.png`"></td>
+                                    <td style="font-size: 15px; width: 180px; text-align: left; padding-left: 7px;">{{trainer_name_lookup.detailed[split.trainer]?.trainer}}</td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 110px; text-align: right; padding-right: 7px;">{{split.current_time}}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool_ditto.svg); filter: drop-shadow(0px 0px 1px #000);"></div>
+                        <div class="splitLabel_ditto">Splits</div>
+                        <div class="movepoolLabel_ditto">Movepuddle</div>
+                    </div>
+                    <div v-else-if="right_panel == 'Movepool'" key=1>
                         <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
+                            <tr class="movepool_header" :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                <th class="movepool_header movepool_way">Way</th>
+                                <th class="movepool_header movepool_move">Move</th>
+                                <th class="movepool_header movepool_type">Type</th>
+                                <th class="movepool_header movepool_tableC">Pwr.</th>
+                                <th class="movepool_header movepool_tableC">Acc.</th>
+                                <th class="movepool_header movepool_tableC">PP</th>
+                            </tr>
+                            <tr v-for="(x, index) in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, 'Ditto').initial" :class="{ 'first-row': index === 0 }">
+                                <td class="movepool_way">1</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, 'Ditto').level">
+                                <td class="movepool_way">{{x.Level}}</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, 'Ditto').tmhm">
+                                <td class="movepool_way">{{x.tmhm}}</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                        </table>
+                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg); filter: drop-shadow(0px 0px 1px #000);"></div>
+                        <div class="movepoolLabel">Movepool</div>
+                    </div>
+                    <div v-else-if="right_panel == 'Splits' && ditto_overlay == true" key=3>
+                        <table class="movepoolDemo_ditto" cellspacing="0" :style="mew_movepool_style">
                             <tr class="movepool_header" :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
                                 <th class="movepool_header movepool_way">Way</th>
                                 <th class="movepool_header movepool_move">Move</th>
@@ -194,8 +333,45 @@
                                 <td class="movepool_tableC">{{x.PP}}</td>
                             </tr>
                         </table>
-                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool.svg); filter: drop-shadow(0px 0px 1px #000);"></div>
-                        <div class="movepoolLabel">Movepool</div>
+                        <div v-if="toggle_compare_splits === 'Followup'">
+                            <table style="height: 865px;" class="splits_table_ditto" cellspacing="0">
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                    <td style="font-size: 16px; padding-left: 4px">Split</td>
+                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;"></td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
+                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 5px;">Diff</td>
+                                </tr>
+                                <tr v-for="split in compare_splits">
+                                    <td class="scaled_icon" style="font-size: 16px; width: 35px;  text-align: left;"><img :src="`images/split_images/${trainer_name_lookup.basic[split.trainer]?.trainer}.png`"></td>
+                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">{{trainer_name_lookup.basic[split.trainer]?.trainer}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.previous_time}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.current_time}}</td>
+                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 5px;" :style="split_diff_color(split.difference)">{{split.difference}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div v-else-if="toggle_compare_splits === 'First'">
+                            <table  class="splits_table_ditto" style="height: 865px;" cellspacing="0">
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                    <td style="font-size: 15px; padding-left: 4px">Split</td>
+                                    <td style="font-size: 15px; width: 180px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 110px; text-align: right; padding-right: 5px;">Time</td>
+                                </tr>
+                                <tr v-for="split in compare_splits">
+                                    <td class="scaled_icon" style="font-size: 15px; width: 35px;  text-align: left;"><img :src="`images/split_images/${trainer_name_lookup.basic[split.trainer]?.trainer}.png`"></td>
+                                    <td style="font-size: 15px; width: 180px; text-align: left; padding-left: 7px;">{{trainer_name_lookup.detailed[split.trainer]?.trainer}}</td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 110px; text-align: right; padding-right: 7px;">{{split.current_time}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool_ditto.svg); filter: drop-shadow(0px 0px 1px #000);"></div>
+                        <div class="splitLabel_ditto">Splits</div>
+                        <div class="movepoolLabel_ditto">Movepuddle</div>
                     </div>
                     <div v-else-if="right_panel == 'Splits'" key=5>
                         <div key=3>
@@ -286,7 +462,7 @@
                             </div>
                         </div>
                     </div>
-                    <div v-else-if="right_panel == 'Automatic' && (state != 'Base Stats' && (state == 'To Battle' || state == 'Battle') && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=1>
+                    <div v-else-if="right_panel == 'Automatic' && (state != 'Base Stats' && (state == 'To Battle' || state == 'Battle') && mapper.properties.battle.type.value == `Trainer`)" style="position: absolute;" key=6>
                         <div class="trainerLabel">{{capitalization_format(fixTrainerName(batt.trainer.class.value, batt.trainer.number))}}</div>
                         <div class="colored-image ds" :style="battlePokemonCrop()" style="--url: url(images/ui/opponent.svg);"></div>
                         <div class="enemyGraphic">
@@ -357,7 +533,7 @@
                             </div>
                         </div> 
                     </div>
-                    <div v-else-if="right_panel == 'Automatic' && (mapper.properties.battle.type.value == `Wild` && show_wild_battles == true)" style="position: absolute;">
+                    <div v-else-if="right_panel == 'Automatic' && (mapper.properties.battle.type.value == `Wild` && show_wild_battles == true)" style="position: absolute;" key=7>
                         <div class="trainerLabel">{{"Wild " + wild_pkmn_name(mapper.properties.battle.enemyPokemon.species.value)}}</div>
                         <div class="colored-image ds" :style="battlePokemonCrop()" style="--url: url(images/ui/opponent.svg);"></div>
                         <div class="enemyGraphic">
@@ -381,7 +557,82 @@
                             </div>
                         </div> 
                     </div>
-                    <div v-else-if="key_F14 == true" key=3>
+                    <div v-else-if="key_F14 == true && ditto_overlay == true" key=8>
+                        <table class="movepoolDemo_ditto" cellspacing="0" :style="mew_movepool_style">
+                            <tr class="movepool_header" :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                <th class="movepool_header movepool_way">Way</th>
+                                <th class="movepool_header movepool_move">Move</th>
+                                <th class="movepool_header movepool_type">Type</th>
+                                <th class="movepool_header movepool_tableC">Pwr.</th>
+                                <th class="movepool_header movepool_tableC">Acc.</th>
+                                <th class="movepool_header movepool_tableC">PP</th>
+                            </tr>
+                            <tr v-for="(x, index) in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, 'Ditto').initial" :class="{ 'first-row': index === 0 }">
+                                <td class="movepool_way">1</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, 'Ditto').level">
+                                <td class="movepool_way">{{x.Level}}</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                            <tr v-for="x in getMovepool(pokemon_version_specific_data, g1MoveData, tmhmMapping, 'Ditto').tmhm">
+                                <td class="movepool_way">{{x.tmhm}}</td>
+                                <td class="movepool_move">{{x.Move}}</td>
+                                <td class="movepool_type" :style="{'background-color': `var(--${ui_type_color_modifier}${x.Type?.toLowerCase()})`}">{{x.Type}}</td>
+                                <td class="movepool_tableC">{{x.Power}}</td>
+                                <td class="movepool_tableC">{{x.Accuracy}}%</td>
+                                <td class="movepool_tableC">{{x.PP}}</td>
+                            </tr>
+                        </table>
+                        <div v-if="toggle_compare_splits === 'Followup'">
+                            <table style="height: 865px;" class="splits_table_ditto" cellspacing="0">
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                    <td style="font-size: 16px; padding-left: 4px">Split</td>
+                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;"></td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{previous_label}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{current_label}}</td>
+                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 5px;">Diff</td>
+                                </tr>
+                                <tr v-for="split in compare_splits">
+                                    <td class="scaled_icon" style="font-size: 16px; width: 35px;  text-align: left;"><img :src="`images/split_images/${trainer_name_lookup.basic[split.trainer]?.trainer}.png`"></td>
+                                    <td style="font-size: 16px; width: 80px;  text-align: left; padding-left: 3px;">{{trainer_name_lookup.basic[split.trainer]?.trainer}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.previous_time}}</td>
+                                    <td style="font-size: 16px; width: 110px; text-align: right;">{{split.current_time}}</td>
+                                    <td style="font-size: 16px; width: 68px;  text-align: right; padding-right: 5px;" :style="split_diff_color(split.difference)">{{split.difference}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div v-else-if="toggle_compare_splits === 'First'">
+                            <table  class="splits_table_ditto" style="height: 865px;" cellspacing="0">
+                                <tr :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
+                                    <td style="font-size: 15px; padding-left: 4px">Split</td>
+                                    <td style="font-size: 15px; width: 180px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 110px; text-align: right; padding-right: 5px;">Time</td>
+                                </tr>
+                                <tr v-for="split in compare_splits">
+                                    <td class="scaled_icon" style="font-size: 15px; width: 35px;  text-align: left;"><img :src="`images/split_images/${trainer_name_lookup.basic[split.trainer]?.trainer}.png`"></td>
+                                    <td style="font-size: 15px; width: 180px; text-align: left; padding-left: 7px;">{{trainer_name_lookup.detailed[split.trainer]?.trainer}}</td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 10px;  text-align: left; padding-left: 7px;"></td>
+                                    <td style="font-size: 15px; width: 110px; text-align: right; padding-right: 7px;">{{split.current_time}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="colored-image ds" :style="`filter: saturate(${ui_saturation})`" style="--url: url(images/ui/movepool_ditto.svg); filter: drop-shadow(0px 0px 1px #000);"></div>
+                        <div class="splitLabel_ditto">Splits</div>
+                        <div class="movepoolLabel_ditto">Movepuddle</div>
+                    </div>
+                    <div v-else-if="key_F14 == true" key=9>
                         <table class="movepoolDemo" cellspacing="0" :style="mew_movepool_style">
                             <tr class="movepool_header" :style="{'background-color': `var(--${ui_type_color_modifier}${starting_type_fix[1]})`, 'outline': '2px solid #000'}">
                                 <th class="movepool_header movepool_way">Way</th>
@@ -592,6 +843,11 @@
                         <tr><td>Enemy State:</td><td>{{enemyState}}</td></tr>
                         <tr><td></td><td></td></tr>
                         <tr><td>blackout:</td><td>{{blackout}}</td></tr>
+                        <tr><td>struggle check:</td><td>{{struggle_check}}</td></tr>
+                        <tr><td>move1pp:</td><td>{{s1dynamic['move1pp'].value}}</td></tr>
+                        <tr><td>move2pp:</td><td>{{s1dynamic['move2pp'].value}}</td></tr>
+                        <tr><td>move3pp:</td><td>{{s1dynamic['move3pp'].value}}</td></tr>
+                        <tr><td>move4pp:</td><td>{{s1dynamic['move4pp'].value}}</td></tr>
                     </table>
                 </div>
             </div>
@@ -614,13 +870,17 @@
                         <td>Current: </td>
                         <td><input type="text" class="inputContainer split_label_input_container" v-model="current_label" placeholder="Current"/></td>
                     </tr>
+                    <tr v-if="mew_race">
+                        <td>Name: </td>
+                        <td><input type="text" class="inputContainer split_label_input_container" v-model="mew_race_name" placeholder="mew race name" style="font-size: 13px;"/></td>
+                    </tr>
                 </table>
                 <table>
                     <tr>
                         <th style="text-align: left;">Attempt:</th>
                         <th>{{this.attempt_number}}</th>
                         <th>
-                            <button @click="increment('attempt_number')" class="smallButtonStyle increment">+</button>
+                            <button @click="increment('attempt_n    umber')" class="smallButtonStyle increment">+</button>
                             <button @click="decrement('attempt_number')" class="smallButtonStyle decrement">-</button>
                         </th>
                     </tr>

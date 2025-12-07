@@ -558,29 +558,29 @@ function logData(gameName, gameName_Path, str, file_name, starterName, log_type,
     });
 }
 
-function logCopy(gameName, gameName_Path, file_name, starterName, finished_run_count, refilming_mode, refilmed_attempt, refilmed_finish) {
+function logCopy(gameName, gameName_Path, file_name, starterName, finished_run_count, refilming_mode, refilmed_attempt, refilmed_finish, mew_race_naming = "") {
     var dirPathAttempts = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/attempts/` : `./splits/${gameName_Path}/${starterName}/attempts/`
     var dirPathFinishes = refilming_mode ? `./splits/${gameName_Path}/${starterName}/refilmed/finishes/` : `./splits/${gameName_Path}/${starterName}/finishes/`
     let attempt_number = refilming_mode ? refilmed_attempt : file_name;
     let finish_number = refilming_mode ? refilmed_attempt : finished_run_count;
     fs.mkdir(dirPathFinishes, { recursive: true }, (err) => {
         fs.copyFile(
-            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-simple.csv`), 
-            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}-simple.csv`), (err) => {
+            path.join(dirPathAttempts, `${mew_race_naming}${gameName}-${starterName}-${attempt_number}-simple.csv`), 
+            path.join(dirPathFinishes, `${mew_race_naming}${gameName}-${starterName}-${finish_number}-simple.csv`), (err) => {
             if (err) {
                 console.error(err);
             }
         });
         fs.copyFile(
-            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-full.csv`), 
-            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}-full.csv`), (err) => {
+            path.join(dirPathAttempts, `${mew_race_naming}${gameName}-${starterName}-${attempt_number}-full.csv`), 
+            path.join(dirPathFinishes, `${mew_race_naming}${gameName}-${starterName}-${finish_number}-full.csv`), (err) => {
             if (err) {
                 console.error(err);
             }
         });
         fs.copyFile(
-            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}.csv`), 
-            path.join(dirPathFinishes, `${gameName}-${starterName}-${finish_number}.csv`), (err) => {
+            path.join(dirPathAttempts, `${mew_race_naming}${gameName}-${starterName}-${attempt_number}.csv`), 
+            path.join(dirPathFinishes, `${mew_race_naming}${gameName}-${starterName}-${finish_number}.csv`), (err) => {
             if (err) {
                 console.error(err);
             }
@@ -617,6 +617,10 @@ const app = Vue.createApp({
             state  : "Base Stats",
             obs    : null,
             release: false, //If set to false then development features will be displayed
+            
+            ditto_overlay: false, //If set to false then development features will be displayed
+            mew_race: true,
+            mew_race_name: "",
 
             // Static Data
             g1MoveData             : g1MoveData,
@@ -1295,6 +1299,22 @@ const app = Vue.createApp({
     },
 
     computed: {
+        struggle_check() {
+            check1 = this.s1dynamic['move1pp'].value
+            check2 = this.s1dynamic['move2pp'].value
+            check3 = this.s1dynamic['move3pp'].value
+            check4 = this.s1dynamic['move4pp'].value
+            state = this.mapper.properties.meta.state.value
+            if (state == "No Pokemon") {
+                return false
+            }
+            if (check1 == 0 && check2 == 0 && check3 == 0 && check4 == 0) {
+                return true
+            }
+            else {
+                return false
+            }
+        },
         hp_tracker_style() {
             const state = this.mapper.properties.meta.state.value
             const hp = this.mapper.properties.player.team[0].hp.value
@@ -1524,7 +1544,7 @@ const app = Vue.createApp({
         },
         mew_movepool_style() {
             if (this.starterName == "Mew") {
-                return "font-size: 15px; line-height: 15.5px;"
+                return "font-size: 14px; line-height: 15.72px;"
             }
         },
         pokemon_version_specific_data() {
@@ -1734,6 +1754,7 @@ const app = Vue.createApp({
             else return move_name
         },
         get_backport_move(slot) {
+            console.log(this.s1dynamic)
             const move = this.s1dynamic[slot]?.value
             const byte = this.s1dynamic[slot]?.bytes[0]
             const starter = this.starterName
@@ -3245,11 +3266,11 @@ const app = Vue.createApp({
                 }
             }
         },
-        type_effectiveness(pkmnData, moveNumber, enemyData) { //pkmnData = team[0] etc
+        type_effectiveness(pkmnData, moveNumber, enemyData, struggle_check = false) { //pkmnData = team[0] etc
             if (this.typeCalcs == true) {
                 const move_data_array = Object.values(this.g1MoveData);
 
-                var move_name          =  this.get_backport_move_name(pkmnData[moveNumber].value, this.starterName, pkmnData[moveNumber].bytes[0])
+                var move_name          =  struggle_check ? "Struggle" : this.get_backport_move_name(pkmnData[moveNumber].value, this.starterName, pkmnData[moveNumber].bytes[0])
 
                 if (move_name == null) { return "" } //stop the function if there is no move in that slot
                 if (move_name == 'Doom Desire') { return 120 }
@@ -3814,8 +3835,13 @@ const app = Vue.createApp({
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
             let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red and Blue' ? "R" : "B"
             let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data    
-            if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
+            if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F && mew_race == false) {
                 logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //copy the current `attempt_number` split data to the finished folder
+                console.log("Run complete - moving attempt files to finished folder.")
+                this.finished_logs = true
+            }
+            if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F && mew_race == true) {
+                logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish, this.mew_race_name) //copy the current `attempt_number` split data to the finished folder
                 console.log("Run complete - moving attempt files to finished folder.")
                 this.finished_logs = true
             }
@@ -3935,9 +3961,12 @@ const app = Vue.createApp({
         //EXP BAR
         var species = this.s1dynamicReset.species.value == 'Backport' ? this.starterName : this.s1dynamicReset.species.value;
         var growthRate = species ? this.g1PokemonData[species].growth_rate : this.g1PokemonData[this.starterName].growth_rate
+        if (this.ditto_overlay == true) {
+            growthRate = "Medium Fast"
+        }
         var expStats = this.calcExpStats(growthRate, this.mapper.properties.player.team[0].expPoints.value);
         this.$refs.expBar.style.width = (expStats.percent * 100) + "%";
-        this.prevSpecies = species
+        this.prevSpecies = this.ditto_overlay ? 'Ditto' : species
         this.oldExpValue = this.mapper.properties.player.team[0].expPoints.value
         this.mapper.properties.player.team[0].expPoints.change(async (newProp, oldProp) => {
             if (this.mapper.properties.player.team[0].level.value == 100) {
@@ -3948,8 +3977,8 @@ const app = Vue.createApp({
                 this.$refs.expBar.style.transition = null;
             }
             if (this.expBarAnimation == true) {
-                const currSpecies = this.s1dynamicReset.species.value;
-                const growthRate = this.g1PokemonData[currSpecies]?.growth_rate ?? this.g1PokemonData[this.starterName].growth_rate // TODO - this may cause issues
+                const currSpecies = this.ditto_overlay ? 'Ditto' :this.s1dynamicReset.species.value;
+                const growthRate = this.ditto_overlay ? "Medium Fast" : this.g1PokemonData[currSpecies]?.growth_rate ?? this.g1PokemonData[this.starterName].growth_rate // TODO - this may cause issues
                 const oldExpStats = this.calcExpStats(growthRate, this.oldExpValue);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
                 const animationMaxDuration = 600
