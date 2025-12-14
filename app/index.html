@@ -850,6 +850,7 @@
                         <tr><td>move2pp:</td><td>{{s1dynamic['move2pp'].value}}</td></tr>
                         <tr><td>move3pp:</td><td>{{s1dynamic['move3pp'].value}}</td></tr>
                         <tr><td>move4pp:</td><td>{{s1dynamic['move4pp'].value}}</td></tr>
+                        <tr><td>game_over:</td><td>{{game_over}}</td></tr>
                     </table>
                 </div>
             </div>
@@ -882,7 +883,7 @@
                         <th style="text-align: left;">Attempt:</th>
                         <th>{{this.attempt_number}}</th>
                         <th>
-                            <button @click="increment('attempt_n    umber')" class="smallButtonStyle increment">+</button>
+                            <button @click="increment('attempt_number')" class="smallButtonStyle increment">+</button>
                             <button @click="decrement('attempt_number')" class="smallButtonStyle decrement">-</button>
                         </th>
                     </tr>

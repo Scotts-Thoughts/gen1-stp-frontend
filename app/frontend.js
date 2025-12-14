@@ -536,14 +536,19 @@ function logData(gameName, gameName_Path, str, file_name, starterName, log_type,
         header = "Unknown"
     }
     fs.mkdir(dirPath, { recursive: true }, (err) => {
+        if (err) {
+            console.error(`Error creating directory ${dirPath}:`, err);
+            return;
+        }
         if (!fs.existsSync(filePath)) {
             fs.writeFile(filePath, header, (err) => {
                 if (err) {
-                    console.error(err);
+                    console.error(`Error writing header to ${filePath}:`, err);
                 } else {
                     fs.appendFile(filePath, str, (err) => {
                         if (err) {
-                            console.error(err);
+                            console.error(`Error appending data to ${filePath}:`, err);
+                        } else {
                         }
                     });
                 }
@@ -551,7 +556,8 @@ function logData(gameName, gameName_Path, str, file_name, starterName, log_type,
         } else {
             fs.appendFile(filePath, str, (err) => {
                 if (err) {
-                    console.error(err);
+                    console.error(`Error appending to existing file ${filePath}:`, err);
+                } else {
                 }
             });   
         }
@@ -565,21 +571,23 @@ function logCopy(gameName, gameName_Path, file_name, starterName, finished_run_c
     let finish_number = refilming_mode ? refilmed_attempt : finished_run_count;
     fs.mkdir(dirPathFinishes, { recursive: true }, (err) => {
         fs.copyFile(
-            path.join(dirPathAttempts, `${mew_race_naming}${gameName}-${starterName}-${attempt_number}-simple.csv`), 
+            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-simple.csv`), 
             path.join(dirPathFinishes, `${mew_race_naming}${gameName}-${starterName}-${finish_number}-simple.csv`), (err) => {
             if (err) {
-                console.error(err);
+                console.error(`Error copying simple file:`, err);
+            } else {
+                console.log(`Successfully copied simple file`)
             }
         });
         fs.copyFile(
-            path.join(dirPathAttempts, `${mew_race_naming}${gameName}-${starterName}-${attempt_number}-full.csv`), 
+            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}-full.csv`), 
             path.join(dirPathFinishes, `${mew_race_naming}${gameName}-${starterName}-${finish_number}-full.csv`), (err) => {
             if (err) {
                 console.error(err);
             }
         });
         fs.copyFile(
-            path.join(dirPathAttempts, `${mew_race_naming}${gameName}-${starterName}-${attempt_number}.csv`), 
+            path.join(dirPathAttempts, `${gameName}-${starterName}-${attempt_number}.csv`), 
             path.join(dirPathFinishes, `${mew_race_naming}${gameName}-${starterName}-${finish_number}.csv`), (err) => {
             if (err) {
                 console.error(err);
@@ -1321,7 +1329,7 @@ const app = Vue.createApp({
             const hp_max = this.mapper.properties.player.team[0].maxHp.value
             const hp_percentage = hp / hp_max
             const status_condition = this.mapper.properties.player.team[0].statusCondition.bytes
-            console.log(status_condition)
+            // console.log(status_condition)
             if (state == "Overworld" && hp_percentage != 1) {
                 return "--overlay-color: rgb(255, 167, 167);"
             }
@@ -1754,7 +1762,7 @@ const app = Vue.createApp({
             else return move_name
         },
         get_backport_move(slot) {
-            console.log(this.s1dynamic)
+            // console.log(this.s1dynamic)
             const move = this.s1dynamic[slot]?.value
             const byte = this.s1dynamic[slot]?.bytes[0]
             const starter = this.starterName
@@ -2333,6 +2341,7 @@ const app = Vue.createApp({
             this.most_recent_move = ""
             this.timer.setTimer(this.timer_startTimeOffset)
 
+            this.game_over = false
             this.playerResets = 0
             this.finished_logs = false
             this.blackout_counter = 0
@@ -3449,7 +3458,8 @@ const app = Vue.createApp({
                 let time_string = d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0")
                 let player_name = this.playerNameChoice
                 let pokemon = this.starterName
-                let trainer_name = this.format_trainer_name(this.mapper.properties.battle.trainer.class.value, this.mapper.properties.battle.trainer.number.value)
+                let trainer_name = this.mapper.properties.overworld.map.value == 'Hall of Fame' ? 'Hall of Fame' : this.format_trainer_name(this.mapper.properties.battle.trainer.class.value, this.mapper.properties.battle.trainer.number.value)
+                console.log("trainer_name", trainer_name)
                 let trainer_id = this.mapper.properties.battle.trainer.number.value
                 let location = this.mapper.properties.overworld.map.value
                 let total_pokemon = this.mapper.properties.battle.trainer.totalPokemon
@@ -3494,7 +3504,7 @@ const app = Vue.createApp({
 
                 let incremented_finished_run_count = this.finished_run_count + 1
                 let runIdentifier = this.starterName.toString() + " " + incremented_finished_run_count.toString()
-                let trainerName = this.deprecated_autosplitter[this.mapper.properties.meta.gameName.value][`${this.mapper.properties.battle.trainer.class}_${this.mapper.properties.battle.trainer.number}`]
+                let trainerName = this.mapper.properties.overworld.map.value == 'Hall of Fame' ? 'Hall of Fame' : this.deprecated_autosplitter[this.mapper.properties.meta.gameName.value][`${this.mapper.properties.battle.trainer.class}_${this.mapper.properties.battle.trainer.number}`]
                 const time = this.timer.getTime();
                 let RTHours = time.hours;
                 let RTMinutes = time.minutes;
@@ -3692,7 +3702,7 @@ const app = Vue.createApp({
                 this.full_data_str = full_data_str // assign within Data so it can be recalled on future loops
                 this.deprecated_data_str = deprecated_data_str // assign within Data so it can be recalled on future loops
                 this.simple_data = simple_data // assign within Data so it can be recalled on future loops
-                if (this.collect_split_data == true && (this.mapper.properties.meta.state.value == "Battle" || this.mapper.properties.meta.state.value == "From Battle")) {
+                if (this.collect_split_data == true && (this.mapper.properties.meta.state.value == "Battle" || this.mapper.properties.meta.state.value == "From Battle" || this.mapper.properties.overworld.map.value == 'Hall of Fame')) {
                     this.current_splits.push({
                         trainer: trainer_name, 
                         time:    real_time_hmmss,
@@ -3800,9 +3810,9 @@ const app = Vue.createApp({
                         this.right_panel = "Splits"
                         this.automatic_splits = true
                     }
-                    if (this.test_run == false && this.refilming_mode == false && this.no_attempt == false) {
-                        this.finished_run_count++ //increment finished count if this is not a test run
-                    };
+                    // if (this.test_run == false && this.refilming_mode == false && this.no_attempt == false) {
+                    //     this.finished_run_count++ //increment finished count if this is not a test run
+                    // };
                     // this.stopTime() //stop the timer
                     this.timer.stopTime();
                     logData(gameName, gameName_Path, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
@@ -3818,11 +3828,11 @@ const app = Vue.createApp({
             let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data     
             if (newProp.value == 122) {
                 if (this.mapper.properties.events.beatChampion.value == true && this.mapper.properties.overworld.map.value == "Hall of Fame") {
-                    autosplitter_process()
                     console.log("Run Ended - Backing up split data now...")
-                    logData(gameName, gameName_Path, this.simple_data_str, this.finished_run_count, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    logData(gameName, gameName_Path, this.deprecated_data_str, this.finished_run_count, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    logData(gameName, gameName_Path, this.full_data_str, this.finished_run_count, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    autosplitter_process()
+                    logData(gameName, gameName_Path, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    logData(gameName, gameName_Path, this.deprecated_data_str, this.attempt_number, this.starterName, "Deprecated", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    logData(gameName, gameName_Path, this.full_data_str, this.attempt_number, this.starterName, "Full", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                     const time = this.timer.formatted_time;
                     console.log(`Autosplitter - Run Ended: Real-Time: ${time[0]}${time[1]} Resets: ${this.playerResets} Blackouts: ${this.blackout_counter} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
@@ -3835,14 +3845,17 @@ const app = Vue.createApp({
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
             let gameName = this.game_name == 'Yellow' ? "Y" : this.game_name == 'Red and Blue' ? "R" : "B"
             let gameName_Path = this.game_name == 'Yellow' ? 'Yellow' : 'Red and Blue' // Used for split data    
-            if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F && mew_race == false) {
+            if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F && this.mew_race == false) {
                 logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //copy the current `attempt_number` split data to the finished folder
                 console.log("Run complete - moving attempt files to finished folder.")
+                this.finished_run_count++
                 this.finished_logs = true
             }
-            if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F && mew_race == true) {
-                logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish, this.mew_race_name) //copy the current `attempt_number` split data to the finished folder
+            if (this.finished_logs == false && this.game_over == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F && this.mew_race == true) {
+                add_mew_race_label = this.mew_race_name.toString() + "-"
+                logCopy(gameName, gameName_Path, this.attempt_number, this.starterName, this.finished_run_count, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish, add_mew_race_label) //copy the current `attempt_number` split data to the finished folder
                 console.log("Run complete - moving attempt files to finished folder.")
+                this.finished_run_count++
                 this.finished_logs = true
             }
         });
