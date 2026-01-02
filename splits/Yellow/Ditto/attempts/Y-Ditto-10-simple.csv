@@ -1,0 +1,6 @@
+player_name,pokemon,trainer_name,real_time_hmmss,resets,blackouts,level,game_time,battle_duration,move1,move2,move3,move4
+NINTEN,Ditto,Rival1a-Route 22,9:19,0,17,12,0:36,12.454,TRANSFORM,,,
+NINTEN,Ditto,Brock,25:53,6,27,18,1:33,21.843,TRANSFORM,,,
+NINTEN,Ditto,Rival2-Nugget Bridge,41:53,12,47,25,2:28,25.661,TRANSFORM,,,
+NINTEN,Ditto,Cerulean Rocket,47:06,12,47,27,2:49,11.094,TRANSFORM,,,
+NINTEN,Ditto,Misty,49:47,12,49,28,2:59,29.011,TRANSFORM,,,

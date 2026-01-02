@@ -627,7 +627,7 @@ const app = Vue.createApp({
             release: false, //If set to false then development features will be displayed
             
             ditto_overlay: false, //If set to false then development features will be displayed
-            mew_race: true,
+            mew_race: false,
             mew_race_name: "",
 
             // Static Data
