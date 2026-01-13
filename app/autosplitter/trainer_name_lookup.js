@@ -2,6 +2,13 @@ const trainer_name_lookup = {
     "basic": {
         "Rival1-Lab":           {trainer: "Rival 1",  color: "background-color: #FF0000;",},
         "Rival1a-Route 22":     {trainer: "Rival 1a", color: "background-color: #FF0000;",},
+        "Bug Catcher_1":        {trainer: "Bug Catcher_1",    color: "background-color: #FF0000;",},
+        "Brock":                {trainer: "Brock",    color: "background-color: #FF0000;",},
+        "Brock":                {trainer: "Brock",    color: "background-color: #FF0000;",},
+        "Brock":                {trainer: "Brock",    color: "background-color: #FF0000;",},
+        "Brock":                {trainer: "Brock",    color: "background-color: #FF0000;",},
+        "Brock":                {trainer: "Brock",    color: "background-color: #FF0000;",},
+        "Brock":                {trainer: "Brock",    color: "background-color: #FF0000;",},
         "Brock":                {trainer: "Brock",    color: "background-color: #FF0000;",},
         "Rival2-Nugget Bridge": {trainer: "Rival 2",  color: "background-color: #FF0000;",},
         "Cerulean Rocket":      {trainer: "Rocket",   color: "background-color: #FF0000;",},

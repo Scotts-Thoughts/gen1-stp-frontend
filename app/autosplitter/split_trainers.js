@@ -1,6 +1,12 @@
 const split_trainers = {
     "Yellow": [
         "Rival1-Lab",           
+        "Lass 19",
+        "Bug Catcher 1",
+        "Bug Catcher 2",
+        "Bug Catcher 15",
+        "Bug Catcher 3",
+        "Jr Trainer M 1",
         "Rival1a-Route 22",     
         "Brock",                
         "Rival2-Nugget Bridge", 

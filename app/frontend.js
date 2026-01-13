@@ -1398,6 +1398,11 @@ const app = Vue.createApp({
                 return result
             }
         },
+        filtered_first_splits() {
+            // Always show all splits - no filtering
+            // This ensures default trainers are shown even when comparison files are loaded
+            return this.compare_splits
+        },
         stats_header() {
             const toggle    = this.automatic_stats
             const stat_type = this.stats_display
@@ -3801,6 +3806,56 @@ const app = Vue.createApp({
                         simpleSplit() 
                         break;
                     } //this is the rocket outside of Cerulean city, collecting this data allows for better comparisons for Pokemon that take different choices in Cerulean Nugget->Misty or Misty->Nugget
+                    
+                    // Abra cases
+                    case "BUG CATCHER_1": {
+                        simpleSplit() 
+                        if (this.automatic_post_battle_splits == true) {
+                            this.right_panel = "Splits"
+                            this.automatic_splits = true
+                        }
+                        break;
+                    }                       
+                    case "BUG CATCHER_2": {
+                        simpleSplit() 
+                        if (this.automatic_post_battle_splits == true) {
+                            this.right_panel = "Splits"
+                            this.automatic_splits = true
+                        }
+                        break;
+                    }                       
+                    case "BUG CATCHER_3": {
+                        simpleSplit() 
+                        if (this.automatic_post_battle_splits == true) {
+                            this.right_panel = "Splits"
+                            this.automatic_splits = true
+                        }
+                        break;
+                    }                       
+                    case "BUG CATCHER_15": {
+                        simpleSplit() 
+                        if (this.automatic_post_battle_splits == true) {
+                            this.right_panel = "Splits"
+                            this.automatic_splits = true
+                        }
+                        break;
+                    }                       
+                    case "LASS_19": {
+                        simpleSplit() 
+                        if (this.automatic_post_battle_splits == true) {
+                            this.right_panel = "Splits"
+                            this.automatic_splits = true
+                        }
+                        break;
+                    }                       
+                    case "JR TRAINER M_1": {
+                        simpleSplit() 
+                        if (this.automatic_post_battle_splits == true) {
+                            this.right_panel = "Splits"
+                            this.automatic_splits = true
+                        }
+                        break;
+                    }                       
                 }
 
                 //stop timer
@@ -3821,6 +3876,47 @@ const app = Vue.createApp({
             }   
         });
         
+        this.mapper.properties.player.team[0].level.change((newProp, oldProp) => {
+            if (newProp.value == 0) {
+                return
+            }
+            autosplitter_process()
+            switch (newProp.value) {      
+                case (18): {
+                    simpleSplit() 
+                    if (this.automatic_post_battle_splits == true) {
+                        this.right_panel = "Splits"
+                        this.automatic_splits = true
+                    }
+                    break;
+                }           
+                case (20): {
+                    simpleSplit() 
+                    if (this.automatic_post_battle_splits == true) {
+                        this.right_panel = "Splits"
+                        this.automatic_splits = true
+                    }
+                    break;
+                }           
+                case (22): {
+                    simpleSplit() 
+                    if (this.automatic_post_battle_splits == true) {
+                        this.right_panel = "Splits"
+                        this.automatic_splits = true
+                    }
+                    break;
+                }           
+                case (24): {
+                    simpleSplit() 
+                    if (this.automatic_post_battle_splits == true) {
+                        this.right_panel = "Splits"
+                        this.automatic_splits = true
+                    }
+                    break;
+                }           
+            }
+        });       
+
         //log the final times with the final gametime
         //I am watching tile1 for a specifc tile that appears when the gametime displays on screen
         this.mapper.properties.screen.tiles.column1.tile1.change((newProp) => {
