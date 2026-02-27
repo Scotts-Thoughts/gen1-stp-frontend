@@ -1708,6 +1708,59 @@ const app = Vue.createApp({
     },
 
     methods: {
+                /**
+         * Send an OBS WebSocket 5 "CreateRecordChapter" request (Add Chapter Marker).
+         * Connects to ws://localhost:4455 (or MyStorage.obs_websocket_url), identifies,
+         * sends the chapter name, then closes. Fails silently if OBS is not running.
+         * Optional: set MyStorage.obs_websocket_password if OBS has authentication enabled.
+         * @param {string} chapterName - Name for the chapter marker (e.g. "Overworld", "Battle")
+         */
+        sendObsChapterMarker(chapterName) {
+            const url = (typeof MyStorage !== 'undefined' && MyStorage.obs_websocket_url) ? MyStorage.obs_websocket_url : 'ws://localhost:4455';
+            const password = (typeof MyStorage !== 'undefined' && MyStorage.obs_websocket_password) ? MyStorage.obs_websocket_password : null;
+            const requestId = 'chapter-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
+            let ws;
+            try {
+                ws = new WebSocket(url);
+            } catch (e) {
+                return;
+            }
+            ws.onerror = () => { try { ws.close(); } catch (_) {} };
+            ws.onclose = () => {};
+            ws.onmessage = (event) => {
+                try {
+                    const msg = JSON.parse(event.data);
+                    const op = msg.op;
+                    const d = msg.d || {};
+                    if (op === 0) {
+                        // Hello - send Identify (with optional auth)
+                        let identifyPayload = { rpcVersion: 1 };
+                        const auth = d.authentication;
+                        if (auth && auth.challenge && auth.salt && password) {
+                            try {
+                                const crypto = require('crypto');
+                                const secret = crypto.createHash('sha256').update(password + auth.salt, 'utf8').digest('base64');
+                                identifyPayload.authentication = crypto.createHash('sha256').update(secret + auth.challenge, 'utf8').digest('base64');
+                            } catch (_) {}
+                        }
+                        ws.send(JSON.stringify({ op: 1, d: identifyPayload }));
+                    } else if (op === 2) {
+                        // Identified - send CreateRecordChapter
+                        ws.send(JSON.stringify({
+                            op: 6,
+                            d: {
+                                requestId: requestId,
+                                requestType: 'CreateRecordChapter',
+                                requestData: { chapterName: String(chapterName) }
+                            }
+                        }));
+                    } else if (op === 7 && d.requestId === requestId) {
+                        try { ws.close(); } catch (_) {}
+                    }
+                } catch (_) {}
+            };
+            ws.onopen = () => {};
+        },
         async set_rom_starter() {
             let starter = this.starterName
             let pokedex = this.pokedex_yellow
@@ -3373,6 +3426,7 @@ const app = Vue.createApp({
             }
             else if (newProp.value == 0 && oldProp.value > 0 && this.game_over == false) {
                 this.blackout = false;
+                this.sendObsChapterMarker('RESET')
                 this.playerResets++;
             } 
         })
@@ -3868,11 +3922,31 @@ const app = Vue.createApp({
             }
         })
 
+        // this.mapper.properties.battle.trainer.class.change((newProp, oldProp) => {
+        //     console.log('Trainer Changed: ' + newProp.value + ' -> ' + oldProp.value)
+        //     if (newProp.value != "NOBODY" && oldProp.value == "NOBODY") {
+        //         sendObsChapterMarker('IN - ' + newProp.value)
+        //     }
+        //     else if (newProp.value == "NOBODY" && oldProp.value != "NOBODY") {
+        //         sendObsChapterMarker('OUT - ' + oldProp.value)
+        //     }
+        // })
+
         //new blackout tracking for loop processed gamestate
         this.mapper.properties.meta.state.change((newProp, oldProp) => {
+            if (newProp.value == "To Battle" && oldProp.value == "Overworld" && this.mapper.properties.battle.type.value == "Trainer") {
+                this.sendObsChapterMarker('IN - ' + this.mapper.properties.battle.trainer.class.value)
+            }
+            else if (newProp.value == "Overworld" && oldProp.value == "From Battle") {
+                this.sendObsChapterMarker('OUT - ' + this.mapper.properties.battle.trainer.class.value)
+            }
+                        
             if (newProp.value == "Overworld" && oldProp.value == "Battle" && this.blackout == true) {
                 this.blackout = false;
-                if (this.enable_blackouts) { this.blackout_counter++; }
+                if (this.enable_blackouts) { 
+                    this.sendObsChapterMarker('BLACKOUT')
+                    this.blackout_counter++; 
+                }
             }
             else if (newProp.value == "Overworld") {
                 this.blackout = false;
