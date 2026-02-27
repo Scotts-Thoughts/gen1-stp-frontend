@@ -90,4 +90,6 @@ const application_settings = [
     [ "editor",                                        false ],
     [ "no_attempt",                                    false ],
     [ "mew_race_name",                                 "" ],
+    [ "shuckie_timer",                                 false ],
+    [ "shuckie_counters",                              false ],
 ];

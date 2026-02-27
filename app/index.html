@@ -750,7 +750,12 @@
                         </div>
                     </transition>
                 </div>
-                <Timer ></Timer>
+                <div v-if="shuckie_timer == true" class="gametime">
+                    <div class="gametimeClock">{{formatMilliseconds(emulatorStats?.time_current)}}</div>
+                    <div class="gametimeFrames">.{{getCentiseconds(emulatorStats?.time_current)}}</div>
+                </div>
+                <Timer v-else></Timer>
+
                 <!-- Game Time -->
                 <!-- <transition name="fade"><div v-show="timer_settings == `Game-Time`" class="gametime">
                     <div class="gametimeClock">{{gametimeHMS}}</div>
@@ -762,28 +767,55 @@
                     <div class="gametimeFrames">{{timer_formatted_time[1]}}</div>
                 </div></transition> -->
                 <!-- Resets -->
-                <div v-show="blackouts_resets == 'None'">
-                    <transition name="fade">
-                        <div class="faults_style resets_1"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
-                    </transition>
+                <div v-if="shuckie_counters == true">
+                    <div v-show="blackouts_resets == 'None'">
+                        <transition name="fade">
+                            <div class="faults_style resets_1"><div id="reset_counter">{{emulatorStats?.counters?.playerResets ?? 0}}</div></div>
+                        </transition>
+                    </div>
+                    <div v-show="blackouts_resets == 'Resets'">
+                        <transition name="fade">
+                            <div class="faults_style resets_1"><div id="reset_counter">{{emulatorStats?.counters?.playerResets ?? 0}}</div></div>
+                        </transition>
+                    </div>
+                    <div v-show="blackouts_resets == 'Blackouts'">
+                        <transition name="fade">
+                            <div class="faults_style blackouts_1" id="reset_counter">{{emulatorStats?.counters?.blackout_counter ?? 0}}</div>
+                        </transition>
+                    </div>
+                    <div v-show="blackouts_resets == 'Both'">
+                        <transition name="fade">
+                            <div class="faults_style resets"><div id="reset_counter">{{emulatorStats?.counters?.playerResets ?? 0}}</div></div>
+                        </transition>
+                        <transition name="fade">
+                            <div class="faults_style blackouts" id="reset_counter">{{emulatorStats?.counters?.blackout_counter ?? 0}}</div>
+                        </transition>
+                    </div>
                 </div>
-                <div v-show="blackouts_resets == 'Resets'">
-                    <transition name="fade">
-                        <div class="faults_style resets_1"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
-                    </transition>
-                </div>
-                <div v-show="blackouts_resets == 'Blackouts'">
-                    <transition name="fade">
-                        <div class="faults_style blackouts_1" id="reset_counter">{{blackout_counter}}</div>
-                    </transition>
-                </div>
-                <div v-show="blackouts_resets == 'Both'">
-                    <transition name="fade">
-                        <div class="faults_style resets"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
-                    </transition>
-                    <transition name="fade">
-                        <div class="faults_style blackouts" id="reset_counter">{{blackout_counter}}</div>
-                    </transition>
+                <div v-else>
+                    <div v-show="blackouts_resets == 'None'">
+                        <transition name="fade">
+                            <div class="faults_style resets_1"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
+                        </transition>
+                    </div>
+                    <div v-show="blackouts_resets == 'Resets'">
+                        <transition name="fade">
+                            <div class="faults_style resets_1"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
+                        </transition>
+                    </div>
+                    <div v-show="blackouts_resets == 'Blackouts'">
+                        <transition name="fade">
+                            <div class="faults_style blackouts_1" id="reset_counter">{{blackout_counter}}</div>
+                        </transition>
+                    </div>
+                    <div v-show="blackouts_resets == 'Both'">
+                        <transition name="fade">
+                            <div class="faults_style resets"><div id="reset_counter">{{playerResetsDisplay}}</div></div>
+                        </transition>
+                        <transition name="fade">
+                            <div class="faults_style blackouts" id="reset_counter">{{blackout_counter}}</div>
+                        </transition>
+                    </div>
                 </div>
             </div>
             <!-- UI -->
@@ -808,6 +840,8 @@
                         <tr v-if="refilming_mode"><td>Attempt:</td><td><input class="inputContainer" style="width: 50px;" type="text" v-model="refilmed_attempt"/></td></tr>
                         <tr v-if="refilming_mode"><td>Finish:</td><td> <input class="inputContainer" style="width: 50px;" type="text" v-model="refilmed_finish"/></td></tr>
                         <tr><td>No attempt/split:</td><td><input class="checkBoxStyle" type="checkbox" v-model="no_attempt"/></td></tr>
+                        <tr><td>Shuckie Timer:</td><td><input class="checkBoxStyle" type="checkbox" v-model="shuckie_timer"/></td></tr>
+                        <tr><td>Shuckie Counter:</td><td><input class="checkBoxStyle" type="checkbox" v-model="shuckie_counters"/></td></tr>
                         <tr><td>Debugging:</td><td><input class="checkBoxStyle" type="checkbox" v-model="debugging"/></td></tr>
                     </table>
                     <br>

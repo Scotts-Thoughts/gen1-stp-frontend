@@ -616,6 +616,7 @@ function transition(fn, ms) {
 const app = Vue.createApp({
     components: {
         "Timer": require("./components/Timer.js"),
+        "ShuckieTimer": require("./components/ShuckieTimer.js"),
     },
     //DATA & DEFINITIONS
     data() {
@@ -626,6 +627,12 @@ const app = Vue.createApp({
             obs    : null,
             release: false, //If set to false then development features will be displayed
             
+            emulatorStatsInterval        : null,
+            emulatorStats                : null,
+
+            shuckie_timer   : false, //search_term
+            shuckie_counters: false,
+
             ditto_overlay: false, //If set to false then development features will be displayed
             mew_race: false,
             mew_race_name: "",
@@ -1341,9 +1348,18 @@ const app = Vue.createApp({
             }
         },
         blackouts_resets() {
-            const resets = this.playerResets
-            const blackouts = this.blackout_counter
+            var resets = 0
+            var blackouts = 0
             const allow_none = true // Toggle that allows for the UI to display no border if there are no faults
+            if (this.shuckie_counters == true) {
+                resets = this.emulatorStats?.counters?.playerResets ?? 0
+                blackouts = this.emulatorStats?.counters?.blackout_counter ?? 0
+            }
+            else {
+                resets = this.playerResets
+                blackouts = this.blackout_counter
+            }
+
             if (allow_none == true && blackouts == 0 && resets == 0) {
                 return "None"
             }
@@ -1708,7 +1724,127 @@ const app = Vue.createApp({
     },
 
     methods: {
-                /**
+        formatMilliseconds(ms) {
+            // Truncate milliseconds to seconds
+            const totalSeconds = Math.floor(ms / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            
+            // Helper function to pad with leading zero
+            const pad = (x) => x.toString().padStart(2, "0");
+            
+            // Progressive format: starts at "0" and grows as needed
+            if (hours > 0) {
+                return `${hours}:${pad(minutes)}:${pad(seconds)}`;
+            } else if (minutes > 0) {
+                return `${minutes}:${pad(seconds)}`;
+            } else {
+                return seconds.toString();
+            }
+        },
+        getCentiseconds(ms) {
+            // Convert milliseconds to centiseconds and extract only the centiseconds part
+            const centiseconds = Math.floor(ms / 10) % 100;
+            return centiseconds.toString().padStart(2, "0");
+        },
+        async fetchEmulatorStats() {
+            try {
+                const response = await fetch('http://127.0.0.1:30158/stats');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const stats = await response.json();
+                
+                // Store the stats object in Vue data
+                this.emulatorStats = stats;
+                
+                // Update timer without pausing - sync the timer's startTime to match emulator
+                if (stats.time) {
+                    // Parse the time string from emulator (format: "hh:mm:ss.ms")
+                    const timeRegex = /(\d+):(\d{2}):(\d{2})\.(\d{2})/;
+                    const timeArray = stats.time.match(timeRegex)?.slice(1,5).map(x => parseInt(x)) ?? [0,0,0,0];
+                    const timeOffsetMs = timeArray[0] * 3600000 + timeArray[1] * 60000 + timeArray[2] * 1000 + timeArray[3] * 10;
+                    
+                    // Sync timer without pausing - set the startTime so current time matches emulator time
+                    const currentPauseState = this.timer.storage.timer_pause;
+                    this.timer.storage.timer_startTime = Date.now() - timeOffsetMs;
+                    
+                    // If timer was paused, also update pause_time
+                    if (currentPauseState) {
+                        this.timer.storage.timer_pause_time = Date.now();
+                    }
+                }
+                
+                return stats;
+            } catch (error) {
+                console.error('Error fetching emulator stats:', error);
+                return null;
+            }
+        },
+        // Add these methods to your Vue app methods section
+        async sendEmulatorStart() {
+            try {
+                const response = await fetch('http://127.0.0.1:30158/mark-start', {
+                    method: 'POST'
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                console.log('Emulator start command sent successfully');
+                return true;
+            } catch (error) {
+                console.error('Error sending start command:', error);
+                return false;
+            }
+        },
+
+        async sendEmulatorEnd() {
+            try {
+                const response = await fetch('http://127.0.0.1:30158/mark-end', {
+                    method: 'POST'
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                console.log('Emulator end command sent successfully');
+                return true;
+            } catch (error) {
+                console.error('Error sending end command:', error);
+                return false;
+            }
+        },
+        async incrementEmulatorCounter(counter_name) {
+            try {
+                const response = await fetch(`http://127.0.0.1:30158/increment-counter?name=${counter_name}`, {
+                    method: 'POST'
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                console.log('Emulator start command sent successfully');
+                return true;
+            } catch (error) {
+                console.error('Error sending start command:', error);
+                return false;
+            }
+        },
+        async incrementEmulatorCounterByAmount(counter_name, amount) {
+            try {
+                const response = await fetch(`http://127.0.0.1:30158/increment-counter?name=${counter_name}&by=${amount}`, {
+                    method: 'POST'
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                console.log('Emulator start command sent successfully');
+                return true;
+            } catch (error) {
+                console.error('Error sending start command:', error);
+                return false;
+            }
+        },
+        /**
          * Send an OBS WebSocket 5 "CreateRecordChapter" request (Add Chapter Marker).
          * Connects to ws://localhost:4455 (or MyStorage.obs_websocket_url), identifies,
          * sends the chapter name, then closes. Fails silently if OBS is not running.
@@ -2454,12 +2590,22 @@ const app = Vue.createApp({
         },
         increment(property) {
             this[property]++;
+            if (this.shuckie_counters == true) { 
+                this.incrementEmulatorCounter(property) 
+            }
         },
         decrement(property) {
             if (this[property] == 0) {
                 return 0
             }
             this[property]--;
+
+            if (this.shuckie_counters == true) { 
+                if (this.emulatorStats?.counters?.[property] == undefined || this.emulatorStats?.counters?.[property] <= 0) {
+                    return
+                }
+                this.incrementEmulatorCounterByAmount(property, -1) 
+            }
         },
         async colorPick() {
             return new EyeDropper().open().then(res => res.sRGBHex)
@@ -3403,6 +3549,14 @@ const app = Vue.createApp({
 
         this.pokemon_list = this.keys_function(g1PokemonData)
 
+        // In mounted hook (around line 6897)
+        // Poll for emulator stats continuously
+        this.emulatorStatsInterval = setInterval(async () => {
+            if (this.ready) { // Only poll when mapper is ready
+                await this.fetchEmulatorStats();
+            }
+        }, 10); // 100ms = 10 times per second (adjust as needed)
+
         if (this.playerResets.toString().length == 1 && document.getElementById("reset_counter")) {
             document.getElementById("reset_counter").style.fontSize = "75px"
         }
@@ -3428,6 +3582,7 @@ const app = Vue.createApp({
                 this.blackout = false;
                 this.sendObsChapterMarker('RESET')
                 this.playerResets++;
+                if (this.shuckie_counters) { this.incrementEmulatorCounter("playerResets") }
             } 
         })
         this.mapper.properties.player.playerId.change((newProp) => {
@@ -3444,6 +3599,12 @@ const app = Vue.createApp({
                     };
                     this.most_recent_move = "";
                     // this.startTime();
+                    if (this.shuckie_timer == true) {
+                        if (this.emulatorStats.time_current == null) {
+                            console.log("Sending emulator start")
+                            this.sendEmulatorStart();
+                        }
+                    }
                     this.timer.startTime(this.timer_startTimeOffset);
                     if (this.toggle_wEarlyEncounters == false && this.toggle_wEarlyEncountersNoMoon == true) {
                         this.toggle_wEarlyEncounters == true
@@ -3564,9 +3725,15 @@ const app = Vue.createApp({
                 let RTMinutes = time.minutes;
                 let RTSeconds = time.seconds;
                 let RTMilliseconds = time.ms;
+
                 let startTime = this.time_split_start
                 let realTime = this.padTime(time.hours) + ":" + this.padTime(time.minutes) + ":" + this.padTime(time.seconds) + "." + this.padTime(time.ms)
                 let gameTime = this.padTime(gameTimeH) + ":" + this.padTime(gameTimeM) + ":" + this.padTime(gameTimeS) + "." + this.padTime(gameTimeF)
+
+                let shuckie_time_hhmmss = this.formatMilliseconds(this.emulatorStats?.time_current)
+                let shuckie_time_cs = this.getCentiseconds(this.emulatorStats?.time_current)
+                let shuckie_rt = this.shuckie_timer ? shuckie_time_hhmmss + "." + shuckie_time_cs : realTime
+
                 let hp = this.mapper.properties.player.team[0].hp.value
                 let maxHp = this.mapper.properties.player.team[0].maxHp.value
                 let atk = this.mapper.properties.player.team[0].attack.value
@@ -3673,13 +3840,13 @@ const app = Vue.createApp({
 
                 //definitions for what split data is logged to file
                 let simple_data = [
-                    player_name, pokemon, trainer_name, real_time_hmmss, 
+                    player_name, pokemon, trainer_name, shuckie_rt, 
                     resets, blackouts, level, game_time, battle_duration, 
                     move1, move2, move3, move4
                 ]
                 let full_data = [
                     date_string, time_string, player_name, pokemon, trainer_name, 
-                    trainer_id, location, total_pokemon, real_time_total, 
+                    trainer_id, location, total_pokemon, shuckie_rt, 
                     real_time_hmmss, real_time_file_label, resets, blackouts, failures, 
                     level, game_time, battle_duration, move1, move2, move3, move4, 
                     saves, steps, bonks, trainerBattles, wildBattles, battleTurns, 
@@ -3719,7 +3886,7 @@ const app = Vue.createApp({
                 ]
                 let deprecated_data = [
                     runIdentifier, this.starterName, trainerName,
-                    startTime, realTime, gameTime, level, this.playerResets,
+                    startTime, shuckie_rt, gameTime, level, this.playerResets,
                     RTHours, RTMinutes, RTSeconds, RTMilliseconds,
                     move1, move2, move3, move4,
                     atk, def, spA, spD, spe,
@@ -3869,6 +4036,7 @@ const app = Vue.createApp({
                     // };
                     // this.stopTime() //stop the timer
                     this.timer.stopTime();
+                    if (this.shuckie_timer == true) { this.sendEmulatorEnd(); }
                     logData(gameName, gameName_Path, this.simple_data_str, this.attempt_number, this.starterName, "Simple", this.test_run, this.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }
@@ -3946,6 +4114,7 @@ const app = Vue.createApp({
                 if (this.enable_blackouts) { 
                     this.sendObsChapterMarker('BLACKOUT')
                     this.blackout_counter++; 
+                    if (this.shuckie_counters) { this.incrementEmulatorCounter("blackout_counter") }
                 }
             }
             else if (newProp.value == "Overworld") {

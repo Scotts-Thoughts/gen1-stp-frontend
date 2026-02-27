@@ -105,4 +105,6 @@ const auto_save_settings = [
     "debugging",
     "editor",
     "no_attempt",
+    "shuckie_timer",
+    "shuckie_counters",
 ]
