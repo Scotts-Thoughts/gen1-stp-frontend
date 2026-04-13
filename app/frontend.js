@@ -3498,6 +3498,33 @@ const app = Vue.createApp({
                 var screen_reflect       = 1
                 var screen_lightscreen   = 1
                 
+                var multi_hit_modifier = 1;
+                const double_hit_moves = [
+                    "Bonemerang",
+                    "Double Hit",
+                    "Double Iron Bash",
+                    "Double Kick",
+                    "Dragon Darts",
+                    "Dual Chop",
+                    "Dual Wingbeat",
+                    "Gear Grind",
+                    "Tachyon Cutter",
+                    "Triple Dive",
+                    "Twin Beam",
+                    "Twineedle",
+                ];
+                const triple_hit_moves = [
+                    "Surging Strikes",
+                    "Triple Dive",
+                    "Water Shuriken",
+                ];
+                if (double_hit_moves.includes(x)) {
+                    multi_hit_modifier = 2;
+                }
+                if (triple_hit_moves.includes(x)) {
+                    multi_hit_modifier = 3;
+                }
+
                 //Pumpkaboo TrickOrTreat
                 if (this.starterName == 'Pumpkaboo' && move_type == 'Ghost' && this.mapper.properties.patch.backport.prop_2.value == 8) {
                     multiplier_type3 = 2
@@ -3517,10 +3544,10 @@ const app = Vue.createApp({
 
                 //return if further updates aren't required
                 if (move_power == "-")                { return move_power } //returns "-" if the move has no power
-                if (this.state != `Battle`) { return Math.floor(move_power * multiplier_stab) } //returns the move's base power if not in battle
+                if (this.state != `Battle`) { return Math.floor(move_power * multiplier_stab * multi_hit_modifier) } //returns the move's base power if not in battle
 
                 //calculate the move's effective power
-                return Math.floor(move_power * multiplier_stab * multiplier_type1 * multiplier_type2 * multiplier_type3 * screen_reflect * screen_lightscreen)
+                return Math.floor(move_power * multiplier_stab * multiplier_type1 * multiplier_type2 * multiplier_type3 * screen_reflect * screen_lightscreen * multi_hit_modifier)
             }
             else { return this.movePower(pkmnData[moveNumber].value) }
         },
