@@ -15,6 +15,8 @@ export const LocalStorageProxy = new Proxy<Record<string, string>>({}, {
             return () => Object.keys(localStorage);
         if (prop === "has")
             return (key) => localStorage.getItem(key) === null;
-        return JSON.parse(localStorage.getItem(prop) ?? "");
+        const raw = localStorage.getItem(prop);
+        if (raw === null || raw === "") return null;
+        return JSON.parse(raw);
     }
 });

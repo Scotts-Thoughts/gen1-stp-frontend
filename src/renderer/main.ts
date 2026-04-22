@@ -8,6 +8,7 @@ import keyhook from "~/components/keyhook.js";
 import { PokemonGame } from "~/logic/PokeDataTypes.js";
 import { createPinia } from "pinia";
 import { useSettingsStore } from "./stores/useSettingsStore";
+import { useEmulatorStatsStore } from "./stores/useEmulatorStatsStore";
 
 const main = defineComponent({
     components: {
@@ -32,10 +33,12 @@ const main = defineComponent({
 
             await this.settings.overlay.load();
             this.settings.overlay.setGame(gameName);
+            useEmulatorStatsStore().startPolling();
             this.ready = true;
         };
         this.mapper.onMapperUnloaded = () => {
             this.ready = false
+            useEmulatorStatsStore().stopPolling();
         };
         this.mapper.connect();
     },

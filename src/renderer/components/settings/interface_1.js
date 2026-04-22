@@ -29,6 +29,8 @@ const template = /*html*/`
                 <tr><td>Test run:</td><td>        <input class="checkBoxStyle" type="checkbox" v-model="runConfig.advanced.test_run"/></td></tr>
                 <tr><td>Refilming mode:</td><td>  <input class="checkBoxStyle" type="checkbox" v-model="runConfig.advanced.refilming_mode"/></td></tr>
                 <tr><td>No attempt/split:</td><td><input class="checkBoxStyle" type="checkbox" v-model="runConfig.advanced.no_attempt"/></td></tr>
+                <tr><td>Shuckie Timer:</td><td>   <input class="checkBoxStyle" type="checkbox" v-model="runConfig.advanced.shuckie_timer"/></td></tr>
+                <tr><td>Shuckie Counters:</td><td><input class="checkBoxStyle" type="checkbox" v-model="runConfig.advanced.shuckie_counters"/></td></tr>
             </tbody>
         </table>
         <table v-if="runConfig.advanced.refilming_mode">

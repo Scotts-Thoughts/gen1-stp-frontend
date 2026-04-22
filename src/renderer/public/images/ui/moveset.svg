@@ -12,13 +12,6 @@
       <stop offset=".97" stop-color="#9d9d9d"/>
       <stop offset="1" stop-color="#999"/>
     </linearGradient>
-    <filter id="drop-shadow-1" filterUnits="userSpaceOnUse">
-      <feOffset dx="0" dy="1"/>
-      <feGaussianBlur result="blur" stdDeviation="2"/>
-      <feFlood flood-color="#000" flood-opacity=".9"/>
-      <feComposite in2="blur" operator="in"/>
-      <feComposite in="SourceGraphic"/>
-    </filter>
     <linearGradient id="eCrit-2" data-name="eCrit" x1="23" y1="703" x2="375" y2="703" xlink:href="#eCrit"/>
     <filter id="drop-shadow-2" filterUnits="userSpaceOnUse">
       <feOffset dx="0" dy="1"/>
@@ -55,7 +48,7 @@
   <g id="Solo_Challenge" data-name="Solo Challenge">
     <g id="Stats">
       <g id="Moveset">
-        <rect id="Label" x="19" y="670" width="360" height="179" rx="6" ry="6" style="fill: url(#eCrit); filter: url(#drop-shadow-1); stroke-width: 0px;"/>
+        <rect id="Label" x="19" y="670" width="360" height="179" rx="6" ry="6" style="fill: url(#eCrit); stroke-width: 0px;"/>
         <rect id="Label-2" data-name="Label" x="23" y="684" width="352" height="38" rx="6" ry="6" style="fill: url(#eCrit-2); filter: url(#drop-shadow-2); stroke-width: 0px;"/>
         <rect id="Label-3" data-name="Label" x="23" y="725" width="352" height="38" rx="6" ry="6" style="fill: url(#eCrit-3); filter: url(#drop-shadow-3); stroke-width: 0px;"/>
         <rect id="Label-4" data-name="Label" x="23" y="766" width="352" height="38" rx="6" ry="6" style="fill: url(#eCrit-4); filter: url(#drop-shadow-4); stroke-width: 0px;"/>

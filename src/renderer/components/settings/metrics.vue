@@ -19,40 +19,40 @@
     <table>
         <tbody>
             <tr>
-                <th style="text-align: left;">Attempt:</th>
-                <th>{{metrics.attempts}}</th>
-                <th>
+                <td style="text-align: left;">Attempt:</td>
+                <td>{{metrics.attempts}}</td>
+                <td>
                     <button @click="increment('attempts')" class="smallButtonStyle increment">+</button>
                     <button @click="decrement('attempts')" class="smallButtonStyle decrement">-</button>
-                </th>
+                </td>
             </tr>
             <tr>
-                <th style="text-align: left;">Finished Runs:</th>
-                <th>{{metrics.finishes}}</th>
-                <th>
+                <td style="text-align: left;">Finished Runs:</td>
+                <td>{{metrics.finishes}}</td>
+                <td>
                     <button @click="increment('finishes')" class="smallButtonStyle increment">+</button>
                     <button @click="decrement('finishes')" class="smallButtonStyle decrement">-</button>
-                </th>
+                </td>
             </tr>
             <tr>
-                <th style="text-align: left;">Resets:</th>
-                <th>{{metrics.resets}}</th>
-                <th>
+                <td style="text-align: left;">Resets:</td>
+                <td>{{metrics.resets}}</td>
+                <td>
                     <button @click="increment('resets')" class="smallButtonStyle increment">+</button>
                     <button @click="decrement('resets')" class="smallButtonStyle decrement">-</button>
-                </th>
+                </td>
             </tr>
             <tr>
-                <th style="text-align: left;">Blackouts:</th>
-                <th>{{metrics.blackouts}}</th>
-                <th>
+                <td style="text-align: left;">Blackouts:</td>
+                <td>{{metrics.blackouts}}</td>
+                <td>
                     <button @click="increment('blackouts')" class="smallButtonStyle increment">+</button>
                     <button @click="decrement('blackouts')" class="smallButtonStyle decrement">-</button>
-                </th>
+                </td>
             </tr>
             <tr>
-                <th style="text-align: left;">Faults:</th>
-                <th>{{faults}}</th>
+                <td style="text-align: left;">Faults:</td>
+                <td>{{faults}}</td>
             </tr>
         </tbody>
     </table>

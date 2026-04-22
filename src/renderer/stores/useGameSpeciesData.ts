@@ -122,6 +122,8 @@ export function defaultGameSpeciesSettings() {
 				test_run: false,
 				refilming_mode: false,
 				no_attempt: false,
+				shuckie_timer: false,
+				shuckie_counters: false,
 				editor: {
 					moves: {},
 					items: {

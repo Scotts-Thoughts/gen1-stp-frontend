@@ -2,7 +2,7 @@
     <div class="statsContainer"> 
         <div class="critrate">Crit rate: {{ crit_rate }}%</div>
         <div>
-            <div class="statsheader">{{display_mode}} </div>
+            <div class="statsheader">{{stats_header}} </div>
             <div class="expLabelGen1">Exp:</div>
             <div v-for="stat in stat_object" class="stat">
                 <div v-if="stat.name != 'Hp' && meta.gameState == 'Battle'" class="stat_label mod_style">{{ mod_stage_label(game_properties.battle.yourPokemon['modStage'+stat.mod_path]) }}</div>

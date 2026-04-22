@@ -1,12 +1,18 @@
 import { deprecated_autosplitter } from "~/data/deprecated_autosplitter";
 import { capitalize_words } from "../methods/text_functions";
+import { formatShuckieTime } from "~/stores/useEmulatorStatsStore";
 
 const path = require("path");
 const fs = require("fs");
 export function log_split() {
     const {formatted: time } = this.metrics.getTime();
     const opponent = this.mapper.properties.battle.trainer.class.value;
-    console.log(`Autosplitter - Battle Ended: Split: ${opponent} at ${time[0]}${time[1]} (Gametime: ${this.gametimeSplit})`)
+    const shuckieEnabled = this.runConfig.advanced.shuckie_timer
+        && this.emulator?.stats?.time_current != null;
+    const [t0, t1] = shuckieEnabled
+        ? formatShuckieTime(this.emulator.stats.time_current)
+        : [time[0], time[1]];
+    console.log(`Autosplitter - Battle Ended: Split: ${opponent} at ${t0}${t1} (Gametime: ${this.gametimeSplit})`)
 }
 
 export function autosplitter_process() {
@@ -32,6 +38,15 @@ export function autosplitter_process() {
         let real_time_total = formattedTime[0] + formattedTime[1]
         let real_time_hmmss = formattedTime[0]
         let real_time_file_label = formattedTime[2]
+        // When the Shuckie timer is enabled, replace the split time with the emulator's timer
+        // so on-disk logs and the splits panel match the displayed overlay time.
+        const shuckieEnabled = this.runConfig.advanced.shuckie_timer
+            && this.emulator?.stats?.time_current != null;
+        if (shuckieEnabled) {
+            const [shuckie_hms, shuckie_cs] = formatShuckieTime(this.emulator.stats.time_current);
+            real_time_total = shuckie_hms + shuckie_cs
+            real_time_hmmss = shuckie_hms + shuckie_cs
+        }
         let resets = this.metrics.resets.toString()
         let blackouts = this.metrics.blackouts.toString()
         let failures = this.metrics.resets + this.metrics.blackouts

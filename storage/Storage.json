@@ -3438,7 +3438,8 @@
                     "refilmed_finish": 0,
                     "show_bonk_counter": true,
                     "show_repel_counter": true,
-                    "show_frame": true
+                    "show_frame": true,
+                    "player_id": 0
                 },
                 "settings": {},
                 "splits": {},

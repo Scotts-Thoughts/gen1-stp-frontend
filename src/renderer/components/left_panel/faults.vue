@@ -13,20 +13,20 @@
 
     <div v-show="top_left_ui_selector == 'None' || top_left_ui_selector == 'Resets'">
         <transition name="fade">
-            <div class="faults_style resets_1" :style="{ 'font-size': font_size(metrics.resets) + 'px' }"><div id="reset_counter">{{metrics.resets}}</div></div>
+            <div class="faults_style resets_1" :style="{ 'font-size': font_size(reset_count) + 'px' }"><div id="reset_counter">{{reset_count}}</div></div>
         </transition>
     </div>
     <div v-show="top_left_ui_selector == 'Blackouts'">
         <transition name="fade">
-            <div class="faults_style blackouts_1" :style="{ 'font-size': font_size(metrics.blackouts) + 'px' }" id="reset_counter">{{metrics.blackouts}}</div>
+            <div class="faults_style blackouts_1" :style="{ 'font-size': font_size(blackout_count) + 'px' }" id="reset_counter">{{blackout_count}}</div>
         </transition>
     </div>
     <div v-show="top_left_ui_selector == 'Both'">
         <transition name="fade">
-            <div class="faults_style resets"><div :style="{ 'font-size': font_size(metrics.resets) + 'px' }" id="reset_counter">{{metrics.resets}}</div></div>
+            <div class="faults_style resets"><div :style="{ 'font-size': font_size(reset_count) + 'px' }" id="reset_counter">{{reset_count}}</div></div>
         </transition>
         <transition name="fade">
-            <div class="faults_style blackouts" :style="{ 'font-size': font_size(metrics.blackouts) + 'px' }" id="reset_counter">{{metrics.blackouts}}</div>
+            <div class="faults_style blackouts" :style="{ 'font-size': font_size(blackout_count) + 'px' }" id="reset_counter">{{blackout_count}}</div>
         </transition>
     </div>
 </div>
@@ -40,6 +40,7 @@ import { FaultMode } from "~/stores/types/FaultMode";
 import { defineComponent } from "vue";
 import { useMetaStore } from "~/stores/metaStore.js";
 import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";
+import { useEmulatorStatsStore } from "~/stores/useEmulatorStatsStore";
 export default defineComponent({
     inject: [ "game_properties" ],
     data() {
@@ -48,16 +49,30 @@ export default defineComponent({
             meta: useMetaStore(),
             metrics: useSpeciesMetricsStore(),
             runConfig: useGameSpeciesData(),
+            emulator: useEmulatorStatsStore(),
             flag_blackout_prerequisite: JsonStorage.games[this.meta.game]?.[this.meta.starter]?.data?.flag_blackout_prerequisite ?? false,
         }
     },
     computed: {
+        reset_count() {
+            return this.runConfig.advanced.shuckie_counters ? this.emulator.playerResets : this.metrics.resets;
+        },
+        blackout_count() {
+            return this.runConfig.advanced.shuckie_counters ? this.emulator.blackoutCounter : this.metrics.blackouts;
+        },
         top_left_ui_selector() {
             const allow_none = true // Toggle that allows for the UI to display no border if there are no faults
-            if (!allow_none && this.metrics.faultsMode === FaultMode.none) {
+            const resets = this.reset_count;
+            const blackouts = this.blackout_count;
+            let mode;
+            if (blackouts == 0 && resets == 0)       { mode = FaultMode.none; }
+            else if (blackouts == 0 && resets > 0)   { mode = FaultMode.resets; }
+            else if (blackouts > 0 && resets == 0)   { mode = FaultMode.blackouts; }
+            else                                      { mode = FaultMode.both; }
+            if (!allow_none && mode === FaultMode.none) {
                 return FaultMode.resets;
             }
-            return this.metrics.faultsMode;
+            return mode;
         },
     },
     methods: {
@@ -69,11 +84,17 @@ export default defineComponent({
         reset_occurred() {
             this.flag_blackout_prerequisite = false;
             this.metrics.update("resets", this.metrics.resets+1);
+            if (this.runConfig.advanced.shuckie_counters) {
+                this.emulator.incrementCounter("playerResets");
+            }
         },
         check_blackout([newProp, oldProp]) {
             if (newProp?.value == "Overworld" && oldProp?.value == "Battle" && this.flag_blackout_prerequisite == true) {
                 this.flag_blackout_prerequisite = false;
                 this.metrics.update("blackouts", this.metrics.blackouts+1);
+                if (this.runConfig.advanced.shuckie_counters) {
+                    this.emulator.incrementCounter("blackout_counter");
+                }
             }
             else if (newProp.value == "Overworld") {
                 this.flag_blackout_prerequisite = false;

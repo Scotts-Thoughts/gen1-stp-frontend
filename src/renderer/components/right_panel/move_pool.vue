@@ -14,16 +14,16 @@
                     <td class="movepool_way">{{x.Level}}</td>
                     <td class="movepool_move">{{x.move}}</td>
                     <td :class="`movepool_type background-${x.type.toLowerCase()}`">{{x.type}}</td>
-                    <td class="movepool_tableC">{{x.power}}</td>
-                    <td class="movepool_tableC">{{x.accuracy}}%</td>
+                    <td class="movepool_tableC">{{x.power && x.power !== 1 ? x.power : '-'}}</td>
+                    <td class="movepool_tableC">{{x.accuracy ?? '-'}}%</td>
                     <td class="movepool_tableC">{{x.pp}}</td>
                 </tr>
                 <tr v-for="x in moves.tmhm">
                     <td class="movepool_way">{{x.tmhm}}</td>
                     <td class="movepool_move">{{x.move}}</td>
                     <td :class="`movepool_type background-${x.type.toLowerCase()}`">{{x.type}}</td>
-                    <td class="movepool_tableC">{{x.power}}</td>
-                    <td class="movepool_tableC">{{x.accuracy}}%</td>
+                    <td class="movepool_tableC">{{x.power && x.power !== 1 ? x.power : '-'}}</td>
+                    <td class="movepool_tableC">{{x.accuracy ?? '-'}}%</td>
                     <td class="movepool_tableC">{{x.pp}}</td>
                 </tr>
             </tbody>

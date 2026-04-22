@@ -6,20 +6,49 @@
     <link rel="stylesheet" href="style-yellow.css">
 </head>
 <body>
-    <div id="app">
-        <keyhook></keyhook>
-        <div v-if="ready == false">
-            <div>Please load a mapper in PokeAByte...</div>
-            <br>
-            <no_mapper></no_mapper>
-        </div>
-        <div v-else>
-            <frontend 
-                :mapper="mapper"
-            ></frontend>
+    <div id="app-container">
+        <div id="app">
+            <keyhook></keyhook>
+            <div v-if="ready == false">
+                <div>Please load a mapper in PokeAByte...</div>
+                <br>
+                <no_mapper></no_mapper>
+            </div>
+            <div v-else>
+                <frontend
+                    :mapper="mapper"
+                ></frontend>
+            </div>
         </div>
     </div>
 
     <!-- Imports -->
     <script type="module" src="/main.ts"></script>
+
+    <!-- Scaling script to maintain 16:9 aspect ratio -->
+    <script>
+        (function() {
+            const DESIGN_WIDTH = 1920;
+            const DESIGN_HEIGHT = 1080;
+
+            function updateScale() {
+                const appContainer = document.getElementById('app-container');
+                if (!appContainer) return;
+
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+
+                const scaleX = viewportWidth / DESIGN_WIDTH;
+                const scaleY = viewportHeight / DESIGN_HEIGHT;
+                const scale = Math.min(scaleX, scaleY);
+
+                appContainer.style.transform = `scale(${scale})`;
+            }
+
+            window.addEventListener('load', updateScale);
+            window.addEventListener('resize', updateScale);
+            updateScale();
+        })();
+    </script>
 </body>
+</html>

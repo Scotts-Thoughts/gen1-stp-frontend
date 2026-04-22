@@ -228,6 +228,7 @@ body {
 @font-face {
     src: url(fonts/OpenSans-ExtraBold.ttf);
     font-family: oseb;
+    font-weight: 700;
 }
 
 @font-face {
@@ -243,6 +244,10 @@ body {
 @font-face {
     src: url(fonts/Play-Bold.ttf);
     font-family: play;
+}
+@font-face {
+    src: url(fonts/Play-Regular.ttf);
+    font-family: play_regular;
 }
 
 .tinted-box,
@@ -305,10 +310,22 @@ html {
 body {
     height: 100%;
     width: 100%;
-    transform-origin: top left;
     overflow: hidden;
     /* Hide scrollbars */
-    background-color: #ffffff;
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+/* Scaling container that maintains 16:9 aspect ratio */
+#app-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    transform-origin: top left;
+    transform: scale(1);
 }
 
 .absolute {
@@ -1440,7 +1457,7 @@ body {
     letter-spacing: -1.5px;
     text-transform: lowercase;
     font-family: osb;
-    font-weight: 700;
+    font-weight: 400;
     display: block;
     z-index: 4;
 }
@@ -2510,6 +2527,7 @@ body {
 .movepool_header {
     vertical-align: text-bottom;
     line-height: 19px;
+    font-family: play_regular;
 }
 
 .movepoolDemo {

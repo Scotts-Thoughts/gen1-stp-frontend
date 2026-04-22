@@ -11,6 +11,7 @@ import { useGameSpeciesData } from "~/stores/useGameSpeciesData.js";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
 import { useMetaStore } from "~/stores/metaStore";
 import { useBattleStore } from "~/stores/useBattleStore";
+import { useEmulatorStatsStore } from "~/stores/useEmulatorStatsStore";
 
 // vue components:
 import graphics from "./graphics.vue"; 
@@ -55,6 +56,7 @@ export default defineComponent({
             gameSpeciesData: useGameSpeciesData(),
             settings: useOverlaySettingsStore(),
             runConfig: useGameSpeciesData(),
+            emulator: useEmulatorStatsStore(),
             /** The game selected by the user. Used to specify editions that use the same mapper, 
              * e.g. "Blue" from "Red and Blue".  
              * Only used to determine the storage location of the split data, not for any other logic.
@@ -177,6 +179,19 @@ export default defineComponent({
             this.meta.run_finished = false;
             this.flag_finished_logging_splits == false;
         },
+        // When the Shuckie timer toggle is on and the emulator reports no running timer,
+        // kick it off. Covers replays (no 0→positive playerId flip) and users enabling
+        // the flag mid-session. Store self-throttles repeated calls.
+        "runConfig.advanced.shuckie_timer"(enabled) {
+            if (enabled) {
+                this.emulator.ensureStarted();
+            }
+        },
+        "emulator.stats"() {
+            if (this.runConfig.advanced.shuckie_timer) {
+                this.emulator.ensureStarted();
+            }
+        },
     },
     computed: {
         gametimeSplit() {
@@ -213,9 +228,13 @@ export default defineComponent({
     mounted: async function () {
         this.load_split_settings();
 
+        console.log("[frontend mount] properties.player keys:", Object.keys(this.mapper.properties.player ?? {}));
+        console.log("[frontend mount] playerId property:", this.mapper.properties.player?.playerId);
+        console.log("[frontend mount] playerId path:", this.mapper.properties.player?.playerId?.path, "current value:", this.mapper.properties.player?.playerId?.value);
+
         // RESET - Identifies when a reset occurs and publishes an event
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {
-            if (newProp.value == 0 && oldProp.value > 0 && this.meta.finished_runed == false) {
+            if (newProp.value == 0 && oldProp.value > 0 && this.meta.run_finished == false) {
                 PubSub.publish("@run/reset_occurred");
             }
         });
@@ -227,13 +246,18 @@ export default defineComponent({
             }
         });
         // NEW_RUN_STARTED - Determines if the player has pressed 'New Game' and started a new playthrough
-        this.mapper.properties.player.playerId.change((newProp) => {
-            if (newProp.value > 0 && this.meta.finished_runed == false && newProp.value != this.player_id) {
+        this.mapper.properties.player.playerId.change((newProp, oldProp) => {
+            console.log(`[new_run_started?] playerId change old=${oldProp?.value} new=${newProp?.value} stored=${this.player_id} run_finished=${this.meta.run_finished}`);
+            if (newProp.value > 0 && this.meta.run_finished == false && newProp.value != this.player_id) {
+                console.log("[new_run_started] firing; calling metrics.startTime()");
                 PubSub.publish("@run/new_run_started", this.player_id);
                 this.flag_finished_logging_splits = false;
                 if (this.runConfig.advanced.test_run == false && this.runConfig.advanced.refilming_mode == false) {
                     this.metrics.update("attempts", this.metrics.attempts + 1);
                 };
+                if (this.runConfig.advanced.shuckie_timer && this.emulator.timeCurrent == null) {
+                    this.emulator.sendStart();
+                }
                 this.metrics.startTime();
                 if (this.toggle_wEarlyEncounters == false && this.toggle_wEarlyEncountersNoMoon == true) {
                     this.toggle_wEarlyEncounters == true
@@ -243,8 +267,8 @@ export default defineComponent({
         })
         // Only allow the player to reset once after the champion without resets incrementing
         this.mapper.properties.player.name.change((newProp) => {
-            if (this.meta.finished_runed == true && newProp.value == "NINTEN") {
-                this.meta.finished_runed = false;
+            if (this.meta.run_finished == true && newProp.value == "NINTEN") {
+                this.meta.run_finished = false;
             }
         })
 
@@ -331,6 +355,9 @@ export default defineComponent({
                     };
                     // this.stopTime() //stop the timer
                     this.metrics.stopTimer();
+                    if (this.runConfig.advanced.shuckie_timer) {
+                        this.emulator.sendEnd();
+                    }
                     logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }
@@ -351,7 +378,7 @@ export default defineComponent({
                     logData(gameName, gameName_Path, this.full_data_str, this.metrics.finishes, this.meta.starter, "Full", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
                     this.split_data.push(this.simple_data)
                     console.log(`Autosplitter - Run Ended: Real-Time: ${formattedTime[0]}${formattedTime[1]} Resets: ${this.metrics.resets} Blackouts: ${this.metrics.blackouts} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
-                    this.meta.finished_runed = true; //stop incrementing resets
+                    this.meta.run_finished = true; //stop incrementing resets
                 }
             }
         });
@@ -359,7 +386,7 @@ export default defineComponent({
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
             let gameName = this.game_selection == 'Yellow' ? "Y" : this.game_selection == 'Red' ? "R" : "B"
             let gameName_Path = this.meta.game // Used for split data    
-            if (this.flag_finished_logging_splits == false && this.meta.finished_runed == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
+            if (this.flag_finished_logging_splits == false && this.meta.run_finished == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
                 logCopy(  // copy the current `attempt_number` split data to the finished folder
                     gameName,
                     gameName_Path,

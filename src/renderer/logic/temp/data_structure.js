@@ -56,6 +56,8 @@ const settings_gamespecies = {
             test_run: false,
             refilming_mode: false,
             no_attempt: false,
+			shuckie_timer: true,
+			shuckie_counters: true,
             editor: {
                 moves: {},
                 items: {},
