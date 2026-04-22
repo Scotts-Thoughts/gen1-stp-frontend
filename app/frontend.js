@@ -1382,18 +1382,40 @@ const app = Vue.createApp({
         },
         compare_splits() {
             if (this.collect_split_data == true) {
-                const result = []
                 const game = this.mapper.properties.meta.gameName.value
-                const addedTrainers = new Set(); // Keep track of the trainers that have been added to the result
+
+                // First mode: use default order, no CSV needed
+                if (this.toggle_compare_splits === 'First') {
+                    const result = []
+                    const completedTrainers = new Set()
+                    // Add completed splits first, in the order they were completed
+                    for (const cur_split of this.current_splits) {
+                        if (this.split_trainers[game].includes(cur_split.trainer) && !completedTrainers.has(cur_split.trainer)) {
+                            result.push({trainer: cur_split.trainer, current_time: cur_split.time})
+                            completedTrainers.add(cur_split.trainer)
+                        }
+                    }
+                    // Add remaining uncompleted splits in default order
+                    for (const trainer of this.split_trainers[game]) {
+                        if (!completedTrainers.has(trainer)) {
+                            result.push({trainer: trainer, current_time: "-"})
+                        }
+                    }
+                    return result
+                }
+
+                // Followup mode: compare against loaded CSV splits
+                const result = []
+                const addedTrainers = new Set();
                 for (const x of this.previous_splits) {
                     if (this.split_trainers[game].includes(x.trainer)) {
                         const default_string = "-"
                         const cur_split = this.current_splits.find(y => y.trainer === x.trainer)
                         const prev = this.convertDurationToSeconds(x.time)
-                        if (cur_split == undefined) { 
-                            if (!addedTrainers.has(x.trainer)) { // Check if the trainer has already been added to the result
-                                result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: default_string, difference: default_string}) 
-                                addedTrainers.add(x.trainer); // Add the trainer to the set of added trainers
+                        if (cur_split == undefined) {
+                            if (!addedTrainers.has(x.trainer)) {
+                                result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: default_string, difference: default_string})
+                                addedTrainers.add(x.trainer);
                             }
                             continue
                         }
@@ -1405,9 +1427,9 @@ const app = Vue.createApp({
                         const diff_s = diff_abs % 60;
                         var diff_str = `${diff_sign === -1 ? "-" : "+"}${diff_m}:${diff_s.toString().padStart(2, "0")}`;
                         if (diff_str == "+0:00") { diff_str = "0:00" }
-                        if (!addedTrainers.has(x.trainer)) { // Check if the trainer has already been added to the result
+                        if (!addedTrainers.has(x.trainer)) {
                             result.push({trainer: x.trainer, previous_time: this.convertSecondsToDuration(prev), current_time: this.convertSecondsToDuration(cur), difference: diff_str})
-                            addedTrainers.add(x.trainer); // Add the trainer to the set of added trainers
+                            addedTrainers.add(x.trainer);
                         }
                     }
                 }
