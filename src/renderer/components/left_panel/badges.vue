@@ -1,5 +1,5 @@
 <template>
-    <img class="canvas" src="/images/elements/badges.png"/>
+    <img class="canvas" :src="'images/elements/badges.png'"/>
     <div v-show="game_properties.meta.state.value != 'No Pokemon'">
         <div v-for="x in [1, 2, 3, 4, 5, 6, 7, 8]">
             <transition name="fade">

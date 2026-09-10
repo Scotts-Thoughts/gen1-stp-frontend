@@ -21,17 +21,22 @@ const main = defineComponent({
             settings: useSettingsStore(),
             ready: false as boolean,
             mapper: null as GameHookMapperClient|null,
-            starterName: "Venomoth" as string,
-            game_name: "Yellow" as PokemonGame,
+            /** Resolves once the overlay settings have been read from disk. */
+            overlayLoaded: null as Promise<void> | null,
         }
     },
     created() {
+        // Load the overlay settings right away, so that the game and species dropdowns on the "no mapper" screen
+        // reflect the last session and changes made there are not overwritten later.
+        this.overlayLoaded = this.settings.overlay.load()
+            .catch((err) => console.error("[main] Failed to load the overlay settings:", err));
+
         this.mapper = new GameHookMapperClient();
         this.mapper.onMapperLoaded = async () => {
-            const gameName = this.mapper!.properties.meta.gameName.value;
+            const gameName = this.mapper!.properties.meta.gameName.value as PokemonGame;
             PokeData.setGame(gameName);
 
-            await this.settings.overlay.load();
+            await this.overlayLoaded;
             this.settings.overlay.setGame(gameName);
             useEmulatorStatsStore().startPolling();
             this.ready = true;
@@ -49,7 +54,7 @@ export const app = createApp(main);
 app.use(pinia);
 
 app.config.errorHandler = ((err: any) => {
-    console.log(err);
+    console.error(err);
 });
 
 app.mount('#app');

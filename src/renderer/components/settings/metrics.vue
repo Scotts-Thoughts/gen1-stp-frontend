@@ -64,18 +64,26 @@
 import PubSub from "~/logic/PubSub";
 import { SpeciesMetrics, useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.ts";
 import { useGameSpeciesData } from "~/stores/useGameSpeciesData.ts";
+import { useEmulatorStatsStore } from "~/stores/useEmulatorStatsStore";
 import { defineComponent } from "vue";
+
+/** Counters that are mirrored to the Shuckie emulator when the "Shuckie Counters" option is on. */
+const EMULATOR_COUNTERS: Partial<Record<keyof SpeciesMetrics, string>> = {
+    resets: "playerResets",
+    blackouts: "blackout_counter",
+};
 
 export default defineComponent({
     data() {
         return {
             runConfig: useGameSpeciesData(),
             metrics: useSpeciesMetricsStore(),
+            emulator: useEmulatorStatsStore(),
         }
     },
     computed: {
         faults() {
-            
+
             return this.metrics.resets + this.metrics.blackouts;
         }
     },
@@ -84,13 +92,29 @@ export default defineComponent({
             PubSub.publish("@run/cleared");
         },
         increment(property: keyof SpeciesMetrics) {
-            if (typeof this.metrics[property] === "number") {
-                this.metrics.update(property, this.metrics[property] +1);
+            const value = this.metrics[property];
+            if (typeof value === "number") {
+                this.metrics.update(property, (value + 1) as any);
+                const counter = EMULATOR_COUNTERS[property];
+                if (counter && this.runConfig.advanced.shuckie_counters) {
+                    this.emulator.incrementCounter(counter);
+                }
             }
         },
         decrement(property: keyof SpeciesMetrics) {
-            if (typeof this.metrics[property] === "number") {
-                this.metrics.update(property, Math.max(0, this.metrics[property] -1));
+            const value = this.metrics[property];
+            if (typeof value === "number") {
+                if (value <= 0) {
+                    return;
+                }
+                this.metrics.update(property, (value - 1) as any);
+                const counter = EMULATOR_COUNTERS[property];
+                if (counter && this.runConfig.advanced.shuckie_counters) {
+                    const emulatorValue = this.emulator.stats?.counters?.[counter];
+                    if (emulatorValue != null && emulatorValue > 0) {
+                        this.emulator.incrementCounterBy(counter, -1);
+                    }
+                }
             }
         },
         async load_csv_file() {

@@ -53,7 +53,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="tinted-box" style="--url: url(../images/ui/ui_splits.svg)"></div>
+        <div class="tinted-box" style="--url: url(images/ui/ui_splits.svg)"></div>
     </div>
 </template>
 
@@ -91,7 +91,7 @@ export default defineComponent({
     },
     computed: {
         starter_type_2() {
-            return PokeData.getSpecies(this.meta.starter).type_2.toLowerCase();
+            return (PokeData.findSpecies(this.meta.starter)?.type_2 ?? "Normal").toLowerCase();
         }
     }
 });

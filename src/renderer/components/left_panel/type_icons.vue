@@ -13,14 +13,15 @@ import PokeData from "~/logic/PokeData";
 import { useMetaStore } from "~/stores/metaStore";
 
 export default defineComponent({
-    data() { 
+    data() {
         return { meta: useMetaStore() }
     },
     methods: {
-        /** Get the nth type of the current pokemon, as a lower case string. */
+        /** Get the nth type of the current pokemon, as a lower case string. Falls back to the starter, then "normal". */
         get_type(typeNumber: 1 | 2): string {
-            const data = PokeData.getSpecies(this.meta.currentSpecies);
-            return data['type_' + typeNumber.toString()].toLowerCase();
+            const data = PokeData.findSpecies(this.meta.currentSpecies) ?? PokeData.findSpecies(this.meta.starter);
+            const type = typeNumber === 1 ? data?.type_1 : data?.type_2;
+            return (type ?? "Normal").toLowerCase();
         },
     }
 });

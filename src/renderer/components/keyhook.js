@@ -1,4 +1,5 @@
 import { defineComponent } from "vue";
+import PubSub from "~/logic/PubSub";
 import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
 import { RightPanelMode } from "~/stores/types/RightPanelMode";
 import { StatsPanelMode } from "~/stores/types/StatsPanelMode";
@@ -8,16 +9,16 @@ const Keys = {
     "ESCAPE":         0x1B,
     "BACKSPACE":      0x08,
     "TAB":            0x09,
-    
+
     "LEFT":           0x25,
     "UP":             0x26,
     "RIGHT":          0x27,
     "DOWN":           0x28,
-    
+
     "CAPS_LOCK":      0x14,
     "NUM_LOCK":       0x90,
     "SCROLL_LOCK":    0x91,
-    
+
     "SHIFT":          0x10,
     "L_SHIFT":        0xA0,
     "R_SHIFT":        0xA1,
@@ -25,11 +26,11 @@ const Keys = {
     "CTRL":           0x11,
     "L_CTRL":         0xA2,
     "R_CTRL":         0xA3,
-    
+
     "ALT":            0x12,
     "L_ALT":          0xA4,
     "R_ALT":          0xA5,
-    
+
     "L_WIN":          0x5B,
     "R_WIN":          0x5C,
 
@@ -88,7 +89,7 @@ const Keys = {
     "ADD":            0x6B,
     "SUBTRACT":       0x6D,
     "DIVIDE":         0x6F,
-    
+
     "F1":             0x70,
     "F2":             0x71,
     "F3":             0x72,
@@ -144,29 +145,60 @@ Object.entries(Keys).forEach(([k, v]) => Keys[v] = k);
 
 class KeyHook {
     constructor() {
-        // start the keyboard hook
-        this.process = require("child_process").spawn("keyhook.exe");
+        const exePath = KeyHook.locateExecutable();
+        if (!exePath) {
+            console.warn("[keyhook] keyhook.exe was not found next to the application, keyboard shortcuts (F13-F24) are disabled.");
+            this.process = null;
+        } else {
+            // start the keyboard hook
+            this.process = require("child_process").spawn(exePath);
+            // A missing or blocked executable must not take the overlay down with it.
+            this.process.on("error", (err) => {
+                console.error(`[keyhook] Could not start ${exePath}: ${err.message}. Keyboard shortcuts (F13-F24) are disabled.`);
+            });
 
-        // general logging
-        // this.process.on("spawn", () => console.log("Keyboard hook started!"));
-        this.process.stderr.on("data", (data) => console.error(`${data}`));
-        
-        // handle output of the keyboard hook
-        this.process.stdout.on("data", (data) => {
-            for (const line of data.toString().split(/[\n\r]+/)) {
-                const parts = line.split(",").map(x => parseInt(x, 10));
-                const [down, key, time] = parts;
-                
-                if (parts.length !== 3 || parts.some(isNaN)) continue;
-                this._processKey(down === 1, key, time);
-            }
-        });  
-    
+            // general logging
+            // this.process.on("spawn", () => console.log("Keyboard hook started!"));
+            this.process.stderr.on("data", (data) => console.error(`${data}`));
+
+            // handle output of the keyboard hook
+            this.process.stdout.on("data", (data) => {
+                for (const line of data.toString().split(/[\n\r]+/)) {
+                    const parts = line.split(",").map(x => parseInt(x, 10));
+                    const [down, key, time] = parts;
+
+                    if (parts.length !== 3 || parts.some(isNaN)) continue;
+                    this._processKey(down === 1, key, time);
+                }
+            });
+        }
+
         // general initialization
         for (let i=0; i<256; i++)
             this._keyState[i] = false;
     }
-        
+
+    /** Find keyhook.exe: next to the project (development) or in the resources folder (packaged build). */
+    static locateExecutable() {
+        const fs = require("fs");
+        const path = require("path");
+        const candidates = [
+            path.join(process.cwd(), "keyhook.exe"),
+            process.resourcesPath ? path.join(process.resourcesPath, "keyhook.exe") : null,
+            "keyhook.exe",
+        ].filter(Boolean);
+        for (const candidate of candidates) {
+            try {
+                if (fs.existsSync(candidate)) {
+                    return candidate;
+                }
+            } catch (e) {
+                // ignore and try the next location
+            }
+        }
+        return null;
+    }
+
     _listeners = {};
     _keyState = [];
     _processKey(down, keyCode, time) {
@@ -185,9 +217,9 @@ class KeyHook {
         if (!this._listeners[type]) return;
         for (const listener of this._listeners[type]) {
             listener({
-                type, 
-                keyCode, 
-                key, 
+                type,
+                keyCode,
+                key,
                 alt: this.isAltDown,
                 ctrl: this.isCtrlDown,
                 shift: this.isShiftDown,
@@ -195,16 +227,16 @@ class KeyHook {
             });
         }
     }
-  
+
     get isShiftDown() { return this._keyState[Keys.L_SHIFT] || this._keyState[Keys.R_SHIFT] || this._keyState[Keys.SHIFT]; }
     get isCtrlDown()  { return this._keyState[Keys.L_CTRL]  || this._keyState[Keys.R_CTRL]  || this._keyState[Keys.CTRL]; }
     get isAltDown()   { return this._keyState[Keys.L_ALT]   || this._keyState[Keys.R_ALT]   || this._keyState[Keys.ALT]; }
 
-    isKeyDown(key) { 
+    isKeyDown(key) {
         if (typeof key === 'string') key = Keys[key.toUpperCase()];
         return this._keyState[key];
     }
-    
+
     on(event, callback) {
         if (this._listeners[event] === undefined)
             this._listeners[event] = [];
@@ -230,7 +262,7 @@ class KeyHook {
         const checkShift = shortCut.includes(Keys.SHIFT);
         const checkKeys = shortCut.filter(x => x !== Keys.ALT && x !== Keys.CTRL && x !== Keys.SHIFT);
 
-        if (checkKeys.some(x => typeof x !== 'number')) 
+        if (checkKeys.some(x => typeof x !== 'number'))
             throw new Error("Invalid key code");
 
         this.on("down", (data) => {
@@ -246,7 +278,7 @@ class KeyHook {
     }
 
     stop() {
-        return this.process.kill();
+        return this.process?.kill();
     }
 }
 
@@ -299,18 +331,18 @@ export default defineComponent({
         //F17
         keyhook.registerShortCut('F17', async () => { // Automatic Right Panel
             console.log("Key: F17 pressed. Automatic battle graphics will be displayed.")
-            if (this.settings.right_panel.hotkeys === true) { 
+            if (this.settings.right_panel.hotkeys === true) {
                 this.settings.setRightPanelMode(RightPanelMode.automatic);
-                return 
+                return
             }
             this.settings.setRightPanelMode(RightPanelMode.automatic);
         });
         //F18
         keyhook.registerShortCut('F18', async () => { // Trainer Graphic during Battle
             console.log("Key: F18 pressed. Splits displayed.")
-            if (this.settings.right_panel.hotkeys === true) { 
+            if (this.settings.right_panel.hotkeys === true) {
                 this.settings.setRightPanelMode(RightPanelMode.automatic);
-                return 
+                return
             }
             this.settings.setRightPanelMode(RightPanelMode.movepool);
         });
@@ -319,18 +351,19 @@ export default defineComponent({
             console.log("Key: F19 pressed. Movepool displayed.")
             if (this.settings.right_panel.hotkeys === true) {
                 this.settings.setRightPanelMode(RightPanelMode.automatic);
-                return 
+                return
             }
             this.settings.setRightPanelMode(RightPanelMode.splits);
         });
-        //F20 used 
+        //F20 used
         //F21 used
         //F22 unused
-        //F23
+        //F23: New run
         keyhook.registerShortCut('F23', async () => {
-            this.$parent.newRun()
+            console.log("Key: F23 pressed. Starting a new run.")
+            PubSub.publish("@run/cleared");
         });
-        //F24
+        //F24: Pause/unpause the timer
         keyhook.registerShortCut('F24', async () => {
             this.metrics.toggleTimer();
         });

@@ -4,8 +4,8 @@ import { PokemonGame } from "~/logic/PokeDataTypes";
 import { GameState } from "./types/GameState";
 import { EnemyState } from "./types/EnemyState";
 
-/** 
- * Store for general purpose information that is not specific to a game or generation. 
+/**
+ * Store for general purpose information that is not specific to a game or generation.
  * Things like the current game, selected starter and the game state (which can be normalized accross generations).
  */
 export const useMetaStore = defineStore('meta', {
@@ -46,8 +46,6 @@ function getDefaultMetaState() {
 		gameState: GameState.no_pokemon,
 		/** The current state of the enemy trainer or enemy wild pokemon. */
 		enemyState: EnemyState.not_in_battle,
-		/** Flag that is set to true when the run is finished and reset on a new run. */
-		run_finished: false,
 	}
 }
 

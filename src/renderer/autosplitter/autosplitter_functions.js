@@ -1,6 +1,7 @@
 import { deprecated_autosplitter } from "~/data/deprecated_autosplitter";
 import { capitalize_words } from "../methods/text_functions";
 import { formatShuckieTime } from "~/stores/useEmulatorStatsStore";
+import { splitMilliseconds } from "~/logic/Timer";
 
 const path = require("path");
 const fs = require("fs");
@@ -34,19 +35,19 @@ export function autosplitter_process() {
         let trainer_id = this.mapper.properties.battle.trainer.number.value
         let location = this.mapper.properties.overworld.map.value
         let total_pokemon = this.mapper.properties.battle.trainer.totalPokemon
-        const {raw: time, formatted: formattedTime } = this.metrics.getTime();
-        let real_time_total = formattedTime[0] + formattedTime[1]
-        let real_time_hmmss = formattedTime[0]
-        let real_time_file_label = formattedTime[2]
-        // When the Shuckie timer is enabled, replace the split time with the emulator's timer
+        let { raw: time, formatted: formattedTime } = this.metrics.getTime();
+        // When the Shuckie timer is enabled, every time field uses the emulator's timer instead of the local one,
         // so on-disk logs and the splits panel match the displayed overlay time.
         const shuckieEnabled = this.runConfig.advanced.shuckie_timer
             && this.emulator?.stats?.time_current != null;
         if (shuckieEnabled) {
-            const [shuckie_hms, shuckie_cs] = formatShuckieTime(this.emulator.stats.time_current);
-            real_time_total = shuckie_hms + shuckie_cs
-            real_time_hmmss = shuckie_hms + shuckie_cs
+            const shuckie_ms = this.emulator.stats.time_current;
+            time = splitMilliseconds(shuckie_ms);
+            formattedTime = [...formatShuckieTime(shuckie_ms), `${time.hours}h${time.minutes}m${time.seconds}s`];
         }
+        let real_time_total = formattedTime[0] + formattedTime[1]
+        let real_time_hmmss = shuckieEnabled ? formattedTime[0] + formattedTime[1] : formattedTime[0]
+        let real_time_file_label = formattedTime[2]
         let resets = this.metrics.resets.toString()
         let blackouts = this.metrics.blackouts.toString()
         let failures = this.metrics.resets + this.metrics.blackouts

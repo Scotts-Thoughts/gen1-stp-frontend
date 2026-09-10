@@ -18,7 +18,7 @@ export type GrowthRate = "Erratic" | "Fast" | "Medium Fast" | "Medium Slow" | "S
 export type PokemonSpecies = {
 	"species": string;
 	"rom_id": number;
-	"national_dex_number": number;
+	"national_dex_number": number | null;
 	"base_stats": {
 		"hp": number;
 		"attack": number;
@@ -54,6 +54,8 @@ export type PokemonSpecies = {
 	"level_up_learnset": [number, string][];
 	"weight": any;
 	"evolution_family": any[];
+	/** Set for species that are not part of the original game and only exist through the backport ROM patch. */
+	"backport"?: boolean;
 };
 
 /**
@@ -74,7 +76,9 @@ export type PokemonType = (
  */
 export type PokemonMove = {
 	Level?: number,
-	tmhm?: string
+	tmhm?: string,
+	/** Set for moves that only exist through the backport ROM patch. */
+	backport?: boolean,
 	"rom_id": number;
 	"move": string;
 	"type": PokemonType;

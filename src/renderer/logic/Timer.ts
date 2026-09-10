@@ -25,9 +25,20 @@ export function getTime(timer: TimerData) {
 	};
 }
 
-/** 
+/** Split a number of milliseconds into the same shape that {@link getTime} returns. */
+export function splitMilliseconds(milliseconds: number) {
+	const time = Math.max(0, milliseconds);
+	return {
+		ms: (Math.floor(time / 10) % 100),
+		seconds: (Math.floor(time / 1000) % 60),
+		minutes: (Math.floor(time / 60000) % 60),
+		hours: (Math.floor(time / 3600000))
+	};
+}
+
+/**
  * Format a time object into an array of strings with the following formats:
- * 
+ *
  * * 0: `[<hh>:][<mm>:][<ss>]` (e.g. `01:23:45` or `23:45`).
  * * 1: `.<ms>` (e.g. `.67`)
  * * 2: `<h>h<m>m<s>s`  (e.g. `1h23m45s`)
@@ -38,7 +49,7 @@ export function formatTime(time: ReturnType<typeof getTime>): [string, string, s
 		return [ h + ":" + f(m) + ":" + f(s), "." + f(ms), h + "h" + m + "m" + s + "s", ];
 	} else if (m != 0) {
 		return [ m + ":" + f(s), "." + f(ms), h + "h" + m + "m" + s + "s", ];
-	} 
+	}
 	return [ s.toString(), "." + f(ms), h + "h" + m + "m" + s + "s", ];
 }
 
@@ -48,8 +59,25 @@ export function formatTime(time: ReturnType<typeof getTime>): [string, string, s
 export class Timer {
 	static _instance: Timer| null;
 
+	/**
+	 * Create the timer instance for the given store, or re-bind the existing instance to it. Only ever one
+	 * update loop is running, no matter how often this is called.
+	 */
 	static initialize(store: SpeciesMetricStore) {
+		if (this._instance) {
+			this._instance._store = store;
+			this._instance.update();
+			return;
+		}
 		this._instance = new Timer(store);
+	}
+
+	/** Get the timer instance, creating it for the given store if it does not exist yet. */
+	static ensure(store: SpeciesMetricStore) {
+		if (!this._instance) {
+			this.initialize(store);
+		}
+		return this._instance!;
 	}
 
 	static instance() {
@@ -61,9 +89,9 @@ export class Timer {
 
 	_store: SpeciesMetricStore;
 
-	/** 
-	 * An array with formatted time information. First item is the general time as `hh:mm:ss`. 
-	 * Second is the number of milliseconds elapsed as `.ms` 
+	/**
+	 * An array with formatted time information. First item is the general time as `hh:mm:ss`.
+	 * Second is the number of milliseconds elapsed as `.ms`
 	 */
 	formatted_time: string[] = ["0", ".00"];
 	constructor(store: SpeciesMetricStore) {
@@ -131,7 +159,8 @@ export class Timer {
 	 * Updates the {@link formatted_time} and publishes a `time_update` event which the "Timer" vue component listens for.
 	 */
 	update = () => {
-		PubSub.publish("@timer/update", formatTime(getTime(this._store.timer)));
+		this.formatted_time = formatTime(getTime(this._store.timer));
+		PubSub.publish("@timer/update", this.formatted_time);
 	}
 
 	/**

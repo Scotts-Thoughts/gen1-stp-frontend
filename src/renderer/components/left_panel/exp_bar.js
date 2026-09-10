@@ -21,10 +21,24 @@ export default defineComponent({
             expBarAnimation: true,
             prevSpecies:     undefined,
             oldExpValue:     0,
-            state:           this.game_properties.meta.state.value,
         }
     },
+    computed: {
+        /** The current (normalized) game state, e.g. "Overworld" or "Battle". */
+        state() {
+            return this.metaStore.gameState;
+        },
+    },
     methods: {
+        /** Growth rate of the pokemon currently shown, falling back to the starter and then to "Medium Fast". */
+        growthRate() {
+            const species = this.metaStore.currentSpecies == 'Backport'
+                ? this.metaStore.starter
+                : this.metaStore.currentSpecies;
+            return PokeData.findSpecies(species)?.growth_rate
+                ?? PokeData.findSpecies(this.metaStore.starter)?.growth_rate
+                ?? "Medium Fast";
+        },
         calcExpStats(growthRate, exp) {
             const expTable = {
                 "Erratic":     [0,15,52,122,237,406,637,942,1326,1800,2369,3041,3822,4719,5737,6881,8155,9564,11111,12800,14632,16610,18737,21012,23437,26012,28737,31610,34632,37800,41111,44564,48155,51881,55737,59719,63822,68041,72369,76800,81326,85942,90637,95406,100237,105122,110052,115015,120001,125000,131324,137795,144410,151165,158056,165079,172229,179503,186894,194400,202013,209728,217540,225443,233431,241496,249633,257834,267406,276458,286328,296358,305767,316074,326531,336255,346965,357812,367807,378880,390077,400293,411686,423190,433572,445239,457001,467489,479378,491346,501878,513934,526049,536557,548720,560922,571333,583539,591882,600000],
@@ -42,10 +56,11 @@ export default defineComponent({
             expTable["Medium Slow"][100] = expTable["Medium Slow"][99] + 1;
             expTable["Slow"][100]        = expTable["Slow"][99] + 1;
             expTable["Fluctuating"][100] = expTable["Fluctuating"][99] + 1;
-        
-            const index = expTable[growthRate].findIndex(x => x > exp);
-            const currLvlExp = expTable[growthRate][index - 1];
-            const nextLvlExp = expTable[growthRate][index];
+
+            const table = expTable[growthRate] ?? expTable["Medium Fast"];
+            const index = table.findIndex(x => x > exp);
+            const currLvlExp = table[index - 1];
+            const nextLvlExp = table[index];
             return {
                 level: index,
                 percent: (exp - currLvlExp) / (nextLvlExp - currLvlExp),
@@ -57,64 +72,58 @@ export default defineComponent({
     },
     mounted() {
         //EXP BAR
-        var species = this.metaStore.currentSpecies == 'Backport' 
-            ? this.metaStore.starter 
-            : this.metaStore.currentSpecies;
-        var growthRate = species 
-            ? PokeData.getSpecies(species).growth_rate 
-            : PokeData.getSpecies(this.metaStore.starter).growth_rate;
-        var expStats = this.calcExpStats(growthRate, this.game_properties.player.team[0].expPoints.value);
-        document.getElementById("exp-bar").style.width = (expStats.percent * 100) + "%";
-        this.prevSpecies = species
+        const bar = document.getElementById("exp-bar");
+        var expStats = this.calcExpStats(this.growthRate(), this.game_properties.player.team[0].expPoints.value);
+        bar.style.width = (expStats.percent * 100) + "%";
+        this.prevSpecies = this.metaStore.currentSpecies
         this.oldExpValue = this.game_properties.player.team[0].expPoints.value
         this.game_properties.player.team[0].expPoints.change(async (newProp, oldProp) => {
             if (this.game_properties.player.team[0].level.value == 100) {
-                document.getElementById("exp-bar").style.width = "0%";
+                bar.style.width = "0%";
                 return
             }
             if (newProp.value < this.oldExpValue) {
-                document.getElementById("exp-bar").style.transition = null;
+                bar.style.transition = null;
             }
             if (this.expBarAnimation == true) {
-                const growthRate = PokeData.getSpecies(this.metaStore.currentSpecies)?.growth_rate 
-                    ?? PokeData.getSpecies(this.metaStore.starter).growth_rate // TODO - this may cause issues
+                const growthRate = this.growthRate();
                 const oldExpStats = this.calcExpStats(growthRate, this.oldExpValue);
                 const newExpStats = this.calcExpStats(growthRate, newProp.value);
                 const animationMaxDuration = 600
-                if (this.oldExpValue == newProp.value) { 
-                    return 
+                if (this.oldExpValue == newProp.value) {
+                    return
                 }
                 if (this.state == `Overworld` || this.state == "No Pokemon") {
-                    document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
+                    bar.style.width = (newExpStats.percent * 100) + "%";
                 }
                 else if (this.prevSpecies != this.metaStore.currentSpecies) {
-                    this.prevSpecies = this.metaStore.currentSpecies; 
-                    document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
-                } 
+                    this.prevSpecies = this.metaStore.currentSpecies;
+                    bar.style.width = (newExpStats.percent * 100) + "%";
+                }
                 else {
                     if (oldExpStats.level == newExpStats.level) {
                         var diffExp = newExpStats.percent - oldExpStats.percent
                         var animationDuration = Math.ceil(diffExp * animationMaxDuration)
-                        document.getElementById("exp-bar").style.transition = `width ${animationDuration}ms ease-in-out`;
-                        document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
+                        bar.style.transition = `width ${animationDuration}ms ease-in-out`;
+                        bar.style.width = (newExpStats.percent * 100) + "%";
                         await this.sleep(animationDuration + 50);
                     } else {
                         var diffExp1 = 1 - oldExpStats.percent
                         var animationDuration1 = Math.ceil(diffExp1 * animationMaxDuration)
                         var diffExp2 = newExpStats.percent
                         var animationDuration2 = Math.ceil(diffExp2 * animationMaxDuration)
-                        document.getElementById("exp-bar").style.transition = `width ${animationDuration1}ms ease-in`;
-                        document.getElementById("exp-bar").style.width = "100%";
+                        bar.style.transition = `width ${animationDuration1}ms ease-in`;
+                        bar.style.width = "100%";
                         await this.sleep(animationDuration1 + 50);
-                        document.getElementById("exp-bar").style.transition = null;
-                        document.getElementById("exp-bar").style.width = "0%";
+                        bar.style.transition = null;
+                        bar.style.width = "0%";
                         await this.sleep(50);
-                        document.getElementById("exp-bar").style.transition = `width ${animationDuration2}ms ease-out`;
-                        document.getElementById("exp-bar").style.width = (newExpStats.percent * 100) + "%";
+                        bar.style.transition = `width ${animationDuration2}ms ease-out`;
+                        bar.style.width = (newExpStats.percent * 100) + "%";
                         await this.sleep(animationDuration2 + 50);
                     }
                 }
-                document.getElementById("exp-bar").style.transition = null;
+                bar.style.transition = null;
                 this.oldExpValue = newProp.value
             }
         })

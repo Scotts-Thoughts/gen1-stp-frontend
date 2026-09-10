@@ -2,11 +2,21 @@
 <template>
 <div>
     <div class="trainerLabel">{{capitalize_words(fixTrainerName(battle.trainer.class.value, battle.trainer.number))}}</div>
-    <div class="tinted-box" :style="battle_pokemon_crop" style="--url: url(../images/ui/opponent.svg);"></div>
+    <div class="tinted-box" :style="battle_pokemon_crop" style="--url: url(images/ui/opponent.svg);"></div>
     <div class="enemyGraphic">
         <div v-for="[x, pokemon] in party" class="ePkmnStyle">
-            <img v-if="meta.game == 'Yellow'" class="ePkmnSprite" :style="pokemon.style.faint" :src="'images/pokemon/' + game_properties.battle.trainer.team[x]?.species + '.png'"/>
-            <img v-else-if="meta.game == 'Red and Blue'" class="ePkmnSprite" :style="pokemon.style.faint" :src="'images/pokemon/Red_and_Blue/' + game_properties.battle.trainer.team[x]?.species + '.png'"/>
+            <img v-if="meta.game == 'Yellow'" class="ePkmnSprite"
+                :class="{ ePkmnSpriteResizing: resize.resize.slot === x }"
+                :data-enemy-slot="x"
+                :data-enemy-species="game_properties.battle.trainer.team[x]?.species?.value"
+                :style="[pokemon.style.faint, { transform: resize.transformFor(game_properties.battle.trainer.team[x]?.species?.value) }]"
+                :src="'images/pokemon/' + game_properties.battle.trainer.team[x]?.species + '.png'"/>
+            <img v-else-if="meta.game == 'Red and Blue'" class="ePkmnSprite"
+                :class="{ ePkmnSpriteResizing: resize.resize.slot === x }"
+                :data-enemy-slot="x"
+                :data-enemy-species="game_properties.battle.trainer.team[x]?.species?.value"
+                :style="[pokemon.style.faint, { transform: resize.transformFor(game_properties.battle.trainer.team[x]?.species?.value) }]"
+                :src="'images/pokemon/Red_and_Blue/' + game_properties.battle.trainer.team[x]?.species + '.png'"/>
             <div class="ePkmnSpecies opacityTransition" :style="pokemon.style.species">{{game_properties.battle.trainer.team[x]?.species}}</div>
             <div class="ePkmnLevel opacityTransition" :style="pokemon.style.species">Lv:{{game_properties.battle.trainer.team[x]?.level}}</div>
             <img class="ePkmnTypeIcons ePkmnType_1 ds opacityTransition" :style="enemy_pkmn_faint_types(battle.trainer.team[x])" :src="'images/elements/type-icons/' + enemyType1(x).toLowerCase() + '.png'"/>
@@ -25,7 +35,7 @@
                 <img v-if="game_properties.battle.trainer.team[x]['move' + (move_index + 1)]?.value != null" 
                     :class="'ds eMoveIconStyle moveIcon' + (move_index + 1) + ' opacityTransition'" 
                     :style="enemy_pkmn_faint_types(battle.trainer.team[x])" 
-                    :src="'images/elements/type-icons/' + getMove(move_name(game_properties.battle.trainer.team[x]['move' + (move_index + 1)]?.value))?.type?.toLowerCase() + '.png'" 
+                    :src="move_icon(game_properties.battle.trainer.team[x]['move' + (move_index + 1)]?.value)"
                 />
                 <div :class="'ePkmnMoveStyle ePkmnMove' + (move_index + 1) + ' opacityTransition'" 
                     :style="pokemon.style.text">
@@ -80,6 +90,7 @@ import { capitalize_words, move_name } from "../../methods/text_functions";
 import { useMetaStore } from "~/stores/metaStore";
 import { defineComponent, inject } from "vue";
 import {  useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
+import { useEnemySpriteResizeStore } from "~/stores/useEnemySpriteResizeStore";
 import { GameHookProperty } from "~/packages/gameHookMapperClient";
 export default defineComponent({
     name: "EnemyGraphics",
@@ -87,10 +98,11 @@ export default defineComponent({
         "enemy_pkmn_faint_types",
     ],
     data() {
-        return { 
+        return {
             game_properties: inject<Record<string, GameHookProperty>>("game_properties", {}),
-            meta: useMetaStore(), 
-            overlay: useOverlaySettingsStore() 
+            meta: useMetaStore(),
+            overlay: useOverlaySettingsStore(),
+            resize: useEnemySpriteResizeStore(),
         }
     },
     computed: {
@@ -129,15 +141,17 @@ export default defineComponent({
                 5: "886px",
                 6: "1080px"
             };
-            return `height: ${heights[totalPokemon]}; drop-shadow(0px 0px 1px #000000)`;
+            return `height: ${heights[totalPokemon] ?? "242px"};`;
         },
     },
     methods: {
         move_name,
         capitalize_words,
         get_enemy_pkmn_styles,
-        getMove(moveName) {
-            return PokeData.getMove(moveName);
+        /** Path of the type icon for a move of the enemy pokemon. Unknown moves fall back to the normal type. */
+        move_icon(rawMoveName) {
+            const move = PokeData.findMove(this.move_name(rawMoveName));
+            return 'images/elements/type-icons/' + (move?.type ?? "Normal").toLowerCase() + '.png';
         },
         speed_comparison(enemy_slot, enemy_speed_incoming) {
             const trainer = this.game_properties.battle.trainer.class.value
@@ -147,8 +161,11 @@ export default defineComponent({
             let player_speed = this.game_properties.battle.yourPokemon.speed.value
             let enemy_speed = enemy_speed_incoming
             if (this.meta.gameState == 'To Battle') {
-                enemy_speed = trainerData?.party[enemy_slot].stats.speed
-                player_speed = this.game_properties.player.team[0].speed.value
+                // Before the battle data is populated, compare against the trainer data and apply the Soul Badge boost.
+                const koga_badge = this.game_properties.player.badges.badge5.value
+                const party_speed = this.game_properties.player.team[0].speed.value
+                enemy_speed = trainerData?.party?.[enemy_slot]?.stats?.speed
+                player_speed = koga_badge ? Math.floor(party_speed * 1.125) : party_speed
             }
             let object = {
                 comparison: "Outspeeds",
@@ -243,7 +260,7 @@ export default defineComponent({
             if (pkmn_species == null) {
                 return "Normal"
             }
-            return PokeData.getSpecies(pkmn_species).type_1
+            return PokeData.findSpecies(pkmn_species)?.type_1 ?? "Normal"
         },
         enemyType2(slotNumber) {
             const pkmn_species = this.game_properties.battle.trainer.team[slotNumber].species.value
@@ -251,7 +268,7 @@ export default defineComponent({
             if (pkmn_species == null) {
                 return "Normal"
             }
-            const type_2 = PokeData.getSpecies(pkmn_species).type_2
+            const type_2 = PokeData.findSpecies(pkmn_species)?.type_2 ?? type_1
             if (type_1 == type_2 && this.meta.starter == 'Pumpkaboo' && this.game_properties.patch.backport.prop_2.value == 8 && this.game_properties.battle.enemyPokemon.partyPos.value == slotNumber) {
                 return 'Ghost'
             }
@@ -259,8 +276,8 @@ export default defineComponent({
         },
         enemyType3(slotNumber) {
             const pkmn_species = this.game_properties.battle.trainer.team[slotNumber].species.value
-            const type1 = PokeData.getSpecies(pkmn_species).type_1;
-            const type2 = PokeData.getSpecies(pkmn_species).type_2;
+            const type1 = PokeData.findSpecies(pkmn_species)?.type_1 ?? "Normal";
+            const type2 = PokeData.findSpecies(pkmn_species)?.type_2 ?? "Normal";
             if (type2 != null && type1 != type2 && this.meta.starter == 'Pumpkaboo' && this.game_properties.patch.backport.prop_2.value == 8 && this.game_properties.battle.enemyPokemon.partyPos.value == slotNumber) {
                 return 'Ghost'
             }
@@ -316,7 +333,7 @@ export default defineComponent({
         },
         enemy_crit_rate(pkmnData) {
             const species = pkmnData?.species.value;
-            const base_speed = PokeData.getSpecies(species)?.base_stats.speed;
+            const base_speed = PokeData.findSpecies(species)?.base_stats.speed;
             if (base_speed) {
                 return Math.round(Math.round((Math.floor(base_speed / 2) / 256) * 10000) / 100)
             }

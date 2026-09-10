@@ -18,11 +18,15 @@ import { defineComponent, inject } from "vue";
 import PokeData from "~/logic/PokeData";
 import { GameHookProperty } from "~/packages/gameHookMapperClient";
 import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
+
+/** Species byte that the ROM patch uses for every backported species. */
+const BACKPORT_SPECIES_BYTE = 0xBF;
+
 export default defineComponent({
     data() {
         return {
             game_properties: inject<Record<string, GameHookProperty>>("game_properties", {}),
-            overlaySettings: useOverlaySettingsStore(), 
+            overlaySettings: useOverlaySettingsStore(),
             search_term: ""
         }
     },
@@ -37,14 +41,15 @@ export default defineComponent({
     },
     methods: {
         async set_rom_starter() {
-            let starter = this.overlaySettings.starter;
-            let pokedex_data = PokeData.getSpecies(starter);
-            let pokedex_number = pokedex_data.national_dex_number;
-            let backport_index = [0xBF];
-            if (pokedex_number > 151) {
-                // @ts-expect-error: TODO: I think this should be `setBytes(backport_index, false)`, 
-                // but I can't test this. - Ion.
-                await this.game_properties.patch.hChosenStarter.setBytes([backport_index], false)
+            const starter = this.overlaySettings.starter;
+            if (!PokeData.findSpecies(starter)) {
+                console.warn(`[settings] Cannot set the ROM starter, unknown species: ${starter}`);
+                return;
+            }
+            // Backported species are not one of the original 151, the ROM patch uses a placeholder species for them.
+            if (PokeData.isBackportSpecies(starter)) {
+                await this.game_properties.patch.hChosenStarter.setBytes([BACKPORT_SPECIES_BYTE], false);
+                return;
             }
             await this.game_properties.patch.hChosenStarter.set(starter, false);
         },

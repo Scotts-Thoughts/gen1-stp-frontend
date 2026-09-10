@@ -91,7 +91,7 @@ export default defineComponent({
             }
         });
         this.game_properties.battle.turnInfo.battleStart.change((prop) => {
-            if (prop.value != 0 && this.state == "To Battle") {
+            if (prop.value != 0 && this.meta.gameState == "To Battle") {
                 this.meta.setEnemyState("Pokemon");
             }
         });

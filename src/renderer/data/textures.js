@@ -16,6 +16,8 @@ export const textures = {
     'Normal 1': 'images\\textures\\normal.png',
     'Poison 1': 'images\\textures\\poison.png',
     'Psychic 1': 'images\\textures\\Psychic (crisp).jpg',
+    // Kept so that presets saved with the old name keep working.
+    'Psychic (crisp)': 'images\\textures\\Psychic (crisp).jpg',
     'Rock 1': 'images\\textures\\rock.png',
     'Water 1': 'images\\textures\\water1.png',
     'Water 2': 'images\\textures\\water.png',

@@ -200,6 +200,8 @@
     --bulbapedia_stats_20240407-spe-heavy: #8B1370;
 
     --overlay-color: #000000;
+    /* Saturation of the tinted UI boxes. Overwritten by the settings store once a style is loaded. */
+    --style_ui_saturation: 0.6;
     /* default color */
 
     /* Exp Bar Colours */
@@ -788,9 +790,26 @@ body {
     height: 125px;
     left: 7px;
     top: 18px;
+    transform-origin: 50% 50%;
     transition: opacity 500ms ease-in-out, filter 500ms ease-in-out;
     object-fit: contain;
     /* Ensure the image scales to fit within the container without altering its aspect ratio */
+}
+.ePkmnSpriteResizing {
+    outline: 2px dashed #00ffff;
+    outline-offset: 2px;
+}
+.ePkmnSpriteResizeHandle {
+    position: fixed;
+    width: 16px;
+    height: 16px;
+    background: #00ffff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    cursor: nwse-resize;
+    z-index: 2147483647;
+    pointer-events: auto;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
 }
 
 .enemyStatsArea {

@@ -42,3 +42,8 @@ The following stores deal with managing user settings and data collection:
 - `useSettingsStore` exists to manage the other stores, such as loading and saving their settings and ensuring that species
   selection is communicated accross all relevant stores.
 
+All of these are written to `%APPDATA%/stp-generation1-overlay/data/` automatically whenever they change:
+`overlay_settings.json` for the overlay settings and `<game>/<species>/settings.json` plus `metrics.json` per species.
+The first time a species is loaded without such files, its styling preset and run counters are migrated from the old
+`storage/Storage.json` file (see `logic/legacyStorage.ts`), which is otherwise no longer written to.
+

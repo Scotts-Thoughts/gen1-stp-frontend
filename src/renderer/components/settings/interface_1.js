@@ -3,12 +3,13 @@ import battle_testing from "./battle_testing.vue";
 import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
 import { useGameSpeciesData } from "~/stores/useGameSpeciesData";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore";
+import { useEnemySpriteResizeStore } from "~/stores/useEnemySpriteResizeStore";
 import { defineComponent } from "vue";
 import { openFolder } from "../../methods/file_system_functions";
-// todo: remove the "parent.parent" stuff.
+
 const template = /*html*/`
     <div>Game:</div>
-    <select v-model="$parent.$parent.game_selection" class="dropdownMenu dropdown_menu_column3">
+    <select v-model="settings.edition" class="dropdownMenu dropdown_menu_column3">
         <option>Yellow</option>
         <option v-if="isRelease == false">Yellow Legacy</option>
         <option>Red</option>
@@ -31,12 +32,18 @@ const template = /*html*/`
                 <tr><td>No attempt/split:</td><td><input class="checkBoxStyle" type="checkbox" v-model="runConfig.advanced.no_attempt"/></td></tr>
                 <tr><td>Shuckie Timer:</td><td>   <input class="checkBoxStyle" type="checkbox" v-model="runConfig.advanced.shuckie_timer"/></td></tr>
                 <tr><td>Shuckie Counters:</td><td><input class="checkBoxStyle" type="checkbox" v-model="runConfig.advanced.shuckie_counters"/></td></tr>
+                <tr title="Dev only. Packaged builds always apply enemy sprite styles."><td>Enemy Sprite Styles:</td><td><input class="checkBoxStyle" type="checkbox" :checked="enemyResize.styles_enabled" @change="enemyResize.setStylesEnabled($event.target.checked)"/></td></tr>
+                <tr><td>Style Mode:</td><td>
+                    <button v-if="!enemyResize.style_mode_active" class="buttonStyle" style="font-size: 11px;" @click="enemyResize.enterStyleMode()" title="Iterate every species: Enter saves + advances, Backspace discards + steps back, Escape exits.">Start</button>
+                    <button v-else class="buttonStyle" style="font-size: 11px; color: #f44;" @click="enemyResize.exitStyleMode()">Exit</button>
+                </td></tr>
+                <tr v-if="enemyResize.style_mode_active"><td colspan="2" style="font-size: 11px;">{{ enemyResize.style_mode_index + 1 }} / {{ enemyResize.style_mode_species_list.length }} — <strong>{{ enemyResize.styleModeCurrentSpecies }}</strong></td></tr>
             </tbody>
         </table>
         <table v-if="runConfig.advanced.refilming_mode">
             <tbody>
-                <tr><td>Attempt:</td><td><input class="inputContainer" type="text" v-model="$parent.$parent.refilmed_attempt"/></td></tr>
-                <tr><td>Finish:</td><td> <input class="inputContainer" type="text" v-model="$parent.$parent.refilmed_finish"/></td></tr>
+                <tr><td>Attempt:</td><td><input class="inputContainer" type="number" min="0" v-model.number="runConfig.advanced.refilmed_attempt"/></td></tr>
+                <tr><td>Finish:</td><td> <input class="inputContainer" type="number" min="0" v-model.number="runConfig.advanced.refilmed_finish"/></td></tr>
             </tbody>
         </table>
         <br>
@@ -52,7 +59,9 @@ const template = /*html*/`
                 <tr><td>Mapper State:</td><td>{{game_properties.meta.state.value}}</td></tr>
                 <tr><td>Enemy State:</td><td>{{meta.enemyState}}</td></tr>
                 <tr><td></td><td></td></tr>
-                <tr><td>blackout:</td><td>{{$parent.$parent.blackout}}</td></tr>
+                <tr><td>blackout:</td><td>{{metrics.blackout_pending}}</td></tr>
+                <tr><td>save file id:</td><td>{{metrics.player_id}}</td></tr>
+                <tr><td>run finished:</td><td>{{metrics.run_finished}}</td></tr>
             </tbody>
         </table>
     </div>
@@ -70,6 +79,7 @@ export default defineComponent({
             settings: useOverlaySettingsStore(),
             runConfig: useGameSpeciesData(),
             metrics: useSpeciesMetricsStore(),
+            enemyResize: useEnemySpriteResizeStore(),
             isRelease: process.env.NODE_ENV !== "development",
         }
     },

@@ -1,10 +1,19 @@
 import { defineStore } from "pinia";
 import { loadAppSettings, saveAppSettings } from "./helper/files";
-import { JsonStorage } from "~/logic/Storage.js";
+import { deepMerge } from "./helper/merge";
+import { findLegacySpeciesEntry } from "~/logic/legacyStorage";
+import { textures } from "~/data/textures";
 const path = require('path');
 
 const SETTINGS_FILE_NAME = "settings.json";
 
+/**
+ * Settings that are specific to a game and species combination: the run configuration (encounter flags, advanced
+ * toggles, split labels) and the styling of the overlay (artwork position, background texture, UI colour).
+ *
+ * Everything in here is saved automatically by {@link useSettingsStore} whenever it changes, to
+ * `%APPDATA%/stp-generation1-overlay/data/${game}/${starter}/settings.json`.
+ */
 export const useGameSpeciesData = defineStore("game_species_data", {
 	state: () => defaultGameSpeciesSettings(),
 	getters: {
@@ -20,92 +29,116 @@ export const useGameSpeciesData = defineStore("game_species_data", {
 		ui(state) {
 			return state.styling.ui;
 		},
-		gameSpecific<T extends Record<string, any>>(state) {
-			return () =>  state.config.gameSpecific as T ?? {};
+		/** Game specific configuration, e.g. the encounter flags. */
+		gameSpecific(state): Record<string, any> {
+			return state.config.gameSpecific;
 		}
 	},
 	actions: {
-		/** Saves the config section to %APPSETTINGS%/data/${game}/${starter}/settings.json */
-		async saveConfig(game: string|null, starter:string|null) {
+		/** Saves the complete state to `%APPDATA%/data/${game}/${starter}/settings.json` */
+		async save(game: string|null, starter: string|null) {
 			if (!game || !starter) {
 				return;
 			}
-			// load the currently saved settigns:
-			const settings = await loadAppSettings<GameSpeciesData>(path.join(game, starter), SETTINGS_FILE_NAME)
-				?? defaultGameSpeciesSettings();
-			// Apply the config sub-section:
-			Object.assign(settings.config, this.$state.config);
-			// Save the resulting merged config.
-			saveAppSettings(path.join(game, starter), SETTINGS_FILE_NAME, settings)
-			// This way we don't also save the style-settings if there are pending changes on there that the user
-			// has not yet manually changed.
+			await saveAppSettings(path.join(game, starter), SETTINGS_FILE_NAME, this.$state);
 		},
-		/** Loads the config section from %APPSETTINGS%/data/${game}/${starter}/settings.json */
-		async loadConfig(game: string|null, starter:string|null) {
+		/**
+		 * Loads the complete state from `%APPDATA%/data/${game}/${starter}/settings.json`.
+		 * When no file exists yet, the styling preset from the old `Storage.json` is used (if there is one).
+		 */
+		async load(game: string|null, starter: string|null) {
 			if (!game || !starter) {
 				return;
 			}
-			const loadedSettings = await loadAppSettings<GameSpeciesData>(path.join(game, starter), SETTINGS_FILE_NAME)
-				?? defaultGameSpeciesSettings();
-			Object.assign(this.$state.config, loadedSettings.config);
+			const defaults = defaultGameSpeciesSettings();
+			const loaded = await loadAppSettings<Partial<GameSpeciesData>>(path.join(game, starter), SETTINGS_FILE_NAME);
+			const next = loaded
+				? deepMerge(defaults, loaded)
+				: { ...defaults, styling: presetStyling(game, starter) ?? defaults.styling };
+			// Earlier versions of the overlay wrote settings files with default styling before the legacy preset
+			// could be applied. If the styling is still untouched, prefer the preset.
+			if (loaded && JSON.stringify(next.styling) === JSON.stringify(defaults.styling)) {
+				next.styling = presetStyling(game, starter) ?? next.styling;
+			}
+			// Replace the state in one go so that subscribers get a single, synchronous notification.
+			this.$patch((state) => { Object.assign(state, next); });
 		},
-		/** Saves the style section to `%APPSETTINGS%/data/${game}/${starter}/settings.json` */
+		/** Re-reads only the styling section, from the settings file or the legacy preset. */
+		async reloadStyle(game: string|null, starter:string|null) {
+			if (!game || !starter) {
+				return;
+			}
+			const defaults = defaultGameSpeciesSettings();
+			const loaded = await loadAppSettings<Partial<GameSpeciesData>>(path.join(game, starter), SETTINGS_FILE_NAME);
+			const styling = loaded?.styling
+				? deepMerge(defaults.styling, loaded.styling)
+				: (presetStyling(game, starter) ?? defaults.styling);
+			this.$patch((state) => { state.styling = styling; });
+		},
+		// Aliases kept for the buttons on the style panel.
 		async saveStyle(game: string|null, starter:string|null) {
-			if (!game || !starter) {
-				return;
-			}
-			// We can just save the entire state in this case:
-			saveAppSettings(path.join(game, starter), SETTINGS_FILE_NAME, this.$state)
+			await this.save(game, starter);
 		},
-		/** Loads the style section from `%APPSETTINGS%/data/${game}/${starter}/settings.json` */
 		async loadStyle(game: string|null, starter:string|null) {
-			if (!game || !starter) {
-				return;
-			}
-			const loadedSettings = await loadAppSettings<GameSpeciesData>(path.join(game, starter), SETTINGS_FILE_NAME);
-			if (loadedSettings === null)  {
-				this.applyPresetStyle(JsonStorage['games'][game][starter].style)
-				return;
-			}
-			Object.assign(this.$state.styling, loadedSettings.styling);
+			await this.reloadStyle(game, starter);
 		},
-		applyPresetStyle(preset: DeprecatedStyleSettings) {
-			const newStyle = structuredClone(defaultGameSpeciesSettings().styling);
-			// TODO: Hopefully this is temporary code 'til we migrated all the presets to the new format. 
-			// Then loading them is a lot less code. - Ion.
-			if (Object.getOwnPropertyNames(preset).length === 0) {
-				return;
-			}
-			newStyle.ui.saturation = parseFloat(preset.ui_saturation.toString());
-			newStyle.ui.color = preset.overlay_color;
-
-			newStyle.artwork.offset_x = parseInt(preset.imageXOffset.toString());
-			newStyle.artwork.offset_y = parseInt(preset.imageYOffset.toString());
-			newStyle.artwork.scale = parseFloat(preset.imageScale);
-			newStyle.artwork.flip = preset.imageFlip;
-			newStyle.artwork.saturation = parseInt(preset.imageSat);
-			newStyle.artwork.rotation = preset.imageRotation;
-
-			newStyle.background.blur = preset.backgroundBlur;
-			newStyle.background.scale = parseFloat(preset.backgroundScale);
-			newStyle.background.flip = preset.backgroundFlip;
-			newStyle.background.offset_x = preset.backgroundXOffset;
-			newStyle.background.offset_y = preset.backgroundYOffset;
-			newStyle.background.texture = preset.backgroundTexture;
-			newStyle.background.brightness = preset.backgroundBrightness;
-			newStyle.background.contrast = parseInt(preset.backgroundContrast);
-			newStyle.background.saturation = preset.backgroundSaturation;
-			newStyle.background.hue = parseInt(preset.backgroundHue);
-			Object.assign(this.$state.styling, newStyle);
-		}
 	}
 });
 
 type GameSpeciesData = ReturnType<typeof defaultGameSpeciesSettings>;
+type StylingSettings = GameSpeciesData["styling"];
+
+/** Convert a styling preset from the old `Storage.json` file to the current format. */
+function presetStyling(game: string, starter: string): StylingSettings | null {
+	const entry = findLegacySpeciesEntry(game, starter);
+	const preset = entry?.style;
+	if (!preset || Object.keys(preset).length === 0) {
+		return null;
+	}
+	return presetToStyling(preset as DeprecatedStyleSettings);
+}
+
+const toNumber = (value: unknown, fallback: number): number => {
+	const parsed = typeof value === "number" ? value : parseFloat(String(value));
+	return Number.isFinite(parsed) ? parsed : fallback;
+};
+const toBool = (value: unknown, fallback: boolean): boolean => {
+	if (typeof value === "boolean") return value;
+	if (value === "true") return true;
+	if (value === "false") return false;
+	return fallback;
+};
+
+export function presetToStyling(preset: DeprecatedStyleSettings): StylingSettings {
+	const style = structuredClone(defaultGameSpeciesSettings().styling);
+	style.ui.saturation = toNumber(preset.ui_saturation, style.ui.saturation);
+	style.ui.color = typeof preset.overlay_color === "string" && preset.overlay_color ? preset.overlay_color : style.ui.color;
+
+	style.artwork.offset_x = toNumber(preset.imageXOffset, style.artwork.offset_x);
+	style.artwork.offset_y = toNumber(preset.imageYOffset, style.artwork.offset_y);
+	style.artwork.scale = toNumber(preset.imageScale, style.artwork.scale);
+	style.artwork.flip = toBool(preset.imageFlip, style.artwork.flip);
+	style.artwork.saturation = toNumber(preset.imageSat, style.artwork.saturation);
+	style.artwork.rotation = toNumber(preset.imageRotation, style.artwork.rotation);
+
+	style.background.blur = toNumber(preset.backgroundBlur, style.background.blur);
+	style.background.scale = toNumber(preset.backgroundScale, style.background.scale);
+	style.background.flip = toBool(preset.backgroundFlip, style.background.flip);
+	style.background.flip_y = toBool(preset.backgroundXFlip, style.background.flip_y);
+	style.background.offset_x = toNumber(preset.backgroundXOffset, style.background.offset_x);
+	style.background.offset_y = toNumber(preset.backgroundYOffset, style.background.offset_y);
+	style.background.texture = typeof preset.backgroundTexture === "string" && preset.backgroundTexture in textures
+		? preset.backgroundTexture
+		: style.background.texture;
+	style.background.brightness = toNumber(preset.backgroundBrightness, style.background.brightness);
+	style.background.contrast = toNumber(preset.backgroundContrast, style.background.contrast);
+	style.background.saturation = toNumber(preset.backgroundSaturation, style.background.saturation);
+	style.background.hue = toNumber(preset.backgroundHue, style.background.hue);
+	return style;
+}
 
 export function defaultGameSpeciesSettings() {
 	return {
-		// Config settings save on change
 		config: {
 			labels: {
 				split_previous: "Previous",
@@ -121,9 +154,15 @@ export function defaultGameSpeciesSettings() {
 			advanced: {
 				test_run: false,
 				refilming_mode: false,
+				/** Attempt number to log to when refilming. */
+				refilmed_attempt: 0,
+				/** Finish number to log to when refilming. */
+				refilmed_finish: 0,
 				no_attempt: false,
 				shuckie_timer: false,
 				shuckie_counters: false,
+				/** Whether a blackout (returning to the overworld after fainting) counts as a fault. */
+				count_blackouts: true,
 				editor: {
 					moves: {},
 					items: {
@@ -134,7 +173,6 @@ export function defaultGameSpeciesSettings() {
 			},
 			gameSpecific: {} as Record<string, any>
 		},
-		// Styling settings are saved with the click of a button on the overlay
 		styling: {
 			artwork: {
 				/** X-offset for the pokemon artwork. Should be a whole number. */
@@ -153,7 +191,10 @@ export function defaultGameSpeciesSettings() {
 			background: {
 				blur:        0,
 				scale:       100,
+				/** Mirror the background horizontally. */
 				flip:        false,
+				/** Mirror the background vertically. */
+				flip_y:      false,
 				offset_x:    0, // went with "offset_x" instead of "x_offset" so that the offets are "grouped".
 				offset_y:    0,
 				texture:     'Bug 1',
@@ -171,24 +212,25 @@ export function defaultGameSpeciesSettings() {
 	}
 }
 
+/** The style section of a species entry in the old `Storage.json` file. Values were often stored as strings. */
 export interface DeprecatedStyleSettings {
-	overlay_color: string,
-	imageXOffset: string,
-	imageYOffset: string,
-	imageScale: string,
-	imageFlip: true,
-	imageSat: string,
-	imageRotation: number,
-	backgroundBlur: number,
-	backgroundScale: string,
-	backgroundFlip: false,
-	backgroundXOffset: number,
-	backgroundYOffset: number,
-	backgroundTexture: string,
-	backgroundBrightness: number,
-	backgroundContrast: string,
-	backgroundSaturation: number,
-	backgroundHue: string,
-	ui_saturation: string,
+	overlay_color?: string,
+	imageXOffset?: string | number,
+	imageYOffset?: string | number,
+	imageScale?: string | number,
+	imageFlip?: boolean | string,
+	imageSat?: string | number,
+	imageRotation?: string | number,
+	backgroundBlur?: string | number,
+	backgroundScale?: string | number,
+	backgroundFlip?: boolean | string,
+	backgroundXFlip?: boolean | string,
+	backgroundXOffset?: string | number,
+	backgroundYOffset?: string | number,
+	backgroundTexture?: string,
+	backgroundBrightness?: string | number,
+	backgroundContrast?: string | number,
+	backgroundSaturation?: string | number,
+	backgroundHue?: string | number,
+	ui_saturation?: string | number,
 }
-

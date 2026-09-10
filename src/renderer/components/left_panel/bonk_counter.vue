@@ -4,14 +4,14 @@
         <div v-if="mode === 'Bonks'">
             <transition name="fade">
                 <div v-if="metrics.faultsMode != 'Both'">
-                    <div class="tinted-box"  style="--url: url(../images/ui/bonks.svg)"></div>
+                    <div class="tinted-box"  style="--url: url(images/ui/bonks.svg)"></div>
                     <div class="bonksLabel">bonks</div>
                     <div class="popUpsStyle bonksValue">{{ bonks }}</div>
                 </div>
             </transition>
             <transition name="fade">
                 <div v-if="metrics.faultsMode == 'Both'">
-                    <div class="tinted-box"  style="--url: url(../images/ui/bonks_2.svg)"></div>
+                    <div class="tinted-box"  style="--url: url(images/ui/bonks_2.svg)"></div>
                     <div class="bonksLabel_1">bonks</div>
                     <div class="popUpsStyle bonksValue_1">{{ bonks }}</div>
                 </div>
@@ -20,14 +20,14 @@
         <div v-else-if="mode === 'Item Count'">
             <transition name="fade">
                 <div v-if="metrics.faultsMode != 'Both'">
-                    <div class="tinted-box"  style="--url: url(../images/ui/bonks.svg)"></div>
+                    <div class="tinted-box"  style="--url: url(images/ui/bonks.svg)"></div>
                     <div class="bonksLabel">item count</div>
                     <div class="popUpsStyle bonksValue">{{ game_properties?.player.itemCount.value }}</div>
                 </div>
             </transition>
             <transition name="fade">
                 <div v-if="metrics.faultsMode == 'Both'">
-                    <div class="tinted-box" style="--url: url(../images/ui/bonks_2.svg)"></div>
+                    <div class="tinted-box" style="--url: url(images/ui/bonks_2.svg)"></div>
                     <div class="bonksLabel_1">item count</div>
                     <div class="popUpsStyle bonksValue_1">{{ game_properties?.player.itemCount.value }}</div>
                 </div>

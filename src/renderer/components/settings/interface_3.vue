@@ -4,7 +4,7 @@
         Color Picker
     </button>
     <br>
-    Saturation: <input type="range" min="0" max="2" step="0.1" v-model="ui.saturation"/>
+    Saturation: <input type="range" min="0" max="2" step="0.1" v-model.number="ui.saturation"/>
     <br>
     <br>
     <div>Pokemon:</div>
@@ -12,23 +12,23 @@
         <tbody>
             <tr>
                 <td>X-Offset:   </td>
-                <td><input type="range" min="-400" max="400" v-model="artwork.offset_x" /></td>
+                <td><input type="range" min="-400" max="400" v-model.number="artwork.offset_x" /></td>
             </tr>
             <tr>
                 <td>Y-Offset:   </td>
-                <td><input type="range" min="-400" max="400" v-model="artwork.offset_y" /></td>
+                <td><input type="range" min="-400" max="400" v-model.number="artwork.offset_y" /></td>
             </tr>
             <tr>
                 <td>Scale:      </td>
-                <td><input type="range" min="0.3"  max="2"   step="0.02" v-model="artwork.scale" /></td>
+                <td><input type="range" min="0.3"  max="2"   step="0.02" v-model.number="artwork.scale" /></td>
             </tr>
             <tr>
                 <td>Saturation: </td>
-                <td><input type="range" min="90"   max="150" step="1"    v-model="artwork.sat" /></td>
+                <td><input type="range" min="90"   max="150" step="1"    v-model.number="artwork.saturation" /></td>
             </tr>
             <tr>
                 <td>Rotation:   </td>
-                <td><input type="range" min="0"    max="360" step="1"    v-model="artwork.rotation" /></td>
+                <td><input type="range" min="0"    max="360" step="1"    v-model.number="artwork.rotation" /></td>
             </tr>
             <tr>
                 <td>Flip:       </td>
@@ -48,44 +48,46 @@
         <tbody>
             <tr>
                 <td>X-Offset:   </td>
-                <td><input type="range" min="-125" max="125" v-model="background.offset_x"/></td>
+                <td><input type="range" min="-400" max="400" v-model.number="background.offset_x"/></td>
             </tr>
             <tr>
                 <td>Y-Offset:   </td>
-                <td><input type="range" min="-125" max="125" v-model="background.offset_y"/></td>
+                <td><input type="range" min="-400" max="400" v-model.number="background.offset_y"/></td>
             </tr>
             <tr>
                 <td>Scale:      </td>
-                <td><input type="range" min="100"  max="200" v-model="background.scale"/></td>
+                <td><input type="range" min="50"   max="300" v-model.number="background.scale"/></td>
             </tr>
             <tr>
                 <td>Brightness: </td>
-                <td><input type="range" min="0"    max="200" v-model="background.brightness"/></td>
+                <td><input type="range" min="0"    max="200" v-model.number="background.brightness"/></td>
             </tr>
             <tr>
                 <td>Contrast:   </td>
-                <td><input type="range" min="0"    max="200" v-model="background.contrast"/></td>
+                <td><input type="range" min="0"    max="200" v-model.number="background.contrast"/></td>
             </tr>
             <tr>
                 <td>Saturation: </td>
-                <td><input type="range" min="0"    max="200" v-model="background.saturation"/></td>
+                <td><input type="range" min="0"    max="200" v-model.number="background.saturation"/></td>
             </tr>
             <tr>
                 <td>Blur:       </td>
-                <td><input type="range" min="0"    max="10"  v-model="background.blur"/></td>
+                <td><input type="range" min="0"    max="10"  step="0.1" v-model.number="background.blur"/></td>
             </tr>
             <tr>
                 <td>Hue:        </td>
-                <td><input type="range" min="0"    max="358" v-model="background.hue"/></td>
+                <td><input type="range" min="0"    max="358" v-model.number="background.hue"/></td>
             </tr>
             <tr>
-                <td>Flip:     </td>
+                <td>Flip X:     </td>
                 <td><input class="checkBoxStyle" type="checkbox" v-model="background.flip"/></td>
             </tr>
             <tr>
-                <td colspan="2">
-                    <button class="buttonStyle buttonStyle_column3" @click="save">Save style</button>
-                </td>
+                <td>Flip Y:     </td>
+                <td><input class="checkBoxStyle" type="checkbox" v-model="background.flip_y"/></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-size: 12px; opacity: .8;">Changes are saved automatically.</td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -111,13 +113,11 @@ export default defineComponent({
     },
     methods: {
         async color_picker() {
-            this.ui.color = await new EyeDropper().open().then(res => res.sRGBHex);           
+            this.ui.color = await new EyeDropper().open().then(res => res.sRGBHex);
         },
-        async save() {
-            this.runConfig.saveStyle(this.meta.game, this.meta.starter);
-        },
+        /** Re-read the style from disk (or the legacy preset), discarding unsaved edits. */
         async reload() {
-            this.runConfig.loadStyle(this.meta.game, this.meta.starter);
+            this.runConfig.reloadStyle(this.meta.game, this.meta.starter);
         },
     },
     computed: {

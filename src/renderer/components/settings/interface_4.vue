@@ -31,6 +31,10 @@
     <table>
         <tbody>
             <tr>
+                <td>Blackouts?:</td>
+                <td><input class="checkBoxStyle" type="checkbox" v-model="runConfig.advanced.count_blackouts"/></td>
+            </tr>
+            <tr>
                 <td>Disable right panel hotkeys:</td>
                 <td><input class="checkBoxStyle" type="checkbox" v-model="settings.right_panel.hotkeys"/></td>
             </tr>
@@ -71,13 +75,15 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore";
+import { useGameSpeciesData } from "~/stores/useGameSpeciesData";
 import { SplitsMode } from "~/stores/types/SplitsMode";
 import { RightPanelMode } from "~/stores/types/RightPanelMode";
 import { StatsPanelMode } from "~/stores/types/StatsPanelMode";
 export default defineComponent({
     data() {
-        return { 
-            settings: useOverlaySettingsStore(), 
+        return {
+            settings: useOverlaySettingsStore(),
+            runConfig: useGameSpeciesData(),
             StatsPanelMode,
             RightPanelMode,
             SplitsMode,

@@ -1,7 +1,7 @@
 <template>
 <div>
-    <div v-show="top_left_ui_selector != 'Both'" class="tinted-box" style="--drop-shadow: 0px 0px 1px #000000; --url: url(../images/ui/timer_2.svg)"></div>
-    <div v-show="top_left_ui_selector == 'Both'" class="tinted-box" style="--drop-shadow: 0px 0px 1px #000000; --url: url(../images/ui/timer.svg)"></div>
+    <div v-show="top_left_ui_selector != 'Both'" class="tinted-box" style="--drop-shadow: 0px 0px 1px #000000; --url: url(images/ui/timer_2.svg)"></div>
+    <div v-show="top_left_ui_selector == 'Both'" class="tinted-box" style="--drop-shadow: 0px 0px 1px #000000; --url: url(images/ui/timer.svg)"></div>
 
     <div v-show="top_left_ui_selector == 'None'"      class="genericLabels resetsLabel_1">faults</div>
     <div v-show="top_left_ui_selector == 'Resets'"    class="genericLabels resetsLabel_1">resets</div>
@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import { JsonStorage } from "~/logic/Storage.js";
 import PubSub from "~/logic/PubSub";
+import { sendObsChapterMarker } from "~/logic/obs";
 import { useSpeciesMetricsStore } from "~/stores/useSpeciesMetricsStore.js";
 import { FaultMode } from "~/stores/types/FaultMode";
 import { defineComponent } from "vue";
@@ -44,13 +44,11 @@ import { useEmulatorStatsStore } from "~/stores/useEmulatorStatsStore";
 export default defineComponent({
     inject: [ "game_properties" ],
     data() {
-        this.meta = useMetaStore();
         return {
             meta: useMetaStore(),
             metrics: useSpeciesMetricsStore(),
             runConfig: useGameSpeciesData(),
             emulator: useEmulatorStatsStore(),
-            flag_blackout_prerequisite: JsonStorage.games[this.meta.game]?.[this.meta.starter]?.data?.flag_blackout_prerequisite ?? false,
         }
     },
     computed: {
@@ -79,25 +77,29 @@ export default defineComponent({
         clear_playthrough_data() {
             this.metrics.update("resets", 0);
             this.metrics.update("blackouts", 0);
-            this.flag_blackout_prerequisite = false
+            this.metrics.update("blackout_pending", false);
         },
         reset_occurred() {
-            this.flag_blackout_prerequisite = false;
-            this.metrics.update("resets", this.metrics.resets+1);
+            this.metrics.update("blackout_pending", false);
+            this.metrics.update("resets", this.metrics.resets + 1);
+            sendObsChapterMarker('RESET');
             if (this.runConfig.advanced.shuckie_counters) {
                 this.emulator.incrementCounter("playerResets");
             }
         },
         check_blackout([newProp, oldProp]) {
-            if (newProp?.value == "Overworld" && oldProp?.value == "Battle" && this.flag_blackout_prerequisite == true) {
-                this.flag_blackout_prerequisite = false;
-                this.metrics.update("blackouts", this.metrics.blackouts+1);
-                if (this.runConfig.advanced.shuckie_counters) {
-                    this.emulator.incrementCounter("blackout_counter");
+            if (newProp?.value == "Overworld" && oldProp?.value == "Battle" && this.metrics.blackout_pending == true) {
+                this.metrics.update("blackout_pending", false);
+                if (this.runConfig.advanced.count_blackouts) {
+                    sendObsChapterMarker('BLACKOUT');
+                    this.metrics.update("blackouts", this.metrics.blackouts + 1);
+                    if (this.runConfig.advanced.shuckie_counters) {
+                        this.emulator.incrementCounter("blackout_counter");
+                    }
                 }
             }
-            else if (newProp.value == "Overworld") {
-                this.flag_blackout_prerequisite = false;
+            else if (newProp?.value == "Overworld") {
+                this.metrics.update("blackout_pending", false);
             }
         },
         new_run_started() {
@@ -124,24 +126,14 @@ export default defineComponent({
         PubSub.subscribe("@run/check_blackout", this.check_blackout);
         PubSub.subscribe("@run/new_run_started", this.new_run_started);
     },
-    watch: {
-        //! These watchers are just used to emit the changes of these properties for other components to use, there will be a better way to do this.
-        //! This may be important just to keep thes values backed up
-        flag_blackout_prerequisite(new_value) {
-            if (!JsonStorage.games[this.meta.game][this.meta.starter]?.data)  {
-                JsonStorage.games[this.meta.game][this.meta.starter].data = {};
-            }
-            JsonStorage.games[this.meta.game][this.meta.starter].data.flag_blackout_prerequisite = new_value
-        }
-    },
     mounted() {
         this.game_properties.player.team[0].hp.change((newProp, oldProp) => {
             if (newProp.value == 0 && this.game_properties.meta.state.value == 'Battle') {
-                this.flag_blackout_prerequisite = true;
+                this.metrics.update("blackout_pending", true);
             }
         })
     },
-    onUnmounted() {
+    unmounted() {
         PubSub.unsubscribe("@run/cleared", this.clear_playthrough_data);
         PubSub.unsubscribe("@run/reset_occurred", this.reset_occurred);
         PubSub.unsubscribe("@run/check_blackout", this.check_blackout);

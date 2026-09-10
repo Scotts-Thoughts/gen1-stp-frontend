@@ -1,11 +1,20 @@
 import { backport_data } from "~/data/backports";
 
-export function move_name(move_string) {
-    if (!move_string) { 
-        return "" 
+/**
+ * Turn a move name as reported by the mapper (e.g. "THUNDERBOLT") into its display name (e.g. "Thunderbolt").
+ * Moves of backported species are reported as "BACKPORT..." and are resolved through `data/backports.js`.
+ * @param {string | null | undefined} move_string The move name from the mapper.
+ * @param {string} [starter] The starter species, used to resolve backport moves. Falls back to `this.meta.starter`
+ * when called as a component method.
+ * @returns {string}
+ */
+export function move_name(move_string, starter = undefined) {
+    if (!move_string) {
+        return ""
     }
-    if (move_string.includes("BACKPORT")) { 
-        return backport_data[this.meta.starter].moves[move_string] 
+    if (move_string.includes("BACKPORT")) {
+        const species = starter ?? this?.meta?.starter;
+        return backport_data[species]?.moves?.[move_string] ?? capitalize_words(move_string);
     }
     move_string = move_string.toLowerCase()
     const moveMappings = {

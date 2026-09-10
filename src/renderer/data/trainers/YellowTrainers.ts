@@ -380,7 +380,7 @@ export const YellowTrainers: Record<string, Trainer> = {
         "items": [],
         "party": [
             {
-                "species": "Nidoran_M",
+                "species": "NidoranM",
                 "level": 21,
                 "experience_yield": 270,
                 "nature": null,
@@ -576,7 +576,7 @@ export const YellowTrainers: Record<string, Trainer> = {
         "items": [],
         "party": [
             {
-                "species": "Nidoran_M",
+                "species": "NidoranM",
                 "level": 18,
                 "experience_yield": 231,
                 "nature": null,
@@ -1718,7 +1718,7 @@ export const YellowTrainers: Record<string, Trainer> = {
                 ]
             },
             {
-                "species": "Nidoran_M",
+                "species": "NidoranM",
                 "level": 10,
                 "experience_yield": 127,
                 "nature": null,
@@ -1962,7 +1962,7 @@ export const YellowTrainers: Record<string, Trainer> = {
                 ]
             },
             {
-                "species": "Nidoran_F",
+                "species": "NidoranF",
                 "level": 16,
                 "experience_yield": 201,
                 "nature": null,
@@ -2016,7 +2016,7 @@ export const YellowTrainers: Record<string, Trainer> = {
                 ]
             },
             {
-                "species": "Nidoran_F",
+                "species": "NidoranF",
                 "level": 14,
                 "experience_yield": 177,
                 "nature": null,
@@ -2049,7 +2049,7 @@ export const YellowTrainers: Record<string, Trainer> = {
         "items": [],
         "party": [
             {
-                "species": "Nidoran_M",
+                "species": "NidoranM",
                 "level": 15,
                 "experience_yield": 192,
                 "nature": null,
@@ -2071,7 +2071,7 @@ export const YellowTrainers: Record<string, Trainer> = {
                 ]
             },
             {
-                "species": "Nidoran_F",
+                "species": "NidoranF",
                 "level": 15,
                 "experience_yield": 189,
                 "nature": null,
@@ -2195,7 +2195,7 @@ export const YellowTrainers: Record<string, Trainer> = {
                 ]
             },
             {
-                "species": "Nidoran_F",
+                "species": "NidoranF",
                 "level": 18,
                 "experience_yield": 226,
                 "nature": null,
@@ -2261,7 +2261,7 @@ export const YellowTrainers: Record<string, Trainer> = {
         "items": [],
         "party": [
             {
-                "species": "Nidoran_F",
+                "species": "NidoranF",
                 "level": 23,
                 "experience_yield": 289,
                 "nature": null,
@@ -2437,7 +2437,7 @@ export const YellowTrainers: Record<string, Trainer> = {
                 ]
             },
             {
-                "species": "Nidoran_F",
+                "species": "NidoranF",
                 "level": 19,
                 "experience_yield": 240,
                 "nature": null,
@@ -2481,7 +2481,7 @@ export const YellowTrainers: Record<string, Trainer> = {
                 ]
             },
             {
-                "species": "Nidoran_M",
+                "species": "NidoranM",
                 "level": 19,
                 "experience_yield": 243,
                 "nature": null,
@@ -2679,7 +2679,7 @@ export const YellowTrainers: Record<string, Trainer> = {
         "items": [],
         "party": [
             {
-                "species": "Nidoran_F",
+                "species": "NidoranF",
                 "level": 6,
                 "experience_yield": 75,
                 "nature": null,
@@ -2699,7 +2699,7 @@ export const YellowTrainers: Record<string, Trainer> = {
                 ]
             },
             {
-                "species": "Nidoran_M",
+                "species": "NidoranM",
                 "level": 6,
                 "experience_yield": 76,
                 "nature": null,
@@ -3619,7 +3619,7 @@ export const YellowTrainers: Record<string, Trainer> = {
         "items": [],
         "party": [
             {
-                "species": "Nidoran_M",
+                "species": "NidoranM",
                 "level": 29,
                 "experience_yield": 372,
                 "nature": null,
@@ -22550,7 +22550,7 @@ export const YellowTrainers: Record<string, Trainer> = {
         "items": [],
         "party": [
             {
-                "species": "Nidoran_M",
+                "species": "NidoranM",
                 "level": 19,
                 "experience_yield": 243,
                 "nature": null,
@@ -22572,7 +22572,7 @@ export const YellowTrainers: Record<string, Trainer> = {
                 ]
             },
             {
-                "species": "Nidoran_F",
+                "species": "NidoranF",
                 "level": 19,
                 "experience_yield": 240,
                 "nature": null,

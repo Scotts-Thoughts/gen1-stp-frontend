@@ -1,9 +1,8 @@
 import PubSub from "~/logic/PubSub";
-import { JsonStorage} from "~/logic/Storage.js";
 import { LocalStorageProxy } from "~/logic/LocalStorageProxy.js";
 import { log_split, autosplitter_process, format_trainer_name, logData, logCopy } from "../autosplitter/autosplitter_functions.js";
 import { autosplitter } from "~/data/autosplitter.js";
-import { pokemon_settings } from "../settings/pokemon_settings.js";
+import { sendObsChapterMarker } from "~/logic/obs";
 import { computed, defineComponent } from "vue";
 import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
 import { RightPanelMode } from "~/stores/types/RightPanelMode.js";
@@ -14,11 +13,12 @@ import { useBattleStore } from "~/stores/useBattleStore";
 import { useEmulatorStatsStore } from "~/stores/useEmulatorStatsStore";
 
 // vue components:
-import graphics from "./graphics.vue"; 
+import graphics from "./graphics.vue";
 import state from "./state.js"; // background process.
 import left_panel from "./left_panel.vue";
 import game_area from "./game_area.vue";
 import right_panel from "./right_panel.vue";
+import enemy_sprite_resize_handle from "./enemy_sprite_resize_handle.vue";
 
 const template = /*html*/`
 <div>
@@ -32,6 +32,7 @@ const template = /*html*/`
 
         <right_panel :current_splits :previous_splits :collect_split_data />
         <game_area />
+        <enemy_sprite_resize_handle />
     </div>
 </div>
 `
@@ -45,7 +46,8 @@ export default defineComponent({
 
         left_panel, // Left Panel
         game_area, // Middle Panel
-        right_panel //Right Panel
+        right_panel, //Right Panel
+        enemy_sprite_resize_handle, // dev-only resize tool
     },
     props: [ "mapper" ],
     data() {
@@ -53,99 +55,29 @@ export default defineComponent({
             battle: useBattleStore(),
             meta: useMetaStore(),
             metrics: useSpeciesMetricsStore(),
-            gameSpeciesData: useGameSpeciesData(),
             settings: useOverlaySettingsStore(),
             runConfig: useGameSpeciesData(),
             emulator: useEmulatorStatsStore(),
-            /** The game selected by the user. Used to specify editions that use the same mapper, 
-             * e.g. "Blue" from "Red and Blue".  
-             * Only used to determine the storage location of the split data, not for any other logic.
-             */
-            game_selection: "Yellow",
 
             // Static Data
             autosplitter_toggle: true,
             collect_split_data: true,
 
-            refilmed_attempt: 0,
-            refilmed_finish: 0,
             split_data: [],
-            player_id: 0,
-            flag_finished_logging_splits: false,
             split_logStr: "",
             simple_data_str: "",
             full_data_str: "",
             deprecated_data_str: "",
             simple_data: "",
-            blackout: false,
             previous_splits: [],
             current_splits: [],
         }
     },
     created() {
-        PubSub.subscribe("@run/cleared", this.clear_splits_header_timer);
-        PubSub.subscribe("@property/increment", this.increment_property);
-
-        // Initialize the Storage object
-        // This creates all of the objects that will then be filled
-        const debug_mode = false; // This enables the printing of storage related console logs
-        const clear_storage = false; // Use this to test functionality. It resets all the data blocks within the Storage.json file to their default values
-        if (debug_mode) { console.log(`Initializing the Storage Object...`) }
-
-        if (!JsonStorage['games'] || clear_storage == true) {
-            // Assigns the game data to the Storage object, these properties will be switched between depending on the game and starter currently selected
-            JsonStorage['games'] = { //If the games object doesn't exist, create it; everything will be stored within here
-                Red: {},
-                Blue: {},
-                Yellow: {},
-            }
-        }
-
-        if (debug_mode) {
-            console.log(`Success!`)
-            console.log(`Initializing Starter Storage Object...`)
-        }
-        if (!JsonStorage['games'][this.meta.game][this.meta.starter] || clear_storage == true) {
-            JsonStorage['games'][this.meta.game][this.meta.starter] = { 
-                style: {},
-                data: {}
-            };
-        }
-        if (debug_mode) { console.log(`Success!`) }
-        // Initialize watchers for all of the style properties. 
-        // These are game and Pokemon specific saved within: Storage.games[game][starter]
-        // Define variables
-
-        // Set up application settings watchers
-        this.$watch(() => this.autosplitter_toggle, (newValue) => JsonStorage.application_settings.autosplitter_toggle = newValue);
-        this.$watch(() => this.collect_split_data, (newValue) => JsonStorage.application_settings.collect_split_data = newValue);
-        //Loop through style settings that will be saved within a game and specific Pokemon
-        for (let i = 0; i < pokemon_settings.length; i++) {
-            let [prop_name, value] = pokemon_settings[i];
-            this.$watch(
-                () => this[prop_name],
-                (new_value) => {
-                    if (!JsonStorage.games[this.meta.game][this.meta.starter]?.style) {
-                        JsonStorage.games[this.meta.game][this.meta.starter].style = {};
-                    }
-                    JsonStorage.games[this.meta.game][this.meta.starter].style = {
-                        ...JsonStorage.games[this.meta.game][this.meta.starter].style,
-                        [prop_name]: new_value
-                    };
-                }
-            );
-        }
-        if (debug_mode) {
-            console.log(`Storage finished initialization. Printing Storage object to console...`)
-            console.log(JsonStorage)
-        }
-        // Load Application Settings from the Storage object
-        this.autosplitter_toggle = JsonStorage.application_settings.autosplitter_toggle;
-        this.collect_split_data = JsonStorage.application_settings.collect_split_data;
-        if (debug_mode) {
-            console.log(`Success!`)
-            console.log(`Loaded all settings from Storage.`)
-        }
+        PubSub.subscribe("@run/cleared", this.clear_run);
+    },
+    unmounted() {
+        PubSub.unsubscribe("@run/cleared", this.clear_run);
     },
     watch: {
         current_splits: {
@@ -159,25 +91,6 @@ export default defineComponent({
                 LocalStorageProxy['previous_splits'] = newVal
             },
             deep: true,
-        },
-        async "meta.starter"(newValue) { // TODO: This can be removed once we obsoleted all uses of "Storage".
-            if (this.ready == false) {
-                await this.sleep(250)
-            }
-            //update the saved starter in the overlay's local storage
-            if (!JsonStorage['games'][this.meta.game][newValue]) {
-                JsonStorage['games'][this.meta.game][newValue] = { style: {} };
-            }
-        },
-        async game_selection(newValue) {  // TODO: This can be removed once we obsoleted all uses of "Storage".
-            //update the saved starter in the overlay's local storage
-            if (!JsonStorage['games'][newValue][this.meta.starter]) {
-                JsonStorage['games'][newValue][this.meta.starter] = { style: {} };
-            }
-        },
-        player_id() {
-            this.meta.run_finished = false;
-            this.flag_finished_logging_splits == false;
         },
         // When the Shuckie timer toggle is on and the emulator reports no running timer,
         // kick it off. Covers replays (no 0→positive playerId flip) and users enabling
@@ -200,24 +113,34 @@ export default defineComponent({
             const timecode = h + ":" + m.toString().padStart(2, "0")
             return timecode
         },
+        /** "Y", "R" or "B", used as prefix of the split file names. */
+        gameLetter() {
+            return this.settings.gameLetter;
+        },
+        /** Folder under `splits/` that the split files are written to. */
+        gamePath() {
+            return this.meta.game;
+        },
     },
     methods: {
-        clear_splits_header_timer(value) {
+        /** Start over: clears the splits, resets the timer and forgets the current save file. */
+        clear_run() {
             this.current_splits = []
             this.battle_summary_header = "Battle Summary"
             this.metrics.resetTimer();
-            this.player_id = 0
+            this.metrics.update("player_id", 0);
+            this.metrics.update("run_finished", false);
+            this.metrics.update("splits_logged", false);
         },
         load_split_settings() {
             this.current_splits = LocalStorageProxy['current_splits'] ?? []
             this.previous_splits = LocalStorageProxy['previous_splits'] ?? []
         },
         padTime(time) {
-            return !time 
-                ? "00" 
+            return !time
+                ? "00"
                 : time.toString().padStart(2, "0");
         },
-        // MOVE MANAGEMENT
         sleep(ms) {
             return new Promise((res) => setTimeout(res, ms))
         },
@@ -228,30 +151,33 @@ export default defineComponent({
     mounted: async function () {
         this.load_split_settings();
 
-        console.log("[frontend mount] properties.player keys:", Object.keys(this.mapper.properties.player ?? {}));
-        console.log("[frontend mount] playerId property:", this.mapper.properties.player?.playerId);
-        console.log("[frontend mount] playerId path:", this.mapper.properties.player?.playerId?.path, "current value:", this.mapper.properties.player?.playerId?.value);
-
         // RESET - Identifies when a reset occurs and publishes an event
         this.mapper.properties.player.playerId.change((newProp, oldProp) => {
-            if (newProp.value == 0 && oldProp.value > 0 && this.meta.run_finished == false) {
+            if (newProp.value == 0 && oldProp.value > 0 && this.metrics.run_finished == false) {
                 PubSub.publish("@run/reset_occurred");
             }
         });
-        // BLACKOUT - Identifies when a blackout might have occurred
+        // BLACKOUT - Identifies when a blackout might have occurred, and marks battles in the OBS recording.
         this.mapper.properties.meta.state.change((newProp, oldProp) => {
             PubSub.publish("@run/check_blackout", [newProp, oldProp]);
             if (newProp.value == "To Battle" && this.mapper.properties.battle.type.value == "Trainer") {
                 this.settings.clearRightPanelOverride();
+                if (oldProp.value == "Overworld") {
+                    sendObsChapterMarker('IN - ' + this.mapper.properties.battle.trainer.class.value);
+                }
+            }
+            else if (newProp.value == "Overworld" && oldProp.value == "From Battle") {
+                sendObsChapterMarker('OUT - ' + this.mapper.properties.battle.trainer.class.value);
             }
         });
         // NEW_RUN_STARTED - Determines if the player has pressed 'New Game' and started a new playthrough
-        this.mapper.properties.player.playerId.change((newProp, oldProp) => {
-            console.log(`[new_run_started?] playerId change old=${oldProp?.value} new=${newProp?.value} stored=${this.player_id} run_finished=${this.meta.run_finished}`);
-            if (newProp.value > 0 && this.meta.run_finished == false && newProp.value != this.player_id) {
-                console.log("[new_run_started] firing; calling metrics.startTime()");
-                PubSub.publish("@run/new_run_started", this.player_id);
-                this.flag_finished_logging_splits = false;
+        this.mapper.properties.player.playerId.change((newProp) => {
+            if (newProp.value > 0 && this.metrics.run_finished == false && newProp.value != this.metrics.player_id) {
+                if (this.runConfig.advanced.no_attempt == true) {
+                    return
+                }
+                PubSub.publish("@run/new_run_started", this.metrics.player_id);
+                this.metrics.update("splits_logged", false);
                 if (this.runConfig.advanced.test_run == false && this.runConfig.advanced.refilming_mode == false) {
                     this.metrics.update("attempts", this.metrics.attempts + 1);
                 };
@@ -259,16 +185,13 @@ export default defineComponent({
                     this.emulator.sendStart();
                 }
                 this.metrics.startTime();
-                if (this.toggle_wEarlyEncounters == false && this.toggle_wEarlyEncountersNoMoon == true) {
-                    this.toggle_wEarlyEncounters == true
-                }
-                this.player_id = newProp.value;
+                this.metrics.update("player_id", newProp.value);
             }
         })
         // Only allow the player to reset once after the champion without resets incrementing
         this.mapper.properties.player.name.change((newProp) => {
-            if (this.meta.run_finished == true && newProp.value == "NINTEN") {
-                this.meta.run_finished = false;
+            if (this.metrics.run_finished == true && newProp.value == "NINTEN") {
+                this.metrics.update("run_finished", false);
             }
         })
 
@@ -288,25 +211,26 @@ export default defineComponent({
                 let trainer = this.mapper.properties.battle.trainer.class.value
                 let id = this.mapper.properties.battle.trainer.number.value
                 let unique = `${trainer}_${id}`
-                let gameName = this.gameSelection == 'Yellow' ? "Y" : this.meta.game == 'Red' ? "R" : "B"
-                let gameName_Path = this.meta.game // Used for split data   
+                const gameName = this.gameLetter;
+                const gameName_Path = this.gamePath; // Used for split data
+                const advanced = this.runConfig.advanced;
 
                 this.battle.endBattle(this.mapper.properties, this.collect_split_data);
 
                 //write full split data (this is written for every single battle)
-                logData(gameName, gameName_Path, this.full_data_str, this.metrics.attempts, this.meta.starter, "Full", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                logData(gameName, gameName_Path, this.full_data_str, this.metrics.attempts, this.meta.starter, "Full", advanced.test_run, advanced.refilming_mode, advanced.refilmed_attempt, advanced.refilmed_finish)
 
                 //write deprecated split data (this is written for only pre-defined trainers)
                 //a list of these trainers can be found within `autosplitter.js` and inside the parent `Yellow` or `Red and Blue`
                 if (autosplitter[this.mapper.properties.meta.gameName.value][unique]) {
-                    logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.attempts, this.meta.starter, "Deprecated", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.attempts, this.meta.starter, "Deprecated", advanced.test_run, advanced.refilming_mode, advanced.refilmed_attempt, advanced.refilmed_finish)
                 }
 
                 //write simple split data
                 //a list of these can be found within `autosplitter.js` and inside the parent `Simple`
                 const simpleSplit = () => {
                     this.log_split()
-                    logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", advanced.test_run, advanced.refilming_mode, advanced.refilmed_attempt, advanced.refilmed_finish)
                     this.split_data.push(this.simple_data)
                 }
                 //log simple data for only these trainers
@@ -326,7 +250,7 @@ export default defineComponent({
                     case "LANCE": {
                         simpleSplit()
                         if (this.settings.right_panel.post_battle_splits == true) {
-                            this.settings.setRightPanelOverride(RightPanelMode.splits, true);
+                            this.settings.setRightPanelOverride(RightPanelMode.splits);
                         }
                     }
                 }
@@ -335,7 +259,7 @@ export default defineComponent({
                     case "GIOVANNI_3":
                         simpleSplit()
                         if (this.settings.right_panel.post_battle_splits === true) {
-                            this.settings.setRightPanelOverride(RightPanelMode.splits, true);
+                            this.settings.setRightPanelOverride(RightPanelMode.splits);
                         }
                         break;
                     case "ROCKET_5": {
@@ -348,17 +272,13 @@ export default defineComponent({
                 if (trainer == "RIVAL3") { //this is the champion in gen1
                     this.log_split() //log the final split
                     if (this.settings.right_panel.post_battle_splits === true) {
-                        this.settings.setRightPanelOverride(RightPanelMode.splits, true);
+                        this.settings.setRightPanelOverride(RightPanelMode.splits);
                     }
-                    if (this.runConfig.advanced.test_run == false && this.runConfig.advanced.refilming_mode == false && this.runConfig.advanced.no_attempt == false) {
-                        this.metrics.update("finished", this.metrics.finishes + 1); //increment finished count if this is not a test run
-                    };
-                    // this.stopTime() //stop the timer
                     this.metrics.stopTimer();
                     if (this.runConfig.advanced.shuckie_timer) {
                         this.emulator.sendEnd();
                     }
-                    logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish) //log a simple split
+                    logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", advanced.test_run, advanced.refilming_mode, advanced.refilmed_attempt, advanced.refilmed_finish) //log a simple split
                     this.split_data.push(this.simple_data) //push the split data into the data variable
                 }
             }
@@ -366,45 +286,48 @@ export default defineComponent({
         //log the final times with the final gametime
         //I am watching tile1 for a specifc tile that appears when the gametime displays on screen
         this.mapper.properties.screen.tiles.column1.tile1.change((newProp) => {
-            let gameName_Path = this.meta.game; // Used for split data     
             if (newProp.value == 122) {
                 if (this.mapper.properties.events.beatChampion.value == true && this.mapper.properties.overworld.map.value == "Hall of Fame") {
+                    const gameName = this.gameLetter;
+                    const gameName_Path = this.gamePath; // Used for split data
+                    const advanced = this.runConfig.advanced;
                     const { formatted: formattedTime } = this.metrics.getTime();
                     this.autosplitter_process()
                     console.log("Run Ended - Backing up split data now...")
-                    let gameName = this.mapper.properties.meta.gameName.value
-                    logData(gameName, gameName_Path, this.simple_data_str, this.metrics.finishes, this.meta.starter, "Simple", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.finishes, this.meta.starter, "Deprecated", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
-                    logData(gameName, gameName_Path, this.full_data_str, this.metrics.finishes, this.meta.starter, "Full", this.runConfig.advanced.test_run, this.runConfig.advanced.refilming_mode, this.refilmed_attempt, this.refilmed_finish)
+                    logData(gameName, gameName_Path, this.simple_data_str, this.metrics.attempts, this.meta.starter, "Simple", advanced.test_run, advanced.refilming_mode, advanced.refilmed_attempt, advanced.refilmed_finish)
+                    logData(gameName, gameName_Path, this.deprecated_data_str, this.metrics.attempts, this.meta.starter, "Deprecated", advanced.test_run, advanced.refilming_mode, advanced.refilmed_attempt, advanced.refilmed_finish)
+                    logData(gameName, gameName_Path, this.full_data_str, this.metrics.attempts, this.meta.starter, "Full", advanced.test_run, advanced.refilming_mode, advanced.refilmed_attempt, advanced.refilmed_finish)
                     this.split_data.push(this.simple_data)
                     console.log(`Autosplitter - Run Ended: Real-Time: ${formattedTime[0]}${formattedTime[1]} Resets: ${this.metrics.resets} Blackouts: ${this.metrics.blackouts} Level: ${this.mapper.properties.player.team[0].level.value} Gametime: ${this.gametimeSplit})`)
-                    this.meta.run_finished = true; //stop incrementing resets
+                    this.metrics.update("run_finished", true); //stop incrementing resets
                 }
             }
         });
-        //when the triangular cursor appears on the screen, log the gametime
+        //when the triangular cursor appears on the screen, copy the split files to the finishes folder
         this.mapper.properties.screen.text.prompt.change((newProp, oldProp) => {
-            let gameName = this.game_selection == 'Yellow' ? "Y" : this.game_selection == 'Red' ? "R" : "B"
-            let gameName_Path = this.meta.game // Used for split data    
-            if (this.flag_finished_logging_splits == false && this.meta.run_finished == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
-                logCopy(  // copy the current `attempt_number` split data to the finished folder
-                    gameName,
-                    gameName_Path,
+            if (this.metrics.splits_logged == false && this.metrics.run_finished == true && newProp.bytes == 0xEE && oldProp.bytes == 0x7F) {
+                const advanced = this.runConfig.advanced;
+                logCopy(  // copy the current attempt's split data to the finished folder
+                    this.gameLetter,
+                    this.gamePath,
                     this.metrics.attempts,
                     this.meta.starter,
                     this.metrics.finishes,
-                    this.runConfig.advanced.refilming_mode,
-                    this.refilmed_attempt,
-                    this.refilmed_finish
+                    advanced.refilming_mode,
+                    advanced.refilmed_attempt,
+                    advanced.refilmed_finish
                 );
                 console.log("Run complete - moving attempt files to finished folder.")
-                this.flag_finished_logging_splits = true
+                if (advanced.test_run == false && advanced.refilming_mode == false && advanced.no_attempt == false) {
+                    this.metrics.update("finishes", this.metrics.finishes + 1);
+                }
+                this.metrics.update("splits_logged", true);
             }
         });
         //! end of autosplitter
 
         // Alakazam Yellow exception
-        this.mapper.properties?.trainers?.viridianForest?.bugcatcher2.change((newValue, oldValue) => {
+        this.mapper.properties?.trainers?.viridianForest?.bugcatcher2?.change((newValue, oldValue) => {
             if (this.meta.game == "Yellow" && this.meta.starter == "Alakazam" && newValue.value == true) {
                 this.mapper.properties.patch.wEarlyEncounters.set("On", false)
             }

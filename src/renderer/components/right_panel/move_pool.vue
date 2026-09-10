@@ -28,7 +28,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="tinted-box" style="--url: url(../images/ui/movepool.svg); --drop-shadow: 0px 0px 1px #000;"></div>
+        <div class="tinted-box" style="--url: url(images/ui/movepool.svg); --drop-shadow: 0px 0px 1px #000;"></div>
         <div class="movepoolLabel">Movepool</div>
     </div>
 </template>
@@ -42,7 +42,7 @@ export default defineComponent({
     data() {
         return { meta: useMetaStore() };
     },
-    computed: {        
+    computed: {
         mew_movepool_style(): string {
             if (this.meta.starter == "Mew") {
                 return "font-size: 15px; line-height: 15.5px;"
@@ -50,11 +50,15 @@ export default defineComponent({
             return "";
         },
         moves(): PokemonMovePool {
-            const result = PokeData.getMovepool(this.meta.currentSpecies ?? this.meta.starter);
-            return result;
+            const species = this.meta.currentSpecies === 'Backport'
+                ? this.meta.starter
+                : this.meta.currentSpecies || this.meta.starter;
+            const result = PokeData.getMovepool(species);
+            // Show the starters movepool when the current species is unknown to the data set.
+            return result.level.length || result.tmhm.length ? result : PokeData.getMovepool(this.meta.starter);
         },
         starter_type_2(): string {
-            return PokeData.getSpecies(this.meta.starter).type_2.toLowerCase();
+            return (PokeData.findSpecies(this.meta.starter)?.type_2 ?? "Normal").toLowerCase();
         }
     },
 });

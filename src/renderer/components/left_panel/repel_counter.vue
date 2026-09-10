@@ -43,8 +43,8 @@ export default defineComponent({
         },
         boxStyle() {
             return this.metrics.faultsMode != FaultMode.both
-                ? "--url: url(../images/ui/repel.svg)"
-                : "--url: url(../images/ui/repel_2.svg)"
+                ? "--url: url(images/ui/repel.svg)"
+                : "--url: url(images/ui/repel_2.svg)"
         }
     }
 });

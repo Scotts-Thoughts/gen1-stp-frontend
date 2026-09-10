@@ -23,7 +23,7 @@ const template = /*html*/`
                 </tr>
             </tbody>
         </table>
-        <div class="tinted-box" style="--url: url(../images/ui/movepool.svg)"></div>
+        <div class="tinted-box" style="--url: url(images/ui/movepool.svg)"></div>
     </div>
 `
 
@@ -54,7 +54,7 @@ export default defineComponent({
             ];
         },
         starter_type_2() {
-            return PokeData.getSpecies(this.meta.starter)?.type_2.toLowerCase();
+            return (PokeData.findSpecies(this.meta.starter)?.type_2 ?? "Normal").toLowerCase();
         }
     }
 });

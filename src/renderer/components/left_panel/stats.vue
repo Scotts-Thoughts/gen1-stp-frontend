@@ -1,5 +1,5 @@
 <template>
-    <div class="statsContainer"> 
+    <div class="statsContainer">
         <div class="critrate">Crit rate: {{ crit_rate }}%</div>
         <div>
             <div class="statsheader">{{stats_header}} </div>
@@ -7,22 +7,22 @@
             <div v-for="stat in stat_object" class="stat">
                 <div v-if="stat.name != 'Hp' && meta.gameState == 'Battle'" class="stat_label mod_style">{{ mod_stage_label(game_properties.battle.yourPokemon['modStage'+stat.mod_path]) }}</div>
                 <div :style="{ opacity: statLabelOpacity()[stat.name]}" class="stat_label">{{stat.label}}</div>
-                
+
                 <div v-if="display_mode == 'Base Stats'"   class="stat_value">{{base_stats(stat.base_stat_key)}}</div>
                 <div v-if="display_mode == 'Averages'"     class="stat_value">{{average_stats(stat.base_stat_key).mean}}</div>
                 <div v-if="display_mode == 'Medians'"      class="stat_value">{{average_stats(stat.base_stat_key).median}}</div>
                 <div v-if="display_mode == 'DVs'"          class="stat_value dv">{{get_dv(stat.name)}}/15</div>
                 <div v-if="display_mode == 'EVs'"          class="stat_value stat_exp">{{game_properties.player.team[0]['statExp' + stat.name].value}}</div>
                 <div v-if="display_mode == 'Automatic'"    class="stat_value">{{get_stat(stat.name)}}</div>
-                
+
                 <div v-if="display_mode == 'Vitamins'"     class="stat_value stat_multi_line devs2"           ><span style="opacity: .7;">{{stat.vitamin}}</span></div>
                 <div v-if="display_mode == 'Vitamins'"     class="stat_value stat_multi_line percentage_evs2" style="font-size: 21px;"><span style="font-size: 31px;">{{usable_vitamins(game_properties.player.team[0][stat.statExpPath].value)}}</span><span style="font-size: 15px;">/10</span></div>
                 <div v-if="display_mode == 'Vitamins'"     class="stat_value stat_multi_line ev_stats_gained2">{{game_properties.player.team[0]['statExp' + stat.name].value}}<span style="font-size: 13px;">/65535</span></div>
-                
+
                 <div v-if="display_mode == 'Detailed EVs'" class="stat_value stat_multi_line devs"           >{{game_properties.player.team[0]['statExp' + stat.name].value}}/65535</div>
                 <div v-if="display_mode == 'Detailed EVs'" class="stat_value stat_multi_line percentage_evs" >{{decimalToPercentage(game_properties.player.team[0]['statExp' + stat.name].value / 65535) }}%</div>
                 <div v-if="display_mode == 'Detailed EVs'" class="stat_value stat_multi_line ev_stats_gained">Stats: {{Math.floor(Math.sqrt(game_properties.player.team[0]['statExp' + stat.name].value) / 4)}}</div>
-                
+
                 <div v-if="display_mode == 'Badge Boosts'" class="stat_value stat_multi_line devs"           >Stat: {{game_properties.player.team[0][stat.path].value}}</div>
                 <div v-if="display_mode == 'Badge Boosts'" class="stat_value stat_multi_line percentage_evs" >Boost: {{get_bb_stat(stat.name)}}</div>
                 <div v-if="display_mode == 'Badge Boosts'" class="stat_value stat_multi_line ev_stats_gained">+{{(get_stat(stat.name) - game_properties.player.team[0][stat.path].value) / game_properties.player.team[0][stat.path].value*100}}%</div>
@@ -43,24 +43,41 @@ import { GameHookProperty } from "~/packages/gameHookMapperClient";
 import { BaseStats, GrowthRate } from "~/logic/PokeDataTypes";
 
 type StatObject = {
-    /** 
+    /**
      * Name of the stat. Used as a partial path for some poke-a-byte properties.
-     * Also used for identification in various calculations made in the component. 
+     * Also used for identification in various calculations made in the component.
      */
-    name: "Hp" | "Speed" | "Attack" | "Special" | "Defense", 
+    name: "Hp" | "Speed" | "Attack" | "Special" | "Defense",
     /** Label displayed for the stat. */
-    label: string, 
+    label: string,
     /** Partial path for the poke-a-byte property holding the stats value. */
-    path: string, 
+    path: string,
     /** Key of the stat in the {@link BaseStats} object from the pokedex data (see also {@link PokeData.getSpecies}) */
-    base_stat_key: keyof BaseStats, 
+    base_stat_key: keyof BaseStats,
     /** Partial path for the poke-a-byte property holding the stats stage modifier. */
-    mod_path: string, 
+    mod_path: string,
     /** Partial path for the poke-a-byte property holding the stat experience value. */
     statExpPath: string,
     /** Name of the vitamin that boosts the stats stat experience. */
     vitamin: string
 };
+
+/** Maps on which the stats panel automatically shows the remaining vitamins instead of the regular stats. */
+const VITAMIN_MAPS = new Set([
+    "Celadon City - Department Store - 1F",
+    "Celadon City - Department Store - 2F",
+    "Celadon City - Department Store - 3F",
+    "Celadon City - Department Store - 4F",
+    "Celadon City - Department Store - 5F",
+    "Celadon City - Department Store - Roof",
+    "Celadon City - Department Store - Elevator",
+    "Cinnabar Mansion",
+    "Safari Zone (Center)",
+    "Safari Zone (East)",
+    "Safari Zone (North)",
+    "Safari Zone (West)",
+    "Safari Zone - Secret House",
+]);
 
 export default defineComponent({
     data() {
@@ -69,12 +86,14 @@ export default defineComponent({
             game_properties: inject<Record<string, GameHookProperty>>("game_properties", {}),
             meta: useMetaStore(),
             settings: useOverlaySettingsStore(),
+            /** The stats mode that was active before the vitamins view was switched on automatically. */
+            mode_before_vitamins: null as StatsPanelMode | null,
             stat_object: [
-                { name: "Hp",      label: "HP",   path: "maxHp",   base_stat_key: "hp" ,            mod_path: "Hp",      statExpPath: "statExpHp",      vitamin: "HP Up",  }, 
-                { name: "Speed",   label: "Spe.", path: "speed",   base_stat_key: "speed",          mod_path: "Speed",   statExpPath: "statExpSpeed",   vitamin: "Carbos", }, 
-                { name: "Attack",  label: "Atk.", path: "attack",  base_stat_key: "attack",         mod_path: "Attack",  statExpPath: "statExpAttack",  vitamin: "Protein",}, 
-                { name: "Special", label: "Spc.", path: "special", base_stat_key: "special_attack", mod_path: "Special", statExpPath: "statExpSpecial", vitamin: "Calcium",}, 
-                { name: "Defense", label: "Def.", path: "defense", base_stat_key: "defense",        mod_path: "Defense", statExpPath: "statExpDefense", vitamin: "Iron",   }, 
+                { name: "Hp",      label: "HP",   path: "maxHp",   base_stat_key: "hp" ,            mod_path: "Hp",      statExpPath: "statExpHp",      vitamin: "HP Up",  },
+                { name: "Speed",   label: "Spe.", path: "speed",   base_stat_key: "speed",          mod_path: "Speed",   statExpPath: "statExpSpeed",   vitamin: "Carbos", },
+                { name: "Attack",  label: "Atk.", path: "attack",  base_stat_key: "attack",         mod_path: "Attack",  statExpPath: "statExpAttack",  vitamin: "Protein",},
+                { name: "Special", label: "Spc.", path: "special", base_stat_key: "special_attack", mod_path: "Special", statExpPath: "statExpSpecial", vitamin: "Calcium",},
+                { name: "Defense", label: "Def.", path: "defense", base_stat_key: "defense",        mod_path: "Defense", statExpPath: "statExpDefense", vitamin: "Iron",   },
             ] as StatObject[],
         }
     },
@@ -82,9 +101,13 @@ export default defineComponent({
         display_mode(): StatsPanelMode {
             return this.settings.left_panel.stats.mode;
         },
+        /** Pokedex data of the pokemon currently shown, falling back to the starter. */
+        current_species_data() {
+            return PokeData.findSpecies(this.meta.currentSpecies) ?? PokeData.findSpecies(this.meta.starter);
+        },
         /** Provides the criticial hit rate of the current pokemon. */
-        crit_rate() {
-            var baseSpeed = PokeData.getSpecies(this.meta.currentSpecies)?.base_stats.speed;
+        crit_rate(): number {
+            var baseSpeed = this.current_species_data?.base_stats.speed;
             if (baseSpeed) {
                 return Math.round((Math.floor(baseSpeed/2)/256) * 10000) / 100
             } else {
@@ -112,16 +135,16 @@ export default defineComponent({
         },
         /** Provides the growth rate of the current pokemon. */
         growthRate(): GrowthRate {
-            return PokeData.getSpecies(this.meta.currentSpecies).growth_rate;
+            return this.current_species_data?.growth_rate ?? "Medium Fast";
         },
     },
     methods: {
         /** Get the specified base stat of the currently selected starter. */
-        base_stats(statPath: keyof BaseStats) {
-            return PokeData.getSpecies(this.meta.starter).base_stats[statPath];
+        base_stats(statPath: keyof BaseStats): number | string {
+            return PokeData.findSpecies(this.meta.starter)?.base_stats[statPath] ?? "-";
         },
         /** Calculate the number of vitamins that can still be used for the given stat experience value. */
-        usable_vitamins(stat_experience: number) { 
+        usable_vitamins(stat_experience: number) {
             // stat exp ranges from 0 - 65535
             const vitaminsUsed = stat_experience / 2560;
             return Math.max(0, Math.ceil(10 - vitaminsUsed));
@@ -131,19 +154,20 @@ export default defineComponent({
             let sum = 0;
             let count = 0;
             let values: number[] = [];
-            
-            var completeDex = PokeData.getAllSpecies();
+
+            // Only the original species count, the backported ones would skew the numbers.
+            var completeDex = PokeData.getAllSpecies().filter(pokemon => !pokemon.backport);
             for (let pokemon of Object.values(completeDex)) {
                 let stat = pokemon.base_stats[stat_key];
                 sum += stat;
                 count++;
                 values.push(stat);
             }
-            
+
             values.sort((a, b) => a - b);
             let median: number;
             let midIndex = Math.floor(values.length / 2);
-            
+
             if (values.length % 2 === 0) {
                 median = (values[midIndex - 1] + values[midIndex]) / 2;
             } else {
@@ -196,7 +220,10 @@ export default defineComponent({
                 }
             }
             if (this.meta.gameState === GameState.no_pokemon) {
-                const dexData = PokeData.getSpecies(this.meta.starter);
+                const dexData = PokeData.findSpecies(this.meta.starter);
+                if (!dexData) {
+                    return "-";
+                }
                 switch (stat_name) {
                     case "Hp":      return dexData.base_stats.hp
                     case "Attack":  return dexData.base_stats.attack
@@ -213,44 +240,34 @@ export default defineComponent({
             if (this.meta.gameState !== GameState.no_pokemon) {
                 switch (stat_name) {
                     case "Hp":              return 'N/A';
-                    case "Attack":          { 
+                    case "Attack":          {
                         boosting_badge = this.game_properties.player.badges.badge1.value
                         switch (boosting_badge) {
                             case true:  return Math.floor(this.game_properties.player.team[0].attack.value * badge_boost_modifier)
                             case false: return 0
                         }
                     }
-                    case "Defense":         { 
+                    case "Defense":         {
                         boosting_badge = this.game_properties.player.badges.badge6.value
                         switch (boosting_badge) {
                             case true:  return Math.floor(this.game_properties.player.team[0].defense.value * badge_boost_modifier)
                             case false: return 0
                         }
                     }
-                    case "Speed":           { 
+                    case "Speed":           {
                         boosting_badge = this.game_properties.player.badges.badge3.value
                         switch (boosting_badge) {
                             case true:  return Math.floor(this.game_properties.player.team[0].speed.value * badge_boost_modifier)
                             case false: return 0
                         }
                     }
-                    case "Special":  { 
+                    case "Special":  {
                         boosting_badge = this.game_properties.player.badges.badge7.value
                         switch (boosting_badge) {
                             case true:  return Math.floor(this.game_properties.player.team[0].special.value * badge_boost_modifier)
                             case false: return 0
                         }
                     }
-                }
-            }
-            if (this.meta.gameState === GameState.no_pokemon) {
-                switch (stat_name) {
-                    case "Hp":              return 0
-                    case "Attack":          return 0
-                    case "Defense":         return 0
-                    case "Special Attack":  return 0
-                    case "Special Defense": return 0
-                    case "Speed":           return 0
                 }
             }
             return 0;
@@ -285,7 +302,7 @@ export default defineComponent({
                     result.Special = faded_opacity;
                 }
             }
-            return result;                
+            return result;
         },
         /** Converts the mod stage value to `" "` for 0 or null or a signed number string otherwise. */
         mod_stage_label(property: GameHookProperty): string {
@@ -297,35 +314,30 @@ export default defineComponent({
             }
             return property.value;
         },
+        /**
+         * Switch to the vitamins view when entering a shop that sells them and switch back to whatever was
+         * selected before when leaving. A mode picked by the user (dropdown or hotkey) is left alone otherwise.
+         */
+        on_map_change(new_property: GameHookProperty, old_property: GameHookProperty) {
+            const entering = VITAMIN_MAPS.has(new_property.value)
+                || (new_property.value == "Route 16" && old_property?.value == "Route 16 - House");
+            const mode = this.settings.left_panel.stats.mode;
+            if (entering) {
+                if (mode !== StatsPanelMode.vitamins) {
+                    this.mode_before_vitamins = mode;
+                    this.settings.setStatsPanelMode(StatsPanelMode.vitamins);
+                }
+                return;
+            }
+            if (mode === StatsPanelMode.vitamins && this.mode_before_vitamins !== null) {
+                this.settings.setStatsPanelMode(this.mode_before_vitamins);
+                this.mode_before_vitamins = null;
+            }
+        },
     },
     mounted() {
         this.game_properties.overworld.map.change((new_property: GameHookProperty, old_property: GameHookProperty) => {
-            switch (new_property.value) {
-                case "Celadon City - Department Store - 1F":
-                case "Celadon City - Department Store - 2F":
-                case "Celadon City - Department Store - 3F":
-                case "Celadon City - Department Store - 4F":
-                case "Celadon City - Department Store - 5F":
-                case "Celadon City - Department Store - Roof":
-                case "Celadon City - Department Store - Elevator":
-                case "Cinnabar Mansion":
-                case "Safari Zone (Center)":
-                case "Safari Zone (East)":
-                case "Safari Zone (North)":
-                case "Safari Zone (West)":
-                case "Safari Zone - Secret House":
-                    this.settings.setStatsPanelMode(StatsPanelMode.vitamins);
-                    break
-                case "Route 16": {
-                    if (old_property.value == "Route 16 - House") {
-                        this.settings.setStatsPanelMode(StatsPanelMode.vitamins);
-                        break
-                    }
-                }
-                default:
-                    this.settings.setStatsPanelMode(StatsPanelMode.automatic);
-                    break
-            }
+            this.on_map_change(new_property, old_property);
         })
     }
 });
