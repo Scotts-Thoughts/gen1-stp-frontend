@@ -3,6 +3,7 @@ import { LocalStorageProxy } from "~/logic/LocalStorageProxy.js";
 import { log_split, autosplitter_process, format_trainer_name, logData, logCopy } from "../autosplitter/autosplitter_functions.js";
 import { autosplitter } from "~/data/autosplitter.js";
 import { sendObsChapterMarker } from "~/logic/obs";
+import { installChapterMarkerHooks } from "./chapter_markers.js";
 import { computed, defineComponent } from "vue";
 import { useOverlaySettingsStore } from "~/stores/useOverlaySettingsStore.js";
 import { RightPanelMode } from "~/stores/types/RightPanelMode.js";
@@ -332,6 +333,9 @@ export default defineComponent({
                 this.mapper.properties.patch.wEarlyEncounters.set("On", false)
             }
         });
+
+        // The chapter markers beyond IN / OUT / RESET / BLACKOUT (2026-10-29).
+        installChapterMarkerHooks(this);
     },
     provide() {
         return {
